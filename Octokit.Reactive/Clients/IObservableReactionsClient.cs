@@ -2,8 +2,8 @@
 {
     public interface IObservableReactionsClient
     {
-        IObservableCommitCommentsReactionsClient CommitComment { get; }
+        IObservableCommitCommentReactionsClient CommitComment { get; }
 
-        IObservableIssuesReactionsClient Issue { get; }
+        IObservableIssueReactionsClient Issue { get; }
     }
 }

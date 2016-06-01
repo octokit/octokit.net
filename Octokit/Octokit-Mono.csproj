@@ -470,10 +470,10 @@
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
     <Compile Include="Clients\IReactionsClient.cs" />    
-    <Compile Include="Clients\CommitCommentsReactionsClient.cs" />
-    <Compile Include="Clients\ICommitCommentsReactionsClient.cs" />
-    <Compile Include="Clients\IIssuesReactionsClient.cs" />
-    <Compile Include="Clients\IssuesReactionsClient.cs" />
+    <Compile Include="Clients\CommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IssueReactionsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

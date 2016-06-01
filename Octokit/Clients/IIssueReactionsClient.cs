@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public interface IIssuesReactionsClient
+    public interface IIssueReactionsClient
     {
         /// <summary>
         /// Get all reactions for an specified Issue

@@ -9,8 +9,8 @@
         public ReactionsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-            CommitComment = new CommitCommentsReactionsClient(apiConnection);
-            Issue = new IssuesReactionsClient(apiConnection);
+            CommitComment = new CommitCommentReactionsClient(apiConnection);
+            Issue = new IssueReactionsClient(apiConnection);
         }
 
         /// <summary>
@@ -19,7 +19,7 @@
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        public ICommitCommentsReactionsClient CommitComment { get; private set; }
+        public ICommitCommentReactionsClient CommitComment { get; private set; }
 
         /// <summary>
         /// Access GitHub's Reactions API for Issues.
@@ -27,6 +27,6 @@
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        public IIssuesReactionsClient Issue { get; private set; }
+        public IIssueReactionsClient Issue { get; private set; }
     }
 }

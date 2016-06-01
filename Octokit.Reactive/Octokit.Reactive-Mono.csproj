@@ -190,6 +190,10 @@
     <Compile Include="Clients\IObservableIssuesReactionsClient.cs" />
     <Compile Include="Clients\ObservableCommitCommentsReactionClient.cs" />
     <Compile Include="Clients\ObservableIssuesReactionsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssueReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableIssueReactionsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

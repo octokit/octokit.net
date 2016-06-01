@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class IssuesReactionsClient : ApiClient, IIssuesReactionsClient
+    public class IssueReactionsClient : ApiClient, IIssueReactionsClient
     {
-        public IssuesReactionsClient(IApiConnection apiConnection)
+        public IssueReactionsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
         }

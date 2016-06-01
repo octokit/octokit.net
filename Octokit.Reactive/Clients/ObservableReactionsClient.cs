@@ -8,12 +8,12 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            CommitComment = new ObservableCommitCommentsReactionClient(client);
-            Issue = new ObservableIssuesReactionsClient(client);
+            CommitComment = new ObservableCommitCommentReactionsClient(client);
+            Issue = new ObservableIssueReactionsClient(client);
         }
 
-        public IObservableCommitCommentsReactionsClient CommitComment { get; private set; }
+        public IObservableCommitCommentReactionsClient CommitComment { get; private set; }
 
-        public IObservableIssuesReactionsClient Issue { get; private set; }
+        public IObservableIssueReactionsClient Issue { get; private set; }
     }
 }

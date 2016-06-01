@@ -1,20 +1,13 @@
-﻿using System;
-using System.Reactive.Threading.Tasks;
-using Octokit.Reactive.Internal;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Octokit.Reactive
+namespace Octokit
 {
-    public class ObservableCommitCommentsReactionClient : IObservableCommitCommentsReactionsClient
+    public class CommitCommentReactionsClient : ApiClient, ICommitCommentReactionsClient
     {
-        readonly ICommitCommentsReactionsClient _client;
-        readonly IConnection _connection;
-
-        public ObservableCommitCommentsReactionClient(IGitHubClient client)
+        public CommitCommentReactionsClient(IApiConnection apiConnection)
+            : base(apiConnection)
         {
-            Ensure.ArgumentNotNull(client, "client");
-
-            _client = client.Reaction.CommitComment;
-            _connection = client.Connection;
         }
 
         /// <summary>
@@ -26,29 +19,29 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        public IObservable<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction)
+        public Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(reaction, "reaction");
 
-            return _client.CreateReaction(owner, name, number, reaction).ToObservable();
+            return ApiConnection.Post<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
-        /// List reactions for a specified Commit Comment
+        /// Get all reactions for a specified Commit Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-reactions-for-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
-        public IObservable<Reaction> GetAll(string owner, string name, int number)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number));
+            return ApiConnection.GetAll<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
         }
     }
 }

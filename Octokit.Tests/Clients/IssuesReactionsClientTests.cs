@@ -12,7 +12,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new CommitCommentsReactionsClient(null));
+                Assert.Throws<ArgumentNullException>(() => new CommitCommentReactionsClient(null));
             }
         }
 

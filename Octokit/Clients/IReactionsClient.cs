@@ -14,7 +14,7 @@
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        ICommitCommentsReactionsClient CommitComment { get; }
+        ICommitCommentReactionsClient CommitComment { get; }
 
         /// <summary>
         /// Access GitHub's Reactions API for Issues.
@@ -22,6 +22,6 @@
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        IIssuesReactionsClient Issue { get; }
+        IIssueReactionsClient Issue { get; }
     }
 }
