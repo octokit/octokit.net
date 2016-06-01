@@ -59,7 +59,9 @@
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
     <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />

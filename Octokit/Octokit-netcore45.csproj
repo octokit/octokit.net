@@ -478,6 +478,8 @@
     <Compile Include="Clients\IIssueReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
+    <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

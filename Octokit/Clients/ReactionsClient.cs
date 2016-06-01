@@ -1,4 +1,6 @@
-﻿namespace Octokit
+﻿using System;
+
+namespace Octokit
 {
     public class ReactionsClient : ApiClient, IReactionsClient
     {
@@ -28,5 +30,13 @@
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         public IIssueReactionsClient Issue { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API for Issue Comments.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        public IIssueCommentReactionsClient IssueComment { get; private set; }
     }
 }

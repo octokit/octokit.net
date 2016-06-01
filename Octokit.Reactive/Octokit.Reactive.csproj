@@ -91,6 +91,7 @@
     <Compile Include="Clients\Enterprise\ObservableEnterpriseOrganizationClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseLicenseClient.cs" />
     <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservableIssueReactionsClient.cs" />
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\IObservableMergingClient.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
     <Compile Include="Clients\IObservableReactionsClient.cs" />
     <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\ObservableIssueReactionsClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />

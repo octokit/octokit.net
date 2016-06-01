@@ -466,11 +466,13 @@
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
-    <Compile Include="Clients\IReactionsClient.cs" />    
+    <Compile Include="Clients\IReactionsClient.cs" />
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
     <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
+    <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

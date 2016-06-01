@@ -48,7 +48,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number));
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
         }
     }
 }
