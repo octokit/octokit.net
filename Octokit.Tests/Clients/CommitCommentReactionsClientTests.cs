@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class CommitCommentsReactionsClientTests
+    public class CommitCommentReactionsClientTests
     {
         public class TheCtor
         {
@@ -35,11 +35,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReactionsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.CreateReaction("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CommitComment.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CommitComment.Create("owner", "name", 1, null));
             }
         }
 

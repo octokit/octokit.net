@@ -24,6 +24,6 @@ namespace Octokit
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction);
+        Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
     }
 }

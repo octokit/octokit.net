@@ -14,7 +14,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction);
+        Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
         /// Get all reactions for a specified Commit Comment

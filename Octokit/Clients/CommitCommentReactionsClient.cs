@@ -19,7 +19,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        public Task<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction)
+        public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

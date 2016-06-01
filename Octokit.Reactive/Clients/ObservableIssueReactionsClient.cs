@@ -26,13 +26,13 @@ namespace Octokit.Reactive
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        public IObservable<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction)
+        public IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(reaction, "reaction");
 
-            return _client.CreateReaction(owner, name, number, reaction).ToObservable();
+            return _client.Create(owner, name, number, reaction).ToObservable();
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class IssuesReactionsClientTests
+    public class IssueReactionsClientTests
     {
         public class TheCtor
         {
@@ -35,11 +35,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReactionsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Issue.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Issue.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.CreateReaction("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Issue.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Issue.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Issue.Create("owner", "name", 1, null));
             }
         }
 

@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create </param>
         /// <returns></returns>
-        IObservable<Reaction> CreateReaction(string owner, string name, int number, NewReaction reaction);
+        IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
         /// List reactions for a specified Commit Comment
