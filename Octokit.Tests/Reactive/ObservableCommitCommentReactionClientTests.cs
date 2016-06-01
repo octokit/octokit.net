@@ -31,11 +31,11 @@ namespace Octokit.Tests.Reactive
             public void EnsuresArgumentsNotNull()
             {
 
-                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.CreateReaction(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("", "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.CreateReaction("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.CommitComment.CreateReaction("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => _client.CommitComment.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => _client.CommitComment.Create("owner", "name", 1, null));
             }
         }
 
@@ -48,8 +48,8 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableReactionsClient(githubClient);
                 var newReaction = new NewReaction(ReactionType.Confused);
 
-                client.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
-                githubClient.Received().Reaction.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
+                client.CommitComment.Create("fake", "repo", 1, newReaction);
+                githubClient.Received().Reaction.CommitComment.Create("fake", "repo", 1, newReaction);
             }
         }
     }

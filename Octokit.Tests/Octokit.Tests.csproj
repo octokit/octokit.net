@@ -96,6 +96,7 @@
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\OauthClientTests.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Reactive\ObservableCommitCommentReactionClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestReviewCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
