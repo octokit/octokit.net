@@ -204,6 +204,8 @@
     <Compile Include="Clients\ObservableIssueReactionsClient.cs" />
     <Compile Include="Clients\IObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\ObservableIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentReactionsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

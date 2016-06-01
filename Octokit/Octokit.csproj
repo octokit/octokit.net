@@ -61,6 +61,7 @@
     <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Clients\IRepositoryContentsClient.cs" />
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />

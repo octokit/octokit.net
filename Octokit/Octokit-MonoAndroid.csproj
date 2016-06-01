@@ -487,6 +487,8 @@
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

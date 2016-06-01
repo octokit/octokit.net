@@ -31,5 +31,13 @@
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IIssueCommentReactionsClient IssueComment { get; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API for Issue Comments.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        IPullRequestReviewCommentReactionsClient PullRequestReviewComment { get; }
     }
 }

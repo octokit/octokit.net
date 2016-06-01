@@ -7,5 +7,7 @@
         IObservableIssueReactionsClient Issue { get; }
 
         IObservableIssueCommentReactionsClient IssueComment { get; }
+
+        IObservablePullRequestReviewCommentReactionsClient PullRequestReviewComment { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace Octokit
         {
             CommitComment = new CommitCommentReactionsClient(apiConnection);
             Issue = new IssueReactionsClient(apiConnection);
+            IssueComment = new IssueCommentReactionsClient(apiConnection);
+            PullRequestReviewComment = new PullRequestReviewCommentReactionsClient(apiConnection);
         }
 
         /// <summary>
@@ -38,5 +40,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         public IIssueCommentReactionsClient IssueComment { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API for Pull Request Review Comments.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        public IPullRequestReviewCommentReactionsClient PullRequestReviewComment { get; private set; }      
     }
 }
