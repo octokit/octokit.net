@@ -46,9 +46,56 @@ namespace Octokit.Reactive
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<User> GetAll(string org, ApiOptions options);
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
         /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <returns></returns>
         IObservable<User> GetAll(string org, OrganizationMembersFilter filter);
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options);
 
         /// <summary>
         /// <para>
@@ -92,10 +139,59 @@ namespace Octokit.Reactive
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<User> GetAll(string org, OrganizationMembersRole role, ApiOptions options);
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
         /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <returns></returns>
         IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role);
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
@@ -104,6 +200,15 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
         IObservable<User> GetAllPublic(string org);
+
+        /// <summary>
+        /// List all users who have publicized their membership of the organization.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<User> GetAllPublic(string org, ApiOptions options);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
