@@ -14,7 +14,7 @@ namespace Octokit
         /// <summary>
         /// Creates a reaction for an specified Issue
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#create-reaction-for-a-commit-comment</remarks>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
@@ -32,7 +32,7 @@ namespace Octokit
         /// <summary>
         /// Get all reactions for an specified Issue
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#list-reactions-for-a-commit-comment</remarks>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>        

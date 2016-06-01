@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a reaction for a specified Issue
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#create-reaction-for-an-issue</remarks>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
@@ -36,12 +36,12 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// List reactions for a specified Commit Comment
+        /// List reactions for a specified Issue
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#list-reactions-for-a-commit-comment</remarks>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The issue id</param>        
         /// <returns></returns>
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
