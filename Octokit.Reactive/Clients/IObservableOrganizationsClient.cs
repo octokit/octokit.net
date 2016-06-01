@@ -33,11 +33,28 @@ namespace Octokit.Reactive
         IObservable<Organization> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all the organizations for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Method makes a network request")]
+        IObservable<Organization> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all the organizations for the specified user
         /// </summary>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<Organization> GetAll(string user);
+
+        /// <summary>
+        /// Returns all the organizations for the specified user
+        /// </summary>
+        /// <param name="user">The login for the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAll(string user, ApiOptions options);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
