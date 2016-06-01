@@ -5,7 +5,7 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    class ObservablePullRequestReviewCommentReactionsClient : IObservablePullRequestReviewCommentReactionsClient
+    public class ObservablePullRequestReviewCommentReactionsClient : IObservablePullRequestReviewCommentReactionsClient
     {
         readonly IPullRequestReviewCommentReactionsClient _client;
         readonly IConnection _connection;

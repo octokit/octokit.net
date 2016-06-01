@@ -7,6 +7,15 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableCommitCommentReactionClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableCommitCommentReactionsClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             private readonly IGitHubClient _githubClient;
