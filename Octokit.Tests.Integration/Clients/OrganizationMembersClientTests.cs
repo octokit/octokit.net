@@ -20,8 +20,64 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsMembers()
             {
-                var members = _gitHub.Organization.Member.GetAll(_organizationFixture);
-                Assert.NotNull(members);
+                var members = await 
+                    _gitHub.Organization.Member.GetAll(_organizationFixture);
+                Assert.NotEmpty(members);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfMembersWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
+                
+                Assert.Equal(1, members.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfMembersWithStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
+
+                Assert.Equal(1, members.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctMembersBasedOnStartPage()
+            {
+                var startOptions = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                var firstPage = await _gitHub.Organization.Member.GetAll(_organizationFixture, startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await _gitHub.Organization.Member.GetAll(_organizationFixture, skipStartOptions);
+
+                Assert.Equal(1, firstPage.Count);
+                Assert.Equal(1, secondPage.Count);
+                Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
             }
 
             [IntegrationTest(Skip = "TwoFactor filter can't be used unless the requester is an organization owner")]
