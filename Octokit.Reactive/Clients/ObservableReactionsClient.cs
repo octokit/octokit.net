@@ -10,10 +10,13 @@ namespace Octokit.Reactive
 
             CommitComment = new ObservableCommitCommentReactionsClient(client);
             Issue = new ObservableIssueReactionsClient(client);
+            IssueComment = new ObservableIssueCommentReactionsClient(client);
         }
 
         public IObservableCommitCommentReactionsClient CommitComment { get; private set; }
 
         public IObservableIssueReactionsClient Issue { get; private set; }
+
+        public IObservableIssueCommentReactionsClient IssueComment { get; private set; }
     }
 }

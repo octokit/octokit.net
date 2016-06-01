@@ -5,5 +5,7 @@
         IObservableCommitCommentReactionsClient CommitComment { get; }
 
         IObservableIssueReactionsClient Issue { get; }
+
+        IObservableIssueCommentReactionsClient IssueComment { get; }
     }
 }
