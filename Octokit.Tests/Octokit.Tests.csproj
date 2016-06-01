@@ -97,6 +97,7 @@
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\OauthClientTests.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\ReactionsClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
