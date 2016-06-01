@@ -1,4 +1,7 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+using System.Reactive;
+
+namespace Octokit.Reactive
 {
     public interface IObservableReactionsClient
     {
@@ -33,5 +36,13 @@
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IObservablePullRequestReviewCommentReactionsClient PullRequestReviewComment { get; }
+
+        /// <summary>
+        /// Delete a reaction.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#delete-a-reaction</remarks>        
+        /// <param name="number">The reaction id</param>        
+        /// <returns></returns>
+        IObservable<Unit> Delete(int number);
     }
 }

@@ -2926,5 +2926,15 @@ namespace Octokit
         {
             return "repositories/{0}/subscribers".FormatUri(repositoryId);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for deleting a reaction.
+        /// </summary>
+        /// <param name="number">The reaction number</param>
+        /// <returns>The <see cref="Uri"/> that lists the watched repositories for the authenticated user.</returns>
+        public static Uri Reactions(int number)
+        {
+            return "reactions/{0}".FormatUri(number);
+        }
     }
 }

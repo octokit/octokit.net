@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -47,6 +48,17 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
-        public IPullRequestReviewCommentReactionsClient PullRequestReviewComment { get; private set; }      
+        public IPullRequestReviewCommentReactionsClient PullRequestReviewComment { get; private set; }
+
+        /// <summary>
+        /// Delete a reaction.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#delete-a-reaction</remarks>        
+        /// <param name="number">The reaction id</param>        
+        /// <returns></returns>
+        public Task Delete(int number)
+        {
+            return ApiConnection.Delete(ApiUrls.Reactions(number));
+        }
     }
 }
