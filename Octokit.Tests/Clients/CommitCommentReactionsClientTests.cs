@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 client.CommitComment.GetAll("fake", "repo", 42);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42/reactions"), "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
