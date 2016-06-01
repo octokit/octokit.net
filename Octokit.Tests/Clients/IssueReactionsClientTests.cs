@@ -12,7 +12,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new CommitCommentReactionsClient(null));
+                Assert.Throws<ArgumentNullException>(() => new IssueReactionsClient(null));
             }
         }
 
@@ -24,7 +24,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReactionsClient(connection);
 
-                client.CommitComment.GetAll("fake", "repo", 42);
+                client.Issue.GetAll("fake", "repo", 42);
 
                 connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), "application/vnd.github.squirrel-girl-preview");
             }
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReactionsClient(connection);
 
-                client.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
+                client.Issue.Create("fake", "repo", 1, newReaction);
 
                 connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
             }

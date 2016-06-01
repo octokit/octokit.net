@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
     <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
     <Compile Include="Clients\IssueReactionsClientTests.cs" />
     <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />

@@ -53,7 +53,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReactionsClient(connection);
 
-                client.CommitComment.CreateReaction("fake", "repo", 1, newReaction);
+                client.CommitComment.Create("fake", "repo", 1, newReaction);
 
                 connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
             }
