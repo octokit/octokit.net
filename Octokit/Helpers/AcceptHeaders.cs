@@ -21,5 +21,7 @@
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
         public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
+
+        public const string MultipleIssueAssigneesPreview = "application/vnd.github.cerberus-preview";
     }
 }

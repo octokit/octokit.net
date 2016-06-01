@@ -36,5 +36,7 @@ namespace Octokit
         /// <param name="assignee">Username of the prospective assignee</param>
         /// <returns></returns>
         Task<bool> CheckAssignee(string owner, string name, string assignee);
+
+        Task<Issue> AddAssigness(string owner, string name, int number, IList<>)
     }
 }
