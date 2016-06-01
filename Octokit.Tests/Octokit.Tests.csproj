@@ -213,9 +213,12 @@
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitCommentReactionClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableIssueCommentReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableIssueReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestReviewCommentReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
