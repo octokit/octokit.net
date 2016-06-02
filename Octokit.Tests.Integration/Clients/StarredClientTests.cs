@@ -669,11 +669,13 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetAllStargazersWithTimestamps()
         {
-            var users = await _fixture.GetAllStargazers(_repositoryContext.RepositoryOwner, _repositoryContext.RepositoryName);
+            var users = await _fixture.GetAllStargazersWithTimestamps(_repositoryContext.RepositoryOwner, _repositoryContext.RepositoryName);
             Assert.NotEmpty(users);
 
-            var user = users.FirstOrDefault(u => u.Login == _repositoryContext.RepositoryOwner);
-            Assert.NotNull(user);
+            var userStar = users.FirstOrDefault(star => star.User.Login == _repositoryContext.RepositoryOwner);
+            Assert.NotNull(userStar);
+
+            Assert.True(DateTimeOffset.UtcNow.Subtract(userStar.StarredAt) < TimeSpan.FromMinutes(5));
         }
 
         [IntegrationTest]
@@ -727,16 +729,6 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage.First().StarredAt, secondPage.First().StarredAt);
-        }
-
-        [IntegrationTest]
-        public async Task CanCreateAndRetrieveStarsWithTimestamps()
-        {
-            var currentUser = await _client.User.Current();
-            var userStars = await _fixture.GetAllStargazersWithTimestamps("octokit", "octokit.net");
-            var userStar = userStars.SingleOrDefault(x => x.User.Id == currentUser.Id);
-            Assert.NotNull(userStar);
-            Assert.True(DateTimeOffset.UtcNow.Subtract(userStar.StarredAt) < TimeSpan.FromMinutes(5));
         }
 
         public void Dispose()
