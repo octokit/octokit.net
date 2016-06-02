@@ -37,6 +37,6 @@ namespace Octokit
         /// <returns></returns>
         Task<bool> CheckAssignee(string owner, string name, string assignee);
 
-        Task<Issue> AddAssigness(string owner, string name, int number, IList<>)
+        Task<Issue> AddAssigness(string owner, string name, int number, NewAssignees assignees);
     }
 }
