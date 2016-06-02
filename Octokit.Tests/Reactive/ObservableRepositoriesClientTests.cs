@@ -83,21 +83,22 @@ namespace Octokit.Tests.Reactive
                     {
                         new Repository(7)
                     });
+
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string,string>>(), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
-                gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => secondPageResponse));
-                gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), null);
             }
 
             [Fact(Skip = "See https://github.com/octokit/octokit.net/issues/1011 for issue to investigate this further")]

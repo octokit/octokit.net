@@ -311,7 +311,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Args.ApiOptions);
             }
 
             [Fact]
@@ -330,7 +330,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
-                        Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"));
+                        Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -351,7 +352,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["type"] == "private" && d["sort"] == "full_name"));
+                            d["type"] == "private" && d["sort"] == "full_name"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -373,7 +375,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"));
+                            d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -392,7 +395,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["visibility"] == "private"));
+                            d["visibility"] == "private"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -413,7 +417,8 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
-                            d["affiliation"] == "owner" && d["sort"] == "full_name"));
+                            d["affiliation"] == "owner" && d["sort"] == "full_name"),
+                        Args.ApiOptions);
             }
         }
 
