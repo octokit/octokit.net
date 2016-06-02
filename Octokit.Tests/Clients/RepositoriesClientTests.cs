@@ -466,7 +466,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllBranchesMethod
         {
             [Fact]
-            public void ReturnsBranches()
+            public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -474,7 +474,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllBranches("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json");
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
             }
 
             [Fact]

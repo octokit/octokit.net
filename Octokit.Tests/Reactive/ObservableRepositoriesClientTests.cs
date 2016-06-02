@@ -245,7 +245,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllBranches("owner", "repo");
 
-                github.Connection.Received(1).GetResponse<List<Branch>>(expected);
+                github.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
             }
         }
 

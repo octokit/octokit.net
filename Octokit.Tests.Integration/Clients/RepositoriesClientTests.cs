@@ -628,6 +628,52 @@ public class RepositoriesClientTests
             Assert.True(tags.Any(t => t.Name == "v0.1.0"));
         }
     }
+    
+    public class TheGetAllBranchesMethod
+    {
+        [IntegrationTest]
+        public async Task GetsAllBranches()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net");
+
+            Assert.NotEmpty(branches);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfBranches()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllBranches("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllBranches("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
+        }
+    }
 
     public class TheGetBranchMethod
     {
