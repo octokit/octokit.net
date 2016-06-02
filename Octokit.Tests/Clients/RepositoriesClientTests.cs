@@ -433,7 +433,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForUser("username");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"), Args.ApiOptions);
             }
 
             [Fact]
@@ -442,6 +442,12 @@ namespace Octokit.Tests.Clients
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForUser(""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null, Args.ApiOptions));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser("user", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForUser("", Args.ApiOptions));
             }
         }
 

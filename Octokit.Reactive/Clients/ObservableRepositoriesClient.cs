@@ -192,15 +192,27 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
         /// </summary>
-        /// <remarks>
-        /// The default page size on GitHub.com is 30.
-        /// </remarks>
+        /// <param name="login">The account name to search for</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForUser(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login));
+            return GetAllForUser(login, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
+        /// </summary>
+        /// <param name="login">The account name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public IObservable<Repository> GetAllForUser(string login, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), options);
         }
 
         /// <summary>

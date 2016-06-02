@@ -105,13 +105,17 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
         /// </summary>
-        /// <remarks>
-        /// The default page size on GitHub.com is 30.
-        /// </remarks>
+        /// <param name="login">The account name to search for</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         IObservable<Repository> GetAllForUser(string login);
+
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified user.
+        /// </summary>
+        /// <param name="login">The account name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        IObservable<Repository> GetAllForUser(string login, ApiOptions options);
 
         /// <summary>
         /// Retrieves every <see cref="Repository"/> that belongs to the specified organization.
