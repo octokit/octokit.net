@@ -208,11 +208,22 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-organization-repositories">API documentation</a> for more information.
         /// The default page size on GitHub.com is 30.
         /// </remarks>
+        /// <param name="organization">The organization name to search for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllForOrg(string organization);
+
+        /// <summary>
+        /// Gets all repositories owned by the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-organization-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The organization name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options);
 
         /// <summary>
         /// A client for GitHub's Commit Status API.

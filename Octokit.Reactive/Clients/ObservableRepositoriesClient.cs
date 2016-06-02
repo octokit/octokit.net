@@ -214,7 +214,21 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization));
+            return GetAllForOrg(organization, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified organization.
+        /// </summary>
+        /// <param name="organization">The organization name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public IObservable<Repository> GetAllForOrg(string organization, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options);
         }
 
         /// <summary>

@@ -120,9 +120,15 @@ namespace Octokit.Reactive
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         IObservable<Repository> GetAllForOrg(string organization);
+
+        /// <summary>
+        /// Retrieves every <see cref="Repository"/> that belongs to the specified organization.
+        /// </summary>
+        /// <param name="organization">The organization name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        IObservable<Repository> GetAllForOrg(string organization, ApiOptions options);
 
         /// <summary>
         /// A client for GitHub's Commit Status API.

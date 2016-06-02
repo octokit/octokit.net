@@ -448,7 +448,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForOrgMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
@@ -456,7 +456,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"));
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), Args.ApiOptions);
             }
 
             [Fact]
@@ -465,6 +465,11 @@ namespace Octokit.Tests.Clients
                 var reposEndpoint = new RepositoriesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForOrg(""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForOrg("org", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForOrg("", ApiOptions.None));
             }
         }
 

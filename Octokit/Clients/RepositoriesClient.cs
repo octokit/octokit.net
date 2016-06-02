@@ -329,7 +329,25 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization));
+            return GetAllForOrg(organization, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all repositories owned by the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-organization-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The organization name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
         }
 
         /// <summary>
