@@ -544,6 +544,39 @@ public class RepositoriesClientTests
 
             Assert.True(contributors.Any(c => c.Login == "pmacn"));
         }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfContributors()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllContributors("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllContributors("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Login, secondPage[0].Login);
+            Assert.NotEqual(firstPage[1].Login, secondPage[1].Login);
+            Assert.NotEqual(firstPage[2].Login, secondPage[2].Login);
+            Assert.NotEqual(firstPage[3].Login, secondPage[3].Login);
+            Assert.NotEqual(firstPage[4].Login, secondPage[4].Login);
+        }
     }
 
     public class TheGetAllForCurrentMethod

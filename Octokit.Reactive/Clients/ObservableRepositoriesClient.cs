@@ -321,7 +321,29 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name)
         {
-            return GetAllContributors(owner, name, false);
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllContributors(owner, name, ApiOptions.None);
+        }
+        
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllContributors(owner, name, false, ApiOptions.None);
         }
 
         /// <summary>
@@ -338,6 +360,15 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return GetAllContributors(owner, name, false, ApiOptions.None);
+        }
+
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.RepositoryContributors(owner, name);
             var parameters = new Dictionary<string, string>();

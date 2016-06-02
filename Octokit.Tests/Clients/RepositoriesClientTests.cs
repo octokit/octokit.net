@@ -500,13 +500,27 @@ namespace Octokit.Tests.Clients
                 client.GetAllContributors("owner", "name");
 
                 connection.Received()
-                    .GetAll<RepositoryContributor>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>());
+                    .GetAll<RepositoryContributor>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Any<IDictionary<string, string>>(), Args.ApiOptions);
             }
 
             [Fact]
             public async Task EnsuresArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("", "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("owner", "", ApiOptions.None));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors(null, "repo", false, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", null, false, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", "repo", false, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("", "repo", false, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContributors("owner", "", false, ApiOptions.None));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors(null, "repo"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllContributors("owner", null));
