@@ -463,6 +463,8 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+    <Compile Include="Models\Request\NewAssignees.cs" />
+    <Compile Include="Models\Response\IssueAssignees.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -84,12 +84,12 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        public Task<Issue> AddAssigness(string owner, string name, int number, NewAssignees assignees)
+        public Task<IssueAssignees> AddAssignees(string owner, string name, int number, NewAssignees assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Post<Issue>(ApiUrls.AddAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+            return ApiConnection.Post<IssueAssignees>(ApiUrls.AddAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
         }
     }
 }
