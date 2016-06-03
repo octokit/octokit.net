@@ -383,7 +383,9 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTeams("owner", "repo");
 
-                github.Connection.Received(1).GetResponse<List<Team>>(expected);
+                github.Connection.Received(1).Get<List<Team>>(expected,
+                    Arg.Any<IDictionary<string, string>>(),
+                    Arg.Any<string>());
             }
         }
 

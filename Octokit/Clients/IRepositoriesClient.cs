@@ -431,6 +431,18 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name);
 
         /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options);
+
+        /// <summary>
         /// Gets all tags for the specified repository.
         /// </summary>
         /// <remarks>

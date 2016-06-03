@@ -582,7 +582,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllTeams("owner", "name");
 
                 connection.Received()
-                    .GetAll<Team>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"));
+                    .GetAll<Team>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        Args.ApiOptions);
             }
 
             [Fact]
