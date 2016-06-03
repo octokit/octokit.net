@@ -16,7 +16,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List of of assigned users for this issue.
+        /// List of assignees for this issue.
         /// </summary>
         public IReadOnlyList<User> Assignees { get; protected set; }
     }
