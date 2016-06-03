@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -74,23 +73,6 @@ namespace Octokit
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Add assignees to a specified Issue.
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        /// <param name="assignees">List of names of assignees to add</param>
-        /// <returns></returns>
-        public Task<IssueAssignees> AddAssignees(string owner, string name, int number, NewAssignees assignees)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(assignees, "assignees");
-
-            return ApiConnection.Post<IssueAssignees>(ApiUrls.AddAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
         }
     }
 }

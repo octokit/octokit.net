@@ -284,5 +284,15 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <returns>The created <see cref="Task"/> representing accessing the API.</returns>
         Task Unlock(string owner, string name, int number);
+
+        /// <summary>
+        /// Add assignees to a specified Issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="assignees">List of names of assignees to add</param>
+        /// <returns></returns>
+        Task<IssueAssignees> AddAssignees(string owner, string name, int number, NewAssignees assignees);
     }
 }
