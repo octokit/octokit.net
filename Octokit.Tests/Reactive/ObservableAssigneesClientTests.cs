@@ -12,11 +12,11 @@ namespace Octokit.Tests.Reactive
         private const string owner = "owner";
         private const string name = "name";
         private const string assignee = "assignee";
-        
+
         public class TheGetAllMethod
         {
             private readonly Uri _expectedUri;
-            
+
             public TheGetAllMethod()
             {
                 var uri = string.Format("repos/{0}/{1}/assignees", owner, name);
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(github);
 
-                client.GetAllForRepository(owner, name, new ApiOptions {PageSize = 1, StartPage = 1});
+                client.GetAllForRepository(owner, name, new ApiOptions { PageSize = 1, StartPage = 1});
 
                 github.Connection.Received(1).Get<List<User>>(_expectedUri,
                     Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
@@ -107,6 +107,37 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.CheckAssignee(string.Empty, name, assignee));
                 Assert.Throws<ArgumentException>(() => client.CheckAssignee(owner, string.Empty, assignee));
                 Assert.Throws<ArgumentException>(() => client.CheckAssignee(owner, name, string.Empty));
+            }
+        }
+
+        public class TheAddAssigneesMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(gitHubClient);
+
+                client.AddAssignees("fake", "repo", 2, newAssignees);
+
+                gitHubClient.Issue.Assignee.Received().AddAssignees("fake", "repo", 2, newAssignees);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(githubClient);
+                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, null));
+
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "", 2, newAssignees));
             }
         }
 
