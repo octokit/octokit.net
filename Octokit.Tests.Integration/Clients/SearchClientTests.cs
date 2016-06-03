@@ -58,6 +58,20 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForFileNameInCodeWithoutTerm()
+    {
+        var request = new SearchCodeRequest()
+        {
+            FileName = "readme.md",
+            Repos = new RepositoryCollection { "octokit/octokit.net" }
+        };
+
+        var repos = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
     public async Task SearchForWordInCode()
     {
         var request = new SearchIssuesRequest("windows");
