@@ -594,8 +594,16 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams(null, "repo"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTeams("owner", "repo", null));
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("", "repo"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("", "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", "", ApiOptions.None));
             }
         }
 
@@ -620,8 +628,16 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags(null, "repo"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags("owner", null));
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTags("owner", "repo", null));
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("", "repo"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("", "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTags("owner", "", ApiOptions.None));
             }
         }
 
