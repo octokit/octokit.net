@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -18,5 +19,13 @@ namespace Octokit
         }
 
         public IReadOnlyList<string> Assignees { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Assignees: {0}", Assignees);
+            }
+        }
     }
 }
