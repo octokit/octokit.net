@@ -33,10 +33,32 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
-            var url = ApiUrls.RepositoryContent(owner, name, path);
+            return GetAllContents(owner, name, path, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<RepositoryContent>(url);
+        /// <summary>
+        /// Returns the contents of a file or directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path), options);
         }
 
         /// <summary>
@@ -55,9 +77,28 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var url = ApiUrls.RepositoryContent(owner, name, string.Empty);
+            return GetAllContents(owner, name, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<RepositoryContent>(url);
+        /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, string.Empty), options);
         }
 
         /// <summary>
@@ -81,9 +122,32 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
+            return GetAllContentsByRef(owner, name, path, reference, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<RepositoryContent>(url);
+        /// <summary>
+        /// Returns the contents of a file or directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path, reference), options);
         }
 
         /// <summary>
@@ -104,9 +168,31 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            var url = ApiUrls.RepositoryContent(owner, name, string.Empty, reference);
+            return GetAllContentsByRef(owner, name, reference, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<RepositoryContent>(url);
+        /// <summary>
+        /// Returns the contents of the root directory in a repository.
+        /// </summary>
+        /// <remarks>
+        /// If given a path to a single file, this method returns a collection containing only that file.
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>
+        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
+        /// </returns>
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, string.Empty, reference), options);
         }
 
         /// <summary>

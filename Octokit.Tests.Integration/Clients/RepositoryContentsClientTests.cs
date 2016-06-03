@@ -38,6 +38,358 @@ namespace Octokit.Tests.Integration.Clients
         public class TheGetContentsMethod
         {
             [IntegrationTest]
+            public async Task ReturnsContents()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net");
+
+                Assert.NotEmpty(contents);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 3
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsDistinctContentsBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                var firstPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", skipStartOptions);
+
+                Assert.NotEqual(firstPageResults[0].Path, secondPageResults[0].Path);
+                Assert.NotEqual(firstPageResults[1].Path, secondPageResults[1].Path);
+                Assert.NotEqual(firstPageResults[2].Path, secondPageResults[2].Path);
+                Assert.NotEqual(firstPageResults[3].Path, secondPageResults[3].Path);
+                Assert.NotEqual(firstPageResults[4].Path, secondPageResults[4].Path);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsContentsWithPath()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive");
+
+                Assert.NotEmpty(contents);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsWithPathWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsWithPathWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsDistinctContentsWithPathBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                var firstPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("octokit", "octokit.net", "Octokit.Reactive", skipStartOptions);
+
+                Assert.NotEqual(firstPageResults[0].Path, secondPageResults[0].Path);
+                Assert.NotEqual(firstPageResults[1].Path, secondPageResults[1].Path);
+                Assert.NotEqual(firstPageResults[2].Path, secondPageResults[2].Path);
+                Assert.NotEqual(firstPageResults[3].Path, secondPageResults[3].Path);
+                Assert.NotEqual(firstPageResults[4].Path, secondPageResults[4].Path);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsContentsByRef()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4");
+
+                Assert.NotEmpty(contents);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsByRefWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsCorrectCountOfContentsByRefWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsDistinctContentsByRefBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                var firstPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", skipStartOptions);
+
+                Assert.NotEqual(firstPageResults[0].Path, secondPageResults[0].Path);
+                Assert.NotEqual(firstPageResults[1].Path, secondPageResults[1].Path);
+                Assert.NotEqual(firstPageResults[2].Path, secondPageResults[2].Path);
+                Assert.NotEqual(firstPageResults[3].Path, secondPageResults[3].Path);
+                Assert.NotEqual(firstPageResults[4].Path, secondPageResults[4].Path);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsContentsByRefWithPath()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4");
+
+                Assert.NotEmpty(contents);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsContentsByRefWithPathWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsContentsByRefWithPathWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", options);
+
+                Assert.Equal(2, contents.Count);
+            }
+
+            [IntegrationTest(Skip = "The Contents does not support a pagination at this moment. See https://github.com/octokit/octokit.net/issues/1315")]
+            public async Task ReturnsDistinctContentsByRefWithPathBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                var firstPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 5,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPageResults = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive", "26cc074d743612fc1f0c9268dad1e4c2a15c3fc4", skipStartOptions);
+
+                Assert.NotEqual(firstPageResults[0].Path, secondPageResults[0].Path);
+                Assert.NotEqual(firstPageResults[1].Path, secondPageResults[1].Path);
+                Assert.NotEqual(firstPageResults[2].Path, secondPageResults[2].Path);
+                Assert.NotEqual(firstPageResults[3].Path, secondPageResults[3].Path);
+                Assert.NotEqual(firstPageResults[4].Path, secondPageResults[4].Path);
+            }
+
+            [IntegrationTest]
             public async Task GetsFileContent()
             {
                 var github = Helper.GetAuthenticatedClient();
