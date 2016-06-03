@@ -425,12 +425,12 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForUserMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrlAndReturnsRepositories()
+            public async Task RequestsTheCorrectUrlAndReturnsRepositories()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.GetAllForUser("username");
+                await client.GetAllForUser("username");
 
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"), Args.ApiOptions);
