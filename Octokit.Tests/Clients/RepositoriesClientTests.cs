@@ -608,7 +608,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllTags("owner", "name");
 
                 connection.Received()
-                    .GetAll<RepositoryTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"));
+                    .GetAll<RepositoryTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/tags"), Args.ApiOptions);
             }
 
             [Fact]

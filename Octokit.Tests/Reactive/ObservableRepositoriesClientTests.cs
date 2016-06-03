@@ -409,7 +409,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags("owner", "repo");
 
-                github.Connection.Received(1).GetResponse<List<RepositoryTag>>(expected);
+                github.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Any<IDictionary<string,string>>(), null);
             }
         }
 
