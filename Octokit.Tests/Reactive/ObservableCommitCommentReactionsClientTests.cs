@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
-    public class ObservableCommitCommentReactionClientTests
+    public class ObservableCommitCommentReactionsClientTests
     {
         public class TheCtor
         {

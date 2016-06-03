@@ -211,7 +211,7 @@
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
-    <Compile Include="Reactive\ObservableCommitCommentReactionClientTests.cs" />
+    <Compile Include="Reactive\ObservableCommitCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueReactionsClientTests.cs" />
