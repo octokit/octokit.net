@@ -1,4 +1,6 @@
-﻿namespace Octokit
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Octokit
 {
     public static class AcceptHeaders
     {
@@ -23,5 +25,8 @@
         public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
 
         public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
+
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview+sha";
     }
 }
