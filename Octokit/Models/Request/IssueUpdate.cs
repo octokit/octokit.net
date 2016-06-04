@@ -27,8 +27,15 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
-        [SerializeNull]
         public string Assignee { get; set; }
+
+        /// <summary>
+        /// List of logins for the multiple users that this issue should be assigned to
+        /// </summary>
+        /// <remarks>
+        /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
+        /// </remarks>
+        public ICollection<string> Assignees { get; private set; }
 
         /// <summary>
         /// Milestone to associate this issue with.
@@ -58,6 +65,37 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified assigness to the issue.
+        /// </summary>
+        /// <param name="name">The login of the assignee.</param>
+        public void AddAssignee(string name)
+        {
+            // lazily create the assignees array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }
+
+            Assignees.Add(name);
+        }
+
+        /// <summary>
+        /// Clears all the assignees.
+        /// </summary>
+        public void ClearAssignees()
+        {
+            // lazily create the label array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }
+            else
+            {
+                Assignees.Clear();
             }
         }
 

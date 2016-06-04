@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -95,6 +96,11 @@ namespace Octokit
         public User Assignee { get; protected set; }
 
         /// <summary>
+        /// The multiple users this issue is assigned to.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
+
+        /// <summary>
         /// The milestone, if any, that this issue is assigned to.
         /// </summary>
         public Milestone Milestone { get; protected set; }
@@ -149,6 +155,14 @@ namespace Octokit
                 ? null
                 : Assignee.Login;
 
+            var assignees = Assignees == null
+                ? null
+                : Assignees.Select(x => x.Login);
+
+            var labels = Labels == null
+                ? null
+                : Labels.Select(x => x.Name);
+
             var issueUpdate = new IssueUpdate
             {
                 Assignee = assignee,
@@ -157,6 +171,16 @@ namespace Octokit
                 State = State,
                 Title = Title
             };
+
+            foreach (var asignee in assignees)
+            {
+                issueUpdate.AddAssignee(asignee);
+            }
+
+            foreach (var label in labels)
+            {
+                issueUpdate.AddLabel(label);
+            }
 
             return issueUpdate;
         }
