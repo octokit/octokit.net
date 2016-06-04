@@ -45,7 +45,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<CommitComment> Get(int repositoryId, int number)
         {
-            throw new System.NotImplementedException();
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId)
         {
-            throw new System.NotImplementedException();
+            return GetAllForRepository(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
@@ -100,7 +100,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), options);
         }
 
         /// <summary>
@@ -129,7 +131,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+
+            return GetAllForCommit(repositoryId, sha, ApiOptions.None);
         }
 
         /// <summary>
@@ -161,7 +165,10 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), options);
         }
 
         /// <summary>
@@ -193,7 +200,10 @@ namespace Octokit
         /// <returns></returns>
         public Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+
+            return ApiConnection.Post<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), newCommitComment);
         }
 
         /// <summary>
@@ -224,7 +234,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<CommitComment> Update(int repositoryId, int number, string commentUpdate)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+
+            return ApiConnection.Patch<CommitComment>(ApiUrls.CommitComment(repositoryId, number), new BodyWrapper(commentUpdate));
         }
 
         /// <summary>
@@ -252,7 +264,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(int repositoryId, int number)
         {
-            throw new System.NotImplementedException();
+            return ApiConnection.Delete(ApiUrls.CommitComment(repositoryId, number));
         }
     }
 }
