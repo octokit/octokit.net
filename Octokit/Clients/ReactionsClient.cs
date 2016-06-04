@@ -58,7 +58,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(int number)
         {
-            return ApiConnection.Delete(ApiUrls.Reactions(number));
+            return ApiConnection.Delete(ApiUrls.Reactions(number),null, AcceptHeaders.ReactionsPreview);
         }
     }
 }
