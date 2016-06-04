@@ -55,7 +55,7 @@ namespace Octokit
         /// </summary>
         public User User { get; protected set; }
 
-        public IssueCommentReactions Reactions { get; protected set; }
+        public ReactionSummary Reactions { get; protected set; }
 
         internal string DebuggerDisplay
         {

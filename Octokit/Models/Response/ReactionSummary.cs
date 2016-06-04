@@ -6,7 +6,7 @@ using Octokit.Internal;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class IssueCommentReactions
+    public class ReactionSummary
     {
         public int TotalCount { get; protected set; }
         [Parameter(Key = "+1")]
