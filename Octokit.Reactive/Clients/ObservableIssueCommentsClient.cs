@@ -7,6 +7,9 @@ namespace Octokit.Reactive
 {
     public class ObservableIssueCommentsClient : IObservableIssueCommentsClient
     {
+        //TODO: Remove this once PR #1335 has been merged
+        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
+
         readonly IIssueCommentsClient _client;
         readonly IConnection _connection;
 
@@ -63,7 +66,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), options);
+            //TODO: Use AcceptHeaders.ReactionsPreview once PR #1335 has been merged
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), null, ReactionsPreview, options);
         }
 
         /// <summary>
@@ -97,7 +101,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), options);
+            //TODO: Use AcceptHeaders.ReactionsPreview once PR #1335 has been merged
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), null, ReactionsPreview, options);
         }
 
         /// <summary>
