@@ -444,10 +444,10 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null));
                 await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForUser(""));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null, Args.ApiOptions));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser(null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => reposEndpoint.GetAllForUser("user", null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForUser("", Args.ApiOptions));
+                await Assert.ThrowsAsync<ArgumentException>(() => reposEndpoint.GetAllForUser("", ApiOptions.None));
             }
         }
 
