@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.GetAll("owner", "test");
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), null, "application/vnd.github.ironman-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), null, "application/vnd.github.ironman-preview+json", options);
             }
 
             [Fact]
