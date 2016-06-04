@@ -37,6 +37,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single Repository Comment by number.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <returns></returns>
+        public Task<CommitComment> Get(int repositoryId, int number)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
@@ -55,6 +67,17 @@ namespace Octokit
         /// Gets Commit Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
@@ -66,6 +89,18 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -89,6 +124,18 @@ namespace Octokit
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a specified Commit.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
@@ -102,6 +149,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), options);
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a specified Commit.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -124,6 +184,19 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates a new Commit Comment for a specified Commit.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha reference of commit</param>
+        /// <param name="newCommitComment">The new comment to add to the commit</param>
+        /// <returns></returns>
+        public Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
         /// Updates a specified Commit Comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
@@ -142,6 +215,19 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Updates a specified Commit Comment.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <param name="commentUpdate">The modified comment</param>
+        /// <returns></returns>
+        public Task<CommitComment> Update(int repositoryId, int number, string commentUpdate)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
@@ -155,6 +241,18 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Delete(ApiUrls.CommitComment(owner, name, number));
+        }
+
+        /// <summary>
+        /// Deletes the specified Commit Comment
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <returns></returns>
+        public Task Delete(int repositoryId, int number)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
