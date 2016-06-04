@@ -11,6 +11,9 @@ namespace Octokit
     /// </remarks>
     public class IssueCommentsClient : ApiClient, IIssueCommentsClient
     {
+        //TODO: Remove this once PR #1335 has been merged
+        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
+
         /// <summary>
         /// Instantiates a new GitHub Issue Comments API client.
         /// </summary>
@@ -32,7 +35,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id));
+            //TODO: Use AcceptHeaders.ReactionsPreview once PR #1335 has been merged
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id), null, ReactionsPreview);
         }
 
         /// <summary>
@@ -64,7 +68,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), options);
+            //TODO: Use AcceptHeaders.ReactionsPreview once PR #1335 has been merged
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), null, ReactionsPreview, options);
         }
 
         /// <summary>
@@ -97,7 +102,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), options);
+            //TODO: Use AcceptHeaders.ReactionsPreview once PR #1335 has been merged
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), null, ReactionsPreview, options);
         }
 
         /// <summary>
