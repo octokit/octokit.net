@@ -319,33 +319,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheAddAssigneesMethod
-        {
-            [Fact]
-            public async Task PostsToCorrectUrl()
-            {
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
-
-                var connection = Substitute.For<IApiConnection>();
-                var client = new IssuesClient(connection);
-
-                await client.AddAssignees("fake", "repo", 2, newAssignees);
-
-                connection.Received().Post<IssueAssignees>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>(), "application/vnd.github.cerberus-preview");
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new IssuesClient(Substitute.For<IApiConnection>());
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
-            }
-        }
-
         public class TheUnlockMethod
         {
             [Fact]

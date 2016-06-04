@@ -424,37 +424,6 @@ public class ObservableIssuesClientTests
         }
     }
 
-    public class TheAddAssigneesMethod
-    {
-        [Fact]
-        public void RequestsCorrectUrl()
-        {
-            var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
-            var gitHubClient = Substitute.For<IGitHubClient>();
-            var client = new ObservableIssuesClient(gitHubClient);
-
-            client.AddAssignees("fake", "repo", 2, newAssignees);
-
-            gitHubClient.Issue.Received().AddAssignees("fake", "repo", 2, newAssignees);
-        }
-
-        [Fact]
-        public void EnsuresNonNullArguments()
-        {
-            var githubClient = Substitute.For<IGitHubClient>();
-            var client = new ObservableIssuesClient(githubClient);
-            var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
-
-            Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
-            Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));
-            Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, null));
-
-            Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
-            Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
-            Assert.Throws<ArgumentException>(() => client.AddAssignees("", "", 2, newAssignees));
-        }
-    }
-
     public class TheLockMethod
     {
         [Fact]
