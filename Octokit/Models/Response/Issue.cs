@@ -10,7 +10,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository, IReadOnlyList<User> assignees)
         {
             Id = id;
             Url = url;
@@ -24,6 +24,7 @@ namespace Octokit
             User = user;
             Labels = labels;
             Assignee = assignee;
+            Assignees = assignees;
             Milestone = milestone;
             Comments = comments;
             PullRequest = pullRequest;
@@ -93,6 +94,11 @@ namespace Octokit
         /// The user this issue is assigned to.
         /// </summary>
         public User Assignee { get; protected set; }
+
+        /// <summary>
+        /// List of assignees for this issue.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
 
         /// <summary>
         /// The milestone, if any, that this issue is assigned to.

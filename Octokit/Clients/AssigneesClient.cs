@@ -90,7 +90,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Post<IssueAssignees>(ApiUrls.AddAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+            return ApiConnection.Post<IssueAssignees>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
         }
     }
 }
