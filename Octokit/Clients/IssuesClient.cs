@@ -413,7 +413,24 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Post<IssueAssignees>(ApiUrls.AddAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+            return ApiConnection.Post<IssueAssignees>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+        }
+
+        /// <summary>
+        /// Remove assignees from a specified Issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="assignees">List of names of assignees to add</param>
+        /// <returns></returns>
+        public Task<IssueAssignees> RemoveAssignees(string owner, string name, int number, NewAssignees assignees)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(assignees, "assignees");
+
+            return ApiConnection.Delete<IssueAssignees>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
         }
     }
 }

@@ -229,6 +229,8 @@ namespace Octokit
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task<HttpStatusCode> Delete(Uri uri, object data, string accepts);
 
+        Task<T> Delete<T>(Uri uri, object data, string accepts);
+
         /// <summary>
         /// Base address for the connection.
         /// </summary>
