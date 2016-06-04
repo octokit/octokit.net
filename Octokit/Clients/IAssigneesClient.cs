@@ -45,6 +45,6 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        Task<IssueAssignees> AddAssignees(string owner, string name, int number, NewAssignees assignees);
+        Task<Issue> AddAssignees(string owner, string name, int number, NewAssignees assignees);
     }
 }

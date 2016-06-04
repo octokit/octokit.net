@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
-        public IObservable<IssueAssignees> AddAssignees(string owner, string name, int number, NewAssignees assignees)
+        public IObservable<Issue> AddAssignees(string owner, string name, int number, NewAssignees assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
