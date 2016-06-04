@@ -224,7 +224,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>

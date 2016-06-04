@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class TeamsClientTests
@@ -98,11 +99,11 @@ public class TeamsClientTests
         }
     }
 
-    public class TheGetMembersMethod
+    public class TheGetAllMembersMethod
     {
         readonly Team team;
 
-        public TheGetMembersMethod()
+        public TheGetAllMembersMethod()
         {
             var github = Helper.GetAuthenticatedClient();
 
@@ -117,6 +118,34 @@ public class TeamsClientTests
             var members = await github.Organization.Team.GetAllMembers(team.Id);
 
             Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
+    }
+
+    public class TheGetAllRepositoriesMethod
+    {
+        readonly Team _team;
+
+        public TheGetAllRepositoriesMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            _team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllRepositories()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var repositoryContext = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                github.Organization.Team.AddRepository(_team.Id, Helper.Organization, repositoryContext.RepositoryName);
+
+                var repos = await github.Organization.Team.GetAllRepositories(_team.Id);
+
+                Assert.True(repos.Count > 0);
+                Assert.NotNull(repos[0].Permissions);
+            }
         }
     }
 }

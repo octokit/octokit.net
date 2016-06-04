@@ -220,7 +220,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheRRemoveMembershipMethod
+        public class TheRemoveMembershipMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -255,6 +255,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"),
+                    null,
+                    "application/vnd.github.ironman-preview+json",
                     Args.ApiOptions);
             }
         }
