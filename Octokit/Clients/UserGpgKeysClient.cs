@@ -43,6 +43,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
         public Task<IReadOnlyList<GpgKey>> GetAllForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), null, AcceptHeaders.GpgKeysPreview, options);
         }
 
@@ -69,7 +71,9 @@ namespace Octokit
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
         public Task<GpgKey> Create(NewGpgKey newGpgKey)
         {
-            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey);
+            Ensure.ArgumentNotNull(newGpgKey, "newGpgKey");
+
+            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey, AcceptHeaders.GpgKeysPreview);
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(int id)
         {
-            return ApiConnection.Delete(ApiUrls.GpgKeys(id));
+            return ApiConnection.Delete(ApiUrls.GpgKeys(id), null, AcceptHeaders.GpgKeysPreview);
         }
     }
 }
