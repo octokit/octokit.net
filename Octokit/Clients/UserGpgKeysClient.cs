@@ -86,7 +86,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(int id)
         {
-            return ApiConnection.Delete(ApiUrls.GpgKeys(id), null, AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Delete(ApiUrls.GpgKeys(id), new object(), AcceptHeaders.GpgKeysPreview);
         }
     }
 }

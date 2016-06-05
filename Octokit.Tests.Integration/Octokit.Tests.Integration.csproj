@@ -112,12 +112,14 @@
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="Clients\UserGpgKeysClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\GpgKeyContext.cs" />
     <Compile Include="Helpers\PublicKeyContext.cs" />
     <Compile Include="Helpers\EnterpriseUserContext.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
