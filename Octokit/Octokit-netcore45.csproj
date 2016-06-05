@@ -471,6 +471,10 @@
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
     <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
+    <Compile Include="Clients\IUserGpgKeysClient.cs" />
+    <Compile Include="Clients\UserGpgKeysClient.cs" />
+    <Compile Include="Models\Request\NewGpgKey.cs" />
+    <Compile Include="Models\Response\GpgKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
