@@ -12,6 +12,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
+        const int repositoryId = 1296269;
 
         public TheGetMethod()
         {
@@ -26,6 +27,13 @@ public class RepositoryCommentsClientTests
             var commit = await _fixture.Get(owner, name, 1467023);
             Assert.NotNull(commit);
         }
+
+        [IntegrationTest]
+        public async Task CanGetCommentByRepositoryId()
+        {
+            var commit = await _fixture.Get(repositoryId, 1467023);
+            Assert.NotNull(commit);
+        }
     }
 
     public class TheGetAllForRepositoryMethod
@@ -33,6 +41,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
+        const int repositoryId = 1296269;
 
         public TheGetAllForRepositoryMethod()
         {
@@ -45,6 +54,13 @@ public class RepositoryCommentsClientTests
         public async Task CanGetListOfCommentsForRepository()
         {
             var list = await _fixture.GetAllForRepository(owner, name);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommentsForRepositoryByRepositoryId()
+        {
+            var list = await _fixture.GetAllForRepository(repositoryId);
             Assert.NotEmpty(list);
         }
 
@@ -62,6 +78,19 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommentsWithoutStartByRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var commits = await _fixture.GetAllForRepository(repositoryId, options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
         public async Task CanGetCorrectCountOfCommentsWithStart()
         {
             var options = new ApiOptions
@@ -72,6 +101,20 @@ public class RepositoryCommentsClientTests
             };
 
             var commits = await _fixture.GetAllForRepository(owner, name, options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommentsWithStartByRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var commits = await _fixture.GetAllForRepository(repositoryId, options);
             Assert.Equal(5, commits.Count);
         }
 
@@ -100,6 +143,32 @@ public class RepositoryCommentsClientTests
             Assert.NotEqual(firstCommit[3].Id, secondCommit[3].Id);
             Assert.NotEqual(firstCommit[4].Id, secondCommit[4].Id);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStartByRepositoryId()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var firstCommit = await _fixture.GetAllForRepository(repositoryId, startOptions);
+            var secondCommit = await _fixture.GetAllForRepository(repositoryId, skipStartOptions);
+
+            Assert.NotEqual(firstCommit[0].Id, secondCommit[0].Id);
+            Assert.NotEqual(firstCommit[1].Id, secondCommit[1].Id);
+            Assert.NotEqual(firstCommit[2].Id, secondCommit[2].Id);
+            Assert.NotEqual(firstCommit[3].Id, secondCommit[3].Id);
+            Assert.NotEqual(firstCommit[4].Id, secondCommit[4].Id);
+        }
     }
 
     public class TheGetAllForCommitMethod
@@ -107,6 +176,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
+        const int repositoryId = 1296269;
 
         public TheGetAllForCommitMethod()
         {
@@ -119,6 +189,13 @@ public class RepositoryCommentsClientTests
         public async Task CanGetListOfCommentsForCommit()
         {
             var list = await _fixture.GetAllForCommit(owner, name, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d");
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommentsForCommitByRepositoryId()
+        {
+            var list = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d");
             Assert.NotEmpty(list);
         }
 
@@ -136,6 +213,19 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommentsWithoutStartForCommitByRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var commits = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
         public async Task CanGetCorrectCountOfCommentsWithStartForCommit()
         {
             var options = new ApiOptions
@@ -146,6 +236,20 @@ public class RepositoryCommentsClientTests
             };
 
             var commits = await _fixture.GetAllForCommit(owner, name, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommentsWithStartForCommitByRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var commits = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", options);
             Assert.Equal(5, commits.Count);
         }
 
@@ -167,6 +271,32 @@ public class RepositoryCommentsClientTests
 
             var firstCommit = await _fixture.GetAllForCommit(owner, name, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", startOptions);
             var secondCommit = await _fixture.GetAllForCommit(owner, name, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", skipStartOptions);
+
+            Assert.NotEqual(firstCommit[0].Id, secondCommit[0].Id);
+            Assert.NotEqual(firstCommit[1].Id, secondCommit[1].Id);
+            Assert.NotEqual(firstCommit[2].Id, secondCommit[2].Id);
+            Assert.NotEqual(firstCommit[3].Id, secondCommit[3].Id);
+            Assert.NotEqual(firstCommit[4].Id, secondCommit[4].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStartForCommitByRepositoryId()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var firstCommit = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", startOptions);
+            var secondCommit = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d", skipStartOptions);
 
             Assert.NotEqual(firstCommit[0].Id, secondCommit[0].Id);
             Assert.NotEqual(firstCommit[1].Id, secondCommit[1].Id);
@@ -226,6 +356,23 @@ public class RepositoryCommentsClientTests
             Assert.NotNull(result);
 
             var retrieved = await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+
+            Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateCommentByRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.Repository.Id,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var retrieved = await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
 
             Assert.NotNull(retrieved);
         }
@@ -296,6 +443,29 @@ public class RepositoryCommentsClientTests
             Assert.Equal("new comment", retrievedAfter.Body);
         }
 
+        [IntegrationTest]
+        public async Task CanUpdateCommentByRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.Repository.Id,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var retrievedBefore = await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
+
+            Assert.NotNull(retrievedBefore);
+
+            await _github.Repository.Comment.Update(_context.Repository.Id, result.Id, "new comment");
+
+            var retrievedAfter = await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
+
+            Assert.Equal("new comment", retrievedAfter.Body);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
@@ -362,6 +532,38 @@ public class RepositoryCommentsClientTests
             try
             {
                 await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+            }
+            catch (NotFoundException)
+            {
+                notFound = true;
+            }
+
+            Assert.True(notFound);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeleteCommentByRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.Repository.Id,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var retrievedBefore = await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
+
+            Assert.NotNull(retrievedBefore);
+
+            await _github.Repository.Comment.Delete(_context.Repository.Id, result.Id);
+
+            var notFound = false;
+
+            try
+            {
+                await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
             }
             catch (NotFoundException)
             {
