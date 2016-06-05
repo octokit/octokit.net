@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Octokit
 {
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-    [DebuggerDisplay("{DebuggerDisplay,nq")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewGpgKey
     {
         public NewGpgKey()

@@ -10,6 +10,16 @@ namespace Octokit.Tests.Clients
 {
     public class UserGpgKeysClientTests
     {
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new UserGpgKeysClient(null));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
@@ -103,15 +113,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>(),
                     Arg.Is<string>(s => s == AcceptHeaders.GpgKeysPreview));
-            }
-        }
-
-        public class TheCtor
-        {
-            [Fact]
-            public void EnsuresNonNullArgument()
-            {
-                Assert.Throws<ArgumentNullException>(() => new UserGpgKeysClient(null));
             }
         }
     }
