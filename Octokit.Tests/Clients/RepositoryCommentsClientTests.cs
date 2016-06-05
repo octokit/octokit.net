@@ -47,7 +47,7 @@ public class RepositoryCommentsClientTests
         }
     }
 
-    public class TheGetForRepositoryMethod
+    public class TheGetAllForRepositoryMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
@@ -108,18 +108,15 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+            
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
 
@@ -195,39 +192,28 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, "sha", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, null, null));
-
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha", ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha", ApiOptions.None));
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(1, null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(1, "sha", null));
-
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "sha", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "", null));
-
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", ApiOptions.None));
+            
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", ""));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit(1, "", ApiOptions.None));
         }
@@ -238,7 +224,7 @@ public class RepositoryCommentsClientTests
         [Fact]
         public async Task PostsToCorrectUrl()
         {
-            NewCommitComment newComment = new NewCommitComment("body");
+            var newComment = new NewCommitComment("body");
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -251,7 +237,7 @@ public class RepositoryCommentsClientTests
         [Fact]
         public async Task PostsToCorrectUrlByRepositoryId()
         {
-            NewCommitComment newComment = new NewCommitComment("body");
+            var newComment = new NewCommitComment("body");
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -262,7 +248,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -309,7 +295,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -350,7 +336,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNullOrEmpty()
+        public async Task EnsuresNonNullArgumentsOrEmpty()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);

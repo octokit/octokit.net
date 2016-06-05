@@ -163,6 +163,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<CommitComment> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), options);

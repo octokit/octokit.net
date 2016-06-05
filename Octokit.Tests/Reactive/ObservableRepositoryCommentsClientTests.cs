@@ -17,30 +17,45 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetAllForRepositoryMethod
+        public class TheGetMethod
         {
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void RequestsCorrectUrl()
             {
-                var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryCommentsClient(githubClient);
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(gitHub);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, null, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                client.Get("fake", "repo", 42);
 
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
-                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
+                gitHub.Received().Repository.Comment.Get("fake", "repo", 42);
             }
 
+            [Fact]
+            public void RequestsCorrectUrlByRepositoryId()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(gitHub);
+
+                client.Get(1, 42);
+
+                gitHub.Received().Repository.Comment.Get(1, 42);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryCommentsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Get("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1));
+            }
+        }
+
+        public class TheGetAllForRepositoryMethod
+        {
             [Fact]
             public void RequestsCorrectUrl()
             {
@@ -49,7 +64,18 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                    Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlByRepositoryId()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.GetAllForRepository(1);
+                githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repositories/1/comments"),
+                    Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -69,6 +95,44 @@ namespace Octokit.Tests.Reactive
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
                     Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
             }
+
+            [Fact]
+            public void RequestsCorrectUrlByRepositoryIdWithApiOptions()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllForRepository(1, options);
+                githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repositories/1/comments"),
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
+            }
         }
 
         public class TheGetAllForCommitMethod
@@ -79,8 +143,20 @@ namespace Octokit.Tests.Reactive
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
 
-                client.GetAllForCommit("fake", "repo", "sha1");
-                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", Args.ApiOptions);
+                client.GetAllForCommit("fake", "repo", "sha");
+                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repos/fake/repo/commits/sha/comments", UriKind.Relative)),
+                    Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlByRepositoryId()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.GetAllForCommit(1, "sha");
+                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)),
+                    Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -96,41 +172,186 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAllForCommit("fake", "repo", "sha1", options);
-                githubClient.Received().Repository.Comment.GetAllForCommit("fake", "repo", "sha1", options);
+                client.GetAllForCommit("fake", "repo", "sha", options);
+                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repos/fake/repo/commits/sha/comments", UriKind.Relative)),
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
             }
-
+            
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void RequestsCorrectUrlByRepositoryIdWithApiOptions()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, null, "sha1", null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, "name", null, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", null, null, null));
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, Args.ApiOptions));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, Args.ApiOptions));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha1", Args.ApiOptions));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha1", Args.ApiOptions));
+                client.GetAllForCommit(1, "sha", options);
+                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)), 
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+            }
 
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "", "", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "", "", ApiOptions.None));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "", "sha1", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "", null));
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
 
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", Args.ApiOptions));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", Args.ApiOptions));
-                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", Args.ApiOptions));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha", ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha", ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCommit(1, "sha", null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("", "name", "sha", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForCommit(1, "", ApiOptions.None));
+            }
+        }
+
+        public class TheCreateMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var newComment = new NewCommitComment("body");
+
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Create("fake", "repo", "sha", newComment);
+
+                githubClient.Repository.Comment.Received().Create("fake", "repo", "sha", newComment);
+            }
+
+            [Fact]
+            public void PostsToCorrectUrlByRepositoryId()
+            {
+                var newComment = new NewCommitComment("body");
+
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Create(1, "sha", newComment);
+
+                githubClient.Repository.Comment.Received().Create(1, "sha", newComment);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommentsClient(connection);
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", "sha", new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, "sha", new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null, new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", "sha", null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null, new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, "sha", null));
+
+                Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")));
+                Assert.ThrowsAsync<ArgumentException>(() => client.Create(1, "", new NewCommitComment("body")));
+            }
+        }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                const string issueCommentUpdate = "updated comment";
+
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Update("fake", "repo", 42, issueCommentUpdate);
+
+                githubClient.Repository.Comment.Received().Update("fake", "repo", 42, issueCommentUpdate);
+            }
+
+            [Fact]
+            public void PostsToCorrectUrlByRepositoryId()
+            {
+                const string issueCommentUpdate = "updated comment";
+
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Update(1, 42, issueCommentUpdate);
+
+                githubClient.Repository.Comment.Received().Update(1, 42, issueCommentUpdate);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 42, "updated comment"));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 42, "updated comment"));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Update(1, 42, null));
+
+                Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, "updated comment"));
+                Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, "updated comment"));
+            }
+        }
+
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public void DeletesCorrectUrl()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Delete("fake", "repo", 42);
+
+                githubClient.Repository.Comment.Received().Delete("fake", "repo", 42);
+            }
+
+            [Fact]
+            public void DeletesCorrectUrlByRepositoryId()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                client.Delete(1, 42);
+
+                githubClient.Repository.Comment.Received().Delete(1, 42);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArgumentsOrEmpty()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 42));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 42));
+
+                Assert.Throws<ArgumentException>(() => client.Delete("", "name", 42));
+                Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 42));
             }
         }
     }
