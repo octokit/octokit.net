@@ -168,6 +168,7 @@
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserGpgKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryCollaboratorClientTests.cs" />
     <Compile Include="RedirectTests.cs" />

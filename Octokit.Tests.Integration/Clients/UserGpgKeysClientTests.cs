@@ -10,7 +10,6 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class UserGpgKeysClientTests
     {
-        // Create a key
         readonly string knownKeyId = "E88402D2E127A23A";
         readonly string knownPublicKey = "xsBNBFdTvCUBCADOaVtPoJTQOgMIVYEpI8uT60LA/kDqw/1OKn7ftKjAtxNVSgjQi/ZqZp8XKjTg2u6l4c/aPjER2BGTg90xCcbmpwq/kkQuHR4DK7dOlEOoTzDDESEFv6XXlXGCnxN8AD8YNvSO+Sy4+35ihuKUBAHDxmOl7ZAMH0STo10KuW82/DhfT3cCJNqmID7H+CW1H6IhwutPKt8XsVq2FQg2RMx+uX1KqkuBAd7b30KJ93SJqzgq5CC3DticaC0/WdZnxmYD01UvMAS6o/REs+SICdsyTxgBx/X8SIXuX2TD9PG/O2785JI5/xvBd4jU6bBH/4oWoHr3e/lyNqb1+GSeTFX3ABEBAAE=";
 
