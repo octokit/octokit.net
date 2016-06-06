@@ -23,7 +23,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="CompareResult"/> for the specified references.</returns>
         public Task<CompareResult> Compare(string owner, string name, string @base, string head)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -40,7 +40,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference for the commit (SHA)</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="GitHubCommit"/> for the specified commit SHA.</returns>
         public Task<GitHubCommit> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -55,7 +55,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -70,7 +70,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -78,14 +78,14 @@ namespace Octokit
 
             return GetAll(owner, name, new CommitRequest(), options);
         }
-        
+
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -102,7 +102,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         public Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="string"/> for the specified repository reference.</returns>
         public Task<string> GetSha1(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
