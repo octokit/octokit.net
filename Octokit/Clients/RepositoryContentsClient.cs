@@ -258,6 +258,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
+        /// <returns></returns>
         public Task DeleteFile(string owner, string name, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

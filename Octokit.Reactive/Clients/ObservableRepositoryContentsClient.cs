@@ -228,6 +228,14 @@ namespace Octokit.Reactive
             return _client.Repository.Content.UpdateFile(owner, name, path, request).ToObservable();
         }
 
+        /// <summary>
+        /// Creates a commit that deletes a file in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The path to the file</param>
+        /// <param name="request">Information about the file to delete</param>
+        /// <returns></returns>
         public IObservable<System.Reactive.Unit> DeleteFile(string owner, string name, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
