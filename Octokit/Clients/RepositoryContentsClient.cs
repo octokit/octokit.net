@@ -7,6 +7,9 @@ namespace Octokit
     /// <summary>
     /// Client for accessing contents of files within a repository as base64 encoded content.
     /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/repos/contents/">Repository Contents API documentation</a> for more information.
+    /// </remarks>
     public class RepositoryContentsClient : ApiClient, IRepositoryContentsClient
     {
         /// <summary>
