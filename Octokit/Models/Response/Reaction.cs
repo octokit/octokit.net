@@ -11,13 +11,9 @@ namespace Octokit
         Plus1,
         [Parameter(Value = "-1")]
         Minus1,
-        [Parameter(Value = "laugh")]
         Laugh,
-        [Parameter(Value = "confused")]
         Confused,
-        [Parameter(Value = "heart")]
         Heart,
-        [Parameter(Value = "hooray")]
         Hooray
     }
 
