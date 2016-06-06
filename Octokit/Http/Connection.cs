@@ -405,21 +405,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Performs an asynchronous HTTP PUT request that expects an empty response.
-        /// </summary>
-        /// <param name="uri">URI endpoint to send request to</param>
-        /// <param name="body">The object to serialize as the body of the request</param>
-        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Put(Uri uri, object body)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
-
-            var response = await SendData<object>(uri, HttpMethod.Put, body, null, null, CancellationToken.None).ConfigureAwait(false);
-            return response.HttpResponse.StatusCode;
-        }
-
-        /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>

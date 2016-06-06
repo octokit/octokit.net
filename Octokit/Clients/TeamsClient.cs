@@ -335,8 +335,8 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint, permission).ConfigureAwait(false);
-                return httpStatusCode == HttpStatusCode.NoContent;
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.OrganizationPermissionsPreview).ConfigureAwait(false);
+                return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {

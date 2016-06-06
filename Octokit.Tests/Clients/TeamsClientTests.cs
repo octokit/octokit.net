@@ -309,7 +309,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddRepository(1, "org", "repo", newPermission);
 
-                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>());
+                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>(), "application/vnd.github.ironman-preview+json");
             }
 
             [Fact]
