@@ -88,6 +88,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int number);        
+        IObservable<Unit> Delete(string owner, string name, int number);
     }
 }
