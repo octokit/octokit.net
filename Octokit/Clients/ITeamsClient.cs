@@ -160,6 +160,14 @@ namespace Octokit
         Task<bool> AddRepository(int id, string organization, string repoName);
 
         /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <param name="permission">The permission to grant the team on this repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task<bool> AddRepository(int id, string organization, string repoName, PermissionType permission);
+
+        /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>

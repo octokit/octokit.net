@@ -317,6 +317,24 @@ namespace Octokit
             }
         }
 
+        public async Task<bool> AddRepository(int id, string organization, string repoName, PermissionType permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Remove a repository from the team
         /// </summary>
