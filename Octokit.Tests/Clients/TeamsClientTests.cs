@@ -301,6 +301,18 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void AddOrUpdatePermission()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var newPermission = new TeamRepositoryUpdate(PermissionType.Admin);
+
+                client.AddRepository(1, "org", "repo", newPermission);
+
+                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>());
+            }
+
+            [Fact]
             public void EnsureNonNullOrg()
             {
                 var connection = Substitute.For<IApiConnection>();
