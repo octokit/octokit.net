@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryIdWithApiOptions()
+            public void RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryIdParameterized()
+            public void RequestsCorrectUrlWithRepositoryIdParameterized()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -236,7 +236,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryIdWithApiOptionsParameterized()
+            public void RequestsCorrectUrlWithRepositoryIdWithApiOptionsParameterized()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
@@ -314,7 +314,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);

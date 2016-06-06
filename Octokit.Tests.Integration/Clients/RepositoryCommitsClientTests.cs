@@ -28,7 +28,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetMergeBaseCommitByRepositoryId()
+        public async Task CanGetMergeBaseCommitWithRepositoryId()
         {
             var compareResult = await _fixture.Compare(7528679, "65a22f4d2cff94a286ac3e96440c810c5509196f", "65a22f4d2cff94a286ac3e96440c810c5509196f");
             Assert.NotNull(compareResult.MergeBaseCommit);
@@ -42,7 +42,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCommitByRepositoryId()
+        public async Task CanGetCommitWithRepositoryId()
         {
             var commit = await _fixture.Get(7528679, "65a22f4d2cff94a286ac3e96440c810c5509196f");
             Assert.NotNull(commit);
@@ -57,7 +57,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCommitWithFilesByRepositoryId()
+        public async Task CanGetCommitWithFilesWithRepositoryId()
         {
             var commit = await _fixture.Get(7528679, "65a22f4d2cff94a286ac3e96440c810c5509196f");
 
@@ -72,7 +72,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommitsByRepositoryId()
+        public async Task CanGetListOfCommitsWithRepositoryId()
         {
             var list = await _fixture.GetAll(22718025);
             Assert.NotEmpty(list);
@@ -92,7 +92,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommitsWithoutStartByRepositoryId()
+        public async Task CanGetCorrectCountOfCommitsWithoutStartWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -119,7 +119,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommitsWithStartByRepositoryId()
+        public async Task CanGetCorrectCountOfCommitsWithStartWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -159,7 +159,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsDistinctResultsBasedOnStartByRepositoryId()
+        public async Task ReturnsDistinctResultsBasedOnStartWithRepositoryId()
         {
             var startOptions = new ApiOptions
             {
@@ -193,7 +193,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommitsByShaByRepositoryId()
+        public async Task CanGetListOfCommitsByShaWithRepositoryId()
         {
             var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
             var list = await _fixture.GetAll(7528679, request);
@@ -209,7 +209,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommitsByPathByRepositoryId()
+        public async Task CanGetListOfCommitsByPathWithRepositoryId()
         {
             var request = new CommitRequest { Path = "Octokit.Reactive/IObservableGitHubClient.cs" };
             var list = await _fixture.GetAll(7528679, request);
@@ -225,7 +225,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommitsByAuthorByRepositoryId()
+        public async Task CanGetListOfCommitsByAuthorWithRepositoryId()
         {
             var request = new CommitRequest { Author = "kzu" };
             var list = await _fixture.GetAll(7528679, request);
@@ -245,7 +245,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommitsByDateRangeByRepositoryId()
+        public async Task CanGetListOfCommitsByDateRangeWithRepositoryId()
         {
             var offset = new TimeSpan(1, 0, 0);
             var since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, offset);
@@ -267,7 +267,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCommitWithRenamedFilesByRepositoryId()
+        public async Task CanGetCommitWithRenamedFilesWithRepositoryId()
         {
             var commit = await _fixture.Get(7528679, "997e955f38eb0c2c36e55b1588455fa857951dbf");
 
@@ -285,7 +285,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetSha1ByRepositoryId()
+        public async Task CanGetSha1WithRepositoryId()
         {
             var sha1 = await _fixture.GetSha1(7528679, "master");
 
@@ -322,7 +322,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCompareReferencesByRepositoryId()
+        public async Task CanCompareReferencesWithRepositoryId()
         {
             await CreateTheWorld();
 
@@ -348,7 +348,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCompareReferencesOtherWayRoundByRepositoryId()
+        public async Task CanCompareReferencesOtherWayRoundWithRepositoryId()
         {
             await CreateTheWorld();
 
@@ -374,7 +374,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsUrlsToResourcesByRepositoryId()
+        public async Task ReturnsUrlsToResourcesWithRepositoryId()
         {
             await CreateTheWorld();
 
@@ -402,7 +402,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCompareUsingShaByRepositoryId()
+        public async Task CanCompareUsingShaWithRepositoryId()
         {
             await CreateTheWorld();
 
@@ -427,7 +427,7 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetSha1FromRepositoryByRepositoryId()
+        public async Task GetSha1FromRepositoryWithRepositoryId()
         {
             var reference = await CreateTheWorld();
 

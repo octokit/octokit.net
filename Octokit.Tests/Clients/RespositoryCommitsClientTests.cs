@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryId()
+            public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryId()
+            public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -123,7 +123,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryId()
+            public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -152,7 +152,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryIdWithApiOptions()
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -192,7 +192,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryIdParameterized()
+            public async Task RequestsCorrectUrlWithRepositoryIdParameterized()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -242,7 +242,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryIdWithApiOptionsParameterized()
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptionsParameterized()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
@@ -322,7 +322,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByRepositoryId()
+            public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryCommitsClient(connection);
