@@ -317,7 +317,13 @@ namespace Octokit
             }
         }
 
-        public async Task<bool> AddRepository(int id, string organization, string repoName, PermissionType permission)
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public async Task<bool> AddRepository(int id, string organization, string repoName, TeamRepositoryUpdate permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
@@ -326,7 +332,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint, permission).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

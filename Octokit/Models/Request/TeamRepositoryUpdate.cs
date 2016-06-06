@@ -35,7 +35,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Permission: {}", Permission);
+                return string.Format(CultureInfo.InvariantCulture, "Permission: {0}", Permission);
             }
         }
     }
