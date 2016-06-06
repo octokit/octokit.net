@@ -470,7 +470,7 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
-    <Compile Include="Models\Request\TeamRepositoryUpdate.cs" />
+    <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

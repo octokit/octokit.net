@@ -5,12 +5,12 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class TeamRepositoryUpdate
+    public class RepositoryPermissionRequest
     {
         /// <summary>
         /// Used to add or update a team repository.
         /// </summary>
-        public TeamRepositoryUpdate(Permission permission)
+        public RepositoryPermissionRequest(Permission permission)
         {
             Permission = permission;
         }

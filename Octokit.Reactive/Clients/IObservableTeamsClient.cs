@@ -183,7 +183,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
-        IObservable<bool> AddRepository(int id, string organization, string repoName, TeamRepositoryUpdate permission);
+        IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission);
 
         /// <summary>
         /// Gets whether or not the given repository is managed by the given team.

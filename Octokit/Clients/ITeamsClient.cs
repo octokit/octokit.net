@@ -168,7 +168,7 @@ namespace Octokit
         /// <param name="permission">The permission to grant the team on this repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task<bool> AddRepository(int id, string organization, string repoName, TeamRepositoryUpdate permission);
+        Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission);
 
         /// <summary>
         /// Remove a repository from the team
