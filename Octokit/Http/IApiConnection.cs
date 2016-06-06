@@ -301,7 +301,16 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task Delete(Uri uri, object data, string accepts);
-        
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        Task<T> Delete<T>(Uri uri, object data, string accepts);
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
