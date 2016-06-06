@@ -25,6 +25,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Merge> Create(string owner, string name, NewMerge merge)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(merge, "merge");
+
             return _client.Create(owner, name, merge).ToObservable();
         }
 
@@ -39,6 +43,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Merge> Create(int repositoryId, NewMerge merge)
         {
+            Ensure.ArgumentNotNull(merge, "merge");
+
             return _client.Create(repositoryId, merge).ToObservable();
         }
     }

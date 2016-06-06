@@ -46,13 +46,15 @@ namespace Octokit.Tests.Clients
                 var client = new ObservableMergingClient(Substitute.For<IGitHubClient>());
 
                 var newMerge = new NewMerge("baseBranch", "shaToMerge") { CommitMessage = "some mergingMessage" };
+
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", newMerge));
                 Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, newMerge));
                 Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
+
                 Assert.Throws<ArgumentNullException>(() => client.Create(1, null));
+
                 Assert.Throws<ArgumentException>(() => client.Create("", "name", newMerge));
                 Assert.Throws<ArgumentException>(() => client.Create("owner", "", newMerge));
-                Assert.Throws<ArgumentException>(() => client.Create("owner", "", null));
             }
         }
 
