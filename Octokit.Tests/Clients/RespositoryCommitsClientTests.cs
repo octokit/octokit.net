@@ -14,7 +14,7 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(
-                () => new RepositoryCommitsClient(null));
+                    () => new RepositoryCommitsClient(null));
             }
         }
 

@@ -33,6 +33,11 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{CompareResult}"/> of <see cref="CompareResult"/> for the specified references.</returns>
         public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+
             return _commit.Compare(owner, name, @base, head).ToObservable();
         }
 
@@ -45,6 +50,9 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{CompareResult}"/> of <see cref="CompareResult"/> for the specified references.</returns>
         public IObservable<CompareResult> Compare(int repositoryId, string @base, string head)
         {
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+
             return _commit.Compare(repositoryId, @base, head).ToObservable();
         }
 
