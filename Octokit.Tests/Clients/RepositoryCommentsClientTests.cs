@@ -24,7 +24,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlByRepositoryId()
+        public async Task RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -61,7 +61,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlByRepositoryId()
+        public async Task RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -90,7 +90,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlByRepositoryIdWithApiOptions()
+        public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -144,7 +144,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlByRepositoryId()
+        public async Task RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -174,7 +174,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlByRepositoryIdWithApiOptions()
+        public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -235,7 +235,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task PostsToCorrectUrlByRepositoryId()
+        public async Task PostsToCorrectUrlWithRepositoryId()
         {
             var newComment = new NewCommitComment("body");
 
@@ -283,7 +283,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task PostsToCorrectUrlByRepositoryId()
+        public async Task PostsToCorrectUrlWithRepositoryId()
         {
             const string issueCommentUpdate = "updated comment";
             var connection = Substitute.For<IApiConnection>();
@@ -325,7 +325,7 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task DeletesCorrectUrlByRepositoryId()
+        public async Task DeletesCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);

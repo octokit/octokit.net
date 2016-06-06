@@ -29,7 +29,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCommentByRepositoryId()
+        public async Task CanGetCommentWithRepositoryId()
         {
             var commit = await _fixture.Get(repositoryId, 1467023);
             Assert.NotNull(commit);
@@ -58,7 +58,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommentsForRepositoryByRepositoryId()
+        public async Task CanGetListOfCommentsForRepositoryWithRepositoryId()
         {
             var list = await _fixture.GetAllForRepository(repositoryId);
             Assert.NotEmpty(list);
@@ -78,7 +78,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommentsWithoutStartByRepositoryId()
+        public async Task CanGetCorrectCountOfCommentsWithoutStartWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -105,7 +105,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommentsWithStartByRepositoryId()
+        public async Task CanGetCorrectCountOfCommentsWithStartWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -145,7 +145,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsDistinctResultsBasedOnStartByRepositoryId()
+        public async Task ReturnsDistinctResultsBasedOnStartWithRepositoryId()
         {
             var startOptions = new ApiOptions
             {
@@ -193,7 +193,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetListOfCommentsForCommitByRepositoryId()
+        public async Task CanGetListOfCommentsForCommitWithRepositoryId()
         {
             var list = await _fixture.GetAllForCommit(repositoryId, "7fd1a60b01f91b314f59955a4e4d4e80d8edf11d");
             Assert.NotEmpty(list);
@@ -213,7 +213,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommentsWithoutStartForCommitByRepositoryId()
+        public async Task CanGetCorrectCountOfCommentsWithoutStartForCommitWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -240,7 +240,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetCorrectCountOfCommentsWithStartForCommitByRepositoryId()
+        public async Task CanGetCorrectCountOfCommentsWithStartForCommitWithRepositoryId()
         {
             var options = new ApiOptions
             {
@@ -280,7 +280,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsDistinctResultsBasedOnStartForCommitByRepositoryId()
+        public async Task ReturnsDistinctResultsBasedOnStartForCommitWithRepositoryId()
         {
             var startOptions = new ApiOptions
             {
@@ -361,7 +361,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCreateCommentByRepositoryId()
+        public async Task CanCreateCommentWithRepositoryId()
         {
             var commit = await SetupCommitForRepository(_github);
 
@@ -444,7 +444,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanUpdateCommentByRepositoryId()
+        public async Task CanUpdateCommentWithRepositoryId()
         {
             var commit = await SetupCommitForRepository(_github);
 
@@ -542,7 +542,7 @@ public class RepositoryCommentsClientTests
         }
 
         [IntegrationTest]
-        public async Task CanDeleteCommentByRepositoryId()
+        public async Task CanDeleteCommentWithRepositoryId()
         {
             var commit = await SetupCommitForRepository(_github);
 
