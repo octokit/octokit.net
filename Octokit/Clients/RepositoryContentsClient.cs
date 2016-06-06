@@ -121,7 +121,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
+        /// <returns>A <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         public async Task<Readme> GetReadme(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -142,7 +142,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
+        /// <returns>A <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         public Task<string> GetReadmeHtml(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -220,7 +220,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         public Task<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

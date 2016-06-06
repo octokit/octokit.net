@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{Readme}"/> of <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         public IObservable<Readme> GetReadme(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{String}"/> of <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         public IObservable<string> GetReadmeHtml(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -199,7 +199,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{RepositoryContentChangeSet}"/> of <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         public IObservable<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
