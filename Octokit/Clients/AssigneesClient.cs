@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -90,7 +89,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Post<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+            return ApiConnection.Post<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleAssigneesPreview);
         }
 
         /// <summary>
@@ -107,7 +106,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleIssueAssigneesPreview);
+            return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleAssigneesPreview);
         }
     }
 }

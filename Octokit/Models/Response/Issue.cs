@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -155,6 +156,14 @@ namespace Octokit
                 ? null
                 : Assignee.Login;
 
+            var assignees = Assignees == null
+                ? null
+                : Assignees.Select(x => x.Login);
+
+            var labels = Labels == null
+                ? null
+                : Labels.Select(x => x.Name);
+
             var issueUpdate = new IssueUpdate
             {
                 Assignee = assignee,
@@ -163,6 +172,16 @@ namespace Octokit
                 State = State,
                 Title = Title
             };
+
+            foreach (var asignee in assignees)
+            {
+                issueUpdate.AddAssignee(asignee);
+            }
+
+            foreach (var label in labels)
+            {
+                issueUpdate.AddLabel(label);
+            }
 
             return issueUpdate;
         }

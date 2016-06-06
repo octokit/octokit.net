@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -86,23 +87,31 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task CanCreateRetrieveAndCloseIssue()
+    public async Task CanCreateAssignRetrieveAndCloseIssue()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        newIssue.Labels.Add("test");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         try
         {
             Assert.NotNull(issue);
+            Assert.True(issue.Assignees.All(x => x.Login == _context.RepositoryOwner));
 
             var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.NotNull(retrieved);
-            Assert.True(all.Any(i => i.Number == retrieved.Number));
+            Assert.True(retrieved.Assignees.Count == 1);
+            Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
+            Assert.True(all.Any(i => i.Number == retrieved.Number && i.Assignees.Count == 1 && i.Assignees[0].Login == _context.RepositoryOwner));
         }
         finally
         {
             var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
+            Assert.True(closed.Assignees.Count == 1);
+            Assert.True(closed.Assignees[0].Login == _context.RepositoryOwner);
         }
     }
 
@@ -230,6 +239,22 @@ public class IssuesClientTests : IDisposable
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
         Assert.True(retrieved.Any(i => i.Number == issue3.Number));
         Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+    }
+
+    [IntegrationTest]
+    public async Task CanRetrieveIssueWithMultipleAssignees()
+    {
+        var issue = await _issuesClient.Get("octokit", "octokit.net", 1171);
+
+        Assert.True(issue.Assignees.Count == 2);
+    }
+
+    [IntegrationTest]
+    public async Task CanRetrieveIssuesWithMultipleAssignees()
+    {
+        var issues = await _issuesClient.GetAllForRepository("octokit", "octokit.net");
+
+        Assert.True(issues.Any(x => x.Assignees.Count > 0));
     }
 
     [IntegrationTest]
