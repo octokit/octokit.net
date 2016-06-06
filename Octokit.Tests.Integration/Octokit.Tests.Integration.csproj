@@ -94,6 +94,7 @@
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
+    <Compile Include="Clients\OrganizationClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
+    <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />

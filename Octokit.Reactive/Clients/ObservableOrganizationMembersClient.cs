@@ -46,7 +46,36 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org));
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<User> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org), options);
         }
 
         /// <summary>
@@ -74,7 +103,37 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter));
+            return GetAll(org, filter, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter), options);
         }
 
         /// <summary>
@@ -102,7 +161,37 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, role));
+            return GetAll(org, role, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<User> GetAll(string org, OrganizationMembersRole role, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, role), options);
         }
 
         /// <summary>
@@ -131,7 +220,38 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter, role));
+            return GetAll(org, filter, role, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter, role), options);
         }
 
         /// <summary>
@@ -144,7 +264,22 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PublicMembers(org));
+            return GetAllPublic(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all users who have publicized their membership of the organization.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<User> GetAllPublic(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PublicMembers(org), options);
         }
 
         /// <summary>

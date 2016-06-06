@@ -226,6 +226,9 @@ public class ReleasesClientTests
         readonly IGitHubClient _github;
         readonly RepositoryContext _context;
         readonly IReleasesClient _releaseClient;
+        const string owner = "octokit";
+        const string name = "octokit.net";
+        const int releaseId = 2248679;
 
         public TheUploadAssetMethod()
         {
@@ -301,6 +304,7 @@ public class ReleasesClientTests
 
             Assert.Contains("This is a plain text file.", Encoding.ASCII.GetString((byte[])response.Body));
         }
+
         [IntegrationTest]
         public async Task CanDownloadBinaryAsset()
         {
@@ -338,6 +342,57 @@ public class ReleasesClientTests
             Assert.Contains("This is a plain text file.", textContent);
         }
 
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReleasesWithoutStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 2,
+                PageCount = 1
+            };
+
+            var releases = await _releaseClient.GetAllAssets(owner, name, releaseId, options);
+
+            Assert.Equal(2, releases.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReleasesWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var assets = await _releaseClient.GetAllAssets(owner, name, releaseId, options);
+
+            Assert.Equal(1, assets.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStartPage()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _releaseClient.GetAllAssets(owner, name, releaseId, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _releaseClient.GetAllAssets(owner, name, releaseId, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
 
         public void Dispose()
         {

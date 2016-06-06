@@ -45,7 +45,29 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            
             return GetAllForRepository(owner, name, new MilestoneRequest());
+        }
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(owner, name, new MilestoneRequest(), options);
         }
 
         /// <summary>
@@ -64,8 +86,29 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Used to filter and sort the list of Milestones returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(owner, name),
-                request.ToParametersDictionary());
+                request.ToParametersDictionary(), options);
         }
 
         /// <summary>

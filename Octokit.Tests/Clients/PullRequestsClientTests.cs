@@ -44,16 +44,35 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
             }
 
             [Fact]
-            public void SendsAppropriateParameters()
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch" });
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository("fake", "repo", options);
+
+                connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
+                    Arg.Any<Dictionary<string, string>>(), options);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                await client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch" });
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 5
@@ -61,20 +80,78 @@ namespace Octokit.Tests.Clients
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"));
+                        && d["direction"] == "desc"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParametersWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-head", Base = "fake_base_branch" }, options);
+
+                connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-head"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new PullRequestsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new PullRequestRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new PullRequestRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (PullRequestRequest)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new PullRequestRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new PullRequestRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new PullRequestRequest(), null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new PullRequestRequest()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new PullRequestRequest()));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", new PullRequestRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", new PullRequestRequest(), ApiOptions.None));
             }
         }
 
         public class TheCreateMethod
         {
             [Fact]
-            public void PostsToCorrectUrl()
+            public async Task PostsToCorrectUrl()
             {
                 var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.Create("fake", "repo", newPullRequest);
+                await client.Create("fake", "repo", newPullRequest);
 
                 connection.Received().Post<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
                     newPullRequest);
@@ -102,13 +179,13 @@ namespace Octokit.Tests.Clients
         public class TheUpdateMethod
         {
             [Fact]
-            public void PostsToCorrectUrl()
+            public async Task PostsToCorrectUrl()
             {
                 var pullRequestUpdate = new PullRequestUpdate();
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                client.Update("fake", "repo", 42, pullRequestUpdate);
+                await client.Update("fake", "repo", 42, pullRequestUpdate);
 
                 connection.Received().Patch<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"),
                     pullRequestUpdate);

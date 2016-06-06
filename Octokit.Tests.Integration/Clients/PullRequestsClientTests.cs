@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
 using Octokit.Tests.Integration.Helpers;
@@ -53,6 +52,79 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestsWithoutStart()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestsWithStart()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctPullRequestsBasedOnStartPage()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _fixture.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _fixture.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Title, secondPage[0].Title);
+    }
+
+    [IntegrationTest]
     public async Task CanGetOpenPullRequest()
     {
         await CreateTheWorld();
@@ -65,6 +137,83 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestsWithoutStartParameterized()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests, options);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestsWithStartParameterized()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests, options);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctPullRequestsBasedOnStartPageParameterized()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
+        await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
+
+        var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+        
+        var firstPage = await _fixture.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, openPullRequests, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _fixture.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, openPullRequests, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Title, secondPage[0].Title);
     }
 
     [IntegrationTest]

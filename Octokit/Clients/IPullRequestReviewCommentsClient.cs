@@ -22,6 +22,17 @@ namespace Octokit
         Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number);
 
         /// <summary>
+        /// Gets review comments for a specified pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
@@ -36,9 +47,30 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
         Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request);
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets a single pull request review comment by number.
