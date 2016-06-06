@@ -22,7 +22,7 @@ namespace Octokit
             Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
             Keys = new UserKeysClient(apiConnection);
-            GpgKeys = new UserGpgKeysClient(apiConnection);
+            GpgKey = new UserGpgKeysClient(apiConnection);
 
             Administration = new UserAdministrationClient(apiConnection);
         }
@@ -49,7 +49,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
         /// </remarks>
-        public IUserGpgKeysClient GpgKeys { get; private set; }
+        public IUserGpgKeysClient GpgKey { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.

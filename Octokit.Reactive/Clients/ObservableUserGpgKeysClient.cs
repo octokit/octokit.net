@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.User.GpgKeys;
+            _client = client.User.GpgKey;
         }
 
         /// <summary>

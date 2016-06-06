@@ -76,7 +76,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 -----END PGP PUBLIC KEY BLOCK-----
 ";
 
-            var key = await client.User.GpgKeys.Create(new NewGpgKey(publicKey));
+            var key = await client.User.GpgKey.Create(new NewGpgKey(publicKey));
 
             return new GpgKeyContext(key);
         }

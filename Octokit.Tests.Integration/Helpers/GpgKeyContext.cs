@@ -30,7 +30,7 @@ namespace Octokit.Tests.Integration.Helpers
                 var api = Helper.GetBasicAuthClient();
                 try
                 {
-                    api.User.GpgKeys.Delete(Key.Id).Wait(TimeSpan.FromSeconds(15));
+                    api.User.GpgKey.Delete(Key.Id).Wait(TimeSpan.FromSeconds(15));
                 }
                 catch { }
             }

@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Reactive
         {
             using (var context = _gitHubClient.CreateGpgKeyContext())
             {
-                var observable = _gitHubClient.User.GpgKeys.GetAllForCurrent();
+                var observable = _gitHubClient.User.GpgKey.GetAllForCurrent();
                 var keys = await observable.ToList();
 
                 Assert.NotEmpty(keys);
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration.Reactive
         {
             using (var context = await _gitHubClient.CreateGpgKeyContext())
             {
-                var observable = _gitHubClient.User.GpgKeys.Get(context.GpgKeyId);
+                var observable = _gitHubClient.User.GpgKey.Get(context.GpgKeyId);
                 var key = await observable;
 
                 Assert.Equal(knownKeyId, key.KeyId);
@@ -77,7 +77,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 -----END PGP PUBLIC KEY BLOCK-----
 ";
             // Create a key
-            var observable = _gitHubClient.User.GpgKeys.Create(new NewGpgKey(publicKey));
+            var observable = _gitHubClient.User.GpgKey.Create(new NewGpgKey(publicKey));
             var key = await observable;
 
             Assert.NotNull(key);
@@ -85,10 +85,10 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
             Assert.Equal(knownPublicKey, key.PublicKey);
 
             // Delete the key
-            await _gitHubClient.User.GpgKeys.Delete(key.Id);
+            await _gitHubClient.User.GpgKey.Delete(key.Id);
 
             // Verify key no longer exists
-            var keys = await _gitHubClient.User.GpgKeys.GetAllForCurrent().ToList();
+            var keys = await _gitHubClient.User.GpgKey.GetAllForCurrent().ToList();
             Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
         }
     }

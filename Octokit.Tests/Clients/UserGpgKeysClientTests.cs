@@ -28,13 +28,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserGpgKeysClient(connection);
 
-                var expectedUri = ApiUrls.GpgKeys().ToString();
+                var expectedUri = "user/gpg_keys";
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == AcceptHeaders.GpgKeysPreview),
+                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview+sha"),
                     Arg.Any<ApiOptions>());
             }
         }
@@ -47,13 +47,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserGpgKeysClient(connection);
 
-                var expectedUri = ApiUrls.GpgKeys(1).ToString();
+                var expectedUri = "user/gpg_keys/1";
                 client.Get(1);
 
                 connection.Received().Get<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == AcceptHeaders.GpgKeysPreview));
+                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview+sha"));
             }
         }
 
@@ -72,13 +72,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserGpgKeysClient(connection);
 
-                var expectedUri = ApiUrls.GpgKeys().ToString();
+                var expectedUri = "user/gpg_keys";
                 client.Create(new NewGpgKey("ABCDEFG"));
 
                 connection.Received().Post<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>(),
-                    Arg.Is<string>(s => s == AcceptHeaders.GpgKeysPreview));
+                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview+sha"));
             }
 
             [Fact]
@@ -87,11 +87,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserGpgKeysClient(connection);
 
-                var expectedUri = ApiUrls.GpgKeys().ToString();
+                var expectedUri = "user/gpg_keys";
                 client.Create(new NewGpgKey("ABCDEFG"));
 
                 connection.Received().Post<GpgKey>(
-                    Arg.Any<Uri>(),
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Is<NewGpgKey>(a =>
                         a.ArmoredPublicKey == "ABCDEFG"),
                     Arg.Any<string>());
@@ -106,13 +106,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new UserGpgKeysClient(connection);
 
-                var expectedUri = ApiUrls.GpgKeys(1).ToString();
+                var expectedUri = "user/gpg_keys/1";
                 client.Delete(1);
 
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
                     Arg.Any<object>(),
-                    Arg.Is<string>(s => s == AcceptHeaders.GpgKeysPreview));
+                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview+sha"));
             }
         }
     }

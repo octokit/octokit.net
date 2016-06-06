@@ -17,7 +17,7 @@ namespace Octokit.Reactive
             Followers = new ObservableFollowersClient(client);
             Email = new ObservableUserEmailsClient(client);
             Keys = new ObservableUserKeysClient(client);
-            GpgKeys = new ObservableUserGpgKeysClient(client);
+            GpgKey = new ObservableUserGpgKeysClient(client);
             Administration = new ObservableUserAdministrationClient(client);
         }
 
@@ -85,8 +85,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
         /// </remarks>
-        public IObservableUserGpgKeysClient GpgKeys { get; private set; }
-
+        public IObservableUserGpgKeysClient GpgKey { get; private set; }
 
         /// <summary>
         /// A client for GitHub's User Administration API

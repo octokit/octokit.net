@@ -40,7 +40,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             using (var context = await github.CreateGpgKeyContext())
             {
-                var keys = await github.User.GpgKeys.GetAllForCurrent();
+                var keys = await github.User.GpgKey.GetAllForCurrent();
                 Assert.NotEmpty(keys);
 
                 var first = keys[0];
@@ -58,7 +58,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
             var github = Helper.GetBasicAuthClient();
             using (var context = await github.CreateGpgKeyContext())
             {
-                var key = await github.User.GpgKeys.Get(context.GpgKeyId);
+                var key = await github.User.GpgKey.Get(context.GpgKeyId);
 
                 Assert.Equal(context.GpgKeyId, key.Id);
                 Assert.Equal(context.KeyId, key.KeyId);
@@ -71,16 +71,16 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
         {
             var github = Helper.GetBasicAuthClient();
 
-            var key = await github.User.GpgKeys.Create(new NewGpgKey(publicKey));
+            var key = await github.User.GpgKey.Create(new NewGpgKey(publicKey));
             Assert.NotNull(key);
             Assert.Equal(knownPublicKey, key.PublicKey);
             Assert.Equal(knownKeyId, key.KeyId);
 
             // Delete the key
-            await github.User.GpgKeys.Delete(key.Id);
+            await github.User.GpgKey.Delete(key.Id);
 
             // Verify key no longer exists
-            var keys = await github.User.GpgKeys.GetAllForCurrent();
+            var keys = await github.User.GpgKey.GetAllForCurrent();
             Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
         }
 
@@ -89,13 +89,13 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
         {
             var github = Helper.GetBasicAuthClient();
 
-            var key = await github.User.GpgKeys.Create(new NewGpgKey(publicKey));
+            var key = await github.User.GpgKey.Create(new NewGpgKey(publicKey));
             Assert.NotNull(key);
 
-            Assert.ThrowsAsync<ApiValidationException>(async () => await github.User.GpgKeys.Create(new NewGpgKey(publicKey)));
+            Assert.ThrowsAsync<ApiValidationException>(async () => await github.User.GpgKey.Create(new NewGpgKey(publicKey)));
 
-            await github.User.GpgKeys.Delete(key.Id);
-            var keys = await github.User.GpgKeys.GetAllForCurrent();
+            await github.User.GpgKey.Delete(key.Id);
+            var keys = await github.User.GpgKey.GetAllForCurrent();
             Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
         }
     }

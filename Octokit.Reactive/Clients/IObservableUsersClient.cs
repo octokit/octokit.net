@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        IObservableUserGpgKeysClient GpgKeys { get; }
+        IObservableUserGpgKeysClient GpgKey { get; }
 
         /// <summary>
         /// A client for GitHub's User Administration API

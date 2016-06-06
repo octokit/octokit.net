@@ -21,7 +21,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                githubClient.User.GpgKeys.Received().GetAllForCurrent(Arg.Any<ApiOptions>());
+                githubClient.User.GpgKey.Received().GetAllForCurrent(Arg.Any<ApiOptions>());
             }
         }
 
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                githubClient.User.GpgKeys.Received().Get(1);
+                githubClient.User.GpgKey.Received().Get(1);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(new NewGpgKey("ABCDEFG"));
 
-                githubClient.User.GpgKeys.Received().Create(Arg.Is<NewGpgKey>(k => k.ArmoredPublicKey == "ABCDEFG"));
+                githubClient.User.GpgKey.Received().Create(Arg.Is<NewGpgKey>(k => k.ArmoredPublicKey == "ABCDEFG"));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1);
 
-                githubClient.User.GpgKeys.Received().Delete(1);
+                githubClient.User.GpgKey.Received().Delete(1);
             }
         }
 
