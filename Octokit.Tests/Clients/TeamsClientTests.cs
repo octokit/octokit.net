@@ -305,7 +305,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                var newPermission = new TeamRepositoryUpdate(PermissionType.Admin);
+                var newPermission = new TeamRepositoryUpdate(Permission.Admin);
 
                 client.AddRepository(1, "org", "repo", newPermission);
 
