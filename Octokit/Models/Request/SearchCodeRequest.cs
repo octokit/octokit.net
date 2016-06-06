@@ -18,6 +18,14 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
         /// </summary>
+        public SearchCodeRequest() : base()
+        {
+            Repos = new RepositoryCollection();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
         /// <param name="term">The search term.</param>
         public SearchCodeRequest(string term) : base(term)
         {
