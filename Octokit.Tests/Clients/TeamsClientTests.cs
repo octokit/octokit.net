@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
+using System.Net;
 
 namespace Octokit.Tests.Clients
 {
@@ -309,7 +310,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddRepository(1, "org", "repo", newPermission);
 
-                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>(), "application/vnd.github.ironman-preview+json");
+                connection.Connection.Received().Put<HttpStatusCode>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>(), "", "application/vnd.github.ironman-preview+json");
             }
 
             [Fact]
