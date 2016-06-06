@@ -24,6 +24,16 @@ namespace Octokit
         Task<CompareResult> Compare(string owner, string name, string @base, string head);
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <returns>A <see cref="CompareResult"/> for the specified references.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
+        Task<CompareResult> Compare(int repositoryId, string @base, string head);
+
+        /// <summary>
         /// Gets a single commit for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -35,12 +45,29 @@ namespace Octokit
         Task<GitHubCommit> Get(string owner, string name, string reference);
 
         /// <summary>
+        /// Gets a single commit for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference for the commit (SHA)</param>
+        /// <returns>A <see cref="GitHubCommit"/> for the specified commit SHA.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Makes a network request")]
+        Task<GitHubCommit> Get(int repositoryId, string reference);
+
+        /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -54,11 +81,27 @@ namespace Octokit
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, ApiOptions options);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
         Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request);
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -71,6 +114,15 @@ namespace Octokit
         Task<IReadOnlyList<GitHubCommit>> GetAll(string owner, string name, CommitRequest request, ApiOptions options);
 
         /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request, ApiOptions options);
+
+        /// <summary>
         /// Get the SHA-1 of a commit reference
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -78,5 +130,13 @@ namespace Octokit
         /// <param name="reference">The repository reference</param>
         /// <returns>A <see cref="string"/> for the specified repository reference.</returns>
         Task<string> GetSha1(string owner, string name, string reference);
+
+        /// <summary>
+        /// Get the SHA-1 of a commit reference
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The repository reference</param>
+        /// <returns>A <see cref="string"/> for the specified repository reference.</returns>
+        Task<string> GetSha1(int repositoryId, string reference);
     }
 }

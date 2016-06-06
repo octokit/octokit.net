@@ -37,6 +37,18 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <returns>A <see cref="IObservable{CompareResult}"/> of <see cref="CompareResult"/> for the specified references.</returns>
+        public IObservable<CompareResult> Compare(int repositoryId, string @base, string head)
+        {
+            return _commit.Compare(repositoryId, @base, head).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -55,6 +67,19 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference for the commit</param>
+        /// <returns>A <see cref="IObservable{CompareResult}"/> of <see cref="GitHubCommit"/> for the specified commit SHA.</returns>
+        public IObservable<GitHubCommit> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _commit.Get(repositoryId, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
@@ -64,6 +89,16 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAll(owner, name, new CommitRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        public IObservable<GitHubCommit> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, new CommitRequest(), ApiOptions.None);
         }
 
         /// <summary>
@@ -85,6 +120,19 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        public IObservable<GitHubCommit> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAll(repositoryId, new CommitRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
@@ -101,6 +149,19 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        public IObservable<GitHubCommit> GetAll(int repositoryId, CommitRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAll(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
@@ -111,8 +172,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Gets all commits for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter list of commits returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="GitHubCommit"/>s for the specified repository.</returns>
+        public IObservable<GitHubCommit> GetAll(int repositoryId, CommitRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<GitHubCommit>(ApiUrls.RepositoryCommits(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -129,6 +206,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return _commit.GetSha1(owner, name, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the SHA-1 of a commit reference
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The repository reference</param>
+        /// <returns>A <see cref="IObservable{GitHubCommit}"/> of <see cref="string"/> for the specified repository reference.</returns>
+        public IObservable<string> GetSha1(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _commit.GetSha1(repositoryId, reference).ToObservable();
         }
     }
 }
