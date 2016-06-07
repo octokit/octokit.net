@@ -505,7 +505,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive("shiftkey", "reactivegit", ArchiveFormat.Zipball);
+                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Zipball);
 
                 Assert.NotEmpty(archive);
             }
@@ -518,7 +518,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive(22718025, ArchiveFormat.Zipball); // shiftkey/reactivegit repo
+                    .GetArchive(1296269, ArchiveFormat.Zipball); // octocat/Hello-World repo
 
                 Assert.NotEmpty(archive);
             }
@@ -531,7 +531,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "master");
+                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "master");
 
                 Assert.NotEmpty(archive);
             }
@@ -544,7 +544,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive(14065343, ArchiveFormat.Tarball, "master"); // alfhenrik/ScriptCs.OctoKit repo
+                    .GetArchive(1296269, ArchiveFormat.Tarball, "master"); // octocat/Hello-World repo
 
                 Assert.NotEmpty(archive);
             }
@@ -557,7 +557,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60));
+                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60));
 
                 Assert.NotEmpty(archive);
             }
@@ -570,7 +570,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive(14065343, ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60)); // alfhenrik/ScriptCs.OctoKit repo
+                    .GetArchive(1296269, ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60)); // octocat/Hello-World repo
 
                 Assert.NotEmpty(archive);
             }
