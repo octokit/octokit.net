@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class TeamsClientTests
@@ -117,6 +118,30 @@ public class TeamsClientTests
             var members = await github.Organization.Team.GetAllMembers(team.Id);
 
             Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
+    }
+
+    public class TheAddOrUpdateTeamRepositoryMethod
+    {
+        readonly Team team;
+
+        [OrganizationTest]
+        public async Task CanAddRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            var team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var createdRepository = context.Repository;
+
+                var addRepo = await github.Organization.Team.AddRepository(team.Id, team.Organization.Name, createdRepository.Name, new RepositoryPermissionRequest(Permission.Admin));
+
+                Assert.NotNull(addRepo);
+            }
         }
     }
 }
