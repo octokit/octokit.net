@@ -175,6 +175,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(reference, "reference");
             Ensure.GreaterThanZero(timeout, "timeout");
 
             return _client.Repository.Content.GetArchive(owner, name, archiveFormat, reference, timeout).ToObservable();
@@ -192,6 +193,7 @@ namespace Octokit.Reactive
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.GreaterThanZero(timeout, "timeout");
+            Ensure.ArgumentNotNull(reference, "reference");
 
             return _client.Repository.Content.GetArchive(repositoryId, archiveFormat, reference, timeout).ToObservable();
         }
