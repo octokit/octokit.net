@@ -27,6 +27,6 @@ namespace Octokit
         public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview+sha";
+        public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
     }
 }
