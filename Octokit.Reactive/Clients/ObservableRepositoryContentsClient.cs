@@ -141,7 +141,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(reference, "reference");
 
             return GetArchive(owner, name, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
@@ -156,7 +156,7 @@ namespace Octokit.Reactive
         /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(reference, "reference");
 
             return GetArchive(repositoryId, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
