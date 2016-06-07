@@ -115,7 +115,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(gitHubClient);
 
@@ -129,7 +129,7 @@ namespace Octokit.Tests.Reactive
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(githubClient);
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
                 Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));
@@ -146,7 +146,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(gitHubClient);
 
@@ -160,7 +160,7 @@ namespace Octokit.Tests.Reactive
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableAssigneesClient(githubClient);
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
                 Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));

@@ -117,7 +117,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task PostsToCorrectUrl()
             {
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 var connection = Substitute.For<IApiConnection>();
                 var client = new AssigneesClient(connection);
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
@@ -144,12 +144,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task PostsToCorrectUrl()
             {
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var removeAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 var connection = Substitute.For<IApiConnection>();
                 var client = new AssigneesClient(connection);
 
-                await client.RemoveAssignees("fake", "repo", 2, newAssignees);
+                await client.RemoveAssignees("fake", "repo", 2, removeAssignees);
 
                 connection.Received().Delete<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>(), "application/vnd.github.cerberus-preview");
             }
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new AssigneesClient(Substitute.For<IApiConnection>());
-                var newAssignees = new NewAssignees(new List<string>() { "assignee1", "assignee2" });
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("", "name", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("owner", "", 2, newAssignees));

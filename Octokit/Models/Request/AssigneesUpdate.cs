@@ -11,9 +11,9 @@ namespace Octokit
     /// API: https://developer.github.com/v3/git/commits/#create-a-commit
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewAssignees
+    public class AssigneesUpdate
     {
-        public NewAssignees(IReadOnlyList<string> assignees)
+        public AssigneesUpdate(IReadOnlyList<string> assignees)
         {
             Assignees = assignees;
         }

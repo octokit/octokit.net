@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        IObservable<Issue> AddAssignees(string owner, string name, int number, NewAssignees assignees);
+        IObservable<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees);
 
         /// <summary>
         /// Remove assignees from a specified Issue.
@@ -48,6 +48,6 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of assignees to remove </param>
         /// <returns></returns>
-        IObservable<Issue> RemoveAssignees(string owner, string name, int number, NewAssignees assignees);
+        IObservable<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees);
     }
 }

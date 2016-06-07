@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        Task<Issue> AddAssignees(string owner, string name, int number, NewAssignees assignees);
+        Task<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees);
 
         /// <summary>
         /// Remove assignees from a specified Issue.
@@ -55,6 +55,6 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of assignees to remove</param>
         /// <returns></returns>
-        Task<Issue> RemoveAssignees(string owner, string name, int number, NewAssignees assignees);
+        Task<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees);
     }
 }
