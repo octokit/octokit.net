@@ -97,7 +97,7 @@ namespace Octokit
         public User Assignee { get; protected set; }
 
         /// <summary>
-        /// List of assignees for this issue.
+        ///The multiple users this issue is assigned to.
         /// </summary>
         public IReadOnlyList<User> Assignees { get; protected set; }
 
