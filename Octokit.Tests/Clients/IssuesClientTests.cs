@@ -20,7 +20,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"));
+                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"), Arg.Any<Dictionary<string,string>>(), Arg.Any<string>());
             }
 
             [Fact]
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
-                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
+                    Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Args.ApiOptions);
             }
 
             [Fact]
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
                         && d["filter"] == "assigned"
                         && d["sort"] == "created"
                         && d["state"] == "open"
-                        && d["direction"] == "asc"),
+                        && d["direction"] == "asc"), Arg.Any<string>(),
                     Args.ApiOptions);
             }
         }
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForOwnedAndMemberRepositories();
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
-                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(),
                     Args.ApiOptions);
             }
         }
@@ -140,6 +140,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    Arg.Any<string>(),
                     Args.ApiOptions);
             }
 
@@ -160,6 +161,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    Arg.Any<string>(),
                     Args.ApiOptions);
             }
         }
@@ -211,6 +213,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    Arg.Any<string>(),
                     Args.ApiOptions);
             }
 
@@ -231,6 +234,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    Arg.Any<string>(),
                     Args.ApiOptions);
             }
         }
@@ -246,8 +250,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", newIssue);
 
-                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                    newIssue);
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), newIssue, Arg.Any<string>());
             }
 
             [Fact]
@@ -275,8 +278,7 @@ namespace Octokit.Tests.Clients
 
                 client.Update("fake", "repo", 42, issueUpdate);
 
-                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
-                    issueUpdate);
+                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"), issueUpdate, Arg.Any<string>());
             }
 
             [Fact]
