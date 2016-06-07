@@ -257,7 +257,7 @@ public class IssueTest
 
             var update = issue.ToUpdate();
 
-            Assert.Null(update.Labels);
+            Assert.NotNull(update.Labels);
             Assert.Equal(1, update.Milestone.GetValueOrDefault());
             Assert.Equal("octocat", update.Assignee);
         }

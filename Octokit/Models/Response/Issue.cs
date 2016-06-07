@@ -173,14 +173,20 @@ namespace Octokit
                 Title = Title
             };
 
-            foreach (var asignee in assignees)
+            if(assignees != null)
             {
-                issueUpdate.AddAssignee(asignee);
+                foreach (var asignee in assignees)
+                {
+                    issueUpdate.AddAssignee(asignee);
+                }
             }
 
-            foreach (var label in labels)
+            if(labels != null)
             {
-                issueUpdate.AddLabel(label);
+                foreach (var label in labels)
+                {
+                    issueUpdate.AddLabel(label);
+                }
             }
 
             return issueUpdate;
