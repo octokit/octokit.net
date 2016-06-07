@@ -21,6 +21,8 @@ namespace Octokit.Reactive
         /// <param name="client"></param>
         public ObservableRepositoryContentsClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
             _client = client;
         }
 
