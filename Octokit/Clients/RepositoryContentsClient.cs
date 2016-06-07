@@ -36,6 +36,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
@@ -55,6 +56,8 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(int repositoryId, string path)
         {
+            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+
             var url = ApiUrls.RepositoryContent(repositoryId, path);
 
             return ApiConnection.GetAll<RepositoryContent>(url);
@@ -327,6 +330,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(reference, "reference");
 
             return GetArchive(owner, name, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
@@ -341,6 +345,8 @@ namespace Octokit
         /// <returns>The binary contents of the archive</returns>
         public Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference)
         {
+            Ensure.ArgumentNotNull(reference, "reference");
+
             return GetArchive(repositoryId, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
 
@@ -358,6 +364,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(reference, "reference");
             Ensure.GreaterThanZero(timeout, "timeout");
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
@@ -378,6 +385,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive</returns>
         public async Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
+            Ensure.ArgumentNotNull(reference, "reference");
             Ensure.GreaterThanZero(timeout, "timeout");
 
             var endpoint = ApiUrls.RepositoryArchiveLink(repositoryId, archiveFormat, reference);
