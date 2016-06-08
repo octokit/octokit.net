@@ -121,48 +121,33 @@ public class TeamsClientTests
         }
     }
 
-    public class TheAddOrUpdateTeamRepositoryMethod : IDisposable
+    public class TheAddOrUpdateTeamRepositoryMethod
     {
         private readonly IGitHubClient _github;
-        private Repository _repository;
-        private Team _team;
 
         public TheAddOrUpdateTeamRepositoryMethod()
         {
-            _github = EnterpriseHelper.GetAuthenticatedClient();
-
+            _github = Helper.GetAuthenticatedClient();
         }
 
         [OrganizationTest]
         public async Task CanAddRepository()
         {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            var newTeam = new NewTeam(Guid.NewGuid().ToString());
-
-            using (RepositoryContext context = await _github.CreateRepositoryContext(new NewRepository(repoName)))
-            using (TeamContext teamContext = _github.CreateTeamContext(EnterpriseHelper.Organization, newTeam).Result)
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repoContext = await _github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
             {
-                _team = teamContext.Team;
+                var team = teamContext.Team;
+                var repo = repoContext.Repository;
 
-                _repository = context.Repository;
-
-                var addRepo = await _github.Organization.Team.AddRepository(_team.Id, _team.Organization.Name, _repository.Name, new RepositoryPermissionRequest(Permission.Admin));
+                var addRepo = await _github.Organization.Team.AddRepository(team.Id, team.Organization.Login, repo.Name, new RepositoryPermissionRequest(Permission.Admin));
 
                 Assert.True(addRepo);
 
-                var addedRepo = await _github.Organization.Team.GetAllRepositories(_team.Id);
+                var addedRepo = await _github.Organization.Team.GetAllRepositories(team.Id);
 
                 //Check if permission was correctly applied
-                Assert.True(addedRepo.First(x => x.Id == _repository.Id).Permissions.Admin == true);
-
+                Assert.True(addedRepo.First(x => x.Id == repo.Id).Permissions.Admin == true);
             }
-        }
-
-        public void Dispose()
-        {
-            EnterpriseHelper.DeleteRepo(_repository);
-            EnterpriseHelper.DeleteTeam(_team);
         }
     }
 }
