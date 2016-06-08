@@ -127,7 +127,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), AcceptHeaders.MultipleAssigneesPreview, options);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), AcceptHeaders.MultipleAssigneesPreview, options);
         }
 
         /// <summary>
