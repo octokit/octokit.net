@@ -43,6 +43,20 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get a single deploy key by number for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="number">The id of the deploy key.</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/> representing the deploy key of repository for the particular number.</returns>
+        public IObservable<DeployKey> Get(int repositoryId, int number)
+        {
+            return _client.Get(repositoryId, number).ToObservable();
+        }
+
+        /// <summary>
         /// Get all deploy keys for a repository.
         /// </summary>
         /// <remarks>
@@ -65,6 +79,19 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        public IObservable<DeployKey> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all deploy keys for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
@@ -76,6 +103,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
+        }
+
+        /// <summary>
+        /// Get all deploy keys for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        public IObservable<DeployKey> GetAll(int repositoryId, ApiOptions options)
+        {
+            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
         }
 
         /// <summary>
@@ -105,6 +146,29 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Creates a new deploy key for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#create"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="newDeployKey">The deploy key to create for the repository.</param>
+        /// <returns>A <see cref="DeployKey"/> of <see cref="DeployKey"/> representing created deploy key.</returns>
+        public IObservable<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey)
+        {
+            Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
+
+
+            if (string.IsNullOrWhiteSpace(newDeployKey.Title))
+                throw new ArgumentException("The new deploy key's title must not be null.");
+
+            if (string.IsNullOrWhiteSpace(newDeployKey.Key))
+                throw new ArgumentException("The new deploy key's key must not be null.");
+
+            return _client.Create(repositoryId, newDeployKey).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a deploy key from a repository.
         /// </summary>
         /// <remarks>
@@ -120,6 +184,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.Delete(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes a deploy key from a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="number">The id of the deploy key to delete.</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(int repositoryId, int number)
+        {
+            return _client.Delete(repositoryId, number).ToObservable();
         }
     }
 }
