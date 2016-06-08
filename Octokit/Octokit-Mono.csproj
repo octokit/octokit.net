@@ -466,6 +466,7 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+    <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseManagementConsoleClient.cs" />
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />

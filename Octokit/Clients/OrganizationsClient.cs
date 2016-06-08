@@ -54,19 +54,48 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations());
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
         }
 
         /// <summary>
         /// Returns all <see cref="Organization" />s for the specified user.
         /// </summary>
+        /// <param name="user">The login of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user));
+            return GetAll(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user), options);
         }
 
         /// <summary>
