@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration.Helpers
 {
-    internal sealed class EnterpriseTeamContext : IDisposable
+    internal sealed class TeamContext : IDisposable
     {
-        internal EnterpriseTeamContext(Team team)
+        internal TeamContext(Team team)
         {
             Team = team;
             TeamId = team.Id;
