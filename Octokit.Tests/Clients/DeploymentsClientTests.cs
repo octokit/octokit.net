@@ -9,8 +9,9 @@ public class DeploymentsClientTests
 {
     public class TheGetAllMethod
     {
-        private const string name = "name";
-        private const string owner = "owner";
+        const string name = "name";
+        const string owner = "owner";
+        const int repositoryId = 1;
 
         [Fact]
         public async Task EnsuresNonNullArguments()
@@ -20,6 +21,8 @@ public class DeploymentsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, name));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, null));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, name, null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(repositoryId, null));
         }
 
         [Fact]
@@ -46,19 +49,33 @@ public class DeploymentsClientTests
         }
 
         [Fact]
-        public void RequestsCorrectUrl()
+        public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
             var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
 
-            client.GetAll(owner, name);
+            await client.GetAll(owner, name);
+
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
         }
 
         [Fact]
-        public void RequestsCorrectUrlWithApiOptions()
+        public async Task RequestsCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repositories/{0}/deployments", repositoryId);
+
+            await client.GetAll(repositoryId);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
@@ -71,7 +88,28 @@ public class DeploymentsClientTests
                 StartPage = 1
             };
 
-            client.GetAll(owner, name, options);
+            await client.GetAll(owner, name, options);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithRepostoryIdWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repositories/{0}/deployments", repositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            await client.GetAll(repositoryId, options);
+
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
         }
@@ -124,18 +162,19 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                    Arg.Any<NewDeployment>());
+                                                    newDeployment);
         }
 
         [Fact]
-        public void PassesNewDeploymentRequest()
+        public void PostsToDeploymentsUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
+            var expectedUrl = "repositories/1/deployments";
 
-            client.Create("owner", "name", newDeployment);
+            client.Create(1, newDeployment);
 
-            connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
+            connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                     newDeployment);
         }
     }
