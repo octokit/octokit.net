@@ -154,7 +154,7 @@ namespace Octokit.Tests.Integration
             try
             {
                 var client = new GitHubClient(connection);
-                client.User.Keys.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
+                client.User.GitSshKey.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }

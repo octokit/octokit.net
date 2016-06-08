@@ -21,7 +21,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             using (var context = await _github.CreatePublicKeyContext())
             {
-                var observable = _github.User.Keys.GetAllForCurrent();
+                var observable = _github.User.GitSshKey.GetAllForCurrent();
                 var keys = await observable.ToList();
 
                 Assert.NotEmpty(keys);
@@ -37,7 +37,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetAllForGivenUser()
         {
-            var observable = _github.User.Keys.GetAll("shiftkey");
+            var observable = _github.User.GitSshKey.GetAll("shiftkey");
             var keys = await observable.ToList();
 
             Assert.NotEmpty(keys);
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             using (var context = await _github.CreatePublicKeyContext())
             {
-                var observable = _github.User.Keys.Get(context.KeyId);
+                var observable = _github.User.GitSshKey.Get(context.KeyId);
                 var key = await observable;
 
                 Assert.Equal(key.Title, context.KeyTitle);
@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Clients
             string keyTitle = "title";
             string keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjo4DqFKg8dOxiz/yjypmN1A4itU5QOStyYrfOFuTinesU/2zm9hqxJ5BctIhgtSHJ5foxkhsiBji0qrUg73Q25BThgNg8YFE8njr4EwjmqSqW13akx/zLV0GFFU0SdJ2F6rBldhi93lMnl0ex9swBqa3eLTY8C+HQGBI6MQUMw+BKp0oFkz87Kv+Pfp6lt/Uo32ejSxML1PT5hTH5n+fyl0ied+sRmPGZWmWoHB5Bc9mox7lB6I6A/ZgjtBqbEEn4HQ2/6vp4ojKfSgA4Mm7XMu0bZzX0itKjH1QWD9Lr5apV1cmZsj49Xf8SHucTtH+bq98hb8OOXEGFzplwsX2MQ==";
 
-            var observable = _github.User.Keys.Create(new NewPublicKey(keyTitle, keyData));
+            var observable = _github.User.GitSshKey.Create(new NewPublicKey(keyTitle, keyData));
             var key = await observable;
 
             Assert.NotNull(key);
@@ -77,10 +77,10 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(key.Key, keyData);
 
             // Delete key
-            await _github.User.Keys.Delete(key.Id);
+            await _github.User.GitSshKey.Delete(key.Id);
 
             // Verify key no longer exists
-            var keys = await _github.User.Keys.GetAllForCurrent().ToList();
+            var keys = await _github.User.GitSshKey.GetAllForCurrent().ToList();
             Assert.False(keys.Any(k => k.Title == keyTitle && k.Key == keyData));
         }
     }

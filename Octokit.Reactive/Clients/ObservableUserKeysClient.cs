@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.User.Keys;
+            _client = client.User.GitSshKey;
         }
 
         /// <summary>
