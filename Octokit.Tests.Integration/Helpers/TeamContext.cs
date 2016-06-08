@@ -19,7 +19,7 @@ namespace Octokit.Tests.Integration.Helpers
         private IConnection _connection;
         internal int TeamId { get; private set; }
         internal string TeamName { get; private set; }
-        
+
         internal Team Team { get; private set; }
 
         public void Dispose()
