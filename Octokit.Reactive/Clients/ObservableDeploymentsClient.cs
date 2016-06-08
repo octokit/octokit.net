@@ -4,6 +4,13 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive.Clients
 {
+    /// <summary>
+    /// A client for GitHub's Repository Deployments API.
+    /// Gets and creates Deployments.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/repos/deployments/">Repository Deployments API documentation</a> for more information.
+    /// </remarks>
     public class ObservableDeploymentsClient : IObservableDeploymentsClient
     {
         readonly IDeploymentsClient _client;
