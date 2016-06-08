@@ -477,7 +477,11 @@
     <Compile Include="Models\Response\Enterprise\Migration.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
+=======
+    <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
+>>>>>>> refs/remotes/octokit/master
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

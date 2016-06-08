@@ -57,7 +57,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, repo), options);
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, repo), null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>

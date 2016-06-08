@@ -276,22 +276,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint, options);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
-        /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
-        /// </remarks>
-        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
-        public Task<IReadOnlyList<Repository>> GetRepositories(int id)
-        {
-            var endpoint = ApiUrls.TeamRepositories(id);
-
-            return ApiConnection.GetAll<Repository>(endpoint);
+            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>
@@ -310,6 +295,33 @@ namespace Octokit
             {
                 var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.OrganizationPermissionsPreview).ConfigureAwait(false);
+                return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {

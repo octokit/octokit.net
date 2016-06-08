@@ -11,7 +11,11 @@ namespace Octokit
     {
         public Issue() { }
 
+<<<<<<< HEAD
         public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository, IReadOnlyList<User> assignees)
+=======
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+>>>>>>> refs/remotes/octokit/master
         {
             Id = id;
             Url = url;
@@ -22,6 +26,7 @@ namespace Octokit
             State = state;
             Title = title;
             Body = body;
+            ClosedBy = closedBy;
             User = user;
             Labels = labels;
             Assignee = assignee;
@@ -80,6 +85,11 @@ namespace Octokit
         /// Details about the issue.
         /// </summary>
         public string Body { get; protected set; }
+
+        /// <summary>
+        /// Details about the user who has closed this issue.
+        /// </summary>
+        public User ClosedBy { get; protected set; }
 
         /// <summary>
         /// The user that created the issue.

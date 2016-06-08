@@ -101,6 +101,6 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
 
     public void Dispose()
     {
-        Helper.DeleteRepo(_repository);
+        Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, _repository);
     }
 }
