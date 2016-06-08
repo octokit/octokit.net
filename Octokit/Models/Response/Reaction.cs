@@ -22,10 +22,10 @@ namespace Octokit
     {
         public Reaction() { }
 
-        public Reaction(int id, int userId, ReactionType content)
+        public Reaction(int id, User user, ReactionType content)
         {
             Id = id;
-            UserId = userId;
+            User = user;
             Content = content;
         }
 
@@ -35,9 +35,9 @@ namespace Octokit
         public int Id { get; protected set; }
 
         /// <summary>
-        /// The UserId.
+        /// Information about the user.
         /// </summary>
-        public int UserId { get; protected set; }
+        public User User { get; protected set; }
 
         /// <summary>
         /// The reaction type for this commit comment.
