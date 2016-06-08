@@ -116,6 +116,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
         public IObservable<DeployKey> GetAll(int repositoryId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
         }
 
