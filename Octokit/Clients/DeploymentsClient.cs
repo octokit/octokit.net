@@ -47,6 +47,20 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        public Task<IReadOnlyList<Deployment>> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -58,6 +72,23 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        public Task<IReadOnlyList<Deployment>> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(repositoryId), options);
         }
 
         /// <summary>
@@ -78,6 +109,24 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeployment, "newDeployment");
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
+                                                     newDeployment);
+        }
+
+        /// <summary>
+        /// Creates a new deployment for the specified repository.
+        /// Users with push access can create a deployment for a given ref.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#create-a-deployment
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
+        /// <returns>The created <see cref="Deployment"/></returns>
+        public Task<Deployment> Create(int repositoryId, NewDeployment newDeployment)
+        {
+            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+
+            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(repositoryId),
                                                      newDeployment);
         }
 

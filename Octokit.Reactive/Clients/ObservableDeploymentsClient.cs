@@ -51,6 +51,20 @@ namespace Octokit.Reactive.Clients
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        public IObservable<Deployment> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -66,6 +80,24 @@ namespace Octokit.Reactive.Clients
         }
 
         /// <summary>
+        /// Gets all the deployments for the specified repository. Any user with pull access
+        /// to a repository can view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployments
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        public IObservable<Deployment> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Deployment>(
+                ApiUrls.Deployments(repositoryId), options);
+        }
+
+        /// <summary>
         /// Creates a new deployment for the specified repository.
         /// Users with push access can create a deployment for a given ref.
         /// </summary>
@@ -78,11 +110,30 @@ namespace Octokit.Reactive.Clients
         /// <returns>The created <see cref="Deployment"/></returns>
         public IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment)
         {
+            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+
             return _client.Create(owner, name, newDeployment).ToObservable();
         }
 
         /// <summary>
-        /// 
+        /// Creates a new deployment for the specified repository.
+        /// Users with push access can create a deployment for a given ref.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#create-a-deployment
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
+        /// <returns>The created <see cref="Deployment"/></returns>
+        public IObservable<Deployment> Create(int repositoryId, NewDeployment newDeployment)
+        {
+            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+
+            return _client.Create(repositoryId, newDeployment).ToObservable();
+        }
+
+        /// <summary>
+        /// Client for managing deployment status.
         /// </summary>
         public IObservableDeploymentStatusClient Status { get; private set; }
     }
