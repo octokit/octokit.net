@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                client.Forks.GetAll("fake", "repo", null);
+                client.Forks.GetAll("fake", "repo");
 
                 connection.Received().GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/forks"));
             }
@@ -49,8 +49,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Forks.GetAll(null, "name", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Forks.GetAll("owner", null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Forks.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Forks.GetAll("owner", null));
             }
         }
 

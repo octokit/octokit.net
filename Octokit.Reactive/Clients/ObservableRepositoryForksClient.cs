@@ -16,8 +16,36 @@ namespace Octokit.Reactive
         public ObservableRepositoryForksClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
+
             _client = client.Repository.Forks;
             _connection = client.Connection;
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public IObservable<Repository> GetAll(string owner, string repositoryName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+
+            return GetAll(owner, repositoryName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public IObservable<Repository> GetAll(string owner, string repositoryName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), options);
         }
 
         /// <summary>
@@ -29,10 +57,24 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(request, "request");
 
-            return request == null
-                ? _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName))
-                : _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
+            return GetAll(owner, repositoryName, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public IObservable<Repository> GetAll(string owner, string repositoryName, RepositoryForksListRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

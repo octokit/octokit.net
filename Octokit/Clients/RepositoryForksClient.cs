@@ -19,14 +19,55 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        public Task<IReadOnlyList<Repository>> GetAll(string owner, string repositoryName, RepositoryForksListRequest request)
+        public Task<IReadOnlyList<Repository>> GetAll(string owner, string repositoryName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
 
-            return request == null
-                ? ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName))
-                : ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary());
+            return GetAll(owner, repositoryName, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Repository>> GetAll(string owner, string repositoryName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), options);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Repository>> GetAll(string owner, string repositoryName, RepositoryForksListRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAll(owner, repositoryName, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.</remarks>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Repository>> GetAll(string owner, string repositoryName, RepositoryForksListRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, repositoryName), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
