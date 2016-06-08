@@ -81,7 +81,7 @@ namespace Octokit
         public string Body { get; protected set; }
 
         /// <summary>
-        /// Details about the us who has closed this issue.
+        /// Details about the user who has closed this issue.
         /// </summary>
         public User ClosedBy { get; protected set; }
 
