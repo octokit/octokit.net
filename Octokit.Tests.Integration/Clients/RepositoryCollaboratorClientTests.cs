@@ -24,6 +24,8 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName);
                 Assert.NotNull(collaborators);
                 Assert.Equal(2, collaborators.Count);
+                Assert.NotNull(collaborators[0].Permissions);
+                Assert.NotNull(collaborators[1].Permissions);
             }
         }
 

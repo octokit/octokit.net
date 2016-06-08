@@ -276,22 +276,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint, options);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
-        /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
-        /// </remarks>
-        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
-        public Task<IReadOnlyList<Repository>> GetRepositories(int id)
-        {
-            var endpoint = ApiUrls.TeamRepositories(id);
-
-            return ApiConnection.GetAll<Repository>(endpoint);
+            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>

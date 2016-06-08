@@ -25,7 +25,7 @@ namespace Octokit.Tests.Integration.Reactive
         [IntegrationTest]
         public async Task CanGetAllForCurrentUser()
         {
-            using (var context = _gitHubClient.CreateGpgKeyContext())
+            using (var context = await _gitHubClient.CreateGpgKeyContext())
             {
                 var observable = _gitHubClient.User.GpgKey.GetAllForCurrent();
                 var keys = await observable.ToList();

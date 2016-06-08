@@ -78,7 +78,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             var key = await client.User.GpgKey.Create(new NewGpgKey(publicKey));
 
-            return new GpgKeyContext(key);
+            return new GpgKeyContext(client.Connection, key);
         }
     }
 }
