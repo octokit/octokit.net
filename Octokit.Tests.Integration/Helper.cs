@@ -159,6 +159,22 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
+        public static void DeleteGpgKey(IConnection connection, GpgKey key)
+        {
+            if (key != null)
+                DeleteGpgKey(connection, key.Id);
+        }
+
+        public static void DeleteGpgKey(IConnection connection, int keyId)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.User.GpgKey.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
         public static string MakeNameWithTimestamp(string name)
         {
             return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));

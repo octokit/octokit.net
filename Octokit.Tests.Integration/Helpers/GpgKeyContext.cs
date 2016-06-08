@@ -8,15 +8,16 @@ namespace Octokit.Tests.Integration.Helpers
 {
     public class GpgKeyContext : IDisposable
     {
-        internal GpgKeyContext(GpgKey key)
+        internal GpgKeyContext(IConnection connection, GpgKey key)
         {
+            _connection = connection;
             Key = key;
             GpgKeyId = key.Id;
             KeyId = key.KeyId;
             PublicKeyData = key.PublicKey;
         }
 
-
+        private IConnection _connection;
         internal int GpgKeyId { get; set; }
         internal string KeyId { get; set; }
         internal string PublicKeyData { get; set; }
@@ -27,12 +28,7 @@ namespace Octokit.Tests.Integration.Helpers
         {
             if (Key != null)
             {
-                var api = Helper.GetBasicAuthClient();
-                try
-                {
-                    api.User.GpgKey.Delete(Key.Id).Wait(TimeSpan.FromSeconds(15));
-                }
-                catch { }
+                Helper.DeleteGpgKey(_connection, Key);
             }
         }
     }
