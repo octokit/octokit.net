@@ -82,7 +82,7 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             // Remove user if it was already renamed
-            EnterpriseHelper.DeleteUser(renamedUsername);
+            EnterpriseHelper.DeleteUser(_github.Connection, renamedUsername);
         }
 
         [GitHubEnterpriseTest]
