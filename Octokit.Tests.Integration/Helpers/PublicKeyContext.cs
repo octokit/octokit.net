@@ -8,14 +8,16 @@ namespace Octokit.Tests.Integration.Helpers
 {
     internal sealed class PublicKeyContext : IDisposable
     {
-        internal PublicKeyContext(PublicKey key)
+        internal PublicKeyContext(IConnection connection, PublicKey key)
         {
+            _connection = connection;
             Key = key;
             KeyId = key.Id;
             KeyTitle = key.Title;
             KeyData = key.Key;
         }
 
+        private IConnection _connection;
         internal int KeyId { get; private set; }
         internal string KeyTitle { get; private set; }
         internal string KeyData { get; private set; }
@@ -24,7 +26,7 @@ namespace Octokit.Tests.Integration.Helpers
 
         public void Dispose()
         {
-            Helper.DeleteKey(Key);
+            Helper.DeleteKey(_connection, Key);
         }
     }
 }

@@ -470,6 +470,7 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
     <Compile Include="Clients\IReactionsClient.cs" />
@@ -482,6 +483,9 @@
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
+=======
+    <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
+>>>>>>> refs/remotes/octokit/master
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
