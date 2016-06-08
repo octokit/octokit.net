@@ -123,24 +123,37 @@ public class TeamsClientTests
 
     public class TheAddOrUpdateTeamRepositoryMethod
     {
-        readonly Team team;
+        private readonly TeamContext _teamContext;
+        private readonly IGitHubClient _github;
+
+        public TheAddOrUpdateTeamRepositoryMethod()
+        {
+            _github = EnterpriseHelper.GetAuthenticatedClient();
+            var newTeam = new NewTeam(Guid.NewGuid().ToString());
+            _teamContext = _github.CreateTeamContext(EnterpriseHelper.Organization, newTeam).Result;
+        }
 
         [OrganizationTest]
         public async Task CanAddRepository()
         {
-            var github = Helper.GetAuthenticatedClient();
-
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-            var team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            var team = _teamContext.Team;
 
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            using (var context = await _github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var createdRepository = context.Repository;
 
-                var addRepo = await github.Organization.Team.AddRepository(team.Id, team.Organization.Name, createdRepository.Name, new RepositoryPermissionRequest(Permission.Admin));
+                var addRepo = await _github.Organization.Team.AddRepository(team.Id, team.Organization.Name, createdRepository.Name, new RepositoryPermissionRequest(Permission.Admin));
 
-                Assert.NotNull(addRepo);
+                Assert.True(addRepo);
+
+                var addedRepo = await _github.Organization.Team.GetAllRepositories(team.Id);
+
+                //Check if permission was correctly applied
+                Assert.True(addedRepo.First(x => x.Id == createdRepository.Id).Permissions.Admin == true);
+
+
             }
         }
     }
