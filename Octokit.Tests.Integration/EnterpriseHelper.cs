@@ -108,50 +108,18 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
-        public static void DeleteRepo(Repository repository)
-        {
-            if (repository != null)
-                DeleteRepo(repository.Owner.Login, repository.Name);
-        }
-
-        public static void DeleteRepo(string owner, string name)
-        {
-            var api = GetAuthenticatedClient();
-            try
-            {
-                api.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
-            }
-            catch { }
-        }
-
-        public static void DeleteTeam(Team team)
-        {
-            if (team != null)
-                DeleteTeam(team.Id);
-        }
-
-        public static void DeleteTeam(int teamId)
-        {
-            var api = GetAuthenticatedClient();
-            try
-            {
-                api.Organization.Team.Delete(teamId).Wait(TimeSpan.FromSeconds(15));
-            }
-            catch { }
-        }
-
-        public static void DeleteUser(User user)
+        public static void DeleteUser(IConnection connection, User user)
         {
             if (user != null)
-                DeleteUser(user.Login);
+                DeleteUser(connection, user.Login);
         }
 
-        public static void DeleteUser(string username)
+        public static void DeleteUser(IConnection connection, string username)
         {
-            var api = GetAuthenticatedClient();
             try
             {
-                api.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
+                var client = new GitHubClient(connection);
+                client.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }

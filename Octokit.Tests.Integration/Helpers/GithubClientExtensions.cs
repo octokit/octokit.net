@@ -9,35 +9,35 @@ namespace Octokit.Tests.Integration.Helpers
             var repoName = Helper.MakeNameWithTimestamp(repositoryName);
             var repo = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
 
-            return new RepositoryContext(repo);
+            return new RepositoryContext(client.Connection, repo);
         }
 
         internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string organizationLogin, NewRepository newRepository)
         {
             var repo = await client.Repository.Create(organizationLogin, newRepository);
 
-            return new RepositoryContext(repo);
+            return new RepositoryContext(client.Connection, repo);
         }
 
         internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, NewRepository newRepository)
         {
             var repo = await client.Repository.Create(newRepository);
 
-            return new RepositoryContext(repo);
+            return new RepositoryContext(client.Connection, repo);
         }
 
         internal static async Task<TeamContext> CreateTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
         {
             var team = await client.Organization.Team.Create(organization, newTeam);
 
-            return new TeamContext(team);
+            return new TeamContext(client.Connection, team);
         }
 
-        internal static async Task<EnterpriseUserContext> CreateUserContext(this IGitHubClient client, NewUser newUser)
+        internal static async Task<EnterpriseUserContext> CreateEnterpriseUserContext(this IGitHubClient client, NewUser newUser)
         {
             var user = await client.User.Administration.Create(newUser);
 
-            return new EnterpriseUserContext(user);
+            return new EnterpriseUserContext(client.Connection, user);
         }
 
         internal static async Task<PublicKeyContext> CreatePublicKeyContext(this IGitHubClient client)
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Helpers
 
             var key = await client.User.Keys.Create(new NewPublicKey(keyTitle, keyData));
 
-            return new PublicKeyContext(key);
+            return new PublicKeyContext(client.Connection, key);
         }
     }
 }
