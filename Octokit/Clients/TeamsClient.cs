@@ -303,6 +303,33 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.OrganizationPermissionsPreview).ConfigureAwait(false);
+                return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>

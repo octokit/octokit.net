@@ -15,7 +15,7 @@ namespace Octokit.Tests.Integration
         readonly string _testUser = "test-user";
         readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
 
-        readonly EnterpriseTeamContext _context;
+        readonly TeamContext _context;
         readonly string _distinguishedNameTeam = "cn=test-team,ou=groups,dc=company,dc=com";
 
         public ObservableEnterpriseLdapClientTests()

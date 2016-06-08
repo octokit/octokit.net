@@ -148,4 +148,34 @@ public class TeamsClientTests
             }
         }
     }
+
+    public class TheAddOrUpdateTeamRepositoryMethod
+    {
+        private readonly IGitHubClient _github;
+
+        public TheAddOrUpdateTeamRepositoryMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task CanAddRepository()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repoContext = await _github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
+            {
+                var team = teamContext.Team;
+                var repo = repoContext.Repository;
+
+                var addRepo = await _github.Organization.Team.AddRepository(team.Id, team.Organization.Login, repo.Name, new RepositoryPermissionRequest(Permission.Admin));
+
+                Assert.True(addRepo);
+
+                var addedRepo = await _github.Organization.Team.GetAllRepositories(team.Id);
+
+                //Check if permission was correctly applied
+                Assert.True(addedRepo.First(x => x.Id == repo.Id).Permissions.Admin == true);
+            }
+        }
+    }
 }
