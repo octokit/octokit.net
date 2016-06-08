@@ -8,13 +8,15 @@ namespace Octokit.Tests.Integration.Helpers
 {
     internal sealed class TeamContext : IDisposable
     {
-        internal TeamContext(Team team)
+        internal TeamContext(IConnection connection, Team team)
         {
+            _connection = connection;
             Team = team;
             TeamId = team.Id;
             TeamName = team.Name;
         }
 
+        private IConnection _connection;
         internal int TeamId { get; private set; }
         internal string TeamName { get; private set; }
 
@@ -22,7 +24,7 @@ namespace Octokit.Tests.Integration.Helpers
 
         public void Dispose()
         {
-            EnterpriseHelper.DeleteTeam(Team);
+            Helper.DeleteTeam(_connection, Team);
         }
     }
 }

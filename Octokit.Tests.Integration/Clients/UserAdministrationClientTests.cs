@@ -67,7 +67,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             string renamedUsername = Helper.MakeNameWithTimestamp("user-renamed");
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 var response = await _github.User.Administration.Rename(
                     context.UserLogin,
@@ -79,14 +79,14 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             // Remove user if it was already renamed
-            EnterpriseHelper.DeleteUser(renamedUsername);
+            EnterpriseHelper.DeleteUser(_github.Connection, renamedUsername);
         }
 
         [GitHubEnterpriseTest]
         public async Task CanAddAndDeleteImpersonationToken()
         {
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 // Create Impersonation token
                 var token = await _github.User.Administration.CreateImpersonationToken(
@@ -109,7 +109,7 @@ namespace Octokit.Tests.Integration.Clients
             User checkUser = null;
 
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 // Ensure user is not site admin
                 checkUser = await _github.User.Get(context.UserLogin);
@@ -137,7 +137,7 @@ namespace Octokit.Tests.Integration.Clients
             User checkUser = null;
 
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 // Ensure user is not suspended
                 checkUser = await _github.User.Get(context.UserLogin);
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CanListAllPublicKeys()
         {
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 // Ensure user has a key
                 //var key = await _github.User.Keys.Create(new NewPublicKey("title", "key"));
@@ -183,7 +183,7 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CanDeletePublicKey()
         {
             // Create a disposable user for the test
-            using (var context = _github.CreateUserContext(GenerateNewUserDetails()).Result)
+            using (var context = _github.CreateEnterpriseUserContext(GenerateNewUserDetails()).Result)
             {
                 // Ensure user has a key
                 //var key = await _github.User.Keys.Create(new NewPublicKey("title", "key"));
