@@ -10,6 +10,8 @@ namespace Octokit
 
         public const string RedirectsPreviewThenStableVersionJson = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
 
+        public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
+
         public const string LicensesApiPreview = "application/vnd.github.drax-preview+json";
 
         public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
@@ -22,9 +24,7 @@ namespace Octokit
 
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
-        public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
-
-        public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
+        public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
