@@ -20,12 +20,10 @@
 
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
-        public const string MigrationsApiPreview = "  application/vnd.github.wyandotte-preview+json";
+        public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
-<<<<<<< HEAD
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
-=======
+
         public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
->>>>>>> refs/remotes/octokit/master
     }
 }
