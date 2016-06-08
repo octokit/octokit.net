@@ -13,7 +13,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", null);
+                var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net");
 
                 var masterFork = forks.FirstOrDefault(fork => fork.FullName == "TeamBinary/octokit.net");
                 Assert.NotNull(masterFork);
