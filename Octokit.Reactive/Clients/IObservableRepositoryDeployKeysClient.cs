@@ -4,6 +4,12 @@ using System.Reactive;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Repository Deploy Keys API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/repos/keys/">Deploy Keys API documentation</a> for more information.
+    /// </remarks>
     public interface IObservableRepositoryDeployKeysClient
     {
         /// <summary>
@@ -15,6 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/> representing the deploy key of repository for the particular number.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<DeployKey> Get(string owner, string name, int number);
 
@@ -26,6 +33,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
         IObservable<DeployKey> GetAll(string owner, string name);
 
         /// <summary>
@@ -37,6 +45,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
         IObservable<DeployKey> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -48,7 +57,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="DeployKey"/> of <see cref="DeployKey"/> representing created deploy key.</returns>
         IObservable<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey);
 
         /// <summary>
