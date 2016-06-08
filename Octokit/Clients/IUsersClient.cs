@@ -27,6 +27,9 @@ namespace Octokit
         ///</remarks>
         IUserKeysClient Keys { get; }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        IUserGpgKeysClient GpgKey { get; }
+
         /// <summary>
         /// Returns the user specified by the login.
         /// </summary>
