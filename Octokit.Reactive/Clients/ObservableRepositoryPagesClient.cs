@@ -43,6 +43,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets the page metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{Page}"/> of <see cref="Page"/> representing page metadata of specified repository.</returns>
+        public IObservable<Page> Get(int repositoryId)
+        {
+            return _client.Get(repositoryId).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -57,6 +70,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
@@ -79,6 +105,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), options);
+        }
+
+        /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -93,6 +135,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.GetLatest(owner, name).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets the build metadata for the last build for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns>A <see cref="IObservable{Page}"/> of <see cref="Page"/> representing latest pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetLatest(int repositoryId)
+        {
+            return _client.GetLatest(repositoryId).ToObservable();
         }
     }
 }
