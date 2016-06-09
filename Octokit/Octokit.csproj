@@ -58,6 +58,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Clients\ActivitiesClient.cs" />
+    <Compile Include="Clients\IUserGpgKeysClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClient.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
+    <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
     <Compile Include="Clients\RepositoryContentsClient.cs" />
     <Compile Include="Exceptions\InvalidGitIgnoreTemplateException.cs" />
@@ -120,7 +122,11 @@
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
+=======
+    <Compile Include="Models\Request\NewGpgKey.cs" />
+>>>>>>> refs/remotes/octokit/master
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
     <Compile Include="Models\Request\GistFileUpdate.cs" />
@@ -174,6 +180,7 @@
     <Compile Include="Models\Response\Enterprise\LicenseInfo.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsUsers.cs" />
     <Compile Include="Models\Response\GitIgnoreTemplate.cs" />
+    <Compile Include="Models\Response\GpgKey.cs" />
     <Compile Include="Models\Response\License.cs" />
     <Compile Include="Models\Response\LicenseMetadata.cs" />
     <Compile Include="Models\Response\Merge.cs" />
