@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
-        /// List reactions for an specified Issue.
+        /// List reactions for a specified Issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
