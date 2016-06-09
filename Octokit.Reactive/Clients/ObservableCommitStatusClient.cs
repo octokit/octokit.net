@@ -38,7 +38,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return GetAll(owner, name ,reference, ApiOptions.None);                  
+            return GetAll(owner, name ,reference, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>Only users with pull access can see this.</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        public IObservable<CommitStatus> GetAll(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return GetAll(repositoryId, reference, ApiOptions.None);
         }
 
         /// <summary>
@@ -62,6 +77,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>Only users with pull access can see this.</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        public IObservable<CommitStatus> GetAll(int repositoryId, string reference, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options);
+        }
+
+        /// <summary>
         /// Retrieves a combined view of statuses for the specified reference. A reference can be a commit SHA, a branch name, or
         /// a tag name.
         /// </summary>
@@ -80,6 +112,21 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Retrieves a combined view of statuses for the specified reference. A reference can be a commit SHA, a branch name, or
+        /// a tag name.
+        /// </summary>
+        /// <remarks>Only users with pull access can see this.</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <returns>A <see cref="IObservable{CombinedCommitStatus}"/> of <see cref="CombinedCommitStatus"/> representing combined commit status for specified repository</returns>
+        public IObservable<CombinedCommitStatus> GetCombined(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _client.GetCombined(repositoryId, reference).ToObservable();
+        }
+
+        /// <summary>
         /// Creates a commit status for the specified ref.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -92,9 +139,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(newCommitStatus, "commitStatus");
+            Ensure.ArgumentNotNull(newCommitStatus, "newCommitStatus");
 
             return _client.Create(owner, name, reference, newCommitStatus).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a commit status for the specified ref.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        /// <param name="newCommitStatus">The commit status to create</param>
+        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/> representing created commit status for specified repository</returns>
+        public IObservable<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(newCommitStatus, "newCommitStatus");
+
+            return _client.Create(repositoryId, reference, newCommitStatus).ToObservable();
         }
     }
 }
