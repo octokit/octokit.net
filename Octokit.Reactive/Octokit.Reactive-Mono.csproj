@@ -180,6 +180,7 @@
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
+<<<<<<< HEAD
     <Compile Include="Clients\IObservableReactionsClient.cs" />
     <Compile Include="Clients\ObservableReactionsClient.cs" />
     <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
@@ -190,6 +191,10 @@
     <Compile Include="Clients\ObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\ObservablePullRequestReviewCommentReactionsClient.cs" />
+=======
+    <Compile Include="Clients\IObservableUserGpgKeysClient.cs" />
+    <Compile Include="Clients\ObservableUserGpgKeysClient.cs" />
+>>>>>>> refs/remotes/octokit/master
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

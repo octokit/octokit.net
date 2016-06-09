@@ -102,6 +102,7 @@
     <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
+    <Compile Include="Clients\IObservableUserGpgKeysClient.cs" />
     <Compile Include="Clients\IObservableUserKeysClient.cs" />
     <Compile Include="Clients\IObservableReactionsClient.cs" />
     <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Clients\ObservableFollowersClient.cs" />
     <Compile Include="Clients\ObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\ObservableUserEmailsClient.cs" />
+    <Compile Include="Clients\ObservableUserGpgKeysClient.cs" />
     <Compile Include="Clients\ObservableUserKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />

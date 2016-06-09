@@ -136,6 +136,7 @@
     <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
+    <Compile Include="Clients\UserGpgKeysClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
+    <Compile Include="Reactive\ObservableUserGpgKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />

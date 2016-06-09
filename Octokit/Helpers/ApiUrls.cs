@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -10,6 +11,7 @@ namespace Octokit
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserGpgKeys = new Uri("user/gpg_keys", UriKind.Relative);
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
@@ -2192,6 +2194,27 @@ namespace Octokit
         public static Uri Events(int repositoryId)
         {
             return "repositories/{0}/events".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the GPG Keys for the authenticated user.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> that returns all the GPG Keys for the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        public static Uri GpgKeys()
+        {
+            return _currentUserGpgKeys;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.
+        /// </summary>
+        /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        public static Uri GpgKeys(int id)
+        {
+            return "user/gpg_keys/{0}".FormatUri(id);
         }
 
         /// <summary>
