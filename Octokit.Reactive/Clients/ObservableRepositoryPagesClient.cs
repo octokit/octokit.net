@@ -5,6 +5,12 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Repository Pages API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
+    /// </remarks>
     public class ObservableRepositoryPagesClient : IObservableRepositoryPagesClient
     {
         readonly IRepositoryPagesClient _client;
@@ -22,71 +28,71 @@ namespace Octokit.Reactive
         /// Gets the page metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{Page}"/> of <see cref="Page"/> representing page metadata of specified repository.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        public IObservable<Page> Get(string owner, string repositoryName)
+        public IObservable<Page> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.Get(owner, repositoryName).ToObservable();
+            return _client.Get(owner, name).ToObservable();
         }
 
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public IObservable<PagesBuild> GetAll(string owner, string repositoryName)
+        /// <returns>A <see cref="IObservable{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAll(owner, repositoryName, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None);
         }
 
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public IObservable<PagesBuild> GetAll(string owner, string repositoryName, ApiOptions options)
+        /// <returns>A <see cref="IObservable{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName), options);
+            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), options);
         }
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public IObservable<PagesBuild> GetLatest(string owner, string repositoryName)
+        /// <returns>A <see cref="IObservable{Page}"/> of <see cref="Page"/> representing latest pages build metadata of specified repository.</returns>
+        public IObservable<PagesBuild> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.GetLatest(owner, repositoryName).ToObservable();
+            return _client.GetLatest(owner, name).ToObservable();
         }
     }
 }

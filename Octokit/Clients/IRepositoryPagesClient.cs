@@ -16,46 +16,46 @@ namespace Octokit
         /// Gets the page metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>A <see cref="Page"/> representing page metadata of specified repository.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Page> Get(string owner, string repositoryName);
+        Task<Page> Get(string owner, string name);
 
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName);
+        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name);
 
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName, ApiOptions options);
+        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        Task<PagesBuild> GetLatest(string owner, string repositoryName);
+        /// <returns>A <see cref="Page"/> representing latest pages build metadata of specified repository.</returns>
+        Task<PagesBuild> GetLatest(string owner, string name);
     }
 }
