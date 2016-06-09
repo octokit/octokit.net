@@ -43,8 +43,8 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
-    public async Task CanAddAssignees()
-    {        
+    public async Task CanAddAndRemoveAssignees()
+    {
         var newAssignees = new AssigneesUpdate(new List<string>() { _context.RepositoryOwner });
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
 
@@ -58,5 +58,11 @@ public class AssigneesClientTests
 
         //Check if assignee was added to issue
         Assert.True(addAssignees.Assignees.Where(x => x.Name == _context.RepositoryOwner).Any() == true);
+
+        //Test to remove assignees
+        var removeAssignees = await _github.Issue.Assignee.RemoveAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Id, newAssignees);
+
+        //Check if assignee was removed
+        Assert.True(removeAssignees.Assignees.Where(x => x.Name == _context.RepositoryOwner).Any() == false);
     }
 }

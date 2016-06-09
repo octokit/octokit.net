@@ -136,6 +136,9 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, newAssignees));
             }
         }
 
@@ -163,6 +166,9 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("", "name", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("owner", "", 2, newAssignees));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees("owner", "name", 2, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees(null, "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees("owner", null, 2, newAssignees));
             }
         }
 

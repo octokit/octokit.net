@@ -131,13 +131,12 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableAssigneesClient(githubClient);
                 var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, null));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("name", null, 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
 
                 Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));               
             }
         }
 
@@ -162,13 +161,12 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableAssigneesClient(githubClient);
                 var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
 
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, null, 2, newAssignees));
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, null));
-                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, null));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees(null, "name", 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees("owner", null, 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees("owner", "name", 2, null));
 
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.RemoveAssignees("owner", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.RemoveAssignees("", "name", 2, newAssignees));
             }
         }
 

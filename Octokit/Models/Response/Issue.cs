@@ -11,7 +11,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository, IReadOnlyList<User> assignees)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
         {
             Id = id;
             Url = url;
