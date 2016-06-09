@@ -37,7 +37,7 @@ public class IssueReactionsClientTests
 
             Assert.Equal(ReactionType.Heart, issueReaction.Content);
 
-            Assert.Equal(issue.User.Id, issueReaction.UserId);
+            Assert.Equal(issue.User.Id, issueReaction.User.Id);
         }
 
         public void Dispose()

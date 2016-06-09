@@ -63,7 +63,7 @@ public class CommitCommentReactionsClientTests
 
             Assert.Equal(ReactionType.Confused, reaction.Content);
 
-            Assert.Equal(result.User.Id, reaction.UserId);
+            Assert.Equal(result.User.Id, reaction.User.Id);
         }
 
         public void Dispose()

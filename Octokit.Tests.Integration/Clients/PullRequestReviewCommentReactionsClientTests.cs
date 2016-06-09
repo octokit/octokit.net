@@ -47,7 +47,7 @@ public class PullRequestReviewCommentReactionsClientTests
 
         Assert.Equal(ReactionType.Heart, pullRequestReviewCommentReaction.Content);
 
-        Assert.Equal(commentFromGitHub.User.Id, pullRequestReviewCommentReaction.UserId);
+        Assert.Equal(commentFromGitHub.User.Id, pullRequestReviewCommentReaction.User.Id);
     }
 
     /// <summary>

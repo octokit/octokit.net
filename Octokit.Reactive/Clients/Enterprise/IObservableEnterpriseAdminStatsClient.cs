@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive
