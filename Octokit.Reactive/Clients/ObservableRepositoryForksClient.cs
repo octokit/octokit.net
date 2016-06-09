@@ -50,6 +50,19 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>s representing forks of specified repository.</returns>
+        public IObservable<Repository> GetAll(int repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -61,6 +74,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>s representing forks of specified repository.</returns>
+        public IObservable<Repository> GetAll(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), options);
         }
 
         /// <summary>
@@ -87,6 +116,20 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to request and filter a list of repository forks</param>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>s representing forks of specified repository.</returns>
+        public IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request)
+        {
+            return GetAll(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
@@ -100,6 +143,24 @@ namespace Octokit.Reactive
 
             return request == null ? _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), options) :
                 _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Gets the list of forks defined for a repository
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to request and filter a list of repository forks</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>s representing forks of specified repository.</returns>
+        public IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return request == null ? _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), options) :
+                _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -119,6 +180,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(fork, "fork");
 
             return _client.Create(owner, name, fork).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a fork for a repository. Specify organization in the fork parameter to create for an organization.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="http://developer.github.com/v3/repos/forks/#create-a-fork">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="fork">Used to fork a repository</param>
+        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/> representing the created fork of specified repository.</returns>
+        public IObservable<Repository> Create(int repositoryId, NewRepositoryFork fork)
+        {
+            Ensure.ArgumentNotNull(fork, "fork");
+
+            return _client.Create(repositoryId, fork).ToObservable();
         }
     }
 }
