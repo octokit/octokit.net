@@ -5,7 +5,7 @@ namespace Octokit.Reactive
     public interface IObservableCommitCommentReactionsClient
     {
         /// <summary>
-        /// Creates a reaction for an specified Commit Comment
+        /// Creates a reaction for a specified Commit Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>

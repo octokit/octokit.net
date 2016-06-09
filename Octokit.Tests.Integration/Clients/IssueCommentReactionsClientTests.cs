@@ -29,7 +29,7 @@ public class IssueCommentReactionsClientTests
 
             Assert.NotNull(issue);
 
-            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Id, "A test comment");
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
 
             Assert.NotNull(issueComment);
 

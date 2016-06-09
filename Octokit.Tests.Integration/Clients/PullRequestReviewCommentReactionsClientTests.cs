@@ -1,10 +1,11 @@
 ﻿using Octokit;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
-public class PullRequestReviewCommentReactionsClientTests
+public class PullRequestReviewCommentReactionsClientTests : IDisposable
 {
     private readonly IGitHubClient _github;
     private readonly IPullRequestReviewCommentsClient _client;
@@ -140,6 +141,11 @@ public class PullRequestReviewCommentReactionsClientTests
         Assert.NotNull(comment);
         Assert.Equal(body, comment.Body);
         Assert.Equal(position, comment.Position);
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 
     class PullRequestData

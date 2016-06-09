@@ -29,7 +29,7 @@ public class IssueReactionsClientTests
 
             Assert.NotNull(issue);
 
-            var issueReaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Id, new NewReaction(ReactionType.Heart));
+            var issueReaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new NewReaction(ReactionType.Heart));
 
             Assert.NotNull(issueReaction);
 

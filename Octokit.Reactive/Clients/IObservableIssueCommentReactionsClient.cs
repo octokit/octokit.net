@@ -5,7 +5,7 @@ namespace Octokit.Reactive
     public interface IObservableIssueCommentReactionsClient
     {
         /// <summary>
-        /// Creates a reaction for an specified Issue Comment
+        /// Creates a reaction for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
