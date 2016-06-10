@@ -39,6 +39,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a commit for a given repository by sha reference
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#get-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">Tha sha reference of the commit</param>
+        /// <returns>A <see cref="Commit"/> representing commit for specified repository and reference</returns>
+        public Task<Commit> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return ApiConnection.Get<Commit>(ApiUrls.Commit(repositoryId, reference));
+        }
+
+        /// <summary>
         /// Create a commit for a given repository
         /// </summary>
         /// <remarks>
@@ -55,6 +71,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(commit, "commit");
 
             return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(owner, name), commit);
+        }
+
+        /// <summary>
+        /// Create a commit for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#create-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="commit">The commit to create</param>
+        /// <returns>A <see cref="Commit"/> representing created commit for specified repository</returns>
+        public Task<Commit> Create(int repositoryId, NewCommit commit)
+        {
+            Ensure.ArgumentNotNull(commit, "commit");
+
+            return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(repositoryId), commit);
         }
     }
 }

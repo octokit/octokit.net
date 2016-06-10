@@ -40,6 +40,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a commit for a given repository by sha reference
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#get-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">Tha sha reference of the commit</param>
+        /// <returns>A <see cref="Commit"/> representing commit for specified repository and reference</returns>
+        public IObservable<Commit> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _client.Get(repositoryId, reference).ToObservable();
+        }
+
+        /// <summary>
         /// Create a commit for a given repository
         /// </summary>
         /// <remarks>
@@ -56,6 +72,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(commit, "commit");
 
             return _client.Create(owner, name, commit).ToObservable();
+        }
+
+        /// <summary>
+        /// Create a commit for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#create-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="commit">The commit to create</param>
+        /// <returns>A <see cref="IObservable{Commit}"/> of <see cref="Commit"/> representing created commit for specified repository</returns>
+        public IObservable<Commit> Create(int repositoryId, NewCommit commit)
+        {
+            Ensure.ArgumentNotNull(commit, "commit");
+
+            return _client.Create(repositoryId, commit).ToObservable();
         }
     }
 }

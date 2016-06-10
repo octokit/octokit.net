@@ -26,6 +26,19 @@ namespace Octokit
         Task<Commit> Get(string owner, string name, string reference);
 
         /// <summary>
+        /// Gets a commit for a given repository by sha reference
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#get-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">Tha sha reference of the commit</param>
+        /// <returns>A <see cref="Commit"/> representing commit for specified repository and reference</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+            Justification = "Method makes a network request")]
+        Task<Commit> Get(int repositoryId, string reference);
+
+        /// <summary>
         /// Create a commit for a given repository
         /// </summary>
         /// <remarks>
@@ -36,5 +49,16 @@ namespace Octokit
         /// <param name="commit">The commit to create</param>
         /// <returns>A <see cref="Commit"/> representing created commit for specified repository</returns>
         Task<Commit> Create(string owner, string name, NewCommit commit);
+
+        /// <summary>
+        /// Create a commit for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/commits/#create-a-commit
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="commit">The commit to create</param>
+        /// <returns>A <see cref="Commit"/> representing created commit for specified repository</returns>
+        Task<Commit> Create(int repositoryId, NewCommit commit);
     }
 }
