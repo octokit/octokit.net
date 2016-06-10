@@ -216,6 +216,7 @@
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableCommitStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableNotificationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
