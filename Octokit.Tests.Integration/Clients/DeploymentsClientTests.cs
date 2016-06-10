@@ -78,11 +78,13 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {
-        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false, TransientEnvironment = true, ProductionEnvironment = true };
 
         var deployment = await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
 
         Assert.NotNull(deployment);
+        Assert.Equal(newDeployment.TransientEnvironment, deployment.TransientEnvironment);
+        Assert.Equal(newDeployment.ProductionEnvironment, deployment.ProductionEnvironment);
     }
 
     [IntegrationTest]

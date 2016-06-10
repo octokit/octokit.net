@@ -74,6 +74,18 @@ namespace Octokit
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Indicates if the environment is specific to a deployment and will no longer exist at some point in the future.
+        /// (DEFAULT if not specified: False)
+        /// </summary>
+        public bool? TransientEnvironment { get; set; }
+
+        /// <summary>
+        /// Indicates if the environment is one with which end users directly interact.
+        /// (DEFAULT if not specified: True when environment is "production" and False otherwise)
+        /// </summary>
+        public bool? ProductionEnvironment { get; set; }
+
         internal string DebuggerDisplay
         {
             get

@@ -57,7 +57,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), options);
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name),
+                                                    null,
+                                                    AcceptHeaders.DeploymentApiPreview,
+                                                    options);
         }
 
         /// <summary>
@@ -78,7 +81,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeployment, "newDeployment");
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
-                                                     newDeployment);
+                                                  newDeployment,
+                                                  AcceptHeaders.DeploymentApiPreview);
         }
 
         /// <summary>
