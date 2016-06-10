@@ -319,7 +319,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the reaction of an specified issue.
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -366,7 +366,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the reaction of an specified issue comment.
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -1208,7 +1208,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the reaction of an specified pull request review comment.
+        /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>

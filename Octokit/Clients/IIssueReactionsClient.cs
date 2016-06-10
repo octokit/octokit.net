@@ -6,7 +6,7 @@ namespace Octokit
     public interface IIssueReactionsClient
     {
         /// <summary>
-        /// Get all reactions for an specified Issue
+        /// Get all reactions for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -16,7 +16,7 @@ namespace Octokit
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
 
         /// <summary>
-        /// Creates a reaction for an specified Issue
+        /// Creates a reaction for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
