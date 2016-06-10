@@ -39,6 +39,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single Blob by SHA.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/blobs/#get-a-blob
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        public Task<Blob> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return ApiConnection.Get<Blob>(ApiUrls.Blob(repositoryId, reference));
+        }
+
+        /// <summary>
         /// Creates a new Blob
         /// </summary>
         /// <remarks>
@@ -55,6 +71,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(newBlob, "newBlob");
 
             return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(owner, name), newBlob);
+        }
+
+        /// <summary>
+        /// Creates a new Blob
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/blobs/#create-a-blob
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newBlob">The new Blob</param>
+        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        public Task<BlobReference> Create(int repositoryId, NewBlob newBlob)
+        {
+            Ensure.ArgumentNotNull(newBlob, "newBlob");
+
+            return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(repositoryId), newBlob);
         }
     }
 }

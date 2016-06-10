@@ -24,6 +24,18 @@ namespace Octokit
         Task<Blob> Get(string owner, string name, string reference);
 
         /// <summary>
+        /// Gets a single Blob by SHA.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/blobs/#get-a-blob
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The SHA of the blob</param>
+        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<Blob> Get(int repositoryId, string reference);
+
+        /// <summary>
         /// Creates a new Blob
         /// </summary>
         /// <remarks>
@@ -34,5 +46,16 @@ namespace Octokit
         /// <param name="newBlob">The new Blob</param>
         /// <returns>The <see cref="Blob"/> that was just created.</returns>
         Task<BlobReference> Create(string owner, string name, NewBlob newBlob);
+
+        /// <summary>
+        /// Creates a new Blob
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/blobs/#create-a-blob
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newBlob">The new Blob</param>
+        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        Task<BlobReference> Create(int repositoryId, NewBlob newBlob);
     }
 }
