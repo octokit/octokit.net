@@ -4,6 +4,12 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Repository Statistics API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/repos/statistics/">Repository Statistics API documentation</a> for more information.
+    /// </remarks>
     public class ObservableStatisticsClient : IObservableStatisticsClient
     {
         readonly IGitHubClient _client;
