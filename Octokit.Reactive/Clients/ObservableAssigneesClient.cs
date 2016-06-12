@@ -4,6 +4,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Issue Assignees API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/assignees/">Issue Assignees API documentation</a> for more information.
+    /// </remarks>
     public class ObservableAssigneesClient : IObservableAssigneesClient
     {
         readonly IAssigneesClient _client;
@@ -22,7 +28,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
         public IObservable<User> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -36,8 +42,8 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="options">The options to change API's behaviour</param>
-        /// <returns></returns>
+        /// <param name="options">The options to change API's behaviour.</param>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
         public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -53,7 +59,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IObservable{Bool}"/> of <see cref="bool"/> representing is a user is an assignee for a repository.</returns>
         public IObservable<bool> CheckAssignee(string owner, string name, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");

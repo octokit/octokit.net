@@ -24,7 +24,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="bool"/> representing is a user is an assignee for a repository.</returns>
         public async Task<bool> CheckAssignee(string owner, string name, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
