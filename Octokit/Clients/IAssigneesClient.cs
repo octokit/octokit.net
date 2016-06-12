@@ -16,14 +16,14 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>

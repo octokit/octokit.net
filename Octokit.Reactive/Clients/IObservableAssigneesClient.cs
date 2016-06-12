@@ -15,14 +15,14 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         IObservable<User> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         IObservable<User> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         IObservable<User> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>

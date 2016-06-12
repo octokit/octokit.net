@@ -24,7 +24,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -37,7 +37,7 @@ namespace Octokit
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -49,7 +49,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -66,7 +66,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s representing assignees of specified repository.</returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
