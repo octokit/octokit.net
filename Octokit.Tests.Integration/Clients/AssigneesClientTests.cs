@@ -32,10 +32,31 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
+    public async Task CanCheckAssigneesWithRepositoryId()
+    {
+        var isAssigned = await
+            _github.Issue.Assignee.CheckAssignee(_context.Repository.Id, "FakeHaacked");
+        Assert.False(isAssigned);
+
+        // Repository owner is always an assignee
+        isAssigned = await
+            _github.Issue.Assignee.CheckAssignee(_context.Repository.Id, _context.RepositoryOwner);
+        Assert.True(isAssigned);
+    }
+
+    [IntegrationTest]
     public async Task CanListAssignees()
     {
         // Repository owner is always an assignee
         var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.True(assignees.Any(u => u.Login == Helper.UserName));
+    }
+
+    [IntegrationTest]
+    public async Task CanListAssigneesWithRepositoryId()
+    {
+        // Repository owner is always an assignee
+        var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.Repository.Id);
         Assert.True(assignees.Any(u => u.Login == Helper.UserName));
     }
 }
