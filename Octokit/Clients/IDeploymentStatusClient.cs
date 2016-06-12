@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <returns>All deployment statuses for the given deployment.</returns>
+        /// <returns>A <see cref="IReadOnlyList{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId);
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All deployment statuses for the given deployment.</returns>
+        /// <returns>A <see cref="IReadOnlyList{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus"></param>
-        /// <returns></returns>
+        /// <returns>A <see cref="DeploymentStatus"/> representing created deployment status.</returns>
         Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus);
     }
 }

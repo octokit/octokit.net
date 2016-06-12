@@ -2,6 +2,13 @@ using System;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Repository Deployment Statuses API.
+    /// Gets and creates Deployment Statuses.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/repos/deployments/">Repository Deployment Statuses API documentation</a> for more information.
+    /// </remarks>
     public interface IObservableDeploymentStatusClient
     {
         /// <summary>
@@ -14,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <returns>All deployment statuses for the given deployment.</returns>
+        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId);
 
         /// <summary>
@@ -28,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All deployment statuses for the given deployment.</returns>
+        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId, ApiOptions options);
 
         /// <summary>
@@ -42,7 +49,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="DeploymentStatus"/> representing created deployment status.</returns>
         IObservable<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus);
     }
 }
