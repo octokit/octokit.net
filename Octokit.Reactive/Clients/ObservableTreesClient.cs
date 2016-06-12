@@ -3,6 +3,12 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Git Trees API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/git/trees/">Git Trees API documentation</a> for more information.
+    /// </remarks>
     public class ObservableTreesClient : IObservableTreesClient
     {
         readonly ITreesClient _client;
@@ -37,6 +43,22 @@ namespace Octokit.Reactive
         /// Gets a Tree Response for a given SHA.
         /// </summary>
         /// <remarks>
+        /// http://developer.github.com/v3/git/trees/#get-a-tree
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The SHA that references the tree</param>
+        /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
+        public IObservable<TreeResponse> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _client.Get(repositoryId, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a Tree Response for a given SHA.
+        /// </summary>
+        /// <remarks>
         /// https://developer.github.com/v3/git/trees/#get-a-tree-recursively
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -50,6 +72,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return _client.GetRecursive(owner, name, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a Tree Response for a given SHA.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/git/trees/#get-a-tree-recursively
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The SHA that references the tree</param>
+        /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
+        public IObservable<TreeResponse> GetRecursive(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _client.GetRecursive(repositoryId, reference).ToObservable();
         }
 
         /// <summary>
@@ -69,6 +107,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(newTree, "newTree");
 
             return _client.Create(owner, name, newTree).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a new Tree in the specified repo
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/trees/#create-a-tree
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newTree">The value of the new tree</param>
+        /// <returns>The <see cref="TreeResponse"/> that was just created.</returns>
+        public IObservable<TreeResponse> Create(int repositoryId, NewTree newTree)
+        {
+            Ensure.ArgumentNotNull(newTree, "newTree");
+
+            return _client.Create(repositoryId, newTree).ToObservable();
         }
     }
 }
