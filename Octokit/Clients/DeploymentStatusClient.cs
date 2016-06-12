@@ -43,6 +43,21 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="deploymentId">The id of the deployment.</param>
+        /// <returns>A <see cref="IReadOnlyList{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(int repositoryId, int deploymentId)
+        {
+            return GetAll(repositoryId, deploymentId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
+        /// view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+        /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
@@ -58,6 +73,24 @@ namespace Octokit
                                                           null,
                                                           AcceptHeaders.DeploymentApiPreview,
                                                           options);
+        }
+
+        /// <summary>
+        /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
+        /// view deployments.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="deploymentId">The id of the deployment.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A <see cref="IReadOnlyList{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(int repositoryId, int deploymentId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
         }
 
         /// <summary>
@@ -81,6 +114,25 @@ namespace Octokit
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                         newDeploymentStatus,
                                                         AcceptHeaders.DeploymentApiPreview);
+        }
+
+        /// <summary>
+        /// Creates a new status for the given deployment. Users with push access can create deployment
+        /// statuses for a given deployment.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="deploymentId">The id of the deployment.</param>
+        /// <param name="newDeploymentStatus"></param>
+        /// <returns>A <see cref="DeploymentStatus"/> representing created deployment status.</returns>
+        public Task<DeploymentStatus> Create(int repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
+        {
+            Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
+
+            return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
+                                                        newDeploymentStatus);
         }
     }
 }
