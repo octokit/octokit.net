@@ -40,6 +40,16 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        public IObservable<User> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
@@ -51,6 +61,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">The options to change API's behaviour.</param>
+        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/> representing assignees of specified repository.</returns>
+        public IObservable<User> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(repositoryId), options);
         }
 
         /// <summary>
@@ -67,6 +90,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
 
             return _client.CheckAssignee(owner, name, assignee).ToObservable();
+        }
+
+        /// <summary>
+        /// Checks to see if a user is an assignee for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="assignee">Username of the prospective assignee</param>
+        /// <returns>A <see cref="IObservable{Bool}"/> of <see cref="bool"/> representing is a user is an assignee for a repository.</returns>
+        public IObservable<bool> CheckAssignee(int repositoryId, string assignee)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+
+            return _client.CheckAssignee(repositoryId, assignee).ToObservable();
         }
     }
 }
