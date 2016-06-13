@@ -191,6 +191,8 @@ namespace Octokit.Reactive
         /// <returns>The created <see cref="Release"/>.</returns>
         public IObservable<Release> Create(int repositoryId, NewRelease data)
         {
+            Ensure.ArgumentNotNull(data, "data");
+
             return _client.Create(repositoryId, data).ToObservable();
         }
 

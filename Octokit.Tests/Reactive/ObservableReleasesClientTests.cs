@@ -203,7 +203,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
                 var data = new NewRelease("fake-tag");
