@@ -270,10 +270,10 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("", "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", ""));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
             }
         }
 
