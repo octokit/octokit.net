@@ -23,11 +23,26 @@ namespace Octokit
         /// <summary>
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A list of <see cref="Contributor"/></returns>
+        Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId);
+
+        /// <summary>
+        /// Returns a list of <see cref="Contributor"/> for the given repository
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>A list of <see cref="Contributor"/></returns>
         Task<IReadOnlyList<Contributor>> GetContributors(string owner, string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns a list of <see cref="Contributor"/> for the given repository
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>A list of <see cref="Contributor"/></returns>
+        Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
@@ -40,11 +55,26 @@ namespace Octokit
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>The last year of  <see cref="CommitActivity"/></returns>
+        Task<CommitActivity> GetCommitActivity(int repositoryId);
+
+        /// <summary>
+        /// Returns the last year of commit activity grouped by week.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>The last year of  <see cref="CommitActivity"/></returns>
         Task<CommitActivity> GetCommitActivity(string owner, string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns the last year of commit activity grouped by week.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>The last year of  <see cref="CommitActivity"/></returns>
+        Task<CommitActivity> GetCommitActivity(int repositoryId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
@@ -57,11 +87,26 @@ namespace Octokit
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
+        Task<CodeFrequency> GetCodeFrequency(int repositoryId);
+
+        /// <summary>
+        /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
         Task<CodeFrequency> GetCodeFrequency(string owner, string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns a weekly aggregate of the number additions and deletion</returns>
+        Task<CodeFrequency> GetCodeFrequency(int repositoryId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
@@ -74,11 +119,26 @@ namespace Octokit
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        Task<Participation> GetParticipation(int repositoryId);
+
+        /// <summary>
+        /// Returns the total commit counts for the owner and total commit counts in total. 
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
         Task<Participation> GetParticipation(string owner, string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns the total commit counts for the owner and total commit counts in total. 
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns <see cref="Participation"/>from oldest week to now</returns>
+        Task<Participation> GetParticipation(int repositoryId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
@@ -91,10 +151,25 @@ namespace Octokit
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>Returns commit counts per hour in each day</returns>
+        Task<PunchCard> GetPunchCard(int repositoryId);
+
+        /// <summary>
+        /// Returns a list of the number of commits per hour in each day
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         /// <returns>Returns commit counts per hour in each day</returns>
         Task<PunchCard> GetPunchCard(string owner, string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns a list of the number of commits per hour in each day
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <returns>Returns commit counts per hour in each day</returns>
+        Task<PunchCard> GetPunchCard(int repositoryId, CancellationToken cancellationToken);
     }
 }
