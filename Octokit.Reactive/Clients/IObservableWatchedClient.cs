@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <c>bool</c> representing the success of starring</returns>
+        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
         IObservable<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <c>bool</c> representing the success of starring</returns>
+        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
         IObservable<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription);
 
         /// <summary>

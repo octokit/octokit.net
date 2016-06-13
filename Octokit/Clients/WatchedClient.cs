@@ -189,7 +189,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <c>bool</c> representing the success of watching</returns>
+        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
         public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -204,7 +204,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <c>bool</c> representing the success of watching</returns>
+        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
         public Task<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNull(newSubscription, "newSubscription");
