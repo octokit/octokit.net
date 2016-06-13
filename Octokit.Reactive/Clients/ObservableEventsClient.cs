@@ -3,6 +3,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Activity Events API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/events/">Activity Events API documentation</a> for more information
+    /// </remarks>
     public class ObservableEventsClient : IObservableEventsClient
     {
         readonly IConnection _connection;
@@ -64,6 +70,19 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -75,6 +94,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.Events(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.Events(repositoryId), options);
         }
 
         /// <summary>
@@ -95,6 +130,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllIssuesForRepository(int repositoryId)
+        {
+            return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
         /// Gets all the events for a given repository
         /// </summary>
         /// <remarks>
@@ -111,6 +159,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public IObservable<Activity> GetAllIssuesForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(repositoryId), options);
         }
 
         /// <summary>

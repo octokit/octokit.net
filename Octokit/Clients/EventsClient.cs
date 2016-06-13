@@ -61,7 +61,20 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAllForRepository(owner,name,ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
@@ -83,6 +96,21 @@ namespace Octokit
             return ApiConnection.GetAll<Activity>(ApiUrls.Events(owner, name), options);
         }
 
+        /// <summary>
+        /// Gets all the events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(repositoryId), options);
+        }
 
         /// <summary>
         /// Gets all the event issues for a given repository
@@ -99,6 +127,19 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAllIssuesForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllIssuesForRepository(int repositoryId)
+        {
+            return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
@@ -121,6 +162,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets all the issue events for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
+        public Task<IReadOnlyList<Activity>> GetAllIssuesForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Activity>(ApiUrls.IssuesEvents(repositoryId), options);
+        }
+
+        /// <summary>
         /// Gets all the events for a given repository network
         /// </summary>
         /// <remarks>
@@ -134,7 +191,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAllForRepositoryNetwork(owner,name,ApiOptions.None);
+            return GetAllForRepositoryNetwork(owner, name, ApiOptions.None);
         }
 
         /// <summary>
