@@ -214,7 +214,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
                 Assert.Throws<ArgumentNullException>(() => new NewRelease(null));
