@@ -26,7 +26,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{EventInfo}"/> of <see cref="EventInfo"/>s representing event information for specified number.</returns>
         public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{EventInfo}"/> of <see cref="EventInfo"/>s representing event information for specified number.</returns>
         public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -63,7 +63,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{IssueEvent}"/> of <see cref="IssueEvent"/>s representing issue events for specified repository.</returns>
         public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IReadOnlyList{IssueEvent}"/> of <see cref="IssueEvent"/>s representing issue events for specified repository.</returns>
         public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The event id</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="IssueEvent"/> representing issue event for specified number.</returns>
         public Task<IssueEvent> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
