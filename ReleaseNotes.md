@@ -42,7 +42,7 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
  
 **Breaking Changes**
 
- - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemeted
+ - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemented
    and only works for the current user's keys. Update all usages to `GetAllForCurrent()`.
 
  - `CompareResult.MergedBaseCommit` was never deserialized correctly, and has
