@@ -40,12 +40,12 @@ namespace Octokit
         /// Client for managing labels.
         /// </summary>
         public IIssuesLabelsClient Labels { get; private set; }
-        
+
         /// <summary>
         /// Client for managing milestones.
         /// </summary>
         public IMilestonesClient Milestone { get; private set; }
-        
+
         /// <summary>
         /// Client for managing comments.
         /// </summary>
@@ -67,6 +67,20 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number));
+        }
+
+        /// <summary>
+        /// Gets a single Issue by number.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#get-a-single-issue
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>The created <see cref="Task"/> representing requesting the issue from the API.</returns>
+        public Task<Issue> Get(int repositoryId, int number)
+        {
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number));
         }
 
         /// <summary>
@@ -276,7 +290,23 @@ namespace Octokit
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return GetAllForRepository(owner, name, new RepositoryIssueRequest());
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, new RepositoryIssueRequest());
         }
 
         /// <summary>
@@ -291,7 +321,27 @@ namespace Octokit
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
+
             return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(repositoryId, new RepositoryIssueRequest(), options);
         }
 
         /// <summary>
@@ -319,6 +369,22 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
@@ -332,6 +398,24 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -350,6 +434,21 @@ namespace Octokit
             Ensure.ArgumentNotNull(newIssue, "newIssue");
 
             return ApiConnection.Post<Issue>(ApiUrls.Issues(owner, name), newIssue);
+        }
+
+        /// <summary>
+        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
+        /// <returns>The created <see cref="Task"/> representing the new issue from the API.</returns>
+        public Task<Issue> Create(int repositoryId, NewIssue newIssue)
+        {
+            Ensure.ArgumentNotNull(newIssue, "newIssue");
+
+            return ApiConnection.Post<Issue>(ApiUrls.Issues(repositoryId), newIssue);
         }
 
         /// <summary>
@@ -372,6 +471,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Updates an issue for the specified repository. Any user with pull access to a repository can update an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#edit-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
+        /// </param>
+        /// <returns>The created <see cref="Task"/> representing the updated issue from the API.</returns>
+        public Task<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
+        {
+            Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
+
+            return ApiConnection.Patch<Issue>(ApiUrls.Issue(repositoryId, number), issueUpdate);
+        }
+
+        /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
@@ -388,6 +504,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>The created <see cref="Task"/> representing accessing the API.</returns>
+        public Task Lock(int repositoryId, int number)
+        {
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object(), null, AcceptHeaders.IssueLockingUnlockingApiPreview);
+        }
+
+        /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
@@ -401,6 +529,18 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
+        }
+
+        /// <summary>
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>The created <see cref="Task"/> representing accessing the API.</returns>
+        public Task Unlock(int repositoryId, int number)
+        {
+            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
         }
     }
 }

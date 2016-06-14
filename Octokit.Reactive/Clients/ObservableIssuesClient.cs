@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
@@ -72,6 +72,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.Get(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a single Issue by number.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#get-a-single-issue
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>A signal containing the requested <see cref="Issue"/>s.</returns>
+        public IObservable<Issue> Get(int repositoryId, int number)
+        {
+            return _client.Get(repositoryId, number).ToObservable();
         }
 
         /// <summary>
@@ -293,6 +307,19 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        public IObservable<Issue> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -304,6 +331,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(repositoryId, new RepositoryIssueRequest(), options);
         }
 
         /// <summary>
@@ -331,6 +374,22 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
@@ -344,6 +403,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -369,6 +446,21 @@ namespace Octokit.Reactive
         /// issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
+        /// <returns>A signal containing the new <see cref="Issue"/>.</returns>
+        public IObservable<Issue> Create(int repositoryId, NewIssue newIssue)
+        {
+            Ensure.ArgumentNotNull(newIssue, "newIssue");
+
+            return _client.Create(repositoryId, newIssue).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
@@ -385,6 +477,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
+        /// </param>
+        /// <returns>A signal containing the updated <see cref="Issue"/>.</returns>
+        public IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
+        {
+            Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
+
+            return _client.Update(repositoryId, number, issueUpdate).ToObservable();
+        }
+
+        /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
@@ -393,12 +502,24 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <returns>A signal indicating completion.</returns>
         public IObservable<Unit> Lock(string owner, string name, int number)
-         {
-             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-             Ensure.ArgumentNotNullOrEmptyString(name, "name");
- 
-             return _client.Lock(owner, name, number).ToObservable();
-         }
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Lock(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>A signal indicating completion.</returns>
+        public IObservable<Unit> Lock(int repositoryId, int number)
+        {
+            return _client.Lock(repositoryId, number).ToObservable();
+        }
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -409,11 +530,23 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <returns>A signal indicating completion.</returns>
         public IObservable<Unit> Unlock(string owner, string name, int number)
-         {
-             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-             Ensure.ArgumentNotNullOrEmptyString(name, "name");
- 
-             return _client.Unlock(owner, name, number).ToObservable();
-         }
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Unlock(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns>A signal indicating completion.</returns>
+        public IObservable<Unit> Unlock(int repositoryId, int number)
+        {
+            return _client.Unlock(repositoryId, number).ToObservable();
+        }
     }
 }
