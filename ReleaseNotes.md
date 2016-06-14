@@ -2,15 +2,15 @@
 
 **Features**
 
-Pagination support has been added, letting you control how much data you want
-to retrieve for a `GetAll` endpoint. This was a team effort to apply this
-across the entire codebase, with contributions from @dampir, @devkhan,
-@prayankmathur, @SamTheDev and @shiftkey.
+The big focus for this release is pagination support. This lets the caller
+control how much data to retrieve for `GetAll*` endpoints throughout Octokit.
+This was a team effort to apply this across the entire codebase, with
+contributions from @dampir, @devkhan, @prayankmathur, @SamTheDev and @shiftkey.
 
 For more information about how to use pagination in your projects refer to the
 documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#pagination
 
- - Add Migrations API for Enterprise instances - #1141 via @devkhan
+ - Add Migrations preview API - #1141 via @devkhan
  - Add Issue Lock/Unlock functionality - #1185 via @prayankmathur
  - Added Commit Reference SHA-1 API - #1195 via @ryangribble
  - Add additional parameters to `SearchIssuesRequest` -  #1228 via @ryangribble
@@ -23,7 +23,7 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
  
 **Fixes**
 
- - Renamed `IUserKeysClient.GetAll()` to `IUserKeysClient.GetAllForCurrent()` - #1139 via ryangribble
+ - Renamed `IUserKeysClient.GetAll()` to `IUserKeysClient.GetAllForCurrent()` - #1139 via @M-Zuber
  - Add `ItemStateFilter` enum to differentiate between search and list endpoints - #1140 via @prayankmathur
  - `RepositoriesClient.GetAllPublic()` fails for Enterprise instanes due to URI structure - #1204 via @ryangribble 
  - `ConfigureAwait(false)` usages added, eliminating deadlocks - #1248 via @shiftkey
@@ -42,6 +42,9 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
  
 **Breaking Changes**
 
+ - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemeted
+   and only works for the current user's keys. Update all usages to `GetAllForCurrent()`.
+
  - `CompareResult.MergedBaseCommit` was never deserialized correctly, and has
    been marked as obsolete. You should use `CompareResult.MergeBaseCommit`
    instead (note the lack of a `d`).
@@ -52,7 +55,7 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
     if you require all repository events.
 
  - `IUsersClient` has a property named `Keys` which has been renamed in the
-   GitHub API documentation - Octokit has added the name `GitSshKeys` to
+   GitHub API documentation - Octokit has added the name `GitSshKey` to
    reflect this change, and `Keys` will be removed in a later release.
 
 ### New in 0.19.0 (released 2016/03/11)
