@@ -13,14 +13,25 @@ namespace Octokit.Tests.Clients
         public class TheGetMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.Get("fake", "repo", 42);
+                await client.Get("fake", "repo", 42);
 
                 connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                await client.Get(1, 42);
+
+                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"));
             }
 
             [Fact]
@@ -30,6 +41,9 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
             }
         }
 
@@ -47,24 +61,24 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForCurrent();
+                await client.GetAllForCurrent();
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
             }
 
             [Fact]
-            public void SendsAppropriateParameters()
+            public async Task SendsAppropriateParameters()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForCurrent(new IssueRequest { SortDirection = SortDirection.Ascending });
+                await client.GetAllForCurrent(new IssueRequest { SortDirection = SortDirection.Ascending });
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4
@@ -90,12 +104,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForOwnedAndMemberRepositories();
+                await client.GetAllForOwnedAndMemberRepositories();
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                     Arg.Any<Dictionary<string, string>>(),
@@ -106,7 +120,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForOrganizationMethod
         {
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new IssuesClient(Substitute.For<IApiConnection>());
 
@@ -131,12 +145,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForOrganization("fake");
+                await client.GetAllForOrganization("fake");
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/issues"),
                     Arg.Any<Dictionary<string, string>>(),
@@ -167,7 +181,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForRepositoryMethod
         {
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new IssuesClient(Substitute.For<IApiConnection>());
 
@@ -175,39 +189,40 @@ namespace Octokit.Tests.Clients
                 var request = new RepositoryIssueRequest();
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", options));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request, options));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", options));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request, options));
-
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", options));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, options));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request, options));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", options));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request, options));
-
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (RepositoryIssueRequest)null));
-
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", request, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, request, options));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, options));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (RepositoryIssueRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, request, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", request, options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", request, options));
             }
 
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForRepository("fake", "repo");
+                await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
@@ -215,12 +230,63 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void SendsAppropriateParameters()
+            public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                client.GetAllForRepository("fake", "repo", new RepositoryIssueRequest
+                await client.GetAllForRepository(1);
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository("fake", "repo", options);
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), Arg.Any<Dictionary<string, string>>(), options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository(1, options);
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    options);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                await client.GetAllForRepository("fake", "repo", new RepositoryIssueRequest
                 {
                     SortDirection = SortDirection.Ascending
                 });
@@ -232,6 +298,80 @@ namespace Octokit.Tests.Clients
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
                     Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParametersWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                await client.GetAllForRepository(1, new RepositoryIssueRequest
+                {
+                    SortDirection = SortDirection.Ascending
+                });
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                        && d["state"] == "open"
+                        && d["direction"] == "asc"
+                        && d["sort"] == "created"
+                        && d["filter"] == "assigned"),
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParametersWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository("fake", "repo", new RepositoryIssueRequest
+                {
+                    SortDirection = SortDirection.Ascending
+                }, options);
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                        && d["state"] == "open"
+                        && d["direction"] == "asc"
+                        && d["sort"] == "created"
+                        && d["filter"] == "assigned"),
+                    options);
+            }
+
+            [Fact]
+            public async Task SendsAppropriateParametersWithRepositoryIdWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllForRepository(1, new RepositoryIssueRequest
+                {
+                    SortDirection = SortDirection.Ascending
+                }, options);
+
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4
+                        && d["state"] == "open"
+                        && d["direction"] == "asc"
+                        && d["sort"] == "created"
+                        && d["filter"] == "assigned"),
+                    options);
             }
         }
 
@@ -251,16 +391,32 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                var newIssue = new NewIssue("some title");
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.Create(1, newIssue);
+
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
+                    newIssue);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("title")));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewIssue("x")));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewIssue("x")));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewIssue("x")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewIssue("x")));
             }
         }
 
@@ -280,16 +436,32 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                var issueUpdate = new IssueUpdate();
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.Update(1, 42, issueUpdate);
+
+                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"),
+                    issueUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 1, new IssueUpdate()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 1, new IssueUpdate()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, 1, new IssueUpdate()));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 1, new IssueUpdate()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", 1, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, 1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 1, new IssueUpdate()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 1, new IssueUpdate()));
             }
         }
 
@@ -307,14 +479,26 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.Lock(1, 42);
+
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>(), Arg.Any<string>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Lock(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Lock("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Lock("owner", null, 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Lock("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Lock("owner", "", 1));
             }
         }
@@ -333,14 +517,26 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssuesClient(connection);
+
+                client.Unlock(1, 42);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Unlock(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Unlock("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Unlock("owner", null, 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Unlock("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Unlock("owner", "", 1));
             }
         }
