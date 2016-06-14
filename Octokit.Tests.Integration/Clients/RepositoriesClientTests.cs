@@ -852,7 +852,7 @@ public class RepositoriesClientTests
             var secondPageOptions = new ApiOptions
             {
                 PageSize = 5,
-                StartPage = 1,
+                StartPage = 2,
                 PageCount = 1
             };
 
