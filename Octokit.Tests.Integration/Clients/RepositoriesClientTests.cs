@@ -523,13 +523,106 @@ public class RepositoriesClientTests
     public class TheGetAllForOrgMethod
     {
         [IntegrationTest]
-        public async Task ReturnsAllRepositoriesForOrganization()
+        public async Task ReturnsRepositoriesForOrganization()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            
+            var options = new ApiOptions
+            {
+                PageSize = 20,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var repositories = await github.Repository.GetAllForOrg("github", options);
+
+            Assert.Equal(20, repositories.Count);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfRepositories()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var repositories = await github.Repository.GetAllForOrg("github");
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
 
-            Assert.True(repositories.Count > 80);
+            var firstPage = await github.Repository.GetAllForOrg("github", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllForOrg("github", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
+        }
+    }
+
+    public class TheGetAllForUserMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsRepositoriesForOrganization()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var options = new ApiOptions
+            {
+                PageSize = 20,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var repositories = await github.Repository.GetAllForUser("shiftkey", options);
+
+            Assert.Equal(20, repositories.Count);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfRepositories()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllForUser("shiftkey", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllForUser("shiftkey", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
         }
     }
 
@@ -544,6 +637,39 @@ public class RepositoriesClientTests
 
             Assert.True(contributors.Any(c => c.Login == "pmacn"));
         }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfContributors()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllContributors("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllContributors("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Login, secondPage[0].Login);
+            Assert.NotEqual(firstPage[1].Login, secondPage[1].Login);
+            Assert.NotEqual(firstPage[2].Login, secondPage[2].Login);
+            Assert.NotEqual(firstPage[3].Login, secondPage[3].Login);
+            Assert.NotEqual(firstPage[4].Login, secondPage[4].Login);
+        }
     }
 
     public class TheGetAllForCurrentMethod
@@ -556,6 +682,39 @@ public class RepositoriesClientTests
             var repositories = await github.Repository.GetAllForCurrent();
 
             Assert.NotEmpty(repositories);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfRepositories()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllForCurrent(firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllForCurrent(secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
         }
 
         [IntegrationTest]
@@ -627,6 +786,87 @@ public class RepositoriesClientTests
 
             Assert.True(tags.Any(t => t.Name == "v0.1.0"));
         }
+
+
+        [IntegrationTest]
+        public async Task GetsPagesOfTags()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllTags("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 2,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllTags("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
+        }
+
+    }
+
+    public class TheGetAllBranchesMethod
+    {
+        [IntegrationTest]
+        public async Task GetsAllBranches()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net");
+
+            Assert.NotEmpty(branches);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPagesOfBranches()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllBranches("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllBranches("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
+        }
     }
 
     public class TheGetBranchMethod
@@ -640,6 +880,52 @@ public class RepositoriesClientTests
 
             Assert.NotNull(branch);
             Assert.Equal("master", branch.Name);
+        }
+    }
+
+    public class TheGetAllTeamsMethod
+    {
+        [IntegrationTest(Skip="Test requires administration rights to access this endpoint")]
+        public async Task GetsAllTeams()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var branches = await github.Repository.GetAllTeams("octokit", "octokit.net");
+
+            Assert.NotEmpty(branches);
+        }
+
+        [IntegrationTest(Skip = "Test requires administration rights to access this endpoint")]
+        public async Task GetsPagesOfBranches()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var firstPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Repository.GetAllTeams("octokit", "octokit.net", firstPageOptions);
+
+            var secondPageOptions = new ApiOptions
+            {
+                PageSize = 5,
+                StartPage = 1,
+                PageCount = 1
+            };
+
+            var secondPage = await github.Repository.GetAllTeams("octokit", "octokit.net", secondPageOptions);
+
+            Assert.Equal(5, firstPage.Count);
+            Assert.Equal(5, secondPage.Count);
+
+            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
+            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
+            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
+            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
+            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
         }
     }
 }
