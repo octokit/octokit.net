@@ -21,5 +21,29 @@ var repositories = await client.Repository.GetAllForCurrent(options);
  - `PageSize` - change the number of results to return per page
  - `StartPage` - start results from a given page
 
-These parameters can be used in any sort of group. If you don't specify a
-`PageSize` the default page size is 30.
+If `PageSize` is not set the default page size is 30.
+
+Examples:
+
+```csharp
+// fetch all items, 100 at a time
+var batchPagination = new ApiOptions
+{
+    PageSize = 100
+};
+
+// return first 100 items
+var firstOneHundred = new ApiOptions
+{
+    PageSize = 100,
+    PageCount = 1
+};
+
+// return 100 items after first page
+var skipFirstHundred = new ApiOptions
+{
+    PageSize = 100,
+    StartPage = 2, // 1-indexed value
+    PageCount = 1
+};
+```
