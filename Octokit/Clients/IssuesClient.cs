@@ -28,20 +28,24 @@ namespace Octokit
         /// Client for managing assignees.
         /// </summary>
         public IAssigneesClient Assignee { get; private set; }
+
         /// <summary>
         /// Client for reading various event information associated with issues/pull requests.  
         /// This is useful both for display on issue/pull request information pages and also to 
         /// determine who should be notified of comments.
         /// </summary>
         public IIssuesEventsClient Events { get; private set; }
+
         /// <summary>
         /// Client for managing labels.
         /// </summary>
         public IIssuesLabelsClient Labels { get; private set; }
+        
         /// <summary>
         /// Client for managing milestones.
         /// </summary>
         public IMilestonesClient Milestone { get; private set; }
+        
         /// <summary>
         /// Client for managing comments.
         /// </summary>

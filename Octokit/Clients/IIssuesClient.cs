@@ -85,7 +85,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request);
 
         /// <summary>
@@ -98,7 +97,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -110,7 +108,6 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories();
 
         /// <summary>
@@ -123,7 +120,6 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(ApiOptions options);
 
         /// <summary>
@@ -134,7 +130,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request);
 
         /// <summary>
@@ -146,7 +141,6 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The created <see cref="Task"/> representing requesting a list of issue from the API.</returns>
-
         Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
 
         /// <summary>
