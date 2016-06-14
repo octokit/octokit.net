@@ -426,7 +426,7 @@ namespace Octokit.Tests.Integration.Clients
                 // The fork is created asynchronously by github and therefore it cannot 
                 // be certain that the repo exists when the test ends. It is therefore deleted
                 // before the test starts instead of after.
-                Helper.DeleteRepo(Helper.Credentials.Login, "octokit.net");
+                Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, Helper.Credentials.Login, "octokit.net");
 
                 var github = Helper.GetAuthenticatedClient();
 
@@ -460,7 +460,7 @@ namespace Octokit.Tests.Integration.Clients
                 // The fork is created asynchronously by github and therefore it cannot 
                 // be certain that the repo exists when the test ends. It is therefore deleted
                 // before the test starts.
-                Helper.DeleteRepo(Helper.Organization, "octokit.net");
+                Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, Helper.Organization, "octokit.net");
 
                 var github = Helper.GetAuthenticatedClient();
 
