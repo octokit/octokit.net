@@ -4,6 +4,12 @@ using System.Reactive;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Issue Comments API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/comments/">Issue Comments API documentation</a> for more information.
+    /// </remarks>
     public interface IObservableIssueCommentsClient
     {
         /// <summary>
