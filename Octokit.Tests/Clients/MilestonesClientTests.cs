@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
+using Octokit.Internal;
+using System.Net;
 
 namespace Octokit.Tests.Clients
 {
@@ -229,6 +231,73 @@ namespace Octokit.Tests.Clients
             {
                 Assert.Throws<ArgumentNullException>(() => new MilestonesClient(null));
             }
+        }
+
+        [Fact]
+        public void CanDeserializeMilestone()
+        {
+            const string milestoneResponseJson =
+                "{\"url\": \"https://api.github.com/repos/octokit/octokit.net/milestones/6\", " +
+                "\"html_url\": \"https://github.com/octokit/octokit.net/milestones/Pagination%20Support\", " +
+                "\"labels_url\": \"https://api.github.com/repos/octokit/octokit.net/milestones/6/labels\", " +
+                "\"id\": 1641780, " +
+                "\"number\": 6," +
+                "\"title\": \"Pagination Support\", " +
+                "\"description\": \"This milestone tracks deploying pagination out across the entire API\", " +
+                "\"creator\": { " +
+                "\"login\": \"shiftkey\", " +
+                "\"id\": 359239, " +
+                "\"avatar_url\": \"https://avatars.githubusercontent.com/u/359239?v=3\", " +
+                "\"gravatar_id\": \"\", " +
+                "\"url\": \"https://api.github.com/users/shiftkey\", " +
+                "\"html_url\": \"https://github.com/shiftkey\", " +
+                "\"followers_url\": \"https://api.github.com/users/shiftkey/followers\", " +
+                "\"following_url\": \"https://api.github.com/users/shiftkey/following{/other_user}\", " +
+                "\"gists_url\": \"https://api.github.com/users/shiftkey/gists{/gist_id}\", " +
+                "\"starred_url\": \"https://api.github.com/users/shiftkey/starred{/owner}{/repo}\", " +
+                "\"subscriptions_url\": \"https://api.github.com/users/shiftkey/subscriptions\", " +
+                "\"organizations_url\": \"https://api.github.com/users/shiftkey/orgs\", " +
+                "\"repos_url\": \"https://api.github.com/users/shiftkey/repos\", " +
+                "\"events_url\": \"https://api.github.com/users/shiftkey/events{/privacy}\", " +
+                "\"received_events_url\": \"https://api.github.com/users/shiftkey/received_events\", " +
+                "\"type\": \"User\", " +
+                "\"site_admin\": true " +
+                "}, " +
+                "\"open_issues\": 23, " +
+                "\"closed_issues\": 70, " +
+                "\"state\": \"open\", " +
+                "\"created_at\": \"2016-03-14T03:37:08Z\", " +
+                "\"updated_at\": \"2016-06-14T00:15:05Z\", " +
+                "\"due_on\": null, " +
+                "\"closed_at\": null " +
+                "} ";
+
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                milestoneResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
+            var jsonPipeline = new JsonHttpPipeline();
+
+            var response = jsonPipeline.DeserializeResponse<Milestone>(httpResponse);
+
+            Assert.NotNull(response.Body);
+            Assert.Equal(milestoneResponseJson, (string)response.HttpResponse.Body);
+            Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/milestones/6"), response.Body.Url);
+            Assert.Equal(new Uri("https://github.com/octokit/octokit.net/milestones/Pagination%20Support"), response.Body.HtmlUrl);
+            Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/milestones/6/labels"), response.Body.LabelsUrl);
+            Assert.Equal(1641780, response.Body.Id);
+            Assert.Equal(6, response.Body.Number);
+            Assert.Equal("Pagination Support", response.Body.Title);
+            Assert.Equal("This milestone tracks deploying pagination out across the entire API", response.Body.Description);
+            // TODO: Test Creator
+            Assert.Equal(23, response.Body.OpenIssues);
+            Assert.Equal(70, response.Body.ClosedIssues);
+            Assert.Equal(ItemState.Open, response.Body.State);
+            Assert.Equal("3/14/2016 3:37:08 AM", response.Body.CreatedAt.UtcDateTime.ToString());
+            Assert.Equal("6/14/2016 12:15:05 AM", response.Body.UpdatedAt.UtcDateTime.ToString());
+            Assert.Null(response.Body.DueOn);
+            Assert.Null(response.Body.ClosedAt);
         }
     }
 }
