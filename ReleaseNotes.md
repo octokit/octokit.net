@@ -1,3 +1,63 @@
+### New in 0.20.0 (released 2016/06/15)
+
+**Features**
+
+The big focus for this release is pagination support. This lets the caller
+control how much data to retrieve for `GetAll*` endpoints throughout Octokit.
+This was a team effort to apply this across the entire codebase, with
+contributions from @dampir, @devkhan, @prayankmathur, @SamTheDev and @shiftkey.
+
+For more information about how to use pagination in your projects refer to the
+documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#pagination
+
+ - Add Migrations preview API - #1141 via @devkhan
+ - Add Issue Lock/Unlock functionality - #1185 via @prayankmathur
+ - Added Commit Reference SHA-1 API - #1195 via @ryangribble
+ - Add additional parameters to `SearchIssuesRequest` -  #1228 via @ryangribble
+ - Add `Importer` property to Meta endpoint - #1235 via @ryangribble
+ - Raise HTTP 451 exception when repository has DMCA notice - #1239 via @devkhan
+ - Add Merge and Squash preview API - #1245 via @Sarmad93
+ - Add additional methods to `IEventsClient` - #1288 via @drasticactions
+ - Add Organization Permissions preview API - #1342 via @ryangribble
+ - Add GPG Keys preview API - #1343 via @alfhenrik
+ 
+**Fixes**
+
+ - Renamed `IUserKeysClient.GetAll()` to `IUserKeysClient.GetAllForCurrent()` - #1139 via @M-Zuber
+ - Add `ItemStateFilter` enum to differentiate between search and list endpoints - #1140 via @prayankmathur
+ - `RepositoriesClient.GetAllPublic()` fails for Enterprise instanes due to URI structure - #1204 via @ryangribble 
+ - `ConfigureAwait(false)` usages added, eliminating deadlocks - #1248 via @shiftkey
+ - Renamed `CompareResult.MergedBaseCommit` to fix serialization issue - #1265 via @kivancmuslu
+ - Activity Feed now returns issues and repository events - #1288 via @drasticactions
+ - Add `Repository` property to `Issue` response - #1292 via @M-Zuber
+ - `SearchCodeRequest` now supports searching without specifying a term - #1338 via @dsplaisted
+ - Add required Permission parameter to team management APIs - #1347 via @ryangribble
+ - Add `ClosedBy` property to `Issue` - #1353 via @maddin2016
+
+**Other**
+ 
+ - Deleting now-obsolete code - #1224 via @M-Zuber
+ - Centralize and cleanup the `Uri`s created in Octokit - #1287, #1290 via @dampir
+ - Updated documentation links - #1289 via @radu-matei, #1250 via @SamTheDev 
+ 
+**Breaking Changes**
+
+ - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemented
+   and only works for the current user's keys. Update all usages to `GetAllForCurrent()`.
+
+ - `CompareResult.MergedBaseCommit` was never deserialized correctly, and has
+   been marked as obsolete. You should use `CompareResult.MergeBaseCommit`
+   instead (note the lack of a `d`).
+
+ - `IEventsClient.GetAllForRepository` was incorrectly retrieving issue
+    events before this release. Use the new `IEventsClient.GetAllIssuesForRepository`
+    method if you still require issues, or continue to use `IEventsClient.GetAllForRepository`
+    if you require all repository events.
+
+ - `IUsersClient` has a property named `Keys` which has been renamed in the
+   GitHub API documentation - Octokit has added the name `GitSshKey` to
+   reflect this change, and `Keys` will be removed in a later release.
+
 ### New in 0.19.0 (released 2016/03/11)
 
 **Features**

@@ -473,7 +473,22 @@
     <Compile Include="Models\Response\Enterprise\Migration.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
+=======
+    <Compile Include="Models\Request\NewReaction.cs" />
+    <Compile Include="Models\Response\Reaction.cs" />
+    <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="Clients\IReactionsClient.cs" />
+    <Compile Include="Clients\CommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IssueReactionsClient.cs" />
+    <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
+>>>>>>> refs/remotes/octokit/master
     <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
     <Compile Include="Clients\IUserGpgKeysClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />

@@ -77,12 +77,15 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
     <Compile Include="Clients\GitHubClientTests.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueReactionsClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\OrganizationClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />

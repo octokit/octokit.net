@@ -169,10 +169,18 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 _eventsClient = new ObservableEventsClient(Helper.GetAuthenticatedClient());
             }
+
             [IntegrationTest]
             public async Task ReturnsRepositoryEvents()
             {
-                var repositoryEvents = await _eventsClient.GetAllIssuesForRepository(owner, name).ToList();
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 5
+                };
+
+                var repositoryEvents = await _eventsClient.GetAllIssuesForRepository(owner, name, options).ToList();
 
                 Assert.NotEmpty(repositoryEvents);
             }

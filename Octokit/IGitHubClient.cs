@@ -162,5 +162,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/enterprise/
         /// </remarks>
         IEnterpriseClient Enterprise { get; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        IReactionsClient Reaction { get; }
     }
 }
