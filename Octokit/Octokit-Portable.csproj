@@ -463,9 +463,7 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
-=======
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
@@ -478,7 +476,6 @@
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
->>>>>>> refs/remotes/octokit/master
     <Compile Include="Models\Request\RepositoryPermissionRequest.cs" />
     <Compile Include="Clients\IUserGpgKeysClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />

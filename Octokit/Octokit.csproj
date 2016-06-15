@@ -132,11 +132,8 @@
     <Compile Include="Clients\IReactionsClient.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
-=======
     <Compile Include="Models\Request\NewReaction.cs" />
->>>>>>> refs/remotes/octokit/master
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />
     <Compile Include="Models\Request\Enterprise\NewLdapMapping.cs" />
