@@ -22,6 +22,16 @@ namespace Octokit.Reactive
         IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
+        /// Creates a reaction for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction to create </param>
+        /// <returns>A <see cref="IObservable{Reaction}"/> of < see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction);
+
+        /// <summary>
         /// List reactions for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
@@ -30,5 +40,14 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>        
         /// <returns>A <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/>s representing reactions for specified comment id.</returns>
         IObservable<Reaction> GetAll(string owner, string name, int number);
+
+        /// <summary>
+        /// List reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>        
+        /// <returns>A <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/>s representing reactions for specified comment id.</returns>
+        IObservable<Reaction> GetAll(int repositoryId, int number);
     }
 }

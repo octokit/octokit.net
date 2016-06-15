@@ -23,6 +23,16 @@ namespace Octokit
         Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
+        /// Creates a reaction for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction to create</param>
+        /// <returns>A <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        Task<Reaction> Create(int repositoryId, int number, NewReaction reaction);
+
+        /// <summary>
         /// Get all reactions for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
@@ -31,5 +41,14 @@ namespace Octokit
         /// <param name="number">The comment id</param>        
         /// <returns>A <see cref="IReadOnlyList{Reaction}"/> of <see cref="Reaction"/>s representing reactions for specified comment id.</returns>
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
+        
+        /// <summary>
+        /// Get all reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>        
+        /// <returns>A <see cref="IReadOnlyList{Reaction}"/> of <see cref="Reaction"/>s representing reactions for specified comment id.</returns>
+        Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number);
     }
 }
