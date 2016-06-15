@@ -42,6 +42,21 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Creates a reaction for a specified Commit Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction to create </param>
+        /// <returns>A <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        {
+            Ensure.ArgumentNotNull(reaction, "reaction");
+
+            return _client.Create(repositoryId, number, reaction).ToObservable();
+        }
+
+        /// <summary>
         /// List reactions for a specified Commit Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment</remarks>
@@ -55,6 +70,18 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+        }
+
+        /// <summary>
+        /// List reactions for a specified Commit Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The comment id</param>        
+        /// <returns>A <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/>s representing all reactions for specified comment id.</returns>
+        public IObservable<Reaction> GetAll(int repositoryId, int number)
+        {
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
     }
 }
