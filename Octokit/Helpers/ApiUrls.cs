@@ -1220,6 +1220,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri PullRequestReviewCommentReaction(int repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/comments/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
