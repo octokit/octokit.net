@@ -17,16 +17,16 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>        
-        /// <returns>An <see cref="IObservable{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
         IObservable<Reaction> GetAll(string owner, string name, int number);
-        
+
         /// <summary>
         /// List reactions for a specified Issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue id</param>        
-        /// <returns>An <see cref="IObservable{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
         IObservable<Reaction> GetAll(int repositoryId, int number);
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create </param>
-        /// <returns>An <see cref="IObservable{T}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
         IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create </param>
-        /// <returns>An <see cref="IObservable{T}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
         IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction);
     }
 }
