@@ -40,6 +40,18 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get all reactions for a specified Pull Request Review Comment.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>        
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing <see cref="Reaction"/>s for a specified pull request review comment.</returns>
+        public IObservable<Reaction> GetAll(int repositoryId, int number)
+        {
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+        }
+
+        /// <summary>
         /// Creates a reaction for a specified Pull Request Review Comment.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment</remarks>
@@ -55,6 +67,21 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(reaction, "reaction");
 
             return _client.Create(owner, name, number, reaction).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a reaction for a specified Pull Request Review Comment.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction to create</param>
+        /// <returns>An <see cref="IObservable{Reaction}"/> representing created <see cref="Reaction"/> for a specified pull request review comment.</returns>
+        public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        {
+            Ensure.ArgumentNotNull(reaction, "reaction");
+
+            return _client.Create(repositoryId, number, reaction).ToObservable();
         }
     }
 }
