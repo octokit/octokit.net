@@ -93,7 +93,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var comments = await _issueCommentsClient.GetAllForRepository("alfhenrik-test", "repo-with-issue-comment-reactions").ToList();
 
-                Assert.True(comments.Count > 0);
+                Assert.NotEmpty(comments);
                 var comment = comments[0];
                 Assert.NotNull(comment.Reactions);
                 Assert.Equal(3, comment.Reactions.TotalCount);
@@ -110,7 +110,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var comments = await _issueCommentsClient.GetAllForIssue("alfhenrik-test", "repo-with-issue-comment-reactions", 1).ToList();
 
-                Assert.True(comments.Count > 0);
+                Assert.NotEmpty(comments);
                 var comment = comments[0];
                 Assert.NotNull(comment.Reactions);
                 Assert.Equal(3, comment.Reactions.TotalCount);
