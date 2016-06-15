@@ -1,6 +1,6 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Octokit.Reactive;
-using System;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
