@@ -85,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CredentialsTests.cs" />
+    <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueReactionsClientTests.cs" />
     <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
@@ -93,6 +96,8 @@
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\OauthClientTests.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\ReactionsClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\DeploymentsClientTests.cs" />
     <Compile Include="Clients\DeploymentStatusClientTests.cs" />
@@ -207,10 +212,15 @@
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableBlobClientTests.cs" />
+    <Compile Include="Reactive\ObservableCommitCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
+    <Compile Include="Reactive\ObservableIssueCommentReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableIssueReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableNotificationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestReviewCommentReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentsClientTests.cs" />
     <Compile Include="Reactive\ObservableDeploymentStatusClientTests.cs" />
