@@ -1,9 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Reactions API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/reactions/">Reactions API documentation</a> for more information.
+    /// </remarks>
     public class IssueReactionsClient : ApiClient, IIssueReactionsClient
     {
         public IssueReactionsClient(IApiConnection apiConnection)
@@ -14,12 +19,12 @@ namespace Octokit
         /// <summary>
         /// Creates a reaction for a specified Issue
         /// </summary>
-        /// <remarks>https://developer.github.com/v3/reactions/#create-reactions-for-an-issue</remarks>
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task{Reaction}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -36,7 +41,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>        
-        /// <returns></returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
