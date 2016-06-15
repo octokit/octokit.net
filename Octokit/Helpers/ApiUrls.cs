@@ -432,7 +432,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri CommitCommentReactions(int repositoryId, int number)
         {
-            return "repositories/{0}/comments/{2}/reactions".FormatUri(repositoryId, number);
+            return "repositories/{0}/comments/{1}/reactions".FormatUri(repositoryId, number);
         }
 
         /// <summary>
