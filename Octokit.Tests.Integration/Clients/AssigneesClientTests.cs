@@ -1,22 +1,21 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
-using System.Collections.Generic;
 
 public class AssigneesClientTests
 {
     readonly IGitHubClient _github;
     readonly RepositoryContext _context;
-    private readonly IIssuesClient _issuesClient;
+    readonly IIssuesClient _issuesClient;
 
     public AssigneesClientTests()
     {
         _github = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _issuesClient = _github.Issue;
 
         _context = _github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
@@ -47,8 +46,9 @@ public class AssigneesClientTests
     {
         var newAssignees = new AssigneesUpdate(new List<string>() { _context.RepositoryOwner });
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issuesClient = _github.Issue;
 
-        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var issue = await issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue);
 
