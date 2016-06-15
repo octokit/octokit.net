@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
-        /// <returns></returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{Reactions}"/> representing <see cref="Reaction"/>s for a specified pull request review comment.</returns>
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task{Reaction}"/> representing created <see cref="Reaction"/> for a specified pull request review comment.</returns>
         Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
     }
 }
