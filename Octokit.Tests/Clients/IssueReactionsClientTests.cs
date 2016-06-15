@@ -66,7 +66,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(1, 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/1/reactions"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
