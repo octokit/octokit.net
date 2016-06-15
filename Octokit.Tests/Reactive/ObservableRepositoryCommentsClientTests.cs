@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHub = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(gitHub);
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryIdWithApiOptions()
+            public void RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
@@ -149,7 +149,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsCorrectUrlByRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
@@ -178,7 +178,7 @@ namespace Octokit.Tests.Reactive
             }
             
             [Fact]
-            public void RequestsCorrectUrlByRepositoryIdWithApiOptions()
+            public void RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
@@ -239,7 +239,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void PostsToCorrectUrlByRepositoryId()
+            public void PostsToCorrectUrlWithRepositoryId()
             {
                 var newComment = new NewCommitComment("body");
 
@@ -288,7 +288,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void PostsToCorrectUrlByRepositoryId()
+            public void PostsToCorrectUrlWithRepositoryId()
             {
                 const string issueCommentUpdate = "updated comment";
 
@@ -331,7 +331,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void DeletesCorrectUrlByRepositoryId()
+            public void DeletesCorrectUrlWithRepositoryId()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommentsClient(githubClient);
