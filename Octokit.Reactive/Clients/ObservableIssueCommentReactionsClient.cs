@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
-        /// <returns>An <see cref="IObservable{Reaction}"/> of < see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
         public IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
-        /// <returns>An <see cref="IObservable{Reaction}"/> of < see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        /// <returns>An <see cref="IObservable{Reaction}"/> of <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
         public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
