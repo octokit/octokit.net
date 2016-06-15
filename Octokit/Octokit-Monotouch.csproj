@@ -491,6 +491,7 @@
     <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Response\GpgKey.cs" />
+    <Compile Include="Models\Response\ReactionSummary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

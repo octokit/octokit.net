@@ -63,7 +63,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>

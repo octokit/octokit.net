@@ -181,6 +181,7 @@
     <Compile Include="Models\Response\PullRequest.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\MilestoneRequest.cs" />
+    <Compile Include="Models\Response\ReactionSummary.cs" />
     <Compile Include="Models\Response\Reference.cs" />
     <Compile Include="Models\Response\PullRequestMerge.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />

@@ -481,6 +481,7 @@
     <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Response\GpgKey.cs" />
+    <Compile Include="Models\Response\ReactionSummary.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -32,7 +32,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id));
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), options);
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), options);
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
