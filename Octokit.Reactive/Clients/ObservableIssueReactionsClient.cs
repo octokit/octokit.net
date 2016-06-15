@@ -79,6 +79,8 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{T}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
         public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
         {
+            Ensure.ArgumentNotNull(reaction, "reaction");
+
             return _client.Create(repositoryId, number, reaction).ToObservable();
         }
     }
