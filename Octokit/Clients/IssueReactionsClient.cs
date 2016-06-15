@@ -41,7 +41,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>        
-        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{Reactions}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
