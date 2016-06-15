@@ -100,18 +100,20 @@ public class IssuesClientTests : IDisposable
             Assert.True(issue.Assignees.All(x => x.Login == _context.RepositoryOwner));
 
             var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.NotNull(retrieved);
             Assert.True(retrieved.Assignees.Count == 1);
             Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
-            Assert.True(all.Any(i => i.Number == retrieved.Number && i.Assignees.Count == 1 && i.Assignees[0].Login == _context.RepositoryOwner));
+            var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+            Assert.True(all.Any(i => i.Number == retrieved.Number));
+            Assert.True(all.Any(i => i.Assignees.Count == 1));
+            Assert.True(all.Any(i => i.Assignees[0].Login == _context.RepositoryOwner));
         }
         finally
         {
             var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
-            Assert.True(closed.Assignees.Count == 1);
-            Assert.True(closed.Assignees[0].Login == _context.RepositoryOwner);
+            Assert.Equal(1, closed.Assignees.Count);
+            Assert.Equal(_context.RepositoryOwner, closed.Assignees[0].Login);
         }
     }
 
@@ -246,7 +248,7 @@ public class IssuesClientTests : IDisposable
     {
         var issue = await _issuesClient.Get("octokit", "octokit.net", 1171);
 
-        Assert.True(issue.Assignees.Count == 2);
+        Assert.Equal(2, issue.Assignees.Count);
     }
 
     [IntegrationTest]

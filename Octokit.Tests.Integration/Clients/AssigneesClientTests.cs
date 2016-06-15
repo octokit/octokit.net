@@ -52,17 +52,17 @@ public class AssigneesClientTests
 
         Assert.NotNull(issue);
 
-        var addAssignees = await _github.Issue.Assignee.AddAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Id, newAssignees);
+        var addAssignees = await _github.Issue.Assignee.AddAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newAssignees);
 
         Assert.IsType<Issue>(addAssignees);
 
         //Check if assignee was added to issue
-        Assert.True(addAssignees.Assignees.Where(x => x.Name == _context.RepositoryOwner).Any() == true);
+        Assert.True(addAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
 
         //Test to remove assignees
-        var removeAssignees = await _github.Issue.Assignee.RemoveAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Id, newAssignees);
+        var removeAssignees = await _github.Issue.Assignee.RemoveAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newAssignees);
 
         //Check if assignee was removed
-        Assert.True(removeAssignees.Assignees.Where(x => x.Name == _context.RepositoryOwner).Any() == false);
+        Assert.False(removeAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
     }
 }
