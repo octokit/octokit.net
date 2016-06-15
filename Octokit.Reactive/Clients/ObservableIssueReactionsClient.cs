@@ -24,6 +24,34 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// List reactions for a specified Issue
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue id</param>        
+        /// <returns>An <see cref="IObservable{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
+        public IObservable<Reaction> GetAll(string owner, string name, int number)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+        }
+
+        /// <summary>
+        /// List reactions for a specified Issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue id</param>        
+        /// <returns>An <see cref="IObservable{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
+        public IObservable<Reaction> GetAll(int repositoryId, int number)
+        {
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+        }
+
+        /// <summary>
         /// Creates a reaction for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
@@ -42,19 +70,16 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// List reactions for a specified Issue
+        /// Creates a reaction for a specified Issue.
         /// </summary>
-        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>        
-        /// <returns>An <see cref="IObservable{T}"/> representing <see cref="Reaction"/>s for a specified issue.</returns>
-        public IObservable<Reaction> GetAll(string owner, string name, int number)
+        /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="reaction">The reaction to create </param>
+        /// <returns>An <see cref="IObservable{T}"/> representing created <see cref="Reaction"/> for a specified issue.</returns>
+        public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+            return _client.Create(repositoryId, number, reaction).ToObservable();
         }
     }
 }
