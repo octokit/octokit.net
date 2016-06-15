@@ -378,6 +378,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
+        /// </summary>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri IssueCommentReactions(int repositoryId, int number)
+        {
+            return "repositories/{0}/issues/comments/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
