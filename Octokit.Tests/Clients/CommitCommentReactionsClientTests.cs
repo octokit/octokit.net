@@ -24,7 +24,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CommitCommentReactionsClient(connection);
 
-                client.GetAll("fake", "repo", 42);
+                await client.GetAll("fake", "repo", 42);
 
                 connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42/reactions"), "application/vnd.github.squirrel-girl-preview");
             }
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CommitCommentReactionsClient(connection);
 
-                client.GetAll(1, 42);
+                await client.GetAll(1, 42);
 
                 connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42/reactions"), "application/vnd.github.squirrel-girl-preview");
             }
