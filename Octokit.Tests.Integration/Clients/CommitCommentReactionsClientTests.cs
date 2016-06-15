@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -64,8 +63,9 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotEmpty(reactions);
 
-            var @default = reactions.FirstOrDefault(r => r.Id == reaction.Id);
-            Assert.NotNull(@default);
+            Assert.Equal(reaction.Id, reactions[0].Id);
+
+            Assert.Equal(reaction.Content, reactions[0].Content);
         }
 
         [IntegrationTest]
@@ -87,8 +87,9 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotEmpty(reactions);
 
-            var @default = reactions.FirstOrDefault(r => r.Id == reaction.Id);
-            Assert.NotNull(@default);
+            Assert.Equal(reaction.Id, reactions[0].Id);
+
+            Assert.Equal(reaction.Content, reactions[0].Content);
         }
 
         [IntegrationTest]
