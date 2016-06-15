@@ -25,12 +25,33 @@ public class MilestonesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanRetrieveOneMilestone()
     {
-        var newMilestone = new NewMilestone("a milestone") { DueOn = DateTime.Now };
-        var created = await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
+        string title = "New Title";
+        string description = "New description.";
+        DateTimeOffset? now = DateTime.Now;
 
+        var newMilestone = new NewMilestone(title)
+        {
+            Description = description,
+            DueOn = now
+        };
+        var created = await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
         var result = await _milestonesClient.Get(_context.RepositoryOwner, _context.RepositoryName, created.Number);
 
-        Assert.Equal("a milestone", result.Title);
+        var url = "https://api.github.com/repos/" + _context.RepositoryOwner + "/" + _context.RepositoryName + "/milestones/" + created.Number;
+        Assert.Equal(new Uri(url), result.Url);
+        var htmlUrl = "https://github.com/" + _context.RepositoryOwner + "/" + _context.RepositoryName + "/milestones/" + result.Title;
+        Assert.Equal(new Uri(htmlUrl), result.HtmlUrl);
+        Assert.True(result.Id > 0);
+        Assert.Equal(title, result.Title);
+        Assert.Equal(description, result.Description);
+        // TODO: Test Creator
+        Assert.Equal(0, result.OpenIssues);
+        Assert.Equal(0, result.ClosedIssues);
+        Assert.Equal(ItemState.Open, result.State);
+        Assert.InRange(result.CreatedAt, now.Value.UtcDateTime.AddSeconds(-5), now.Value.UtcDateTime.AddSeconds(30));
+        Assert.InRange(result.UpdatedAt, now.Value.UtcDateTime.AddSeconds(-5), now.Value.UtcDateTime.AddSeconds(30));
+        Assert.InRange((DateTimeOffset)result.DueOn, now.Value.UtcDateTime.AddSeconds(-5), now.Value.UtcDateTime.AddSeconds(5));
+        Assert.Null(result.ClosedAt);
     }
 
     [IntegrationTest]

@@ -43,7 +43,6 @@ namespace Octokit
         public Milestone(
             Uri url,
             Uri htmlUrl,
-            Uri labelsUrl,
             int number,
             string title,
             string description,
@@ -58,7 +57,6 @@ namespace Octokit
         {
             Url = url;
             HtmlUrl = htmlUrl;
-            LabelsUrl = labelsUrl;
             Number = number;
             Title = title;
             Description = description;
@@ -81,11 +79,6 @@ namespace Octokit
         /// The html URL for this milestone.
         /// </summary>
         public Uri HtmlUrl { get; protected set; }
-
-        /// <summary>
-        /// The labels URL for this milestone.
-        /// </summary>
-        public Uri LabelsUrl { get; protected set; }
 
         /// <summary>
         /// The Id for this milestone.

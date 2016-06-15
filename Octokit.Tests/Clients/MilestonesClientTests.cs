@@ -285,7 +285,6 @@ namespace Octokit.Tests.Clients
             Assert.Equal(milestoneResponseJson, (string)response.HttpResponse.Body);
             Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/milestones/6"), response.Body.Url);
             Assert.Equal(new Uri("https://github.com/octokit/octokit.net/milestones/Pagination%20Support"), response.Body.HtmlUrl);
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/milestones/6/labels"), response.Body.LabelsUrl);
             Assert.Equal(1641780, response.Body.Id);
             Assert.Equal(6, response.Body.Number);
             Assert.Equal("Pagination Support", response.Body.Title);
