@@ -1,10 +1,15 @@
-﻿using Octokit.Reactive.Internal;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Reactions API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/reactions/">Reactions API documentation</a> for more information.
+    /// </remarks>
     public class ObservablePullRequestReviewCommentReactionsClient : IObservablePullRequestReviewCommentReactionsClient
     {
         readonly IPullRequestReviewCommentReactionsClient _client;
