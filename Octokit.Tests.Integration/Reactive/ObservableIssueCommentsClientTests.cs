@@ -87,6 +87,40 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstPageIssueComments[3].Id, secondPageIssueComments[3].Id);
                 Assert.NotEqual(firstPageIssueComments[4].Id, secondPageIssueComments[4].Id);
             }
+
+            [IntegrationTest]
+            public async Task ReturnsAllIssueCommentsWithReactions()
+            {
+                var comments = await _issueCommentsClient.GetAllForRepository("alfhenrik-test", "repo-with-issue-comment-reactions").ToList();
+
+                Assert.NotEmpty(comments);
+                var comment = comments[0];
+                Assert.NotNull(comment.Reactions);
+                Assert.Equal(3, comment.Reactions.TotalCount);
+                Assert.Equal(1, comment.Reactions.Plus1);
+                Assert.Equal(1, comment.Reactions.Hooray);
+                Assert.Equal(1, comment.Reactions.Heart);
+                Assert.Equal(0, comment.Reactions.Laugh);
+                Assert.Equal(0, comment.Reactions.Confused);
+                Assert.Equal(0, comment.Reactions.Minus1);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsIssueCommentWithReactions()
+            {
+                var comments = await _issueCommentsClient.GetAllForIssue("alfhenrik-test", "repo-with-issue-comment-reactions", 1).ToList();
+
+                Assert.NotEmpty(comments);
+                var comment = comments[0];
+                Assert.NotNull(comment.Reactions);
+                Assert.Equal(3, comment.Reactions.TotalCount);
+                Assert.Equal(1, comment.Reactions.Plus1);
+                Assert.Equal(1, comment.Reactions.Hooray);
+                Assert.Equal(1, comment.Reactions.Heart);
+                Assert.Equal(0, comment.Reactions.Laugh);
+                Assert.Equal(0, comment.Reactions.Confused);
+                Assert.Equal(0, comment.Reactions.Minus1);
+            }
         }
     }
 }
