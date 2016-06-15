@@ -19,9 +19,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified comment id.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing commit comment for the specified comment id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
-            Justification = "Method makes a network request")]
+             Justification = "Method makes a network request")]
         Task<CommitComment> Get(string owner, string name, int number);
 
         /// <summary>
@@ -30,9 +30,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified comment id.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing commit comment for the specified comment id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
-            Justification = "Method makes a network request")]
+             Justification = "Method makes a network request")]
         Task<CommitComment> Get(int repositoryId, int number);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified repository.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified repository.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified repository.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified repository.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified repository.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified repository.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified repository.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified repository.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified commit.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified commit SHA1.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha);
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified commit.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified commit SHA1.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha);
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified commit.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified commit SHA1.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options);
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{CommitComment}"/> of <see cref="CommitComment"/>s for the specified commit.</returns>
+        /// <returns>A <see cref="Task{T}"/> of <see cref="IReadOnlyList{CommitComment}"/> representing commit comments for the specified commit SHA1.</returns>
         Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options);
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified commit.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing created commit comment for the specified commit SHA1.</returns>
         Task<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified commit.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing created commit comment for the specified commit SHA1.</returns>
         Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified commit.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing updated commit comment for the specified comment id.</returns>
         Task<CommitComment> Update(string owner, string name, int number, string commentUpdate);
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
-        /// <returns>A <see cref="CommitComment"/> for the specified commit.</returns>
+        /// <returns>A <see cref="Task{CommitComment}"/> representing updated commit comment for the specified comment id.</returns>
         Task<CommitComment> Update(int repositoryId, int number, string commentUpdate);
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task Delete(string owner, string name, int number);
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task Delete(int repositoryId, int number);
     }
 }
