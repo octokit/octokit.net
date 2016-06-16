@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <returns>A <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -52,7 +52,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The number of the pull request</param>
-        /// <returns>A <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Get(int repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
@@ -66,7 +66,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -115,7 +115,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(string owner, string name, PullRequestRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -150,7 +150,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -168,7 +168,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -189,7 +189,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A collection of <see cref="PullRequest"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -206,7 +206,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        /// <returns>A created <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -222,7 +222,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        /// <returns>A created <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Create(int repositoryId, NewPullRequest newPullRequest)
         {
             Ensure.ArgumentNotNull(newPullRequest, "newPullRequest");
@@ -239,7 +239,7 @@ namespace Octokit.Reactive
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        /// <returns>An updated <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -257,7 +257,7 @@ namespace Octokit.Reactive
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        /// <returns>An updated <see cref="PullRequest"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequest> Update(int repositoryId, int number, PullRequestUpdate pullRequestUpdate)
         {
             Ensure.ArgumentNotNull(pullRequestUpdate, "pullRequestUpdate");
@@ -273,7 +273,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        /// <returns>A <see cref="PullRequestMerge"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -290,7 +290,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        /// <returns>A <see cref="PullRequestMerge"/> result</returns>
+        /// <returns></returns>
         public IObservable<PullRequestMerge> Merge(int repositoryId, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
@@ -305,7 +305,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A <see cref="bool"/> result - true if the pull request has been merged, false otherwise</returns>
+        /// <returns></returns>
         public IObservable<bool> Merged(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -320,7 +320,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A <see cref="bool"/> result - true if the pull request has been merged, false otherwise</returns>
+        /// <returns></returns>
         public IObservable<bool> Merged(int repositoryId, int number)
         {
             return _client.Merged(repositoryId, number).ToObservable();
@@ -333,7 +333,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A collection of <see cref="PullRequestCommit"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequestCommit> Commits(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -348,7 +348,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A collection of <see cref="PullRequestCommit"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequestCommit> Commits(int repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, number));
@@ -361,7 +361,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A collection of <see cref="PullRequestFile"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequestFile> Files(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -376,7 +376,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns>A collection of <see cref="PullRequestFile"/> results</returns>
+        /// <returns></returns>
         public IObservable<PullRequestFile> Files(int repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number));
