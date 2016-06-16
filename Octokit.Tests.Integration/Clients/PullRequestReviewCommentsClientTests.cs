@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class PullRequestReviewCommentsClientTests : IDisposable
 {
@@ -44,6 +44,21 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateAndRetrieveCommentWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateCommentWithRepositoryId(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(_context.Repository.Id, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+    }
+
+    [IntegrationTest]
     public async Task CanEditComment()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -58,6 +73,25 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var editedComment = await _client.Edit(Helper.UserName, _context.RepositoryName, createdComment.Id, edit);
 
         var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, editedComment.Id);
+
+        AssertComment(commentFromGitHub, edit.Body, position);
+    }
+
+    [IntegrationTest]
+    public async Task CanEditCommentWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A new review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateCommentWithRepositoryId(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var edit = new PullRequestReviewCommentEdit("Edited Comment");
+
+        var editedComment = await _client.Edit(_context.Repository.Id, createdComment.Id, edit);
+
+        var commentFromGitHub = await _client.GetComment(_context.Repository.Id, editedComment.Id);
 
         AssertComment(commentFromGitHub, edit.Body, position);
     }
@@ -84,6 +118,27 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task TimestampsAreUpdatedWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A new review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateCommentWithRepositoryId(body, position, pullRequest.Sha, pullRequest.Number);
+
+        Assert.Equal(createdComment.UpdatedAt, createdComment.CreatedAt);
+
+        await Task.Delay(TimeSpan.FromSeconds(2));
+
+        var edit = new PullRequestReviewCommentEdit("Edited Comment");
+
+        var editedComment = await _client.Edit(_context.Repository.Id, createdComment.Id, edit);
+
+        Assert.NotEqual(editedComment.UpdatedAt, editedComment.CreatedAt);
+    }
+
+    [IntegrationTest]
     public async Task CanDeleteComment()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -94,6 +149,23 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
 
         await _client.Delete(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id));
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteCommentWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A new review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateCommentWithRepositoryId(body, position, pullRequest.Sha, pullRequest.Number);
+
+        await _client.Delete(_context.Repository.Id, createdComment.Id);
+
+        Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(_context.Repository.Id, createdComment.Id));
     }
 
     [IntegrationTest]
@@ -114,6 +186,25 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateReplyWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "Reply me!";
+        const int position = 1;
+
+        var createdComment = await CreateCommentWithRepositoryId(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var reply = new PullRequestReviewCommentReplyCreate("Replied", createdComment.Id);
+
+        var createdReply = await _client.CreateReply(_context.Repository.Id, pullRequest.Number, reply);
+
+        var createdReplyFromGitHub = await _client.GetComment(_context.Repository.Id, createdReply.Id);
+
+        AssertComment(createdReplyFromGitHub, reply.Body, position);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForPullRequest()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -129,6 +220,21 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetForPullRequestWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var pullRequestComments = await _client.GetAll(_context.Repository.Id, pullRequest.Number);
+
+        AssertComments(pullRequestComments, commentsToCreate, position);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithoutStart()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -137,7 +243,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
 
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
-        
+
         var options = new ApiOptions
         {
             PageSize = 3,
@@ -145,6 +251,27 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         };
 
         var pullRequestComments = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number, options);
+
+        Assert.Equal(3, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithoutStartWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var pullRequestComments = await _client.GetAll(_context.Repository.Id, pullRequest.Number, options);
 
         Assert.Equal(3, pullRequestComments.Count);
     }
@@ -167,6 +294,28 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         };
 
         var pullRequestComments = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number, options);
+
+        Assert.Equal(1, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithStartWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var pullRequestComments = await _client.GetAll(_context.Repository.Id, pullRequest.Number, options);
 
         Assert.Equal(1, pullRequestComments.Count);
     }
@@ -202,6 +351,36 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _client.GetAll(_context.Repository.Id, pullRequest.Number, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _client.GetAll(_context.Repository.Id, pullRequest.Number, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForRepository()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -212,6 +391,21 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
 
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        AssertComments(pullRequestComments, commentsToCreate, position);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetForRepositoryWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
     }
@@ -238,6 +432,27 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithoutStartForRepositoryWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, options);
+
+        Assert.Equal(3, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithStartForRepository()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -255,6 +470,28 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         };
 
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
+
+        Assert.Equal(1, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithStartForRepositoryWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, options);
 
         Assert.Equal(1, pullRequestComments.Count);
     }
@@ -290,6 +527,36 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPageForRepositoryWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _client.GetAllForRepository(_context.Repository.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _client.GetAllForRepository(_context.Repository.Id, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForRepositoryAscendingSort()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -307,6 +574,23 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetForRepositoryAscendingSortWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new[] { "Comment One", "Comment Two", "Comment Three" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Ascending };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, pullRequestReviewCommentRequest);
+
+        Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForRepositoryDescendingSort()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -319,6 +603,23 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
 
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName, pullRequestReviewCommentRequest);
+
+        Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate.Reverse());
+    }
+
+    [IntegrationTest]
+    public async Task CanGetForRepositoryDescendingSortWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new[] { "Comment One", "Comment Two", "Comment Three", "Comment Four" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, pullRequestReviewCommentRequest);
 
         Assert.Equal(pullRequestComments.Select(x => x.Body), commentsToCreate.Reverse());
     }
@@ -347,6 +648,29 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithoutStartForRepositoryParametrizedWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, pullRequestReviewCommentRequest, options);
+
+        Assert.Equal(3, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithStartForRepositoryParametrized()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -366,6 +690,30 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
 
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName, pullRequestReviewCommentRequest, options);
+
+        Assert.Equal(1, pullRequestComments.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfPullRequestReviewCommentWithStartForRepositoryParametrizedWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var options = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
+
+        var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id, pullRequestReviewCommentRequest, options);
 
         Assert.Equal(1, pullRequestComments.Count);
     }
@@ -402,6 +750,38 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
     }
 
+    [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPageForRepositoryParametrizedWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
+
+        var pullRequestReviewCommentRequest = new PullRequestReviewCommentRequest { Direction = SortDirection.Descending };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var firstPage = await _client.GetAllForRepository(_context.Repository.Id, pullRequestReviewCommentRequest, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName, pullRequestReviewCommentRequest, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
     public void Dispose()
     {
         _context.Dispose();
@@ -412,11 +792,27 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         return await CreateComment(body, position, _context.RepositoryName, commitId, number);
     }
 
+    async Task<PullRequestReviewComment> CreateCommentWithRepositoryId(string body, int position, string commitId, int number)
+    {
+        return await CreateComment(body, position, _context.Repository.Id, commitId, number);
+    }
+
     async Task<PullRequestReviewComment> CreateComment(string body, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
     {
         var comment = new PullRequestReviewCommentCreate(body, pullRequestCommitId, path, position);
 
         var createdComment = await _client.Create(Helper.UserName, repoName, pullRequestNumber, comment);
+
+        AssertComment(createdComment, body, position);
+
+        return createdComment;
+    }
+
+    async Task<PullRequestReviewComment> CreateComment(string body, int position, int repositoryId, string pullRequestCommitId, int pullRequestNumber)
+    {
+        var comment = new PullRequestReviewCommentCreate(body, pullRequestCommitId, path, position);
+
+        var createdComment = await _client.Create(repositoryId, pullRequestNumber, comment);
 
         AssertComment(createdComment, body, position);
 
