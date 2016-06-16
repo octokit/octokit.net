@@ -16,7 +16,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetMethod
         {
             [Fact]
-            public void GetsFromClientRepositoryPullRequest()
+            public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -27,14 +27,26 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Get(1, 42);
+
+                gitHubClient.Repository.PullRequest.Received().Get(1, 42);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservablePullRequestsClient(Substitute.For<IGitHubClient>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "", 1).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", null, 1).ToTask());
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Get("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1));
             }
         }
 
@@ -49,6 +61,17 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo");
 
                 gitHubClient.Received().PullRequest.GetAllForRepository("fake", "repo");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.GetAllForRepository(1);
+
+                gitHubClient.Received().PullRequest.GetAllForRepository(1);
             }
 
             [Fact]
@@ -70,6 +93,24 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllForRepository(1, options);
+
+                gitHubClient.Received().PullRequest.GetAllForRepository(1, options);
+            }
+
+            [Fact]
             public void SendsAppropriateParameters()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -79,6 +120,18 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo", pullRequestRequest);
 
                 gitHubClient.Received().PullRequest.GetAllForRepository("fake", "repo", pullRequestRequest, Args.ApiOptions);
+            }
+
+            [Fact]
+            public void SendsAppropriateParametersWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var pullRequestRequest = new PullRequestRequest { SortDirection = SortDirection.Descending };
+                client.GetAllForRepository(1, pullRequestRequest);
+
+                gitHubClient.Received().PullRequest.GetAllForRepository(1, pullRequestRequest, Args.ApiOptions);
             }
 
             [Fact]
@@ -98,6 +151,25 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo", pullRequestRequest, options);
 
                 gitHubClient.Received().PullRequest.GetAllForRepository("fake", "repo", pullRequestRequest, options);
+            }
+
+            [Fact]
+            public void SendsAppropriateParametersWithApiOptionsWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                var pullRequestRequest = new PullRequestRequest { SortDirection = SortDirection.Descending };
+                client.GetAllForRepository(1, pullRequestRequest, options);
+
+                gitHubClient.Received().PullRequest.GetAllForRepository(1, pullRequestRequest, options);
             }
 
             [Fact]
@@ -146,6 +218,59 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = await client.GetAllForRepository("fake", "repo").ToArray();
+
+                Assert.Equal(7, results.Length);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
+            }
+
+            [Fact]
+            public async Task ReturnsEveryPageOfPullRequestsWithRepositoryId()
+            {
+                var firstPageUrl = new Uri("repositories/1/pulls", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    new Response(),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(7)
+                    }
+                );
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var results = await client.GetAllForRepository(1).ToArray();
 
                 Assert.Equal(7, results.Length);
                 Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
@@ -223,6 +348,75 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task SendsAppropriateParametersMultiWithRepositoryId()
+            {
+                var firstPageUrl = new Uri("repositories/1/pulls", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(1),
+                        new PullRequest(2),
+                        new PullRequest(3)
+                    }
+                );
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(4),
+                        new PullRequest(5),
+                        new PullRequest(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequest>>
+                (
+                    new Response(),
+                    new List<PullRequest>
+                    {
+                        new PullRequest(7)
+                    }
+                );
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Get<List<PullRequest>>(Arg.Is(firstPageUrl),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), Arg.Any<string>())
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["head"] == "user:ref-name"
+                        && d["state"] == "open"
+                        && d["base"] == "fake_base_branch"
+                        && d["sort"] == "created"
+                        && d["direction"] == "desc"), null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                var results = await client.GetAllForRepository(1, new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray();
+
+                Assert.Equal(7, results.Length);
+                Assert.Equal(firstPageResponse.Body[0].Number, results[0].Number);
+                Assert.Equal(secondPageResponse.Body[1].Number, results[4].Number);
+                Assert.Equal(lastPageResponse.Body[0].Number, results[6].Number);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -243,6 +437,11 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new PullRequestRequest(), ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new PullRequestRequest(), null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, (PullRequestRequest)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, new PullRequestRequest(), null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
@@ -273,21 +472,31 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void CreatesFromClientRepositoryPullRequestWithRepositoryId()
+            {
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Create(1, newPullRequest);
+
+                gitHubClient.Repository.PullRequest.Received().Create(1, newPullRequest);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() =>
-                    client.Create("", "name", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() =>
-                    client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create("owner", "name", null).ToTask());
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Create(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
             }
         }
 
@@ -306,21 +515,31 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void UpdatesClientRepositoryPullRequestWithRepositoryId()
+            {
+                var pullRequestUpdate = new PullRequestUpdate();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
+
+                client.Update(1, 42, pullRequestUpdate);
+
+                gitHubClient.Repository.PullRequest.Received().Update(1, 42, pullRequestUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() =>
-                    client.Create("", "name", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() =>
-                    client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Create("owner", "name", null).ToTask());
+                Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 42, new PullRequestUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", null, 42, new PullRequestUpdate()));
+                Assert.Throws<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Update(1, 42, null));
+
+                Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, new PullRequestUpdate()));
+                Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, new PullRequestUpdate()));
             }
         }
 
@@ -339,17 +558,31 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void MergesPullRequestWithRepositoryId()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new PullRequestsClient(connection);
+                var mergePullRequest = new MergePullRequest { CommitMessage = "fake commit message" };
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Merge(null, "name", 42, new MergePullRequest { CommitMessage = "message" }));
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Merge("owner", null, 42, new MergePullRequest { CommitMessage = "message" }));
-                await Assert.ThrowsAsync<ArgumentNullException>(() =>
-                    client.Merge("owner", "name", 42, null));
+                client.Merge(1, 42, mergePullRequest);
+
+                gitHubClient.Repository.PullRequest.Received().Merge(1, 42, mergePullRequest);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.Merge(null, "name", 42, new MergePullRequest { CommitMessage = "message" }));
+                Assert.Throws<ArgumentNullException>(() => client.Merge("owner", null, 42, new MergePullRequest { CommitMessage = "message" }));
+                Assert.Throws<ArgumentNullException>(() => client.Merge("owner", "name", 42, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Merge(1, 42, null));
+
+                Assert.Throws<ArgumentException>(() => client.Merge("", "name", 42, new MergePullRequest { CommitMessage = "message" }));
+                Assert.Throws<ArgumentException>(() => client.Merge("owner", "", 42, new MergePullRequest { CommitMessage = "message" }));
             }
         }
 
@@ -367,15 +600,27 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PullRequestMergedWithRepositoryId()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new PullRequestsClient(connection);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Merged(null, "", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Merged("", null, 1));
+                client.Merged(1, 42);
+
+                gitHubClient.Repository.PullRequest.Received().Merged(1, 42);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.Merged(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Merged("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Merged("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Merged("owner", "", 1));
             }
         }
 
@@ -406,15 +651,40 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task FetchesAllCommitsForPullRequestWithRepositoryId()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new PullRequestsClient(connection);
+                var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
+                var expectedUrl = "repositories/1/pulls/42/commits";
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
+                (
+                    new Response(),
+                    new List<PullRequestCommit> { commit }
+                );
+                connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Commits(null, "", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Commits("", null, 1));
+                var commits = await client.Commits(1, 42).ToList();
+
+                Assert.Equal(1, commits.Count);
+                Assert.Same(commit, commits[0]);
+                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.Commits(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Commits("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Commits("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Commits("owner", "", 1));
             }
         }
 
@@ -445,15 +715,40 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task FetchesAllFilesForPullRequestWithRepositoryId()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new PullRequestsClient(connection);
+                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
+                var expectedUrl = "repositories/1/pulls/42/files";
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
+                (
+                    new Response(),
+                    new List<PullRequestFile> { file }
+                );
+                connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
+                    .Returns(Task.FromResult(response));
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservablePullRequestsClient(gitHubClient);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Files(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Files("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Files("", "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Files("owner", "", 1));
+                var files = await client.Files(1, 42).ToList();
+
+                Assert.Equal(1, files.Count);
+                Assert.Same(file, files[0]);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.Files(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Files("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Files("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Files("owner", "", 1));
             }
         }
 
