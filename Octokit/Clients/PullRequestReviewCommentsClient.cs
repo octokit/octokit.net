@@ -37,6 +37,18 @@ namespace Octokit
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number)
+        {
+            return GetAll(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets review comments for a specified pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
@@ -52,6 +64,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets review comments for a specified pull request.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified pull request</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number), options);
+        }
+
+        /// <summary>
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
@@ -64,6 +91,17 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
         }
 
         /// <summary>
@@ -87,6 +125,20 @@ namespace Octokit
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
@@ -98,6 +150,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
 
         /// <summary>
@@ -120,6 +186,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a list of the pull request review comments in a specified repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of <see cref="PullRequestReviewComment"/>s for the specified repository</returns>
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
         /// Gets a single pull request review comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
@@ -133,6 +215,18 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number));
+        }
+
+        /// <summary>
+        /// Gets a single pull request review comment by number.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request review comment number</param>
+        /// <returns>The <see cref="PullRequestReviewComment"/></returns>
+        public Task<PullRequestReviewComment> GetComment(int repositoryId, int number)
+        {
+            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number));
         }
 
         /// <summary>
@@ -151,6 +245,29 @@ namespace Octokit
             Ensure.ArgumentNotNull(comment, "comment");
 
             var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number);
+            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
+
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
+            }
+
+            return response.Body;
+        }
+
+        /// <summary>
+        /// Creates a comment on a pull request review.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The Pull Request number</param>
+        /// <param name="comment">The comment</param>
+        /// <returns>The created <see cref="PullRequestReviewComment"/></returns>
+        public async Task<PullRequestReviewComment> Create(int repositoryId, int number, PullRequestReviewCommentCreate comment)
+        {
+            Ensure.ArgumentNotNull(comment, "comment");
+
+            var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number);
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
@@ -188,6 +305,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates a comment on a pull request review as a reply to another comment.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="comment">The comment</param>
+        /// <returns>The created <see cref="PullRequestReviewComment"/></returns>
+        public async Task<PullRequestReviewComment> CreateReply(int repositoryId, int number, PullRequestReviewCommentReplyCreate comment)
+        {
+            Ensure.ArgumentNotNull(comment, "comment");
+
+            var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number);
+            var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
+
+            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
+            }
+
+            return response.Body;
+        }
+
+        /// <summary>
         /// Edits a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
@@ -206,6 +346,21 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Edits a comment on a pull request review.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request review comment number</param>
+        /// <param name="comment">The edited comment</param>
+        /// <returns>The edited <see cref="PullRequestReviewComment"/></returns>
+        public Task<PullRequestReviewComment> Edit(int repositoryId, int number, PullRequestReviewCommentEdit comment)
+        {
+            Ensure.ArgumentNotNull(comment, "comment");
+
+            return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number), comment);
+        }
+
+        /// <summary>
         /// Deletes a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
@@ -219,6 +374,18 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(owner, name, number));
+        }
+
+        /// <summary>
+        /// Deletes a comment on a pull request review.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The pull request review comment number</param>
+        /// <returns></returns>
+        public Task Delete(int repositoryId, int number)
+        {
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(repositoryId, number));
         }
     }
 }
