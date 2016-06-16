@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The number of the issue</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForIssue(int repositoryId, int number);
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForIssue(string owner, string name, int number, ApiOptions options);
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForIssue(int repositoryId, int number, ApiOptions options);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of labels</returns>
+        /// <returns></returns>
         IObservable<Label> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        /// <returns>The label</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<Label> Get(string owner, string name, string labelName);
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        /// <returns>The label</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<Label> Get(int repositoryId, string labelName);
@@ -211,7 +211,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        /// <returns>The created label</returns>
+        /// <returns></returns>
         IObservable<Label> Create(string owner, string name, NewLabel newLabel);
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        /// <returns>The created label</returns>
+        /// <returns></returns>
         IObservable<Label> Create(int repositoryId, NewLabel newLabel);
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        /// <returns>The updated label</returns>
+        /// <returns></returns>
         IObservable<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate);
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        /// <returns>The updated label</returns>
+        /// <returns></returns>
         IObservable<Label> Update(int repositoryId, string labelName, LabelUpdate labelUpdate);
 
         /// <summary>
