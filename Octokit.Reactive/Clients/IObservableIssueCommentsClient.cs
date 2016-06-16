@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The issue comment id</param>
-        /// <returns>The <see cref="IssueComment"/>s for the specified Issue Comment.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         IObservable<IssueComment> Get(string owner, string name, int id);
@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="id">The issue comment id</param>
-        /// <returns>The <see cref="IssueComment"/>s for the specified Issue Comment.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         IObservable<IssueComment> Get(int repositoryId, int id);
@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Repository.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForIssue(int repositoryId, int number);
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForIssue(string owner, string name, int number, ApiOptions options);
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>The list of <see cref="IssueComment"/>s for the specified Issue.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> GetAllForIssue(int repositoryId, int number, ApiOptions options);
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="newComment">The text of the new comment</param>
-        /// <returns>The <see cref="IssueComment"/> that was just created.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> Create(string owner, string name, int number, string newComment);
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="newComment">The text of the new comment</param>
-        /// <returns>The <see cref="IssueComment"/> that was just created.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> Create(int repositoryId, int number, string newComment);
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        /// <returns>The <see cref="IssueComment"/> that was just updated.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> Update(string owner, string name, int id, string commentUpdate);
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        /// <returns>The <see cref="IssueComment"/> that was just updated.</returns>
+        /// <returns></returns>
         IObservable<IssueComment> Update(int repositoryId, int id, string commentUpdate);
 
         /// <summary>
