@@ -348,7 +348,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
             Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
 
             return _client.Update(owner, name, labelName, labelUpdate).ToObservable();
@@ -366,7 +366,7 @@ namespace Octokit.Reactive
         /// <returns>The updated label</returns>
         public IObservable<Label> Update(int repositoryId, string labelName, LabelUpdate labelUpdate)
         {
-            Ensure.ArgumentNotNull(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
             Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
 
             return _client.Update(repositoryId, labelName, labelUpdate).ToObservable();
@@ -406,6 +406,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Label> AddToIssue(int repositoryId, int number, string[] labels)
         {
+            Ensure.ArgumentNotNull(labels, "labels");
+
             return _client.AddToIssue(repositoryId, number, labels)
                 .ToObservable()
                 .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
