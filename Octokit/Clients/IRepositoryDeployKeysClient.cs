@@ -21,7 +21,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
-        /// <returns>A <see cref="DeployKey"/> representing the deploy key of repository for the particular number.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<DeployKey> Get(string owner, string name, int number);
 
@@ -33,7 +33,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
-        /// <returns>A <see cref="DeployKey"/> representing the deploy key of repository for the particular number.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<DeployKey> Get(int repositoryId, int number);
 
@@ -45,7 +45,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <returns>A <see cref="IReadOnlyList{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
-        /// <returns>A <see cref="IReadOnlyList{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId);
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IReadOnlyList{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IReadOnlyList{DeployKey}"/> of <see cref="DeployKey"/>s representing the deploy keys for specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        /// <returns>A <see cref="DeployKey"/> representing created deploy key.</returns>
+        /// <returns></returns>
         Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey);
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        /// <returns>A <see cref="DeployKey"/> representing created deploy key.</returns>
+        /// <returns></returns>
         Task<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey);
 
         /// <summary>
