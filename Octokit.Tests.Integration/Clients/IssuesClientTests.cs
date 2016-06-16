@@ -254,7 +254,13 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanRetrieveIssuesWithMultipleAssignees()
     {
-        var issues = await _issuesClient.GetAllForRepository("octokit", "octokit.net");
+        var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
+        var issue1 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+
+        await _issuesClient.Assignee.AddAssignees(_context.RepositoryOwner, _context.RepositoryName,issue1.Number, new AssigneesUpdate(new List<string>() { _context.RepositoryOwner }));
+
+        var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
 
         Assert.True(issues.Any(x => x.Assignees.Count > 0));
     }
