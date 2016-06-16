@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> GetAll(string owner, string name, string reference);
         
         /// <summary>
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> GetAll(int repositoryId, string reference);
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>        
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> GetAll(string owner, string name, string reference, ApiOptions options);
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/>es representing commit statuses for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> GetAll(int repositoryId, string reference, ApiOptions options);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        /// <returns>A <see cref="IObservable{CombinedCommitStatus}"/> of <see cref="CombinedCommitStatus"/> representing combined commit status for specified repository</returns>
+        /// <returns></returns>
         IObservable<CombinedCommitStatus> GetCombined(string owner, string name, string reference);
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Octokit.Reactive
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        /// <returns>A <see cref="IObservable{CombinedCommitStatus}"/> of <see cref="CombinedCommitStatus"/> representing combined commit status for specified repository</returns>
+        /// <returns></returns>
         IObservable<CombinedCommitStatus> GetCombined(int repositoryId, string reference);
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/> representing created commit status for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus);
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        /// <returns>A <see cref="IObservable{CommitStatus}"/> of <see cref="CommitStatus"/> representing created commit status for specified repository</returns>
+        /// <returns></returns>
         IObservable<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus);
     }
 }
