@@ -1,4 +1,6 @@
 language: csharp
+mono:
+  - 4.2.3
 
 sudo: false  # use the new container-based Travis infrastructure
 os:
