@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        /// <returns>A <see cref="IObservable{GitTag}"/> of <see cref="GitTag"/> representing git tag for specified repository and reference</returns>
+        /// <returns></returns>
         public IObservable<GitTag> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        /// <returns>A <see cref="IObservable{GitTag}"/> of <see cref="GitTag"/> representing git tag for specified repository and reference</returns>
+        /// <returns></returns>
         public IObservable<GitTag> Get(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
-        /// <returns>A <see cref="GitTag"/> representing created git tag for specified repository</returns>
+        /// <returns></returns>
         public IObservable<GitTag> Create(string owner, string name, NewTag tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="tag">The tag to create</param>
-        /// <returns>A <see cref="GitTag"/> representing created git tag for specified repository</returns>
+        /// <returns></returns>
         public IObservable<GitTag> Create(int repositoryId, NewTag tag)
         {
             Ensure.ArgumentNotNull(tag, "tag");
