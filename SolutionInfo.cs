@@ -9,5 +9,6 @@ using System.Runtime.InteropServices;
 namespace System {
     internal static class AssemblyVersionInformation {
         internal const string Version = "0.20.0";
+        internal const string InformationalVersion = "0.20.0";
     }
 }
