@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAll(string owner, string name);
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAll(int repositoryId);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
+        /// <returns></returns>
         Task<bool> IsCollaborator(string owner, string name, string user);
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="bool"/>True if user is a collaborator else false</returns>
+        /// <returns></returns>
         Task<bool> IsCollaborator(int repositoryId, string user);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns></returns>
         Task Add(string owner, string name, string user);
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns></returns>
         Task Add(int repositoryId, string user);
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns></returns>
         Task Delete(string owner, string name, string user);
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns></returns>
         Task Delete(int repositoryId, string user);
     }
 }
