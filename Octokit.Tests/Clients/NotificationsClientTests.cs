@@ -254,7 +254,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (NotificationsRequest)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new NotificationsRequest(), ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new NotificationsRequest(), ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new NotificationsRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new NotificationsRequest(), null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
