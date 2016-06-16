@@ -7,18 +7,17 @@ using Octokit.Tests.Integration.Helpers;
 
 public class MilestonesClientTests : IDisposable
 {
-    private readonly IGitHubClient _github;
     private readonly IMilestonesClient _milestonesClient;
     private readonly RepositoryContext _context;
 
     public MilestonesClientTests()
     {
-        _github = Helper.GetAuthenticatedClient();
+        var github = Helper.GetAuthenticatedClient();
 
-        _milestonesClient = _github.Issue.Milestone;
+        _milestonesClient = github.Issue.Milestone;
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-        _context = _github.CreateRepositoryContext(new NewRepository(repoName)).Result;
+        _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
 
     [IntegrationTest]
@@ -49,13 +48,12 @@ public class MilestonesClientTests : IDisposable
         var newMilestone = new NewMilestone("a milestone") { DueOn = DateTime.Now };
         var created = await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
 
-        var result1 = await _milestonesClient.Get(_context.RepositoryOwner, _context.RepositoryName, created.Number);
-        Assert.Equal("a milestone", result1.Title);
+        var milestone = await _milestonesClient.Get(_context.RepositoryOwner, _context.RepositoryName, created.Number);
+        Assert.Equal("a milestone", milestone.Title);
 
         await _milestonesClient.Delete(_context.RepositoryOwner, _context.RepositoryName, created.Number);
 
-        var result2 = await _milestonesClient.Get(_context.RepositoryOwner, _context.RepositoryName, created.Number);
-        Assert.Null(result2);
+        await Assert.ThrowsAsync<NotFoundException>(() => _milestonesClient.Get(_context.RepositoryOwner, _context.RepositoryName, created.Number));
     }
 
     [IntegrationTest]
@@ -64,13 +62,12 @@ public class MilestonesClientTests : IDisposable
         var newMilestone = new NewMilestone("a milestone") { DueOn = DateTime.Now };
         var created = await _milestonesClient.Create(_context.Repository.Id, newMilestone);
 
-        var result1 = await _milestonesClient.Get(_context.Repository.Id, created.Number);
-        Assert.Equal("a milestone", result1.Title);
+        var milestone = await _milestonesClient.Get(_context.Repository.Id, created.Number);
+        Assert.Equal("a milestone", milestone.Title);
 
         await _milestonesClient.Delete(_context.Repository.Id, created.Number);
 
-        var result2 = await _milestonesClient.Get(_context.Repository.Id, created.Number);
-        Assert.Null(result2);
+        await Assert.ThrowsAsync<NotFoundException>(() => _milestonesClient.Get(_context.Repository.Id, created.Number));
     }
 
     [IntegrationTest]
