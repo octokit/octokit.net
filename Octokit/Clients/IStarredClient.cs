@@ -17,7 +17,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name);
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(string owner, string name);
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId);
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{Repository}"/> starred by the specified user.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request);
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{Repository}"/> starred by the specified user.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request, ApiOptions options);
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         Task<bool> CheckStarred(string owner, string name);
         
         /// <summary>
@@ -267,7 +267,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
-        /// <returns>A <c>bool</c> representing the success of starring</returns>
+        /// <returns></returns>
         Task<bool> StarRepo(string owner, string name);
         
         /// <summary>
@@ -275,7 +275,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         Task<bool> RemoveStarFromRepo(string owner, string name);
     }
 }
