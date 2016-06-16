@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="IObservable{RepositoryHook}"/> of <see cref="RepositoryHook"/>s representing hooks for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> GetAll(string owner, string name);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The repository's ID</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="IObservable{RepositoryHook}"/> of <see cref="RepositoryHook"/>s representing hooks for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> GetAll(int repositoryId);
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="IObservable{RepositoryHook}"/> of <see cref="RepositoryHook"/>s representing hooks for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options);
         
         /// <summary>
@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's owner</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="IObservable{RepositoryHook}"/> of <see cref="RepositoryHook"/>s representing hooks for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing hook for specified hook id</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
         IObservable<RepositoryHook> Get(string owner, string name, int hookId);
 
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's owner</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing hook for specified hook id</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
         IObservable<RepositoryHook> Get(int repositoryId, int hookId);
 
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing created hook for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's owner</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing created hook for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> Create(int repositoryId, NewRepositoryHook hook);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing modified hook for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook);
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns>A <see cref="RepositoryHook"/> representing modified hook for specified repository</returns>
+        /// <returns></returns>
         IObservable<RepositoryHook> Edit(int repositoryId, int hookId, EditRepositoryHook hook);
 
         /// <summary>
