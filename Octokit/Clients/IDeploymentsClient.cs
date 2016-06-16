@@ -21,7 +21,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Deployment>> GetAll(string owner, string name);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Octokit
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Deployment>> GetAll(int repositoryId);
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Deployment"/>s for the specified repository.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Deployment>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns>The created <see cref="Deployment"/></returns>
+        /// <returns></returns>
         Task<Deployment> Create(string owner, string name, NewDeployment newDeployment);
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns>The created <see cref="Deployment"/></returns>
+        /// <returns></returns>
         Task<Deployment> Create(int repositoryId, NewDeployment newDeployment);
 
         /// <summary>
