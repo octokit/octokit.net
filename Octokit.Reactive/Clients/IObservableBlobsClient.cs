@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Blob> Get(string owner, string name, string reference);
 
@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Blob> Get(int repositoryId, string reference);
 
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        /// <returns></returns>
         IObservable<BlobReference> Create(string owner, string name, NewBlob newBlob);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        /// <returns></returns>
         IObservable<BlobReference> Create(int repositoryId, NewBlob newBlob);
     }
 }

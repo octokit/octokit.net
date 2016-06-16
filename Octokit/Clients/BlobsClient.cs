@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        /// <returns></returns>
         public Task<Blob> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -46,7 +46,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        /// <returns>The <see cref="Blob"/> for the specified SHA.</returns>
+        /// <returns></returns>
         public Task<Blob> Get(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        /// <returns></returns>
         public Task<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -81,7 +81,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        /// <returns>The <see cref="Blob"/> that was just created.</returns>
+        /// <returns></returns>
         public Task<BlobReference> Create(int repositoryId, NewBlob newBlob)
         {
             Ensure.ArgumentNotNull(newBlob, "newBlob");
