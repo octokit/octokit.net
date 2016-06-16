@@ -23,7 +23,7 @@ namespace Octokit
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -34,7 +34,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -47,7 +47,7 @@ namespace Octokit
         /// </summary>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -61,7 +61,7 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -76,7 +76,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -90,7 +90,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -103,7 +103,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -119,7 +119,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -134,7 +134,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -150,7 +150,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -166,7 +166,7 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -184,7 +184,7 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -278,7 +278,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
-        /// <returns>A <see cref="Notification"/> for the given Id.</returns>
+        /// <returns></returns>
         public Task<Notification> Get(int id)
         {
             return ApiConnection.Get<Notification>(ApiUrls.Notification(id));
@@ -300,7 +300,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        /// <returns>A <see cref="ThreadSubscription"/> for the chosen thread.</returns>
+        /// <returns></returns>
         public Task<ThreadSubscription> GetThreadSubscription(int id)
         {
             return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(id));
