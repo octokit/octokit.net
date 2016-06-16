@@ -30,7 +30,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -47,7 +47,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Release>> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="Release"/>s for the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<Release>> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -102,7 +102,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The <see cref="Release"/> specified by the id</returns>
+        /// <returns></returns>
         public Task<Release> Get(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -121,7 +121,7 @@ namespace Octokit
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The <see cref="Release"/> specified by the id</returns>
+        /// <returns></returns>
         public Task<Release> Get(int repositoryId, int id)
         {
             var endpoint = ApiUrls.Releases(repositoryId, id);
@@ -137,7 +137,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The latest <see cref="Release"/> specified by the repository</returns>
+        /// <returns></returns>
         public Task<Release> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -155,7 +155,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The latest <see cref="Release"/> specified by the repository</returns>
+        /// <returns></returns>
         public Task<Release> GetLatest(int repositoryId)
         {
             var endpoint = ApiUrls.LatestRelease(repositoryId);
@@ -172,7 +172,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="Release"/>.</returns>
+        /// <returns></returns>
         public Task<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -192,7 +192,7 @@ namespace Octokit
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="Release"/>.</returns>
+        /// <returns></returns>
         public Task<Release> Create(int repositoryId, NewRelease data)
         {
             Ensure.ArgumentNotNull(data, "data");
@@ -212,7 +212,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The updated <see cref="Release"/>.</returns>
+        /// <returns></returns>
         public Task<Release> Edit(string owner, string name, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -233,7 +233,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The updated <see cref="Release"/>.</returns>
+        /// <returns></returns>
         public Task<Release> Edit(int repositoryId, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
@@ -288,7 +288,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -306,7 +306,7 @@ namespace Octokit
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id)
         {
             return GetAllAssets(repositoryId, id, ApiOptions.None);
@@ -323,7 +323,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -344,7 +344,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The list of <see cref="ReleaseAsset"/> for the specified release of the specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -362,7 +362,7 @@ namespace Octokit
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>The created <see cref="ReleaseAsset"/>.</returns>
+        /// <returns></returns>
         public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
             Ensure.ArgumentNotNull(release, "release");
@@ -396,7 +396,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
+        /// <returns></returns>
         public Task<ReleaseAsset> GetAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -414,7 +414,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        /// <returns>The <see cref="ReleaseAsset"/> specified by the asset id.</returns>
+        /// <returns></returns>
         public Task<ReleaseAsset> GetAsset(int repositoryId, int assetId)
         {
             var endpoint = ApiUrls.Asset(repositoryId, assetId);
@@ -431,7 +431,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
+        /// <returns></returns>
         public Task<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -451,7 +451,7 @@ namespace Octokit
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        /// <returns>The edited <see cref="ReleaseAsset"/>.</returns>
+        /// <returns></returns>
         public Task<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
