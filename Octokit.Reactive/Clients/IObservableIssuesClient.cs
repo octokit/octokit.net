@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal containing the requested <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<Issue> Get(string owner, string name, int number);
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal containing the requested <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<Issue> Get(int repositoryId, int number);
@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForCurrent();
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForCurrent(IssueRequest request);
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOwnedAndMemberRepositories();
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options);
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request);
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOrganization(string organization);
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options);
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request);
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request);
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request);
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
+        /// <returns></returns>
         IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options);
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// <returns>A signal containing the new <see cref="Issue"/>.</returns>
+        /// <returns></returns>
         IObservable<Issue> Create(string owner, string name, NewIssue newIssue);
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// <returns>A signal containing the new <see cref="Issue"/>.</returns>
+        /// <returns></returns>
         IObservable<Issue> Create(int repositoryId, NewIssue newIssue);
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        /// <returns>A signal containing the updated <see cref="Issue"/>.</returns>
+        /// <returns></returns>
         IObservable<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate);
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        /// <returns>A signal containing the updated <see cref="Issue"/>.</returns>
+        /// <returns></returns>
         IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate);
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
+        /// <returns></returns>
         IObservable<Unit> Lock(string owner, string name, int number);
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
+        /// <returns></returns>
         IObservable<Unit> Lock(int repositoryId, int number);
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
+        /// <returns></returns>
         IObservable<Unit> Unlock(string owner, string name, int number);
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
+        /// <returns></returns>
         IObservable<Unit> Unlock(int repositoryId, int number);
     }
 }
