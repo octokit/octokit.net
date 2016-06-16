@@ -40,6 +40,18 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a single Milestone by number.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+        /// </remarks>
+        /// <returns></returns>
+        public IObservable<Milestone> Get(int repositoryId, int number)
+        {
+            return _client.Get(repositoryId, number).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all open milestones for the repository.
         /// </summary>
         /// <remarks>
@@ -54,6 +66,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return GetAllForRepository(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns></returns>
+        public IObservable<Milestone> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
@@ -81,6 +106,22 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Milestone> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(repositoryId), options);
+        }
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
@@ -92,6 +133,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, "request");
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of Milestones returned</param>
+        /// <returns></returns>
+        public IObservable<Milestone> GetAllForRepository(int repositoryId, MilestoneRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
 
         /// <summary>
@@ -117,6 +174,25 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all open milestones for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="request">Used to filter and sort the list of Milestones returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Milestone> GetAllForRepository(int repositoryId, MilestoneRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(repositoryId),
+                request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a
         /// Milestone.
         /// </summary>
@@ -132,6 +208,21 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(newMilestone, "newMilestone");
 
             return _client.Create(owner, name, newMilestone).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a
+        /// Milestone.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
+        /// <returns></returns>
+        public IObservable<Milestone> Create(int repositoryId, NewMilestone newMilestone)
+        {
+            Ensure.ArgumentNotNull(newMilestone, "newMilestone");
+
+            return _client.Create(repositoryId, newMilestone).ToObservable();
         }
 
         /// <summary>
@@ -155,6 +246,23 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Updates a milestone for the specified repository. Any user with pull access to a repository can create a
+        /// Milestone.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
+        /// </param>
+        /// <returns></returns>
+        public IObservable<Milestone> Update(int repositoryId, int number, MilestoneUpdate milestoneUpdate)
+        {
+            Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
+
+            return _client.Update(repositoryId, number, milestoneUpdate).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
         /// Milestone.
         /// </summary>
@@ -169,6 +277,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.Delete(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
+        /// Milestone.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The milestone number</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(int repositoryId, int number)
+        {
+            return _client.Delete(repositoryId, number).ToObservable();
         }
     }
 }
