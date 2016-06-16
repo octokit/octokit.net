@@ -38,6 +38,17 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId)
+        {
+            return GetAllStargazers(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -50,6 +61,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.Stargazers(owner, name), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<User>(ApiUrls.Stargazers(repositoryId), options);
         }
 
         /// <summary>
@@ -70,6 +95,17 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId)
+        {
+            return GetAllStargazersWithTimestamps(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -82,6 +118,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps, options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyList{UserStar}"/> of <see cref="User"/>s starring the passed repository with star creation timestamps.</returns>
+        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(repositoryId), null, AcceptHeaders.StarCreationTimestamps, options);
         }
 
         /// <summary>
