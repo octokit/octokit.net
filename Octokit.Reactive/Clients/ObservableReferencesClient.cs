@@ -44,6 +44,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a reference for a given repository by reference name
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-a-reference
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The name of the reference</param>
+        /// <returns></returns>
+        public IObservable<Reference> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _reference.Get(repositoryId, reference).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all references for a given repository
         /// </summary>
         /// <remarks>
@@ -58,6 +74,19 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name));
+        }
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns></returns>
+        public IObservable<Reference> GetAll(int repositoryId)
+        {
+            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId));
         }
 
         /// <summary>
@@ -80,6 +109,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <returns></returns>
+        public IObservable<Reference> GetAllForSubNamespace(int repositoryId, string subNamespace)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
+
+            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId, subNamespace));
+        }
+
+        /// <summary>
         /// Creates a reference for a given repository
         /// </summary>
         /// <remarks>
@@ -96,6 +141,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(reference, "reference");
 
             return _reference.Create(owner, name, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a reference for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#create-a-reference
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The reference to create</param>
+        /// <returns></returns>
+        public IObservable<Reference> Create(int repositoryId, NewReference reference)
+        {
+            Ensure.ArgumentNotNull(reference, "reference");
+
+            return _reference.Create(repositoryId, reference).ToObservable();
         }
 
         /// <summary>
@@ -120,6 +181,24 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Updates a reference for a given repository by reference name
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#update-a-reference
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The name of the reference</param>
+        /// <param name="referenceUpdate">The updated reference data</param>
+        /// <returns></returns>
+        public IObservable<Reference> Update(int repositoryId, string reference, ReferenceUpdate referenceUpdate)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNull(referenceUpdate, "update");
+
+            return _reference.Update(repositoryId, reference, referenceUpdate).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a reference for a given repository by reference name
         /// </summary>
         /// <remarks>
@@ -136,6 +215,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return _reference.Delete(owner, name, reference).ToObservable();
+        }
+
+        /// <summary>
+        /// Deletes a reference for a given repository by reference name
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#delete-a-reference
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="reference">The name of the reference</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return _reference.Delete(repositoryId, reference).ToObservable();
         }
     }
 }
