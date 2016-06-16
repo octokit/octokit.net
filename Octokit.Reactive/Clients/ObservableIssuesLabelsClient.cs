@@ -43,6 +43,20 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <returns>The list of labels</returns>
+        public IObservable<Label> GetAllForIssue(int repositoryId, int number)
+        {
+            return GetAllForIssue(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
@@ -55,6 +69,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), options);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of labels</returns>
+        public IObservable<Label> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -80,6 +111,19 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>The list of labels</returns>
+        public IObservable<Label> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -91,6 +135,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of labels</returns>
+        public IObservable<Label> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(repositoryId), options);
         }
 
         /// <summary>
@@ -117,6 +177,20 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <returns></returns>
+        public IObservable<Label> GetAllForMilestone(int repositoryId, int number)
+        {
+            return GetAllForMilestone(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
@@ -129,6 +203,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
+        }
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Label> GetAllForMilestone(int repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -151,6 +242,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a single Label by name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-a-single-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <returns>The label</returns>
+        public IObservable<Label> Get(int repositoryId, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return _client.Get(repositoryId, labelName).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a label.
         /// </summary>
         /// <remarks>
@@ -170,6 +277,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Deletes a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#delete-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <returns></returns>
+        public IObservable<Unit> Delete(int repositoryId, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return _client.Delete(repositoryId, labelName).ToObservable();
+        }
+
+        /// <summary>
         /// Creates a label.
         /// </summary>
         /// <remarks>
@@ -186,6 +309,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(newLabel, "newLabel");
 
             return _client.Create(owner, name, newLabel).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#create-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newLabel">The data for the label to be created</param>
+        /// <returns>The created label</returns>
+        public IObservable<Label> Create(int repositoryId, NewLabel newLabel)
+        {
+            Ensure.ArgumentNotNull(newLabel, "newLabel");
+
+            return _client.Create(repositoryId, newLabel).ToObservable();
         }
 
         /// <summary>
@@ -210,6 +349,24 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Updates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#update-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <param name="labelUpdate">The data for the label to be updated</param>
+        /// <returns>The updated label</returns>
+        public IObservable<Label> Update(int repositoryId, string labelName, LabelUpdate labelUpdate)
+        {
+            Ensure.ArgumentNotNull(labelName, "labelName");
+            Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
+
+            return _client.Update(repositoryId, labelName, labelUpdate).ToObservable();
+        }
+
+        /// <summary>
         /// Adds a label to an issue
         /// </summary>
         /// <remarks>
@@ -231,6 +388,22 @@ namespace Octokit.Reactive
                 .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
         }
 
+        /// <summary>
+        /// Adds a label to an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to add</param>
+        /// <returns></returns>
+        public IObservable<Label> AddToIssue(int repositoryId, int number, string[] labels)
+        {
+            return _client.AddToIssue(repositoryId, number, labels)
+                .ToObservable()
+                .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
+        }
 
         /// <summary>
         /// Removes a label from an issue
@@ -250,6 +423,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
 
             return _client.RemoveFromIssue(owner, name, number, labelName).ToObservable();
+        }
+
+        /// <summary>
+        /// Removes a label from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labelName">The name of the label to remove</param>
+        /// <returns></returns>
+        public IObservable<Unit> RemoveFromIssue(int repositoryId, int number, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return _client.RemoveFromIssue(repositoryId, number, labelName).ToObservable();
         }
 
         /// <summary>
@@ -275,6 +465,25 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Replaces all labels on the specified issues with the provided labels
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to set</param>
+        /// <returns></returns>
+        public IObservable<Label> ReplaceAllForIssue(int repositoryId, int number, string[] labels)
+        {
+            Ensure.ArgumentNotNull(labels, "labels");
+
+            return _client.ReplaceAllForIssue(repositoryId, number, labels)
+                .ToObservable()
+                .SelectMany(x => x);  // HACK: PUT is not compatible with GetAndFlattenPages
+        }
+
+        /// <summary>
         /// Removes all labels from an issue
         /// </summary>
         /// <remarks>
@@ -290,6 +499,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.RemoveAllFromIssue(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Removes all labels from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <returns></returns>
+        public IObservable<Unit> RemoveAllFromIssue(int repositoryId, int number)
+        {
+            return _client.RemoveAllFromIssue(repositoryId, number).ToObservable();
         }
     }
 }

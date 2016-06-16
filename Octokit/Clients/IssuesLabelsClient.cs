@@ -34,6 +34,20 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <returns>The list of labels</returns>
+        public Task<IReadOnlyList<Label>> GetAllForIssue(int repositoryId, int number)
+        {
+            return GetAllForIssue(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
@@ -46,6 +60,23 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), options);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of labels</returns>
+        public Task<IReadOnlyList<Label>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -71,6 +102,19 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>The list of labels</returns>
+        public Task<IReadOnlyList<Label>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -82,6 +126,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), options);
+        }
+
+        /// <summary>
+        /// Gets all  labels for the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The list of labels</returns>
+        public Task<IReadOnlyList<Label>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), options);
         }
 
         /// <summary>
@@ -108,6 +168,20 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> GetAllForMilestone(int repositoryId, int number)
+        {
+            return GetAllForMilestone(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
@@ -120,6 +194,23 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
+        }
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> GetAllForMilestone(int repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -142,6 +233,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single Label by name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-a-single-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <returns>The label</returns>
+        public Task<Label> Get(int repositoryId, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName));
+        }
+
+        /// <summary>
         /// Deletes a label.
         /// </summary>
         /// <remarks>
@@ -161,6 +268,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Deletes a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#delete-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <returns></returns>
+        public Task Delete(int repositoryId, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return ApiConnection.Delete(ApiUrls.Label(repositoryId, labelName));
+        }
+
+        /// <summary>
         /// Creates a label.
         /// </summary>
         /// <remarks>
@@ -177,6 +300,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(newLabel, "newLabel");
 
             return ApiConnection.Post<Label>(ApiUrls.Labels(owner, name), newLabel);
+        }
+
+        /// <summary>
+        /// Creates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#create-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="newLabel">The data for the label to be created</param>
+        /// <returns>The created label</returns>
+        public Task<Label> Create(int repositoryId, NewLabel newLabel)
+        {
+            Ensure.ArgumentNotNull(newLabel, "newLabel");
+
+            return ApiConnection.Post<Label>(ApiUrls.Labels(repositoryId), newLabel);
         }
 
         /// <summary>
@@ -201,6 +340,24 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Updates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#update-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <param name="labelUpdate">The data for the label to be updated</param>
+        /// <returns>The updated label</returns>
+        public Task<Label> Update(int repositoryId, string labelName, LabelUpdate labelUpdate)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
+
+            return ApiConnection.Post<Label>(ApiUrls.Label(repositoryId, labelName), labelUpdate);
+        }
+
+        /// <summary>
         /// Adds a label to an issue
         /// </summary>
         /// <remarks>
@@ -218,6 +375,23 @@ namespace Octokit
             Ensure.ArgumentNotNull(labels, "labels");
 
             return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels);
+        }
+
+        /// <summary>
+        /// Adds a label to an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to add</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> AddToIssue(int repositoryId, int number, string[] labels)
+        {
+            Ensure.ArgumentNotNull(labels, "labels");
+
+            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
         }
 
         /// <summary>
@@ -241,6 +415,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Removes a label from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labelName">The name of the label to remove</param>
+        /// <returns></returns>
+        public Task RemoveFromIssue(int repositoryId, int number, string labelName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+
+            return ApiConnection.Delete(ApiUrls.IssueLabel(repositoryId, number, labelName));
+        }
+
+        /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
         /// </summary>
         /// <remarks>
@@ -261,6 +452,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Replaces all labels on the specified issues with the provided labels
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to set</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Label>> ReplaceAllForIssue(int repositoryId, int number, string[] labels)
+        {
+            Ensure.ArgumentNotNull(labels, "labels");
+
+            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
+        }
+
+        /// <summary>
         /// Removes all labels from an issue
         /// </summary>
         /// <remarks>
@@ -276,6 +484,20 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Delete(ApiUrls.IssueLabels(owner, name, number));
+        }
+
+        /// <summary>
+        /// Removes all labels from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <returns></returns>
+        public Task RemoveAllFromIssue(int repositoryId, int number)
+        {
+            return ApiConnection.Delete(ApiUrls.IssueLabels(repositoryId, number));
         }
     }
 }
