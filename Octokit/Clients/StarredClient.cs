@@ -26,7 +26,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -40,7 +40,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId)
         {
             return GetAllStargazers(repositoryId, ApiOptions.None);
@@ -53,7 +53,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -69,7 +69,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s starring the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
