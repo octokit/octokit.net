@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        /// <returns></returns>
         IObservable<User> GetAllWatchers(string owner, string name);
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        /// <returns></returns>
         IObservable<User> GetAllWatchers(int repositoryId);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        /// <returns></returns>
         IObservable<User> GetAllWatchers(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -44,14 +44,14 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s watching the passed repository</returns>
+        /// <returns></returns>
         IObservable<User> GetAllWatchers(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Repository> GetAllForCurrent();
 
@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> of <see cref="Repository"/></returns>
+        /// <returns></returns>
         IObservable<Repository> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> watched by the specified user</returns>
+        /// <returns></returns>
         IObservable<Repository> GetAllForUser(string user);
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <see cref="IObservable{Repository}"/> watched by the specified user</returns>
+        /// <returns></returns>
         IObservable<Repository> GetAllForUser(string user, ApiOptions options);
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         IObservable<bool> CheckWatched(string owner, string name);
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         IObservable<bool> CheckWatched(int repositoryId);
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
+        /// <returns></returns>
         IObservable<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <see cref="Subscription"/> representing the subscription on specified repository.</returns>
+        /// <returns></returns>
         IObservable<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription);
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
         IObservable<bool> UnwatchRepo(string owner, string name);
@@ -128,7 +128,7 @@ namespace Octokit.Reactive
         /// Unstars a repository for the authenticated user.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
         IObservable<bool> UnwatchRepo(int repositoryId);
