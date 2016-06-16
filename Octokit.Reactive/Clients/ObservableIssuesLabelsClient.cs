@@ -6,6 +6,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Issue Labels API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/labels/">Issue Labels API documentation</a> for more information.
+    /// </remarks>
     public class ObservableIssuesLabelsClient : IObservableIssuesLabelsClient
     {
         readonly IIssuesLabelsClient _client;
