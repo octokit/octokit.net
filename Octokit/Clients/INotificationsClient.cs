@@ -60,12 +60,29 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
@@ -80,6 +97,15 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
@@ -87,6 +113,16 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
         /// Marks all notifications as read.
@@ -115,12 +151,29 @@ namespace Octokit
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        Task MarkAsReadForRepository(int repositoryId);
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         /// <returns></returns>
         Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest);
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        Task MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
         /// Retrives a single <see cref="Notification"/> by Id.

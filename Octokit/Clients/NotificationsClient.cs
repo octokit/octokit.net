@@ -88,6 +88,17 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
@@ -100,6 +111,20 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), options);
         }
 
         /// <summary>
@@ -122,6 +147,20 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
@@ -136,6 +175,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -179,6 +234,17 @@ namespace Octokit
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        public Task MarkAsReadForRepository(int repositoryId)
+        {
+            return ApiConnection.Put(ApiUrls.Notifications(repositoryId));
+        }
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
@@ -188,9 +254,23 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(markAsReadRequest, "markAsRead");
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsReadRequest);
+        }
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        public Task MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest)
+        {
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+
+            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), markAsReadRequest);
         }
 
         /// <summary>

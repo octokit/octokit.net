@@ -5,6 +5,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Activity Notifications API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/notifications/">Activity Notifications API documentation</a> for more information.
+    /// </remarks>
     public class ObservableNotificationsClient : IObservableNotificationsClient
     {
         readonly IConnection _connection;
@@ -59,6 +65,17 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
+        public IObservable<Notification> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
@@ -71,6 +88,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(owner, name), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
+        public IObservable<Notification> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(repositoryId), options);
         }
 
         /// <summary>
@@ -121,6 +152,20 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public IObservable<Notification> GetAllForRepository(int repositoryId, NotificationsRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
@@ -135,6 +180,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
+        public IObservable<Notification> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -178,6 +239,17 @@ namespace Octokit.Reactive
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        public IObservable<Unit> MarkAsReadForRepository(int repositoryId)
+        {
+            return _notificationsClient.MarkAsReadForRepository(repositoryId).ToObservable();
+        }
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
@@ -190,6 +262,20 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
 
             return _notificationsClient.MarkAsReadForRepository(owner, name, markAsReadRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        /// <returns></returns>
+        public IObservable<Unit> MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest)
+        {
+            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+
+            return _notificationsClient.MarkAsReadForRepository(repositoryId, markAsReadRequest).ToObservable();
         }
 
         /// <summary>
