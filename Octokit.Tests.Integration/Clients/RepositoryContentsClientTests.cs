@@ -192,7 +192,7 @@ namespace Octokit.Tests.Integration.Clients
             var archive = await github
                 .Repository
                 .Content
-                .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "dev");
+                .GetArchive("alfhenrik", "ScriptCs.OctoKit", ArchiveFormat.Tarball, "master");
 
             Assert.NotEmpty(archive);
         }

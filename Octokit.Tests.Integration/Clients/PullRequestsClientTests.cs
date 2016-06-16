@@ -85,7 +85,7 @@ public class PullRequestsClientTests : IDisposable
         {
             PageSize = 1,
             PageCount = 1,
-            StartPage = 2
+            StartPage = 1
         };
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
@@ -174,7 +174,7 @@ public class PullRequestsClientTests : IDisposable
         {
             PageSize = 1,
             PageCount = 1,
-            StartPage = 2
+            StartPage = 1
         };
 
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };

@@ -96,6 +96,16 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        Task<IReadOnlyList<T>> GetAll<T>(Uri uri, string accepts);
+
+        /// <summary>
+        /// Gets all API resources in the list at the specified URI.
+        /// </summary>
+        /// <typeparam name="T">Type of the API resource in the list.</typeparam>
+        /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
@@ -301,7 +311,7 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task Delete(Uri uri, object data, string accepts);
-        
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.

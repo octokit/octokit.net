@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Octokit.Reactive;
 
 namespace Octokit.Tests.Integration
 {
@@ -110,34 +111,66 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTSECRET"); }
         }
 
-        public static void DeleteRepo(Repository repository)
+        public static void DeleteRepo(IConnection connection, Repository repository)
         {
             if (repository != null)
-                DeleteRepo(repository.Owner.Login, repository.Name);
+                DeleteRepo(connection, repository.Owner.Login, repository.Name);
         }
 
-        public static void DeleteRepo(string owner, string name)
+        public static void DeleteRepo(IConnection connection, string owner, string name)
         {
-            var api = GetAuthenticatedClient();
             try
             {
-                api.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
+                var client = new GitHubClient(connection);
+                client.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }
 
-        public static void DeleteKey(PublicKey key)
+        public static void DeleteTeam(IConnection connection, Team team)
         {
-            if (key != null)
-                DeleteKey(key.Id);
+            if (team != null)
+                DeleteTeam(connection, team.Id);
         }
 
-        public static void DeleteKey(int keyId)
+        public static void DeleteTeam(IConnection connection, int teamId)
         {
-            var api = GetAuthenticatedClient();
             try
             {
-                api.User.Keys.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
+                var client = new GitHubClient(connection);
+                client.Organization.Team.Delete(teamId).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
+        public static void DeleteKey(IConnection connection, PublicKey key)
+        {
+            if (key != null)
+                DeleteKey(connection, key.Id);
+        }
+
+        public static void DeleteKey(IConnection connection, int keyId)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.User.GitSshKey.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
+        public static void DeleteGpgKey(IConnection connection, GpgKey key)
+        {
+            if (key != null)
+                DeleteGpgKey(connection, key.Id);
+        }
+
+        public static void DeleteGpgKey(IConnection connection, int keyId)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.User.GpgKey.Delete(keyId).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }
