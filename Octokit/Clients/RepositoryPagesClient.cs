@@ -27,7 +27,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="Page"/> representing page metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<Page> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -43,7 +43,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="Page"/> representing page metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<Page> Get(int repositoryId)
         {
             return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId));
@@ -57,7 +57,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -73,7 +73,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -88,7 +88,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -107,7 +107,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{PagesBuild}"/> of <see cref="PagesBuild"/>s representing pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -124,7 +124,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="Page"/> representing latest pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<PagesBuild> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -140,7 +140,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="Page"/> representing latest pages build metadata of specified repository.</returns>
+        /// <returns></returns>
         public Task<PagesBuild> GetLatest(int repositoryId)
         {
             return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId));
