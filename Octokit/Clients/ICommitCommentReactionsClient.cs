@@ -19,7 +19,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns>A <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        /// <returns></returns>
         Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns>A <see cref="Reaction"/> representing created reaction for specified comment id.</returns>
+        /// <returns></returns>
         Task<Reaction> Create(int repositoryId, int number, NewReaction reaction);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
-        /// <returns>A <see cref="IReadOnlyList{Reaction}"/> of <see cref="Reaction"/>s representing all reactions for specified comment id.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>        
-        /// <returns>A <see cref="IReadOnlyList{Reaction}"/> of <see cref="Reaction"/>s representing all reactions for specified comment id.</returns>
+        /// <returns></returns>
         Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number);
     }
 }
