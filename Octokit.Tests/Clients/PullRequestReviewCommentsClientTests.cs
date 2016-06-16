@@ -368,8 +368,8 @@ public class PullRequestReviewCommentsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request, null));
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, request));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (PullRequestReviewCommentRequest)null));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, request, null));
 
@@ -592,7 +592,7 @@ public class PullRequestReviewCommentsClientTests
 
             await client.Delete("owner", "name", 13);
 
-            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments/13"));
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/13"));
         }
 
         [Fact]

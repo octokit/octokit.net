@@ -91,7 +91,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlMulti()
             {
-                var firstPageUrl = new Uri("repos/fakeOwner/fakeRepoName/pulls/7/comments", UriKind.Relative);
+                var firstPageUrl = new Uri("repos/owner/name/pulls/7/comments", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
@@ -532,7 +532,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlWithoutSelectedSortingArgumentsMulti()
             {
-                var firstPageUrl = new Uri("repos/fakeOwner/fakeRepoName/pulls/comments", UriKind.Relative);
+                var firstPageUrl = new Uri("repos/owner/name/pulls/comments", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
@@ -654,7 +654,7 @@ namespace Octokit.Tests.Reactive
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
 
-                var results = await client.GetAllForRepository("owner", "name").ToArray();
+                var results = await client.GetAllForRepository(1).ToArray();
 
                 Assert.Equal(8, results.Length);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
