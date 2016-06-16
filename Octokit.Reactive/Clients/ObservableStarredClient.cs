@@ -4,6 +4,12 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Activity Starring API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/starring/">Activity Starring API documentation</a> for more information.
+    /// </remarks>
     public class ObservableStarredClient : IObservableStarredClient
     {
         private readonly IStarredClient _client;
