@@ -308,7 +308,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlMulti()
             {
-                var firstPageUrl = new Uri("repos/fakeOwner/fakeRepoName/pulls/comments", UriKind.Relative);
+                var firstPageUrl = new Uri("repos/owner/name/pulls/comments", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
