@@ -177,7 +177,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", "club", null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllStargazers(1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllStargazers(1, null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps(1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllStargazers("", "club"));
