@@ -733,7 +733,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAllContributors(owner, name, false, ApiOptions.None);
+            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
         }
 
         /// <summary>
@@ -747,7 +747,7 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, bool includeAnonymous)
         {
-            return GetAllContributors(repositoryId, false, ApiOptions.None);
+            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None);
         }
 
         /// <summary>
@@ -879,7 +879,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
+            var repositoryTeams = ApiUrls.RepositoryTeams(owner, name);
+            return ApiConnection.GetAll<Team>(repositoryTeams, options);
         }
 
         /// <summary>
