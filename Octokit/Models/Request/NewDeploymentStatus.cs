@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -28,12 +29,33 @@ namespace Octokit
         /// output to keep the user updated while the task is running or serve as
         /// historical information for what happened in the deployment
         /// </summary>
+        [Obsolete("This property is obsolete. Use LogUrl instead.", false)]
         public string TargetUrl { get; set; }
+
+        /// <summary>
+        /// The target URL to associate with this status. This URL should contain
+        /// output to keep the user updated while the task is running or serve as
+        /// historical information for what happened in the deployment
+        /// </summary>
+        public string LogUrl { get; set; }
 
         /// <summary>
         /// A short description of the status.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The URL for accessing your environment.
+        /// </summary>
+        public string EnvironmentUrl { get; set; }
+
+        /// <summary>
+        /// Indicates if a new inactive status should be added to all non-transient, 
+        /// non-production environment deployments with the same repository and environment 
+        /// name as the created status's deployment. 
+        /// (DEFAULT if not specified: True)
+        /// </summary>
+        public bool? AutoInactive { get; set; }
 
         internal string DebuggerDisplay
         {
