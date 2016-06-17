@@ -21,7 +21,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<DeployKey> Get(string owner, string name, int number);
 
@@ -33,7 +32,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<DeployKey> Get(int repositoryId, int number);
 
@@ -45,7 +43,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name);
 
         /// <summary>
@@ -55,7 +52,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
-        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId);
 
         /// <summary>
@@ -67,7 +63,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -78,7 +73,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -90,7 +84,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        /// <returns></returns>
         Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey);
 
         /// <summary>
@@ -101,7 +94,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        /// <returns></returns>
         Task<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey);
 
         /// <summary>
@@ -113,7 +105,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
-        /// <returns></returns>
         Task Delete(string owner, string name, int number);
 
         /// <summary>
@@ -124,7 +115,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
-        /// <returns></returns>
         Task Delete(int repositoryId, int number);
     }
 }
