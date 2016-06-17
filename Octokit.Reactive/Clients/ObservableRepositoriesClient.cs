@@ -795,32 +795,32 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="branchName">The name of the branch</param>
+        /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        public IObservable<Branch> EditBranch(string owner, string name, string branchName, BranchUpdate update)
+        public IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
-            return _client.EditBranch(owner, name, branchName, update).ToObservable();
+            return _client.EditBranch(owner, name, branch, update).ToObservable();
         }
 
         /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <param name="branchName">The name of the branch</param>
+        /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        public IObservable<Branch> EditBranch(int repositoryId, string branchName, BranchUpdate update)
+        public IObservable<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
-            return _client.EditBranch(repositoryId, branchName, update).ToObservable();
+            return _client.EditBranch(repositoryId, branch, update).ToObservable();
         }
 
         /// <summary>
