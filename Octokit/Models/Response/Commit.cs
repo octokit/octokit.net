@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Octokit.Internal;
+using Octokit.Models.Response;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -34,5 +36,7 @@ namespace Octokit
         public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public int CommentCount { get; protected set; }
+
+        public Verification Verification { get; protected set; }
     }
 }

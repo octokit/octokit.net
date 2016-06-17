@@ -27,7 +27,9 @@ namespace Octokit
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
-        
+
+        public const string SignatureVerification = "application/vnd.github.cryptographer-preview+sha";
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
     }
