@@ -31,7 +31,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IObservable{Readme}"/> of <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         public IObservable<Readme> GetReadme(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -44,7 +43,6 @@ namespace Octokit.Reactive
         /// Returns the HTML rendered README.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IObservable{Readme}"/> of <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         public IObservable<Readme> GetReadme(int repositoryId)
         {
             return _client.Repository.Content.GetReadme(repositoryId).ToObservable();
@@ -55,7 +53,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A <see cref="IObservable{String}"/> of <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         public IObservable<string> GetReadmeHtml(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -68,7 +65,6 @@ namespace Octokit.Reactive
         /// Returns just the HTML portion of the README without the surrounding HTML document. 
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A <see cref="IObservable{String}"/> of <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         public IObservable<string> GetReadmeHtml(int repositoryId)
         {
             return _client.Repository.Content.GetReadmeHtml(repositoryId).ToObservable();
@@ -80,7 +76,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -94,7 +89,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(int repositoryId)
         {
             return GetArchive(repositoryId, ArchiveFormat.Tarball);
@@ -107,7 +101,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -122,7 +115,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat)
         {
             return GetArchive(repositoryId, archiveFormat, string.Empty);
@@ -136,7 +128,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -153,7 +144,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        /// <returns>A promise, containing the binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNull(reference, "reference");
@@ -170,7 +160,6 @@ namespace Octokit.Reactive
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        /// <returns>The binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -189,7 +178,6 @@ namespace Octokit.Reactive
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        /// <returns>The binary contents of the archive</returns>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.GreaterThanZero(timeout, "timeout");
@@ -207,9 +195,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContents(string owner, string name, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -229,9 +214,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContents(int repositoryId, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
@@ -246,9 +228,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContents(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -263,9 +242,6 @@ namespace Octokit.Reactive
         /// Returns the contents of the root directory in a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContents(int repositoryId)
         {
             return _client
@@ -284,9 +260,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -307,9 +280,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContentsByRef(int repositoryId, string reference, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -324,9 +294,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -341,9 +308,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         public IObservable<RepositoryContent> GetAllContentsByRef(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -358,7 +322,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns>A <see cref="IObservable{RepositoryContentChangeSet}"/> of <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         public IObservable<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -375,7 +338,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns>A <see cref="IObservable{RepositoryContentChangeSet}"/> of <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         public IObservable<RepositoryContentChangeSet> CreateFile(int repositoryId, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
@@ -391,7 +353,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        /// <returns>The updated content</returns>
         public IObservable<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -408,7 +369,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        /// <returns>The updated content</returns>
         public IObservable<RepositoryContentChangeSet> UpdateFile(int repositoryId, string path, UpdateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
@@ -424,7 +384,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        /// <returns></returns>
         public IObservable<Unit> DeleteFile(string owner, string name, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -441,7 +400,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        /// <returns></returns>
         public IObservable<Unit> DeleteFile(int repositoryId, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");

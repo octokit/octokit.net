@@ -22,9 +22,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path);
 
         /// <summary>
@@ -35,9 +32,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The content path</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(int repositoryId, string path);
 
         /// <summary>
@@ -48,9 +42,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name);
 
         /// <summary>
@@ -60,9 +51,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(int repositoryId);
 
         /// <summary>
@@ -75,9 +63,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference);
 
         /// <summary>
@@ -89,9 +74,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(int repositoryId, string path, string reference);
 
         /// <summary>
@@ -104,9 +86,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference);
 
         /// <summary>
@@ -118,9 +97,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        /// <returns>
-        /// A collection of <see cref="RepositoryContent"/> representing the content at the specified path
-        /// </returns>
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(int repositoryId, string reference);
 
         /// <summary>
@@ -132,7 +108,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         Task<Readme> GetReadme(string owner, string name);
 
         /// <summary>
@@ -143,7 +118,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="Readme"/> representing the README.md at the specified repository.</returns>
         Task<Readme> GetReadme(int repositoryId);
 
         /// <summary>
@@ -155,7 +129,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         Task<string> GetReadmeHtml(string owner, string name);
 
         /// <summary>
@@ -166,7 +139,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="string"/> contains the HTML representation of README.md at the specified repository.</returns>
         Task<string> GetReadmeHtml(int repositoryId);
 
         /// <summary>
@@ -175,7 +147,6 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(string owner, string name);
 
         /// <summary>
@@ -183,7 +154,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(int repositoryId);
 
         /// <summary>
@@ -193,7 +163,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat);
 
         /// <summary>
@@ -202,7 +171,6 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat);
 
         /// <summary>
@@ -213,7 +181,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference);
 
         /// <summary>
@@ -223,7 +190,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference);
 
         /// <summary>
@@ -235,7 +201,6 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout);
 
         /// <summary>
@@ -246,7 +211,6 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        /// <returns>The binary contents of the archive</returns>
         Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout);
 
         /// <summary>
@@ -256,7 +220,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns>A <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         Task<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request);
 
         /// <summary>
@@ -265,7 +228,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        /// <returns>A <see cref="RepositoryContentChangeSet"/> representing file created at the specified repository.</returns>
         Task<RepositoryContentChangeSet> CreateFile(int repositoryId, string path, CreateFileRequest request);
 
         /// <summary>
@@ -275,7 +237,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        /// <returns>The updated content</returns>
         Task<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request);
 
         /// <summary>
@@ -284,7 +245,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        /// <returns>The updated content</returns>
         Task<RepositoryContentChangeSet> UpdateFile(int repositoryId, string path, UpdateFileRequest request);
 
         /// <summary>
@@ -294,7 +254,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        /// <returns></returns>
         Task DeleteFile(string owner, string name, string path, DeleteFileRequest request);
 
         /// <summary>
@@ -303,7 +262,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        /// <returns></returns>
         Task DeleteFile(int repositoryId, string path, DeleteFileRequest request);
     }
 
