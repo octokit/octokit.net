@@ -462,7 +462,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return GetAllContributors(owner, name, false, ApiOptions.None);
+            return GetAllContributors(owner, name, false, options);
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return GetAllContributors(repositoryId, false, ApiOptions.None);
+            return GetAllContributors(repositoryId, false, options);
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAllContributors(owner, name, false, ApiOptions.None);
+            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
         }
 
         /// <summary>
@@ -510,9 +510,20 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(int repositoryId, bool includeAnonymous)
         {
-            return GetAllContributors(repositoryId, false, ApiOptions.None);
+            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None);
         }
 
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -524,7 +535,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options);
         }
 
         /// <summary>
@@ -546,7 +557,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options);
         }
 
         /// <summary>
@@ -727,6 +738,10 @@ namespace Octokit.Reactive
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
         public IObservable<Branch> GetBranch(string owner, string name, string branchName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
             return _client.GetBranch(owner, name, branchName).ToObservable();
         }
 
@@ -741,6 +756,8 @@ namespace Octokit.Reactive
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
         public IObservable<Branch> GetBranch(int repositoryId, string branchName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+
             return _client.GetBranch(repositoryId, branchName).ToObservable();
         }
 
@@ -753,6 +770,10 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(update, "update");
+
             return _client.Edit(owner, name, update).ToObservable();
         }
 
@@ -764,6 +785,8 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public IObservable<Repository> Edit(int repositoryId, RepositoryUpdate update)
         {
+            Ensure.ArgumentNotNull(update, "update");
+
             return _client.Edit(repositoryId, update).ToObservable();
         }
 
@@ -772,24 +795,32 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
+        /// <param name="branchName">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        public IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update)
+        public IObservable<Branch> EditBranch(string owner, string name, string branchName, BranchUpdate update)
         {
-            return _client.EditBranch(owner, name, branch, update).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return _client.EditBranch(owner, name, branchName, update).ToObservable();
         }
 
         /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <param name="branch">The name of the branch</param>
+        /// <param name="branchName">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        public IObservable<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update)
+        public IObservable<Branch> EditBranch(int repositoryId, string branchName, BranchUpdate update)
         {
-            return _client.EditBranch(repositoryId, branch, update).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return _client.EditBranch(repositoryId, branchName, update).ToObservable();
         }
 
         /// <summary>
