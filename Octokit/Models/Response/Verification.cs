@@ -18,23 +18,23 @@ namespace Octokit.Models.Response
         /// <summary>
         /// Does GitHub consider the signature in this commit to be verified?
         /// </summary>
-        public bool Verified { get; set; }
+        public bool Verified { get; protected set; }
 
         /// <summary>
         /// The reason for verified value.
         /// </summary>
         [Parameter(Key = "reason")]
-        public Reason Reason { get; set; }
+        public Reason Reason { get; protected set; }
 
         /// <summary>
         /// The signature that was extracted from the commit.
         /// </summary>
-        public string Signature { get; set; }
+        public string Signature { get; protected set; }
 
         /// <summary>
         /// The value that was signed.
         /// </summary>
-        public string Payload { get; set; }
+        public string Payload { get; protected set; }
 
         internal string DebuggerDisplay
         {
