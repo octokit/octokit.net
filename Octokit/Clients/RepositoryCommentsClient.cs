@@ -23,11 +23,10 @@ namespace Octokit
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         public Task<CommitComment> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -37,12 +36,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets a single Repository Comment by number.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
+        public Task<CommitComment> Get(int repositoryId, int number)
+        {
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number));
+        }
+
+        /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -54,11 +63,20 @@ namespace Octokit
         /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -69,13 +87,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets Commit Comments for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), options);
+        }
+
+        /// <summary>
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -88,12 +118,24 @@ namespace Octokit
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+
+            return GetAllForCommit(repositoryId, sha, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets Commit Comments for a specified Commit.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -105,14 +147,28 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets Commit Comments for a specified Commit.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha of the commit</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), options);
+        }
+
+        /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         public Task<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -124,14 +180,28 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates a new Commit Comment for a specified Commit.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="sha">The sha reference of commit</param>
+        /// <param name="newCommitComment">The new comment to add to the commit</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
+        public Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+
+            return ApiConnection.Post<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), newCommitComment);
+        }
+
+        /// <summary>
         /// Updates a specified Commit Comment.
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         public Task<CommitComment> Update(string owner, string name, int number, string commentUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -142,19 +212,43 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Updates a specified Commit Comment.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <param name="commentUpdate">The modified comment</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
+        public Task<CommitComment> Update(int repositoryId, int number, string commentUpdate)
+        {
+            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+
+            return ApiConnection.Patch<CommitComment>(ApiUrls.CommitComment(repositoryId, number), new BodyWrapper(commentUpdate));
+        }
+
+        /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
-        /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <returns></returns>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         public Task Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return ApiConnection.Delete(ApiUrls.CommitComment(owner, name, number));
+        }
+
+        /// <summary>
+        /// Deletes the specified Commit Comment
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
+        public Task Delete(int repositoryId, int number)
+        {
+            return ApiConnection.Delete(ApiUrls.CommitComment(repositoryId, number));
         }
     }
 }
