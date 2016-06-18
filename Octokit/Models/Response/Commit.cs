@@ -1,9 +1,8 @@
-﻿using Octokit.Internal;
-using Octokit.Models.Response;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using Octokit.Models.Response;
 
 namespace Octokit
 {
