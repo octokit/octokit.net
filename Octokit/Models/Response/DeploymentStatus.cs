@@ -56,6 +56,18 @@ namespace Octokit
         public string TargetUrl { get; protected set; }
 
         /// <summary>
+        /// The target URL  of this deployment status. This URL should contain
+        /// output to keep the user updated while the task is running or serve as
+        /// historical information for what happened in the deployment
+        /// </summary>
+        public string LogUrl { get; protected set; }
+
+        /// <summary>
+        /// The URL for accessing your environment.
+        /// </summary>
+        public string EnvironmentUrl { get; protected set; }
+
+        /// <summary>
         /// The date and time that the status was created.
         /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
@@ -84,6 +96,7 @@ namespace Octokit
         Pending,
         Success,
         Error,
-        Failure
+        Failure,
+        Inactive
     }
 }

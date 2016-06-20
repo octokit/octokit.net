@@ -37,6 +37,21 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.Equal(_keyTitle, deployKeyResult.Title);
     }
 
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
+    public async Task CanCreateADeployKeyWithRepositoryId()
+    {
+        var deployKey = new NewDeployKey
+        {
+            Key = _key,
+            Title = _keyTitle
+        };
+
+        var deployKeyResult = await _fixture.Create(_context.Repository.Id, deployKey);
+        Assert.NotNull(deployKeyResult);
+        Assert.Equal(_key, deployKeyResult.Key);
+        Assert.Equal(_keyTitle, deployKeyResult.Title);
+    }
+
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
     public async Task CanRetrieveAllDeployKeys()
     {
@@ -52,6 +67,26 @@ public class RepositoryDeployKeysClientTests : IDisposable
         await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, deployKey);
 
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.Equal(1, deployKeys.Count);
+        Assert.Equal(_key, deployKeys[0].Key);
+        Assert.Equal(_keyTitle, deployKeys[0].Title);
+    }
+
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
+    public async Task CanRetrieveAllDeployKeysWithRepositoryId()
+    {
+        var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.Equal(0, deployKeys.Count);
+
+        var deployKey = new NewDeployKey
+        {
+            Key = _key,
+            Title = _keyTitle
+        };
+
+        await _fixture.Create(_context.Repository.Id, deployKey);
+
+        deployKeys = await _fixture.GetAll(_context.Repository.Id);
         Assert.Equal(1, deployKeys.Count);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
@@ -166,6 +201,46 @@ public class RepositoryDeployKeysClientTests : IDisposable
         Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
     }
 
+    [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
+    public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
+    {
+        var list = new List<NewDeployKey>();
+        var deployKeysCount = 5;
+        for (int i = 0; i < deployKeysCount; i++)
+        {
+            var item = new NewDeployKey
+            {
+                Key = "ssh-rsa A" + i, // here we should genereate ssh-key some how
+                Title = "KeyTitle" + i
+            };
+            list.Add(item);
+        }
+
+        foreach (var key in list)
+        {
+            await _fixture.Create(_context.Repository.Id, key);
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1
+        };
+
+        var firstPage = await _fixture.GetAll(_context.Repository.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 2,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _fixture.GetAll(_context.Repository.Id, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+    }
+
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
     public async Task CanRetrieveADeployKey()
     {
@@ -177,6 +252,23 @@ public class RepositoryDeployKeysClientTests : IDisposable
         var deployKeyResult = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployKey);
 
         var deployKey = await _fixture.Get(_context.RepositoryOwner, _context.RepositoryName, deployKeyResult.Id);
+        Assert.NotNull(deployKey);
+        Assert.Equal(deployKeyResult.Id, deployKey.Id);
+        Assert.Equal(_key, deployKey.Key);
+        Assert.Equal(_keyTitle, deployKey.Title);
+    }
+
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    public async Task CanRetrieveADeployKeyWithRepositoryId()
+    {
+        var newDeployKey = new NewDeployKey
+        {
+            Key = _key,
+            Title = _keyTitle
+        };
+        var deployKeyResult = await _fixture.Create(_context.Repository.Id, newDeployKey);
+
+        var deployKey = await _fixture.Get(_context.Repository.Id, deployKeyResult.Id);
         Assert.NotNull(deployKey);
         Assert.Equal(deployKeyResult.Id, deployKey.Id);
         Assert.Equal(_key, deployKey.Key);
@@ -201,6 +293,27 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
         await _fixture.Delete(_context.RepositoryOwner, _context.RepositoryName, deployKeys[0].Id);
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+        Assert.Equal(0, deployKeys.Count);
+    }
+
+    [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
+    public async Task CanRemoveADeployKeyWithRepositoryId()
+    {
+        var newDeployKey = new NewDeployKey
+        {
+            Key = _key,
+            Title = _keyTitle
+        };
+
+        await _fixture.Create(_context.Repository.Id, newDeployKey);
+
+        var deployKeys = await _fixture.GetAll(_context.Repository.Id);
+        Assert.Equal(1, deployKeys.Count);
+        Assert.Equal(_key, deployKeys[0].Key);
+        Assert.Equal(_keyTitle, deployKeys[0].Title);
+
+        await _fixture.Delete(_context.Repository.Id, deployKeys[0].Id);
+        deployKeys = await _fixture.GetAll(_context.Repository.Id);
         Assert.Equal(0, deployKeys.Count);
     }
 

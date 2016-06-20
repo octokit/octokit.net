@@ -30,5 +30,7 @@ namespace Octokit
         
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
+
+        public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
     }
 }

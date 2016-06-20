@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -54,7 +55,10 @@ public class DeploymentsClientTests
 
             client.GetAll(owner, name);
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    Arg.Any<IDictionary<string, string>>(),
+                                    Arg.Any<string>(), 
+                                    Args.ApiOptions);
         }
 
         [Fact]
@@ -73,7 +77,25 @@ public class DeploymentsClientTests
 
             client.GetAll(owner, name, options);
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    Arg.Any<IDictionary<string, string>>(),
+                                    Arg.Any<string>(),
+                                    options);
+        }
+
+        [Fact]
+        public void RequestsCorrectUrlWithPreviewAcceptHeaders()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+            client.GetAll(owner, name);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    Arg.Any<IDictionary<string, string>>(),
+                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview),
+                                    Args.ApiOptions);
         }
     }
 
@@ -124,7 +146,8 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                    Arg.Any<NewDeployment>());
+                                                    Arg.Any<NewDeployment>(),
+                                                    Arg.Any<string>());
         }
 
         [Fact]
@@ -136,7 +159,21 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
-                                                    newDeployment);
+                                                    newDeployment,
+                                                    Arg.Any<string>());
+        }
+
+        [Fact]
+        public void SendsPreviewAcceptHeaders()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+
+            client.Create("owner", "name", newDeployment);
+
+            connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
+                                                    Arg.Any<NewDeployment>(),
+                                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview));
         }
     }
 

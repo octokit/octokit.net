@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -59,7 +60,10 @@ public class DeploymentStatusClientTests
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
             client.GetAll("owner", "name", 1);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
+                                                           Arg.Any<IDictionary<string, string>>(),
+                                                           Arg.Any<string>(),
+                                                           Args.ApiOptions);
         }
 
         [Fact]
@@ -69,7 +73,7 @@ public class DeploymentStatusClientTests
             var client = new DeploymentStatusClient(connection);
             var expectedUrl = "repos/owner/name/deployments/1/statuses";
 
-            var options =new ApiOptions
+            var options = new ApiOptions
             {
                 StartPage = 1,
                 PageCount = 1,
@@ -77,7 +81,24 @@ public class DeploymentStatusClientTests
             };
 
             client.GetAll("owner", "name", 1, options);
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                                           Arg.Any<IDictionary<string, string>>(),
+                                                           Arg.Any<string>(), 
+                                                           options);
+        }
+
+        [Fact]
+        public void RequestsCorrectUrlWithPreviewAcceptHeaders()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentStatusClient(connection);
+            var expectedUrl = "repos/owner/name/deployments/1/statuses";
+
+            client.GetAll("owner", "name", 1);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                                           Arg.Any<IDictionary<string, string>>(),
+                                                           Arg.Is<string>(a => a == AcceptHeaders.DeploymentApiPreview),
+                                                           Args.ApiOptions);
         }
     }
 
@@ -127,7 +148,36 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         Arg.Any<NewDeploymentStatus>());
+                                                         Arg.Any<NewDeploymentStatus>(),
+                                                         Arg.Any<string>());
+        }
+
+        [Fact]
+        public void PassesNewDeploymentRequest()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentStatusClient(connection);
+            var expectedUrl = "repos/owner/repo/deployments/1/statuses";
+
+            client.Create("owner", "repo", 1, newDeploymentStatus);
+
+            connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                                         newDeploymentStatus,
+                                                         Arg.Any<string>());
+        }
+
+        [Fact]
+        public void SendsPreviewAcceptHeaders()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentStatusClient(connection);
+            var expectedUrl = "repos/owner/repo/deployments/1/statuses";
+
+            client.Create("owner", "repo", 1, newDeploymentStatus);
+
+            connection.Received(1).Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                                          Arg.Any<NewDeploymentStatus>(),
+                                                          Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview));
         }
     }
 
