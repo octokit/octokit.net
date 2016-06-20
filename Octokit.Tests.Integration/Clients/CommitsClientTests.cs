@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Octokit;
+using Octokit.Models.Response;
 using Octokit.Tests.Integration.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
@@ -58,6 +59,6 @@ public class CommitsClientTests
         Assert.Equal(commit.Verification.Payload,
             "tree c91c844f37974093a3f0a864755441b577e7663a\nparent 6eb645f6badd46de65700b4d7b6fcdb97684ce5a\nauthor noonari <SarmadSattar1@gmail.com> 1465990529 +0500\ncommitter noonari <SarmadSattar1@gmail.com> 1465990529 +0500\n\ngpg stuff\n");
 
-        Assert.Equal(commit.Verification.Reason, commit.Verification.Reason);
+        Assert.Equal(commit.Verification.Reason, VerificationReason.UnknownKey);
     }
 }
