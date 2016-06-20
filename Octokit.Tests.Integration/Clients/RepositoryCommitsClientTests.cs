@@ -155,6 +155,15 @@ public class RepositoryCommitsClientTests
 
             Assert.NotNull(sha1);
         }
+
+		[IntegrationTest]
+		public async Task CanGetSignatureVerification()
+		{
+			var commit = await _fixture.Get("octokit", "octokit.net", "05bdbab842598d38962045d30679f5472f6ee913");
+
+			Assert.Equal(true, commit.Commit.verification.Verified);
+			Assert.Equal(VerificationReason.Valid, commit.Commit.verification.Reason);
+		}
     }
 
     public class TestsWithNewRepository : IDisposable

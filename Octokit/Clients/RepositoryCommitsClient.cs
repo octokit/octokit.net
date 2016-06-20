@@ -47,7 +47,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference));
+			return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name), request.ToParametersDictionary(), options);
+			return ApiConnection.GetAll<GitHubCommit>(ApiUrls.RepositoryCommits(owner, name), request.ToParametersDictionary(), AcceptHeaders.SignatureVerificationPreview, options);
         }
 
         /// <summary>
