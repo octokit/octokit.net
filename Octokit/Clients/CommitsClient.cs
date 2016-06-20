@@ -35,7 +35,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<Commit>(ApiUrls.Commit(owner, name, reference), null, AcceptHeaders.SignatureVerification);
+            return ApiConnection.Get<Commit>(ApiUrls.Commit(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
 
         /// <summary>
