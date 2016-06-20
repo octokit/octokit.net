@@ -161,8 +161,8 @@ public class RepositoryCommitsClientTests
 		{
 			var commit = await _fixture.Get("octokit", "octokit.net", "05bdbab842598d38962045d30679f5472f6ee913");
 
-			Assert.Equal(true, commit.Commit.verification.Verified);
-			Assert.Equal(VerificationReason.Valid, commit.Commit.verification.Reason);
+			Assert.Equal(true, commit.Commit.Verification.Verified);
+			Assert.Equal(VerificationReason.Valid, commit.Commit.Verification.Reason);
 		}
     }
 
