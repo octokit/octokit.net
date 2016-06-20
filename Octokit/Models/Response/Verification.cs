@@ -19,7 +19,7 @@ namespace Octokit.Models.Response
         /// The reason for verified value.
         /// </summary>
         [Parameter(Key = "reason")]
-        public Reason Reason { get; protected set; }
+        public VerificationReason Reason { get; protected set; }
 
         /// <summary>
         /// The signature that was extracted from the commit.
@@ -46,7 +46,7 @@ namespace Octokit.Models.Response
         }
     }
 
-    public enum Reason
+    public enum VerificationReason
     {
         [Parameter(Value = "expired_key")]
         ExpiredKey,
@@ -86,6 +86,5 @@ namespace Octokit.Models.Response
 
         [Parameter(Value = "valid")]
         Valid
-
     }
 }
