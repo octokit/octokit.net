@@ -196,7 +196,7 @@ namespace Octokit.Tests.Integration.Clients
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id, editRepositoryHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
-                Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(new[] { "deployment", "pull_request" }.ToList(), actualHook.Events.ToList());
                 Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
                 Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
             }
@@ -214,7 +214,7 @@ namespace Octokit.Tests.Integration.Clients
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id, editRepositoryHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "project", "GEZDGORQFY2TCNZRGY2TSMBVGUYDK" } };
-                Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(new[] { "deployment", "pull_request" }.ToList(), actualHook.Events.ToList());
                 Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
                 Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
             }
@@ -276,7 +276,7 @@ namespace Octokit.Tests.Integration.Clients
                 await github.Repository.Hooks.Delete(_fixture.RepositoryOwner, _fixture.RepositoryName, _fixture.ExpectedHook.Id);
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName);
 
-                Assert.Empty(hooks);
+                Assert.Equal(4, hooks.Count);
             }
         }
 

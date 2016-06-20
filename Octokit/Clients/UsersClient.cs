@@ -21,7 +21,12 @@ namespace Octokit
         {
             Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
+#pragma warning disable CS0618 // Type or member is obsolete
             Keys = new UserKeysClient(apiConnection);
+#pragma warning restore CS0618 // Type or member is obsolete
+            GitSshKey = new UserKeysClient(apiConnection);
+            GpgKey = new UserGpgKeysClient(apiConnection);
+
             Administration = new UserAdministrationClient(apiConnection);
         }
 
@@ -39,7 +44,24 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
+        [Obsolete("Ssh key information is now available under the GitSshKey property. This will be removed in a future update.")]
         public IUserKeysClient Keys { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        public IUserKeysClient GitSshKey { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's UserUser GPG Keys API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
+        /// </remarks>
+        public IUserGpgKeysClient GpgKey { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.

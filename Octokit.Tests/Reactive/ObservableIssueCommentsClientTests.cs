@@ -46,7 +46,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), Args.EmptyDictionary, null);
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
+                    Args.EmptyDictionary, 
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -64,7 +66,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo", options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), Arg.Any<Dictionary<string, string>>(), null);
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -94,7 +98,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Args.EmptyDictionary, null);
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
+                    Args.EmptyDictionary,
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -112,7 +118,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Arg.Any<Dictionary<string, string>>(), null);
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]

@@ -77,12 +77,16 @@
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
     <Compile Include="Clients\BranchesClientTests.cs" />
+    <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
     <Compile Include="Clients\GitHubClientTests.cs" />
+    <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueReactionsClientTests.cs" />
+    <Compile Include="Clients\IssueCommentsClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Clients\MilestonesClientTests.cs" />
     <Compile Include="Clients\OrganizationClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
+    <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
@@ -112,12 +117,14 @@
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
     <Compile Include="Clients\FollowersClientTests.cs" />
+    <Compile Include="Clients\UserGpgKeysClientTests.cs" />
     <Compile Include="Clients\UserKeysClientTests.cs" />
     <Compile Include="Clients\WatchedClientTests.cs" />
     <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\GpgKeyContext.cs" />
     <Compile Include="Helpers\PublicKeyContext.cs" />
     <Compile Include="Helpers\EnterpriseUserContext.cs" />
     <Compile Include="Helpers\GithubClientExtensions.cs" />
@@ -127,7 +134,7 @@
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
-    <Compile Include="Helpers\EnterpriseTeamContext.cs" />
+    <Compile Include="Helpers\TeamContext.cs" />
     <Compile Include="Helpers\RepositoryContext.cs" />
     <Compile Include="Helpers\RepositorySetupHelper.cs" />
     <Compile Include="HttpClientAdapterTests.cs" />
@@ -166,6 +173,7 @@
     <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
     <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Include="Reactive\ObservableUserGpgKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryCollaboratorClientTests.cs" />
     <Compile Include="RedirectTests.cs" />
