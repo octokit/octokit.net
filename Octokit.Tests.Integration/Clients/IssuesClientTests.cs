@@ -11,12 +11,14 @@ public class IssuesClientTests : IDisposable
 {
     private readonly RepositoryContext _context;
     private readonly IIssuesClient _issuesClient;
+    private readonly IReactionsClient _reactionsClient;
 
     public IssuesClientTests()
     {
         var github = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
         _issuesClient = github.Issue;
+        _reactionsClient = github.Reaction;
         _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
 
@@ -33,12 +35,20 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(title, issue.Title);
         Assert.Equal(description, issue.Body);
 
+        var reaction = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new NewReaction(ReactionType.Confused));
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         Assert.True(retrieved.Id > 0);
         Assert.False(retrieved.Locked);
         Assert.Equal(title, retrieved.Title);
         Assert.Equal(description, retrieved.Body);
+        Assert.Equal(1, retrieved.Reactions.TotalCount);
+        Assert.Equal(0, retrieved.Reactions.Plus1);
+        Assert.Equal(0, retrieved.Reactions.Hooray);
+        Assert.Equal(0, retrieved.Reactions.Heart);
+        Assert.Equal(0, retrieved.Reactions.Laugh);
+        Assert.Equal(1, retrieved.Reactions.Confused);
+        Assert.Equal(0, retrieved.Reactions.Minus1);
     }
 
     [IntegrationTest]
@@ -219,6 +229,10 @@ public class IssuesClientTests : IDisposable
         var issue2 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
         var issue3 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue3);
         var issue4 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue4);
+        var reaction1 = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new NewReaction(ReactionType.Plus1));
+        var reaction2 = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new NewReaction(ReactionType.Minus1));
+        var reaction3 = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue3.Number, new NewReaction(ReactionType.Confused));
+        var reaction4 = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue4.Number, new NewReaction(ReactionType.Laugh));
         await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue4.Number, new IssueUpdate { State = ItemState.Closed });
 
         var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
@@ -230,6 +244,14 @@ public class IssuesClientTests : IDisposable
         Assert.True(retrieved.Any(i => i.Number == issue2.Number));
         Assert.True(retrieved.Any(i => i.Number == issue3.Number));
         Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        var issue = retrieved[0];
+        Assert.Equal(4, issue.Reactions.TotalCount);
+        Assert.Equal(0, issue.Reactions.Plus1);
+        Assert.Equal(0, issue.Reactions.Hooray);
+        Assert.Equal(0, issue.Reactions.Heart);
+        Assert.Equal(0, issue.Reactions.Laugh);
+        Assert.Equal(1, issue.Reactions.Confused);
+        Assert.Equal(0, issue.Reactions.Minus1);
     }
 
     [IntegrationTest]

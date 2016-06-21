@@ -20,7 +20,9 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"));
+                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"));
             }
 
             [Fact]
@@ -55,7 +57,9 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
-                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -72,6 +76,7 @@ namespace Octokit.Tests.Clients
                         && d["sort"] == "created"
                         && d["state"] == "open"
                         && d["direction"] == "asc"),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
         }
@@ -99,6 +104,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
         }
@@ -140,6 +146,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
 
@@ -160,6 +167,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
         }
@@ -211,6 +219,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
 
@@ -231,6 +240,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
                     Args.ApiOptions);
             }
         }
