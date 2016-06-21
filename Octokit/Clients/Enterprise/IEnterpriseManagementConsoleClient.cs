@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -27,5 +28,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         Task<MaintenanceModeResponse> EditMaintenanceMode(UpdateMaintenanceRequest maintenance, string managementConsolePassword);
+
+        Task<IReadOnlyList<AuthorizedManagementKey>> GetAllAuthorizedKeys(string managementConsolePassword);
+
+        Task<IReadOnlyList<AuthorizedManagementKey>> AddAuthorizedKey(string key, string managementConsolePassword);
+
+        Task DeleteAuthorizedKey(string key, string managementConsolePassword);
     }
 }
