@@ -80,11 +80,14 @@ namespace Octokit.Internal
             {
                 var type = p.GetType();
                 var name = Enum.GetName(type, p);
+#if NETFX_CORE
+                var attr = type.GetTypeInfo().GetCustomAttribute<ParameterAttribute>();
+#else
                 var attr =  type.GetField(name) 
                     .GetCustomAttributes(false)
                     .OfType<ParameterAttribute>()
                     .SingleOrDefault();
-
+#endif
                 if (attr != null)
                     return attr.Value;
                 
