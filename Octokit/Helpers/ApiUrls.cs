@@ -1901,6 +1901,11 @@ namespace Octokit
             return "setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
         }
 
+        public static Uri EnterpriseManagementConsoleAuthorizedKeys(string managementConsolePassword)
+        {
+            return "setup/api/settings/authorized-keys?api_key={0}".FormatUri(managementConsolePassword);
+        }
+
         public static Uri EnterpriseOrganization()
         {
             return "admin/organizations".FormatUri();

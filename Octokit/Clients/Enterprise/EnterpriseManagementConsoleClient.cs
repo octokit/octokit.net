@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -63,6 +64,38 @@ namespace Octokit
             endpoint = CorrectEndpointForManagementConsole(endpoint);
 
             return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.AsNamedFormEncodingString());
+        }
+
+        public Task<IReadOnlyList<AuthorizedManagementKey>> GetAllAuthorizedKeys(string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+
+            return ApiConnection.Get<IReadOnlyList<AuthorizedManagementKey>>(endpoint);
+        }
+
+        public Task<IReadOnlyList<AuthorizedManagementKey>> AddAuthorizedKey(string key, string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(key, "publicKeyContent");
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+
+            return ApiConnection.Post<IReadOnlyList<AuthorizedManagementKey>>(endpoint, key);
+        }
+
+        public Task DeleteAuthorizedKey(string key, string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(key, "publicKeyContent");
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+
+            return ApiConnection.Delete(endpoint, key);
         }
     }
 }
