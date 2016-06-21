@@ -78,6 +78,16 @@ namespace Octokit.Internal
                 Justification = "The API expects lowercase values")]
             protected override object SerializeEnum(Enum p)
             {
+                var type = p.GetType();
+                var name = Enum.GetName(type, p);
+                var attr =  type.GetField(name) 
+                    .GetCustomAttributes(false)
+                    .OfType<ParameterAttribute>()
+                    .SingleOrDefault();
+
+                if (attr != null)
+                    return attr.Value;
+                
                 return p.ToString().ToLowerInvariant();
             }
 
