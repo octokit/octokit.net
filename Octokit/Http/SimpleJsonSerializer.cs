@@ -80,17 +80,15 @@ namespace Octokit.Internal
             {
                 var type = p.GetType();
                 var name = Enum.GetName(type, p);
-#if NETFX_CORE
-                var attr = type.GetTypeInfo().GetCustomAttribute<ParameterAttribute>();
-#else
-                var attr =  type.GetField(name) 
+
+                var attr = type.GetRuntimeField(name)
                     .GetCustomAttributes(false)
                     .OfType<ParameterAttribute>()
                     .SingleOrDefault();
-#endif
+
                 if (attr != null)
                     return attr.Value;
-                
+
                 return p.ToString().ToLowerInvariant();
             }
 
@@ -105,6 +103,17 @@ namespace Octokit.Internal
                 {
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
+                        //first try to get all custom attributes
+                        var fields = type.GetRuntimeFields();
+                        foreach (var field in fields)
+                        {
+                            var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
+                            if (attribute != null)
+                            {
+                                if (attribute.Value.Equals(value))
+                                    return field.GetValue(null);
+                            }
+                        }
                         // remove '-' from values coming in to be able to enum utf-8
                         stringValue = RemoveHyphenAndUnderscore(stringValue);
                         return Enum.Parse(type, stringValue, ignoreCase: true);
