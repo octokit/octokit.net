@@ -4,7 +4,7 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewReaction
+    public class NewReaction : RequestParameters
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NewReaction"/> class.
