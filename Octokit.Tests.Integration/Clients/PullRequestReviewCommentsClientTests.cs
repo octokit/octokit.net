@@ -12,7 +12,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     private readonly IGitHubClient _github;
     private readonly IPullRequestReviewCommentsClient _client;
     private readonly RepositoryContext _context;
-    private readonly IReactionsClient _reactionsClient;
 
     const string branchName = "new-branch";
     const string branchHead = "heads/" + branchName;
@@ -24,8 +23,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         _github = Helper.GetAuthenticatedClient();
 
         _client = _github.PullRequest.Comment;
-
-        _reactionsClient = _github.Reaction;
 
         // We'll create a pull request that can be used by most tests
         _context = _github.CreateRepositoryContext("test-repo").Result;
@@ -233,7 +230,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         AssertComments(pullRequestComments, commentsToCreate, position);
 
-        var reaction = await _reactionsClient.PullRequestReviewComment.Create(Helper.UserName, _context.RepositoryName, pullRequestComments[0].Id, new NewReaction(ReactionType.Confused));
+        var reaction = await _github.Reaction.PullRequestReviewComment.Create(Helper.UserName, _context.RepositoryName, pullRequestComments[0].Id, new NewReaction(ReactionType.Confused));
         var retrieved = await _github.PullRequest.Comment.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequest.Number);
 
         Assert.Equal(1, retrieved[0].Reactions.TotalCount);

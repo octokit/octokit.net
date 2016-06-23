@@ -310,13 +310,11 @@ public class RepositoryCommentsClientTests
     {
         private readonly IGitHubClient _github;
         private readonly RepositoryContext _context;
-        private readonly IReactionsClient _reactionsClient;
 
         public TheCreateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             _context = _github.CreateRepositoryContext("public-repo").Result;
-            _reactionsClient = _github.Reaction;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)
@@ -388,7 +386,7 @@ public class RepositoryCommentsClientTests
             var result = await _github.Repository.Comment.Create(_context.Repository.Id,
                 commit.Sha, comment);
 
-            var reaction = await _reactionsClient.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, new NewReaction(ReactionType.Confused));
+            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, new NewReaction(ReactionType.Confused));
             var retrieved = await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             Assert.True(retrieved.Id > 0);
