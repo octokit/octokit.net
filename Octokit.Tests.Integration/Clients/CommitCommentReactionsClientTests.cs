@@ -56,42 +56,16 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotNull(result);
 
-            var newReactionConfused = new NewReaction(ReactionType.Confused);
-            var newReactionHeart = new NewReaction(ReactionType.Heart);
-            var newReactionHooray = new NewReaction(ReactionType.Hooray);
-            var newReactionLaugh = new NewReaction(ReactionType.Laugh);
-            var newReactionMinus1 = new NewReaction(ReactionType.Minus1);
-            var newReactionPlus1 = new NewReaction(ReactionType.Plus1);
-            var reactionConfused = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionConfused);
-            var reactionHeart = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionHeart);
-            var reactionHooray = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionHooray);
-            var reactionLaugh = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionLaugh);
-            var reactionMinus1 = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionMinus1);
-            var reactionPlus1 = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReactionPlus1);
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
 
-            Assert.IsType<Reaction>(reactionConfused);
-            Assert.Equal(ReactionType.Confused, reactionConfused.Content);
-            Assert.Equal(result.User.Id, reactionConfused.User.Id);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
 
-            Assert.IsType<Reaction>(reactionHeart);
-            Assert.Equal(ReactionType.Heart, reactionHeart.Content);
-            Assert.Equal(result.User.Id, reactionHeart.User.Id);
-
-            Assert.IsType<Reaction>(reactionHooray);
-            Assert.Equal(ReactionType.Hooray, reactionHooray.Content);
-            Assert.Equal(result.User.Id, reactionHooray.User.Id);
-
-            Assert.IsType<Reaction>(reactionLaugh);
-            Assert.Equal(ReactionType.Laugh, reactionLaugh.Content);
-            Assert.Equal(result.User.Id, reactionLaugh.User.Id);
-
-            Assert.IsType<Reaction>(reactionMinus1);
-            Assert.Equal(ReactionType.Minus1, reactionMinus1.Content);
-            Assert.Equal(result.User.Id, reactionMinus1.User.Id);
-
-            Assert.IsType<Reaction>(reactionPlus1);
-            Assert.Equal(ReactionType.Plus1, reactionPlus1.Content);
-            Assert.Equal(result.User.Id, reactionPlus1.User.Id);
+                Assert.IsType<Reaction>(reaction);
+                Assert.Equal(reactionType, reaction.Content);
+                Assert.Equal(result.User.Id, reaction.User.Id);
+            }
         }
 
         public void Dispose()
