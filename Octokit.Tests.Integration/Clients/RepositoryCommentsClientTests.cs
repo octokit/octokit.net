@@ -310,12 +310,13 @@ public class RepositoryCommentsClientTests
     {
         private readonly IGitHubClient _github;
         private readonly RepositoryContext _context;
+        private readonly IReactionsClient _reactionsClient;
 
         public TheCreateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-
             _context = _github.CreateRepositoryContext("public-repo").Result;
+            _reactionsClient = _github.Reaction;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)
@@ -375,6 +376,29 @@ public class RepositoryCommentsClientTests
             var retrieved = await _github.Repository.Comment.Get(_context.Repository.Id, result.Id);
 
             Assert.NotNull(retrieved);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetReactionPayload()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.Repository.Id,
+                commit.Sha, comment);
+
+            var reaction = await _reactionsClient.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, new NewReaction(ReactionType.Confused));
+            var retrieved = await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+
+            Assert.True(retrieved.Id > 0);
+            Assert.Equal(1, retrieved.Reactions.TotalCount);
+            Assert.Equal(0, retrieved.Reactions.Plus1);
+            Assert.Equal(0, retrieved.Reactions.Hooray);
+            Assert.Equal(0, retrieved.Reactions.Heart);
+            Assert.Equal(0, retrieved.Reactions.Laugh);
+            Assert.Equal(1, retrieved.Reactions.Confused);
+            Assert.Equal(0, retrieved.Reactions.Minus1);
         }
 
         public void Dispose()
