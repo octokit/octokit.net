@@ -12,6 +12,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     private readonly IGitHubClient _github;
     private readonly IPullRequestReviewCommentsClient _client;
     private readonly RepositoryContext _context;
+    private readonly IReactionsClient _reactionsClient;
 
     const string branchName = "new-branch";
     const string branchHead = "heads/" + branchName;
@@ -23,6 +24,8 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         _github = Helper.GetAuthenticatedClient();
 
         _client = _github.PullRequest.Comment;
+
+        _reactionsClient = _github.Reaction;
 
         // We'll create a pull request that can be used by most tests
         _context = _github.CreateRepositoryContext("test-repo").Result;
@@ -137,7 +140,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var commentsToCreate = new List<string> { "Comment 1", "Comment 2", "Comment 3" };
 
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
-        
+
         var options = new ApiOptions
         {
             PageSize = 3,
@@ -214,6 +217,32 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetReactionPayload()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
+        var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        AssertComments(pullRequestComments, commentsToCreate, position);
+
+        var reaction = await _reactionsClient.PullRequestReviewComment.Create(Helper.UserName, _context.RepositoryName, pullRequestComments[0].Id, new NewReaction(ReactionType.Confused));
+        var retrieved = await _github.PullRequest.Comment.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequest.Number);
+
+        Assert.Equal(1, retrieved[0].Reactions.TotalCount);
+        Assert.Equal(0, retrieved[0].Reactions.Plus1);
+        Assert.Equal(0, retrieved[0].Reactions.Hooray);
+        Assert.Equal(0, retrieved[0].Reactions.Heart);
+        Assert.Equal(0, retrieved[0].Reactions.Laugh);
+        Assert.Equal(1, retrieved[0].Reactions.Confused);
+        Assert.Equal(0, retrieved[0].Reactions.Minus1);
     }
 
     [IntegrationTest]
