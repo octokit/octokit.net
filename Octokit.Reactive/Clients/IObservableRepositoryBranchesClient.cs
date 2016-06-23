@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        IObservable<Branch> GetAll(int repositoryId);
+        IObservable<Branch> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Branch> GetAll(int repositoryId, ApiOptions options);
+        IObservable<Branch> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the specified branch.
@@ -72,7 +72,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Branch> Get(int repositoryId, string branch);
+        IObservable<Branch> Get(long repositoryId, string branch);
 
         /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other ObservableRepositoryBranchesClient methods instead.")]
-        IObservable<Branch> Edit(int repositoryId, string branch, BranchUpdate update);
+        IObservable<Branch> Edit(long repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch />
@@ -112,7 +112,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch);
+        IObservable<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch />
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        IObservable<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update);
+        IObservable<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch />
@@ -156,6 +156,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteBranchProtection(int repositoryId, string branch);
+        IObservable<bool> DeleteBranchProtection(long repositoryId, string branch);
     }
 }

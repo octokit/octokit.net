@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the tag</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<GitTag> Get(int repositoryId, string reference);
+        IObservable<GitTag> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -55,6 +55,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        IObservable<GitTag> Create(int repositoryId, NewTag tag);
+        IObservable<GitTag> Create(long repositoryId, NewTag tag);
     }
 }

@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        public IObservable<User> GetAllWatchers(int repositoryId)
+        public IObservable<User> GetAllWatchers(long repositoryId)
         {
             return GetAllWatchers(repositoryId, ApiOptions.None);
         }
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        public IObservable<User> GetAllWatchers(int repositoryId, ApiOptions options)
+        public IObservable<User> GetAllWatchers(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -142,7 +142,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        public IObservable<bool> CheckWatched(int repositoryId)
+        public IObservable<bool> CheckWatched(long repositoryId)
         {
             return _client.CheckWatched(repositoryId).ToObservable();
         }
@@ -167,7 +167,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        public IObservable<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription)
+        public IObservable<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNull(newSubscription, "newSubscription");
 
@@ -191,7 +191,7 @@ namespace Octokit.Reactive
         /// Unstars a repository for the authenticated user.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<bool> UnwatchRepo(int repositoryId)
+        public IObservable<bool> UnwatchRepo(long repositoryId)
         {
             return _client.UnwatchRepo(repositoryId).ToObservable();
         }

@@ -33,7 +33,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        Task<IReadOnlyList<Branch>> GetAll(int repositoryId);
+        Task<IReadOnlyList<Branch>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -54,7 +54,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Branch>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the specified branch.
@@ -77,7 +77,7 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Branch> Get(int repositoryId, string branch);
+        Task<Branch> Get(long repositoryId, string branch);
 
         /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
@@ -96,7 +96,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other RepositoryBranchesClient methods instead.")]
-        Task<Branch> Edit(int repositoryId, string branch, BranchUpdate update);
+        Task<Branch> Edit(long repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch />
@@ -117,7 +117,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch);
+        Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch />
@@ -140,7 +140,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        Task<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update);
+        Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch />
@@ -161,6 +161,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteBranchProtection(int repositoryId, string branch);
+        Task<bool> DeleteBranchProtection(long repositoryId, string branch);
     }
 }

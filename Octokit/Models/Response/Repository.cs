@@ -9,12 +9,12 @@ namespace Octokit
     {
         public Repository() { }
 
-        public Repository(int id)
+        public Repository(long id)
         {
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, int id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -61,7 +61,7 @@ namespace Octokit
 
         public string MirrorUrl { get; protected set; }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         public User Owner { get; protected set; }
 

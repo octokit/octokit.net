@@ -34,7 +34,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Commit> Get(int repositoryId, string reference);
+        Task<Commit> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -55,6 +55,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        Task<Commit> Create(int repositoryId, NewCommit commit);
+        Task<Commit> Create(long repositoryId, NewCommit commit);
     }
 }

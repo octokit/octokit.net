@@ -45,7 +45,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        public Task<Blob> Get(int repositoryId, string reference)
+        public Task<Blob> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -78,7 +78,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        public Task<BlobReference> Create(int repositoryId, NewBlob newBlob)
+        public Task<BlobReference> Create(long repositoryId, NewBlob newBlob)
         {
             Ensure.ArgumentNotNull(newBlob, "newBlob");
 

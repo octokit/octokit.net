@@ -32,7 +32,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference);
+        Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference);
 
         /// <summary>
         /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference, ApiOptions options);
+        Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options);
 
         /// <summary>
         /// Retrieves a combined view of statuses for the specified reference. A reference can be a commit SHA, a branch name, or
@@ -80,7 +80,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        Task<CombinedCommitStatus> GetCombined(int repositoryId, string reference);
+        Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference);
 
         /// <summary>
         /// Creates a commit status for the specified ref.
@@ -103,6 +103,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        Task<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus);
+        Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus);
     }
 }

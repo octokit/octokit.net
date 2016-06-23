@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue id</param>        
-        public IObservable<Reaction> GetAll(int repositoryId, int number)
+        public IObservable<Reaction> GetAll(long repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create </param>
-        public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        public IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
 

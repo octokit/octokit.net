@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(int repositoryId);
+        IObservable<RepositoryHook> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets the list of hooks defined for a repository
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(int repositoryId, ApiOptions options);
+        IObservable<RepositoryHook> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets a single hook by Id
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
-        IObservable<RepositoryHook> Get(int repositoryId, int hookId);
+        IObservable<RepositoryHook> Get(long repositoryId, int hookId);
 
         /// <summary>
         /// Creates a hook for a repository
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Create(int repositoryId, NewRepositoryHook hook);
+        IObservable<RepositoryHook> Create(long repositoryId, NewRepositoryHook hook);
 
         /// <summary>
         /// Edits a hook for a repository
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Edit(int repositoryId, int hookId, EditRepositoryHook hook);
+        IObservable<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook);
 
         /// <summary>
         /// Tests a hook for a repository
@@ -118,7 +118,7 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        IObservable<Unit> Test(int repositoryId, int hookId);
+        IObservable<Unit> Test(long repositoryId, int hookId);
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Ping(int repositoryId, int hookId);
+        IObservable<Unit> Ping(long repositoryId, int hookId);
 
         /// <summary>
         /// Deletes a hook for a repository
@@ -152,6 +152,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Delete(int repositoryId, int hookId);
+        IObservable<Unit> Delete(long repositoryId, int hookId);
     }
 }

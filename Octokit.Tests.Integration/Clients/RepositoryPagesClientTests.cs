@@ -10,7 +10,7 @@ public class RepositoryPagesClientTests
         readonly IRepositoryPagesClient _repositoryPagesClient;
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int repositoryId = 7528679;
+        const long repositoryId = 7528679;
 
         public TheGetMethod()
         {

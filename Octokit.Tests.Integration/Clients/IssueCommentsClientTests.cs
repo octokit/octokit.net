@@ -17,7 +17,7 @@ public class IssueCommentsClientTests
         const string owner = "octokit";
         const string name = "octokit.net";
         const int id = 12067722;
-        const int repositoryId = 7528679;
+        const long repositoryId = 7528679;
 
         public TheGetMethod()
         {
@@ -76,7 +76,7 @@ public class IssueCommentsClientTests
 
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int repositoryId = 7528679;
+        const long repositoryId = 7528679;
 
         public TheGetAllForRepositoryMethod()
         {
@@ -261,7 +261,7 @@ public class IssueCommentsClientTests
         const string owner = "octokit";
         const string name = "octokit.net";
         const int number = 1115;
-        const int repositoryId = 7528679;
+        const long repositoryId = 7528679;
 
         public TheGetAllForIssueMethod()
         {

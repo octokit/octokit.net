@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<IEnumerable<Contributor>> GetContributors(int repositoryId)
+        public IObservable<IEnumerable<Contributor>> GetContributors(long repositoryId)
         {
             return _client.Repository.Statistics.GetContributors(repositoryId).ToObservable();
         }
@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<CommitActivity> GetCommitActivity(int repositoryId)
+        public IObservable<CommitActivity> GetCommitActivity(long repositoryId)
         {
             return _client.Repository.Statistics.GetCommitActivity(repositoryId).ToObservable();
         }
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<CodeFrequency> GetCodeFrequency(int repositoryId)
+        public IObservable<CodeFrequency> GetCodeFrequency(long repositoryId)
         {
             return _client.Repository.Statistics.GetCodeFrequency(repositoryId).ToObservable();
         }
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Participation> GetParticipation(int repositoryId)
+        public IObservable<Participation> GetParticipation(long repositoryId)
         {
             return _client.Repository.Statistics.GetParticipation(repositoryId).ToObservable();
         }
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<PunchCard> GetPunchCard(int repositoryId)
+        public IObservable<PunchCard> GetPunchCard(long repositoryId)
         {
             return _client.Repository.Statistics.GetPunchCard(repositoryId).ToObservable();
         }

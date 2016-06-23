@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
-        IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction);
+        IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction);
 
         /// <summary>
         /// List reactions for a specified Issue Comment
@@ -44,6 +44,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
-        IObservable<Reaction> GetAll(int repositoryId, int number);
+        IObservable<Reaction> GetAll(long repositoryId, int number);
     }
 }

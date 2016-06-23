@@ -45,7 +45,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        public Task<Commit> Get(int repositoryId, string reference)
+        public Task<Commit> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -78,7 +78,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        public Task<Commit> Create(int repositoryId, NewCommit commit)
+        public Task<Commit> Create(long repositoryId, NewCommit commit)
         {
             Ensure.ArgumentNotNull(commit, "commit");
 

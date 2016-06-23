@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<User> GetAll(int repositoryId);
+        IObservable<User> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<User> GetAll(int repositoryId, ApiOptions options);
+        IObservable<User> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> IsCollaborator(int repositoryId, string user);
+        IObservable<bool> IsCollaborator(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -112,7 +112,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Add(int repositoryId, string user);
+        IObservable<Unit> Add(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -124,7 +124,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> Add(int repositoryId, string user, CollaboratorRequest permission);
+        IObservable<bool> Add(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.
@@ -158,7 +158,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Invite(int repositoryId, string user);
+        IObservable<RepositoryInvitation> Invite(long repositoryId, string user);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.
@@ -170,7 +170,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Invite(int repositoryId, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Deletes a collaborator from the repository.
@@ -193,6 +193,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(int repositoryId, string user);
+        IObservable<Unit> Delete(long repositoryId, string user);
     }
 }

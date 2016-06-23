@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
         /// <returns></returns>
-        IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction);
+        IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction);
 
         /// <summary>
         /// List reactions for a specified Commit Comment
@@ -48,6 +48,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
-        IObservable<Reaction> GetAll(int repositoryId, int number);
+        IObservable<Reaction> GetAll(long repositoryId, int number);
     }
 }

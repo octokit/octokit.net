@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Page> Get(int repositoryId);
+        IObservable<Page> Get(long repositoryId);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(int repositoryId);
+        IObservable<PagesBuild> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(int repositoryId, ApiOptions options);
+        IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -89,7 +89,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetLatest(int repositoryId);
+        IObservable<PagesBuild> GetLatest(long repositoryId);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -108,6 +108,6 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> RequestPageBuild(int repositoryId);
+        IObservable<PagesBuild> RequestPageBuild(long repositoryId);
     }
 }

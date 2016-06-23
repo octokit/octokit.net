@@ -47,7 +47,7 @@ namespace Octokit
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Deployment>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -83,7 +83,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Deployment>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -120,7 +120,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        public Task<Deployment> Create(int repositoryId, NewDeployment newDeployment)
+        public Task<Deployment> Create(long repositoryId, NewDeployment newDeployment)
         {
             Ensure.ArgumentNotNull(newDeployment, "newDeployment");
 

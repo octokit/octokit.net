@@ -26,7 +26,7 @@ namespace Octokit.Tests.Reactive
             private readonly IObservableRepoCollaboratorsClient _client;
             private const string owner = "owner";
             private const string name = "name";
-            private const int repositoryId = 1;
+            private const long repositoryId = 1;
 
             public TheGetAllMethod()
             {
@@ -233,9 +233,10 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                _client.IsCollaborator(1, "user");
+                var id = 1L;
+                _client.IsCollaborator(id, "user");
 
-                _githubClient.Repository.Collaborator.Received(1).IsCollaborator(Arg.Is(1),
+                _githubClient.Repository.Collaborator.Received(1).IsCollaborator(Arg.Is(id),
                     Arg.Is("user"));
             }
 
@@ -244,9 +245,10 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                _client.IsCollaborator(1, "user");
+                var id = 1L;
+                _client.IsCollaborator(id, "user");
 
-                _githubClient.Repository.Collaborator.Received(1).IsCollaborator(Arg.Is(1),
+                _githubClient.Repository.Collaborator.Received(1).IsCollaborator(Arg.Is(id),
                     Arg.Is("user"));
             }
         }
@@ -324,9 +326,10 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                _client.Add(1, "user");
+                var id = 1L;
+                _client.Add(id, "user");
 
-                _githubClient.Repository.Collaborator.Received(1).Add(Arg.Is(1),
+                _githubClient.Repository.Collaborator.Received(1).Add(Arg.Is(id),
                     Arg.Is("user"));
             }
         }
@@ -478,9 +481,10 @@ namespace Octokit.Tests.Reactive
             {
                 SetupWithoutNonReactiveClient();
 
-                _client.Delete(1, "user");
+                var id = 1L;
+                _client.Delete(id, "user");
 
-                _githubClient.Repository.Collaborator.Received(1).Delete(Arg.Is(1),
+                _githubClient.Repository.Collaborator.Received(1).Delete(Arg.Is(id),
                     Arg.Is("user"));
             }
         }
