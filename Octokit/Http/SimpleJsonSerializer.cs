@@ -78,7 +78,7 @@ namespace Octokit.Internal
                 Justification = "The API expects lowercase values")]
             protected override object SerializeEnum(Enum p)
             {
-                return p.ToString().ToLowerInvariant();
+                return p.ToParameter();
             }
 
             private string _type;

@@ -26,7 +26,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(reaction, "reaction");
 
-            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), reaction.ToParametersDictionary(), AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
