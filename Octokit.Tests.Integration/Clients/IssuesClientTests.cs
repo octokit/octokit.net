@@ -35,20 +35,30 @@ public class IssuesClientTests : IDisposable
         Assert.Equal(title, issue.Title);
         Assert.Equal(description, issue.Body);
 
-        var reaction = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new NewReaction(ReactionType.Confused));
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await _reactionsClient.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Id, newReaction);
+
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(issue.User.Id, reaction.User.Id);
+        }
+
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         Assert.True(retrieved.Id > 0);
         Assert.False(retrieved.Locked);
         Assert.Equal(title, retrieved.Title);
         Assert.Equal(description, retrieved.Body);
-        Assert.Equal(1, retrieved.Reactions.TotalCount);
-        Assert.Equal(0, retrieved.Reactions.Plus1);
-        Assert.Equal(0, retrieved.Reactions.Hooray);
-        Assert.Equal(0, retrieved.Reactions.Heart);
-        Assert.Equal(0, retrieved.Reactions.Laugh);
+        Assert.Equal(6, retrieved.Reactions.TotalCount);
+        Assert.Equal(1, retrieved.Reactions.Plus1);
+        Assert.Equal(1, retrieved.Reactions.Hooray);
+        Assert.Equal(1, retrieved.Reactions.Heart);
+        Assert.Equal(1, retrieved.Reactions.Laugh);
         Assert.Equal(1, retrieved.Reactions.Confused);
-        Assert.Equal(0, retrieved.Reactions.Minus1);
+        Assert.Equal(1, retrieved.Reactions.Minus1);
     }
 
     [IntegrationTest]

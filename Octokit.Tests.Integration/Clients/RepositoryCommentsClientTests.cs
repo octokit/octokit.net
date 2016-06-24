@@ -386,17 +386,26 @@ public class RepositoryCommentsClientTests
             var result = await _github.Repository.Comment.Create(_context.Repository.Id,
                 commit.Sha, comment);
 
-            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, new NewReaction(ReactionType.Confused));
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+
+                Assert.IsType<Reaction>(reaction);
+                Assert.Equal(reactionType, reaction.Content);
+                Assert.Equal(result.User.Id, reaction.User.Id);
+            }
             var retrieved = await _github.Repository.Comment.Get(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             Assert.True(retrieved.Id > 0);
-            Assert.Equal(1, retrieved.Reactions.TotalCount);
-            Assert.Equal(0, retrieved.Reactions.Plus1);
-            Assert.Equal(0, retrieved.Reactions.Hooray);
-            Assert.Equal(0, retrieved.Reactions.Heart);
-            Assert.Equal(0, retrieved.Reactions.Laugh);
+            Assert.Equal(6, retrieved.Reactions.TotalCount);
+            Assert.Equal(1, retrieved.Reactions.Plus1);
+            Assert.Equal(1, retrieved.Reactions.Hooray);
+            Assert.Equal(1, retrieved.Reactions.Heart);
+            Assert.Equal(1, retrieved.Reactions.Laugh);
             Assert.Equal(1, retrieved.Reactions.Confused);
-            Assert.Equal(0, retrieved.Reactions.Minus1);
+            Assert.Equal(1, retrieved.Reactions.Minus1);
         }
 
         public void Dispose()

@@ -230,16 +230,25 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         AssertComments(pullRequestComments, commentsToCreate, position);
 
-        var reaction = await _github.Reaction.PullRequestReviewComment.Create(Helper.UserName, _context.RepositoryName, pullRequestComments[0].Id, new NewReaction(ReactionType.Confused));
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestComments[0].Id, newReaction);
+
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(pullRequestComments[0].User.Id, reaction.User.Id);
+        }
         var retrieved = await _github.PullRequest.Comment.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(1, retrieved[0].Reactions.TotalCount);
-        Assert.Equal(0, retrieved[0].Reactions.Plus1);
-        Assert.Equal(0, retrieved[0].Reactions.Hooray);
-        Assert.Equal(0, retrieved[0].Reactions.Heart);
-        Assert.Equal(0, retrieved[0].Reactions.Laugh);
+        Assert.Equal(6, retrieved[0].Reactions.TotalCount);
+        Assert.Equal(1, retrieved[0].Reactions.Plus1);
+        Assert.Equal(1, retrieved[0].Reactions.Hooray);
+        Assert.Equal(1, retrieved[0].Reactions.Heart);
+        Assert.Equal(1, retrieved[0].Reactions.Laugh);
         Assert.Equal(1, retrieved[0].Reactions.Confused);
-        Assert.Equal(0, retrieved[0].Reactions.Minus1);
+        Assert.Equal(1, retrieved[0].Reactions.Minus1);
     }
 
     [IntegrationTest]
