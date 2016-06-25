@@ -33,7 +33,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -50,7 +49,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -66,7 +64,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -85,7 +82,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -103,7 +99,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Get(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -121,7 +116,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Get(int repositoryId, int id)
         {
             return _client.Get(repositoryId, id).ToObservable();
@@ -136,7 +130,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -153,7 +146,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> GetLatest(int repositoryId)
         {
             return _client.GetLatest(repositoryId).ToObservable();
@@ -169,7 +161,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -188,7 +179,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Create(int repositoryId, NewRelease data)
         {
             Ensure.ArgumentNotNull(data, "data");
@@ -207,7 +197,6 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Edit(string owner, string name, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -227,7 +216,6 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Release> Edit(int repositoryId, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
@@ -245,7 +233,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Unit> Delete(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -263,7 +250,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<Unit> Delete(int repositoryId, int id)
         {
             return _client.Delete(repositoryId, id).ToObservable();
@@ -279,7 +265,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAllAssets(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -297,7 +282,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAllAssets(int repositoryId, int id)
         {
             return GetAllAssets(repositoryId, id, ApiOptions.None);
@@ -314,7 +298,6 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAllAssets(string owner, string name, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -334,7 +317,6 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAllAssets(int repositoryId, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -351,7 +333,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -369,7 +350,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> GetAsset(int repositoryId, int assetId)
         {
             Ensure.ArgumentNotNull(assetId, "assetId");
@@ -386,7 +366,6 @@ namespace Octokit.Reactive
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
         {
             Ensure.ArgumentNotNull(release, "release");
@@ -405,7 +384,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -424,7 +402,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        /// <returns></returns>
         public IObservable<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
@@ -441,7 +418,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        /// <returns></returns>
         public IObservable<Unit> DeleteAsset(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -458,7 +434,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        /// <returns></returns>
         public IObservable<Unit> DeleteAsset(int repositoryId, int id)
         {
             return _client.DeleteAsset(repositoryId, id).ToObservable();
