@@ -26,7 +26,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
-        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
         public IObservable<Activity> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -39,7 +38,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>        
         public IObservable<Activity> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -55,7 +53,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -71,7 +68,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -86,7 +82,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -104,7 +99,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -120,7 +114,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllIssuesForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -136,7 +129,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllIssuesForRepository(int repositoryId)
         {
             return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
@@ -151,7 +143,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -169,7 +160,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository.</returns>
         public IObservable<Activity> GetAllIssuesForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -185,7 +175,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
         public IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -203,7 +192,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular repository network.</returns>
         public IObservable<Activity> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -220,7 +208,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
         public IObservable<Activity> GetAllForOrganization(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -236,7 +223,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s for the particular organization.</returns>
         public IObservable<Activity> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -252,7 +238,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         public IObservable<Activity> GetAllUserReceived(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -268,7 +253,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         public IObservable<Activity> GetAllUserReceived(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -284,7 +268,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         public IObservable<Activity> GetAllUserReceivedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -300,7 +283,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has received.</returns>
         public IObservable<Activity> GetAllUserReceivedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -316,7 +298,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
         public IObservable<Activity> GetAllUserPerformed(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -332,7 +313,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the <see cref="Activity"/>s that a particular user has performed.</returns>
         public IObservable<Activity> GetAllUserPerformed(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -348,7 +328,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
         public IObservable<Activity> GetAllUserPerformedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -364,7 +343,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the public <see cref="Activity"/>s that a particular user has performed.</returns>
         public IObservable<Activity> GetAllUserPerformedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -381,7 +359,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
-        /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
         public IObservable<Activity> GetAllForAnOrganization(string user, string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -399,7 +376,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the public <see cref="Activity"/>s that are associated with an organization.</returns>
         public IObservable<Activity> GetAllForAnOrganization(string user, string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
