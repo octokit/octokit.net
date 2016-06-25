@@ -24,6 +24,7 @@ namespace Octokit.Internal
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
+            Dictionary<Type, Dictionary<object, object>> _cachedEnums = new Dictionary<Type, Dictionary<object, object>>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -88,24 +89,62 @@ namespace Octokit.Internal
             {
                 var stringValue = value as string;
                 var jsonValue = value as JsonObject;
+                object attributeValue = null;
                 if (stringValue != null)
                 {
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
-                        //first try to get all custom attributes
-                        var fields = type.GetRuntimeFields();
-                        foreach (var field in fields)
+                        //first try get value from cache
+                        if (_cachedEnums.ContainsKey(type))
                         {
-                            var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
-                            if (attribute != null)
+                            if (_cachedEnums[type].ContainsKey(value))
                             {
-                                if (attribute.Value.Equals(value))
-                                    return field.GetValue(null);
+                                return _cachedEnums[type][value];
+                            }
+                            else
+                            {
+                                //dictionary does not contain enum value and has no attribute (see below). So add it for future loops and return value
+                                // remove '-' from values coming in to be able to enum utf-8
+                                stringValue = RemoveHyphenAndUnderscore(stringValue);
+                                var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
+                                _cachedEnums[type].Add(value, parsed);
+                                return parsed;
                             }
                         }
-                        // remove '-' from values coming in to be able to enum utf-8
-                        stringValue = RemoveHyphenAndUnderscore(stringValue);
-                        return Enum.Parse(type, stringValue, ignoreCase: true);
+                        else
+                        {
+                            //First add type to Dictionary
+                            _cachedEnums.Add(type, new Dictionary<object, object>());
+                            //then try to get all custom attributes, this happens only once per type
+                            var fields = type.GetRuntimeFields();
+                            foreach (var field in fields)
+                            {
+                                if (field.Name == "value__")
+                                    continue;
+                                var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
+                                if (attribute != null)
+                                {
+                                    if (attribute.Value.Equals(value))
+                                        attributeValue = field.GetValue(null);//Store value that we can return it after loop
+                                    _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+
+                                }
+                            }
+                        }
+                        //Check if we have a match for attribute
+                        if (attributeValue != null)
+                        {
+                            return attributeValue;
+                        }
+                        else
+                        {
+                            //Fallback for any reason we have no match. This sould also happens once
+                            // remove '-' from values coming in to be able to enum utf-8
+                            stringValue = RemoveHyphenAndUnderscore(stringValue);
+                            var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
+                            _cachedEnums[type].Add(value, parsed);
+                            return parsed;
+                        }
                     }
 
                     if (ReflectionUtils.IsNullableType(type))
