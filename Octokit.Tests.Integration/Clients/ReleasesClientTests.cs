@@ -156,7 +156,7 @@ public class ReleasesClientTests
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
-            var releases = await _releaseClient.GetAll(252774);
+            var releases = await _releaseClient.GetAll(_context.Repository.Id);
 
             Assert.True(releases.Count == 1);
             Assert.False(releases.First().PublishedAt.HasValue);
@@ -414,7 +414,7 @@ public class ReleasesClientTests
         const string owner = "octokit";
         const string name = "octokit.net";
         const int releaseId = 2248679;
-        const int repositoryId = 252774;
+        const int repositoryId = 7528679;
 
         public TheUploadAssetMethod()
         {
@@ -645,7 +645,7 @@ public class ReleasesClientTests
             {
                 PageSize = 1,
                 PageCount = 1,
-                StartPage = 2
+                StartPage = 1
             };
 
             var assets = await _releaseClient.GetAllAssets(repositoryId, releaseId, options);
@@ -749,9 +749,9 @@ public class ReleasesClientTests
         public async Task NoReleaseOnRepoWithRepositoryId()
         {
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            await _client.Repository.Create(new NewRepository(repoName));
+            var repository = await _client.Repository.Create(new NewRepository(repoName));
 
-            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.GetLatest(252774));
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.GetLatest(repository.Id));
 
             await _client.Repository.Delete(Helper.UserName, repoName);
         }
@@ -788,9 +788,7 @@ public class ReleasesClientTests
 
             await _releaseClient.DeleteAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
-            asset = await _releaseClient.GetAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
-
-            Assert.Null(asset);
+            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.DeleteAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id));
         }
 
         [IntegrationTest]
@@ -808,11 +806,7 @@ public class ReleasesClientTests
 
             Assert.NotNull(asset);
 
-            await _releaseClient.DeleteAsset(_context.Repository.Id, result.Id);
-
-            asset = await _releaseClient.GetAsset(_context.Repository.Id, result.Id);
-
-            Assert.Null(asset);
+            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.DeleteAsset(_context.Repository.Id, result.Id));
         }
     }
 
@@ -842,9 +836,7 @@ public class ReleasesClientTests
 
             await _releaseClient.Delete(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id);
 
-            var deletedRelease = await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id);
-
-            Assert.NotNull(deletedRelease);
+            Assert.ThrowsAsync<NotFoundException>(async ()=> await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id));
         }
 
         [IntegrationTest]
@@ -859,9 +851,7 @@ public class ReleasesClientTests
 
             await _releaseClient.Delete(_context.Repository.Id, createdRelease.Id);
 
-            var deletedRelease = await _releaseClient.Get(_context.Repository.Id, createdRelease.Id);
-
-            Assert.NotNull(deletedRelease);
+            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.Get(_context.Repository.Id, createdRelease.Id));
         }
     }
 }
