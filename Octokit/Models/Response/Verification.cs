@@ -2,7 +2,7 @@
 using System.Globalization;
 using Octokit.Internal;
 
-namespace Octokit.Models.Response
+namespace Octokit
 {
     /// <summary>
     /// Represents a Signature Verification Object in Git Data Commit Payload.

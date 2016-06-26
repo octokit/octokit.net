@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using Octokit.Models.Response;
 
 namespace Octokit
 {

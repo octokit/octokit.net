@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Octokit;
-using Octokit.Models.Response;
 using Octokit.Tests.Integration.Helpers;
 using Octokit.Tests.Integration;
 using Xunit;
