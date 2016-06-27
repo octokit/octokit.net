@@ -34,5 +34,7 @@ namespace Octokit
         public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public int CommentCount { get; protected set; }
+
+        public Verification Verification { get; protected set; }
     }
 }
