@@ -172,6 +172,20 @@ namespace Octokit.Reactive
         IObservable<bool> AddRepository(int id, string organization, string repoName);
 
         /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
+        IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission);
+
+        /// <summary>
         /// Gets whether or not the given repository is managed by the given team.
         /// </summary>
         /// <param name="id">The team identifier</param>
