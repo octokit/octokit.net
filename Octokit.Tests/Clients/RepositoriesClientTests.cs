@@ -1120,7 +1120,7 @@ namespace Octokit.Tests.Clients
                 client.Get("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"));
+				          .Get<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, AcceptHeaders.SignatureVerificationPreview);
             }
         }
 
@@ -1149,7 +1149,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "name");
 
                 connection.Received()
-                    .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"), Args.EmptyDictionary, Args.ApiOptions);
+				          .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"), Args.EmptyDictionary, AcceptHeaders.SignatureVerificationPreview, Args.ApiOptions);
             }
         }
 
