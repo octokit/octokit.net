@@ -16,7 +16,6 @@ namespace Octokit
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Notification>> GetAllForCurrent();
 
@@ -25,7 +24,6 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options);
 
@@ -34,7 +32,6 @@ namespace Octokit
         /// </summary>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request);
 
@@ -44,7 +41,6 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options);
 
@@ -54,7 +50,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -62,7 +57,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -72,7 +66,6 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -81,7 +74,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -91,7 +83,6 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request);
 
         /// <summary>
@@ -100,7 +91,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request);
 
         /// <summary>
@@ -111,7 +101,6 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
@@ -121,14 +110,12 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
         /// Marks all notifications as read.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        /// <returns></returns>
         Task MarkAsRead();
 
         /// <summary>
@@ -136,7 +123,6 @@ namespace Octokit
         /// </summary>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        /// <returns></returns>
         Task MarkAsRead(MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
@@ -145,7 +131,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
         Task MarkAsReadForRepository(string owner, string name);
 
         /// <summary>
@@ -153,7 +138,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
         Task MarkAsReadForRepository(int repositoryId);
 
         /// <summary>
@@ -163,7 +147,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
         Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
@@ -172,7 +155,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
         Task MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
@@ -180,7 +162,6 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Notification> Get(int id);
 
@@ -189,7 +170,6 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
-        /// <returns></returns>
         Task MarkAsRead(int id);
 
         /// <summary>
@@ -197,7 +177,6 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        /// <returns></returns>
         Task<ThreadSubscription> GetThreadSubscription(int id);
 
         /// <summary>
@@ -206,7 +185,6 @@ namespace Octokit
         /// <param name="id">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
-        /// <returns></returns>
         Task<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription);
 
         /// <summary>
@@ -214,7 +192,6 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
-        /// <returns></returns>
         Task DeleteThreadSubscription(int id);
     }
 }
