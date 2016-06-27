@@ -20,7 +20,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         IObservable<Deployment> GetAll(string owner, string name);
         
         /// <summary>
@@ -31,7 +30,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         IObservable<Deployment> GetAll(int repositoryId);
 
         /// <summary>
@@ -44,7 +42,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Deployment> GetAll(string owner, string name, ApiOptions options);
         
         /// <summary>
@@ -56,7 +53,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Deployment> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -69,7 +65,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns></returns>
         IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment);
 
         /// <summary>
@@ -81,7 +76,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        /// <returns></returns>
         IObservable<Deployment> Create(int repositoryId, NewDeployment newDeployment);
 
         /// <summary>
