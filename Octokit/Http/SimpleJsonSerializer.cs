@@ -89,29 +89,12 @@ namespace Octokit.Internal
             {
                 var stringValue = value as string;
                 var jsonValue = value as JsonObject;
-                object attributeValue = null;
+
                 if (stringValue != null)
                 {
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
-                        //first try get value from cache
-                        if (_cachedEnums.ContainsKey(type))
-                        {
-                            if (_cachedEnums[type].ContainsKey(value))
-                            {
-                                return _cachedEnums[type][value];
-                            }
-                            else
-                            {
-                                //dictionary does not contain enum value and has no attribute (see below). So add it for future loops and return value
-                                // remove '-' from values coming in to be able to enum utf-8
-                                stringValue = RemoveHyphenAndUnderscore(stringValue);
-                                var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
-                                _cachedEnums[type].Add(value, parsed);
-                                return parsed;
-                            }
-                        }
-                        else
+                        if (!_cachedEnums.ContainsKey(type))
                         {
                             //First add type to Dictionary
                             _cachedEnums.Add(type, new Dictionary<object, object>());
@@ -125,20 +108,18 @@ namespace Octokit.Internal
                                 if (attribute != null)
                                 {
                                     if (attribute.Value.Equals(value))
-                                        attributeValue = field.GetValue(null);//Store value that we can return it after loop
-                                    _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+                                        _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
 
                                 }
                             }
                         }
-                        //Check if we have a match for attribute
-                        if (attributeValue != null)
+                        if (_cachedEnums[type].ContainsKey(value))
                         {
-                            return attributeValue;
+                            return _cachedEnums[type][value];
                         }
                         else
                         {
-                            //Fallback for any reason we have no match. This sould also happens once
+                            //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
                             // remove '-' from values coming in to be able to enum utf-8
                             stringValue = RemoveHyphenAndUnderscore(stringValue);
                             var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
