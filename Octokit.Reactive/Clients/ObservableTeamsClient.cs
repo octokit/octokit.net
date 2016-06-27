@@ -224,7 +224,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>
@@ -246,6 +246,25 @@ namespace Octokit.Reactive
             return _client.AddRepository(id, organization, repoName).ToObservable();
         }
 
+        /// <summary>
+        /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add a repository to a team that is not owned by the organization.</exception>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
+        /// </remarks>
+        /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
+        public IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
+            return _client.AddRepository(id, organization, repoName, permission).ToObservable();
+        }
 
         /// <summary>
         /// Remove a repository from the team

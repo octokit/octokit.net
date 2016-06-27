@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,7 +26,19 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
+        [Obsolete("Ssh key information is now available under the GitSshKey property. This will be removed in a future update.")]
         IUserKeysClient Keys { get; }
+
+        /// <summary>
+        /// A client for GitHub's User Keys API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
+        ///</remarks>
+        IUserKeysClient GitSshKey { get; }
+
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        IUserGpgKeysClient GpgKey { get; }
 
         /// <summary>
         /// Returns the user specified by the login.

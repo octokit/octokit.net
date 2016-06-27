@@ -1,6 +1,6 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using System;
 #if NET_45
 using System.Collections.Generic;
 #endif
@@ -92,6 +92,17 @@ namespace Octokit
         Task Delete(string owner, string name);
 
         /// <summary>
+        /// Deletes the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#delete-a-repository">API documentation</a> for more information.
+        /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task Delete(int repositoryId);
+
+        /// <summary>
         /// Gets the specified repository.
         /// </summary>
         /// <remarks>
@@ -105,6 +116,18 @@ namespace Octokit
         Task<Repository> Get(string owner, string name);
 
         /// <summary>
+        /// Gets the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="Repository"/></returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<Repository> Get(int repositoryId);
+
+        /// <summary>
         /// Gets all public repositories.
         /// </summary>
         /// <remarks>
@@ -115,9 +138,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
+             Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllPublic();
-
 
         /// <summary>
         /// Gets all public repositories since the integer ID of the last Repository that you've seen.
@@ -143,8 +165,20 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
+             Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllForCurrent();
+
+        /// <summary>
+        /// Gets all repositories owned by the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
         /// Gets all repositories owned by the current user.
@@ -157,9 +191,20 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request);
+
+        /// <summary>
+        /// Gets all repositories owned by the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="request">Search parameters to filter results on</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets all repositories owned by the specified user.
@@ -168,11 +213,22 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-user-repositories">API documentation</a> for more information.
         /// The default page size on GitHub.com is 30.
         /// </remarks>
+        /// <param name="login">The account name to search for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllForUser(string login);
+
+        /// <summary>
+        /// Gets all repositories owned by the specified user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-user-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="login">The account name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options);
 
         /// <summary>
         /// Gets all repositories owned by the specified organization.
@@ -181,11 +237,22 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-organization-repositories">API documentation</a> for more information.
         /// The default page size on GitHub.com is 30.
         /// </remarks>
+        /// <param name="organization">The organization name to search for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
         Task<IReadOnlyList<Repository>> GetAllForOrg(string organization);
+
+        /// <summary>
+        /// Gets all repositories owned by the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-organization-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The organization name to search for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options);
 
         /// <summary>
         /// A client for GitHub's Commit Status API.
@@ -299,6 +366,42 @@ namespace Octokit
         Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name);
 
         /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId);
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId, ApiOptions options);
+
+        /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
         /// </summary>
         /// <remarks>
@@ -308,6 +411,39 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
         Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -322,6 +458,42 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous);
 
         /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, bool includeAnonymous);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, bool includeAnonymous, ApiOptions options);
+
+        /// <summary>
         /// Gets all languages for the specified repository.
         /// </summary>
         /// <remarks>
@@ -331,6 +503,16 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name);
+
+        /// <summary>
+        /// Gets all languages for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(int repositoryId);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -344,6 +526,39 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name);
 
         /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        Task<IReadOnlyList<Team>> GetAllTeams(int repositoryId);
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        Task<IReadOnlyList<Team>> GetAllTeams(int repositoryId, ApiOptions options);
+
+        /// <summary>
         /// Gets all tags for the specified repository.
         /// </summary>
         /// <remarks>
@@ -355,16 +570,60 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name);
 
         /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All of the repositories tags.</returns>
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(int repositoryId);
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All of the repositories tags.</returns>
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All of the repositories tags.</returns>
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(int repositoryId, ApiOptions options);
+
+        /// <summary>
         /// Gets the specified branch.
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
-        Task<Branch> GetBranch(string owner, string repositoryName, string branchName);
+        Task<Branch> GetBranch(string owner, string name, string branchName);
+
+        /// <summary>
+        /// Gets the specified branch.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        Task<Branch> GetBranch(int repositoryId, string branchName);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
@@ -376,6 +635,14 @@ namespace Octokit
         Task<Repository> Edit(string owner, string name, RepositoryUpdate update);
 
         /// <summary>
+        /// Updates the specified repository with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="update">New values to update the repository with</param>
+        /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        Task<Repository> Edit(int repositoryId, RepositoryUpdate update);
+
+        /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -384,6 +651,15 @@ namespace Octokit
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
         Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
+
+        /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        Task<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// A client for GitHub's Repository Pages API.
