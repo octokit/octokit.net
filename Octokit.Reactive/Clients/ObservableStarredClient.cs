@@ -133,9 +133,6 @@ namespace Octokit.Reactive
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user
-        /// </returns>
         public IObservable<Repository> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -145,9 +142,6 @@ namespace Octokit.Reactive
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user
-        /// </returns>
         public IObservable<Repository> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -159,9 +153,6 @@ namespace Octokit.Reactive
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps()
         {
             return GetAllForCurrentWithTimestamps(ApiOptions.None);
@@ -171,9 +162,6 @@ namespace Octokit.Reactive
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -186,10 +174,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters
-        /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<Repository> GetAllForCurrent(StarredRequest request)
         {
@@ -204,10 +188,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters
-        /// </returns>
         public IObservable<Repository> GetAllForCurrent(StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -221,10 +201,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request)
         {
@@ -239,10 +215,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -282,9 +254,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -298,9 +267,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -346,10 +312,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request)
         {
@@ -366,10 +328,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");

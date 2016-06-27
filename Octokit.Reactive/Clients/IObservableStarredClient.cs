@@ -78,36 +78,24 @@ namespace Octokit.Reactive
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user
-        /// </returns>
         IObservable<Repository> GetAllForCurrent();
         
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user
-        /// </returns>
         IObservable<Repository> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForCurrentWithTimestamps();
         
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(ApiOptions options);
 
         /// <summary>
@@ -115,10 +103,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters
-        /// </returns>
         IObservable<Repository> GetAllForCurrent(StarredRequest request);
 
         /// <summary>
@@ -127,10 +111,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        /// <returns>
-        /// A <see cref="IObservable{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters
-        /// </returns>
         IObservable<Repository> GetAllForCurrent(StarredRequest request, ApiOptions options);
 
         /// <summary>
@@ -138,10 +118,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request);
 
         /// <summary>
@@ -150,10 +126,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options);
 
         /// <summary>
@@ -176,9 +148,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user);
 
         /// <summary>
@@ -187,9 +156,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, ApiOptions options);
 
         /// <summary>
@@ -215,10 +181,6 @@ namespace Octokit.Reactive
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request);
 
         /// <summary>
@@ -228,10 +190,6 @@ namespace Octokit.Reactive
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IObservable{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options);
 
         /// <summary>

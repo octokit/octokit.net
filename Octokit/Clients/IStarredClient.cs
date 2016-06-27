@@ -79,9 +79,6 @@ namespace Octokit
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForCurrent();
 
         /// <summary>
@@ -89,18 +86,12 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps();
 
         /// <summary>
@@ -108,9 +99,6 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current authenticated user with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(ApiOptions options);
 
         /// <summary>
@@ -118,10 +106,6 @@ namespace Octokit
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request);
 
         /// <summary>
@@ -130,10 +114,6 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request, ApiOptions options);
 
         /// <summary>
@@ -141,10 +121,6 @@ namespace Octokit
         /// </summary>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request);
 
         /// <summary>
@@ -153,10 +129,6 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the current user,
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options);
 
         /// <summary>
@@ -164,9 +136,6 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/>(ies) starred by the specified user.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user);
 
         /// <summary>
@@ -175,9 +144,6 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{Repository}"/>(ies) starred by the specified user.
-        /// </returns>
         Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options);
 
         /// <summary>
@@ -185,9 +151,6 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user);
 
         /// <summary>
@@ -196,9 +159,6 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/>(ies) starred by the specified user with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, ApiOptions options);
 
         /// <summary>
@@ -224,10 +184,6 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, StarredRequest request);
 
         /// <summary>
@@ -237,10 +193,6 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>
-        /// A <see cref="IReadOnlyList{RepoStar}"/> of <see cref="Repository"/>(ies) starred by the specified user, 
-        /// sorted according to the passed request parameters and with star creation timestamps.
-        /// </returns>
         Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options);
 
         /// <summary>
