@@ -645,7 +645,7 @@ public class ReleasesClientTests
             {
                 PageSize = 1,
                 PageCount = 1,
-                StartPage = 1
+                StartPage = 2
             };
 
             var assets = await _releaseClient.GetAllAssets(repositoryId, releaseId, options);
