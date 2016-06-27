@@ -10,7 +10,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateMethod
         {
             [Fact]
-            public void PostsToTheCorrectUrl()
+            public void RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new MergingClient(connection);
@@ -28,6 +28,24 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MergingClient(connection);
+
+                var newMerge = new NewMerge("baseBranch", "shaToMerge")
+                {
+                    CommitMessage = "some mergingMessage"
+                };
+                client.Create(1, newMerge);
+
+                connection.Received().Post<Merge>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/merges"),
+                    Arg.Is<NewMerge>(nm => nm.Base == "baseBranch"
+                                            && nm.Head == "shaToMerge"
+                                            && nm.CommitMessage == "some mergingMessage"));
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new MergingClient(Substitute.For<IApiConnection>());
@@ -36,6 +54,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", newMerge));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, newMerge));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", newMerge));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", newMerge));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", null));

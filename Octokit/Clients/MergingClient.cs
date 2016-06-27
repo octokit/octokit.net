@@ -36,5 +36,21 @@ namespace Octokit
 
             return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge);
         }
+
+        /// <summary>
+        /// Create a merge for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/repos/merging/#perform-a-merge
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="merge">The merge to create</param>
+        /// <returns></returns>
+        public Task<Merge> Create(int repositoryId, NewMerge merge)
+        {
+            Ensure.ArgumentNotNull(merge, "merge");
+
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge);
+        }
     }
 }
