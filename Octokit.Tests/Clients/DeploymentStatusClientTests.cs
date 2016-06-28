@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -167,20 +166,6 @@ public class DeploymentStatusClientTests
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create(whitespace, "repo", 1, newDeploymentStatus));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", whitespace, 1, newDeploymentStatus));
-        }
-
-        [Fact]
-        public void PostsToCorrectUrl()
-        {
-            var connection = Substitute.For<IApiConnection>();
-            var client = new DeploymentStatusClient(connection);
-            var expectedUrl = "repos/owner/repo/deployments/1/statuses";
-
-            client.Create("owner", "repo", 1, newDeploymentStatus);
-
-            connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         Arg.Any<NewDeploymentStatus>(),
-                                                         Arg.Any<string>());
         }
 
         [Fact]
