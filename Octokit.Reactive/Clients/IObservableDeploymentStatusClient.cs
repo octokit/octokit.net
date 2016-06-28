@@ -21,7 +21,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId);
 
         /// <summary>
@@ -33,7 +32,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(int repositoryId, int deploymentId);
 
         /// <summary>
@@ -47,7 +45,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId, ApiOptions options);
 
         /// <summary>
@@ -60,7 +57,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A <see cref="IObservable{DeploymentStatus}"/> of <see cref="DeploymentStatus"/>es for the given deployment.</returns>
         IObservable<DeploymentStatus> GetAll(int repositoryId, int deploymentId, ApiOptions options);
 
         /// <summary>
@@ -74,7 +70,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        /// <returns>A <see cref="DeploymentStatus"/> representing created deployment status.</returns>
         IObservable<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus);
 
         /// <summary>
@@ -87,7 +82,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        /// <returns>A <see cref="DeploymentStatus"/> representing created deployment status.</returns>
         IObservable<DeploymentStatus> Create(int repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus);
     }
 }
