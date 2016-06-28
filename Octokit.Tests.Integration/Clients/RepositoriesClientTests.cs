@@ -605,6 +605,31 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsRenamedRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("michael-wolfenden", "Polly");
+
+            Assert.Equal("https://github.com/App-vNext/Polly.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+            //Assert.Equal(AccountType.User, repository.Owner.Type);
+
+            repository = await github.Repository.Get("fsprojects", "FSharp.Atom");
+
+            Assert.Equal("https://github.com/ionide/ionide-fsharp.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+
+            repository = await github.Repository.Get("cabbage89", "Orchard.Weixin");
+
+            Assert.Equal("https://github.com/cabbage89/Orchard.WeChat.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsOrganizationRepositoryWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
