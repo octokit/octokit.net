@@ -30,7 +30,14 @@ namespace Octokit
 
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
 
+<<<<<<< HEAD
+=======
+        public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
+
+>>>>>>> refs/remotes/octokit/master
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
+
+        public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
     }
 }

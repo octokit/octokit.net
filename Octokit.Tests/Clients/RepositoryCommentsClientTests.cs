@@ -24,18 +24,30 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
+        public async Task RequestsCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.Get(1, 42);
+
+            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42"));
+        }
+
+        [Fact]
         public async Task EnsuresNonNullArguments()
         {
             var client = new RepositoryCommentsClient(Substitute.For<IApiConnection>());
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
         }
     }
 
-    public class TheGetForRepositoryMethod
+    public class TheGetAllForRepositoryMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
@@ -46,6 +58,17 @@ public class RepositoryCommentsClientTests
             await client.GetAllForRepository("fake", "repo");
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"), Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.GetAllForRepository(1);
+
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), Args.ApiOptions);
         }
 
         [Fact]
@@ -67,20 +90,37 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+            var options = new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            await client.GetAllForRepository(1, options);
+
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), options);
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+            
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null));
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
@@ -104,6 +144,18 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
+        public async Task RequestsCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.GetAllForCommit(1, "sha");
+
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/comments"), 
+                Args.ApiOptions);
+        }
+
+        [Fact]
         public async Task RequestsCorrectUrlWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
@@ -122,36 +174,48 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, null, "sha1", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", null, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, null, null));
+            var options = new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, null));
+            await client.GetAllForCommit(1, "sha", options);
+
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/comments"), options);
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha"));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha", ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", null, ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", null, "sha1", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(null, "name", "sha1", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha", null));
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "", "sha1", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(1, null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit(1, "sha", null));
+            
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", ""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCommit("owner", "name", "sha1", null));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "name", "", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("owner", "", "sha1", ApiOptions.None));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit("", "name", "sha1", ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCommit(1, "", ApiOptions.None));
         }
     }
 
@@ -160,7 +224,7 @@ public class RepositoryCommentsClientTests
         [Fact]
         public async Task PostsToCorrectUrl()
         {
-            NewCommitComment newComment = new NewCommitComment("body");
+            var newComment = new NewCommitComment("body");
 
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
@@ -171,18 +235,36 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task PostsToCorrectUrlWithRepositoryId()
+        {
+            var newComment = new NewCommitComment("body");
+
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.Create(1, "sha", newComment);
+
+            connection.Received().Post<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/comments"), Arg.Any<object>());
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", "sha", new NewCommitComment("body")));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, "sha", new NewCommitComment("body")));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null, new NewCommitComment("body")));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", "sha", null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null, new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, "sha", null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Create(1, "", new NewCommitComment("body")));
         }
     }
 
@@ -201,16 +283,31 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNull()
+        public async Task PostsToCorrectUrlWithRepositoryId()
+        {
+            const string issueCommentUpdate = "updated comment";
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.Update(1, 42, issueCommentUpdate);
+
+            connection.Received().Patch<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42"), Arg.Any<object>());
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 42, "updated comment"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "updated comment"));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, 42, "updated comment"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "updated comment"));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, 42, null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "updated comment"));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "updated comment"));
         }
     }
 
@@ -228,14 +325,26 @@ public class RepositoryCommentsClientTests
         }
 
         [Fact]
-        public async Task EnsuresArgumentsNotNullOrEmpty()
+        public async Task DeletesCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryCommentsClient(connection);
+
+            await client.Delete(1, 42);
+
+            connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42"));
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArgumentsOrEmpty()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new RepositoryCommentsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 42));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 42));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 42));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 42));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", 42));
         }
     }

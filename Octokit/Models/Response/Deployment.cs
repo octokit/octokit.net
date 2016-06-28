@@ -71,6 +71,16 @@ namespace Octokit
         /// </summary>
         public string StatusesUrl { get; protected set; }
 
+        /// <summary>
+        /// Indicates if the environment is specific to a deployment and will no longer exist at some point in the future.
+        /// </summary>
+        public bool TransientEnvironment { get; protected set; }
+
+        /// <summary>
+        /// Indicates if the environment is one with which end users directly interact.
+        /// </summary>
+        public bool ProductionEnvironment { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
