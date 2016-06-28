@@ -28,7 +28,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<User> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -41,7 +40,6 @@ namespace Octokit.Reactive
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<User> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -53,7 +51,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        /// <returns></returns>
         public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -68,7 +65,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        /// <returns></returns>
         public IObservable<User> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -82,7 +78,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        /// <returns></returns>
         public IObservable<bool> CheckAssignee(string owner, string name, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -97,7 +92,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        /// <returns></returns>
         public IObservable<bool> CheckAssignee(int repositoryId, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
