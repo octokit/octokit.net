@@ -59,7 +59,9 @@ public class DeploymentsClientTests
             await client.GetAll(owner, name);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), null,
+                                    "application/vnd.github.ant-man-preview+json", 
+                                    Args.ApiOptions);
         }
 
         [Fact]
@@ -72,9 +74,7 @@ public class DeploymentsClientTests
             await client.GetAll(repositoryId);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                    Arg.Any<IDictionary<string, string>>(),
-                                    Arg.Any<string>(), 
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
                                     Args.ApiOptions);
         }
 
@@ -95,7 +95,10 @@ public class DeploymentsClientTests
             await client.GetAll(owner, name, options);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
+                                    null,
+                                    "application/vnd.github.ant-man-preview+json",
+                                    options);
         }
 
         [Fact]
@@ -116,8 +119,6 @@ public class DeploymentsClientTests
 
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                    Arg.Any<IDictionary<string, string>>(),
-                                    Arg.Any<string>(),
                                     options);
         }
 
@@ -184,7 +185,8 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                    newDeployment);
+                                                    newDeployment,
+                                                    "application/vnd.github.ant-man-preview+json");
         }
 
         [Fact]
@@ -196,9 +198,8 @@ public class DeploymentsClientTests
 
             client.Create(1, newDeployment);
 
-            connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
-                                                    newDeployment,
-                                                    Arg.Any<string>());
+            connection.Received(1).Post<Deployment>(Arg.Is<Uri>(uri => uri.ToString() == expectedUrl),
+                                                    newDeployment);
         }
 
         [Fact]
