@@ -18,7 +18,11 @@ public class DeploymentStatusClientTests
 
             await client.GetAll("owner", "name", 1);
 
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+            connection.Received().GetAll<
+                DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                null,
+                "application/vnd.github.ant-man-preview+json",
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -49,7 +53,11 @@ public class DeploymentStatusClientTests
 
             await client.GetAll("owner", "name", 1, options);
 
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+            connection.Received().GetAll<DeploymentStatus>(
+                Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                null,
+                "application/vnd.github.ant-man-preview+json",
+                options);
         }
 
         [Fact]
@@ -123,7 +131,8 @@ public class DeploymentStatusClientTests
             client.Create("owner", "repo", 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                Arg.Any<NewDeploymentStatus>());
+                newDeploymentStatus,
+                "application/vnd.github.ant-man-preview+json");
         }
 
         [Fact]
