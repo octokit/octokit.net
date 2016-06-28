@@ -30,7 +30,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -44,7 +43,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The repository's ID</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -57,7 +55,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -73,7 +70,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -88,7 +84,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Get(string owner, string name, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -103,7 +98,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Get(int repositoryId, int hookId)
         {
             return _client.Get(repositoryId, hookId).ToObservable();
@@ -116,7 +110,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -132,7 +125,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Create(int repositoryId, NewRepositoryHook hook)
         {
             Ensure.ArgumentNotNull(hook, "hook");
@@ -148,7 +140,6 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -165,7 +156,6 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<RepositoryHook> Edit(int repositoryId, int hookId, EditRepositoryHook hook)
         {
             Ensure.ArgumentNotNull(hook, "hook");
@@ -182,7 +172,6 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Test(string owner, string name, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -199,7 +188,6 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Test(int repositoryId, int hookId)
         {
             return _client.Test(repositoryId, hookId).ToObservable();
@@ -212,7 +200,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Ping(string owner, string name, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -227,7 +214,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Ping(int repositoryId, int hookId)
         {
             return _client.Ping(repositoryId, hookId).ToObservable();
@@ -240,7 +226,6 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Delete(string owner, string name, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -255,7 +240,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The repository's ID</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Delete(int repositoryId, int hookId)
         {
             return _client.Delete(repositoryId, hookId).ToObservable();
