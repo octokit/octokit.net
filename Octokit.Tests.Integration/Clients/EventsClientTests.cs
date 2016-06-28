@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,7 +14,282 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
                 var events = await github.Activity.Events.GetAllUserPerformed("shiftkey");
+
                 Assert.NotEmpty(events);
+            }
+        }
+
+        public class TheGetAllForRepositoryMethod
+        {
+            [IntegrationTest]
+            public async Task CanListEvents()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                var events = await github.Activity.Events.GetAllForRepository("octokit", "octokit.net");
+
+                Assert.NotEmpty(events);
+            }
+
+            [IntegrationTest]
+            public async Task CanListEventsWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                var events = await github.Activity.Events.GetAllForRepository(7528679);
+
+                Assert.NotEmpty(events);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfEventsWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllForRepository("octokit", "octokit.net", options);
+
+                Assert.Equal(3, eventInfos.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfEventsWithoutStartWitRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllForRepository(7528679, options);
+
+                Assert.Equal(3, eventInfos.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfEventsWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllForRepository("octokit", "octokit.net", options);
+
+                Assert.Equal(2, eventInfos.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfEventsWithStartWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllForRepository(7528679, options);
+
+                Assert.Equal(2, eventInfos.Count);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctEventsBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                 
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await github.Activity.Events.GetAllForRepository("octokit", "octokit.net", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await github.Activity.Events.GetAllForRepository("octokit", "octokit.net", skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsDistinctEventsBasedOnStartPageWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                 
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await github.Activity.Events.GetAllForRepository(7528679, startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await github.Activity.Events.GetAllForRepository(7528679, skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            }
+        }
+
+        public class TheGetAllIssuesForRepositoryMethod
+        {
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task CanListIssues()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                var issues = await github.Activity.Events.GetAllIssuesForRepository("octokit", "octokit.net");
+
+                Assert.NotEmpty(issues);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task CanListIssuesWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                var issues = await github.Activity.Events.GetAllIssuesForRepository(7528679);
+
+                Assert.NotEmpty(issues);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsCorrectCountOfEventsWithoutStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllIssuesForRepository("octokit", "octokit.net", options);
+
+                Assert.Equal(3, eventInfos.Count);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsCorrectCountOfEventsWithoutStartWitRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 3,
+                    PageCount = 1
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllIssuesForRepository(7528679, options);
+
+                Assert.Equal(3, eventInfos.Count);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsCorrectCountOfEventsWithStart()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllIssuesForRepository("octokit", "octokit.net", options);
+
+                Assert.Equal(2, eventInfos.Count);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsCorrectCountOfEventsWithStartWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var options = new ApiOptions
+                {
+                    PageSize = 2,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var eventInfos = await github.Activity.Events.GetAllIssuesForRepository(7528679, options);
+
+                Assert.Equal(2, eventInfos.Count);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsDistinctEventsBasedOnStartPage()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await github.Activity.Events.GetAllIssuesForRepository("octokit", "octokit.net", startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await github.Activity.Events.GetAllIssuesForRepository("octokit", "octokit.net", skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            }
+
+            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            public async Task ReturnsDistinctEventsBasedOnStartPageWithRepositoryId()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await github.Activity.Events.GetAllIssuesForRepository(7528679, startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await github.Activity.Events.GetAllIssuesForRepository(7528679, skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             }
         }
 

@@ -120,6 +120,19 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                client.GetAllForRepository(1);
+
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, null);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
                 var endpoint = new Uri("repos/banana/split/notifications", UriKind.Relative);
@@ -140,6 +153,26 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllForRepository(1, options);
+
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlNotificationRequest()
             {
                 var endpoint = new Uri("repos/banana/split/notifications", UriKind.Relative);
@@ -150,6 +183,23 @@ namespace Octokit.Tests.Reactive
                 var notificationsRequest = new NotificationsRequest { All = true };
 
                 client.GetAllForRepository("banana", "split", notificationsRequest);
+
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
+                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"),
+                    null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlNotificationRequestWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                var notificationsRequest = new NotificationsRequest { All = true };
+
+                client.GetAllForRepository(1, notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
                     d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"),
@@ -182,6 +232,31 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlNotificationRequestWithApiOptionsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                var notificationsRequest = new NotificationsRequest { All = true };
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllForRepository(1, notificationsRequest, options);
+
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
+                    d => d.Count == 4 && d["all"] == "true" && d["participating"] == "false"
+                         && d["page"] == "1" && d["per_page"] == "1"),
+                    null);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableNotificationsClient(Substitute.For<IGitHubClient>());
@@ -194,6 +269,15 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new NotificationsRequest()));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new NotificationsRequest()));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", (NotificationsRequest)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", new NotificationsRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, new NotificationsRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", new NotificationsRequest(), null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, (NotificationsRequest)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, new NotificationsRequest(), null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
@@ -201,6 +285,8 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new NotificationsRequest()));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new NotificationsRequest()));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", new NotificationsRequest(), ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", new NotificationsRequest(), ApiOptions.None));
             }
         }
 
@@ -236,6 +322,19 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                client.MarkAsReadForRepository(1);
+
+                connection.Received().Put(endpoint);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlParameterized()
             {
                 var endpoint = new Uri("repos/banana/split/notifications", UriKind.Relative);
@@ -251,6 +350,21 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlParameterizedWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/notifications", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableNotificationsClient(gitHubClient);
+
+                var markAsReadRequest = new MarkAsReadRequest();
+
+                client.MarkAsReadForRepository(1, markAsReadRequest);
+
+                connection.Received().Put<object>(endpoint, markAsReadRequest);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableNotificationsClient(Substitute.For<IGitHubClient>());
@@ -260,6 +374,8 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.MarkAsReadForRepository(null, "name", new MarkAsReadRequest()));
                 Assert.Throws<ArgumentNullException>(() => client.MarkAsReadForRepository("owner", null, new MarkAsReadRequest()));
                 Assert.Throws<ArgumentNullException>(() => client.MarkAsReadForRepository("owner", "name", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.MarkAsReadForRepository(1, null));
 
                 Assert.Throws<ArgumentException>(() => client.MarkAsReadForRepository("", "name"));
                 Assert.Throws<ArgumentException>(() => client.MarkAsReadForRepository("owner", ""));
