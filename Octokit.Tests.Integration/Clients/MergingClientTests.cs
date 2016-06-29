@@ -38,6 +38,19 @@ public class MergingClientTests : IDisposable
         Assert.Equal("merge commit to master from integrationtests", merge.Commit.Message);
     }
 
+    [IntegrationTest]
+    public async Task CanCreateMergeWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newMerge = new NewMerge("master", branchName) { CommitMessage = "merge commit to master from integrationtests" };
+
+        var merge = await _fixture.Create(_context.Repository.Id, newMerge);
+        Assert.NotNull(merge);
+        Assert.NotNull(merge.Commit);
+        Assert.Equal("merge commit to master from integrationtests", merge.Commit.Message);
+    }
+
     async Task CreateTheWorld()
     {
         var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");

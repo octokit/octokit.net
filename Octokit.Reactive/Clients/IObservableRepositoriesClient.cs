@@ -31,6 +31,14 @@ namespace Octokit.Reactive
         IObservable<Unit> Delete(string owner, string name);
 
         /// <summary>
+        /// Deletes a repository for the specified owner and name.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
+        /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
+        IObservable<Unit> Delete(int repositoryId);
+
+        /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -38,6 +46,14 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Repository> Get(string owner, string name);
+
+        /// <summary>
+        /// Retrieves the <see cref="Repository"/> for the specified owner and name.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>A <see cref="Repository"/></returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        IObservable<Repository> Get(int repositoryId);
 
         /// <summary>
         /// Retrieves every public <see cref="Repository"/>.
@@ -234,12 +250,35 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        IObservable<Branch> GetAllBranches(int repositoryId);
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
         IObservable<Branch> GetAllBranches(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all the branches for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-branches">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        IObservable<Branch> GetAllBranches(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -258,11 +297,32 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All contributors of the repository.</returns>
+        IObservable<RepositoryContributor> GetAllContributors(int repositoryId);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
         IObservable<RepositoryContributor> GetAllContributors(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all contributors for the specified repository. Does not include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        IObservable<RepositoryContributor> GetAllContributors(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -276,6 +336,16 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous);
 
+        /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <returns>All contributors of the repository.</returns>
+        IObservable<RepositoryContributor> GetAllContributors(int repositoryId, bool includeAnonymous);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -291,6 +361,18 @@ namespace Octokit.Reactive
         IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options);
 
         /// <summary>
+        /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All contributors of the repository.</returns>
+        IObservable<RepositoryContributor> GetAllContributors(int repositoryId, bool includeAnonymous, ApiOptions options);
+
+        /// <summary>
         /// Gets all languages for the specified repository.
         /// </summary>
         /// <remarks>
@@ -300,6 +382,16 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         IObservable<RepositoryLanguage> GetAllLanguages(string owner, string name);
+
+        /// <summary>
+        /// Gets all languages for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        IObservable<RepositoryLanguage> GetAllLanguages(int repositoryId);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -318,11 +410,32 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        IObservable<Team> GetAllTeams(int repositoryId);
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         IObservable<Team> GetAllTeams(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all teams for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
+        IObservable<Team> GetAllTeams(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -341,11 +454,32 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
         /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All of the repositories tags.</returns>
+        IObservable<RepositoryTag> GetAllTags(int repositoryId);
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
         IObservable<RepositoryTag> GetAllTags(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all tags for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All of the repositories tags.</returns>
+        IObservable<RepositoryTag> GetAllTags(int repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the specified branch.
@@ -354,10 +488,21 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
-        IObservable<Branch> GetBranch(string owner, string repositoryName, string branchName);
+        IObservable<Branch> GetBranch(string owner, string name, string branchName);
+
+        /// <summary>
+        /// Gets the specified branch.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#get-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        IObservable<Branch> GetBranch(int repositoryId, string branchName);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
@@ -369,6 +514,14 @@ namespace Octokit.Reactive
         IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update);
 
         /// <summary>
+        /// Updates the specified repository with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="update">New values to update the repository with</param>
+        /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        IObservable<Repository> Edit(int repositoryId, RepositoryUpdate update);
+
+        /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -377,6 +530,15 @@ namespace Octokit.Reactive
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
         IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
+
+        /// <summary>
+        /// Edit the specified branch with the values given in <paramref name="update"/>
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">New values to update the branch with</param>
+        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
+        IObservable<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// A client for GitHub's Repo Collaborators.
@@ -401,7 +563,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
         ///</remarks>
-        [System.Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
+        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
         IObservableRepositoryCommitsClient Commits { get; }
 
         /// <summary>
