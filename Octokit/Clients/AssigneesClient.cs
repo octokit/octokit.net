@@ -24,7 +24,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -36,10 +35,18 @@ namespace Octokit
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -52,12 +59,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">The options to change API's response.</param>
+        public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            var endpoint = ApiUrls.Assignees(repositoryId);
+
+            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.StableVersion, options);
+        }
+
+        /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        /// <returns></returns>
         public async Task<bool> CheckAssignee(string owner, string name, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -67,6 +87,26 @@ namespace Octokit
             try
             {
                 var response = await Connection.Get<object>(ApiUrls.CheckAssignee(owner, name, assignee), null, null).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if a user is an assignee for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="assignee">Username of the prospective assignee</param>
+        public async Task<bool> CheckAssignee(int repositoryId, string assignee)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+
+            try
+            {
+                var response = await Connection.Get<object>(ApiUrls.CheckAssignee(repositoryId, assignee), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)

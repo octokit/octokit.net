@@ -29,6 +29,8 @@ namespace Octokit.Tests.Integration.fixtures
 
         public string RepositoryName { get { return _repository.Name; } }
 
+        public int RepositoryId { get { return _repository.Id; } }
+
         public RepositoryHook ExpectedHook { get { return _hook; } }
 
         public IList<RepositoryHook> ExpectedHooks { get { return _hooks; } }
