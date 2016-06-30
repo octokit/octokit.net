@@ -318,20 +318,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates or replaces the API resource at the specified URI
-        /// </summary>
-        /// <param name="uri">URI of the API resource to put</param>
-        /// <param name="accepts">Accept header to use for the API request</param>
-        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Put(Uri uri, string accepts)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(accepts, "accpets");
-
-            return Connection.Put(uri, accepts);
-        }
-
-        /// <summary>
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>

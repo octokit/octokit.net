@@ -66,7 +66,7 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        Task Invite(string owner, string repo, string user);
+        Task<RepositoryInvitation> Invite(string owner, string repo, string user);
 
         /// <summary>
         /// Deletes a collaborator from the repo

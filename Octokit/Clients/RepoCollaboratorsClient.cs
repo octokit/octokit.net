@@ -73,7 +73,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            
+
             try
             {
                 var response = await Connection.Get<object>(ApiUrls.RepoCollaborator(owner, repo, user), null, null).ConfigureAwait(false);
@@ -98,7 +98,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            
+
             return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user));
         }
 
@@ -115,17 +115,17 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            
+
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
         }
 
-        public Task Invite(string owner, string repo, string user)
+        public Task<RepositoryInvitation> Invite(string owner, string repo, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user), AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InvitationUpdate
     {
-        public InvitationUpdate(RepositoryInvitationPermission permission)
+        public InvitationUpdate(InvitationPermissionType permission)
         {
             Permissions = permission;
         }
 
-        public RepositoryInvitationPermission Permissions { get; private set; }
+        public InvitationPermissionType Permissions { get; private set; }
 
         internal string DebuggerDisplay
         {

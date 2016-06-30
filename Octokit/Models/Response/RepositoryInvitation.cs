@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public enum RepositoryInvitationPermission
+    public enum InvitationPermissionType
     {
         Read,
         Write,
@@ -14,7 +14,7 @@ namespace Octokit
         {
         }
 
-        public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, RepositoryInvitationPermission permissions, DateTimeOffset createdAt, string url, string htmlUrl)
+        public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, string url, string htmlUrl)
         {
             Id = id;
             Repository = repository;
@@ -34,7 +34,7 @@ namespace Octokit
 
         public User Inviter { get; protected set; }
 
-        public RepositoryInvitationPermission Permissions { get; protected set; }
+        public InvitationPermissionType Permissions { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; set; }
 

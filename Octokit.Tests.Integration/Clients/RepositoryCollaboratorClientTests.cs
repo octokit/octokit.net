@@ -136,4 +136,26 @@ public class RepositoryCollaboratorClientTests
             }
         }
     }
+
+    public class TheInviteNewCollaboratorMethod
+    {
+        [IntegrationTest]
+        public async Task CanInviteNewCollaborator()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                // invite a collaborator
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "maddin2016");
+
+                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+
+                Assert.True(isCollab);
+            }
+        }
+    }
 }
