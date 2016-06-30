@@ -4,8 +4,13 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public class RepositoryInvitationsClient : IRepositoryInvitationsClient
+    public class RepositoryInvitationsClient : ApiClient, IRepositoryInvitationsClient
     {
+        public RepositoryInvitationsClient(IApiConnection apiConnection)
+            : base(apiConnection)
+        {
+        }
+
         /// <summary>
         /// Accept a repository invitation.
         /// </summary>
@@ -17,7 +22,7 @@ namespace Octokit
         /// <returns><see cref="Task"/></returns>
         public Task Accept(int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Patch(ApiUrls.UserInvitations(id), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -31,7 +36,7 @@ namespace Octokit
         /// <returns><see cref="Task"/></returns>
         public Task Decline(int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Delete(ApiUrls.UserInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -40,13 +45,13 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoId">The id ot the repository</param>
+        /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        public Task Delete(int repoId, int invitationId)
+        public Task Delete(int repositoryId, int invitationId)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Delete(ApiUrls.RepositoryInvitations(repositoryId, invitationId), null, AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -55,12 +60,12 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the repository</param>
+        /// <param name="id">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -74,7 +79,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -87,9 +92,9 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        public Task<RepositoryInvitation> Update(int repoId, int invitationId)
+        public Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions, AcceptHeaders.InvitationsApiPreview);
         }
     }
 }
