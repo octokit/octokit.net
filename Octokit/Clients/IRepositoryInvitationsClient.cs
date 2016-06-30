@@ -39,11 +39,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoId">The id ot the repository</param>
+        /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        Task Delete(int repoId, int invitationId);
+        Task Delete(int repositoryId, int invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -51,7 +51,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the repository</param>
+        /// <param name="id">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(int id);
@@ -73,10 +73,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoId">The id ot the repository</param>
+        /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
-        Task<RepositoryInvitation> Update(int repoId, int invitationId);
+        Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions);
     }
 }
