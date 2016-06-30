@@ -59,6 +59,16 @@ namespace Octokit
         Task Add(string owner, string repo, string user);
 
         /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="Task"/></returns>
+        Task Invite(string owner, string repo, string user);
+
+        /// <summary>
         /// Deletes a collaborator from the repo
         /// </summary>
         /// <remarks>

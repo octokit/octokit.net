@@ -118,5 +118,14 @@ namespace Octokit
             
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
         }
+
+        public Task Invite(string owner, string repo, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user), AcceptHeaders.InvitationsApiPreview);
+        }
     }
 }
