@@ -88,7 +88,6 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-<<<<<<< HEAD
         /// Add assignees to a specified Issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -119,7 +118,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(assignees, "assignees");
 
             return _client.RemoveAssignees(owner, name, number, assignees).ToObservable();
-=======
+        }
+
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
@@ -129,7 +129,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
 
             return _client.CheckAssignee(repositoryId, assignee).ToObservable();
->>>>>>> refs/remotes/octokit/master
         }
     }
 }

@@ -55,7 +55,6 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
-<<<<<<< HEAD
     public async Task CanAddAndRemoveAssignees()
     {
         var newAssignees = new AssigneesUpdate(new List<string>() { _context.RepositoryOwner });
@@ -78,12 +77,12 @@ public class AssigneesClientTests
 
         //Check if assignee was removed
         Assert.False(removeAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
-=======
+    }
+
     public async Task CanListAssigneesWithRepositoryId()
     {
         // Repository owner is always an assignee
         var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.Repository.Id);
         Assert.True(assignees.Any(u => u.Login == Helper.UserName));
->>>>>>> refs/remotes/octokit/master
     }
 }

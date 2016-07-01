@@ -48,7 +48,6 @@ namespace Octokit
         Task<bool> CheckAssignee(string owner, string name, string assignee);
 
         /// <summary>
-<<<<<<< HEAD
         /// Add assignees to a specified Issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -67,12 +66,11 @@ namespace Octokit
         /// <param name="assignees">List of assignees to remove</param>
         /// <returns></returns>
         Task<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees);
-=======
+
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
         Task<bool> CheckAssignee(int repositoryId, string assignee);
->>>>>>> refs/remotes/octokit/master
     }
 }

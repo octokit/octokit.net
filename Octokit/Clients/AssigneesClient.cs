@@ -96,7 +96,6 @@ namespace Octokit
         }
 
         /// <summary>
-<<<<<<< HEAD
         /// Add assignees to a specified Issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -128,7 +127,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(assignees, "assignees");
 
             return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleAssigneesPreview);
-=======
+        }
+
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
@@ -146,7 +146,6 @@ namespace Octokit
             {
                 return false;
             }
->>>>>>> refs/remotes/octokit/master
         }
     }
 }

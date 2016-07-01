@@ -12,18 +12,12 @@ namespace Octokit.Tests.Reactive
         private const string owner = "owner";
         private const string name = "name";
         private const string assignee = "assignee";
-<<<<<<< HEAD
-=======
         private const int repositoryId = 1;
->>>>>>> refs/remotes/octokit/master
 
         public class TheGetAllMethod
         {
             private readonly Uri _expectedUri;
-<<<<<<< HEAD
-=======
             private readonly Uri _expectedUriWithRepositoryId;
->>>>>>> refs/remotes/octokit/master
 
             public TheGetAllMethod()
             {
@@ -70,12 +64,8 @@ namespace Octokit.Tests.Reactive
                     StartPage = 1,
                     PageCount = 1
                 };
-
-<<<<<<< HEAD
-                client.GetAllForRepository(owner, name, new ApiOptions { PageSize = 1, StartPage = 1});
-=======
+                client.GetAllForRepository(owner, name, new ApiOptions { PageSize = 1, StartPage = 1 });
                 client.GetAllForRepository(owner, name, options);
->>>>>>> refs/remotes/octokit/master
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUri,
                     Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
@@ -187,7 +177,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
 
                 Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
-                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));               
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
             }
         }
 
