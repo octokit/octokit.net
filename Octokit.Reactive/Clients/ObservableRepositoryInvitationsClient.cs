@@ -75,10 +75,9 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>   
-        public IObservable<RepositoryInvitation> GetAllForCurrent(int id)
+        public IObservable<RepositoryInvitation> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(id), null, AcceptHeaders.InvitationsApiPreview, null);
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, null);
         }
 
         /// <summary>

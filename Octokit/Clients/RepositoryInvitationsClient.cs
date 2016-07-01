@@ -60,12 +60,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(int id)
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(id), AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>

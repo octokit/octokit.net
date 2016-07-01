@@ -20,5 +20,19 @@ public class RepositoryInvitationsClientTests
         }
     }
 
+    public class TheGetAllForCurrentMethod
+    {
+        [Fact]
+        public async Task RequestsCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryInvitationsClient(connection);
+
+            await client.GetAllForCurrent();
+
+            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations"), "application/vnd.github.swamp-thing-preview+json");
+        }
+    }
+
 }
 

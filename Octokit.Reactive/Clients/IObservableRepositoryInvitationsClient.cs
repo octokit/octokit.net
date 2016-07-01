@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -38,9 +39,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
-        /// </remarks>        
-        /// <param name="id">The id of the invitation</param>        
-        IObservable<RepositoryInvitation> GetAllForCurrent(int id);
+        /// </remarks>       
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<RepositoryInvitation> GetAllForCurrent();
 
         /// <summary>
         /// Gets all the invitations on a repository.
