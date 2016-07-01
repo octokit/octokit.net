@@ -36,7 +36,7 @@ namespace Octokit
         /// <returns><see cref="Task"/></returns>
         public Task Decline(int id)
         {
-            return ApiConnection.Delete(ApiUrls.UserInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Delete(ApiUrls.UserInvitations(id), new object(), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Octokit
         /// <returns><see cref="Task"/></returns>
         public Task Delete(int repositoryId, int invitationId)
         {
-            return ApiConnection.Delete(ApiUrls.RepositoryInvitations(repositoryId, invitationId), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Delete(ApiUrls.RepositoryInvitations(repositoryId, invitationId), new object(), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
