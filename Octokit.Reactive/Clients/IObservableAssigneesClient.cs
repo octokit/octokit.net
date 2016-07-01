@@ -66,6 +66,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         IObservable<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees);
 
+        /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>

@@ -120,6 +120,7 @@ namespace Octokit.Reactive
             return _client.RemoveAssignees(owner, name, number, assignees).ToObservable();
         }
 
+        /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
