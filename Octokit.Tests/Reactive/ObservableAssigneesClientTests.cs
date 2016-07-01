@@ -67,7 +67,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(owner, name, new ApiOptions { PageSize = 1, StartPage = 1 });
                 client.GetAllForRepository(owner, name, options);
 
-                gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUri,
+                gitHubClient.Connection.Received(2).Get<List<User>>(_expectedUri,
                     Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
             }
 
