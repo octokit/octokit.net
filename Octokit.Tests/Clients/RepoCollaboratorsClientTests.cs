@@ -146,6 +146,32 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheInviteMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                client.Invite("owner", "test", "user1");
+                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Any<object>(), Arg.Any<string>(), Arg.Is<string>("application/vnd.github.swamp-thing-preview+json"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite(null, "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("owner", "test", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite("owner", "test", null));
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
