@@ -668,5 +668,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
         /// </remarks>
         IRepositoryPagesClient Page { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repository Invitations API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryInvitationsClient Invitation { get; }
     }
 }

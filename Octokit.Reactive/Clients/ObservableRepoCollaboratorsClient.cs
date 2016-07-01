@@ -44,7 +44,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNull(options, "options");
-            
+
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, repo), options);
         }
 
@@ -70,6 +70,22 @@ namespace Octokit.Reactive
         public IObservable<Unit> Add(string owner, string repo, string user)
         {
             return _client.Add(owner, repo, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Invites a user as a collaborator to a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="user">Username of the prospective collaborator</param>
+        /// <returns></returns>
+        public IObservable<RepositoryInvitation> Invite(string owner, string repo, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+            return _client.Invite(owner, repo, user).ToObservable();
         }
 
         /// <summary>
