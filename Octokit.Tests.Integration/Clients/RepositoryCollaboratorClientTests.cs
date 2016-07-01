@@ -152,9 +152,7 @@ public class RepositoryCollaboratorClientTests
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "maddin2016");
 
-                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
-                Assert.True(isCollab);
+                Assert.Equal("maddin2016", response.Invitee.Login);
             }
         }
     }

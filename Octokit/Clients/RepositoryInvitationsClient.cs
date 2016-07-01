@@ -62,10 +62,10 @@ namespace Octokit
         /// </remarks>        
         /// <param name="id">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(int id)
         {
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(id), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace Octokit
         /// </remarks>        
         /// <param name="id">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int id)
         {
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(id), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(id), AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>

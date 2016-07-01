@@ -53,7 +53,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="id">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(int id);
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="id">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyPagedCollection{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int id);
 
         /// <summary>
