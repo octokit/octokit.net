@@ -34,6 +34,19 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
+    public async Task CanCheckAssigneesWithRepositoryId()
+    {
+        var isAssigned = await
+            _github.Issue.Assignee.CheckAssignee(_context.Repository.Id, "FakeHaacked");
+        Assert.False(isAssigned);
+
+        // Repository owner is always an assignee
+        isAssigned = await
+            _github.Issue.Assignee.CheckAssignee(_context.Repository.Id, _context.RepositoryOwner);
+        Assert.True(isAssigned);
+    }
+
+    [IntegrationTest]
     public async Task CanListAssignees()
     {
         // Repository owner is always an assignee
@@ -42,6 +55,7 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
+<<<<<<< HEAD
     public async Task CanAddAndRemoveAssignees()
     {
         var newAssignees = new AssigneesUpdate(new List<string>() { _context.RepositoryOwner });
@@ -64,5 +78,12 @@ public class AssigneesClientTests
 
         //Check if assignee was removed
         Assert.False(removeAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
+=======
+    public async Task CanListAssigneesWithRepositoryId()
+    {
+        // Repository owner is always an assignee
+        var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.Repository.Id);
+        Assert.True(assignees.Any(u => u.Login == Helper.UserName));
+>>>>>>> refs/remotes/octokit/master
     }
 }
