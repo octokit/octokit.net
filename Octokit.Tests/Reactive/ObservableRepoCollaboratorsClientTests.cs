@@ -170,6 +170,71 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheInviteMethod
+        {
+            private readonly IGitHubClient _githubClient;
+            private IObservableRepoCollaboratorsClient _client;
+
+            public TheInviteMethod()
+            {
+                _githubClient = Substitute.For<IGitHubClient>();
+            }
+
+            private void SetupWithoutNonReactiveClient()
+            {
+                _client = new ObservableRepoCollaboratorsClient(_githubClient);
+            }
+
+            private void SetupWithNonReactiveClient()
+            {
+                var collaboratorsClient = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+                _githubClient.Repository.Collaborator.Returns(collaboratorsClient);
+                _client = new ObservableRepoCollaboratorsClient(_githubClient);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                Assert.Throws<ArgumentNullException>(() => _client.Invite(null, "repo", "user"));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", null, "user"));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user"));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonWhitespaceArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite(whitespace, "repo", "user"));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite("owner", whitespace, "user"));
+            }
+
+            [Fact]
+            public void CallsCreateOnRegularDeploymentsClient()
+            {
+                SetupWithoutNonReactiveClient();
+
+                _client.Invite("owner", "repo", "user");
+
+                _githubClient.Repository.Collaborator.Received(1).Invite(Arg.Is("owner"),
+                    Arg.Is("repo"),
+                    Arg.Is("user"));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]
