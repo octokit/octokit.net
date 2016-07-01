@@ -75,6 +75,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
+        /// <param name="permissions">The permission for the collsborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns><see cref="Task"/></returns>
         Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions);

@@ -60,7 +60,8 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id ot the repository</param>
-        /// <param name="invitationId">The id of the invitation</param>       
+        /// <param name="invitationId">The id of the invitation</param>   
+        /// <param name="permissions">The permission for the collsborator</param>
         public IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
         {
             return _client.Edit(repositoryId, invitationId, permissions).ToObservable();
