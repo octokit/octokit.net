@@ -12,6 +12,8 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryInvitationsClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
             _client = client.Repository.Invitation;
             _connection = client.Connection;
         }
