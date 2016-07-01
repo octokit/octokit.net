@@ -29,15 +29,16 @@ public class IssueReactionsClientTests
 
             Assert.NotNull(issue);
 
-            var issueReaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new NewReaction(ReactionType.Heart));
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
 
-            Assert.NotNull(issueReaction);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Id, newReaction);
 
-            Assert.IsType<Reaction>(issueReaction);
-
-            Assert.Equal(ReactionType.Heart, issueReaction.Content);
-
-            Assert.Equal(issue.User.Id, issueReaction.User.Id);
+                Assert.IsType<Reaction>(reaction);
+                Assert.Equal(reactionType, reaction.Content);
+                Assert.Equal(issue.User.Id, reaction.User.Id);
+            }
         }
 
         public void Dispose()

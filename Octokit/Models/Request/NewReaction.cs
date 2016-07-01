@@ -18,7 +18,7 @@ namespace Octokit
         /// <summary>
         /// The reaction type (required)
         /// </summary>
-        public ReactionType Content { get; private set; }        
+        public ReactionType Content { get; private set; }
 
         internal string DebuggerDisplay
         {
