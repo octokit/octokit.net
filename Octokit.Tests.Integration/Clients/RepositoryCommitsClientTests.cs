@@ -12,6 +12,12 @@ public class RepositoryCommitsClientTests
     public class TestsWithExistingRepositories
     {
         readonly IRepositoryCommitsClient _fixture;
+        const int octokitNetRepositoryId = 7528679;
+        const string octokitNetRepositoryOwner = "octokit";
+        const string octokitNetRepositorName = "octokit.net";
+        const int reactiveGitRepositoryId = 22718025;
+        const string reactiveGitRepositoryOwner = "shiftkey";
+        const string reactiveGitRepositorName = "ReactiveGit";
 
         public TestsWithExistingRepositories()
         {
@@ -23,21 +29,43 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetMergeBaseCommit()
         {
-            var compareResult = await _fixture.Compare("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            var compareResult = await _fixture.Compare(octokitNetRepositoryOwner, octokitNetRepositorName, "65a22f4d2cff94a286ac3e96440c810c5509196f", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            Assert.NotNull(compareResult.MergeBaseCommit);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetMergeBaseCommitWithRepositoryId()
+        {
+            var compareResult = await _fixture.Compare(octokitNetRepositoryId, "65a22f4d2cff94a286ac3e96440c810c5509196f", "65a22f4d2cff94a286ac3e96440c810c5509196f");
             Assert.NotNull(compareResult.MergeBaseCommit);
         }
 
         [IntegrationTest]
         public async Task CanGetCommit()
         {
-            var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            var commit = await _fixture.Get(octokitNetRepositoryOwner, octokitNetRepositorName, "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            Assert.NotNull(commit);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCommitWithRepositoryId()
+        {
+            var commit = await _fixture.Get(octokitNetRepositoryId, "65a22f4d2cff94a286ac3e96440c810c5509196f");
             Assert.NotNull(commit);
         }
 
         [IntegrationTest]
         public async Task CanGetCommitWithFiles()
         {
-            var commit = await _fixture.Get("octokit", "octokit.net", "65a22f4d2cff94a286ac3e96440c810c5509196f");
+            var commit = await _fixture.Get(octokitNetRepositoryOwner, octokitNetRepositorName, "65a22f4d2cff94a286ac3e96440c810c5509196f");
+
+            Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCommitWithFilesWithRepositoryId()
+        {
+            var commit = await _fixture.Get(octokitNetRepositoryId, "65a22f4d2cff94a286ac3e96440c810c5509196f");
 
             Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
         }
@@ -45,7 +73,14 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetListOfCommits()
         {
-            var list = await _fixture.GetAll("shiftkey", "ReactiveGit");
+            var list = await _fixture.GetAll(reactiveGitRepositoryOwner, reactiveGitRepositorName);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommitsWithRepositoryId()
+        {
+            var list = await _fixture.GetAll(reactiveGitRepositoryId);
             Assert.NotEmpty(list);
         }
 
@@ -58,7 +93,20 @@ public class RepositoryCommitsClientTests
                 PageCount = 1
             };
 
-            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            var commits = await _fixture.GetAll(reactiveGitRepositoryOwner, reactiveGitRepositorName, options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithoutStartWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var commits = await _fixture.GetAll(reactiveGitRepositoryId, options);
             Assert.Equal(5, commits.Count);
         }
 
@@ -72,7 +120,21 @@ public class RepositoryCommitsClientTests
                 StartPage = 2
             };
 
-            var commits = await _fixture.GetAll("shiftkey", "ReactiveGit", options);
+            var commits = await _fixture.GetAll(reactiveGitRepositoryOwner, reactiveGitRepositorName, options);
+            Assert.Equal(5, commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCorrectCountOfCommitsWithStartWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var commits = await _fixture.GetAll(reactiveGitRepositoryId, options);
             Assert.Equal(5, commits.Count);
         }
 
@@ -92,8 +154,34 @@ public class RepositoryCommitsClientTests
                 StartPage = 2
             };
 
-            var firstCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", startOptions);
-            var secondCommit = await _fixture.GetAll("shiftkey", "ReactiveGit", skipStartOptions);
+            var firstCommit = await _fixture.GetAll(reactiveGitRepositoryOwner, reactiveGitRepositorName, startOptions);
+            var secondCommit = await _fixture.GetAll(reactiveGitRepositoryOwner, reactiveGitRepositorName, skipStartOptions);
+
+            Assert.NotEqual(firstCommit[0].Sha, secondCommit[0].Sha);
+            Assert.NotEqual(firstCommit[1].Sha, secondCommit[1].Sha);
+            Assert.NotEqual(firstCommit[2].Sha, secondCommit[2].Sha);
+            Assert.NotEqual(firstCommit[3].Sha, secondCommit[3].Sha);
+            Assert.NotEqual(firstCommit[4].Sha, secondCommit[4].Sha);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctResultsBasedOnStartWithRepositoryId()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1
+            };
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var firstCommit = await _fixture.GetAll(reactiveGitRepositoryId, startOptions);
+            var secondCommit = await _fixture.GetAll(reactiveGitRepositoryId, skipStartOptions);
 
             Assert.NotEqual(firstCommit[0].Sha, secondCommit[0].Sha);
             Assert.NotEqual(firstCommit[1].Sha, secondCommit[1].Sha);
@@ -106,7 +194,15 @@ public class RepositoryCommitsClientTests
         public async Task CanGetListOfCommitsBySha()
         {
             var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
-            var list = await _fixture.GetAll("octokit", "octokit.net", request);
+            var list = await _fixture.GetAll(octokitNetRepositoryOwner, octokitNetRepositorName, request);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommitsByShaWithRepositoryId()
+        {
+            var request = new CommitRequest { Sha = "08b363d45d6ae8567b75dfa45c032a288584afd4" };
+            var list = await _fixture.GetAll(octokitNetRepositoryId, request);
             Assert.NotEmpty(list);
         }
 
@@ -114,7 +210,15 @@ public class RepositoryCommitsClientTests
         public async Task CanGetListOfCommitsByPath()
         {
             var request = new CommitRequest { Path = "Octokit.Reactive/IObservableGitHubClient.cs" };
-            var list = await _fixture.GetAll("octokit", "octokit.net", request);
+            var list = await _fixture.GetAll(octokitNetRepositoryOwner, octokitNetRepositorName, request);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommitsByPathWithRepositoryId()
+        {
+            var request = new CommitRequest { Path = "Octokit.Reactive/IObservableGitHubClient.cs" };
+            var list = await _fixture.GetAll(octokitNetRepositoryId, request);
             Assert.NotEmpty(list);
         }
 
@@ -122,7 +226,15 @@ public class RepositoryCommitsClientTests
         public async Task CanGetListOfCommitsByAuthor()
         {
             var request = new CommitRequest { Author = "kzu" };
-            var list = await _fixture.GetAll("octokit", "octokit.net", request);
+            var list = await _fixture.GetAll(octokitNetRepositoryOwner, octokitNetRepositorName, request);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommitsByAuthorWithRepositoryId()
+        {
+            var request = new CommitRequest { Author = "kzu" };
+            var list = await _fixture.GetAll(octokitNetRepositoryId, request);
             Assert.NotEmpty(list);
         }
 
@@ -134,14 +246,36 @@ public class RepositoryCommitsClientTests
             var until = new DateTimeOffset(2014, 1, 8, 0, 0, 0, offset);
 
             var request = new CommitRequest { Since = since, Until = until };
-            var list = await _fixture.GetAll("octokit", "octokit.net", request);
+            var list = await _fixture.GetAll(octokitNetRepositoryOwner, octokitNetRepositorName, request);
+            Assert.NotEmpty(list);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetListOfCommitsByDateRangeWithRepositoryId()
+        {
+            var offset = new TimeSpan(1, 0, 0);
+            var since = new DateTimeOffset(2014, 1, 1, 0, 0, 0, offset);
+            var until = new DateTimeOffset(2014, 1, 8, 0, 0, 0, offset);
+
+            var request = new CommitRequest { Since = since, Until = until };
+            var list = await _fixture.GetAll(octokitNetRepositoryId, request);
             Assert.NotEmpty(list);
         }
 
         [IntegrationTest]
         public async Task CanGetCommitWithRenamedFiles()
         {
-            var commit = await _fixture.Get("octokit", "octokit.net", "997e955f38eb0c2c36e55b1588455fa857951dbf");
+            var commit = await _fixture.Get(octokitNetRepositoryOwner, octokitNetRepositorName, "997e955f38eb0c2c36e55b1588455fa857951dbf");
+
+            Assert.True(commit.Files
+                .Where(file => file.Status == "renamed")
+                .All(file => string.IsNullOrEmpty(file.PreviousFileName) == false));
+        }
+
+        [IntegrationTest]
+        public async Task CanGetCommitWithRenamedFilesWithRepositoryId()
+        {
+            var commit = await _fixture.Get(octokitNetRepositoryId, "997e955f38eb0c2c36e55b1588455fa857951dbf");
 
             Assert.True(commit.Files
                 .Where(file => file.Status == "renamed")
@@ -151,7 +285,15 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetSha1()
         {
-            var sha1 = await _fixture.GetSha1("octokit", "octokit.net", "master");
+            var sha1 = await _fixture.GetSha1(octokitNetRepositoryOwner, octokitNetRepositorName, "master");
+
+            Assert.NotNull(sha1);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetSha1WithRepositoryId()
+        {
+            var sha1 = await _fixture.GetSha1(octokitNetRepositoryId, "master");
 
             Assert.NotNull(sha1);
         }
@@ -186,6 +328,19 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanCompareReferencesWithRepositoryId()
+        {
+            await CreateTheWorld();
+
+            var result = await _fixture.Compare(_context.Repository.Id, "master", "my-branch");
+
+            Assert.Equal(1, result.TotalCommits);
+            Assert.Equal(1, result.Commits.Count);
+            Assert.Equal(1, result.AheadBy);
+            Assert.Equal(0, result.BehindBy);
+        }
+
+        [IntegrationTest]
         public async Task CanCompareReferencesOtherWayRound()
         {
             await CreateTheWorld();
@@ -199,11 +354,37 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanCompareReferencesOtherWayRoundWithRepositoryId()
+        {
+            await CreateTheWorld();
+
+            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "master");
+
+            Assert.Equal(0, result.TotalCommits);
+            Assert.Equal(0, result.Commits.Count);
+            Assert.Equal(0, result.AheadBy);
+            Assert.Equal(1, result.BehindBy);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsUrlsToResources()
         {
             await CreateTheWorld();
 
             var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "master");
+
+            Assert.NotNull(result.DiffUrl);
+            Assert.NotNull(result.HtmlUrl);
+            Assert.NotNull(result.PatchUrl);
+            Assert.NotNull(result.PermalinkUrl);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsUrlsToResourcesWithRepositoryId()
+        {
+            await CreateTheWorld();
+
+            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "master");
 
             Assert.NotNull(result.DiffUrl);
             Assert.NotNull(result.HtmlUrl);
@@ -227,11 +408,36 @@ public class RepositoryCommitsClientTests
         }
 
         [IntegrationTest]
+        public async Task CanCompareUsingShaWithRepositoryId()
+        {
+            await CreateTheWorld();
+
+            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var branch = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/my-branch");
+
+            var result = await _fixture.Compare(_context.Repository.Id, master.Object.Sha, branch.Object.Sha);
+
+            Assert.Equal(1, result.Commits.Count);
+            Assert.Equal(1, result.AheadBy);
+            Assert.Equal(0, result.BehindBy);
+        }
+
+        [IntegrationTest]
         public async Task GetSha1FromRepository()
         {
             var reference = await CreateTheWorld();
 
             var sha1 = await _fixture.GetSha1(Helper.UserName, _context.RepositoryName, "my-branch");
+
+            Assert.Equal(reference.Object.Sha, sha1);
+        }
+
+        [IntegrationTest]
+        public async Task GetSha1FromRepositoryWithRepositoryId()
+        {
+            var reference = await CreateTheWorld();
+
+            var sha1 = await _fixture.GetSha1(_context.Repository.Id, "my-branch");
 
             Assert.Equal(reference.Object.Sha, sha1);
         }

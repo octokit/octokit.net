@@ -184,6 +184,26 @@
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReaction.cs" />
+    <Compile Include="Clients\IObservableReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReaction.cs" />
+    <Compile Include="Clients\ObservableReactionsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReactionClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReactionClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentsReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssuesReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentsReactionClient.cs" />
+    <Compile Include="Clients\ObservableIssuesReactionsClient.cs" />
+    <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssueReactionsClient.cs" />
+    <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableIssueReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableIssueCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservableUserGpgKeysClient.cs" />
+    <Compile Include="Clients\ObservableUserGpgKeysClient.cs" />
     <Compile Include="Clients\Enterprise\IObservableEnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\ObservableEnterpriseManagementConsoleClient.cs" />
   </ItemGroup>

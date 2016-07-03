@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -10,6 +11,7 @@ namespace Octokit
         static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
         static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
         static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
+        static readonly Uri _currentUserGpgKeys = new Uri("user/gpg_keys", UriKind.Relative);
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
         static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
@@ -317,6 +319,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueReactions(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -352,6 +366,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri IssueCommentReactions(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/comments/{2}/reactions".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -384,6 +410,18 @@ namespace Octokit
         public static Uri CommitComments(string owner, string name)
         {
             return "repos/{0}/{1}/comments".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified commit comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri CommitCommentReactions(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -1167,6 +1205,18 @@ namespace Octokit
         public static Uri PullRequestReviewComment(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/comments/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri PullRequestReviewCommentReaction(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/comments/{2}/reactions".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -2152,6 +2202,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the GPG Keys for the authenticated user.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> that returns all the GPG Keys for the authenticated user.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        public static Uri GpgKeys()
+        {
+            return _currentUserGpgKeys;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.
+        /// </summary>
+        /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
+        public static Uri GpgKeys(int id)
+        {
+            return "user/gpg_keys/{0}".FormatUri(id);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified issue.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
@@ -2882,6 +2953,16 @@ namespace Octokit
         public static Uri Watchers(int repositoryId)
         {
             return "repositories/{0}/subscribers".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for deleting a reaction.
+        /// </summary>
+        /// <param name="number">The reaction number</param>
+        /// <returns>The <see cref="Uri"/> that lists the watched repositories for the authenticated user.</returns>
+        public static Uri Reactions(int number)
+        {
+            return "reactions/{0}".FormatUri(number);
         }
     }
 }

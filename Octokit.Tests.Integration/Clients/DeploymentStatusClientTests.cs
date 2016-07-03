@@ -58,13 +58,15 @@ public class DeploymentStatusClientTests : IDisposable
     [IntegrationTest]
     public async Task CanReadDeploymentStatuses()
     {
-        var newStatus = new NewDeploymentStatus(DeploymentState.Success);
+        var newStatus = new NewDeploymentStatus(DeploymentState.Success) { LogUrl = "http://test.com/log", EnvironmentUrl = "http:test.com/staging" };
         await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus);
 
         var statuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id);
 
         Assert.NotEmpty(statuses);
         Assert.Equal(DeploymentState.Success, statuses[0].State);
+        Assert.Equal(newStatus.LogUrl, statuses[0].LogUrl);
+        Assert.Equal(newStatus.EnvironmentUrl, statuses[0].EnvironmentUrl);
     }
 
     [IntegrationTest]
