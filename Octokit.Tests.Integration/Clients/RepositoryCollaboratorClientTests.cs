@@ -137,7 +137,7 @@ public class RepositoryCollaboratorClientTests
         }
     }
 
-    public class TheInviteNewCollaboratorMethod
+    public class TheInviteMethod
     {
         [IntegrationTest]
         public async Task CanInviteNewCollaborator()
@@ -152,7 +152,7 @@ public class RepositoryCollaboratorClientTests
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "lrz-hal");
 
-                Assert.Equal("maddin2016", response.Invitee.Login);
+                Assert.Equal("lrz-hal", response.Invitee.Login);
             }
         }
     }

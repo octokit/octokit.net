@@ -40,6 +40,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>       
+        /// /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<RepositoryInvitation> GetAllForCurrent();
 
@@ -49,7 +50,8 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the repository</param>        
+        /// <param name="id">The id of the repository</param> 
+        /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         IObservable<RepositoryInvitation> GetAllForRepository(int repositroyId);
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>   
         /// <param name="permissions">The permission for the collsborator</param>
+        /// <returns><see cref="RepositoryInvitation"/></returns>
         IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions);
     }
 }

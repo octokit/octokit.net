@@ -65,7 +65,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <returns><see cref="IReadOnlyList{RepositoryInvitation}"/></returns>
         Task<RepositoryInvitation> Invite(string owner, string repo, string user);
 
         /// <summary>

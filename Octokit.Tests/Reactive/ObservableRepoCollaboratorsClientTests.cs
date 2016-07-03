@@ -209,6 +209,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user"));
                 Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user"));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "repo", ""));
             }
 
             [Fact]
@@ -220,10 +221,12 @@ namespace Octokit.Tests.Reactive
                     async whitespace => await _client.Invite(whitespace, "repo", "user"));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.Invite("owner", whitespace, "user"));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite("owner", "repo", whitespace));
             }
 
             [Fact]
-            public void CallsCreateOnRegularDeploymentsClient()
+            public void CallsInviteOnRegularDeploymentsClient()
             {
                 SetupWithoutNonReactiveClient();
 
