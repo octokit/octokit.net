@@ -8,14 +8,13 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class StarredClientTests : IDisposable
     {
-        private readonly IGitHubClient _client;
         private readonly IStarredClient _fixture;
         private readonly RepositoryContext _repositoryContext;
 
         public StarredClientTests()
         {
-            _client = Helper.GetAuthenticatedClient();
-            _fixture = _client.Activity.Starring;
+            var client = Helper.GetAuthenticatedClient();
+            _fixture = client.Activity.Starring;
 
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo1");
@@ -614,6 +613,16 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task CanGetAllStargazersWithRepositoryId()
+        {
+            var users = await _fixture.GetAllStargazers(_repositoryContext.Repository.Id);
+            Assert.NotEmpty(users);
+
+            var user = users.FirstOrDefault(u => u.Login == Helper.UserName);
+            Assert.NotNull(user);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsCorrectCountOfRepositoriesWithoutStartAllStargazers()
         {
             var options = new ApiOptions
@@ -623,6 +632,19 @@ namespace Octokit.Tests.Integration.Clients
             };
 
             var users = await _fixture.GetAllStargazers("octokit", "octokit.net", options);
+            Assert.Equal(1, users.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfRepositoriesWithoutStartAllStargazersWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            var users = await _fixture.GetAllStargazers(7528679, options);
             Assert.Equal(1, users.Count);
         }
 
@@ -637,6 +659,20 @@ namespace Octokit.Tests.Integration.Clients
             };
 
             var users = await _fixture.GetAllStargazers("octokit", "octokit.net", options);
+            Assert.Equal(1, users.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfRepositoriesWithStartAllStargazersWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 2
+            };
+
+            var users = await _fixture.GetAllStargazers(7528679, options);
             Assert.Equal(1, users.Count);
         }
 
@@ -667,9 +703,47 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task ReturnsDistinctRepositoriesBasedOnStartPageAllStargazersWithRepositoryId()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var firstPage = await _fixture.GetAllStargazers(7528679, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _fixture.GetAllStargazers(7528679, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
+        }
+
+        [IntegrationTest]
         public async Task CanGetAllStargazersWithTimestamps()
         {
             var users = await _fixture.GetAllStargazersWithTimestamps(_repositoryContext.RepositoryOwner, _repositoryContext.RepositoryName);
+            Assert.NotEmpty(users);
+
+            var userStar = users.FirstOrDefault(star => star.User.Login == _repositoryContext.RepositoryOwner);
+            Assert.NotNull(userStar);
+
+            Assert.True(DateTimeOffset.UtcNow.Subtract(userStar.StarredAt) < TimeSpan.FromMinutes(5));
+        }
+
+        [IntegrationTest]
+        public async Task CanGetAllStargazersWithTimestampsWithRepositoryId()
+        {
+            var users = await _fixture.GetAllStargazersWithTimestamps(_repositoryContext.Repository.Id);
             Assert.NotEmpty(users);
 
             var userStar = users.FirstOrDefault(star => star.User.Login == _repositoryContext.RepositoryOwner);
@@ -692,6 +766,19 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task ReturnsCorrectCountOfRepositoriesWithoutStartAllStargazersWithTimestampsWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            var userStars = await _fixture.GetAllStargazersWithTimestamps(7528679, options);
+            Assert.Equal(1, userStars.Count);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsCorrectCountOfRepositoriesWithStartAllStargazersWithTimestamps()
         {
             var options = new ApiOptions
@@ -702,6 +789,20 @@ namespace Octokit.Tests.Integration.Clients
             };
 
             var userStars = await _fixture.GetAllStargazersWithTimestamps("octokit", "octokit.net", options);
+            Assert.Equal(1, userStars.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfRepositoriesWithStartAllStargazersWithTimestampsWithRepositoryId()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 2
+            };
+
+            var userStars = await _fixture.GetAllStargazersWithTimestamps(7528679, options);
             Assert.Equal(1, userStars.Count);
         }
 
@@ -725,6 +826,32 @@ namespace Octokit.Tests.Integration.Clients
             };
 
             var secondPage = await _fixture.GetAllStargazersWithTimestamps("octokit", "octokit.net", skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage.First().StarredAt, secondPage.First().StarredAt);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctRepositoriesBasedOnStartPageAllStargazersWithTimestampsWithRepositoryId()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var firstPage = await _fixture.GetAllStargazersWithTimestamps(7528679, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _fixture.GetAllStargazersWithTimestamps(7528679, skipStartOptions);
 
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
