@@ -78,9 +78,21 @@ public class DeploymentsClientTests : IDisposable
     [IntegrationTest]
     public async Task CanCreateDeployment()
     {
-        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false, TransientEnvironment = true, ProductionEnvironment = true };
 
         var deployment = await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
+
+        Assert.NotNull(deployment);
+        Assert.Equal(newDeployment.TransientEnvironment, deployment.TransientEnvironment);
+        Assert.Equal(newDeployment.ProductionEnvironment, deployment.ProductionEnvironment);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateDeploymentWithRepositoryId()
+    {
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
+
+        var deployment = await _deploymentsClient.Create(_context.Repository.Id, newDeployment);
 
         Assert.NotNull(deployment);
     }
@@ -92,6 +104,17 @@ public class DeploymentsClientTests : IDisposable
         await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
 
         var deployments = await _deploymentsClient.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+
+        Assert.NotEmpty(deployments);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDeploymentsWithRepositoryId()
+    {
+        var newDeployment = new NewDeployment(_commit.Sha) { AutoMerge = false };
+        await _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment);
+
+        var deployments = await _deploymentsClient.GetAll(_context.Repository.Id);
 
         Assert.NotEmpty(deployments);
     }
@@ -165,6 +188,38 @@ public class DeploymentsClientTests : IDisposable
         };
 
         var secondPage = await _deploymentsClient.GetAll(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+        Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
+    {
+        var commits = CreateCommits(6);
+        foreach (var commit in commits)
+        {
+            var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
+            await _deploymentsClient.Create(_context.Repository.Id, newDeployment);
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1
+        };
+
+        var firstPage = await _deploymentsClient.GetAll(_context.Repository.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 3,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _deploymentsClient.GetAll(_context.Repository.Id, skipStartOptions);
 
         Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
         Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);

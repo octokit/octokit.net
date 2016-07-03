@@ -24,6 +24,7 @@ namespace Octokit.Internal
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
+            Dictionary<Type, Dictionary<object, object>> _cachedEnums = new Dictionary<Type, Dictionary<object, object>>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -78,7 +79,7 @@ namespace Octokit.Internal
                 Justification = "The API expects lowercase values")]
             protected override object SerializeEnum(Enum p)
             {
-                return p.ToString().ToLowerInvariant();
+                return p.ToParameter();
             }
 
             private string _type;
@@ -88,13 +89,43 @@ namespace Octokit.Internal
             {
                 var stringValue = value as string;
                 var jsonValue = value as JsonObject;
+
                 if (stringValue != null)
                 {
                     if (ReflectionUtils.GetTypeInfo(type).IsEnum)
                     {
-                        // remove '-' from values coming in to be able to enum utf-8
-                        stringValue = RemoveHyphenAndUnderscore(stringValue);
-                        return Enum.Parse(type, stringValue, ignoreCase: true);
+                        if (!_cachedEnums.ContainsKey(type))
+                        {
+                            //First add type to Dictionary
+                            _cachedEnums.Add(type, new Dictionary<object, object>());
+                            //then try to get all custom attributes, this happens only once per type
+                            var fields = type.GetRuntimeFields();
+                            foreach (var field in fields)
+                            {
+                                if (field.Name == "value__")
+                                    continue;
+                                var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
+                                if (attribute != null)
+                                {
+                                    if (attribute.Value.Equals(value))
+                                        _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+
+                                }
+                            }
+                        }
+                        if (_cachedEnums[type].ContainsKey(value))
+                        {
+                            return _cachedEnums[type][value];
+                        }
+                        else
+                        {
+                            //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
+                            // remove '-' from values coming in to be able to enum utf-8
+                            stringValue = RemoveHyphenAndUnderscore(stringValue);
+                            var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
+                            _cachedEnums[type].Add(value, parsed);
+                            return parsed;
+                        }
                     }
 
                     if (ReflectionUtils.IsNullableType(type))

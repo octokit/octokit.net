@@ -47,6 +47,29 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var result = new List<EventInfo> { new EventInfo() };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableIssuesEventsClient(gitHubClient);
+
+                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                    new Response
+                    {
+                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
+                    }, result);
+                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Args.EmptyDictionary, null)
+                    .Returns(Task.FromResult(response));
+
+                var eventInfos = await client.GetAllForIssue(1, 42).ToList();
+
+                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Args.EmptyDictionary, null);
+                Assert.Equal(1, eventInfos.Count);
+            }
+
+            [Fact]
             public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var result = new List<EventInfo> { new EventInfo() };
@@ -77,16 +100,52 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var result = new List<EventInfo> { new EventInfo() };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableIssuesEventsClient(gitHubClient);
+                
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                    new Response
+                    {
+                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
+                    }, result);
+                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
+                    .Returns(Task.FromResult(response));
+
+                var eventInfos = await client.GetAllForIssue(1, 42, options).ToList();
+
+                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                Assert.Equal(1, eventInfos.Count);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableIssuesEventsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1));
-
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForIssue("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllForIssue("owner", "", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllForIssue("", "name", 1, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForIssue("owner", "", 1, ApiOptions.None));
             }
         }
 
@@ -112,6 +171,29 @@ namespace Octokit.Tests.Reactive
                 var issueEvents = await client.GetAllForRepository("fake", "repo").ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.EmptyDictionary, null);
+                Assert.Equal(1, issueEvents.Count);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var result = new List<IssueEvent> { new IssueEvent() };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableIssuesEventsClient(gitHubClient);
+
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
+                    new Response
+                    {
+                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
+                    }, result);
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
+                    .Returns(Task.FromResult(response));
+
+                var issueEvents = await client.GetAllForRepository(1).ToList();
+
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Args.EmptyDictionary, null);
                 Assert.Equal(1, issueEvents.Count);
             }
 
@@ -146,16 +228,52 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var result = new List<IssueEvent> { new IssueEvent() };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableIssuesEventsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
+                    new Response
+                    {
+                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
+                    }, result);
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
+                    .Returns(Task.FromResult(response));
+
+                var issueEvents = await client.GetAllForRepository(1, options).ToList();
+
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                Assert.Equal(1, issueEvents.Count);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableIssuesEventsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
-
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
             }
         }
 
@@ -173,12 +291,26 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssuesEventsClient(gitHubClient);
+
+                client.Get(1, 42);
+
+                gitHubClient.Received().Issue.Events.Get(1, 42);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableIssuesEventsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.Get("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1));
             }
         }
     }

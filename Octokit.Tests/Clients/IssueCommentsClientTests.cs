@@ -20,7 +20,10 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"));
+                connection.Received().Get<IssueComment>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"), 
+                    Arg.Any<Dictionary<string, string>>(), 
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"));
             }
 
             [Fact]
@@ -45,7 +48,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForRepository("fake", "repo");
 
-                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"), Args.ApiOptions);
+                connection.Received().GetAll<IssueComment>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -62,7 +69,11 @@ namespace Octokit.Tests.Clients
                 };
                 client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"), options);
+                connection.Received().GetAll<IssueComment>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    options);
             }
 
             [Fact]
@@ -91,7 +102,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllForIssue("fake", "repo", 3);
 
-                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"), Args.ApiOptions);
+                connection.Received().GetAll<IssueComment>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -108,7 +123,11 @@ namespace Octokit.Tests.Clients
                 };
                 client.GetAllForIssue("fake", "repo", 3, options);
 
-                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"), options);
+                connection.Received().GetAll<IssueComment>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"), 
+                    Arg.Any<Dictionary<string, string>>(),
+                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"), 
+                    options);
             }
 
             [Fact]
@@ -249,6 +268,52 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(response.Body);
             Assert.Equal(issueResponseJson, response.HttpResponse.Body);
             Assert.Equal(1, response.Body.Id);
+        }
+
+        [Fact]
+        public void CanDeserializeIssueCommentWithReactions()
+        {
+            const string issueResponseJson =
+                "{\"id\": 1," +
+                "\"url\": \"https://api.github.com/repos/octocat/Hello-World/issues/comments/1\"," +
+                "\"html_url\": \"https://github.com/octocat/Hello-World/issues/1347#issuecomment-1\"," +
+                "\"body\": \"Me too\"," +
+                "\"user\": {" +
+                "\"login\": \"octocat\"," +
+                "\"id\": 1," +
+                "\"avatar_url\": \"https://github.com/images/error/octocat_happy.gif\"," +
+                "\"gravatar_id\": \"somehexcode\"," +
+                "\"url\": \"https://api.github.com/users/octocat\"" +
+                "}," +
+                "\"created_at\": \"2011-04-14T16:00:49Z\"," +
+                "\"updated_at\": \"2011-04-14T16:00:49Z\"," +
+                "\"reactions\": {" +
+                "\"total_count\": 5," +
+                "\"+1\": 3," +
+                "\"-1\": 1," +
+                "\"laugh\": 0," +
+                "\"confused\": 0," +
+                "\"heart\": 1," +
+                "\"hooray\": 0," +
+                "\"url\": \"https://api.github.com/repos/octocat/Hello-World/issues/comments/1/reactions\"" +
+                "}" +
+                "}";
+            var httpResponse = new Response(
+                HttpStatusCode.OK,
+                issueResponseJson,
+                new Dictionary<string, string>(),
+                "application/json");
+
+            var jsonPipeline = new JsonHttpPipeline();
+
+            var response = jsonPipeline.DeserializeResponse<IssueComment>(httpResponse);
+
+            Assert.NotNull(response.Body);
+            Assert.Equal(issueResponseJson, response.HttpResponse.Body);
+            Assert.Equal(1, response.Body.Id);
+            Assert.NotNull(response.Body.Reactions);
+            Assert.Equal(5, response.Body.Reactions.TotalCount);
+            Assert.Equal(3, response.Body.Reactions.Plus1);
         }
     }
 }

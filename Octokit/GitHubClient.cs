@@ -99,6 +99,7 @@ namespace Octokit
             Search = new SearchClient(apiConnection);
             SshKey = new SshKeysClient(apiConnection);
             User = new UsersClient(apiConnection);
+            Reaction = new ReactionsClient(apiConnection);
         }
 
         /// <summary>
@@ -304,6 +305,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/enterprise/
         /// </remarks>
         public IEnterpriseClient Enterprise { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Reactions API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+        /// </remarks>
+        public IReactionsClient Reaction { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

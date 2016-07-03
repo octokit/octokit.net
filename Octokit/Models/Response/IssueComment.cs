@@ -55,6 +55,8 @@ namespace Octokit
         /// </summary>
         public User User { get; protected set; }
 
+        public ReactionSummary Reactions { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt); }
