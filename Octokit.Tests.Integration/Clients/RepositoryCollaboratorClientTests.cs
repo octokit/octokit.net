@@ -150,7 +150,7 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "maddin2016");
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "lrz-hal");
 
                 Assert.Equal("maddin2016", response.Invitee.Login);
             }

@@ -6,6 +6,15 @@ using Xunit;
 
 public class RepositoryInvitationsClientTests
 {
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            Assert.Throws<ArgumentNullException>(() => new RepositoryInvitationsClient(null));
+        }
+    }
+
     public class TheGetAllForRepositoryMethod
     {
         [Fact]

@@ -50,7 +50,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="id">The id of the repository</param>        
-        IObservable<RepositoryInvitation> GetAllForRepository(int id);
+        IObservable<RepositoryInvitation> GetAllForRepository(int repositroyId);
 
         /// <summary>
         /// Updates a repository invitation.
