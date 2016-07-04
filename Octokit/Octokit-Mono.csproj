@@ -484,6 +484,7 @@
     <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Response\GpgKey.cs" />
+    <Compile Include="Models\Response\Verification.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
