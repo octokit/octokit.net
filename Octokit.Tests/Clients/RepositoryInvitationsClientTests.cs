@@ -98,6 +98,14 @@ public class RepositoryInvitationsClientTests
 
             connection.Received().Patch<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations/2"), Arg.Is<InvitationUpdate>(updatedInvitation), "application/vnd.github.swamp-thing-preview+json");
         }
+
+        [Fact]
+        public async Task EnsureNonNullArguments()
+        {
+            var client = new RepositoryInvitationsClient(Substitute.For<IApiConnection>());
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(1, 2, null));
+        }
     }
 
 }

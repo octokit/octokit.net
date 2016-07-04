@@ -67,6 +67,8 @@ namespace Octokit.Reactive
         /// <param name="permissions">The permission to set.</param>
         public IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
         {
+            Ensure.ArgumentNotNull(permissions, "persmissions");
+
             return _client.Edit(repositoryId, invitationId, permissions).ToObservable();
         }
 

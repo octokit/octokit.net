@@ -99,6 +99,15 @@ namespace Octokit.Tests.Reactive
 
                 gitHub.Received().Repository.Invitation.Edit(42, 43, update);
             }
+
+            [Fact]
+            public void EnsureNonNullArguments()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryInvitationsClient(gitHub);
+
+                Assert.Throws<ArgumentNullException>(() => client.Edit(1, 2, null));
+            }
         }
     }
 }

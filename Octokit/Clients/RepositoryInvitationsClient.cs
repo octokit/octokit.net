@@ -123,6 +123,8 @@ namespace Octokit
         /// <returns><see cref="RepositoryInvitation"/></returns>
         public Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
         {
+            Ensure.ArgumentNotNull(permissions, "permissions");
+
             return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions, AcceptHeaders.InvitationsApiPreview);
         }
     }

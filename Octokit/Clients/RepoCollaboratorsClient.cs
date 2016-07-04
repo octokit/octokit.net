@@ -134,6 +134,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(permission, "permission");
 
             return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
