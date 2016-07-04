@@ -134,6 +134,7 @@
     <Compile Include="Clients\IReactionsClient.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
     <Compile Include="Models\Request\InvitationUpdate.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
