@@ -56,7 +56,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
-        /// <returns></returns>
         IObservable<Unit> Delete(string owner, string repo, string user);
     }
 }

@@ -2961,7 +2961,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository invitations.
+        /// Returns the <see cref="Uri"/> for a single repository invitation.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
@@ -2991,7 +2991,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for invitations for the current user.
+        /// Returns the <see cref="Uri"/> for a single invitation of the current user.
         /// </summary>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>

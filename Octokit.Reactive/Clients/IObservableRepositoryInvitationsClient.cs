@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository.</param>
+        /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>        
         IObservable<bool> Delete(int repositoryId, int invitationId);
 
@@ -39,8 +39,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
-        /// </remarks>       
-        /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// </remarks>        
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<RepositoryInvitation> GetAllForCurrent();
 
@@ -50,8 +49,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="repositoryId">The id of the repository</param> 
-        /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
+        /// <param name="repositoryId">The id of the repository</param>         
         IObservable<RepositoryInvitation> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -60,7 +58,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository.</param>
+        /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>   
         /// <param name="permissions">The permission to set.</param>
         /// <returns><see cref="RepositoryInvitation"/></returns>

@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository.</param>
+        /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>        
         public IObservable<bool> Delete(int repositoryId, int invitationId)
         {
@@ -62,7 +62,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository.</param>
+        /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitatio.n</param>   
         /// <param name="permissions">The permission to set.</param>
         public IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)

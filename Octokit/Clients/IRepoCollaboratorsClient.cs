@@ -67,8 +67,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>
         /// <param name="permission">The permission to set.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="RepositoryInvitation"/></returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
 
         /// <summary>

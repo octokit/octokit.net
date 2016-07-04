@@ -20,7 +20,6 @@ namespace Octokit
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        /// <returns><see cref="Task"/></returns>
         public async Task<bool> Accept(int invitationId)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
@@ -65,7 +64,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository</param>
+        /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<bool> Delete(int repositoryId, int invitationId)
@@ -90,7 +89,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
         {
             return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), AcceptHeaders.InvitationsApiPreview);
@@ -104,7 +102,6 @@ namespace Octokit
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int repositoryId)
         {
             return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), AcceptHeaders.InvitationsApiPreview);
@@ -116,11 +113,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id ot the repository</param>
+        /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collsborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="RepositoryInvitation"/></returns>
         public Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, "permissions");

@@ -151,9 +151,9 @@ public class RepositoryCollaboratorClientTests
                 var permission = new CollaboratorRequest();
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "lrz-hal", permission);
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "maddin2016", permission);
 
-                Assert.Equal("lrz-hal", response.Invitee.Login);
+                Assert.Equal("maddin2016", response.Invitee.Login);
                 Assert.Equal(InvitationPermissionType.Write, response.Permissions);
             }
         }
