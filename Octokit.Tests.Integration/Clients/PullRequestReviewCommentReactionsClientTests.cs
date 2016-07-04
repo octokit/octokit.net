@@ -40,15 +40,16 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         AssertComment(commentFromGitHub, body, position);
 
-        var pullRequestReviewCommentReaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
 
-        Assert.NotNull(pullRequestReviewCommentReaction);
+            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, newReaction);
 
-        Assert.IsType<Reaction>(pullRequestReviewCommentReaction);
-
-        Assert.Equal(ReactionType.Heart, pullRequestReviewCommentReaction.Content);
-
-        Assert.Equal(commentFromGitHub.User.Id, pullRequestReviewCommentReaction.User.Id);
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(commentFromGitHub.User.Id, reaction.User.Id);
+        }
     }
 
     /// <summary>

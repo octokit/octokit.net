@@ -56,14 +56,16 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotNull(result);
 
-            var newReaction = new NewReaction(ReactionType.Confused);
-            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
 
-            Assert.IsType<Reaction>(reaction);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
 
-            Assert.Equal(ReactionType.Confused, reaction.Content);
-
-            Assert.Equal(result.User.Id, reaction.User.Id);
+                Assert.IsType<Reaction>(reaction);
+                Assert.Equal(reactionType, reaction.Content);
+                Assert.Equal(result.User.Id, reaction.User.Id);
+            }
         }
 
         public void Dispose()
