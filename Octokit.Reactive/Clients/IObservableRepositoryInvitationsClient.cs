@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Reactive;
+using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
