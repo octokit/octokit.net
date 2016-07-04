@@ -489,6 +489,7 @@
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Models\Request\InvitationUpdate.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

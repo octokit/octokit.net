@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -17,12 +18,22 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>
+        /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         /// <returns><see cref="Task"/></returns>
-        public Task Accept(int id)
+        public async Task<bool> Accept(int invitationId)
         {
-            return ApiConnection.Patch(ApiUrls.UserInvitations(id), AcceptHeaders.InvitationsApiPreview);
+            var endpoint = ApiUrls.UserInvitations(invitationId);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Patch(endpoint, AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -31,12 +42,21 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        /// <returns><see cref="Task"/></returns>
-        public Task Decline(int id)
+        /// <param name="invitationId">The id of the invitation</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public async Task<bool> Decline(int invitationId)
         {
-            return ApiConnection.Delete(ApiUrls.UserInvitations(id), new object(), AcceptHeaders.InvitationsApiPreview);
+            var endpoint = ApiUrls.UserInvitations(invitationId);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -48,10 +68,19 @@ namespace Octokit
         /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
-        public Task Delete(int repositoryId, int invitationId)
+        public async Task<bool> Delete(int repositoryId, int invitationId)
         {
-            return ApiConnection.Delete(ApiUrls.RepositoryInvitations(repositoryId, invitationId), new object(), AcceptHeaders.InvitationsApiPreview);
+            var endpoint = ApiUrls.RepositoryInvitations(repositoryId, invitationId);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>

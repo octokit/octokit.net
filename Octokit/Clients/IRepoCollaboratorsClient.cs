@@ -54,8 +54,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         Task Add(string owner, string repo, string user);
 
         /// <summary>
@@ -64,9 +63,13 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="repo">The name of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="IReadOnlyList{RepositoryInvitation}"/></returns>
-        Task<RepositoryInvitation> Invite(string owner, string repo, string user);
+        /// <returns><see cref="RepositoryInvitation"/></returns>
+        Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Deletes a collaborator from the repo
@@ -75,7 +78,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
         Task Delete(string owner, string repo, string user);
     }
 }

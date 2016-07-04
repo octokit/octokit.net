@@ -18,10 +18,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>
+        /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        /// <returns><see cref="Task"/></returns>
-        Task Accept(int id);
+        Task<bool> Accept(int invitationId);
 
         /// <summary>
         /// Decline a repository invitation.
@@ -29,10 +28,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the invitation</param>
+        /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         /// <returns><see cref="Task"/></returns>
-        Task Decline(int id);
+        Task<bool> Decline(int invitationId);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -43,8 +42,7 @@ namespace Octokit
         /// <param name="repositoryId">The id ot the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
-        Task Delete(int repositoryId, int invitationId);
+        Task<bool> Delete(int repositoryId, int invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.

@@ -92,7 +92,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
         public Task Add(string owner, string repo, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -109,7 +108,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="Task"/></returns>
         public Task Delete(string owner, string repo, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -119,13 +117,25 @@ namespace Octokit
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
         }
 
-        public Task<RepositoryInvitation> Invite(string owner, string repo, string user)
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="repo">The name of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns><see cref="RepositoryInvitation"/></returns>
+        public Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
     }
 }
