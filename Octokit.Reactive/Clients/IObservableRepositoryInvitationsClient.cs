@@ -13,7 +13,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation.</param>        
-        IObservable<Unit> Accept(int invitationId);
+        IObservable<bool> Accept(int invitationId);
 
         /// <summary>
         /// Decline a repository invitation.
@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation.</param>        
-        IObservable<Unit> Decline(int invitationId);
+        IObservable<bool> Decline(int invitationId);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id ot the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>        
-        IObservable<Unit> Delete(int repositoryId, int invitationId);
+        IObservable<bool> Delete(int repositoryId, int invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -50,9 +50,9 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
-        /// <param name="id">The id of the repository</param> 
+        /// <param name="repositoryId">The id of the repository</param> 
         /// <returns>A <see cref="IReadOnlyList{RepositoryInvitation}"/> of <see cref="RepositoryInvitation"/>.</returns>
-        IObservable<RepositoryInvitation> GetAllForRepository(int repositroyId);
+        IObservable<RepositoryInvitation> GetAllForRepository(int repositoryId);
 
         /// <summary>
         /// Updates a repository invitation.

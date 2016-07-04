@@ -1,5 +1,6 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
@@ -77,7 +78,7 @@ namespace Octokit.Reactive
         /// </remarks>        
         public IObservable<RepositoryInvitation> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, null);
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, ApiOptions.None);
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>  
         public IObservable<RepositoryInvitation> GetAllForRepository(int repositoryId)
         {
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, null);
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, ApiOptions.None);
         }
     }
 }

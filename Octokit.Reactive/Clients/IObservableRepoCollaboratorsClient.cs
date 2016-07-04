@@ -45,9 +45,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="user">Username of the prospective collaborator</param>
+        /// <param name="user">The username of the prospective collaborator</param>
+        /// <param name="permission">The permission to set</param>
         /// <returns></returns>
-        IObservable<RepositoryInvitation> Invite(string owner, string repo, string user);
+        IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Removes a user as a collaborator for a repository.

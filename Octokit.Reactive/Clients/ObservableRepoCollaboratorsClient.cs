@@ -77,15 +77,17 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="user">Username of the prospective collaborator</param>
+        /// <param name="user">The username of the prospective collaborator</param>
+        /// <param name="permission">The permission to set</param>
         /// <returns></returns>
-        public IObservable<RepositoryInvitation> Invite(string owner, string repo, string user)
+        public IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(permission, "psermission");
 
-            return _client.Invite(owner, repo, user).ToObservable();
+            return _client.Invite(owner, repo, user, permission).ToObservable();
         }
 
         /// <summary>

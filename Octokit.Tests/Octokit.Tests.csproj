@@ -244,6 +244,7 @@
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryContentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryForksClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryInvitationsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />

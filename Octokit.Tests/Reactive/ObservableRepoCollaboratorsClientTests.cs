@@ -196,45 +196,51 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest();
 
-                Assert.Throws<ArgumentNullException>(() => _client.Invite(null, "repo", "user"));
-                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", null, "user"));
-                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", null));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite(null, "repo", "user", permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", null, "user", permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", null, permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", "user", null));
             }
 
             [Fact]
             public void EnsuresNonEmptyArguments()
             {
                 SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest();
 
-                Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user"));
-                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user"));
-                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "repo", ""));
+                Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user", permission));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user", permission));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "repo", "", permission));
             }
 
             [Fact]
             public async Task EnsuresNonWhitespaceArguments()
             {
                 SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest();
 
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Invite(whitespace, "repo", "user"));
+                    async whitespace => await _client.Invite(whitespace, "repo", "user", permission));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Invite("owner", whitespace, "user"));
+                    async whitespace => await _client.Invite("owner", whitespace, "user", permission));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
-                    async whitespace => await _client.Invite("owner", "repo", whitespace));
+                    async whitespace => await _client.Invite("owner", "repo", whitespace, permission));
             }
 
             [Fact]
             public void CallsInviteOnRegularDeploymentsClient()
             {
                 SetupWithoutNonReactiveClient();
+                var permission = new CollaboratorRequest();
 
-                _client.Invite("owner", "repo", "user");
+                _client.Invite("owner", "repo", "user", permission);
 
                 _githubClient.Repository.Collaborator.Received(1).Invite(Arg.Is("owner"),
                     Arg.Is("repo"),
-                    Arg.Is("user"));
+                    Arg.Is("user"),
+                    Arg.Is(permission));
             }
         }
 

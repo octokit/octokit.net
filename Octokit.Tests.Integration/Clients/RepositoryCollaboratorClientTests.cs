@@ -148,11 +148,13 @@ public class RepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
+                var permission = new CollaboratorRequest();
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "lrz-hal");
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "lrz-hal", permission);
 
                 Assert.Equal("lrz-hal", response.Invitee.Login);
+                Assert.Equal(InvitationPermissionType.Write, response.Permissions);
             }
         }
     }
