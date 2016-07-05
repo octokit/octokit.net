@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -45,6 +46,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
             return ApiConnection.Get<MaintenanceModeResponse>(endpoint);
         }
 
@@ -65,36 +67,38 @@ namespace Octokit
             return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.ToFormUrlEncodedParameterString());
         }
 
-        public Task<IReadOnlyList<AuthorizedManagementKey>> GetAllAuthorizedKeys(string managementConsolePassword)
+        public Task<IReadOnlyList<AuthorizedKey>> GetAllAuthorizedKeys(string managementConsolePassword)
         {
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
 
-            return ApiConnection.Get<IReadOnlyList<AuthorizedManagementKey>>(endpoint);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            return ApiConnection.Get<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
 
-        public Task<IReadOnlyList<AuthorizedManagementKey>> AddAuthorizedKey(string key, string managementConsolePassword)
+        public Task<IReadOnlyList<AuthorizedKey>> AddAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
         {
-            Ensure.ArgumentNotNullOrEmptyString(key, "publicKeyContent");
+            Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            endpoint = endpoint.ApplyParameters(authorizedKey.ToParametersDictionary());
 
-            return ApiConnection.Post<IReadOnlyList<AuthorizedManagementKey>>(endpoint, key);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            return ApiConnection.Post<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
 
-        public Task DeleteAuthorizedKey(string key, string managementConsolePassword)
+        public Task DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
         {
-            Ensure.ArgumentNotNullOrEmptyString(key, "publicKeyContent");
+            Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            endpoint = endpoint.ApplyParameters(authorizedKey.ToParametersDictionary());
 
-            return ApiConnection.Delete(endpoint, key);
+            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            return ApiConnection.Delete(endpoint);
         }
     }
 }
