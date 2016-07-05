@@ -24,7 +24,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -39,7 +38,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number)
         {
             return GetAll(repositoryId, number, ApiOptions.None);
@@ -53,7 +51,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -70,7 +67,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -84,7 +80,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -98,7 +93,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
@@ -111,7 +105,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -127,7 +120,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -142,7 +134,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -158,7 +149,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -174,7 +164,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -192,7 +181,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -208,7 +196,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request review comment number</param>
-        /// <returns></returns>
         public Task<PullRequestReviewComment> GetComment(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -223,7 +210,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request review comment number</param>
-        /// <returns></returns>
         public Task<PullRequestReviewComment> GetComment(int repositoryId, int number)
         {
             return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number));
@@ -237,7 +223,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="comment">The comment</param>
-        /// <returns></returns>
         public async Task<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentCreate comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -262,7 +247,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="comment">The comment</param>
-        /// <returns></returns>
         public async Task<PullRequestReviewComment> Create(int repositoryId, int number, PullRequestReviewCommentCreate comment)
         {
             Ensure.ArgumentNotNull(comment, "comment");
@@ -286,7 +270,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="comment">The comment</param>
-        /// <returns></returns>
         public async Task<PullRequestReviewComment> CreateReply(string owner, string name, int number, PullRequestReviewCommentReplyCreate comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -311,7 +294,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="comment">The comment</param>
-        /// <returns></returns>
         public async Task<PullRequestReviewComment> CreateReply(int repositoryId, int number, PullRequestReviewCommentReplyCreate comment)
         {
             Ensure.ArgumentNotNull(comment, "comment");
@@ -335,7 +317,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="comment">The edited comment</param>
-        /// <returns></returns>
         public Task<PullRequestReviewComment> Edit(string owner, string name, int number, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -352,7 +333,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="comment">The edited comment</param>
-        /// <returns></returns>
         public Task<PullRequestReviewComment> Edit(int repositoryId, int number, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNull(comment, "comment");
@@ -367,7 +347,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request review comment number</param>
-        /// <returns></returns>
         public Task Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -382,7 +361,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request review comment number</param>
-        /// <returns></returns>
         public Task Delete(int repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(repositoryId, number));
