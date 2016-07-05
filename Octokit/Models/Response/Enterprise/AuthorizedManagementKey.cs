@@ -16,7 +16,7 @@ namespace Octokit
 
         public string Key { get; private set; }
 
-        //[Parameter(Key="pretty-print")]
+        [Parameter(Key="pretty-print")]
         public string PrettyPrint { get; private set; }
 
         public string Comment { get; private set; }
