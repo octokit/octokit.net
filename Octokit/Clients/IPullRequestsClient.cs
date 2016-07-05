@@ -23,7 +23,6 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         Task<PullRequest> Get(string owner, string name, int number);
@@ -34,7 +33,6 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         Task<PullRequest> Get(int repositoryId, int number);
@@ -47,7 +45,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -57,7 +54,6 @@ namespace Octokit
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -69,7 +65,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -80,7 +75,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -92,7 +86,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request);
 
         /// <summary>
@@ -103,7 +96,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(int repositoryId, PullRequestRequest request);
 
         /// <summary>
@@ -116,7 +108,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options);
 
         /// <summary>
@@ -128,7 +119,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequest>> GetAllForRepository(int repositoryId, PullRequestRequest request, ApiOptions options);
 
         /// <summary>
@@ -138,7 +128,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        /// <returns></returns>
         Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest);
 
         /// <summary>
@@ -147,7 +136,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        /// <returns></returns>
         Task<PullRequest> Create(int repositoryId, NewPullRequest newPullRequest);
 
         /// <summary>
@@ -159,7 +147,6 @@ namespace Octokit
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        /// <returns></returns>
         Task<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate);
 
         /// <summary>
@@ -170,7 +157,6 @@ namespace Octokit
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        /// <returns></returns>
         Task<PullRequest> Update(int repositoryId, int number, PullRequestUpdate pullRequestUpdate);
 
         /// <summary>
@@ -181,7 +167,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        /// <returns></returns>
         Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest);
 
         /// <summary>
@@ -191,7 +176,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        /// <returns></returns>
         Task<PullRequestMerge> Merge(int repositoryId, int number, MergePullRequest mergePullRequest);
 
         /// <summary>
@@ -201,7 +185,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<bool> Merged(string owner, string name, int number);
 
         /// <summary>
@@ -210,7 +193,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<bool> Merged(int repositoryId, int number);
 
         /// <summary>
@@ -220,7 +202,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number);
 
         /// <summary>
@@ -229,7 +210,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequestCommit>> Commits(int repositoryId, int number);
 
         /// <summary>
@@ -239,7 +219,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number);
 
         /// <summary>
@@ -248,7 +227,6 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The pull request number</param>
-        /// <returns></returns>
         Task<IReadOnlyList<PullRequestFile>> Files(int repositoryId, int number);
     }
 }
