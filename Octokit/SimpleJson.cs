@@ -1486,12 +1486,17 @@ namespace Octokit
                             obj = value;
                         else
                         {
-                            obj = ConstructorCache[type]();
                             foreach (KeyValuePair<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> setter in SetCache[type])
                             {
                                 object jsonValue;
                                 if (jsonObject.TryGetValue(setter.Key, out jsonValue))
                                 {
+                                    // Create object if it hasn't been created yet
+                                    if (obj == null)
+                                    {
+                                        obj = ConstructorCache[type]();
+                                    }
+
                                     jsonValue = DeserializeObject(jsonValue, setter.Value.Key);
                                     setter.Value.Value(obj, jsonValue);
                                 }
