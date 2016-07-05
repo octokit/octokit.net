@@ -476,6 +476,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var request = new Request
+            {
+                Method = HttpMethod.Delete,
+                BaseAddress = BaseAddress,
+                Endpoint = uri
+            };
+
+            return Run<T>(request, CancellationToken.None);
+        }
+
+        /// <summary>
         /// Base address for the connection.
         /// </summary>
         public Uri BaseAddress { get; private set; }

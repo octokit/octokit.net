@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -89,7 +88,7 @@ namespace Octokit
             return ApiConnection.Post<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
 
-        public Task DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
+        public Task<IReadOnlyList<AuthorizedKey>> DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
         {
             Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
@@ -98,7 +97,7 @@ namespace Octokit
             endpoint = endpoint.ApplyParameters(authorizedKey.ToParametersDictionary());
 
             endpoint = CorrectEndpointForManagementConsole(endpoint);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
     }
 }

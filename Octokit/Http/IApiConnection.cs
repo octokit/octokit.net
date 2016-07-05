@@ -313,6 +313,13 @@ namespace Octokit
         Task Delete(Uri uri, object data, string accepts);
 
         /// <summary>
+        /// Deletes the API object at the specified URI and returns a response
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <returns>A <see cref="Task"/> for the API's response.</returns>
+        Task<T> Delete<T>(Uri uri);
+
+        /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
         /// It expects the API to respond with a 302 Found.

@@ -230,6 +230,13 @@ namespace Octokit
         Task<HttpStatusCode> Delete(Uri uri, object data, string accepts);
 
         /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that returns a response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IApiResponse<T>> Delete<T>(Uri uri);
+
+        /// <summary>
         /// Base address for the connection.
         /// </summary>
         Uri BaseAddress { get; }

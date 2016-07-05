@@ -479,6 +479,21 @@ namespace Octokit
 
             return Connection.Delete(uri, data, accepts);
         }
+
+        /// <summary>
+        /// Deletes the API object at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public async Task<T> Delete<T>(Uri uri)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+
+            var response = await Connection.Delete<T>(uri).ConfigureAwait(false);
+
+            return response.Body;
+        }
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
