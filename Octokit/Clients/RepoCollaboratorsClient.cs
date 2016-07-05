@@ -31,7 +31,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -48,7 +47,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -64,7 +62,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -83,7 +80,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -101,7 +97,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public async Task<bool> IsCollaborator(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -128,7 +123,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public async Task<bool> IsCollaborator(int repositoryId, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -154,7 +148,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task Add(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -173,7 +166,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task Add(int repositoryId, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -191,7 +183,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the deleted collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task Delete(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -210,7 +201,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the deleted collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns></returns>
         public Task Delete(int repositoryId, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
