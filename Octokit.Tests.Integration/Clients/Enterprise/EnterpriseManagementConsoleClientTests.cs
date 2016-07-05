@@ -87,12 +87,26 @@ public class EnterpriseManagementConsoleClientTests
         }
     }
 
+    private async Task DeleteManagementAuthorizedKeyIfExists(string keyData)
+    {
+        // Check if key already exists
+        var keys = await _github.Enterprise.ManagementConsole.GetAllAuthorizedKeys(
+            EnterpriseHelper.ManagementConsolePassword);
+
+        // Delete it if so
+        if (keys.Any(x => x.Key == keyData))
+        {
+            await _github.Enterprise.ManagementConsole.DeleteAuthorizedKey(
+                new AuthorizedKeyRequest(keyData),
+                EnterpriseHelper.ManagementConsolePassword).ConfigureAwait(false);
+        }
+    }
+
     [GitHubEnterpriseTest]
     public async Task CanGetAllAuthorizedKeys()
     {
-        var keys = await
-            _github.Enterprise.ManagementConsole.GetAllAuthorizedKeys(
-                EnterpriseHelper.ManagementConsolePassword);
+        var keys = await _github.Enterprise.ManagementConsole.GetAllAuthorizedKeys(
+            EnterpriseHelper.ManagementConsolePassword);
 
         Assert.NotNull(keys);
         Assert.True(keys.Count > 0);
@@ -102,31 +116,28 @@ public class EnterpriseManagementConsoleClientTests
     }
 
     [GitHubEnterpriseTest]
-    public async Task CanAddAuthorizedKey()
+    public async Task CanAddAndDeleteAuthorizedKey()
     {
-        var keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjo4DqFKg8dOxiz/yjypmN1A4itU5QOStyYrfOFuTinesU/2zm9hqxJ5BctIhgtSHJ5foxkhsiBji0qrUg73Q25BThgNg8YFE8njr4EwjmqSqW13akx/zLV0GFFU0SdJ2F6rBldhi93lMnl0ex9swBqa3eLTY8C+HQGBI6MQUMw+BKp0oFkz87Kv+Pfp6lt/Uo32ejSxML1PT5hTH5n+fyl0ied+sRmPGZWmWoHB5Bc9mox7lB6I6A/ZgjtBqbEEn4HQ2/6vp4ojKfSgA4Mm7XMu0bZzX0itKjH1QWD9Lr5apV1cmZsj49Xf8SHucTtH+bq98hb8OOXEGFzplwsX2MQ==";
+        var keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjo4DqFKg8dOxiz/yjypmN1A4itU5QOStyYrfOFuTinesU/2zm9hqxJ5BctIhgtSHJ5foxkhsiBji0qrUg73Q25BThgNg8YFE8njr4EwjmqSqW13akx/zLV0GFFU0SdJ2F6rBldhi93lMnl0ex9swBqa3eLTY8C+HQGBI6MQUMw+BKp0oFkz87Kv+Pfp6lt/Uo32ejSxML1PT5hTH5n+fyl0ied+sRmPGZWmWoHB5Bc9mox7lB6I6A/ZgjtBqbEEn4HQ2/6vp4ojKfSgA4Mm7XMu0bZzX0itKjH1QWD9Lr5apV1cmZsj49Xf8SHucTtH+bq98hb8OOXEGFzplwsX2MQ== my-test-key";
 
-        var keys = await
-            _github.Enterprise.ManagementConsole.AddAuthorizedKey(
-                keyData,
-                EnterpriseHelper.ManagementConsolePassword);
+        // Ensure key doesn't already exist
+        await DeleteManagementAuthorizedKeyIfExists(keyData).ConfigureAwait(false);
 
+        // Add key
+        var keys = await _github.Enterprise.ManagementConsole.AddAuthorizedKey(
+            new AuthorizedKeyRequest(keyData),
+            EnterpriseHelper.ManagementConsolePassword).ConfigureAwait(false);
+
+        // Ensure key was added
         Assert.NotNull(keys);
         Assert.Contains(keys, x => x.Key == keyData);
-    }
 
-    [GitHubEnterpriseTest]
-    public async Task CanDeleteAuthorizedKey()
-    {
-        var keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjo4DqFKg8dOxiz/yjypmN1A4itU5QOStyYrfOFuTinesU/2zm9hqxJ5BctIhgtSHJ5foxkhsiBji0qrUg73Q25BThgNg8YFE8njr4EwjmqSqW13akx/zLV0GFFU0SdJ2F6rBldhi93lMnl0ex9swBqa3eLTY8C+HQGBI6MQUMw+BKp0oFkz87Kv+Pfp6lt/Uo32ejSxML1PT5hTH5n+fyl0ied+sRmPGZWmWoHB5Bc9mox7lB6I6A/ZgjtBqbEEn4HQ2/6vp4ojKfSgA4Mm7XMu0bZzX0itKjH1QWD9Lr5apV1cmZsj49Xf8SHucTtH+bq98hb8OOXEGFzplwsX2MQ==";
+        // Now delete it
+        var remainingKeys = await _github.Enterprise.ManagementConsole.DeleteAuthorizedKey(
+            new AuthorizedKeyRequest(keyData),
+            EnterpriseHelper.ManagementConsolePassword).ConfigureAwait(false);
 
-        await _github.Enterprise.ManagementConsole.DeleteAuthorizedKey(
-                keyData,
-                EnterpriseHelper.ManagementConsolePassword);
-
-        var keys = await _github.Enterprise.ManagementConsole.GetAllAuthorizedKeys(
-                EnterpriseHelper.ManagementConsolePassword);
-
-        Assert.DoesNotContain(keys, x => x.Key == keyData);
+        // Ensure key no longer exists
+        Assert.DoesNotContain(remainingKeys, x => x.Key == keyData);
     }
 }
