@@ -501,7 +501,8 @@
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeActiveProcesses.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeResponse.cs" />
-    <Compile Include="Models\Response\Enterprise\AuthorizedManagementKey.cs" />
+    <Compile Include="Models\Request\Enterprise\AuthorizedKeyRequest.cs" />
+    <Compile Include="Models\Response\Enterprise\AuthorizedKey.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

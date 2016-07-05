@@ -2,12 +2,12 @@
 
 namespace Octokit
 {
-    public class AuthorizedManagementKey
+    public class AuthorizedKey
     {
-        public AuthorizedManagementKey()
+        public AuthorizedKey()
         { }
 
-        public AuthorizedManagementKey(string key, string prettyPrint, string comment)
+        public AuthorizedKey(string key, string prettyPrint, string comment)
         {
             Key = key;
             PrettyPrint = prettyPrint;

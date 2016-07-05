@@ -134,6 +134,7 @@
     <Compile Include="Clients\IReactionsClient.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\Enterprise\AuthorizedKeyRequest.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
@@ -186,7 +187,7 @@
     <Compile Include="Models\Response\Enterprise\AdminStatsPages.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsPulls.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStatsRepos.cs" />
-    <Compile Include="Models\Response\Enterprise\AuthorizedManagementKey.cs" />
+    <Compile Include="Models\Response\Enterprise\AuthorizedKey.cs" />
     <Compile Include="Models\Response\Enterprise\LdapSyncResponse.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeActiveProcesses.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeResponse.cs" />

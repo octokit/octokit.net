@@ -26,9 +26,11 @@ namespace Octokit
             IDictionary<string, string> p = new Dictionary<string, string>(parameters);
 
             string queryString;
+            string uriWithoutQuery;
             if (uri.IsAbsoluteUri)
             {
                 queryString = uri.Query;
+                uriWithoutQuery = uri.AbsoluteUri;
             }
             else
             {
@@ -36,6 +38,10 @@ namespace Octokit
                 queryString = hasQueryString == -1
                     ? ""
                     : uri.OriginalString.Substring(hasQueryString);
+
+                uriWithoutQuery = hasQueryString == -1
+                    ? uri.ToString()
+                    : uri.OriginalString.Substring(0, hasQueryString);
             }
 
             var values = queryString.Replace("?", "")
@@ -64,8 +70,10 @@ namespace Octokit
                 };
                 return uriBuilder.Uri;
             }
-
-            return new Uri(uri + "?" + query, UriKind.Relative);
+            else
+            {
+                return new Uri(uriWithoutQuery + "?" + query, UriKind.Relative);
+            }
         }
     }
 }
