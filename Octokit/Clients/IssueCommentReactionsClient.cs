@@ -24,7 +24,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns></returns>
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -41,7 +40,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        /// <returns></returns>
         public Task<Reaction> Create(int repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
@@ -56,7 +54,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
-        /// <returns></returns>
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -71,7 +68,6 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The comment id</param>        
-        /// <returns></returns>
         public Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number)
         {
             return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), AcceptHeaders.ReactionsPreview);
