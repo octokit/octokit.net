@@ -14,9 +14,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryInvitation
     {
-        public RepositoryInvitation()
-        {
-        }
+        public RepositoryInvitation() { }
 
         public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, string url, string htmlUrl)
         {
