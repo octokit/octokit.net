@@ -18,7 +18,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name);
 
         /// <summary>
@@ -26,7 +25,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId);
 
         /// <summary>
@@ -36,7 +34,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -45,7 +42,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -96,7 +92,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<bool> CheckWatched(string owner, string name);
 
         /// <summary>
@@ -104,7 +99,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns></returns>
         Task<bool> CheckWatched(int repositoryId);
 
         /// <summary>
@@ -113,7 +107,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns></returns>
         Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription);
 
         /// <summary>
@@ -121,7 +114,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns></returns>
         Task<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription);
 
         /// <summary>
@@ -129,7 +121,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
         Task<bool> UnwatchRepo(string owner, string name);
@@ -138,7 +129,6 @@ namespace Octokit
         /// Unwatches a repository for the authenticated user.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
         Task<bool> UnwatchRepo(int repositoryId);
