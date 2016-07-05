@@ -42,7 +42,7 @@ namespace Octokit.Internal
 
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
-            using(var requestMessage = BuildRequestMessage(request))
+            using (var requestMessage = BuildRequestMessage(request))
             {
                 var response = await GetSuccessfulResponse(requestMessage, cancellationTokenForRequest);
 
@@ -109,7 +109,6 @@ namespace Octokit.Internal
                 {
                     newRequest.Headers.Authorization = null;
                 }
-
 
                 response = await GetSuccessfulResponse(newRequest, cancellationToken).ConfigureAwait(false);
             }
@@ -263,7 +262,7 @@ namespace Octokit.Internal
     }
 
     internal class RedirectHandler : DelegatingHandler
-    {        
+    {
         public bool Enabled { get; set; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
