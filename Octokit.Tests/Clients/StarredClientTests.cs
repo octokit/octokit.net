@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Octokit.Internal;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -15,8 +15,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(
-                    () => new StarredClient(null));
+                Assert.Throws<ArgumentNullException>(() => new StarredClient(null));
             }
         }
 
@@ -153,7 +152,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(request, options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), 
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"),
                     "application/vnd.github.v3.star+json", options);
             }
 
@@ -346,19 +345,31 @@ namespace Octokit.Tests.Clients
         public class TheGetAllStargazersForRepoMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new StarredClient(connection);
 
-                client.GetAllStargazers("fight", "club");
+                await client.GetAllStargazers("fight", "club");
 
                 connection.Received().GetAll<User>(endpoint, Args.ApiOptions);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                await client.GetAllStargazers(1);
+
+                connection.Received().GetAll<User>(endpoint, Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
@@ -371,27 +382,15 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                client.GetAllStargazers("fight", "club", options);
+                await client.GetAllStargazers("fight", "club", options);
 
                 connection.Received().GetAll<User>(endpoint, options);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithTimestamps()
+            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
             {
-                var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
-                var connection = Substitute.For<IApiConnection>();
-                var client = new StarredClient(connection);
-
-                client.GetAllStargazersWithTimestamps("fight", "club");
-
-                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
-            }
-
-            [Fact]
-            public void RequestsCorrectUrlWithTimestampsWithApiOptions()
-            {
-                var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new StarredClient(connection);
 
@@ -402,7 +401,69 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                client.GetAllStargazersWithTimestamps("fight", "club", options);
+                await client.GetAllStargazers(1, options);
+
+                connection.Received().GetAll<User>(endpoint, options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithTimestamps()
+            {
+                var endpoint = new Uri("repos/fake/repo/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                await client.GetAllStargazersWithTimestamps("fake", "repo");
+
+                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithTimestampsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                await client.GetAllStargazersWithTimestamps(1);
+
+                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithTimestampsWithApiOptions()
+            {
+                var endpoint = new Uri("repos/fake/repo/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllStargazersWithTimestamps("fake", "repo", options);
+
+                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithTimestampsWithApiOptionsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new StarredClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllStargazersWithTimestamps(1, options);
 
                 connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
             }
@@ -422,6 +483,9 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps(null, "club", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", "club", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazers(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps(1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllStargazers("", "club"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllStargazers("fight", ""));
