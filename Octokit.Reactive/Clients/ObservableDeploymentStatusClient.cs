@@ -108,6 +108,8 @@ namespace Octokit.Reactive.Clients
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public IObservable<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
 
             return _client.Create(owner, name, deploymentId, newDeploymentStatus).ToObservable();

@@ -99,7 +99,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <param name="newDeploymentStatus"></param>
+        /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -120,7 +120,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        /// <param name="newDeploymentStatus"></param>
+        /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public Task<DeploymentStatus> Create(int repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
