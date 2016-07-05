@@ -20,6 +20,8 @@ namespace Octokit.Internal
     {
         readonly HttpClient _http;
 
+        public const string RedirectCountKey = "RedirectCount";
+
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
@@ -40,7 +42,7 @@ namespace Octokit.Internal
 
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
-            var response = await GetSuccessfulResponse(() => GetRequest(request), cancellationTokenForRequest);
+            var response = await GetSuccessfulResponse(GetRequest(request), cancellationTokenForRequest);
 
             return await BuildResponse(response).ConfigureAwait(false);
         }
@@ -51,57 +53,24 @@ namespace Octokit.Internal
             return requestMessage;
         }
 
-        private async Task<HttpResponseMessage> GetSuccessfulResponse(Func<HttpRequestMessage> request, CancellationToken cancellationToken)
+        private async Task<HttpResponseMessage> GetSuccessfulResponse(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var requestToSend = request();
-            var response = await SendRequest(requestToSend, cancellationToken).ConfigureAwait(false);
+            var response = await SendRequest(request, cancellationToken).ConfigureAwait(false);
 
             // Can't redirect without somewhere to redirect too.  Throw?
             if (response.Headers.Location == null) return response;
 
-            if (response.StatusCode == HttpStatusCode.SeeOther)
-            {
-                requestToSend.Content = null;
-                requestToSend.Method = HttpMethod.Get;
-            }
-            else
-            {
-                if (requestToSend.Content != null && response.RequestMessage.Content.Headers.ContentLength != 0)
-                {
-                    var stream = await response.RequestMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                    if (stream.CanSeek)
-                    {
-                        stream.Position = 0;
-                    }
-                    else
-                    {
-                        throw new Exception("Cannot redirect a request with an unbuffered body");
-                    }
-                    newRequest.Content = new StreamContent(stream);
-                }
-                else
-                {
-                    newRequest.Content = null;
-                }
-            }
-            newRequest.RequestUri = response.Headers.Location;
-
-            if (string.Compare(newRequest.RequestUri.Host, newRequest.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
-            {
-                newRequest.Headers.Authorization = null;
-            }
-
             // Don't redirect if we exceed max number of redirects
-            //var redirectCount = 0;
-            //if (requestMessage.Properties.Keys.Contains(RedirectCountKey))
-            //{
-            //    redirectCount = (int)request.Properties[RedirectCountKey];
-            //}
-            //if (redirectCount > 3)
-            //{
-            //    throw new InvalidOperationException("The redirect count for this request has been exceeded. Aborting.");
-            //}
-            //request.Properties[RedirectCountKey] = ++redirectCount;
+            var redirectCount = 0;
+            if (request.Properties.Keys.Contains(RedirectCountKey))
+            {
+                redirectCount = (int)request.Properties[RedirectCountKey];
+            }
+            if (redirectCount > 3)
+            {
+                throw new InvalidOperationException("The redirect count for this request has been exceeded. Aborting.");
+            }
+            request.Properties[RedirectCountKey] = ++redirectCount;
 
             if (response.StatusCode == HttpStatusCode.MovedPermanently
                         || response.StatusCode == HttpStatusCode.Redirect
@@ -109,21 +78,56 @@ namespace Octokit.Internal
                         || response.StatusCode == HttpStatusCode.SeeOther
                         || response.StatusCode == HttpStatusCode.TemporaryRedirect
                         || (int)response.StatusCode == 308)
-            {                                
-                response = await GetSuccessfulResponse(() => CopyRequest(response.RequestMessage, response), cancellationToken).ConfigureAwait(false);
+            {
+                var newRequest = CopyRequest(request);
+
+                if (response.StatusCode == HttpStatusCode.SeeOther)
+                {
+                    request.Content = null;
+                    request.Method = HttpMethod.Get;
+                }
+                else
+                {
+                    if (request.Content != null && request.Content.Headers.ContentLength != 0)
+                    {
+                        var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                        if (stream.CanSeek)
+                        {
+                            stream.Position = 0;
+                        }
+                        else
+                        {
+                            throw new Exception("Cannot redirect a request with an unbuffered body");
+                        }
+                        newRequest.Content = new StreamContent(stream);
+                    }
+                    else
+                    {
+                        newRequest.Content = null;
+                    }
+                }
+                newRequest.RequestUri = response.Headers.Location;
+
+                if (string.Compare(newRequest.RequestUri.Host, newRequest.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    newRequest.Headers.Authorization = null;
+                }
+
+
+                response = await GetSuccessfulResponse(newRequest, cancellationToken).ConfigureAwait(false);
             }
 
             return response;
         }
 
         private async Task<HttpResponseMessage> SendRequest(HttpRequestMessage request, CancellationToken cancellationToken)
-        {            
+        {
             var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
             return response;
-        }        
+        }
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        private HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest, HttpResponseMessage response)
+        private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
         {
             var newRequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
 
@@ -262,17 +266,12 @@ namespace Octokit.Internal
     }
 
     internal class RedirectHandler : DelegatingHandler
-    {
-        public const string RedirectCountKey = "RedirectCount";
+    {        
         public bool Enabled { get; set; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-
-           
         }
-
-        
     }
 }
