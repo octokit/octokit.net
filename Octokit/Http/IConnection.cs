@@ -270,8 +270,14 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        /// <param name="accepts">Specifies accept response media type</param>        
+        /// <param name="accepts">Specifies accept response media type</param>
         Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
+
+        /// Performs an asynchronous HTTP DELETE request that returns a response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IApiResponse<T>> Delete<T>(Uri uri);
 
         /// <summary>
         /// Base address for the connection.
@@ -287,9 +293,9 @@ namespace Octokit
         /// Gets or sets the credentials used by the connection.
         /// </summary>
         /// <remarks>
-        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
-        /// <see cref="ICredentialStore"/> to the constructor. 
-        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an
+        /// <see cref="ICredentialStore"/> to the constructor.
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         Credentials Credentials { get; set; }

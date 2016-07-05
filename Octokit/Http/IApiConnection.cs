@@ -322,6 +322,16 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
+        /// Deletes the API object at the specified URI and returns a response
+        /// </summary>
+        /// <param name="uri">URI of the API resource to delete</param>
+        /// <returns>A <see cref="Task"/> for the API's response.</returns>
+        Task<T> Delete<T>(Uri uri);
+
+        /// <summary>
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
+        /// API calls which wants to return the redirect URL.
+        /// It expects the API to respond with a 302 Found.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
@@ -350,7 +360,7 @@ namespace Octokit
         Task<T> Delete<T>(Uri uri, object data, string accepts);
 
         /// <summary>
-        /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which 
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which
         /// queue long running calculations and return a collection of a resource.
         /// It expects the API to respond with an initial 202 Accepted, and queries again until a 200 OK is received.
         /// It returns an empty collection if it receives a 204 No Content response.

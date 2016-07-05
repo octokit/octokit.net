@@ -33,6 +33,6 @@ namespace Octokit
 
         Task<IReadOnlyList<AuthorizedKey>> AddAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword);
 
-        Task DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword);
+        Task<IReadOnlyList<AuthorizedKey>> DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword);
     }
 }
