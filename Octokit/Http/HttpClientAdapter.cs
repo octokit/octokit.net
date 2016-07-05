@@ -42,15 +42,12 @@ namespace Octokit.Internal
 
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
-            var response = await GetSuccessfulResponse(GetRequest(request), cancellationTokenForRequest);
+            using(var requestMessage = BuildRequestMessage(request))
+            {
+                var response = await GetSuccessfulResponse(requestMessage, cancellationTokenForRequest);
 
-            return await BuildResponse(response).ConfigureAwait(false);
-        }
-
-        private HttpRequestMessage GetRequest(IRequest request)
-        {
-            var requestMessage = BuildRequestMessage(request);
-            return requestMessage;
+                return await BuildResponse(response).ConfigureAwait(false);
+            }
         }
 
         private async Task<HttpResponseMessage> GetSuccessfulResponse(HttpRequestMessage request, CancellationToken cancellationToken)
