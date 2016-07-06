@@ -26,7 +26,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<IEnumerable<Contributor>> GetContributors(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -39,7 +38,6 @@ namespace Octokit.Reactive
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<IEnumerable<Contributor>> GetContributors(int repositoryId)
         {
             return _client.Repository.Statistics.GetContributors(repositoryId).ToObservable();
@@ -50,7 +48,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<CommitActivity> GetCommitActivity(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -63,7 +60,6 @@ namespace Octokit.Reactive
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<CommitActivity> GetCommitActivity(int repositoryId)
         {
             return _client.Repository.Statistics.GetCommitActivity(repositoryId).ToObservable();
@@ -74,7 +70,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<CodeFrequency> GetCodeFrequency(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -87,7 +82,6 @@ namespace Octokit.Reactive
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<CodeFrequency> GetCodeFrequency(int repositoryId)
         {
             return _client.Repository.Statistics.GetCodeFrequency(repositoryId).ToObservable();
@@ -98,7 +92,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<Participation> GetParticipation(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -111,7 +104,6 @@ namespace Octokit.Reactive
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<Participation> GetParticipation(int repositoryId)
         {
             return _client.Repository.Statistics.GetParticipation(repositoryId).ToObservable();
@@ -122,7 +114,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<PunchCard> GetPunchCard(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -135,7 +126,6 @@ namespace Octokit.Reactive
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<PunchCard> GetPunchCard(int repositoryId)
         {
             return _client.Repository.Statistics.GetPunchCard(repositoryId).ToObservable();

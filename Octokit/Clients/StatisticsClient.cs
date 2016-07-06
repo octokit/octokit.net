@@ -26,7 +26,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Contributor>> GetContributors(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -39,7 +38,6 @@ namespace Octokit
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId)
         {
             return GetContributors(repositoryId, CancellationToken.None);
@@ -51,7 +49,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Contributor>> GetContributors(string owner, string name, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -65,7 +62,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId, CancellationToken cancellationToken)
         {
             return ApiConnection.GetQueuedOperation<Contributor>(ApiUrls.StatsContributors(repositoryId), cancellationToken);
@@ -76,7 +72,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<CommitActivity> GetCommitActivity(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -89,7 +84,6 @@ namespace Octokit
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<CommitActivity> GetCommitActivity(int repositoryId)
         {
             return GetCommitActivity(repositoryId, CancellationToken.None);
@@ -101,7 +95,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<CommitActivity> GetCommitActivity(string owner, string name, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -117,7 +110,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<CommitActivity> GetCommitActivity(int repositoryId, CancellationToken cancellationToken)
         {
             var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(
@@ -130,7 +122,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<CodeFrequency> GetCodeFrequency(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -143,7 +134,6 @@ namespace Octokit
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<CodeFrequency> GetCodeFrequency(int repositoryId)
         {
             return GetCodeFrequency(repositoryId, CancellationToken.None);
@@ -155,7 +145,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<CodeFrequency> GetCodeFrequency(string owner, string name, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -171,7 +160,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<CodeFrequency> GetCodeFrequency(int repositoryId, CancellationToken cancellationToken)
         {
             var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(
@@ -184,7 +172,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<Participation> GetParticipation(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -197,7 +184,6 @@ namespace Octokit
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<Participation> GetParticipation(int repositoryId)
         {
             return GetParticipation(repositoryId, CancellationToken.None);
@@ -209,7 +195,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<Participation> GetParticipation(string owner, string name, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -225,7 +210,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<Participation> GetParticipation(int repositoryId, CancellationToken cancellationToken)
         {
             var result = await ApiConnection.GetQueuedOperation<Participation>(
@@ -238,7 +222,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<PunchCard> GetPunchCard(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -251,7 +234,6 @@ namespace Octokit
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<PunchCard> GetPunchCard(int repositoryId)
         {
             return GetPunchCard(repositoryId, CancellationToken.None);
@@ -263,7 +245,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<PunchCard> GetPunchCard(string owner, string name, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -279,7 +260,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        /// <returns></returns>
         public async Task<PunchCard> GetPunchCard(int repositoryId, CancellationToken cancellationToken)
         {
             var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(
