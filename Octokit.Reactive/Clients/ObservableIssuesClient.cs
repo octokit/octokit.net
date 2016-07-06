@@ -65,7 +65,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Issue> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -82,7 +81,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Issue> Get(int repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
@@ -96,7 +94,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -111,7 +108,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -127,7 +123,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForCurrent(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -144,7 +139,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -161,7 +155,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories()
         {
             return GetAllForOwnedAndMemberRepositories(new IssueRequest());
@@ -176,7 +169,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -191,7 +183,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -207,7 +198,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -223,7 +213,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOrganization(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -239,7 +228,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -256,7 +244,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -274,7 +261,6 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -292,7 +278,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -308,7 +293,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -323,7 +307,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -341,7 +324,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -358,7 +340,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -376,7 +357,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -394,7 +374,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -414,7 +393,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -431,7 +409,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// <returns></returns>
         public IObservable<Issue> Create(string owner, string name, NewIssue newIssue)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -448,7 +425,6 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// <returns></returns>
         public IObservable<Issue> Create(int repositoryId, NewIssue newIssue)
         {
             Ensure.ArgumentNotNull(newIssue, "newIssue");
@@ -466,7 +442,6 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        /// <returns></returns>
         public IObservable<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -485,7 +460,6 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        /// <returns></returns>
         public IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
@@ -500,7 +474,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Unit> Lock(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -515,7 +488,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Unit> Lock(int repositoryId, int number)
         {
             return _client.Lock(repositoryId, number).ToObservable();
@@ -528,7 +500,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Unit> Unlock(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -543,7 +514,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public IObservable<Unit> Unlock(int repositoryId, int number)
         {
             return _client.Unlock(repositoryId, number).ToObservable();
