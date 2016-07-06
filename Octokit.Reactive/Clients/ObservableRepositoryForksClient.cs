@@ -106,6 +106,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
 
             return GetAll(owner, name, request, ApiOptions.None);
         }
@@ -121,6 +122,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request)
         {
+            Ensure.ArgumentNotNull(request, "request");
+
             return GetAll(repositoryId, request, ApiOptions.None);
         }
 
