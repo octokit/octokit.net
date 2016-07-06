@@ -28,7 +28,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -44,7 +43,6 @@ namespace Octokit
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -59,7 +57,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -77,7 +74,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -94,7 +90,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(string owner, string name, RepositoryForksListRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -111,7 +106,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request)
         {
             return GetAll(repositoryId, request, ApiOptions.None);
@@ -127,7 +121,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(string owner, string name, RepositoryForksListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -148,7 +141,6 @@ namespace Octokit
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -167,7 +159,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        /// <returns></returns>
         public Task<Repository> Create(string owner, string name, NewRepositoryFork fork)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -185,7 +176,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        /// <returns></returns>
         public Task<Repository> Create(int repositoryId, NewRepositoryFork fork)
         {
             Ensure.ArgumentNotNull(fork, "fork");

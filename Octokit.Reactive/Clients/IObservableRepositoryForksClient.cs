@@ -18,7 +18,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(string owner, string name);
 
         /// <summary>
@@ -28,7 +27,6 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(int repositoryId);
 
         /// <summary>
@@ -40,7 +38,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -51,7 +48,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -63,7 +59,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request);
 
         /// <summary>
@@ -74,7 +69,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request);
 
         /// <summary>
@@ -87,7 +81,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request, ApiOptions options);
 
         /// <summary>
@@ -99,7 +92,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options);
 
         /// <summary>
@@ -111,7 +103,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        /// <returns></returns>
         IObservable<Repository> Create(string owner, string name, NewRepositoryFork fork);
 
         /// <summary>
@@ -122,7 +113,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        /// <returns></returns>
         IObservable<Repository> Create(int repositoryId, NewRepositoryFork fork);
     }
 }
