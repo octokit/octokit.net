@@ -1,8 +1,8 @@
-﻿using Octokit;
+﻿using System;
+using System.Threading.Tasks;
+using Octokit;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 public class PullRequestReviewCommentReactionsClientTests : IDisposable
@@ -24,6 +24,52 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         // We'll create a pull request that can be used by most tests
         _context = _github.CreateRepositoryContext("test-repo").Result;
+    }
+
+    [IntegrationTest]
+    public async Task CanListReactions()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+
+        var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id);
+
+        Assert.NotEmpty(reactions);
+        Assert.Equal(reaction.Id, reactions[0].Id);
+        Assert.Equal(reaction.Content, reactions[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task CanListReactionsWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.Repository.Id, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+
+        var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id);
+
+        Assert.NotEmpty(reactions);
+        Assert.Equal(reaction.Id, reactions[0].Id);
+        Assert.Equal(reaction.Content, reactions[0].Content);
     }
 
     [IntegrationTest]
@@ -50,6 +96,31 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
             Assert.Equal(reactionType, reaction.Content);
             Assert.Equal(commentFromGitHub.User.Id, reaction.User.Id);
         }
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateReactionWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var pullRequestReviewCommentReaction = await _github.Reaction.PullRequestReviewComment.Create(_context.Repository.Id, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+
+        Assert.NotNull(pullRequestReviewCommentReaction);
+
+        Assert.IsType<Reaction>(pullRequestReviewCommentReaction);
+
+        Assert.Equal(ReactionType.Heart, pullRequestReviewCommentReaction.Content);
+
+        Assert.Equal(commentFromGitHub.User.Id, pullRequestReviewCommentReaction.User.Id);
     }
 
     /// <summary>
@@ -155,4 +226,3 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         public string Sha { get; set; }
     }
 }
-

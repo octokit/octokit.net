@@ -65,19 +65,19 @@ namespace Octokit.Tests.Clients
         public class TheGetAllForUserMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var endpoint = new Uri("users/banana/subscriptions", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new WatchedClient(connection);
 
-                client.GetAllForUser("banana");
+                await client.GetAllForUser("banana");
 
                 connection.Received().GetAll<Repository>(endpoint, Args.ApiOptions);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var endpoint = new Uri("users/banana/subscriptions", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                client.GetAllForUser("banana", options);
+                await client.GetAllForUser("banana", options);
 
                 connection.Received().GetAll<Repository>(endpoint, options);
             }
@@ -112,19 +112,31 @@ namespace Octokit.Tests.Clients
         public class TheGetAllWatchersForRepoMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var endpoint = new Uri("repos/fight/club/subscribers", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new WatchedClient(connection);
 
-                client.GetAllWatchers("fight", "club");
+                await client.GetAllWatchers("fight", "club");
 
                 connection.Received().GetAll<User>(endpoint, Args.ApiOptions);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/subscribers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new WatchedClient(connection);
+
+                await client.GetAllWatchers(1);
+
+                connection.Received().GetAll<User>(endpoint, Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var endpoint = new Uri("repos/fight/club/subscribers", UriKind.Relative);
                 var connection = Substitute.For<IApiConnection>();
@@ -137,7 +149,26 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                client.GetAllWatchers("fight", "club", options);
+                await client.GetAllWatchers("fight", "club", options);
+
+                connection.Received().GetAll<User>(endpoint, options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var endpoint = new Uri("repositories/1/subscribers", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new WatchedClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllWatchers(1, options);
 
                 connection.Received().GetAll<User>(endpoint, options);
             }
@@ -152,6 +183,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllWatchers(null, "name", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllWatchers("owner", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllWatchers("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllWatchers(1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllWatchers("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllWatchers("owner", ""));
@@ -178,6 +211,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task ReturnsTrueOnValidResultWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/subscription", UriKind.Relative);
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.Get<Subscription>(endpoint).Returns(Task.FromResult(new Subscription(false, false, null, default(DateTimeOffset), null, null)));
+
+                var client = new WatchedClient(connection);
+
+                var watched = await client.CheckWatched(1);
+
+                Assert.True(watched);
+            }
+
+            [Fact]
             public async Task ReturnsFalseOnNotFoundException()
             {
                 var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
@@ -195,6 +243,37 @@ namespace Octokit.Tests.Clients
 
                 Assert.False(watched);
             }
+
+            [Fact]
+            public async Task ReturnsFalseOnNotFoundExceptionWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/subscription", UriKind.Relative);
+
+                var connection = Substitute.For<IApiConnection>();
+                var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
+                connection.Get<Subscription>(endpoint).Returns<Task<Subscription>>(x =>
+                {
+                    throw new NotFoundException(response);
+                });
+
+                var client = new WatchedClient(connection);
+
+                var watched = await client.CheckWatched(1);
+
+                Assert.False(watched);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new WatchedClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckWatched(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CheckWatched("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckWatched("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CheckWatched("owner", ""));
+            }
         }
 
         public class TheWatchRepoMethod
@@ -210,6 +289,32 @@ namespace Octokit.Tests.Clients
                 client.WatchRepo("fight", "club", newSubscription);
 
                 connection.Received().Put<Subscription>(endpoint, newSubscription);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/subscription", UriKind.Relative);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new WatchedClient(connection);
+
+                var newSubscription = new NewSubscription();
+                client.WatchRepo(1, newSubscription);
+
+                connection.Received().Put<Subscription>(endpoint, newSubscription);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new WatchedClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.WatchRepo(null, "name", new NewSubscription()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.WatchRepo("owner", null, new NewSubscription()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.WatchRepo("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.WatchRepo("", "name", new NewSubscription()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.WatchRepo("owner", "", new NewSubscription()));
             }
         }
 
@@ -234,6 +339,39 @@ namespace Octokit.Tests.Clients
                 var result = await client.UnwatchRepo("yes", "no");
 
                 Assert.Equal(expected, result);
+            }
+
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            [InlineData(HttpStatusCode.OK, false)]
+            public async Task ReturnsCorrectResultBasedOnStatusWithRepositoryId(HttpStatusCode status, bool expected)
+            {
+                var response = Task.Factory.StartNew(() => status);
+
+                var connection = Substitute.For<IConnection>();
+                connection.Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/subscription"))
+                    .Returns(response);
+
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+
+                var client = new WatchedClient(apiConnection);
+                var result = await client.UnwatchRepo(1);
+
+                Assert.Equal(expected, result);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new WatchedClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnwatchRepo(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UnwatchRepo("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnwatchRepo("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.UnwatchRepo("owner", ""));
             }
         }
     }
