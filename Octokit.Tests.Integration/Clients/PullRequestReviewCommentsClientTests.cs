@@ -396,11 +396,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     }
 
     [IntegrationTest]
-<<<<<<< HEAD
     public async Task CanGetReactionPayload()
-=======
-    public async Task CanGetForRepositoryWithRepositoryId()
->>>>>>> refs/remotes/octokit/master
     {
         var pullRequest = await CreatePullRequest(_context);
 
@@ -409,7 +405,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
 
-<<<<<<< HEAD
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
@@ -418,7 +413,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         {
             var newReaction = new NewReaction(reactionType);
 
-            var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestComments[0].Id, newReaction);
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestComments[0].Id, newReaction);
 
             Assert.IsType<Reaction>(reaction);
             Assert.Equal(reactionType, reaction.Content);
@@ -433,11 +428,22 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         Assert.Equal(1, retrieved[0].Reactions.Laugh);
         Assert.Equal(1, retrieved[0].Reactions.Confused);
         Assert.Equal(1, retrieved[0].Reactions.Minus1);
-=======
+    }
+
+    [IntegrationTest]
+    public async Task CanGetForRepositoryWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const int position = 1;
+        var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
+
+        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
+
         var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
->>>>>>> refs/remotes/octokit/master
+
     }
 
     [IntegrationTest]

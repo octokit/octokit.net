@@ -98,12 +98,9 @@ public class PullRequestReviewCommentsClientTests
             await client.GetAll("owner", "name", 7);
 
             connection.Received().GetAll<PullRequestReviewComment>(
-<<<<<<< HEAD
-                Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"),
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
                 Arg.Any<Dictionary<string, string>>(),
                 "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
-=======
-                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"), Args.ApiOptions);
         }
 
         [Fact]
@@ -116,7 +113,6 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().GetAll<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/7/comments"), Args.ApiOptions);
->>>>>>> refs/remotes/octokit/master
         }
 
         [Fact]
@@ -135,12 +131,9 @@ public class PullRequestReviewCommentsClientTests
             await client.GetAll("owner", "name", 7, options);
 
             connection.Received().GetAll<PullRequestReviewComment>(
-<<<<<<< HEAD
-                Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/7/comments"),
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
                 Arg.Any<Dictionary<string, string>>(),
                 "application/vnd.github.squirrel-girl-preview", options);
-=======
-                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"), options);
         }
 
         [Fact]
@@ -160,7 +153,6 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().GetAll<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/7/comments"), options);
->>>>>>> refs/remotes/octokit/master
         }
 
         [Fact]
@@ -418,11 +410,8 @@ public class PullRequestReviewCommentsClientTests
 
             client.GetComment("owner", "name", 53);
 
-<<<<<<< HEAD
             connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/comments/53"), Arg.Any<Dictionary<string, string>>(),
                 "application/vnd.github.squirrel-girl-preview");
-=======
-            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/53"));
         }
 
         [Fact]
@@ -434,7 +423,6 @@ public class PullRequestReviewCommentsClientTests
             client.GetComment(1, 53);
 
             connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments/53"));
->>>>>>> refs/remotes/octokit/master
         }
 
         [Fact]
