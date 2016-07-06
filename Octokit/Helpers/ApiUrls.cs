@@ -331,6 +331,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueReactions(int repositoryId, int number)
+        {
+            return "repositories/{0}/issues/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -378,6 +389,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
+        /// </summary>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri IssueCommentReactions(int repositoryId, int number)
+        {
+            return "repositories/{0}/issues/comments/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -422,6 +444,17 @@ namespace Octokit
         public static Uri CommitCommentReactions(string owner, string name, int number)
         {
             return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified commit comment.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri CommitCommentReactions(int repositoryId, int number)
+        {
+            return "repositories/{0}/comments/{1}/reactions".FormatUri(repositoryId, number);
         }
 
         /// <summary>
@@ -1220,6 +1253,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="number">The comment number</param>
+        /// <returns></returns>
+        public static Uri PullRequestReviewCommentReaction(int repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/comments/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1398,6 +1442,17 @@ namespace Octokit
         public static Uri RepoCollaborator(string owner, string repo, string user)
         {
             return "repos/{0}/{1}/collaborators/{2}".FormatUri(owner, repo, user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to check user is collaborator
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">The name of the user</param>
+        /// <returns>The <see cref="Uri"/> to check user is collaborator</returns>
+        public static Uri RepoCollaborator(int repositoryId, string user)
+        {
+            return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
         }
 
         /// <summary>
