@@ -79,31 +79,12 @@ namespace Octokit.Reactive
         IObservable<bool> IsCollaborator(int repositoryId, string user);
 
         /// <summary>
-<<<<<<< HEAD
-        /// Invites a user as a collaborator to a repository.
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="user">The username of the prospective collaborator</param>
-        /// <param name="permission">The permission to set</param>
-        /// <returns></returns>
-        IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
-
-        /// <summary>
-        /// Removes a user as a collaborator for a repository.
-=======
         /// Adds a new collaborator to the repository.
->>>>>>> refs/remotes/octokit/master
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-<<<<<<< HEAD
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="user">Username of the prospective collaborator</param>
-        IObservable<Unit> Delete(string owner, string repo, string user);
-=======
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -119,6 +100,15 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Unit> Add(int repositoryId, string user);
+
+        /// <summary>
+        /// Invites a user as a collaborator to a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="user">The username of the prospective collaborator</param>
+        /// <param name="permission">The permission to set</param>        
+        IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Deletes a collaborator from the repository.
@@ -142,6 +132,5 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Unit> Delete(int repositoryId, string user);
->>>>>>> refs/remotes/octokit/master
     }
 }

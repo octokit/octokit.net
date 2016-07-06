@@ -73,13 +73,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
-<<<<<<< HEAD
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, repo), options);
-=======
-            
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), options);
->>>>>>> refs/remotes/octokit/master
         }
 
         /// <summary>
@@ -134,28 +129,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-<<<<<<< HEAD
-        /// Invites a user as a collaborator to a repository.
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="user">The username of the prospective collaborator</param>
-        /// <param name="permission">The permission to set</param>
-        public IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "psermission");
-
-            return _client.Invite(owner, repo, user, permission).ToObservable();
-        }
-
-        /// <summary>
-        /// Removes a user as a collaborator for a repository.
-=======
         /// Adds a new collaborator to the repository.
->>>>>>> refs/remotes/octokit/master
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
@@ -187,6 +161,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return _client.Add(repositoryId, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Invites a user as a collaborator to a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="user">The username of the prospective collaborator</param>
+        /// <param name="permission">The permission to set</param>
+        public IObservable<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(permission, "psermission");
+
+            return _client.Invite(owner, repo, user, permission).ToObservable();
         }
 
         /// <summary>

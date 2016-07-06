@@ -148,20 +148,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-<<<<<<< HEAD
-        public Task Add(string owner, string repo, string user)
-=======
         public Task Add(string owner, string name, string user)
->>>>>>> refs/remotes/octokit/master
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-<<<<<<< HEAD
 
-            return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, repo, user));
-=======
-            
             return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, name, user));
         }
 
@@ -179,7 +171,27 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return ApiConnection.Put(ApiUrls.RepoCollaborator(repositoryId, user));
->>>>>>> refs/remotes/octokit/master
+        }
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="repo">The name of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(permission, "permission");
+
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
 
         /// <summary>
@@ -192,20 +204,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the deleted collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-<<<<<<< HEAD
-        public Task Delete(string owner, string repo, string user)
-=======
         public Task Delete(string owner, string name, string user)
->>>>>>> refs/remotes/octokit/master
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-<<<<<<< HEAD
 
-            return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, repo, user));
-=======
-            
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, name, user));
         }
 
@@ -223,29 +227,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(repositoryId, user));
->>>>>>> refs/remotes/octokit/master
-        }
-
-        /// <summary>
-        /// Invites a new collaborator to the repo
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="repo">The name of the repository.</param>
-        /// <param name="user">The name of the user to invite.</param>
-        /// <param name="permission">The permission to set.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns><see cref="RepositoryInvitation"/></returns>
-        public Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "permission");
-
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, repo, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
     }
 }

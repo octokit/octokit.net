@@ -67,7 +67,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
                         Arg.Any<string>());
             }
 
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
                         Arg.Any<string>());
             }
 
@@ -331,7 +331,6 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-<<<<<<< HEAD
         public class TheInviteMethod
         {
             private readonly IGitHubClient _githubClient;
@@ -406,10 +405,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheCtor
-=======
         public class TheDeleteMethod
->>>>>>> refs/remotes/octokit/master
         {
             private readonly IGitHubClient _githubClient;
             private IObservableRepoCollaboratorsClient _client;
