@@ -1434,6 +1434,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to check user is collaborator
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">The name of the user</param>
+        /// <returns>The <see cref="Uri"/> to check user is collaborator</returns>
+        public static Uri RepoCollaborator(int repositoryId, string user)
+        {
+            return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for branches
         /// </summary>
         /// <param name="owner">owner of repo</param>
