@@ -29,7 +29,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -47,7 +46,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> Get(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -64,7 +62,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -82,7 +79,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> GetRecursive(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -99,7 +95,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -117,7 +112,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        /// <returns></returns>
         public IObservable<TreeResponse> Create(int repositoryId, NewTree newTree)
         {
             Ensure.ArgumentNotNull(newTree, "newTree");
