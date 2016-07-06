@@ -179,7 +179,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
