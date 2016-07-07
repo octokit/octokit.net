@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="id">The issue comment id</param>
         public Task<IssueComment> Get(int repositoryId, int id)
         {
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(repositoryId, id));
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(repositoryId, id), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId), options);
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId, number), options);
+            return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>

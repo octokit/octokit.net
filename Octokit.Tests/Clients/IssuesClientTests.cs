@@ -33,7 +33,9 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1, 42);
 
-                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"));
+                connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -234,6 +236,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
                     Args.ApiOptions);
             }
 
@@ -266,7 +269,10 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), Arg.Any<Dictionary<string, string>>(), options);
+                connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
+                    options);
             }
 
             [Fact]
@@ -286,6 +292,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
                     Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
                     options);
             }
 
@@ -327,6 +334,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    "application/vnd.github.squirrel-girl-preview",
                     Args.ApiOptions);
             }
 
@@ -354,6 +362,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    "application/vnd.github.squirrel-girl-preview",
                     options);
             }
 
@@ -381,6 +390,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
+                    "application/vnd.github.squirrel-girl-preview",
                     options);
             }
         }

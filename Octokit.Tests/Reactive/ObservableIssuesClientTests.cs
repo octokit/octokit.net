@@ -94,7 +94,8 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository("fake", "repo");
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                Arg.Any<IDictionary<string, string>>(), null);
+                Arg.Any<IDictionary<string, string>>(),
+                "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
@@ -131,7 +132,8 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"), null);
+                && d["per_page"] == "1"),
+                "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
@@ -175,7 +177,8 @@ public class ObservableIssuesClientTests
                 && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
-                && d["direction"] == "asc"), null);
+                && d["direction"] == "asc"),
+                "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
@@ -223,7 +226,7 @@ public class ObservableIssuesClientTests
                 && d["direction"] == "asc"
                 && d["page"] == "1"
                 && d["per_page"] == "1"),
-                null);
+                "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]
