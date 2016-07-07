@@ -194,7 +194,10 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(),
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(
+                ApiUrls.PullRequestReviewCommentsRepository(repositoryId),
+                request.ToParametersDictionary(),
+                AcceptHeaders.ReactionsPreview,
                 options);
         }
 
