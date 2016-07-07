@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -9,6 +11,7 @@ public class RepositoryCommentsClientTests
 {
     public class TheGetMethod
     {
+        readonly IGitHubClient _github;
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
@@ -16,9 +19,9 @@ public class RepositoryCommentsClientTests
 
         public TheGetMethod()
         {
-            var client = Helper.GetAuthenticatedClient();
+            _github = Helper.GetAuthenticatedClient();
 
-            _fixture = client.Repository.Comment;
+            _fixture = _github.Repository.Comment;
         }
 
         [IntegrationTest]
@@ -34,10 +37,37 @@ public class RepositoryCommentsClientTests
             var commit = await _fixture.Get(repositoryId, 1467023);
             Assert.NotNull(commit);
         }
+
+        [IntegrationTest]
+        public async Task CanGetReactionPayload()
+        {
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            {
+                // Create a test commit
+                var commit = await HelperCreateCommit(context.RepositoryOwner, context.RepositoryName);
+
+                // Create a test comment with reactions
+                var commentId = await HelperCreateCommitCommentWithReactions(context.RepositoryOwner, context.RepositoryName, commit.Sha);
+
+                // Retrieve the comment
+                var retrieved = await _fixture.Get(context.RepositoryOwner, context.RepositoryName, commentId);
+
+                // Check the reactions
+                Assert.True(retrieved.Id > 0);
+                Assert.Equal(6, retrieved.Reactions.TotalCount);
+                Assert.Equal(1, retrieved.Reactions.Plus1);
+                Assert.Equal(1, retrieved.Reactions.Hooray);
+                Assert.Equal(1, retrieved.Reactions.Heart);
+                Assert.Equal(1, retrieved.Reactions.Laugh);
+                Assert.Equal(1, retrieved.Reactions.Confused);
+                Assert.Equal(1, retrieved.Reactions.Minus1);
+            }
+        }
     }
 
     public class TheGetAllForRepositoryMethod
     {
+        readonly IGitHubClient _github;
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
@@ -45,9 +75,9 @@ public class RepositoryCommentsClientTests
 
         public TheGetAllForRepositoryMethod()
         {
-            var client = Helper.GetAuthenticatedClient();
+            _github = Helper.GetAuthenticatedClient();
 
-            _fixture = client.Repository.Comment;
+            _fixture = _github.Repository.Comment;
         }
 
         [IntegrationTest]
@@ -169,10 +199,50 @@ public class RepositoryCommentsClientTests
             Assert.NotEqual(firstCommit[3].Id, secondCommit[3].Id);
             Assert.NotEqual(firstCommit[4].Id, secondCommit[4].Id);
         }
+
+        [IntegrationTest]
+        public async Task CanGetReactionPayload()
+        {
+            var numberToCreate = 2;
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            {
+                var commentIds = new List<int>();
+
+                // Create multiple test commits
+                for (int count = 1; count <= numberToCreate; count++)
+                {
+                    var commit = await HelperCreateCommit(context.RepositoryOwner, context.RepositoryName);
+
+                    // Each with a comment with reactions
+                    var commentId = await HelperCreateCommitCommentWithReactions(context.RepositoryOwner, context.RepositoryName, commit.Sha);
+                    commentIds.Add(commentId);
+                }
+                Assert.Equal(numberToCreate, commentIds.Count);
+
+                // Retrieve all comments for the repo
+                var commitComments = await _fixture.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+                // Check the reactions
+                foreach (var commentId in commentIds)
+                {
+                    var retrieved = commitComments.FirstOrDefault(x => x.Id == commentId);
+
+                    Assert.NotNull(retrieved);
+                    Assert.Equal(6, retrieved.Reactions.TotalCount);
+                    Assert.Equal(1, retrieved.Reactions.Plus1);
+                    Assert.Equal(1, retrieved.Reactions.Hooray);
+                    Assert.Equal(1, retrieved.Reactions.Heart);
+                    Assert.Equal(1, retrieved.Reactions.Laugh);
+                    Assert.Equal(1, retrieved.Reactions.Confused);
+                    Assert.Equal(1, retrieved.Reactions.Minus1);
+                }
+            }
+        }
     }
 
     public class TheGetAllForCommitMethod
     {
+        readonly IGitHubClient _github;
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
@@ -180,9 +250,9 @@ public class RepositoryCommentsClientTests
 
         public TheGetAllForCommitMethod()
         {
-            var client = Helper.GetAuthenticatedClient();
+            _github = Helper.GetAuthenticatedClient();
 
-            _fixture = client.Repository.Comment;
+            _fixture = _github.Repository.Comment;
         }
 
         [IntegrationTest]
@@ -303,6 +373,45 @@ public class RepositoryCommentsClientTests
             Assert.NotEqual(firstCommit[2].Id, secondCommit[2].Id);
             Assert.NotEqual(firstCommit[3].Id, secondCommit[3].Id);
             Assert.NotEqual(firstCommit[4].Id, secondCommit[4].Id);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetReactionPayload()
+        {
+            var numberToCreate = 2;
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            {
+                var commentIds = new List<int>();
+
+                // Create a single test commit
+                var commit = await HelperCreateCommit(context.RepositoryOwner, context.RepositoryName);
+
+                // With multiple comments with reactions
+                for (int count = 1; count <= numberToCreate; count++)
+                {
+                    var commentId = await HelperCreateCommitCommentWithReactions(context.RepositoryOwner, context.RepositoryName, commit.Sha);
+                    commentIds.Add(commentId);
+                }
+                Assert.Equal(numberToCreate, commentIds.Count);
+
+                // Retrieve all comments for the commit
+                var commitComments = await _fixture.GetAllForCommit(context.RepositoryOwner, context.RepositoryName, commit.Sha);
+
+                // Check the reactions
+                foreach (var commentId in commentIds)
+                {
+                    var retrieved = commitComments.FirstOrDefault(x => x.Id == commentId);
+
+                    Assert.NotNull(retrieved);
+                    Assert.Equal(6, retrieved.Reactions.TotalCount);
+                    Assert.Equal(1, retrieved.Reactions.Plus1);
+                    Assert.Equal(1, retrieved.Reactions.Hooray);
+                    Assert.Equal(1, retrieved.Reactions.Heart);
+                    Assert.Equal(1, retrieved.Reactions.Laugh);
+                    Assert.Equal(1, retrieved.Reactions.Confused);
+                    Assert.Equal(1, retrieved.Reactions.Minus1);
+                }
+            }
         }
     }
 
@@ -608,5 +717,53 @@ public class RepositoryCommentsClientTests
         {
             _context.Dispose();
         }
+    }
+
+    async static Task<Commit> HelperCreateCommit(string owner, string repo)
+    {
+        var client = Helper.GetAuthenticatedClient();
+
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await client.Git.Blob.Create(owner, repo, blob);
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Mode = FileMode.File,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = await client.Git.Tree.Create(owner, repo, newTree);
+
+        var newCommit = new NewCommit("test-commit", treeResult.Sha);
+
+        return await client.Git.Commit.Create(owner, repo, newCommit);
+    }
+
+    async static Task<int> HelperCreateCommitCommentWithReactions(string owner, string repo, string sha)
+    {
+        var github = Helper.GetAuthenticatedClient();
+
+        var commitComment = await github.Repository.Comment.Create(owner, repo, sha, new NewCommitComment("A test comment"));
+        Assert.NotNull(commitComment);
+
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await github.Reaction.CommitComment.Create(owner, repo, commitComment.Id, newReaction);
+
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(commitComment.User.Id, reaction.User.Id);
+        }
+
+        return commitComment.Id;
     }
 }

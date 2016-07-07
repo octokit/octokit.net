@@ -45,7 +45,7 @@ public class IssueCommentsClientTests
         [IntegrationTest]
         public async Task CanGetReactionPayload()
         {
-            using (var context = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests"))))
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 // Create a test issue
                 var issueNumber = await HelperCreateIssue(context.RepositoryOwner, context.RepositoryName);
@@ -53,7 +53,7 @@ public class IssueCommentsClientTests
                 // Create a test comment with reactions
                 var commentId = await HelperCreateIssueCommentWithReactions(context.RepositoryOwner, context.RepositoryName, issueNumber);
 
-                // Retrieve the issue
+                // Retrieve the comment
                 var retrieved = await _issueCommentsClient.Get(context.RepositoryOwner, context.RepositoryName, commentId);
 
                 // Check the reactions
@@ -217,7 +217,7 @@ public class IssueCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests"))))
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
                 
@@ -402,7 +402,7 @@ public class IssueCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests"))))
+            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
 
@@ -443,7 +443,6 @@ public class IssueCommentsClientTests
         readonly IIssueCommentsClient _issueCommentsClient;
         readonly RepositoryContext _context;
         readonly IIssuesClient _issuesClient;
-        readonly IReactionsClient _reactionsClient;
 
         public TheCreateMethod()
         {
@@ -455,7 +454,6 @@ public class IssueCommentsClientTests
 
             _issuesClient = gitHubClient.Issue;
             _issueCommentsClient = gitHubClient.Issue.Comment;
-            _reactionsClient = gitHubClient.Reaction;
         }
 
         [IntegrationTest]

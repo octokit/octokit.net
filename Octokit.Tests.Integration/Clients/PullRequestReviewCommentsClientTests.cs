@@ -14,8 +14,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     private readonly RepositoryContext _context;
 
     const string branchName = "new-branch";
-    const string branchHead = "heads/" + branchName;
-    const string branchRef = "refs/" + branchHead;
     const string path = "CONTRIBUTING.md";
 
     public PullRequestReviewCommentsClientTests()
@@ -393,41 +391,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
-    }
-
-    [IntegrationTest]
-    public async Task CanGetReactionPayload()
-    {
-        var pullRequest = await CreatePullRequest(_context);
-
-        const int position = 1;
-        var commentsToCreate = new List<string> { "Comment One", "Comment Two" };
-
-        await CreateComments(commentsToCreate, position, _context.RepositoryName, pullRequest.Sha, pullRequest.Number);
-
-        var pullRequestComments = await _client.GetAllForRepository(Helper.UserName, _context.RepositoryName);
-
-        AssertComments(pullRequestComments, commentsToCreate, position);
-
-        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
-        {
-            var newReaction = new NewReaction(reactionType);
-
-            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestComments[0].Id, newReaction);
-
-            Assert.IsType<Reaction>(reaction);
-            Assert.Equal(reactionType, reaction.Content);
-            Assert.Equal(pullRequestComments[0].User.Id, reaction.User.Id);
-        }
-        var retrieved = await _github.PullRequest.Comment.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequest.Number);
-
-        Assert.Equal(6, retrieved[0].Reactions.TotalCount);
-        Assert.Equal(1, retrieved[0].Reactions.Plus1);
-        Assert.Equal(1, retrieved[0].Reactions.Hooray);
-        Assert.Equal(1, retrieved[0].Reactions.Heart);
-        Assert.Equal(1, retrieved[0].Reactions.Laugh);
-        Assert.Equal(1, retrieved[0].Reactions.Confused);
-        Assert.Equal(1, retrieved[0].Reactions.Minus1);
     }
 
     [IntegrationTest]
@@ -885,10 +848,14 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     /// Creates the base state for testing (creates a repo, a commit in master, a branch, a commit in the branch and a pull request)
     /// </summary>
     /// <returns></returns>
-    async Task<PullRequestData> CreatePullRequest(RepositoryContext context)
+    async Task<PullRequestData> CreatePullRequest(RepositoryContext context, string branch = branchName)
     {
-        var repoName = context.RepositoryName;
+        string branchHead = "heads/" + branch;
+        string branchRef = "refs/" + branchHead;
 
+
+        var repoName = context.RepositoryName;
+        
         // Creating a commit in master
 
         var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");
@@ -904,7 +871,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         // Creating a pull request
 
-        var pullRequest = new NewPullRequest("Nice title for the pull request", branchName, "master");
+        var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
         var createdPullRequest = await _github.PullRequest.Create(Helper.UserName, repoName, pullRequest);
 
         var data = new PullRequestData
@@ -954,5 +921,106 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     {
         public int Number { get; set; }
         public string Sha { get; set; }
+    }
+
+    [IntegrationTest]
+    public async Task CanGetReactionPayloadForPullRequestReviews()
+    {
+        int numberToCreate = 2;
+        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("PullRequestReviewCommentsReactionTests")))
+        {
+            var commentIds = new List<int>();
+
+            // Create a test pull request
+            var pullRequest = await CreatePullRequest(context);
+
+            // With multiple review comments with reactions
+            for (int count = 1; count <= numberToCreate; count++)
+            {
+                var commentId = await HelperCreatePullRequestReviewCommentWithReactions(context.RepositoryOwner, context.RepositoryName, pullRequest);
+                commentIds.Add(commentId);
+            }
+            Assert.Equal(numberToCreate, commentIds.Count);
+
+            // Retrieve all review comments for the pull request
+            var reviewComments = await _client.GetAll(context.RepositoryOwner, context.RepositoryName, pullRequest.Number);
+
+            // Check the reactions
+            foreach (var commentId in commentIds)
+            {
+                var retrieved = reviewComments.FirstOrDefault(x => x.Id == commentId);
+
+                Assert.NotNull(retrieved);
+                Assert.Equal(6, retrieved.Reactions.TotalCount);
+                Assert.Equal(1, retrieved.Reactions.Plus1);
+                Assert.Equal(1, retrieved.Reactions.Hooray);
+                Assert.Equal(1, retrieved.Reactions.Heart);
+                Assert.Equal(1, retrieved.Reactions.Laugh);
+                Assert.Equal(1, retrieved.Reactions.Confused);
+                Assert.Equal(1, retrieved.Reactions.Minus1);
+            }
+        }
+    }
+
+    [IntegrationTest]
+    public async Task CanGetReactionPayloadForRepositoryPullRequestReviews()
+    {
+        int numberToCreate = 2;
+        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("PullRequestReviewCommentsReactionTests")))
+        {
+            var commentIds = new List<int>();
+
+            // Create multiple test pull requests
+            for (int count = 1; count <= numberToCreate; count++)
+            {
+                var pullRequest = await CreatePullRequest(context, "branch" + count);
+
+                // Each with a review comment with reactions
+                var commentId = await HelperCreatePullRequestReviewCommentWithReactions(context.RepositoryOwner, context.RepositoryName, pullRequest);
+                commentIds.Add(commentId);
+            }
+            Assert.Equal(numberToCreate, commentIds.Count);
+
+            // Retrieve all review comments for the repo
+            var reviewComments = await _client.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+            // Check the reactions
+            foreach (var commentId in commentIds)
+            {
+                var retrieved = reviewComments.FirstOrDefault(x => x.Id == commentId);
+
+                Assert.NotNull(retrieved);
+                Assert.Equal(6, retrieved.Reactions.TotalCount);
+                Assert.Equal(1, retrieved.Reactions.Plus1);
+                Assert.Equal(1, retrieved.Reactions.Hooray);
+                Assert.Equal(1, retrieved.Reactions.Heart);
+                Assert.Equal(1, retrieved.Reactions.Laugh);
+                Assert.Equal(1, retrieved.Reactions.Confused);
+                Assert.Equal(1, retrieved.Reactions.Minus1);
+            }
+        }
+    }
+
+    async Task<int> HelperCreatePullRequestReviewCommentWithReactions(string owner, string repo, PullRequestData pullRequest)
+    {
+        var github = Helper.GetAuthenticatedClient();
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var reviewComment = await CreateComment(body, position, repo, pullRequest.Sha, pullRequest.Number);
+
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await github.Reaction.PullRequestReviewComment.Create(owner, repo, reviewComment.Id, newReaction);
+
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(reviewComment.User.Id, reaction.User.Id);
+        }
+
+        return reviewComment.Id;
     }
 }
