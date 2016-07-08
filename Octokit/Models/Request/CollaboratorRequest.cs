@@ -6,16 +6,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CollaboratorRequest
     {
-        public CollaboratorRequest()
-        {
-            Permission = Permission.Push;
-        }
-
+        /// <summary>
+        /// Used to set the permission for a collaborator.
+        /// </summary>
         public CollaboratorRequest(Permission permissions)
         {
             Permission = permissions;
         }
 
+        /// <summary>
+        /// The permission to grant the collaborator on this repository.
+        /// </summary>
         public Permission Permission { get; private set; }
 
         internal string DebuggerDisplay

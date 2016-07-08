@@ -40,7 +40,6 @@ public class RepositoryInvitationsClientTests
                 Assert.Equal(invitations[0].Repository.Id, response.Repository.Id);                
             }
         }
-
     }
 }
 
