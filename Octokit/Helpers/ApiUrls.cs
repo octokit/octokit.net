@@ -1285,7 +1285,7 @@ namespace Octokit
         {
             return Blob(owner, name, "");
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
@@ -3016,7 +3016,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a single repository invitation.
+        /// Returns the <see cref="Uri"/> for repository invitations.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
@@ -3026,7 +3026,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository invitations.
+        /// Returns the <see cref="Uri"/> for a single repository invitation.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
