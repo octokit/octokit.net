@@ -237,7 +237,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepoCollaboratorsClient(connection);
 
-                var permission = new CollaboratorRequest();
+                var permission = new CollaboratorRequest(Permission.Push);
 
                 client.Invite("owner", "test", "user1", permission);
                 connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission), Arg.Any<string>(), Arg.Is<string>("application/vnd.github.swamp-thing-preview+json"));
@@ -247,7 +247,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
-                var permission = new CollaboratorRequest();
+                var permission = new CollaboratorRequest(Permission.Push);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite(null, "test", "user1", permission));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("", "test", "user1", permission));

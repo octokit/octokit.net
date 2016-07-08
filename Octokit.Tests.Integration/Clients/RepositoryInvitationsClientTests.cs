@@ -21,7 +21,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest();
+                var permission = new CollaboratorRequest(Permission.Push);
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, owner, permission);
