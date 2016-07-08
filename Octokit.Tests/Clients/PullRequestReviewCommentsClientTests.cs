@@ -98,7 +98,9 @@ public class PullRequestReviewCommentsClientTests
             await client.GetAll("owner", "name", 7);
 
             connection.Received().GetAll<PullRequestReviewComment>(
-                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"), Args.ApiOptions);
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
+                Arg.Any<Dictionary<string, string>>(),
+                "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
         }
 
         [Fact]
@@ -129,7 +131,9 @@ public class PullRequestReviewCommentsClientTests
             await client.GetAll("owner", "name", 7, options);
 
             connection.Received().GetAll<PullRequestReviewComment>(
-                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"), options);
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
+                Arg.Any<Dictionary<string, string>>(),
+                "application/vnd.github.squirrel-girl-preview", options);
         }
 
         [Fact]
@@ -195,7 +199,9 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), Args.ApiOptions);
+                        && d["sort"] == "updated"),
+                "application/vnd.github.squirrel-girl-preview", 
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -217,7 +223,8 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), Args.ApiOptions);
+                        && d["sort"] == "updated"),
+                "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
         }
 
         [Fact]
@@ -246,7 +253,9 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), options);
+                        && d["sort"] == "updated"),
+                "application/vnd.github.squirrel-girl-preview", 
+                options);
         }
 
         [Fact]
@@ -275,7 +284,8 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), options);
+                        && d["sort"] == "updated"),
+                "application/vnd.github.squirrel-girl-preview", options);
         }
 
         [Fact]
@@ -289,7 +299,9 @@ public class PullRequestReviewCommentsClientTests
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), Args.ApiOptions);
+                        && d["sort"] == "created"),
+                "application/vnd.github.squirrel-girl-preview",
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -303,7 +315,8 @@ public class PullRequestReviewCommentsClientTests
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), Args.ApiOptions);
+                        && d["sort"] == "created"),
+                "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
         }
 
         [Fact]
@@ -324,7 +337,9 @@ public class PullRequestReviewCommentsClientTests
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), options);
+                        && d["sort"] == "created"),
+                "application/vnd.github.squirrel-girl-preview",
+                options);
         }
 
         [Fact]
@@ -345,7 +360,8 @@ public class PullRequestReviewCommentsClientTests
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments"),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), options);
+                        && d["sort"] == "created"),
+                "application/vnd.github.squirrel-girl-preview", options);
         }
 
         [Fact]
@@ -402,7 +418,10 @@ public class PullRequestReviewCommentsClientTests
 
             client.GetComment("owner", "name", 53);
 
-            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/53"));
+            connection.Received().Get<PullRequestReviewComment>(
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/53"),
+                Arg.Any<Dictionary<string, string>>(),
+                "application/vnd.github.squirrel-girl-preview");
         }
 
         [Fact]

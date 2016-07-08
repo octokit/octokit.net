@@ -32,7 +32,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number));
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         public Task<CommitComment> Get(int repositoryId, int number)
         {
-            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number));
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>

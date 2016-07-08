@@ -87,7 +87,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name), options);
+            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name, sha), options);
+            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), options);
+            return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
