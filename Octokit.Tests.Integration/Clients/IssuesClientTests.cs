@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,15 +10,16 @@ using Xunit;
 
 public class IssuesClientTests : IDisposable
 {
+    private readonly IGitHubClient _github;
     private readonly RepositoryContext _context;
     private readonly IIssuesClient _issuesClient;
 
     public IssuesClientTests()
     {
-        var github = Helper.GetAuthenticatedClient();
+        _github = Helper.GetAuthenticatedClient();
         var repoName = Helper.MakeNameWithTimestamp("public-repo");
-        _issuesClient = github.Issue;
-        _context = github.CreateRepositoryContext(new NewRepository(repoName)).Result;
+        _issuesClient = _github.Issue;
+        _context = _github.CreateRepositoryContext(new NewRepository(repoName)).Result;
     }
 
     [IntegrationTest]
@@ -1051,6 +1053,87 @@ public class IssuesClientTests : IDisposable
         {
             Assert.NotNull(issue.Repository);
         }
+    }
+
+    [IntegrationTest]
+    public async Task CanGetReactionPayload()
+    {
+        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
+        {
+            // Create a test issue with reactions
+            var issueNumber = await HelperCreateIssue(context.RepositoryOwner, context.RepositoryName);
+
+            // Retrieve the issue
+            var retrieved = await _issuesClient.Get(context.RepositoryOwner, context.RepositoryName, issueNumber);
+
+            // Check the reactions
+            Assert.True(retrieved.Id > 0);
+            Assert.Equal(6, retrieved.Reactions.TotalCount);
+            Assert.Equal(1, retrieved.Reactions.Plus1);
+            Assert.Equal(1, retrieved.Reactions.Hooray);
+            Assert.Equal(1, retrieved.Reactions.Heart);
+            Assert.Equal(1, retrieved.Reactions.Laugh);
+            Assert.Equal(1, retrieved.Reactions.Confused);
+            Assert.Equal(1, retrieved.Reactions.Minus1);
+        }
+    }
+
+    [IntegrationTest]
+    public async Task CanGetReactionPayloadForMultipleIssues()
+    {
+        var numberToCreate = 2;
+        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
+        {
+            var issueNumbers = new List<int>();
+
+            // Create multiple test issues with reactions
+            for (int count = 1; count <= numberToCreate; count++)
+            {
+                var issueNumber = await HelperCreateIssue(context.RepositoryOwner, context.RepositoryName);
+                issueNumbers.Add(issueNumber);
+            }
+            Assert.Equal(numberToCreate, issueNumbers.Count);
+
+            // Retrieve all issues for the repo
+            var issues = await _issuesClient.GetAllForRepository(context.RepositoryOwner, context.RepositoryName);
+
+            // Check the reactions
+            foreach (var issueNumber in issueNumbers)
+            {
+                var retrieved = issues.FirstOrDefault(x => x.Number == issueNumber);
+
+                Assert.NotNull(retrieved);
+                Assert.Equal(6, retrieved.Reactions.TotalCount);
+                Assert.Equal(1, retrieved.Reactions.Plus1);
+                Assert.Equal(1, retrieved.Reactions.Hooray);
+                Assert.Equal(1, retrieved.Reactions.Heart);
+                Assert.Equal(1, retrieved.Reactions.Laugh);
+                Assert.Equal(1, retrieved.Reactions.Confused);
+                Assert.Equal(1, retrieved.Reactions.Minus1);
+            }
+        }
+    }
+
+    async static Task<int> HelperCreateIssue(string owner, string repo)
+    {
+        var github = Helper.GetAuthenticatedClient();
+
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var issue = await github.Issue.Create(owner, repo, newIssue);
+        Assert.NotNull(issue);
+
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await github.Reaction.Issue.Create(owner, repo, issue.Number, newReaction);
+
+            Assert.IsType<Reaction>(reaction);
+            Assert.Equal(reactionType, reaction.Content);
+            Assert.Equal(issue.User.Id, reaction.User.Id);
+        }
+
+        return issue.Number;
     }
 
     public void Dispose()

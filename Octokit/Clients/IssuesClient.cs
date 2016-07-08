@@ -65,7 +65,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number));
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         public Task<Issue> Get(int repositoryId, int number)
         {
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number));
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>

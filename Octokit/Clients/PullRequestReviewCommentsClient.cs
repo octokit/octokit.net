@@ -57,7 +57,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), options);
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number));
+            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), new Dictionary<string, string>(), AcceptHeaders.ReactionsPreview);
         }
 
         /// <summary>
