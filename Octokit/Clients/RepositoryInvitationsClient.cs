@@ -52,7 +52,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }

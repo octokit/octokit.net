@@ -88,14 +88,14 @@ public class RepositoryInvitationsClientTests
                 var permission = new CollaboratorRequest(Permission.Push);
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
                 Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
                 Assert.Equal(InvitationPermissionType.Write, response.Permissions);
 
                 var declineResponse = await github.Repository.Invitation.Decline(response.Id);
 
-                Assert.False(declineResponse);
+                Assert.True(declineResponse);
 
                 //Assert.True(invitations.Count >= 1);
                 //Assert.NotNull(invitations.FirstOrDefault(i => i.CreatedAt == response.CreatedAt));
