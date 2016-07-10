@@ -154,6 +154,29 @@ namespace Octokit
         Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
 
         /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>        
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<RepositoryInvitation> Invite(int respositoryId, string user);
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
+        Task<RepositoryInvitation> Invite(int repositoryId, string user, CollaboratorRequest permission);
+
+        /// <summary>
         /// Deletes a collaborator from the repository.
         /// </summary>
         /// <remarks>
