@@ -135,10 +135,10 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
-        /// <param name="repo">The name of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Invite(string owner, string repo, string user);
+        Task<RepositoryInvitation> Invite(string owner, string name, string user);
 
         /// <summary>
         /// Invites a new collaborator to the repo
@@ -147,11 +147,11 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
-        /// <param name="repo">The name of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>
         /// <param name="permission">The permission to set.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        Task<RepositoryInvitation> Invite(string owner, string repo, string user, CollaboratorRequest permission);
+        Task<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Invites a new collaborator to the repo
