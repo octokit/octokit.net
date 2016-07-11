@@ -290,7 +290,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>
-        /// <param name="permission">The permission to set.</param>
+        /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         public Task<RepositoryInvitation> Invite(int repositoryId, string user, CollaboratorRequest permission)
         {

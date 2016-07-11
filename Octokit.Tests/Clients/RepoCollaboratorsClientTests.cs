@@ -290,8 +290,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, "user1"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "test", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(1, null));
-                
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1"));;
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1")); ;
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "test", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete(1, ""));
