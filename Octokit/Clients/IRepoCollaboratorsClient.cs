@@ -162,7 +162,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Invite(int respositoryId, string user);
+        Task<RepositoryInvitation> Invite(int repositoryId, string user);
 
         /// <summary>
         /// Invites a new collaborator to the repo
