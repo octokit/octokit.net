@@ -43,6 +43,7 @@ namespace Octokit.Tests.Integration
                 { "deployments", "deployment" },
                 { "emails", "email" },
                 { "contents", "content" },
+                { "reactions", "reaction" },
                 // replace abbreviation with something more user-friendly
                 { "pulls", "pullrequest" },
                 { "repos", "repository" },
