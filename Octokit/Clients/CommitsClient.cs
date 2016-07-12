@@ -28,7 +28,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        /// <returns></returns>
         public Task<Commit> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -46,7 +45,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        /// <returns></returns>
         public Task<Commit> Get(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -63,7 +61,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
-        /// <returns></returns>
         public Task<Commit> Create(string owner, string name, NewCommit commit)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -81,7 +78,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="commit">The commit to create</param>
-        /// <returns></returns>
         public Task<Commit> Create(int repositoryId, NewCommit commit)
         {
             Ensure.ArgumentNotNull(commit, "commit");

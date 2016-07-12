@@ -20,7 +20,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         Task<Commit> Get(string owner, string name, string reference);
@@ -33,7 +32,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         Task<Commit> Get(int repositoryId, string reference);
@@ -47,7 +45,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
-        /// <returns></returns>
         Task<Commit> Create(string owner, string name, NewCommit commit);
 
         /// <summary>
@@ -58,7 +55,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="commit">The commit to create</param>
-        /// <returns></returns>
         Task<Commit> Create(int repositoryId, NewCommit commit);
     }
 }
