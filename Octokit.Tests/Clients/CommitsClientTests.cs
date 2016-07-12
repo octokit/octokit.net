@@ -18,7 +18,8 @@ public class CommitsClientTests
 
             await client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/commits/reference"));
+            connection.Received().Get<Commit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/commits/reference"), null, 
+                "application/vnd.github.cryptographer-preview+sha");
         }
 
         [Fact]
