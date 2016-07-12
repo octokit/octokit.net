@@ -20,7 +20,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Page> Get(string owner, string name);
 
@@ -31,7 +30,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Page> Get(int repositoryId);
 
@@ -43,7 +41,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name);
 
         /// <summary>
@@ -53,7 +50,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId);
 
         /// <summary>
@@ -65,7 +61,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -76,7 +71,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -87,7 +81,6 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<PagesBuild> GetLatest(string owner, string name);
 
         /// <summary>
@@ -97,7 +90,6 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
         Task<PagesBuild> GetLatest(int repositoryId);
     }
 }
