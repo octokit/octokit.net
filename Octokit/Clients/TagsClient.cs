@@ -28,7 +28,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        /// <returns></returns>
         public Task<GitTag> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -46,7 +45,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        /// <returns></returns>
         public Task<GitTag> Get(int repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -63,7 +61,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
-        /// <returns></returns>
         public Task<GitTag> Create(string owner, string name, NewTag tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -81,7 +78,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="tag">The tag to create</param>
-        /// <returns></returns>
         public Task<GitTag> Create(int repositoryId, NewTag tag)
         {
             Ensure.ArgumentNotNull(tag, "tag");
