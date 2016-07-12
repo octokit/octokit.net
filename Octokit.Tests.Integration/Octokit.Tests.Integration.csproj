@@ -113,6 +113,7 @@
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
+    <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />

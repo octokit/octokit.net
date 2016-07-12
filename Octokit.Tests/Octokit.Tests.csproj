@@ -250,6 +250,7 @@
     <Compile Include="Reactive\ObservableRespositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTagsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />
