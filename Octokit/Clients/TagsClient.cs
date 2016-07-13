@@ -34,7 +34,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference));
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference));
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
 
         /// <summary>

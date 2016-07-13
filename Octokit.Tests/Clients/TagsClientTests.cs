@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
 using Octokit.Internal;
+using Octokit.Tests;
 using Xunit;
 
 public class TagsClientTests
@@ -17,7 +18,7 @@ public class TagsClientTests
 
             await client.Get("owner", "repo", "reference");
 
-            connection.Received().Get<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"));
+            connection.Received().Get<GitTag>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/tags/reference"), Args.EmptyDictionary, "application/vnd.github.cryptographer-preview+sha");
         }
 
         [Fact]
