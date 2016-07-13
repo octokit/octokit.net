@@ -107,6 +107,26 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(gitTag.Message, "Hello");
                 Assert.Equal(gitTag.Object.Sha, sha);
             }
+
+            [IntegrationTest]
+            public async Task DeserializeTagSignatureVerification()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var newTag = new NewTag { Message = "Hello", Type = TaggedType.Blob, Object = sha, Tag = "tag" };
+
+                var tag = await github.Git.Tag.Create(context.Repository.Id, newTag);
+
+                var gitTag = await github.Git.Tag.Get(context.Repository.Id, tag.Sha);
+
+                Assert.NotNull(gitTag);
+
+                Assert.False(gitTag.Verification.Verified);
+                Assert.Equal(gitTag.Verification.Reason, VerificationReason.Unsigned);
+                Assert.Null(gitTag.Verification.Signature);
+                Assert.Null(gitTag.Verification.Payload);
+
+            }
         }
     }
 }
