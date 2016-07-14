@@ -49,6 +49,9 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", ""));
             }
         }
 
@@ -161,6 +164,47 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("owner", ""));
+            }
+        }
+
+        public class TheRequestPageBuildMethod
+        {
+            [Fact]
+            public async Task PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryPagesClient(connection);
+
+                await client.RequestPageBuild("fake", "repo");
+
+                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"), "application/vnd.github.mister-fantastic-preview+json");
+            }
+
+            [Fact]
+            public async Task PostsToCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryPagesClient(connection);
+
+                await client.RequestPageBuild(1);
+
+                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pages/builds"), "application/vnd.github.mister-fantastic-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryPagesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RequestPageBuild(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RequestPageBuild("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RequestPageBuild("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RequestPageBuild("owner", ""));
             }
         }
     }
