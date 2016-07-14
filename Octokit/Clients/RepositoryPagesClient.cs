@@ -151,7 +151,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name));
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), AcceptHeaders.PagesApiPreview);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Octokit
         /// </remarks>
         public Task<PagesBuild> RequestPageBuild(int repositoryId)
         {
-            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId));
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), AcceptHeaders.PagesApiPreview);
         }
     }
 }
