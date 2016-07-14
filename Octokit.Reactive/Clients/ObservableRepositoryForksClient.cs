@@ -135,10 +135,10 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return request == null ? _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), options) :
-                _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -152,10 +152,10 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return request == null ? _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), options) :
-                _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

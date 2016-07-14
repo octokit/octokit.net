@@ -156,11 +156,14 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", (ApiOptions)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", new RepositoryForksListRequest()));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, new RepositoryForksListRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", (RepositoryForksListRequest)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", new RepositoryForksListRequest(), ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, new RepositoryForksListRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", new RepositoryForksListRequest(), null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (RepositoryForksListRequest)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, new RepositoryForksListRequest(), null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));

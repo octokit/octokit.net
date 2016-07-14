@@ -94,6 +94,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
 
             return GetAll(owner, name, request, ApiOptions.None);
         }
@@ -108,6 +109,8 @@ namespace Octokit
         /// <param name="request">Used to request and filter a list of repository forks</param>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request)
         {
+            Ensure.ArgumentNotNull(request, "request");
+
             return GetAll(repositoryId, request, ApiOptions.None);
         }
 
@@ -125,11 +128,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return request == null
-                ? ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, name), options) :
-                ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -143,11 +145,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return request == null
-                ? ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(repositoryId), options) :
-                ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
