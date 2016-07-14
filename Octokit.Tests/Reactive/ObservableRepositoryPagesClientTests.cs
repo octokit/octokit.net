@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -48,6 +49,9 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.Get(null, "name"));
                 Assert.Throws<ArgumentNullException>(() => client.Get("owner", null));
+
+                Assert.Throws<ArgumentException>(() => client.Get("", "name"));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", ""));
             }
         }
 
@@ -160,6 +164,47 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetLatest(null, "name"));
                 Assert.Throws<ArgumentNullException>(() => client.GetLatest("owner", null));
+
+                Assert.Throws<ArgumentException>(() => client.GetLatest("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetLatest("owner", ""));
+            }
+        }
+
+        public class TheRequestPageBuildMethod
+        {
+            [Fact]
+            public async Task PostsToCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryPagesClient(gitHubClient);
+
+                client.RequestPageBuild("fake", "repo");
+
+                gitHubClient.Received().Repository.Page.RequestPageBuild("fake", "repo");
+            }
+
+            [Fact]
+            public async Task PostsToCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryPagesClient(gitHubClient);
+
+                client.RequestPageBuild(1);
+
+                gitHubClient.Received().Repository.Page.RequestPageBuild(1);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryPagesClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.RequestPageBuild(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.RequestPageBuild("owner", null));
+
+                Assert.Throws<ArgumentException>(() => client.RequestPageBuild("", "name"));
+                Assert.Throws<ArgumentException>(() => client.RequestPageBuild("owner", ""));
             }
         }
     }
