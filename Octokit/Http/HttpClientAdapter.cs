@@ -171,8 +171,26 @@ namespace Octokit.Internal
             }
         }
 
-        private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            StreamContent savedContent = null;
+            bool unbuffered = false;
+            if (request.Content != null && request.Content.Headers.ContentLength != 0)
+            {
+                var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                if (stream.CanSeek)
+                {
+                    stream.Position = 0;
+                    savedContent = new StreamContent(stream);
+                }
+                else
+                {
+                    unbuffered = true;
+                    //throw new Exception("Cannot redirect a request with an unbuffered body");
+                    //savedContent = null;
+                }
+            }
+
             var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
 
             // Can't redirect without somewhere to redirect to.  Throw?
@@ -206,19 +224,11 @@ namespace Octokit.Internal
                 }
                 else
                 {
-                    if (request.Content != null && request.Content.Headers.ContentLength != 0)
+                    if (unbuffered)
                     {
-                        var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                        if (stream.CanSeek)
-                        {
-                            stream.Position = 0;
-                        }
-                        else
-                        {
-                            throw new Exception("Cannot redirect a request with an unbuffered body");
-                        }
-                        newRequest.Content = new StreamContent(stream);
+                        throw new Exception("Cannot redirect a request with an unbuffered body");
                     }
+                    newRequest.Content = savedContent;
                 }
                 newRequest.RequestUri = response.Headers.Location;
                 if (string.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
