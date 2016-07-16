@@ -73,5 +73,65 @@ public class RepositoryInvitationsClientTests
             }
         }
     }
+
+    public class TheDeleteMethod
+    {
+        [IntegrationTest]
+        public async Task CanDeleteInvitation()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                // invite a collaborator
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
+
+                Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
+                Assert.Equal(InvitationPermissionType.Write, response.Permissions);
+
+                var delete = await github.Repository.Invitation.Delete(response.Repository.Id, response.Id);
+
+                Assert.True(delete);
+            }
+        }
+    }
+
+    public class TheUpdateMethod
+    {
+        [IntegrationTest]
+        public async Task CanUpdateInvitation()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                // invite a collaborator
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
+
+                Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
+                Assert.Equal(InvitationPermissionType.Write, response.Permissions);
+
+                var updatedInvitation = new InvitationUpdate(InvitationPermissionType.Admin);
+
+                var update = await github.Repository.Invitation.Edit(response.Repository.Id, response.Id, updatedInvitation);
+
+                Assert.Equal(updatedInvitation.Permissions, update.Permissions);
+                Assert.Equal(response.Id, update.Id);
+                Assert.Equal(response.Repository.Id, update.Repository.Id);
+                Assert.Equal(response.Invitee.Login, update.Invitee.Login);
+                Assert.Equal(response.Inviter.Login, update.Inviter.Login);
+            }
+        }
+    }
 }
 
