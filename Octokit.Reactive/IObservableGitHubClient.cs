@@ -15,7 +15,6 @@ namespace Octokit.Reactive
         IObservablePullRequestsClient PullRequest { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableGistsClient Gist { get; }
-        IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
         IObservableGitDatabaseClient Git { get; }
         IObservableSearchClient Search { get; }

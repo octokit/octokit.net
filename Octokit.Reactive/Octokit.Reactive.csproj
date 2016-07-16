@@ -182,7 +182,6 @@
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableRepositoryHooksClient.cs" />
-    <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStatisticsClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
@@ -207,7 +206,6 @@
     <Compile Include="Clients\IObservableReleasesClient.cs" />
     <Compile Include="Clients\IObservableRepositoriesClient.cs" />
     <Compile Include="Clients\IObservableOrganizationsClient.cs" />
-    <Compile Include="Clients\IObservableSshKeysClient.cs" />
     <Compile Include="Clients\IObservableUsersClient.cs" />
     <Compile Include="Clients\ObservableActivitiesClient.cs" />
     <Compile Include="ObservableGitHubClient.cs" />

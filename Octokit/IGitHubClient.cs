@@ -92,16 +92,6 @@ namespace Octokit
         /// </remarks>
         IGistsClient Gist { get; }
 
-        // TODO: this should be under Users to align with the API docs
-        // TODO: this should be named PublicKeys to align with the API docs
-        /// <summary>
-        /// Access GitHub's Public Keys API.
-        /// </summary>
-        /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/keys/
-        /// </remarks>
-        ISshKeysClient SshKey { get; }
-
         /// <summary>
         /// Access GitHub's Users API.
         /// </summary>

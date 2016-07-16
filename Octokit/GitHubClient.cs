@@ -96,7 +96,6 @@ namespace Octokit
             PullRequest = new PullRequestsClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Search = new SearchClient(apiConnection);
-            SshKey = new SshKeysClient(apiConnection);
             User = new UsersClient(apiConnection);
             Reaction = new ReactionsClient(apiConnection);
         }
@@ -223,17 +222,6 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/gists/
         /// </remarks>
         public IGistsClient Gist { get; private set; }
-
-        /// <summary>
-
-        // TODO: this should be under Users to align with the API docs
-        // TODO: this should be named PublicKeys to align with the API docs
-        /// Access GitHub's Public Keys API.
-        /// </summary>
-        /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/users/keys/
-        /// </remarks>
-        public ISshKeysClient SshKey { get; private set; }
 
         /// <summary>
         /// Access GitHub's Users API.

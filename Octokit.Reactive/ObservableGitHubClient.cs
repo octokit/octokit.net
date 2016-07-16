@@ -39,7 +39,6 @@ namespace Octokit.Reactive
             Organization = new ObservableOrganizationsClient(gitHubClient);
             PullRequest = new ObservablePullRequestsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
-            SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
             Git = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
@@ -63,7 +62,6 @@ namespace Octokit.Reactive
         public IObservablePullRequestsClient PullRequest { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableGistsClient Gist { get; private set; }
-        public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
         public IObservableGitDatabaseClient Git { get; private set; }
         public IObservableSearchClient Search { get; private set; }
