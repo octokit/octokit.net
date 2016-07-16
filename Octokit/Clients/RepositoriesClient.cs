@@ -25,20 +25,11 @@ namespace Octokit
             Status = new CommitStatusClient(apiConnection);
             Hooks = new RepositoryHooksClient(apiConnection);
             Forks = new RepositoryForksClient(apiConnection);
-#pragma warning disable CS0618 // Type or member is obsolete
-            RepoCollaborators = new RepoCollaboratorsClient(apiConnection);
-#pragma warning restore CS0618 // Type or member is obsolete
             Collaborator = new RepoCollaboratorsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
-#pragma warning disable CS0618 // Type or member is obsolete
-            RepositoryComments = new RepositoryCommentsClient(apiConnection);
-#pragma warning restore CS0618 // Type or member is obsolete
             Comment = new RepositoryCommentsClient(apiConnection);
-#pragma warning disable CS0618 // Type or member is obsolete
-            Commits = new RepositoryCommitsClient(apiConnection);
-#pragma warning restore CS0618 // Type or member is obsolete
             Commit = new RepositoryCommitsClient(apiConnection);
             Release = new ReleasesClient(apiConnection);
             DeployKeys = new RepositoryDeployKeysClient(apiConnection);
@@ -449,20 +440,6 @@ namespace Octokit
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        [Obsolete("Use Status instead")]
-        public ICommitStatusClient CommitStatus
-        {
-            get { return Status; }
-        }
-
-        /// <summary>
-        /// A client for GitHub's Commit Status API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-        /// that announced this feature.
-        /// </remarks>
         public ICommitStatusClient Status { get; private set; }
 
         /// <summary>
@@ -476,15 +453,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
         public IRepositoryForksClient Forks { get; private set; }
-
-        /// <summary>
-        /// A client for GitHub's Repo Collaborators.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
-        /// </remarks>
-        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
-        public IRepoCollaboratorsClient RepoCollaborators { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repo Collaborators.
@@ -509,15 +477,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         public IStatisticsClient Statistics { get; private set; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Commits API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
-        ///</remarks>
-        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
-        public IRepositoryCommitsClient Commits { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API
@@ -550,15 +509,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
-
-        /// <summary>
-        /// Client for managing commit comments in a repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
-        /// </remarks>
-        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
-        public IRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
         /// Client for managing commit comments in a repository.
