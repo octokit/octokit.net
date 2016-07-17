@@ -25,7 +25,7 @@ namespace Octokit
         /// Creates a reaction for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         Task<Reaction> Create(int repositoryId, int number, NewReaction reaction);
@@ -43,7 +43,7 @@ namespace Octokit
         /// Get all reactions for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
         Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number);
     }

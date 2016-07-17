@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/commits/#get-a-commit
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
         public IObservable<Commit> Get(int repositoryId, string reference)
         {
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/commits/#create-a-commit
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
         public IObservable<Commit> Create(int repositoryId, NewCommit commit)
         {

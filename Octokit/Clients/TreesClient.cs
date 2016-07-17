@@ -45,7 +45,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/trees/#get-a-tree
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> Get(int repositoryId, string reference)
         {
@@ -78,7 +78,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/git/trees/#get-a-tree-recursively
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> GetRecursive(int repositoryId, string reference)
         {
@@ -116,7 +116,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/trees/#create-a-tree
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
         public Task<TreeResponse> Create(int repositoryId, NewTree newTree)
         {

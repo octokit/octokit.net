@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         public IObservable<PullRequestReviewComment> GetAll(int repositoryId, int number)
         {
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<PullRequestReviewComment> GetAll(int repositoryId, int number, ApiOptions options)
@@ -99,7 +99,7 @@ namespace Octokit.Reactive
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<PullRequestReviewComment> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
@@ -125,7 +125,7 @@ namespace Octokit.Reactive
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<PullRequestReviewComment> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -154,7 +154,7 @@ namespace Octokit.Reactive
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         public IObservable<PullRequestReviewComment> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request)
         {
@@ -186,7 +186,7 @@ namespace Octokit.Reactive
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<PullRequestReviewComment> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
@@ -220,7 +220,7 @@ namespace Octokit.Reactive
         /// Gets a single pull request review comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         public IObservable<PullRequestReviewComment> GetComment(int repositoryId, int number)
         {
@@ -248,7 +248,7 @@ namespace Octokit.Reactive
         /// Creates a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="comment">The comment</param>
         public IObservable<PullRequestReviewComment> Create(int repositoryId, int number, PullRequestReviewCommentCreate comment)
@@ -279,7 +279,7 @@ namespace Octokit.Reactive
         /// Creates a comment on a pull request review as a reply to another comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="comment">The comment</param>
         public IObservable<PullRequestReviewComment> CreateReply(int repositoryId, int number, PullRequestReviewCommentReplyCreate comment)
@@ -310,7 +310,7 @@ namespace Octokit.Reactive
         /// Edits a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="comment">The edited comment</param>
         public IObservable<PullRequestReviewComment> Edit(int repositoryId, int number, PullRequestReviewCommentEdit comment)
@@ -339,7 +339,7 @@ namespace Octokit.Reactive
         /// Deletes a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         public IObservable<Unit> Delete(int repositoryId, int number)
         {

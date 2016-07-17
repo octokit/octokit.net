@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<IEnumerable<Contributor>> GetContributors(int repositoryId);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<CommitActivity> GetCommitActivity(int repositoryId);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<CodeFrequency> GetCodeFrequency(int repositoryId);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<Participation> GetParticipation(int repositoryId);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<PunchCard> GetPunchCard(int repositoryId);
     }
 }

@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves the <see cref="SshKey"/> for the specified id.
         /// </summary>
-        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="id">The Id of the SSH key</param>
         /// <returns>A <see cref="SshKey"/></returns>
         [Obsolete("This method is obsolete. Please use User.Keys.Get(int) instead.")]
         public IObservable<SshKey> Get(int id)
@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
         /// </summary>
-        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="id">The Id of the SSH key</param>
         /// <param name="key">The SSH Key contents</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>

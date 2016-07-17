@@ -38,7 +38,7 @@ namespace Octokit
         /// Gets a single Issue Comment by id.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The issue comment id</param>
         public Task<IssueComment> Get(int repositoryId, int id)
         {
@@ -63,7 +63,7 @@ namespace Octokit
         /// Gets Issue Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -89,7 +89,7 @@ namespace Octokit
         /// Gets Issue Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -117,7 +117,7 @@ namespace Octokit
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(int repositoryId, int number)
         {
@@ -145,7 +145,7 @@ namespace Octokit
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
@@ -176,7 +176,7 @@ namespace Octokit
         /// Creates a new Issue Comment for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="newComment">The new comment to add to the issue</param>
         public Task<IssueComment> Create(int repositoryId, int number, string newComment)
@@ -207,7 +207,7 @@ namespace Octokit
         /// Updates a specified Issue Comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#edit-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         public Task<IssueComment> Update(int repositoryId, int id, string commentUpdate)
@@ -236,7 +236,7 @@ namespace Octokit
         /// Deletes the specified Issue Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         public Task Delete(int repositoryId, int id)
         {

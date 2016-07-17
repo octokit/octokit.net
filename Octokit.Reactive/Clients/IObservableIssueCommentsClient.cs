@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// Gets a single Issue Comment by id.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The issue comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// Gets Issue Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<IssueComment> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// Gets Issue Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<IssueComment> GetAllForRepository(int repositoryId, ApiOptions options);
 
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         IObservable<IssueComment> GetAllForIssue(int repositoryId, int number);
 
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<IssueComment> GetAllForIssue(int repositoryId, int number, ApiOptions options);
@@ -115,7 +115,7 @@ namespace Octokit.Reactive
         /// Creates a new Issue Comment for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="newComment">The text of the new comment</param>
         IObservable<IssueComment> Create(int repositoryId, int number, string newComment);
@@ -134,7 +134,7 @@ namespace Octokit.Reactive
         /// Updates a specified Issue Comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#edit-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         IObservable<IssueComment> Update(int repositoryId, int id, string commentUpdate);
@@ -152,7 +152,7 @@ namespace Octokit.Reactive
         /// Deletes the specified Issue Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         IObservable<Unit> Delete(int repositoryId, int id);
     }

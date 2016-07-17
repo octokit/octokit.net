@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/blobs/#get-a-blob
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         public IObservable<Blob> Get(int repositoryId, string reference)
         {
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/blobs/#create-a-blob
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         public IObservable<BlobReference> Create(int repositoryId, NewBlob newBlob)
         {

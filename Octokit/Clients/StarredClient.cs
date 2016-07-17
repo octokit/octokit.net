@@ -37,7 +37,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId)
         {
@@ -63,7 +63,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId, ApiOptions options)
@@ -90,7 +90,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId)
         {
@@ -116,7 +116,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the stargazers for the passed repository with star creation timestamps.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId, ApiOptions options)

@@ -45,7 +45,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference)
         {
@@ -82,7 +82,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference, ApiOptions options)
@@ -119,7 +119,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<CombinedCommitStatus> GetCombined(int repositoryId, string reference)
         {
@@ -154,7 +154,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/repos/statuses/#create-a-status
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
         public Task<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus)

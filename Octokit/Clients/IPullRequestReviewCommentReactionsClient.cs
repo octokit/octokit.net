@@ -24,7 +24,7 @@ namespace Octokit
         /// Get all reactions for a specified Pull Request Review Comment.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
         Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number);
 
@@ -42,7 +42,7 @@ namespace Octokit
         /// Creates a reaction for a specified Pull Request Review Comment.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         Task<Reaction> Create(int repositoryId, int number, NewReaction reaction);

@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// Creates a reaction for a specified Commit Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
         /// <returns></returns>

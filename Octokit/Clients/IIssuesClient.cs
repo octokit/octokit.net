@@ -58,7 +58,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#get-a-single-issue
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
@@ -202,7 +202,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, ApiOptions options);
 
@@ -243,7 +243,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request);
 
@@ -265,7 +265,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options);
@@ -285,7 +285,7 @@ namespace Octokit
         /// issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
         Task<Issue> Create(int repositoryId, NewIssue newIssue);
 
@@ -306,7 +306,7 @@ namespace Octokit
         /// issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/#edit-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
@@ -325,7 +325,7 @@ namespace Octokit
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         Task Lock(int repositoryId, int number);
 
@@ -342,7 +342,7 @@ namespace Octokit
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         Task Unlock(int repositoryId, int number);
     }
