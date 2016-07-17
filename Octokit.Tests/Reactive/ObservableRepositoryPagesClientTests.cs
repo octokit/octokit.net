@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -173,7 +172,7 @@ namespace Octokit.Tests.Reactive
         public class TheRequestPageBuildMethod
         {
             [Fact]
-            public async Task PostsToCorrectUrl()
+            public void PostsToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryPagesClient(gitHubClient);
@@ -184,7 +183,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task PostsToCorrectUrlWithRepositoryId()
+            public void PostsToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryPagesClient(gitHubClient);
@@ -195,7 +194,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryPagesClient(gitHubClient);
