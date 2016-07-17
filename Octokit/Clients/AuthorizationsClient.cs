@@ -387,24 +387,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Revokes every OAuth token for an OAuth application.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
-        /// </remarks>
-        /// <param name="clientId">ClientID of the OAuth application for the token</param>
-        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
-        public Task RevokeAllApplicationAuthentications(string clientId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-
-            return ApiConnection.Delete(
-                ApiUrls.ApplicationAuthorization(clientId));
-        }
-
-        /// <summary>
         /// Updates the specified <see cref="Authorization"/>.
         /// </summary>
         /// <remarks>

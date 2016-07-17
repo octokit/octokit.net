@@ -158,17 +158,6 @@ namespace Octokit.Reactive
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        [Obsolete("Use Status instead")]
-        IObservableCommitStatusClient CommitStatus { get; }
-
-        /// <summary>
-        /// A client for GitHub's Commit Status API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-        /// that announced this feature.
-        /// </remarks>
         IObservableCommitStatusClient Status { get; }
 
         /// <summary>
@@ -186,15 +175,6 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         IObservableStatisticsClient Statistics { get; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Comments API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
-        /// </remarks>
-        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
-        IObservableRepositoryCommentsClient RepositoryComments { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Comments API.
@@ -546,25 +526,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
-        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
-        IObservableRepoCollaboratorsClient RepoCollaborators { get; }
-
-        /// <summary>
-        /// A client for GitHub's Repo Collaborators.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
-        /// </remarks>
         IObservableRepoCollaboratorsClient Collaborator { get; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Commits API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
-        ///</remarks>
-        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
-        IObservableRepositoryCommitsClient Commits { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API

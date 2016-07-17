@@ -29,15 +29,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
-        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
-        IRepositoryCommentsClient RepositoryComments { get; }
-
-        /// <summary>
-        /// Client for managing commit comments in a repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
-        /// </remarks>
         IRepositoryCommentsClient Comment { get; }
 
         /// <summary>
@@ -262,17 +253,6 @@ namespace Octokit
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        [Obsolete("Use Status instead")]
-        ICommitStatusClient CommitStatus { get; }
-
-        /// <summary>
-        /// A client for GitHub's Commit Status API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-        /// that announced this feature.
-        /// </remarks>
         ICommitStatusClient Status { get; }
 
         /// <summary>
@@ -286,15 +266,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
         IRepositoryForksClient Forks { get; }
-
-        /// <summary>
-        /// A client for GitHub's Repo Collaborators.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
-        /// </remarks>
-        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
-        IRepoCollaboratorsClient RepoCollaborators { get; }
 
         /// <summary>
         /// A client for GitHub's Repo Collaborators.
@@ -319,15 +290,6 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         IStatisticsClient Statistics { get; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Commits API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
-        ///</remarks>
-        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
-        IRepositoryCommitsClient Commits { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API

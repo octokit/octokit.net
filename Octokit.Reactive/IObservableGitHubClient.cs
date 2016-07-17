@@ -15,15 +15,8 @@ namespace Octokit.Reactive
         IObservablePullRequestsClient PullRequest { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableGistsClient Gist { get; }
-        [Obsolete("Use Repository.Release instead")]
-        IObservableReleasesClient Release { get; }
-        IObservableSshKeysClient SshKey { get; }
         IObservableUsersClient User { get; }
-        [Obsolete("Notifications are now available under the Activities client. This will be removed in a future update.")]
-        IObservableNotificationsClient Notification { get; }
         IObservableGitDatabaseClient Git { get; }
-        [Obsolete("Use Git instead")]
-        IObservableGitDatabaseClient GitDatabase { get; }
         IObservableSearchClient Search { get; }
         IObservableEnterpriseClient Enterprise { get; }
         IObservableMigrationClient Migration { get; }
