@@ -50,8 +50,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("", "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", ""));
             }
         }
 
@@ -165,8 +165,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("", "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLatest("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetLatest("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetLatest("owner", ""));
             }
         }
 
