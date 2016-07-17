@@ -97,7 +97,6 @@
     <Compile Include="Clients\RepositoryHooksClientTest.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
-    <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
     <Compile Include="Clients\TagsClientTests.cs" />
@@ -146,7 +145,6 @@
     <Compile Include="Models\IssueRequestTests.cs" />
     <Compile Include="Models\IssueTest.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
-    <Compile Include="Models\ModelExtensionsTests.cs" />
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\PullRequestRequestTests.cs" />
     <Compile Include="Models\PunchCardTests.cs" />
