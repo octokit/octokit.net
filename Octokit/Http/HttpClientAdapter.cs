@@ -20,6 +20,8 @@ namespace Octokit.Internal
     {
         readonly HttpClient _http;
 
+        public const string RedirectCountKey = "RedirectCount";
+
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
@@ -42,8 +44,8 @@ namespace Octokit.Internal
 
             using (var requestMessage = BuildRequestMessage(request))
             {
-                // Make the request
-                var responseMessage = await _http.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, cancellationTokenForRequest).ConfigureAwait(false);
+                var responseMessage = await SendAsync(requestMessage, cancellationTokenForRequest).ConfigureAwait(false);
+
                 return await BuildResponse(responseMessage).ConfigureAwait(false);
             }
         }
@@ -168,18 +170,12 @@ namespace Octokit.Internal
                 if (_http != null) _http.Dispose();
             }
         }
-    }
 
-    internal class RedirectHandler : DelegatingHandler
-    {
-        public const string RedirectCountKey = "RedirectCount";
-        public bool Enabled { get; set; }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
 
-            // Can't redirect without somewhere to redirect too.  Throw?
+            // Can't redirect without somewhere to redirect to.  Throw?
             if (response.Headers.Location == null) return response;
 
             // Don't redirect if we exceed max number of redirects
@@ -229,6 +225,7 @@ namespace Octokit.Internal
                 {
                     newRequest.Headers.Authorization = null;
                 }
+
                 response = await SendAsync(newRequest, cancellationToken).ConfigureAwait(false);
             }
 
@@ -238,18 +235,28 @@ namespace Octokit.Internal
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
         {
-            var newrequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
+            var newRequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
 
             foreach (var header in oldRequest.Headers)
             {
-                newrequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
             foreach (var property in oldRequest.Properties)
             {
-                newrequest.Properties.Add(property);
+                newRequest.Properties.Add(property);
             }
 
-            return newrequest;
+            return newRequest;
+        }
+    }
+
+    internal class RedirectHandler : DelegatingHandler
+    {
+        public bool Enabled { get; set; }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return base.SendAsync(request, cancellationToken);
         }
     }
 }
