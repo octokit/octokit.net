@@ -214,18 +214,6 @@ namespace Octokit.Reactive
         IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken);
 
         /// <summary>
-        /// Revokes every OAuth token for an OAuth application.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
-        /// </remarks>
-        /// <param name="clientId">ClientID of the OAuth application for the token</param>
-        /// <returns></returns>
-        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
-        IObservable<Unit> RevokeAllApplicationAuthentications(string clientId);
-
-        /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/></param>

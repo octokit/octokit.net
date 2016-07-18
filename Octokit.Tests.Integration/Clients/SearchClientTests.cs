@@ -71,6 +71,35 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
+    [IntegrationTest(Skip = "As this repository has been renamed, you cannot search for it's results.")]
+    public async Task SearchForFileNameInCodeWithoutTerm2()
+    {
+        var request = new SearchCodeRequest()
+        {
+            FileName = "project.json",
+            Repos = new RepositoryCollection { "adamcaudill/Psychson" }
+        };
+
+
+        var repos = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.Empty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForFileNameInCodeWithoutTermWithUnderscore()
+    {
+        var request = new SearchCodeRequest()
+        {
+            FileName = "readme.md",
+            Repos = new RepositoryCollection { "Cultural-Rogue/_51Wp.XinFengSDK.Demo" }
+        };
+
+        var repos = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.Empty(repos.Items);
+    }
+
     [IntegrationTest]
     public async Task SearchForWordInCode()
     {

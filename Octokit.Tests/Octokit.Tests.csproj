@@ -133,7 +133,6 @@
     <Compile Include="Clients\ReleasesClientTests.cs" />
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTest.cs" />
-    <Compile Include="Clients\SshKeysClientTests.cs" />
     <Compile Include="Clients\TreesClientTests.cs" />
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserGpgKeysClientTests.cs" />
@@ -187,7 +186,6 @@
     <Compile Include="Models\NewReferenceTests.cs" />
     <Compile Include="Models\MilestoneRequestTests.cs" />
     <Compile Include="Models\IssueRequestTests.cs" />
-    <Compile Include="Models\ModelExtensionsTests.cs" />
     <Compile Include="Models\NewRepositoryWebHookTests.cs" />
     <Compile Include="Models\PullRequestRequestTests.cs" />
     <Compile Include="Models\PunchCardTests.cs" />
@@ -217,6 +215,7 @@
     <Compile Include="Reactive\ObservableCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueCommentReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservableCommitStatusClientTests.cs" />
     <Compile Include="Reactive\ObservableOrganizationsClientTests.cs" />
     <Compile Include="Reactive\ObservableNotificationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
@@ -250,6 +249,7 @@
     <Compile Include="Reactive\ObservableRespositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableStarredClientTests.cs" />
     <Compile Include="Reactive\ObservableStatisticsClientTests.cs" />
+    <Compile Include="Reactive\ObservableTagsClientTests.cs" />
     <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
     <Compile Include="Reactive\ObservableTreesClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersTest.cs" />

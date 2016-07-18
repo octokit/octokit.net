@@ -13,17 +13,30 @@ namespace Octokit.Tests.Clients
         public class TheGetMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                client.Get("fake", "repo", 42);
+                await client.Get("fake", "repo", 42);
 
                 connection.Received().Get<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"), 
-                    Arg.Any<Dictionary<string, string>>(), 
-                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"));
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                await client.Get(1, 42);
+
+                connection.Received().Get<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments/42"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -32,8 +45,9 @@ namespace Octokit.Tests.Clients
                 var client = new IssueCommentsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1));
             }
         }
@@ -41,22 +55,36 @@ namespace Octokit.Tests.Clients
         public class TheGetForRepositoryMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                client.GetAllForRepository("fake", "repo");
+                await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    "application/vnd.github.squirrel-girl-preview",
                     Args.ApiOptions);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                await client.GetAllForRepository(1);
+
+                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
@@ -67,26 +95,53 @@ namespace Octokit.Tests.Clients
                     PageSize = 1,
                     StartPage = 1
                 };
-                client.GetAllForRepository("fake", "repo", options);
+
+                await client.GetAllForRepository("fake", "repo", options);
 
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    "application/vnd.github.squirrel-girl-preview",
                     options);
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                await client.GetAllForRepository(1, options);
+
+                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", "", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "name", ApiOptions.None));
             }
@@ -95,22 +150,36 @@ namespace Octokit.Tests.Clients
         public class TheGetForIssueMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                client.GetAllForIssue("fake", "repo", 3);
+                await client.GetAllForIssue("fake", "repo", 3);
 
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"),
+                    "application/vnd.github.squirrel-girl-preview",
                     Args.ApiOptions);
             }
 
             [Fact]
-            public void RequestsCorrectUrlWithApiOptions()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                await client.GetAllForIssue(1, 3);
+
+                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/3/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
@@ -121,26 +190,53 @@ namespace Octokit.Tests.Clients
                     PageSize = 1,
                     PageCount = 1
                 };
-                client.GetAllForIssue("fake", "repo", 3, options);
+
+                await client.GetAllForIssue("fake", "repo", 3, options);
 
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"), 
                     Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.squirrel-girl-preview"), 
+                    "application/vnd.github.squirrel-girl-preview",
                     options);
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                await client.GetAllForIssue(1, 3, options);
+
+                connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/3/comments"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview",
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1, ApiOptions.None));
             }
@@ -161,16 +257,31 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                const string newComment = "some title";
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                client.Create(1, 1, newComment);
+
+                connection.Received().Post<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/1/comments"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", 1, "title"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", 1, "x"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", 1, "x"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, 1, "x"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", 1, "x"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", 1, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, 1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", 1, "x"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", 1, "x"));
             }
         }
 
@@ -189,16 +300,31 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresArgumentsNotNull()
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                const string issueCommentUpdate = "Worthwhile update";
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                client.Update(1, 42, issueCommentUpdate);
+
+                connection.Received().Patch<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments/42"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 42, "title"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "x"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 42, "x"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", null, 42, "x"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "x"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("owner", "name", 42, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, 42, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "name", 42, "x"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("owner", "", 42, "x"));
             }
         }
 
@@ -216,26 +342,38 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void DeletesCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentsClient(connection);
+
+                client.Delete(1, 42);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments/42"));
+            }
+
+            [Fact]
             public async Task EnsuresArgumentsNotNullOrEmpty()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueCommentsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 42));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 42));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 42));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 42));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", 42));
             }
         }
 
-    public class TheCtor
-    {
-        [Fact]
-        public void EnsuresNonNullArguments()
+        public class TheCtor
         {
-            Assert.Throws<ArgumentNullException>(() => new IssueCommentsClient(null));
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new IssueCommentsClient(null));
+            }
         }
-    }
 
         [Fact]
         public void CanDeserializeIssueComment()

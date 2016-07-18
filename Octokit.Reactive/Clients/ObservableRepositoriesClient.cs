@@ -22,20 +22,11 @@ namespace Octokit.Reactive
             Status = new ObservableCommitStatusClient(client);
             Hooks = new ObservableRepositoryHooksClient(client);
             Forks = new ObservableRepositoryForksClient(client);
-#pragma warning disable CS0618 // Type or member is obsolete
-            RepoCollaborators = new ObservableRepoCollaboratorsClient(client);
-#pragma warning restore CS0618 // Type or member is obsolete
             Collaborator = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
-#pragma warning disable CS0618 // Type or member is obsolete
-            RepositoryComments = new ObservableRepositoryCommentsClient(client);
-#pragma warning restore CS0618 // Type or member is obsolete
             Comment = new ObservableRepositoryCommentsClient(client);
-#pragma warning disable CS0618 // Type or member is obsolete
-            Commits = new ObservableRepositoryCommitsClient(client);
-#pragma warning restore CS0618 // Type or member is obsolete
             Commit = new ObservableRepositoryCommitsClient(client);
             Release = new ObservableReleasesClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
@@ -272,17 +263,6 @@ namespace Octokit.Reactive
         /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
         /// that announced this feature.
         /// </remarks>
-        [Obsolete("Use Status instead")]
-        public IObservableCommitStatusClient CommitStatus { get { return Status; } }
-
-        /// <summary>
-        /// A client for GitHub's Commit Status API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
-        /// that announced this feature.
-        /// </remarks>
         public IObservableCommitStatusClient Status { get; private set; }
 
         /// <summary>
@@ -300,15 +280,6 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/statistics/">Statistics API documentation</a> for more details
         ///</remarks>
         public IObservableStatisticsClient Statistics { get; private set; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Comments API.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
-        /// </remarks>
-        [Obsolete("Comment information is now available under the Comment property. This will be removed in a future update.")]
-        public IObservableRepositoryCommentsClient RepositoryComments { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Comments API.
@@ -842,25 +813,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
         /// </remarks>
-        [Obsolete("Collaborator information is now available under the Collaborator property. This will be removed in a future update.")]
-        public IObservableRepoCollaboratorsClient RepoCollaborators { get; private set; }
-
-        /// <summary>
-        /// A client for GitHub's Repo Collaborators.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details
-        /// </remarks>
         public IObservableRepoCollaboratorsClient Collaborator { get; private set; }
-
-        /// <summary>
-        /// Client for GitHub's Repository Commits API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/commits/">Commits API documentation</a> for more details
-        ///</remarks>
-        [Obsolete("Commit information is now available under the Commit property. This will be removed in a future update.")]
-        public IObservableRepositoryCommitsClient Commits { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Commits API
