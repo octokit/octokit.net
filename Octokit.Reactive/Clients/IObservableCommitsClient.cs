@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/commits/#get-a-commit
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/commits/#create-a-commit
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
         IObservable<Commit> Create(int repositoryId, NewCommit commit);
     }

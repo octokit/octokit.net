@@ -28,7 +28,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/blobs/#get-a-blob
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Blob> Get(int repositoryId, string reference);
@@ -50,7 +50,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/blobs/#create-a-blob
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         Task<BlobReference> Create(int repositoryId, NewBlob newBlob);
     }

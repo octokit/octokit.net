@@ -36,7 +36,7 @@ namespace Octokit
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number)
         {
@@ -64,7 +64,7 @@ namespace Octokit
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(int repositoryId, int number, ApiOptions options)
@@ -92,7 +92,7 @@ namespace Octokit
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
@@ -118,7 +118,7 @@ namespace Octokit
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -147,7 +147,7 @@ namespace Octokit
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request)
         {
@@ -178,7 +178,7 @@ namespace Octokit
         /// Gets a list of the pull request review comments in a specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(int repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
@@ -208,7 +208,7 @@ namespace Octokit
         /// Gets a single pull request review comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         public Task<PullRequestReviewComment> GetComment(int repositoryId, int number)
         {
@@ -244,7 +244,7 @@ namespace Octokit
         /// Creates a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> Create(int repositoryId, int number, PullRequestReviewCommentCreate comment)
@@ -291,7 +291,7 @@ namespace Octokit
         /// Creates a comment on a pull request review as a reply to another comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> CreateReply(int repositoryId, int number, PullRequestReviewCommentReplyCreate comment)
@@ -330,7 +330,7 @@ namespace Octokit
         /// Edits a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="comment">The edited comment</param>
         public Task<PullRequestReviewComment> Edit(int repositoryId, int number, PullRequestReviewCommentEdit comment)
@@ -359,7 +359,7 @@ namespace Octokit
         /// Deletes a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         public Task Delete(int repositoryId, int number)
         {

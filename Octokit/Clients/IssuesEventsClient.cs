@@ -40,7 +40,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/events/#list-events-for-an-issue
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         public Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number)
         {
@@ -72,7 +72,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/events/#list-events-for-an-issue
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
@@ -104,7 +104,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -134,7 +134,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -166,7 +166,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/events/#get-a-single-event
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The event id</param>
         public Task<IssueEvent> Get(int repositoryId, int number)
         {

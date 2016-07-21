@@ -32,7 +32,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return string.Format(CultureInfo.InvariantCulture, "ID: {0} Key: {1}", Id, Key); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} Key: {1}", Id, Key); }
         }
     }
 }

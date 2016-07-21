@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// a tag name.
         /// </summary>
         /// <remarks>Only users with pull access can see this.</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         IObservable<CommitStatus> GetAll(int repositoryId, string reference);
 
@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// a tag name.
         /// </summary>
         /// <remarks>Only users with pull access can see this.</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<CommitStatus> GetAll(int repositoryId, string reference, ApiOptions options);
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// a tag name.
         /// </summary>
         /// <remarks>Only users with pull access can see this.</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         IObservable<CombinedCommitStatus> GetCombined(int repositoryId, string reference);
 
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a commit status for the specified ref.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
         IObservable<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus);

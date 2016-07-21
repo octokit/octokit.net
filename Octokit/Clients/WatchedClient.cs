@@ -38,7 +38,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId)
         {
@@ -64,7 +64,7 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId, ApiOptions options)
@@ -160,7 +160,7 @@ namespace Octokit
         /// <summary>
         /// Check if a repository is watched by the current authenticated user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public async Task<bool> CheckWatched(int repositoryId)
         {
@@ -195,7 +195,7 @@ namespace Octokit
         /// <summary>
         /// Watches a repository for the authenticated user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         public Task<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription)
         {
@@ -230,7 +230,7 @@ namespace Octokit
         /// <summary>
         /// Unwatches a repository for the authenticated user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public async Task<bool> UnwatchRepo(int repositoryId)
         {
             try

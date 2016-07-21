@@ -43,7 +43,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/tags/#get-a-tag
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
         public Task<GitTag> Get(int repositoryId, string reference)
         {
@@ -76,7 +76,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/tags/#create-a-tag-object
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
         public Task<GitTag> Create(int repositoryId, NewTag tag)
         {

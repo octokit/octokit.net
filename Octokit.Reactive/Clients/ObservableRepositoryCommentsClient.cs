@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         public IObservable<CommitComment> Get(int repositoryId, int number)
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public IObservable<CommitComment> GetAllForRepository(int repositoryId)
         {
@@ -93,7 +93,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public IObservable<CommitComment> GetAllForRepository(int repositoryId, ApiOptions options)
@@ -122,7 +122,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public IObservable<CommitComment> GetAllForCommit(int repositoryId, string sha)
@@ -153,7 +153,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
@@ -186,7 +186,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
@@ -218,7 +218,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Updates a specified Commit Comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         public IObservable<Unit> Delete(int repositoryId, int number)

@@ -37,7 +37,7 @@ namespace Octokit
         /// <summary>
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId)
         {
             return GetContributors(repositoryId, CancellationToken.None);
@@ -60,7 +60,7 @@ namespace Octokit
         /// <summary>
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId, CancellationToken cancellationToken)
         {
@@ -83,7 +83,7 @@ namespace Octokit
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<CommitActivity> GetCommitActivity(int repositoryId)
         {
             return GetCommitActivity(repositoryId, CancellationToken.None);
@@ -108,7 +108,7 @@ namespace Octokit
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<CommitActivity> GetCommitActivity(int repositoryId, CancellationToken cancellationToken)
         {
@@ -133,7 +133,7 @@ namespace Octokit
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<CodeFrequency> GetCodeFrequency(int repositoryId)
         {
             return GetCodeFrequency(repositoryId, CancellationToken.None);
@@ -158,7 +158,7 @@ namespace Octokit
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<CodeFrequency> GetCodeFrequency(int repositoryId, CancellationToken cancellationToken)
         {
@@ -183,7 +183,7 @@ namespace Octokit
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<Participation> GetParticipation(int repositoryId)
         {
             return GetParticipation(repositoryId, CancellationToken.None);
@@ -208,7 +208,7 @@ namespace Octokit
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<Participation> GetParticipation(int repositoryId, CancellationToken cancellationToken)
         {
@@ -233,7 +233,7 @@ namespace Octokit
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public Task<PunchCard> GetPunchCard(int repositoryId)
         {
             return GetPunchCard(repositoryId, CancellationToken.None);
@@ -258,7 +258,7 @@ namespace Octokit
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<PunchCard> GetPunchCard(int repositoryId, CancellationToken cancellationToken)
         {

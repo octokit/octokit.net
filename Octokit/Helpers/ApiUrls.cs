@@ -34,7 +34,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.
         /// </summary>
-        /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
+        /// <param name="since">The integer Id of the last Repository that you’ve seen.</param>
         public static Uri AllPublicRepositories(long since)
         {
             return "repositories?since={0}".FormatUri(since);
@@ -333,7 +333,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
         public static Uri IssueReactions(int repositoryId, int number)
@@ -449,7 +449,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified commit comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns></returns>
         public static Uri CommitCommentReactions(int repositoryId, int number)
@@ -1255,7 +1255,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns></returns>
         public static Uri PullRequestReviewCommentReaction(int repositoryId, int number)
@@ -2059,7 +2059,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the assets specified by the asset id.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns>The <see cref="Uri"/> that returns the assets specified by the asset id.</returns>
         public static Uri Asset(int repositoryId, int id)
@@ -2070,7 +2070,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the assignees to which issues may be assigned.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the assignees to which issues may be assigned.</returns>
         public static Uri Assignees(int repositoryId)
         {
@@ -2080,7 +2080,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for a specific blob.</returns>
         public static Uri Blobs(int repositoryId)
         {
@@ -2090,7 +2090,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         /// <returns>The <see cref="Uri"/> for a specific blob.</returns>
         public static Uri Blob(int repositoryId, string reference)
@@ -2106,7 +2106,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="login">The login for the user</param>
         /// <returns>The <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.</returns>
         public static Uri CheckAssignee(int repositoryId, string login)
@@ -2117,7 +2117,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a combined view of commit statuses for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns>The <see cref="Uri"/> that returns a combined view of commit statuses for the specified reference.</returns>
         public static Uri CombinedCommitStatus(int repositoryId, string reference)
@@ -2128,7 +2128,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (SHA)</param>
         /// <returns>The <see cref="Uri"/> for the specified commit.</returns>
         public static Uri Commit(int repositoryId, string reference)
@@ -2139,7 +2139,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
         public static Uri CommitComment(int repositoryId, int number)
@@ -2150,7 +2150,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <returns>The <see cref="Uri"/> for the comments of a specified commit.</returns>
         public static Uri CommitComments(int repositoryId, string sha)
@@ -2161,7 +2161,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified commit.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the comments of a specified commit.</returns>
         public static Uri CommitComments(int repositoryId)
         {
@@ -2171,7 +2171,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns>The <see cref="Uri"/> that lists the commit statuses for the specified reference.</returns>
         public static Uri CommitStatuses(int repositoryId, string reference)
@@ -2182,7 +2182,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for creating a commit object.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for creating a commit object.</returns>
         public static Uri CreateCommit(int repositoryId)
         {
@@ -2192,7 +2192,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> to use when creating a commit status for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <returns>The <see cref="Uri"/> to use when creating a commit status for the specified reference.</returns>
         public static Uri CreateCommitStatus(int repositoryId, string reference)
@@ -2203,7 +2203,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for creating a merge object.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for creating a merge object.</returns>
         public static Uri CreateMerge(int repositoryId)
         {
@@ -2213,7 +2213,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for creating a tag object.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for creating a tag object.</returns>
         public static Uri CreateTag(int repositoryId)
         {
@@ -2223,7 +2223,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the Deployments API for the given repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the Deployments API for the given repository.</returns>
         public static Uri Deployments(int repositoryId)
         {
@@ -2233,7 +2233,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the Deployment Statuses API for the given deployment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns>The <see cref="Uri"/> for the Deployment Statuses API for the given deployment.</returns>
         public static Uri DeploymentStatuses(int repositoryId, int deploymentId)
@@ -2244,7 +2244,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.</returns>
         public static Uri Events(int repositoryId)
         {
@@ -2262,9 +2262,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.
+        /// Returns the <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified Id.
         /// </summary>
-        /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified ID.</param>
+        /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified Id.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
         public static Uri GpgKeys(int id)
@@ -2275,7 +2275,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue.</returns>
         public static Uri Issue(int repositoryId, int number)
@@ -2286,7 +2286,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
         public static Uri IssueComment(int repositoryId, int id)
@@ -2297,7 +2297,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments for all issues in a specific repo.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the comments for all issues in a specific repo.</returns>
         public static Uri IssueComments(int repositoryId)
         {
@@ -2307,7 +2307,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the comments of a specified issue.</returns>
         public static Uri IssueComments(int repositoryId, int number)
@@ -2318,7 +2318,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the named label for the specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="labelName">The name of the label</param>
         /// <returns>The <see cref="Uri"/> that returns the named label for the specified issue.</returns>
@@ -2330,7 +2330,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for the specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> that returns all of the labels for the specified issue.</returns>
         public static Uri IssueLabels(int repositoryId, int number)
@@ -2341,7 +2341,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified issue to be locked/unlocked.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue to be locked/unlocked.</returns>
         public static Uri IssueLock(int repositoryId, int number)
@@ -2352,7 +2352,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the issues for the currently logged in user specific to the repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the issues for the currently logged in user specific to the repository.</returns>
         public static Uri Issues(int repositoryId)
         {
@@ -2362,7 +2362,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The event id</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.</returns>
         public static Uri IssuesEvent(int repositoryId, int id)
@@ -2373,7 +2373,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.</returns>
         public static Uri IssuesEvents(int repositoryId, int number)
@@ -2384,7 +2384,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.</returns>
         public static Uri IssuesEvents(int repositoryId)
         {
@@ -2394,7 +2394,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified label.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of label</param>
         /// <returns>The <see cref="Uri"/> that returns the specified label.</returns>
         public static Uri Label(int repositoryId, string labelName)
@@ -2405,7 +2405,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the labels for the specified repository.</returns>
         public static Uri Labels(int repositoryId)
         {
@@ -2415,7 +2415,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the latest release for the specified repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns the latest release for the specified repository</returns>
         public static Uri LatestRelease(int repositoryId)
         {
@@ -2425,7 +2425,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the pull request merge state.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the pull request merge state.</returns>
         public static Uri MergePullRequest(int repositoryId, int number)
@@ -2436,7 +2436,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified milestone.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns>The <see cref="Uri"/> that returns the specified milestone.</returns>
         public static Uri Milestone(int repositoryId, int number)
@@ -2447,7 +2447,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns>The <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.</returns>
         public static Uri MilestoneLabels(int repositoryId, int number)
@@ -2458,7 +2458,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the milestones for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the milestones for the specified repository.</returns>
         public static Uri Milestones(int repositoryId)
         {
@@ -2468,7 +2468,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the notifications for the currently logged in user specific to the repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the notifications for the currently logged in user specific to the repository.</returns>
         public static Uri Notifications(int repositoryId)
         {
@@ -2478,7 +2478,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified pull request.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the specified pull request.</returns>
         public static Uri PullRequest(int repositoryId, int number)
@@ -2489,7 +2489,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the commits on a pull request.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the commits on a pull request.</returns>
         public static Uri PullRequestCommits(int repositoryId, int number)
@@ -2500,7 +2500,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the files on a pull request.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the files on a pull request.</returns>
         public static Uri PullRequestFiles(int repositoryId, int number)
@@ -2511,7 +2511,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified pull request review comment.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
         public static Uri PullRequestReviewComment(int repositoryId, int number)
@@ -2522,7 +2522,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified pull request review.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
         public static Uri PullRequestReviewComments(int repositoryId, int number)
@@ -2533,7 +2533,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that </returns>
         public static Uri PullRequestReviewCommentsRepository(int repositoryId)
         {
@@ -2543,7 +2543,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the pull requests for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that lists the pull requests for a repository.</returns>
         public static Uri PullRequests(int repositoryId)
         {
@@ -2553,7 +2553,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the specified reference.</returns>
         public static Uri Reference(int repositoryId)
         {
@@ -2563,7 +2563,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="referenceName">The reference name</param>
         /// <returns>The <see cref="Uri"/> for the specified reference.</returns>
         public static Uri Reference(int repositoryId, string referenceName)
@@ -2574,7 +2574,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.</returns>
         public static Uri ReleaseAssets(int repositoryId, int id)
@@ -2585,7 +2585,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the releases for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the releases for the specified repository.</returns>
         public static Uri Releases(int repositoryId)
         {
@@ -2595,7 +2595,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
         public static Uri Releases(int repositoryId, int id)
@@ -2606,7 +2606,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a repository branch.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The <see cref="Uri"/> for a repository branch.</returns>
         public static Uri RepoBranch(int repositoryId, string branchName)
@@ -2617,7 +2617,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the branches for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the branches for the specified repository.</returns>
         public static Uri RepoBranches(int repositoryId)
         {
@@ -2627,7 +2627,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the collaborators for the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that returns all of the collaborators for the specified repository.</returns>
         public static Uri RepoCollaborators(int repositoryId)
         {
@@ -2637,7 +2637,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for comparing two commits.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="base">The base commit</param>
         /// <param name="head">The head commit</param>
         /// <returns>The <see cref="Uri"/> for comparing two commits.</returns>
@@ -2655,7 +2655,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for a repository.</returns>
         public static Uri Repository(int repositoryId)
         {
@@ -2665,7 +2665,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting an archive of a given repository's contents, in a specific format
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <returns>The <see cref="Uri"/> for getting an archive of a given repository's contents, in a specific format</returns>
@@ -2677,7 +2677,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository commits.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (SHA)</param>
         /// <returns>The <see cref="Uri"/> for repository commits.</returns>
         public static Uri RepositoryCommit(int repositoryId, string reference)
@@ -2688,7 +2688,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository commits.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository commits.</returns>
         public static Uri RepositoryCommits(int repositoryId)
         {
@@ -2698,7 +2698,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the contents of the specified repository's root
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository's root</returns>
         public static Uri RepositoryContent(int repositoryId)
         {
@@ -2708,7 +2708,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the contents of the specified repository and path
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path of the contents to get</param>
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(int repositoryId, string path)
@@ -2719,7 +2719,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the contents of the specified repository and path
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path of the contents to get</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
@@ -2731,7 +2731,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository contributors.</returns>
         public static Uri RepositoryContributors(int repositoryId)
         {
@@ -2741,7 +2741,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a deploy key for a repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The id of the deploy key of the repository</param>
         /// <returns>The <see cref="Uri"/> for a deploy key for a repository</returns>
         public static Uri RepositoryDeployKey(int repositoryId, int number)
@@ -2752,7 +2752,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for deploy keys for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for deploy keys for a repository.</returns>
         public static Uri RepositoryDeployKeys(int repositoryId)
         {
@@ -2762,7 +2762,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the repository forks for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that lists the repository forks for the specified reference.</returns>
         public static Uri RepositoryForks(int repositoryId)
         {
@@ -2772,7 +2772,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that gets the repository hook for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that gets the repository hook for the specified reference.</returns>
         public static Uri RepositoryHookById(int repositoryId, int hookId)
@@ -2783,7 +2783,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that can ping a specified repository hook
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that can ping a specified repository hook</returns>
         public static Uri RepositoryHookPing(int repositoryId, int hookId)
@@ -2794,7 +2794,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the repository hooks for the specified reference.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that lists the repository hooks for the specified reference.</returns>
         public static Uri RepositoryHooks(int repositoryId)
         {
@@ -2804,7 +2804,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that can tests a specified repository hook
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that can tests a specified repository hook</returns>
         public static Uri RepositoryHookTest(int repositoryId, int hookId)
@@ -2815,7 +2815,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository languages.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository languages.</returns>
         public static Uri RepositoryLanguages(int repositoryId)
         {
@@ -2825,7 +2825,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the page metadata for a given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for getting the page metadata for a given repository</returns>
         public static Uri RepositoryPage(int repositoryId)
         {
@@ -2835,7 +2835,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting all build metadata for a given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for getting all build metadata for a given repository</returns>
         public static Uri RepositoryPageBuilds(int repositoryId)
         {
@@ -2845,7 +2845,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the build metadata for the last build for a given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for getting the build metadata for the last build for a given repository</returns>
         public static Uri RepositoryPageBuildsLatest(int repositoryId)
         {
@@ -2855,7 +2855,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for getting the README of the specified repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for getting the README of the specified repository</returns>
         public static Uri RepositoryReadme(int repositoryId)
         {
@@ -2865,7 +2865,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository tags.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository tags.</returns>
         public static Uri RepositoryTags(int repositoryId)
         {
@@ -2875,7 +2875,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository teams.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository teams.</returns>
         public static Uri RepositoryTeams(int repositoryId)
         {
@@ -2885,7 +2885,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the starred repositories for the authenticated user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that lists the starred repositories for the authenticated user.</returns>
         public static Uri Stargazers(int repositoryId)
         {
@@ -2895,7 +2895,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the code frequency for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the code frequency for the given repository</returns>
         public static Uri StatsCodeFrequency(int repositoryId)
         {
@@ -2905,7 +2905,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the commit activity for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the commit activity for the given repository</returns>
         public static Uri StatsCommitActivity(int repositoryId)
         {
@@ -2915,7 +2915,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the contributors for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the contributors for the given repository</returns>
         public static Uri StatsContributors(int repositoryId)
         {
@@ -2925,7 +2925,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the participation for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the participation for the given repository</returns>
         public static Uri StatsParticipation(int repositoryId)
         {
@@ -2935,7 +2935,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the punch card for the given repository
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the punch card for the given repository</returns>
         public static Uri StatsPunchCard(int repositoryId)
         {
@@ -2945,7 +2945,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tag.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The tag reference (SHA)</param>
         /// <returns>The <see cref="Uri"/> for the specified tag.</returns>
         public static Uri Tag(int repositoryId, string reference)
@@ -2956,7 +2956,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tree.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> for the specified tree.</returns>
         public static Uri Tree(int repositoryId)
         {
@@ -2966,7 +2966,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tree.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The tree reference (SHA)</param>
         /// <returns>The <see cref="Uri"/> for the specified tree.</returns>
         public static Uri Tree(int repositoryId, string reference)
@@ -2977,7 +2977,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified tree.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The tree reference (SHA)</param>
         /// <returns>The <see cref="Uri"/> for the specified tree.</returns>
         public static Uri TreeRecursive(int repositoryId, string reference)
@@ -2988,7 +2988,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that shows whether the repo is starred by the current user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that shows whether the repo is starred by the current user.</returns>
         public static Uri Watched(int repositoryId)
         {
@@ -2998,7 +2998,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the watched repositories for the authenticated user.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>The <see cref="Uri"/> that lists the watched repositories for the authenticated user.</returns>
         public static Uri Watchers(int repositoryId)
         {

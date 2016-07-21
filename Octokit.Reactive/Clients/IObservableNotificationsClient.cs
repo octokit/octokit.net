@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         IObservable<Notification> GetAllForRepository(int repositoryId);
 
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         IObservable<Notification> GetAllForRepository(int repositoryId, ApiOptions options);
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         IObservable<Notification> GetAllForRepository(int repositoryId, NotificationsRequest request);
@@ -106,7 +106,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -136,7 +136,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         IObservable<Unit> MarkAsReadForRepository(int repositoryId);
 
@@ -152,7 +152,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         IObservable<Unit> MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest);

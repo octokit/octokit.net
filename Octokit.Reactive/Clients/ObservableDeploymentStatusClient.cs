@@ -49,7 +49,7 @@ namespace Octokit.Reactive.Clients
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         public IObservable<DeploymentStatus> GetAll(int repositoryId, int deploymentId)
         {
@@ -84,7 +84,7 @@ namespace Octokit.Reactive.Clients
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployment-statuses
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<DeploymentStatus> GetAll(int repositoryId, int deploymentId, ApiOptions options)
@@ -122,7 +122,7 @@ namespace Octokit.Reactive.Clients
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#create-a-deployment-status
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public IObservable<DeploymentStatus> Create(int repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)

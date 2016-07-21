@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the pull request</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         IObservable<PullRequest> GetAllForRepository(int repositoryId);
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<PullRequest> GetAllForRepository(int repositoryId, ApiOptions options);
 
@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request);
 
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request, ApiOptions options);
@@ -138,7 +138,7 @@ namespace Octokit.Reactive
         /// Creates a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         IObservable<PullRequest> Create(int repositoryId, NewPullRequest newPullRequest);
 
@@ -157,7 +157,7 @@ namespace Octokit.Reactive
         /// Update a pull request for the specified repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#update-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
@@ -177,7 +177,7 @@ namespace Octokit.Reactive
         /// Merge a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#merge-a-pull-request-merge-buttontrade</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         IObservable<PullRequestMerge> Merge(int repositoryId, int number, MergePullRequest mergePullRequest);
@@ -195,7 +195,7 @@ namespace Octokit.Reactive
         /// Gets the pull request merge status.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         IObservable<bool> Merged(int repositoryId, int number);
 
@@ -212,7 +212,7 @@ namespace Octokit.Reactive
         /// Gets the list of commits on a pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         IObservable<PullRequestCommit> Commits(int repositoryId, int number);
 
@@ -229,7 +229,7 @@ namespace Octokit.Reactive
         /// Get the list of files on a pull request.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         IObservable<PullRequestFile> Files(int repositoryId, int number);
     }
