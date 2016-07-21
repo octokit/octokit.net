@@ -74,6 +74,33 @@ public class RepositoryInvitationsClientTests
         }
     }
 
+    public class TheAcceptMethod
+    {
+        [IntegrationTest]
+        public async Task CanAcceptInvitation()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                // invite a collaborator
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
+
+                Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
+                Assert.Equal(InvitationPermissionType.Write, response.Permissions);
+
+                // Accept the invitation
+                var accepted = await github.Repository.Invitation.Accept(response.Id);
+
+                Assert.True(accepted);
+            }
+        }
+    }
+
     public class TheDeclineMethod
     {
         [IntegrationTest]
