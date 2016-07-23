@@ -18,17 +18,17 @@ async Task Main(string[] args)
 	var client = new GitHubClient(new Octokit.ProductHeaderValue("octokit.samples"));
 	
 	//Get releases for the octokit
-	var releases = await client.Release.GetAll(owner, reponame);
+	var releases = await client.Repository.Release.GetAll(owner, reponame);
 	releases.Select(r => new { r.Name, r.Body }).Dump("Releases");
 	
 	//Don't want draft release and because we are using reactive the first one is the latest one.
 	var latestrelease = releases.First(r => r.Draft == false).Dump("Latest Octokit"); 
 	
 	//Gets the assets for the latest relase
-	var assets = await client.Release.GetAllAssets(owner,reponame,latestrelease.Id);
+	var assets = await client.Repository.Release.GetAllAssets(owner,reponame,latestrelease.Id);
 	assets.Dump("Assets");
 	var latestreleaseassetid = assets.First(a => a.Name.Contains("Reactive")).Id;
-	var asset = await client.Release.GetAsset(owner,reponame,latestreleaseassetid);
+	var asset = await client.Repository.Release.GetAsset(owner,reponame,latestreleaseassetid);
 	asset.DownloadCount.Dump("Download Count for this release");
 	
 	//Download the release
