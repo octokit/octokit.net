@@ -109,10 +109,12 @@
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryForksClientTests.cs" />
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />
+    <Compile Include="Clients\TagsClientTests.cs" />
     <Compile Include="Clients\TreeClientTests.cs" />
     <Compile Include="Clients\UserAdministrationClientTests.cs" />
     <Compile Include="Clients\UserEmailsClientTests.cs" />
@@ -151,7 +153,6 @@
     <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
     <Compile Include="Reactive\ObservableFollowersClientTests.cs" />
     <Compile Include="Reactive\ObservableGistClientTests.cs" />
-    <Compile Include="Reactive\ObservableIssueCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />

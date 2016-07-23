@@ -102,7 +102,6 @@
     <Compile Include="Clients\IRepositoriesClient.cs" />
     <Compile Include="Clients\IRepositoryForksClient.cs" />
     <Compile Include="Clients\IRepositoryHooksClient.cs" />
-    <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IssueCommentsClient.cs" />
     <Compile Include="Clients\IssuesClient.cs" />
     <Compile Include="Clients\IssuesLabelsClient.cs" />
@@ -126,7 +125,6 @@
     <Compile Include="Clients\RepositoryForksClient.cs" />
     <Compile Include="Clients\RepositoryHooksClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
-    <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Clients\StarredClient.cs" />
     <Compile Include="Clients\StatisticsClient.cs" />
     <Compile Include="Clients\TagsClient.cs" />
@@ -151,7 +149,6 @@
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Helpers\IApiPagination.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
-    <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Helpers\ParameterAttribute.cs" />
     <Compile Include="Helpers\AcceptHeaders.cs" />
     <Compile Include="Helpers\ReflectionExtensions.cs" />
@@ -226,7 +223,6 @@
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Request\RepositoryIssueRequest.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
-    <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Request\StarredRequest.cs" />
     <Compile Include="Models\Request\UpdateTeam.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
@@ -288,8 +284,6 @@
     <Compile Include="Models\Response\RepositoryContributor.cs" />
     <Compile Include="Models\Response\SearchRepositoryResult.cs" />
     <Compile Include="Models\Response\RepositoryHook.cs" />
-    <Compile Include="Models\Response\SshKey.cs" />
-    <Compile Include="Models\Response\SshKeyInfo.cs" />
     <Compile Include="Models\Response\Subscription.cs" />
     <Compile Include="Models\Response\TagObject.cs" />
     <Compile Include="Models\Response\TreeItem.cs" />
@@ -489,6 +483,11 @@
     <Compile Include="Models\Response\GpgKey.cs" />
     <Compile Include="Models\Response\ReactionSummary.cs" />
     <Compile Include="Models\Response\Verification.cs" />
+    <Compile Include="Models\Response\RepositoryInvitation.cs" />
+    <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClient.cs" />
+    <Compile Include="Models\Request\InvitationUpdate.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -39,7 +39,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<User> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
         public IObservable<User> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
         public IObservable<bool> CheckAssignee(int repositoryId, string assignee)
         {

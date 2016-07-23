@@ -72,7 +72,6 @@
     <Compile Include="Clients\ObservableOrganizationsClient.cs" />
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
-    <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableUsersClient.cs" />
     <Compile Include="Clients\IObservableAssigneesClient.cs" />
     <Compile Include="Clients\IObservableNotificationsClient.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Clients\IObservableReleasesClient.cs" />
     <Compile Include="Clients\IObservableRepositoriesClient.cs" />
     <Compile Include="Clients\IObservableOrganizationsClient.cs" />
-    <Compile Include="Clients\IObservableSshKeysClient.cs" />
     <Compile Include="Clients\IObservableUsersClient.cs" />
     <Compile Include="ObservableGitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +202,8 @@
     <Compile Include="Clients\ObservablePullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservableUserGpgKeysClient.cs" />
     <Compile Include="Clients\ObservableUserGpgKeysClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryInvitationsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

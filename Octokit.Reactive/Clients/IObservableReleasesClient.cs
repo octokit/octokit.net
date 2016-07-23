@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-releases-for-a-repository">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Release> GetAll(int repositoryId);
 
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-releases-for-a-repository">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Release> GetAll(int repositoryId, ApiOptions options);
@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/releases/#get-the-latest-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Release> GetLatest(int repositoryId);
 
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#create-a-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Release> Create(int repositoryId, NewRelease data);
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#edit-a-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -168,7 +168,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Unit> Delete(int repositoryId, int id);
@@ -191,7 +191,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<ReleaseAsset> GetAllAssets(int repositoryId, int id);
@@ -215,7 +215,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -249,7 +249,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         IObservable<ReleaseAsset> GetAsset(int repositoryId, int assetId);
 
@@ -271,7 +271,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#edit-a-release-asset">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
         IObservable<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data);
@@ -293,7 +293,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The repository's ID</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
         IObservable<Unit> DeleteAsset(int repositoryId, int id);
     }
