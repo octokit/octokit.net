@@ -98,10 +98,83 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">Username of the new collaborator</param>
+        /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<bool> Add(string owner, string name, string user, CollaboratorRequest permission);
+
+        /// <summary>
+        /// Adds a new collaborator to the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task Add(int repositoryId, string user);
+
+        /// <summary>
+        /// Adds a new collaborator to the repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the new collaborator</param>
+        /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<bool> Add(int repositoryId, string user, CollaboratorRequest permission);
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>        
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<RepositoryInvitation> Invite(string owner, string name, string user);
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
+        Task<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission);
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>        
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<RepositoryInvitation> Invite(int repositoryId, string user);
+
+        /// <summary>
+        /// Invites a new collaborator to the repo
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository.</param>
+        /// <param name="user">The name of the user to invite.</param>
+        /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
+        Task<RepositoryInvitation> Invite(int repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Deletes a collaborator from the repository.

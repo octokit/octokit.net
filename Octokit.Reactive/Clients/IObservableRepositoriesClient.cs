@@ -561,6 +561,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/">Repository Deploy Keys API documentation</a> for more information.
         /// </remarks>
         IObservableRepositoryDeployKeysClient DeployKeys { get; }
+
         /// <summary>
         /// A client for GitHub's Repository Pages API.
         /// </summary>
@@ -568,5 +569,13 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/pages/">Repository Pages API documentation</a> for more information.
         /// </remarks>
         IObservableRepositoryPagesClient Page { get; }
+
+        /// <summary>
+        /// A client for GitHub's Repository Invitations API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryInvitationsClient Invitation { get; }
     }
 }

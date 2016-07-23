@@ -104,6 +104,7 @@
     <Compile Include="Clients\FeedsClientTests.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
     <Compile Include="Clients\RespositoryCommitsClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryContentsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryForksClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryInvitationsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableGistsTests.cs" />

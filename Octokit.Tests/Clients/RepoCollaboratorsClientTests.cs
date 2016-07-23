@@ -229,6 +229,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheInviteMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                client.Invite("owner", "test", "user1", permission);
+                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission), Arg.Any<string>(), Arg.Is<string>("application/vnd.github.swamp-thing-preview+json"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite(null, "test", "user1", permission));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("", "test", "user1", permission));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite("owner", null, "user1", permission));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("owner", "", "user1", permission));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("owner", "test", "", permission));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite("owner", "test", null, permission));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite("owner", "test", "user1", null));
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
@@ -260,8 +290,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, "user1"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "test", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(1, null));
-                
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1"));;
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1")); ;
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "test", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete(1, ""));

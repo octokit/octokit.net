@@ -1285,7 +1285,7 @@ namespace Octokit
         {
             return Blob(owner, name, "");
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specific blob.
         /// </summary>
@@ -3013,6 +3013,46 @@ namespace Octokit
         public static Uri Reactions(int number)
         {
             return "reactions/{0}".FormatUri(number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository invitations.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
+        public static Uri RepositoryInvitations(int repositoryId)
+        {
+            return "repositories/{0}/invitations".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a single repository invitation.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="invitationId">The id of the invitation</param>
+        /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
+        public static Uri RepositoryInvitations(int repositoryId, int invitationId)
+        {
+            return "repositories/{0}/invitations/{1}".FormatUri(repositoryId, invitationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for invitations for the current user.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>
+        public static Uri UserInvitations()
+        {
+            return "user/repository_invitations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a single invitation of the current user.
+        /// </summary>
+        /// <param name="invitationId">The id of the invitation</param>
+        /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>
+        public static Uri UserInvitations(int invitationId)
+        {
+            return "user/repository_invitations/{0}".FormatUri(invitationId);
         }
     }
 }

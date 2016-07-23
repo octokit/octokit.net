@@ -67,7 +67,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
                         Arg.Any<string>());
             }
 
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), 
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
                         Arg.Any<string>());
             }
 
@@ -328,6 +328,80 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Repository.Collaborator.Received(1).Add(Arg.Is(1),
                     Arg.Is("user"));
+            }
+        }
+
+        public class TheInviteMethod
+        {
+            private readonly IGitHubClient _githubClient;
+            private IObservableRepoCollaboratorsClient _client;
+
+            public TheInviteMethod()
+            {
+                _githubClient = Substitute.For<IGitHubClient>();
+            }
+
+            private void SetupWithoutNonReactiveClient()
+            {
+                _client = new ObservableRepoCollaboratorsClient(_githubClient);
+            }
+
+            private void SetupWithNonReactiveClient()
+            {
+                var collaboratorsClient = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+                _githubClient.Repository.Collaborator.Returns(collaboratorsClient);
+                _client = new ObservableRepoCollaboratorsClient(_githubClient);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                Assert.Throws<ArgumentNullException>(() => _client.Invite(null, "repo", "user", permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", null, "user", permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", null, permission));
+                Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", "repo", "user", null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user", permission));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user", permission));
+                Assert.Throws<ArgumentException>(() => _client.Invite("owner", "repo", "", permission));
+            }
+
+            [Fact]
+            public async Task EnsuresNonWhitespaceArguments()
+            {
+                SetupWithNonReactiveClient();
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite(whitespace, "repo", "user", permission));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite("owner", whitespace, "user", permission));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.Invite("owner", "repo", whitespace, permission));
+            }
+
+            [Fact]
+            public void CallsInviteOnRegularDeploymentsClient()
+            {
+                SetupWithoutNonReactiveClient();
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                _client.Invite("owner", "repo", "user", permission);
+
+                _githubClient.Repository.Collaborator.Received(1).Invite(Arg.Is("owner"),
+                    Arg.Is("repo"),
+                    Arg.Is("user"),
+                    Arg.Is(permission));
             }
         }
 

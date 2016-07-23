@@ -306,4 +306,26 @@ public class RepositoryCollaboratorClientTests
             }
         }
     }
+
+    public class TheInviteMethod
+    {
+        [IntegrationTest]
+        public async Task CanInviteNewCollaborator()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+                var permission = new CollaboratorRequest(Permission.Push);
+
+                // invite a collaborator
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "octokat", permission);
+
+                Assert.Equal("octokat", response.Invitee.Login);
+                Assert.Equal(InvitationPermissionType.Write, response.Permissions);
+            }
+        }
+    }
 }
