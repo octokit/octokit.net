@@ -1,13 +1,12 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Octokit.Reactive;
-using System;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
     public class ObservablePullRequestReviewCommentReactionsClientTests
     {
-
         public class TheCtor
         {
             [Fact]
@@ -19,33 +18,39 @@ namespace Octokit.Tests.Reactive
 
         public class TheGetAllMethod
         {
-            private readonly IGitHubClient _githubClient;
-            private readonly IObservableReactionsClient _client;
-            private const string owner = "owner";
-            private const string name = "name";
-
-            public TheGetAllMethod()
-            {
-                _githubClient = Substitute.For<IGitHubClient>();
-                _client = new ObservableReactionsClient(_githubClient);
-            }
-
             [Fact]
             public void RequestsCorrectUrl()
             {
-                _client.PullRequestReviewComment.GetAll("fake", "repo", 42);
-                _githubClient.Received().Reaction.PullRequestReviewComment.GetAll("fake", "repo", 42);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
+
+                client.GetAll("fake", "repo", 42);
+
+                gitHubClient.Received().Reaction.PullRequestReviewComment.GetAll("fake", "repo", 42);
             }
 
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => _client.PullRequestReviewComment.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.PullRequestReviewComment.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.PullRequestReviewComment.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.PullRequestReviewComment.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.PullRequestReviewComment.Create("owner", "name", 1, null));
+                client.GetAll(1, 42);
+
+                gitHubClient.Received().Reaction.PullRequestReviewComment.GetAll(1, 42);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
             }
         }
 
@@ -54,12 +59,41 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableReactionsClient(githubClient);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
                 var newReaction = new NewReaction(ReactionType.Confused);
 
-                client.PullRequestReviewComment.Create("fake", "repo", 1, newReaction);
-                githubClient.Received().Reaction.PullRequestReviewComment.Create("fake", "repo", 1, newReaction);
+                client.Create("fake", "repo", 1, newReaction);
+
+                gitHubClient.Received().Reaction.PullRequestReviewComment.Create("fake", "repo", 1, newReaction);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
+                var newReaction = new NewReaction(ReactionType.Confused);
+
+                client.Create(1, 1, newReaction);
+
+                gitHubClient.Received().Reaction.PullRequestReviewComment.Create(1, 1, newReaction);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewCommentReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Create(1, 1, null));
+
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
             }
         }
     }

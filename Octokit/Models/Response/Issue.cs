@@ -144,6 +144,8 @@ namespace Octokit
         /// </summary>
         public Repository Repository { get; protected set; }
 
+        public ReactionSummary Reactions { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get

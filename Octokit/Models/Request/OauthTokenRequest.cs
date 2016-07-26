@@ -14,7 +14,7 @@ namespace Octokit
         /// <summary>
         /// Creates an instance of the OAuth login request with the required parameter.
         /// </summary>
-        /// <param name="clientId">The client ID you received from GitHub when you registered the application.</param>
+        /// <param name="clientId">The client Id you received from GitHub when you registered the application.</param>
         /// <param name="clientSecret">The client secret you received from GitHub when you registered.</param>
         /// <param name="code">The code you received as a response to making the OAuth login request</param>
         public OauthTokenRequest(string clientId, string clientSecret, string code)
@@ -29,7 +29,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The client ID you received from GitHub when you registered the application.
+        /// The client Id you received from GitHub when you registered the application.
         /// </summary>
         [Parameter(Key = "client_id")]
         public string ClientId { get; private set; }

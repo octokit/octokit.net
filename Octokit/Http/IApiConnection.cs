@@ -262,6 +262,14 @@ namespace Octokit
         /// <summary>
         /// Updates the API resource at the specified URI.
         /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Patch(Uri uri, string accepts);
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>

@@ -26,8 +26,6 @@ namespace Octokit
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
-        public const string MultipleAssigneesPreview = "application/vnd.github.cerberus-preview";
-
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
 
         public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
@@ -36,5 +34,9 @@ namespace Octokit
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
 
         public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
+
+        public const string InvitationsApiPreview = "application/vnd.github.swamp-thing-preview+json";
+
+        public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
     }
 }

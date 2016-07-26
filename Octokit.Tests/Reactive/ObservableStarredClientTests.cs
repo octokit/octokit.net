@@ -36,6 +36,20 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservableStarredClient(gitHubClient);
+
+                client.GetAllStargazers(1);
+
+                connection.Received().Get<List<User>>(endpoint, Args.EmptyDictionary, null);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
                 var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
@@ -57,6 +71,27 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservableStarredClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllStargazers(1, options);
+
+                connection.Received().Get<List<User>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlWithTimestamps()
             {
                 var endpoint = new Uri("repos/fight/club/stargazers", UriKind.Relative);
@@ -66,6 +101,20 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableStarredClient(gitHubClient);
 
                 client.GetAllStargazersWithTimestamps("fight", "club");
+
+                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, "application/vnd.github.v3.star+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithTimestampsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservableStarredClient(gitHubClient);
+
+                client.GetAllStargazersWithTimestamps(1);
 
                 connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, "application/vnd.github.v3.star+json");
             }
@@ -92,6 +141,27 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithTimestampsWithApiOptionsWithRepositoryId()
+            {
+                var endpoint = new Uri("repositories/1/stargazers", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservableStarredClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllStargazersWithTimestamps(1, options);
+
+                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), "application/vnd.github.v3.star+json");
+            }
+
+            [Fact]
             public void EnsuresNonNullArguments()
             {
                 var client = new ObservableStarredClient(Substitute.For<IGitHubClient>());
@@ -106,6 +176,9 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps(null, "club", ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps("fight", "club", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllStargazers(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllStargazersWithTimestamps(1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllStargazers("", "club"));
                 Assert.Throws<ArgumentException>(() => client.GetAllStargazers("fight", ""));

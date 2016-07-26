@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<DeployKey> Get(int repositoryId, int number);
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         IObservable<DeployKey> GetAll(int repositoryId);
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<DeployKey> GetAll(int repositoryId, ApiOptions options);
 
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#create"> API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         IObservable<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey);
 
@@ -113,7 +113,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository.</param>
+        /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
         IObservable<Unit> Delete(int repositoryId, int number);
     }

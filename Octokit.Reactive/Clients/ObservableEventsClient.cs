@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<Activity> GetAllForRepository(int repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Activity> GetAllForRepository(int repositoryId, ApiOptions options)
         {
@@ -128,7 +128,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<Activity> GetAllIssuesForRepository(int repositoryId)
         {
             return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
@@ -158,7 +158,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Activity> GetAllIssuesForRepository(int repositoryId, ApiOptions options)
         {

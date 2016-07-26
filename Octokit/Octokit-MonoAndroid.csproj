@@ -161,7 +161,6 @@
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
-    <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
     <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
@@ -185,7 +184,6 @@
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
-    <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
@@ -216,7 +214,6 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
@@ -229,9 +226,6 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
-    <Compile Include="Models\Response\SshKey.cs" />
-    <Compile Include="Models\Response\SshKeyInfo.cs" />
-    <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
@@ -497,6 +491,11 @@
     <Compile Include="Models\Response\GpgKey.cs" />
     <Compile Include="Models\Response\ReactionSummary.cs" />
     <Compile Include="Models\Response\Verification.cs" />
+    <Compile Include="Models\Response\RepositoryInvitation.cs" />
+    <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClient.cs" />
+    <Compile Include="Models\Request\InvitationUpdate.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

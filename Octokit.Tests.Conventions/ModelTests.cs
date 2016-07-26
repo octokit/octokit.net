@@ -39,6 +39,18 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("ResponseModelTypes")]
+        public void AllResponseModelsHavePublicParameterlessCtors(Type modelType)
+        {
+            var ctor = modelType.GetConstructor(Type.EmptyTypes);
+
+            if (ctor == null || !ctor.IsPublic)
+            {
+                throw new MissingPublicParameterlessCtorException(modelType);
+            }
+        }
+
+        [Theory]
+        [MemberData("ResponseModelTypes")]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();

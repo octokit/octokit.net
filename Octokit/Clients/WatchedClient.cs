@@ -27,7 +27,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -39,11 +38,20 @@ namespace Octokit
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
         /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        public Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId)
+        {
+            return GetAllWatchers(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watchers for the passed repository.
+        /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{User}"/> of <see cref="User"/>s watching the passed repository.</returns>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -51,6 +59,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.Watchers(owner, name), options);
+        }
+
+        /// <summary>
+        /// Retrieves all of the watchers for the passed repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing API's response.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        public Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<User>(ApiUrls.Watchers(repositoryId), options);
         }
 
         /// <summary>
@@ -118,7 +139,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
         public async Task<bool> CheckWatched(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -138,12 +158,31 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Check if a repository is watched by the current authenticated user.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        public async Task<bool> CheckWatched(int repositoryId)
+        {
+            try
+            {
+                var endpoint = ApiUrls.Watched(repositoryId);
+                var subscription = await ApiConnection.Get<Subscription>(endpoint).ConfigureAwait(false);
+
+                return subscription != null;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Watches a repository for the authenticated user.
         /// </summary>
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        /// <returns>A <c>bool</c> representing the success of watching</returns>
         public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -154,11 +193,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Watches a repository for the authenticated user.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
+        public Task<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription)
+        {
+            Ensure.ArgumentNotNull(newSubscription, "newSubscription");
+
+            return ApiConnection.Put<Subscription>(ApiUrls.Watched(repositoryId), newSubscription);
+        }
+
+        /// <summary>
         /// Unwatches a repository for the authenticated user.
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
-        /// <returns>A <c>bool</c> representing the success of the operation</returns>
         public async Task<bool> UnwatchRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -167,6 +217,25 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.Watched(owner, name);
+                var statusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+
+                return statusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Unwatches a repository for the authenticated user.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        public async Task<bool> UnwatchRepo(int repositoryId)
+        {
+            try
+            {
+                var endpoint = ApiUrls.Watched(repositoryId);
                 var statusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return statusCode == HttpStatusCode.NoContent;
