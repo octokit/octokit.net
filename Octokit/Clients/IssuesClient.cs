@@ -410,7 +410,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(newIssue, "newIssue");
 
-            return ApiConnection.Post<Issue>(ApiUrls.Issues(owner, name), newIssue, AcceptHeaders.MultipleAssigneesPreview);
+            return ApiConnection.Post<Issue>(ApiUrls.Issues(owner, name), newIssue);
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
 
-            return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate, AcceptHeaders.MultipleAssigneesPreview);
+            return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate);
         }
 
         /// <summary>

@@ -238,7 +238,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RemoveAssignees("fake", "repo", 2, removeAssignees);
 
-                connection.Received().Delete<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>(), "application/vnd.github.cerberus-preview");
+                connection.Received().Delete<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>());
             }
 
             [Fact]

@@ -109,7 +109,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Post<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleAssigneesPreview);
+            return ApiConnection.Post<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(assignees, "assignees");
 
-            return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees, AcceptHeaders.MultipleAssigneesPreview);
+            return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees);
         }
 
         /// <summary>

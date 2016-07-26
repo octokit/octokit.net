@@ -326,8 +326,7 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        /// <param name="accepts">Specifies accept response media type</param>
-        Task<T> Delete<T>(Uri uri, object data, string accepts);
+        Task<T> Delete<T>(Uri uri, object data);
 
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
