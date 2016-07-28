@@ -15,10 +15,10 @@ async Task Main(string[] args)
 	
 	owner = "octokit";
 	reponame = "octokit.net";
-	
-	
-	var releases = await client.Release.GetAll(owner, reponame);
-	
+
+
+	var releases = await client.Repository.Release.GetAll(owner, reponame);
+
 	// we have to build up this tag because release tags
 	// are just lightweight tags. you can read more about
 	// the differences between lightweight tags and annotated tags
@@ -26,10 +26,10 @@ async Task Main(string[] args)
 	
 	// we can fetch the tag for this release
 	var reference = "tags/" + releases[0].TagName;
-	var tag = await client.GitDatabase.Reference.Get(owner, reponame, reference);
+	var tag = await client.Git.Reference.Get(owner, reponame, reference);
 	tag.Dump();
 	
 	// and we can fetch the commit associated with this release
-	var commit = await client.GitDatabase.Commit.Get(owner, reponame, tag.Object.Sha);
+	var commit = await client.Git.Commit.Get(owner, reponame, tag.Object.Sha);
 	commit.Dump();
 }

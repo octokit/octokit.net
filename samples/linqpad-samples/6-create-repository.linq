@@ -44,8 +44,8 @@ async Task Main(string[] args)
 	   	+ DateTime.Now.ToString(), 
 	   Encoding = EncodingType.Utf8 
 	};
-	
-	var createdBlob = await client.GitDatabase.Blob
+
+	var createdBlob = await client.Git.Blob
 		.Create(owner, reponame, newBlob);
 	createdBlob.Dump();
 	
@@ -57,14 +57,14 @@ async Task Main(string[] args)
 	  Sha = createdBlob.Sha,
 	  Type = TreeType.Blob
 	});
-	
-	var createdTree = await client.GitDatabase.Tree
+
+	var createdTree = await client.Git.Tree
 		.Create(owner, reponame, newTree);
 	
 	createdTree.Dump();
 	
 	// 4 - this commit should build on the current master branch
-	var master = await client.GitDatabase.Reference
+	var master = await client.Git.Reference
 		.Get(owner, reponame, "heads/master");
 	
 	var newCommit = new NewCommit(
@@ -72,15 +72,15 @@ async Task Main(string[] args)
 	  createdTree.Sha,
 	  new[] { master.Object.Sha })
 	{ Author = new Committer(owner,email,DateTime.UtcNow)};
-	
-	var createdCommit = await client.GitDatabase.Commit
+
+	var createdCommit = await client.Git.Commit
 		.Create(owner, reponame, newCommit);
 	
 	createdCommit.Dump();
 	
 	// 5 - create a reference for the master branch
 	var updateReference = new ReferenceUpdate(createdCommit.Sha);
-	var updatedReference = await client.GitDatabase
+	var updatedReference = await client.Git
 		.Reference.Update(owner, reponame, "heads/master", updateReference);
 	updatedReference.Dump();
 	
