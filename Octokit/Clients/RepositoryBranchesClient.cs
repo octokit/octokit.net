@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -150,6 +151,74 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, "update");
 
             return ApiConnection.Patch<Branch>(ApiUrls.RepoBranch(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        public Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        public Task<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        public Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        public Task<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        public async Task<bool> DeleteBranchProtection(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoBranchProtection(owner, name, branch);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteBranchProtection(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoBranchProtection(repositoryId, branch);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

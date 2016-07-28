@@ -94,4 +94,126 @@ namespace Octokit
         /// </summary>
         Everyone
     }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionSettings
+    {
+        public BranchProtectionSettings() { }
+
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, ProtectedBranchRestrictions restrictions)
+        {
+            RequiredStatusChecks = requiredStatusChecks;
+            Restrictions = restrictions;
+        }
+
+        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
+        public ProtectedBranchRestrictions Restrictions { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks, Restrictions);
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionSettingsUpdate
+    {
+        public BranchProtectionSettingsUpdate() { }
+
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecks requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
+        {
+            RequiredStatusChecks = requiredStatusChecks;
+            Restrictions = restrictions;
+        }
+
+        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
+
+        public ProtectedBranchRestrictionsUpdate Restrictions { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks, Restrictions);
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredStatusChecks
+    {
+        public BranchProtectionRequiredStatusChecks() { }
+
+        public BranchProtectionRequiredStatusChecks(bool includeAdmins, bool strict, IReadOnlyList<string> contexts)
+        {
+            IncludeAdmins = includeAdmins;
+            Strict = strict;
+            Contexts = contexts;
+        }
+
+        public bool IncludeAdmins { get; protected set; }
+
+        public bool Strict { get; protected set; }
+
+        public IReadOnlyList<string> Contexts { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, String.Join(",", Contexts));
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class ProtectedBranchRestrictions
+    {
+        public ProtectedBranchRestrictions() { }
+
+        public ProtectedBranchRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        {
+            Teams = teams;
+            Users = users;
+        }
+
+        public IReadOnlyList<Team> Teams { get; private set; }
+
+        public IReadOnlyList<User> Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams, Users);
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class ProtectedBranchRestrictionsUpdate
+    {
+        public ProtectedBranchRestrictionsUpdate() { }
+
+        public ProtectedBranchRestrictionsUpdate(IReadOnlyList<string> teams, IReadOnlyList<string> users)
+        {
+            Teams = teams;
+            Users = users;
+        }
+
+        public IReadOnlyList<string> Teams { get; private set; }
+
+        public IReadOnlyList<string> Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", String.Join(",", Teams), String.Join(",", Users));
+            }
+        }
+    }
 }
