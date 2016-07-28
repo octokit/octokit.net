@@ -714,7 +714,9 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
 
+#pragma warning disable CS0618
             return _client.GetBranch(owner, name, branchName).ToObservable();
+#pragma warning restore CS0618
         }
 
         /// <summary>
@@ -729,8 +731,9 @@ namespace Octokit.Reactive
         public IObservable<Branch> GetBranch(int repositoryId, string branchName)
         {
             Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
-
+#pragma warning disable CS0618
             return _client.GetBranch(repositoryId, branchName).ToObservable();
+#pragma warning restore CS0618
         }
 
         /// <summary>
