@@ -208,7 +208,7 @@ namespace Octokit.Tests.Clients
 
                 await client.AddAssignees("fake", "repo", 2, newAssignees);
 
-                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>(), "application/vnd.github.cerberus-preview");
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>());
             }
 
             [Fact]
