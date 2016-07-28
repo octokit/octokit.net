@@ -35,7 +35,7 @@ exist in other parts of the API surface:
  - `I(Observable)GitHubClient.Repository.RepoCollaborators`
  - `I(Observable)GitHubClient.Repository.Commits`
 
-This method has also been removed, but is no longer supported through the API: 
+This method is no longer supported through the API and has been removed from Octokit.net.: 
 
  - `I(Observable)GitHubClient.Authorization.RevokeAllApplicationAuthentications()`
 
