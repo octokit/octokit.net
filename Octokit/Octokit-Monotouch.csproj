@@ -496,6 +496,8 @@
     <Compile Include="Models\Response\RenameInfo.cs" />
     <Compile Include="Models\Response\SourceInfo.cs" />
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
+    <Compile Include="Clients\IRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\RepositoryBranchesClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
