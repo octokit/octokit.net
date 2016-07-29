@@ -1,3 +1,16 @@
+### New in 0.21.1 (released 2016/07/29)
+
+**Features**
+
+Due to a programming error in the tool to generate these release notes, additional
+features were not properly documented for the previous release:
+
+ - Reactions preview API support for issues, issue comments, commit comments and PR comments - #1335, #1341, #1405 via @maddin2016, @alfhenrik 
+ - Repository Invitation preview API support - #1410 via @maddin2016
+ - Added new fields for signature verification to Git Data Commit API - #1398 via @Sarmad93
+
+No additional code changes have been made to this release.
+
 ### New in 0.21.0 (released 2016/07/29)
 
 **Features**
