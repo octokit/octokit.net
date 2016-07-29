@@ -2,11 +2,12 @@
 
 **Features**
 
-Due to an programming error in the tool to generate these release notes, additional
+Due to a programming error in the tool to generate these release notes, additional
 features were not properly documented for the previous release:
 
- - Reactions preview API support for issues, commit comments and PR comments - #1335, #1405 via @maddin2016 
+ - Reactions preview API support for issues, issue comments, commit comments and PR comments - #1335, #1341, #1405 via @maddin2016, @alfhenrik 
  - Repository Invitation preview API support - #1410 via @maddin2016
+ - Added new files for signature verification to git Data Commit API - #1398 via @Sarmad93
 
 No additional code changes have been made to this release.
 
