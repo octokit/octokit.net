@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TimelineEventInfo
     {
         public TimelineEventInfo() { }
@@ -32,5 +35,10 @@ namespace Octokit
         public Milestone Milestone { get; protected set; }
         public SourceInfo Source { get; protected set; }
         public RenameInfo Rename { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1} Event: {2}", Id, CreatedAt, Event); }
+        }
     }
 }
