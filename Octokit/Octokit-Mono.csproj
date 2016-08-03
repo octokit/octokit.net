@@ -484,6 +484,11 @@
     <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Models\Request\InvitationUpdate.cs" />
     <Compile Include="Models\Request\CollaboratorRequest.cs" />
+    <Compile Include="Clients\IIssueTimelineClient.cs" />
+    <Compile Include="Clients\IssueTimelineClient.cs" />
+    <Compile Include="Models\Response\RenameInfo.cs" />
+    <Compile Include="Models\Response\SourceInfo.cs" />
+    <Compile Include="Models\Response\TimelineEventInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
