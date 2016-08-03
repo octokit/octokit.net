@@ -11,7 +11,7 @@ namespace Octokit
         {
         }
 
-        public Task<IReadOnlyList<TimelineEventInfo>> Get(string owner, string repo, int number)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
