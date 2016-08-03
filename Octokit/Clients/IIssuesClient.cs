@@ -39,6 +39,8 @@ namespace Octokit
         /// </summary>
         IIssueCommentsClient Comment { get; }
 
+        IIssueTimelineClient Timeline { get; }
+
         /// <summary>
         /// Gets a single Issue by number.
         /// </summary>

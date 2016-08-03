@@ -22,6 +22,7 @@ namespace Octokit
             Labels = new IssuesLabelsClient(apiConnection);
             Milestone = new MilestonesClient(apiConnection);
             Comment = new IssueCommentsClient(apiConnection);
+            Timeline = new IssueTimelineClient(apiConnection);
         }
 
         /// <summary>
@@ -50,6 +51,8 @@ namespace Octokit
         /// Client for managing comments.
         /// </summary>
         public IIssueCommentsClient Comment { get; private set; }
+
+        public IIssueTimelineClient Timeline { get; private set; }
 
         /// <summary>
         /// Gets a single Issue by number.
