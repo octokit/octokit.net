@@ -39,6 +39,8 @@ namespace Octokit.Reactive
         /// </summary>
         IObservableIssueCommentsClient Comment { get; }
 
+        IObservableIssueTimelineClient Timeline { get; }
+
         /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
