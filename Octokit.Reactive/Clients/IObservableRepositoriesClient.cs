@@ -151,6 +151,15 @@ namespace Octokit.Reactive
         IObservable<Repository> GetAllForOrg(string organization, ApiOptions options);
 
         /// <summary>
+        /// Client for managing branches in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/">Branches API documentation</a> for more details
+        /// </remarks>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        IObservableRepositoryBranchesClient Branch { get; }
+
+        /// <summary>
         /// A client for GitHub's Commit Status API.
         /// </summary>
         /// <remarks>
