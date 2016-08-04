@@ -52,6 +52,9 @@ namespace Octokit
         /// </summary>
         public IIssueCommentsClient Comment { get; private set; }
 
+        /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
         public IIssueTimelineClient Timeline { get; private set; }
 
         /// <summary>
