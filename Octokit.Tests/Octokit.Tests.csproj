@@ -240,6 +240,7 @@
     <Compile Include="Reactive\ObservablePullRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReleasesClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestReviewCommentsClientTests.cs" />
+    <Compile Include="Reactive\ObservableRepositoryBranchesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryCommentsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesEventsClientTests.cs" />
