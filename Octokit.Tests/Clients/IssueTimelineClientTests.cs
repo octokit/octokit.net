@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NSubstitute;
+using Xunit;
+
+namespace Octokit.Tests.Clients
+{
+    public class IssueTimelineClientTests
+    {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArgument()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new IssueTimelineClient(null));
+            }
+        }
+
+        public class TheGetAllForIssueMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueTimelineClient(connection);
+
+                await client.GetAllForIssue("fake", "repo", 42);
+
+                connection.Received().GetAll<TimelineEventInfo>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"), 
+                    Args.ApiOptions
+                );
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new IssueTimelineClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "repo", 42));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 42));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "repo", 42));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 42));
+
+            }
+        }
+    }
+}
