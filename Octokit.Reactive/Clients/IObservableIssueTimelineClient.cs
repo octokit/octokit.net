@@ -6,7 +6,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Issue Timeline API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/issues/timeline/">Issue Timeline API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/issues/timeline/">Issue Timeline API documentation</a> for more information.
     /// </remarks>
     public interface IObservableIssueTimelineClient
     {
