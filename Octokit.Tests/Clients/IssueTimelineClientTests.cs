@@ -32,7 +32,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"), 
-                    Args.ApiOptions
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.mockingbird-preview"
                 );
             }
 
