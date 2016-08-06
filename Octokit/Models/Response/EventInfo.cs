@@ -165,6 +165,9 @@ namespace Octokit
         /// <summary>
         /// The actor unsubscribed from notifications for an issue.
         /// </summary>
-        Unsubscribed
+        Unsubscribed,
+
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
+        Crossreferenced
     }
 }
