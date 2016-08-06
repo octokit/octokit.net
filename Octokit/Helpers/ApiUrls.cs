@@ -330,11 +330,6 @@ namespace Octokit
             return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, number);
         }
 
-        public static Uri IssueTimeline(string owner, string repo, int number)
-        {
-            return "repos/{0}/{1}/issues/{2}/timeline".FormatUri(owner, repo, number);
-        }
-
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
@@ -344,6 +339,16 @@ namespace Octokit
         public static Uri IssueReactions(int repositoryId, int number)
         {
             return "repositories/{0}/issues/{1}/reactions".FormatUri(repositoryId, number);
+        }
+
+        public static Uri IssueTimeline(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/timeline".FormatUri(owner, repo, number);
+        }
+
+        public static Uri IssueTimeline(int repositoryId, int number)
+        {
+            return "repositories/{0}/issues/{1}/timeline".FormatUri(repositoryId, number);
         }
 
         /// <summary>
