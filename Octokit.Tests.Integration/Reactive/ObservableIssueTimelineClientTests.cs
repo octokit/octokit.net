@@ -77,5 +77,62 @@ namespace Octokit.Tests.Integration.Reactive
             Assert.Equal(1, timelineEventInfos.Count);
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
         }
+
+        [IntegrationTest]
+        public async Task CanRetrieveTimelineForIssueByRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var observable = _client.Issue.Create(_context.Repository.Id, newIssue);
+            var issue = await observable;
+
+            var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
+            var timelineEventInfos = await observableTimeline.ToList();
+            Assert.Empty(timelineEventInfos);
+
+            observable = _client.Issue.Update(_context.Repository.Id, issue.Number, new IssueUpdate { State = ItemState.Closed });
+            var closed = await observable;
+            Assert.NotNull(closed);
+
+            observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
+            timelineEventInfos = await observableTimeline.ToList();
+            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeserializeRenameEventByRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var observable = _client.Issue.Create(_context.Repository.Id, newIssue);
+            var issue = await observable;
+
+            observable = _client.Issue.Update(_context.Repository.Id, issue.Number, new IssueUpdate { Title = "A test issue" });
+            var renamed = await observable;
+            Assert.NotNull(renamed);
+            Assert.Equal("A test issue", renamed.Title);
+
+            var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
+            var timelineEventInfos = await observableTimeline.ToList();
+            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Equal("a test issue", timelineEventInfos[0].Rename.From);
+            Assert.Equal("A test issue", timelineEventInfos[0].Rename.To);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeserializeCrossReferenceEventByRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var observable = _client.Issue.Create(_context.Repository.Id, newIssue);
+            var issue = await observable;
+
+            newIssue = new NewIssue("another test issue") { Body = "Another new unassigned issue referencing the first new issue in #" + issue.Number };
+            observable = _client.Issue.Create(_context.Repository.Id, newIssue);
+            var anotherNewIssue = await observable;
+
+            var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
+            var timelineEventInfos = await observableTimeline.ToList();
+            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+        }
     }
 }

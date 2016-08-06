@@ -44,7 +44,32 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"), 
-                    null, 
+                    Arg.Any<Dictionary<string, string>>(), 
+                    "application/vnd.github.mockingbird-preview");
+                Assert.Equal(1, timelineEvents.Count);
+            }
+
+            [Fact]
+            public async Task RequestCorrectUrlWithRepositoryId()
+            {
+                var result = new List<TimelineEventInfo> { new TimelineEventInfo() };
+                var connection = Substitute.For<IConnection>();
+                var githubClient = new GitHubClient(connection);
+                var client = new ObservableIssueTimelineClient(githubClient);
+
+                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
+                    new Response
+                    {
+                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
+                    }, result);
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, null, "application/vnd.github.mockingbird-preview")
+                    .Returns(Task.FromResult(response));
+
+                var timelineEvents = await client.GetAllForIssue(1, 42).ToList();
+
+                connection.Received().Get<List<TimelineEventInfo>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
+                    Arg.Any<Dictionary<string, string>>(),
                     "application/vnd.github.mockingbird-preview");
                 Assert.Equal(1, timelineEvents.Count);
             }

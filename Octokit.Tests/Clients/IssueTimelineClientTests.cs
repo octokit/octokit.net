@@ -36,13 +36,27 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueTimelineClient(connection);
+
+                await client.GetAllForIssue(1, 42);
+
+                connection.Received().GetAll<TimelineEventInfo>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.mockingbird-preview");
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new IssueTimelineClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "repo", 42));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 42));
-
+                
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "repo", 42));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 42));
 
