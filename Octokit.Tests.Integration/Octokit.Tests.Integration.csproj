@@ -87,6 +87,7 @@
     <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
     <Compile Include="Clients\IssueReactionsClientTests.cs" />
     <Compile Include="Clients\IssueCommentsClientTests.cs" />
+    <Compile Include="Clients\IssueTimelineClientTests.cs" />
     <Compile Include="Clients\MergingClientTests.cs" />
     <Compile Include="Clients\CommitsClientTests.cs" />
     <Compile Include="Clients\CommitStatusClientTests.cs" />
