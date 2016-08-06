@@ -167,6 +167,22 @@ namespace Octokit
         /// </summary>
         Unsubscribed,
 
+        /// <summary>
+        /// A comment was added to the issue.
+        /// </summary>
+        Commented,
+
+        /// <summary>
+        /// A commit was added to the pull request's HEAD branch.
+        /// Only provided for pull requests.
+        /// </summary>
+        Committed,
+
+        /// <summary>
+        /// The issue was referenced from another issue.
+        /// The source attribute contains the id, actor, and
+        /// url of the reference's source.
+        /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
         Crossreferenced
     }
