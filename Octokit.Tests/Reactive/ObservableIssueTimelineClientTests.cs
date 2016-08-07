@@ -37,7 +37,7 @@ namespace Octokit.Tests.Reactive
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, null, "application/vnd.github.mockingbird-preview")
+                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42).ToList();
@@ -70,7 +70,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"),
                     "application/vnd.github.mockingbird-preview");
                 Assert.Equal(1, timelineEvents.Count);
             }
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Reactive
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, null, "application/vnd.github.mockingbird-preview")
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue(1, 42).ToList();
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"),
                     "application/vnd.github.mockingbird-preview");
                 Assert.Equal(1, timelineEvents.Count);
             }
