@@ -77,6 +77,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
         }
     }
