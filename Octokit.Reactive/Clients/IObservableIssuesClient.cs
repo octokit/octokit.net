@@ -40,6 +40,11 @@ namespace Octokit.Reactive
         IObservableIssueCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        IObservableIssueTimelineClient Timeline { get; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>

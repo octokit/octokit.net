@@ -38,5 +38,7 @@ namespace Octokit
         public const string InvitationsApiPreview = "application/vnd.github.swamp-thing-preview+json";
 
         public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
+
+        public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview";
     }
 }

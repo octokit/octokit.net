@@ -43,6 +43,11 @@ namespace Octokit.Reactive
         /// </summary>
         public IObservableMilestonesClient Milestone { get; private set; }
 
+        /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        public IObservableIssueTimelineClient Timeline { get; private set; }
+
         public ObservableIssuesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
@@ -54,6 +59,7 @@ namespace Octokit.Reactive
             Labels = new ObservableIssuesLabelsClient(client);
             Milestone = new ObservableMilestonesClient(client);
             Comment = new ObservableIssueCommentsClient(client);
+            Timeline = new ObservableIssueTimelineClient(client);
         }
 
         /// <summary>
