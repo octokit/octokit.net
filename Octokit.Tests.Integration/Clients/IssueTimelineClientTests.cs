@@ -41,6 +41,25 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task CanRetrieveTimelineForIssueWithApiOptions()
+        {
+            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115);
+            Assert.NotEmpty(timelineEventInfos);
+            Assert.NotEqual(1, timelineEventInfos.Count);
+
+            var pageOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115, pageOptions);
+            Assert.NotEmpty(timelineEventInfos);
+            Assert.Equal(1, timelineEventInfos.Count);
+        }
+
+        [IntegrationTest]
         public async Task CanDeserializeRenameEvent()
         {
             var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
