@@ -561,7 +561,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            
+
             return Branch.GetAll(owner, name);
         }
 
