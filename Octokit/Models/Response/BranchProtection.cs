@@ -95,6 +95,10 @@ namespace Octokit
         Everyone
     }
 
+    /// <summary>
+    /// Protection details for a <see cref="Branch"/>.
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettings
     {
@@ -106,32 +110,15 @@ namespace Octokit
             Restrictions = restrictions;
         }
 
+        /// <summary>
+        /// Status check settings for the protected branch
+        /// </summary>
         public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
+
+        /// <summary>
+        /// Push access restrictions for the protected branch
+        /// </summary>
         public ProtectedBranchRestrictions Restrictions { get; protected set; }
-
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks, Restrictions);
-            }
-        }
-    }
-
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class BranchProtectionSettingsUpdate
-    {
-        public BranchProtectionSettingsUpdate() { }
-
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecks requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
-        {
-            RequiredStatusChecks = requiredStatusChecks;
-            Restrictions = restrictions;
-        }
-
-        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
-
-        public ProtectedBranchRestrictionsUpdate Restrictions { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -154,10 +141,19 @@ namespace Octokit
             Contexts = contexts;
         }
 
+        /// <summary>
+        /// Enforce required status checks for repository administrators
+        /// </summary>
         public bool IncludeAdmins { get; protected set; }
 
+        /// <summary>
+        /// Require branches to be up to date before merging
+        /// </summary>
         public bool Strict { get; protected set; }
 
+        /// <summary>
+        /// Require status checks to pass before merging
+        /// </summary>
         public IReadOnlyList<string> Contexts { get; private set; }
 
         internal string DebuggerDisplay
@@ -172,7 +168,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProtectedBranchRestrictions
     {
-        public ProtectedBranchRestrictions() { }
+        protected ProtectedBranchRestrictions() { }
 
         public ProtectedBranchRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
         {
@@ -180,8 +176,14 @@ namespace Octokit
             Users = users;
         }
 
+        /// <summary>
+        /// Push access is restricted to the specified Teams
+        /// </summary>
         public IReadOnlyList<Team> Teams { get; private set; }
 
+        /// <summary>
+        /// Push access is restricted to the specified Users
+        /// </summary>
         public IReadOnlyList<User> Users { get; private set; }
 
         internal string DebuggerDisplay
@@ -189,30 +191,6 @@ namespace Octokit
             get
             {
                 return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams, Users);
-            }
-        }
-    }
-
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ProtectedBranchRestrictionsUpdate
-    {
-        public ProtectedBranchRestrictionsUpdate() { }
-
-        public ProtectedBranchRestrictionsUpdate(IReadOnlyList<string> teams, IReadOnlyList<string> users)
-        {
-            Teams = teams;
-            Users = users;
-        }
-
-        public IReadOnlyList<string> Teams { get; private set; }
-
-        public IReadOnlyList<string> Users { get; private set; }
-
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", String.Join(",", Teams), String.Join(",", Users));
             }
         }
     }

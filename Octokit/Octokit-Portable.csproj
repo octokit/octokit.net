@@ -488,6 +488,7 @@
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
+    <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

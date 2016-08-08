@@ -256,7 +256,9 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionSettingsUpdate();
+                var update = new BranchProtectionSettingsUpdate(
+                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }),
+                    new ProtectedBranchRestrictionsUpdate(null, null));
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
@@ -270,7 +272,9 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionSettingsUpdate();
+                var update = new BranchProtectionSettingsUpdate(
+                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }),
+                    new ProtectedBranchRestrictionsUpdate(null, null));
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateBranchProtection(1, "branch", update);
@@ -283,7 +287,9 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var update = new BranchProtectionSettingsUpdate();
+                var update = new BranchProtectionSettingsUpdate(
+                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }),
+                    new ProtectedBranchRestrictionsUpdate(null, null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateBranchProtection(null, "repo", "branch", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateBranchProtection("owner", null, "branch", update));

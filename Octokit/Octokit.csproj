@@ -136,6 +136,7 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Clients\IReactionsClient.cs" />
+    <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Models\Request\CollaboratorRequest.cs" />
