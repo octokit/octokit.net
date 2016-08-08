@@ -64,6 +64,7 @@
     <Compile Include="Clients\IIssueTimelineClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Clients\IssueTimelineClient.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />

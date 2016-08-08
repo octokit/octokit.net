@@ -24,6 +24,15 @@ namespace Octokit
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>
+        /// Client for managing branches in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/">Branches API documentation</a> for more details
+        /// </remarks>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        IRepositoryBranchesClient Branch { get; }
+
+        /// <summary>
         /// Client for managing commit comments in a repository.
         /// </summary>
         /// <remarks>
@@ -325,6 +334,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name);
 
         /// <summary>
@@ -336,6 +346,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId);
 
         /// <summary>
@@ -349,6 +360,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -361,6 +373,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -574,6 +587,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        [Obsolete("Please use RepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
         Task<Branch> GetBranch(string owner, string name, string branchName);
 
         /// <summary>
@@ -585,6 +599,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        [Obsolete("Please use RepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
         Task<Branch> GetBranch(int repositoryId, string branchName);
 
         /// <summary>
@@ -612,7 +627,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("Please use RepositoriesClient.Branch.Edit() instead. This method will be removed in a future version")]
         Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
 
         /// <summary>
@@ -622,7 +637,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("Please use RepositoriesClient.Branch.Edit() instead. This method will be removed in a future version")]
         Task<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update);
 
         /// <summary>

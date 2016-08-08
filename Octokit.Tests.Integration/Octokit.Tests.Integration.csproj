@@ -76,7 +76,6 @@
     <Compile Include="Clients\AssigneesClientTests.cs" />
     <Compile Include="Clients\AuthorizationClientTests.cs" />
     <Compile Include="Clients\BlobClientTests.cs" />
-    <Compile Include="Clients\BranchesClientTests.cs" />
     <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
     <Compile Include="Clients\PullRequestsClientTests.cs" />
     <Compile Include="Clients\ReferencesClientTests.cs" />
+    <Compile Include="Clients\RepositoryBranchesClientTests.cs" />
     <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
     <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
     <Compile Include="Clients\RepositoryContentsClientTests.cs" />

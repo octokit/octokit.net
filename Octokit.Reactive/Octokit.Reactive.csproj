@@ -99,6 +99,8 @@
     <Compile Include="Clients\IObservableMigrationClient.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\IObservableRepositoryInvitationsClient.cs" />
