@@ -15,6 +15,16 @@ namespace Octokit
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
+        {
+            RequiredStatusChecks = requiredStatusChecks;
+            Restrictions = null;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
+        /// <param name="requiredStatusChecks">Specifies the requested status check settings</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories)</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
         {
