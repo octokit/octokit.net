@@ -15,7 +15,7 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
-        /// <param name="requiredStatusChecks">Specifies the requested status check settings</param>
+        /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
         {
             RequiredStatusChecks = requiredStatusChecks;
@@ -25,8 +25,8 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
-        /// <param name="requiredStatusChecks">Specifies the requested status check settings.  Pass null to disable status checks</param>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories).  Pass null to disable push access restrictions</param>
+        /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
+        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
         {
             RequiredStatusChecks = requiredStatusChecks;
@@ -34,7 +34,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Status check settings for protected branch
+        /// Status check settings for the protected branch
         /// </summary>
         [SerializeNull]
         public BranchProtectionRequiredStatusChecksUpdate RequiredStatusChecks { get; protected set; }
@@ -55,7 +55,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Specifies the requested status check settings for branch protection
+    /// Specifies settings for status checks which must pass before branches can be merged into the protected branch
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionRequiredStatusChecksUpdate
@@ -98,13 +98,13 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Specifies people or teams allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail.
+    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProtectedBranchRestrictionsUpdate
     {
         /// <summary>
-        /// Specify people or teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail.
+        /// Specify people or teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
         /// </summary>
         /// <param name="teams">Teams allowed to push to this branch (pass empty array if no teams)</param>
         /// <param name="users">Users allowed to push to this branch (pass empty array if no users)</param>

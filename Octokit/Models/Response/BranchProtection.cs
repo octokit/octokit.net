@@ -124,11 +124,17 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks.DebuggerDisplay, Restrictions.DebuggerDisplay);
+                return String.Format(CultureInfo.InvariantCulture, 
+                    "StatusChecks: {0} Restrictions: {1}",
+                    RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
+                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
             }
         }
     }
 
+    /// <summary>
+    /// Specifies settings for status checks which must pass before branches can be merged into the protected branch
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionRequiredStatusChecks
     {
@@ -160,11 +166,18 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
+                return String.Format(CultureInfo.InvariantCulture,
+                    "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
+                    IncludeAdmins, 
+                    Strict, 
+                    Contexts == null ? "" : String.Join(",", Contexts));
             }
         }
     }
 
+    /// <summary>
+    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProtectedBranchRestrictions
     {
@@ -190,7 +203,10 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams == null ? "" : String.Join(",", Teams), Users == null ? "" : String.Join(",", Users));
+                return String.Format(CultureInfo.InvariantCulture, 
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : String.Join(",", Teams),
+                    Users == null ? "" : String.Join(",", Users));
             }
         }
     }
