@@ -1639,8 +1639,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a repository branches protection.
         /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns></returns>
         public static Uri RepoBranchProtection(int repositoryId, string branchName)
