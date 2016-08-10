@@ -25,8 +25,8 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
-        /// <param name="requiredStatusChecks">Specifies the requested status check settings</param>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories)</param>
+        /// <param name="requiredStatusChecks">Specifies the requested status check settings.  Pass null to disable status checks</param>
+        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories).  Pass null to disable push access restrictions</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
         {
             RequiredStatusChecks = requiredStatusChecks;
@@ -104,12 +104,15 @@ namespace Octokit
     public class ProtectedBranchRestrictionsUpdate
     {
         /// <summary>
-        /// Specify people or teams allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail.
+        /// Specify people or teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail.
         /// </summary>
-        /// <param name="teams">Teams allowed to push to this branch</param>
-        /// <param name="users">Users allowed to push to this branch</param>
+        /// <param name="teams">Teams allowed to push to this branch (pass empty array if no teams)</param>
+        /// <param name="users">Users allowed to push to this branch (pass empty array if no users)</param>
         public ProtectedBranchRestrictionsUpdate(IReadOnlyList<string> teams, IReadOnlyList<string> users)
         {
+            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(users, "users");
+
             Teams = teams;
             Users = users;
         }
@@ -117,13 +120,11 @@ namespace Octokit
         /// <summary>
         /// Teams allowed to push to this branch
         /// </summary>
-        [SerializeNull]
         public IReadOnlyList<string> Teams { get; private set; }
 
         /// <summary>
         /// Users allowed to push to this branch
         /// </summary>
-        [SerializeNull]
         public IReadOnlyList<string> Users { get; private set; }
 
         internal string DebuggerDisplay
