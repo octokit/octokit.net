@@ -618,7 +618,7 @@ public class RepositoriesClientTests
 
             repository = await github.Repository.Get("fsprojects", "FSharp.Atom");
 
-            Assert.Equal("https://github.com/ionide/ionide-fsharp.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/ionide/ionide-atom-fsharp.git", repository.CloneUrl);
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
 

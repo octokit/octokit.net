@@ -122,8 +122,6 @@ namespace Octokit.Tests.Http
             
             Assert.Equal(response.RequestMessage.Method, httpRequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
-            //TODO: response.RequestMessage.Content has been disposed so cant access it here
-            //Assert.Equal("Hello World", await response.RequestMessage.Content.ReadAsStringAsync());
         }
 
         // POST see other with content

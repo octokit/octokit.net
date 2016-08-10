@@ -173,26 +173,17 @@ namespace Octokit.Internal
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            StreamContent savedContent = null;
-            bool unbuffered = false;
-            if (request.Content != null && request.Content.Headers.ContentLength != 0)
-            {
-                var stream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                if (stream.CanSeek)
-                {
-                    stream.Position = 0;
-                    savedContent = new StreamContent(stream);
-                }
-                else
-                {
-                    unbuffered = true;
-                }
-            }
+            // Clone the request/content incase we get a redirect
+            var clonedRequest = await CloneHttpRequestMessageAsync(request);
 
+            // Send initial response
             var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
 
-            // Can't redirect without somewhere to redirect to.  Throw?
-            if (response.Headers.Location == null) return response;
+            // Can't redirect without somewhere to redirect to.
+            if (response.Headers.Location == null)
+            {
+                return response;
+            }
 
             // Don't redirect if we exceed max number of redirects
             var redirectCount = 0;
@@ -204,7 +195,6 @@ namespace Octokit.Internal
             {
                 throw new InvalidOperationException("The redirect count for this request has been exceeded. Aborting.");
             }
-            request.Properties[RedirectCountKey] = ++redirectCount;
 
             if (response.StatusCode == HttpStatusCode.MovedPermanently
                         || response.StatusCode == HttpStatusCode.Redirect
@@ -213,42 +203,60 @@ namespace Octokit.Internal
                         || response.StatusCode == HttpStatusCode.TemporaryRedirect
                         || (int)response.StatusCode == 308)
             {
-                var newRequest = CopyRequest(response.RequestMessage);
-
                 if (response.StatusCode == HttpStatusCode.SeeOther)
                 {
-                    newRequest.Content = null;
-                    newRequest.Method = HttpMethod.Get;
-                }
-                else
-                {
-                    if (unbuffered)
-                    {
-                        throw new Exception("Cannot redirect a request with an unbuffered body");
-                    }
-                    newRequest.Content = savedContent;
-                }
-                newRequest.RequestUri = response.Headers.Location;
-                if (string.Compare(newRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
-                {
-                    newRequest.Headers.Authorization = null;
+                    clonedRequest.Content = null;
+                    clonedRequest.Method = HttpMethod.Get;
                 }
 
-                response = await SendAsync(newRequest, cancellationToken).ConfigureAwait(false);
+                // Increment the redirect count
+                clonedRequest.Properties[RedirectCountKey] = ++redirectCount;
+
+                // Set the new Uri based on location header
+                clonedRequest.RequestUri = response.Headers.Location;
+
+                // Clear authentication if redirected to a different host
+                if (string.Compare(clonedRequest.RequestUri.Host, request.RequestUri.Host, StringComparison.OrdinalIgnoreCase) != 0)
+                {
+                    clonedRequest.Headers.Authorization = null;
+                }
+
+                // Send redirected request
+                response = await SendAsync(clonedRequest, cancellationToken).ConfigureAwait(false);
             }
 
             return response;
         }
 
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        private static HttpRequestMessage CopyRequest(HttpRequestMessage oldRequest)
+        public static async Task<HttpRequestMessage> CloneHttpRequestMessageAsync(HttpRequestMessage oldRequest)
         {
             var newRequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
+
+            // Copy the request's content (via a MemoryStream) into the cloned object
+            var ms = new MemoryStream();
+            if (oldRequest.Content != null)
+            {
+                await oldRequest.Content.CopyToAsync(ms).ConfigureAwait(false);
+                ms.Position = 0;
+                newRequest.Content = new StreamContent(ms);
+
+                // Copy the content headers
+                if (oldRequest.Content.Headers != null)
+                {
+                    foreach (var h in oldRequest.Content.Headers)
+                    {
+                        newRequest.Content.Headers.Add(h.Key, h.Value);
+                    }
+                }
+            }
+
+            newRequest.Version = oldRequest.Version;
 
             foreach (var header in oldRequest.Headers)
             {
                 newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
+
             foreach (var property in oldRequest.Properties)
             {
                 newRequest.Properties.Add(property);
@@ -259,6 +267,6 @@ namespace Octokit.Internal
     }
 
     internal class RedirectHandler : DelegatingHandler
-    {        
+    {
     }
 }
