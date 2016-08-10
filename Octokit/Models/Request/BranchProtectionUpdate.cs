@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -35,18 +36,20 @@ namespace Octokit
         /// <summary>
         /// Status check settings for protected branch
         /// </summary>
+        [SerializeNull]
         public BranchProtectionRequiredStatusChecksUpdate RequiredStatusChecks { get; protected set; }
 
         /// <summary>
         /// Push access restrictions for the protected branch
         /// </summary>
+        [SerializeNull]
         public ProtectedBranchRestrictionsUpdate Restrictions { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks, Restrictions);
+                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks.DebuggerDisplay, Restrictions.DebuggerDisplay);
             }
         }
     }
@@ -89,7 +92,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, String.Join(",", Contexts));
+                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
             }
         }
     }
@@ -114,18 +117,20 @@ namespace Octokit
         /// <summary>
         /// Teams allowed to push to this branch
         /// </summary>
+        [SerializeNull]
         public IReadOnlyList<string> Teams { get; private set; }
 
         /// <summary>
         /// Users allowed to push to this branch
         /// </summary>
+        [SerializeNull]
         public IReadOnlyList<string> Users { get; private set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", String.Join(",", Teams), String.Join(",", Users));
+                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams == null ? "" : String.Join(",", Teams), Users == null ? "" : String.Join(",", Users));
             }
         }
     }

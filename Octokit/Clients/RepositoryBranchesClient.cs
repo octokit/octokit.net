@@ -200,7 +200,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
             
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>

@@ -263,7 +263,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), previewAcceptsHeader);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null, previewAcceptsHeader);
             }
 
             [Fact]
@@ -278,7 +278,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateBranchProtection(1, "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), previewAcceptsHeader);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null, previewAcceptsHeader);
             }
 
             [Fact]

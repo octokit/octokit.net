@@ -124,7 +124,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks, Restrictions);
+                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks.DebuggerDisplay, Restrictions.DebuggerDisplay);
             }
         }
     }
@@ -160,7 +160,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, String.Join(",", Contexts));
+                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
             }
         }
     }
@@ -168,7 +168,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProtectedBranchRestrictions
     {
-        protected ProtectedBranchRestrictions() { }
+        public ProtectedBranchRestrictions() { }
 
         public ProtectedBranchRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
         {
@@ -190,7 +190,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams, Users);
+                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams == null ? "" : String.Join(",", Teams), Users == null ? "" : String.Join(",", Users));
             }
         }
     }
