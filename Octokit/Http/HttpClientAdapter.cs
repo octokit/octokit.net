@@ -186,8 +186,6 @@ namespace Octokit.Internal
                 else
                 {
                     unbuffered = true;
-                    //throw new Exception("Cannot redirect a request with an unbuffered body");
-                    //savedContent = null;
                 }
             }
 
@@ -261,12 +259,6 @@ namespace Octokit.Internal
     }
 
     internal class RedirectHandler : DelegatingHandler
-    {
-        public bool Enabled { get; set; }
-
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            return base.SendAsync(request, cancellationToken);
-        }
+    {        
     }
 }
