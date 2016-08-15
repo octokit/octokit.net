@@ -1,3 +1,14 @@
+### New in 0.22.0 (released 2016/08/17)
+
+**Features**
+
+ - Timeline preview API support - #1435 via @alfhenrik
+ - Initial groundwork for Branches API - #1437 via @ryangribble
+
+**Fixes**
+
+ - Redirect timeout when repository renamed - #1411 via @maddin2016
+
 ### New in 0.21.1 (released 2016/07/29)
 
 **Features**
