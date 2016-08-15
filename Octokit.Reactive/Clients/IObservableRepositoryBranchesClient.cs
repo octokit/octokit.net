@@ -313,5 +313,26 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         IObservable<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
+
+        /// <summary>
+        /// Get the restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get the restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
     }
 }

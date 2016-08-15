@@ -498,5 +498,38 @@ namespace Octokit.Reactive
 
             return _client.DeleteRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable();
         }
+
+        /// <summary>
+        /// Get the restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetProtectedBranchRestrictions(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetProtectedBranchRestrictions(repositoryId, branch).ToObservable();
+        }
     }
 }
