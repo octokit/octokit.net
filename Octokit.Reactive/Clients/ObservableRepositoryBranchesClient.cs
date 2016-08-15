@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -352,6 +353,39 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
             return _client.DeleteRequiredStatusChecks(repositoryId, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the required status checks contexts for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetRequiredStatusChecksContexts(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the required status checks contexts for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetRequiredStatusChecksContexts(repositoryId, branch).ToObservable();
         }
     }
 }
