@@ -1671,6 +1671,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for required status checks for a protected branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoRequiredStatusChecksContexts(string owner, string name, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}/protection/required_status_checks/contexts".FormatUri(owner, name, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for required status checks for a protected branch.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoRequiredStatusChecksContexts(int repositoryId, string branchName)
+        {
+            return "repos/{0}/branches/{1}/protection/required_status_checks/contexts".FormatUri(repositoryId, branchName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
