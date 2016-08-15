@@ -518,7 +518,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(contexts, "contexts");
 
-
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -532,7 +532,10 @@ namespace Octokit
         /// <param name="contexts">The contexts to remove</param>
         public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(contexts, "contexts");
+
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, AcceptHeaders.ProtectedBranchesApiPreview);
         }
     }
 }

@@ -245,7 +245,7 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>        
-        Task<T> Delete<T>(Uri uri, object data, string accepts);
+        Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
 
         /// <summary>
         /// Base address for the connection.
