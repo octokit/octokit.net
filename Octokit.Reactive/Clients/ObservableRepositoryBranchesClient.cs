@@ -424,5 +424,42 @@ namespace Octokit.Reactive
 
             return _client.UpdateRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable();
         }
+
+        /// <summary>
+        /// Add the required status checks context for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="contexts">The contexts to add</param>
+        public IObservable<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(contexts, "contexts");
+
+            return _client.AddRequiredStatusChecksContexts(owner, name, branch, contexts).ToObservable();
+        }
+
+        /// <summary>
+        /// Add the required status checks contexts for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="contexts">The contexts to add</param>
+        public IObservable<IReadOnlyList<string>> AddRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(contexts, "contexts");
+
+            return _client.AddRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable();
+        }
     }
 }
