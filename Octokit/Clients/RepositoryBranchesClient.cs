@@ -321,7 +321,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
-            return ApiConnection.Put<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update, null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
-            return ApiConnection.Put<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update, null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
