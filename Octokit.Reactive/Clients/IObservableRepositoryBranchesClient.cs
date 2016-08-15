@@ -466,5 +466,28 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         IObservable<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
+
+        /// <summary>
+        /// Replace user restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="users">List of users with push access</param>
+        IObservable<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+
+        /// <summary>
+        /// Replace user restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="users">List of users with push access</param>
+        IObservable<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
     }
 }
