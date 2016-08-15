@@ -634,5 +634,42 @@ namespace Octokit.Reactive
 
             return _client.SetProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable();
         }
+
+        /// <summary>
+        /// Add team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="teams">List of teams with push access</param>
+        public IObservable<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(teams, "teams");
+
+            return _client.AddProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable();
+        }
+
+        /// <summary>
+        /// Add team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="teams">List of teams with push access</param>
+        public IObservable<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(teams, "teams");
+
+            return _client.AddProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable();
+        }
     }
 }
