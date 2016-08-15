@@ -321,7 +321,7 @@ namespace Octokit.Reactive
             return _client.UpdateRequiredStatusChecks(repositoryId, branch, update).ToObservable();
         }
 
-        // <summary>
+        /// <summary>
         /// Remove required status checks for the specified branch />
         /// </summary>
         /// <remarks>
