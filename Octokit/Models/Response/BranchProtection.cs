@@ -9,8 +9,10 @@ namespace Octokit
 {
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
     public class BranchProtection
@@ -97,8 +99,10 @@ namespace Octokit
 
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettings
     {

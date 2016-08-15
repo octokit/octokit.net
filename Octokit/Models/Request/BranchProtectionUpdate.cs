@@ -9,6 +9,9 @@ namespace Octokit
     /// <summary>
     /// Specifies the requested settings for branch protection
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettingsUpdate
     {
