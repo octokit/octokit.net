@@ -1667,7 +1667,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRequiredStatusChecks(int repositoryId, string branchName)
         {
-            return "repos/{0}/{1}/branches/{2}/protection/required_status_checks".FormatUri(repositoryId, branchName);
+            return "repos/{0}/branches/{1}/protection/required_status_checks".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
