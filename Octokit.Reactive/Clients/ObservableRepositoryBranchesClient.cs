@@ -595,7 +595,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
-            return _client.GetProtectedBranchTeamRestrictions(owner, name, branch).ToObservable();
+            return _client.GetProtectedBranchTeamRestrictions(repositoryId, branch).ToObservable();
         }
     }
 }
