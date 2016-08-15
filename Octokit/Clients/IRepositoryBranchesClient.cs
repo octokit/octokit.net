@@ -401,7 +401,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        /// <param name="teams">List of teams with push access</param>
+        /// <param name="teams">List of teams with push access to add</param>
         Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        /// <param name="teams">List of teams with push access</param>
+        /// <param name="teams">List of teams with push access to add</param>
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -426,5 +426,28 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+
+        /// <summary>
+        /// Remove team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="teams">List of teams to remove</param>
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+
+        /// <summary>
+        /// Remove team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="teams">List of teams to remove</param>
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
     }
 }
