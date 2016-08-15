@@ -445,5 +445,26 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
         IObservable<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+
+        /// <summary>
+        /// Get user restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        IObservable<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get user restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        IObservable<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
     }
 }
