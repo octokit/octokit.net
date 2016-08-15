@@ -493,6 +493,24 @@ namespace Octokit
 
             return Connection.Delete(uri, data, accepts);
         }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        public Task<T> Delete<T>(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            return Connection.Delete<T>(uri, data, accepts);
+        }
+
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for
         /// API calls which wants to return the redirect URL.
