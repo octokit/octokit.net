@@ -590,7 +590,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch(NotFoundException)
@@ -615,13 +615,46 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Get team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Get team restrictions for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
     }
 }
