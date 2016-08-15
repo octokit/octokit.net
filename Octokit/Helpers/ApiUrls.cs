@@ -1694,6 +1694,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for restrictions for a protected branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoRestrictions(string owner, string name, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}/protection/restrictions".FormatUri(owner, name, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for restrictions for a protected branch.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        /// <returns></returns>
+        public static Uri RepoRestrictions(int repositoryId, string branchName)
+        {
+            return "repos/{0}/branches/{1}/protection/restrictions".FormatUri(repositoryId, branchName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
