@@ -12,20 +12,17 @@ namespace Octokit.Tests.Integration.Helpers
         internal MaintenanceModeContext(IConnection connection, bool enabled)
         {
             _connection = connection;
-            _initialState = enabled;
 
-            // Ensure maintenance mode is in the desired state
-            EnterpriseHelper.SetMaintenanceMode(_connection, _initialState);
+            // Ensure maintenance mode is in the desired initial state
+            EnterpriseHelper.SetMaintenanceMode(_connection, enabled);
         }
 
         private IConnection _connection;
-
-        private bool _initialState;
         
         public void Dispose()
         {
-            // Ensure maintenance mode is restored to desired state
-            EnterpriseHelper.SetMaintenanceMode(_connection, _initialState);
+            // Ensure maintenance mode is OFF
+            EnterpriseHelper.SetMaintenanceMode(_connection, false);
         }
     }
 }
