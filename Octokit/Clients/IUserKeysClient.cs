@@ -60,7 +60,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
         /// </remarks>
-        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<PublicKey> Get(int id);

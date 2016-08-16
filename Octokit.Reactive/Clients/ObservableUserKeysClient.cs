@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
         /// </remarks>
-        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
         public IObservable<PublicKey> Get(int id)
         {

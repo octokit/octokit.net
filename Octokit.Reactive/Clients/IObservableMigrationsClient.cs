@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#get-the-status-of-a-migration
         /// </remarks>
         /// <param name="org">The organization which is migrating.</param>
-        /// <param name="id">Migration ID of the organization.</param>
+        /// <param name="id">Migration Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Migration> Get(
@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#download-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
-        /// <param name="id">The ID of the migration.</param>
+        /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
         IObservable<byte[]> GetArchive(
             string org,
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#delete-a-migration-archive
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
-        /// <param name="id">The ID of the migration.</param>
+        /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
         IObservable<Unit> DeleteArchive(
             string org,
@@ -86,7 +86,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#unlock-a-repository
         /// </remarks>
         /// <param name="org">The organization of which the migration was.</param>
-        /// <param name="id">The ID of the migration.</param>
+        /// <param name="id">The Id of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
         IObservable<Unit> UnlockRepository(

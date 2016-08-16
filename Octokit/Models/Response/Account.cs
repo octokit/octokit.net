@@ -99,7 +99,7 @@ namespace Octokit
         public string HtmlUrl { get; protected set; }
 
         /// <summary>
-        /// The account's system-wide unique ID.
+        /// The account's system-wide unique Id.
         /// </summary>
         public int Id { get; protected set; }
 

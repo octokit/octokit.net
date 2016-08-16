@@ -342,7 +342,7 @@ namespace Octokit.Tests.Integration.Clients
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryId, _fixture.ExpectedHooks[1].Id, editRepositoryHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
-                Assert.Equal(new[] { "deployment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(new[] { "push", "pull_request" }.ToList(), actualHook.Events.ToList());
                 Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
                 Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
             }
@@ -378,7 +378,7 @@ namespace Octokit.Tests.Integration.Clients
                 var actualHook = await github.Repository.Hooks.Edit(_fixture.RepositoryId, _fixture.ExpectedHooks[3].Id, editRepositoryHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "project", "GEZDGORQFY2TCNZRGY2TSMBVGUYDK" } };
-                Assert.Equal(new[] { "deployment", "pull_request" }.ToList(), actualHook.Events.ToList());
+                Assert.Equal(new[] { "push", "pull_request" }.ToList(), actualHook.Events.ToList());
                 Assert.Equal(expectedConfig.Keys, actualHook.Config.Keys);
                 Assert.Equal(expectedConfig.Values, actualHook.Config.Values);
             }

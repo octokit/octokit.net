@@ -61,9 +61,13 @@
     <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IIssueTimelineClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
+    <Compile Include="Clients\IssueTimelineClient.cs" />
     <Compile Include="Clients\IUserGpgKeysClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
@@ -97,12 +101,14 @@
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
     <Compile Include="Clients\IFeedsClient.cs" />
     <Compile Include="Clients\RepositoryCommitsClient.cs" />
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />
@@ -134,6 +140,8 @@
     <Compile Include="Clients\IReactionsClient.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
+    <Compile Include="Models\Request\InvitationUpdate.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
@@ -208,6 +216,10 @@
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\RenameInfo.cs" />
+    <Compile Include="Models\Response\RepositoryInvitation.cs" />
+    <Compile Include="Models\Response\SourceInfo.cs" />
+    <Compile Include="Models\Response\TimelineEventInfo.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
@@ -425,7 +437,6 @@
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
-    <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
     <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
@@ -449,7 +460,6 @@
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
-    <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
@@ -480,7 +490,6 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
@@ -493,9 +502,6 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
-    <Compile Include="Models\Response\SshKey.cs" />
-    <Compile Include="Models\Response\SshKeyInfo.cs" />
-    <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

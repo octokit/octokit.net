@@ -848,7 +848,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetBranch("owner", "repo", "branch");
 
-                github.Repository.Received(1).GetBranch("owner", "repo", "branch");
+                github.Repository.Branch.Received(1).Get("owner", "repo", "branch");
             }
 
             [Fact]
@@ -859,7 +859,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetBranch(1, "branch");
 
-                github.Repository.Received(1).GetBranch(1, "branch");
+                github.Repository.Branch.Received(1).Get(1, "branch");
             }
 
             [Fact]
@@ -935,7 +935,7 @@ namespace Octokit.Tests.Reactive
 
                 client.EditBranch("owner", "repo", "branch", update);
 
-                github.Repository.Received(1).EditBranch("owner", "repo", "branch", update);
+                github.Repository.Branch.Received(1).Edit("owner", "repo", "branch", update);
             }
 
             [Fact]
@@ -947,7 +947,7 @@ namespace Octokit.Tests.Reactive
 
                 client.EditBranch(1, "branch", update);
 
-                github.Repository.Received(1).EditBranch(1, "branch", update);
+                github.Repository.Branch.Received(1).Edit(1, "branch", update);
             }
 
             [Fact]

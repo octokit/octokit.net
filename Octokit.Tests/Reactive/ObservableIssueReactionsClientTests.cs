@@ -1,6 +1,6 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Octokit.Reactive;
-using System;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -18,33 +18,37 @@ namespace Octokit.Tests.Reactive
 
         public class TheGetAllMethod
         {
-            private readonly IGitHubClient _githubClient;
-            private readonly IObservableReactionsClient _client;
-            private const string owner = "owner";
-            private const string name = "name";
-
-            public TheGetAllMethod()
-            {
-                _githubClient = Substitute.For<IGitHubClient>();
-                _client = new ObservableReactionsClient(_githubClient);
-            }
-
             [Fact]
             public void RequestsCorrectUrl()
             {
-                _client.Issue.GetAll("fake", "repo", 42);
-                _githubClient.Received().Reaction.Issue.GetAll("fake", "repo", 42);
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueReactionsClient(gitHubClient);
+
+                client.GetAll("fake", "repo", 42);
+                gitHubClient.Received().Reaction.Issue.GetAll("fake", "repo", 42);
             }
 
             [Fact]
-            public void EnsuresArgumentsNotNull()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueReactionsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => _client.Issue.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.Issue.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.Issue.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentException>(() => _client.Issue.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
-                Assert.Throws<ArgumentNullException>(() => _client.Issue.Create("owner", "name", 1, null));
+                client.GetAll(1, 42);
+                gitHubClient.Received().Reaction.Issue.GetAll(1, 42);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
             }
         }
 
@@ -58,7 +62,36 @@ namespace Octokit.Tests.Reactive
                 var newReaction = new NewReaction(ReactionType.Confused);
 
                 client.Issue.Create("fake", "repo", 1, newReaction);
+
                 githubClient.Received().Reaction.Issue.Create("fake", "repo", 1, newReaction);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReactionsClient(githubClient);
+                var newReaction = new NewReaction(ReactionType.Confused);
+
+                client.Issue.Create(1, 1, newReaction);
+
+                githubClient.Received().Reaction.Issue.Create(1, 1, newReaction);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.Create(1, 1, null));
+
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", 1, new NewReaction(ReactionType.Heart)));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", 1, new NewReaction(ReactionType.Heart)));
             }
         }
     }

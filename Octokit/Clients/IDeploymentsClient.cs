@@ -30,7 +30,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         Task<IReadOnlyList<Deployment>> GetAll(int repositoryId);
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Deployment>> GetAll(int repositoryId, ApiOptions options);
 
@@ -75,7 +75,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/repos/deployments/#create-a-deployment
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         Task<Deployment> Create(int repositoryId, NewDeployment newDeployment);
 

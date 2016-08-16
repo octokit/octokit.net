@@ -49,6 +49,29 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanListIssueLabelsForAnIssueWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+        Assert.Empty(issueLabelsInfo);
+
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(label.Name);
+        var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+        Assert.NotNull(updated);
+
+        issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+        Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfIssueLabelsWithoutStartForAnIssue()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
@@ -72,6 +95,35 @@ public class IssuesLabelsClientTests : IDisposable
         };
 
         issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+        Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithoutStartForAnIssueWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+        Assert.Empty(issueLabelsInfo);
+
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(label.Name);
+        var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+        Assert.NotNull(updated);
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1
+        };
+
+        issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number, options);
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
@@ -106,6 +158,40 @@ public class IssuesLabelsClientTests : IDisposable
         };
 
         issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+        Assert.Equal(labels.Last().Color, issueLabelsInfo.First().Color);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithStartForAnIssueWithRepositoryId()
+    {
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewIssue("A test issue") { Body = "A new unassigned issue" });
+        var issueUpdate = new IssueUpdate();
+
+        var labels = new List<Label>();
+
+        for (int i = 0; i < 2; i++)
+        {
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, new NewLabel("test label " + (i + 1), "FFFFF" + (i+1)));
+            labels.Add(label);
+            issueUpdate.AddLabel(label.Name);
+        }
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+        Assert.Empty(issueLabelsInfo);
+        
+        var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+        Assert.NotNull(updated);
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 2
+        };
+
+        issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number, options);
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(labels.Last().Color, issueLabelsInfo.First().Color);
@@ -153,6 +239,47 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsDistinctIssueLabelsBasedOnStartPageForAnIssueWithRepositoryId()
+    {
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewIssue("A test issue") { Body = "A new unassigned issue" });
+        var issueUpdate = new IssueUpdate();
+        
+        for (int i = 0; i < 2; i++)
+        {
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, new NewLabel("test label " + (i + 1), "FFFFF" + (i + 1)));
+            issueUpdate.AddLabel(label.Name);
+        }
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+        Assert.Empty(issueLabelsInfo);
+
+        var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+        Assert.NotNull(updated);
+
+        var startOptions = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 1
+        };
+
+        var firstPage = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.NotEqual(firstPage.First().Color, secondPage.First().Color);
+    }
+
+    [IntegrationTest]
     public async Task CanListIssueLabelsForARepository()
     {
         var newLabel1 = new NewLabel("test label 1", "FFFFFF");
@@ -164,6 +291,22 @@ public class IssuesLabelsClientTests : IDisposable
         await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel2);
 
         var issueLabels = await _issuesLabelsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+
+        Assert.Equal(originalIssueLabels.Count + 2, issueLabels.Count);
+    }
+
+    [IntegrationTest]
+    public async Task CanListIssueLabelsForARepositoryWithRepositoryId()
+    {
+        var newLabel1 = new NewLabel("test label 1", "FFFFFF");
+        var newLabel2 = new NewLabel("test label 2", "FFFFFF");
+
+        var originalIssueLabels = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id);
+
+        await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel1);
+        await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel2);
+
+        var issueLabels = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id);
 
         Assert.Equal(originalIssueLabels.Count + 2, issueLabels.Count);
     }
@@ -198,6 +341,35 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithoutStartForARepositoryWithRepositoryId()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate();
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1
+        };
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfIssueLabelsWithStartForARepository()
     {
         for (int i = 0; i < 2; i++)
@@ -223,6 +395,36 @@ public class IssuesLabelsClientTests : IDisposable
         };
 
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithStartForARepositoryWithRepositoryId()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate();
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 2
+        };
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id, options);
 
         Assert.Equal(1, issueLabelsInfo.Count);
     }
@@ -269,6 +471,47 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsDistinctIssueLabelsBasedOnStartPageForARepositoryWithRepositoryId()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate();
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 1
+        };
+
+        var firstPage = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesLabelsClient.GetAllForRepository(_context.Repository.Id, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.NotEqual(firstPage.First().Color, secondPage.First().Color);
+    }
+
+    [IntegrationTest]
     public async Task CanListLabelsForAnMilestone()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
@@ -289,6 +532,32 @@ public class IssuesLabelsClientTests : IDisposable
         Assert.NotNull(updated);
 
         issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.RepositoryOwner, _context.RepositoryName, milestone.Number);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+        Assert.Equal(label.Color, issueLabelsInfo[0].Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanListLabelsForAnMilestoneWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label", "FFFFFF");
+        var newMilestone = new NewMilestone("New Milestone");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
+        
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number);
+        Assert.Empty(issueLabelsInfo);
+
+        var issueUpdate = new IssueUpdate { Milestone = milestone.Number };
+        issueUpdate.AddLabel(label.Name);
+
+        var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+        Assert.NotNull(updated);
+
+        issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number);
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(label.Color, issueLabelsInfo[0].Color);
@@ -327,6 +596,38 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithoutStartForAMilestoneWithRepositoryId()
+    {
+        var newMilestone = new NewMilestone("New Milestone");
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
+
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate { Milestone = milestone.Number };
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1
+        };
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfIssueLabelsWithStartForAMilestone()
     {
         var newMilestone = new NewMilestone("New Milestone");
@@ -355,6 +656,39 @@ public class IssuesLabelsClientTests : IDisposable
         };
 
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.RepositoryOwner, _context.RepositoryName, milestone.Number, options);
+
+        Assert.Equal(1, issueLabelsInfo.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfIssueLabelsWithStartForAMilestoneWithRepositoryId()
+    {
+        var newMilestone = new NewMilestone("New Milestone");
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
+
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate { Milestone = milestone.Number };
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 2
+        };
+
+        var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number, options);
 
         Assert.Equal(1, issueLabelsInfo.Count);
     }
@@ -404,6 +738,50 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsDistinctIssueLabelsBasedOnStartPageForAMilestoneWithRepositoryId()
+    {
+        var newMilestone = new NewMilestone("New Milestone");
+        var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
+
+        for (int i = 0; i < 2; i++)
+        {
+            int k = i + 1;
+            var newIssue = new NewIssue("A test issue " + k) { Body = "A new unassigned issue " + k };
+            var newLabel = new NewLabel("test label " + k, "FFFFF" + k);
+
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            var issueUpdate = new IssueUpdate { Milestone = milestone.Number };
+            issueUpdate.AddLabel(label.Name);
+            var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+            Assert.NotNull(updated);
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 1
+        };
+
+        var firstPage = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.NotEqual(firstPage.First().Color, secondPage.First().Color);
+    }
+
+    [IntegrationTest]
     public async Task CanRetrieveIssueLabelByName()
     {
         var newLabel = new NewLabel("test label 1b", "FFFFFF");
@@ -414,6 +792,225 @@ public class IssuesLabelsClientTests : IDisposable
 
         Assert.Equal(label.Name, issueLabelLookupByName.Name);
         Assert.Equal(label.Color, issueLabelLookupByName.Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanRetrieveIssueLabelByNameWithRepositoryId()
+    {
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.Repository.Id, label.Name);
+
+        Assert.Equal(label.Name, issueLabelLookupByName.Name);
+        Assert.Equal(label.Color, issueLabelLookupByName.Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteIssueLabelByName()
+    {
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        Assert.Equal(label.Name, issueLabelLookupByName.Name);
+        Assert.Equal(label.Color, issueLabelLookupByName.Color);
+
+        await _issuesLabelsClient.Delete(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        await Assert.ThrowsAsync<NotFoundException>(() => _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name));
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteIssueLabelByNameWithRepositoryId()
+    {
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.Repository.Id, label.Name);
+
+        Assert.Equal(label.Name, issueLabelLookupByName.Name);
+        Assert.Equal(label.Color, issueLabelLookupByName.Color);
+
+        await _issuesLabelsClient.Delete(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        await Assert.ThrowsAsync<NotFoundException>(() => _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name));
+    }
+
+    [IntegrationTest]
+    public async Task CanAddToIssue()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.NotEmpty(labels);
+        Assert.Equal(label.Name, labels[0].Name);
+        Assert.Equal(label.Color, labels[0].Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanAddToIssueWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.Repository.Id, issue.Number, new[] { label.Name });
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+
+        Assert.NotEmpty(labels);
+        Assert.Equal(label.Name, labels[0].Name);
+        Assert.Equal(label.Color, labels[0].Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanRemoveAllFromIssue()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+        await _issuesLabelsClient.RemoveAllFromIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.Empty(labels);
+    }
+
+    [IntegrationTest]
+    public async Task CanRemoveAllFromIssueWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.Repository.Id, issue.Number, new[] { label.Name });
+        await _issuesLabelsClient.RemoveAllFromIssue(_context.Repository.Id, issue.Number);
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+
+        Assert.Empty(labels);
+    }
+
+    [IntegrationTest]
+    public async Task CanRemoveFromIssue()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+        await _issuesLabelsClient.RemoveFromIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, label.Name);
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.Empty(labels);
+    }
+
+    [IntegrationTest]
+    public async Task CanRemoveFromIssueWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel = new NewLabel("test label 1b", "FFFFFF");
+
+        var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
+        Assert.NotNull(label);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.Repository.Id, issue.Number, new[] { label.Name });
+        await _issuesLabelsClient.RemoveFromIssue(_context.Repository.Id, issue.Number, label.Name);
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+
+        Assert.Empty(labels);
+    }
+
+    [IntegrationTest]
+    public async Task CanReplaceAllForIssue()
+    {
+        var newIssue1 = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel1 = new NewLabel("test label 1b", "FFFFFF");
+        var newLabel2 = new NewLabel("test label 1a", "FFFFFF");
+
+        var label1 = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel1);
+        Assert.NotNull(label1);
+        var label2 = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel2);
+        Assert.NotNull(label2);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label1.Name });
+        await _issuesLabelsClient.ReplaceAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label2.Name });
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+        Assert.NotEmpty(labels);
+        Assert.Equal(label2.Name, labels[0].Name);
+        Assert.Equal(label2.Color, labels[0].Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanReplaceAllForIssueWithRepositoryId()
+    {
+        var newIssue1 = new NewIssue("A test issue") { Body = "A new unassigned issue" };
+        var newLabel1 = new NewLabel("test label 1b", "FFFFFF");
+        var newLabel2 = new NewLabel("test label 1a", "FFFFFF");
+
+        var label1 = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel1);
+        Assert.NotNull(label1);
+        var label2 = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel2);
+        Assert.NotNull(label2);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+        Assert.NotNull(issue);
+
+        await _issuesLabelsClient.AddToIssue(_context.Repository.Id, issue.Number, new[] { label1.Name });
+        await _issuesLabelsClient.ReplaceAllForIssue(_context.Repository.Id, issue.Number, new[] { label2.Name });
+
+        var labels = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
+
+        Assert.NotEmpty(labels);
+        Assert.Equal(label2.Name, labels[0].Name);
+        Assert.Equal(label2.Color, labels[0].Color);
     }
 
     public void Dispose()

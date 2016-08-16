@@ -23,5 +23,7 @@ namespace Octokit
         public Committer Tagger { get; protected set; }
 
         public TagObject Object { get; protected set; }
+
+        public Verification Verification { get; protected set; }
     }
 }

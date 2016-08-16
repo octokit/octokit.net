@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
-using System.Reactive;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Issues API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/">Issues API documentation</a> for more information.
+    /// </remarks>
     public class ObservableIssuesClient : IObservableIssuesClient
     {
         readonly IIssuesClient _client;
@@ -14,24 +20,33 @@ namespace Octokit.Reactive
         /// Client for managing assignees.
         /// </summary>
         public IObservableAssigneesClient Assignee { get; private set; }
+
         /// <summary>
         /// Client for managing comments.
         /// </summary>
         public IObservableIssueCommentsClient Comment { get; private set; }
+
         /// <summary>
         /// Client for reading various event information associated with issues/pull requests.  
         /// This is useful both for display on issue/pull request information pages and also to 
         /// determine who should be notified of comments.
         /// </summary>
         public IObservableIssuesEventsClient Events { get; private set; }
+
         /// <summary>
         /// Client for managing labels.
         /// </summary>
         public IObservableIssuesLabelsClient Labels { get; private set; }
+
         /// <summary>
         /// Client for managing milestones.
         /// </summary>
         public IObservableMilestonesClient Milestone { get; private set; }
+
+        /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        public IObservableIssueTimelineClient Timeline { get; private set; }
 
         public ObservableIssuesClient(IGitHubClient client)
         {
@@ -44,6 +59,7 @@ namespace Octokit.Reactive
             Labels = new ObservableIssuesLabelsClient(client);
             Milestone = new ObservableMilestonesClient(client);
             Comment = new ObservableIssueCommentsClient(client);
+            Timeline = new ObservableIssueTimelineClient(client);
         }
 
         /// <summary>
@@ -55,13 +71,25 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal containing the requested <see cref="Issue"/>s.</returns>
         public IObservable<Issue> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             return _client.Get(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a single Issue by number.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#get-a-single-issue
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue number</param>
+        public IObservable<Issue> Get(int repositoryId, int number)
+        {
+            return _client.Get(repositoryId, number).ToObservable();
         }
 
         /// <summary>
@@ -72,7 +100,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -87,7 +114,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -103,7 +129,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForCurrent(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -120,13 +145,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -137,7 +161,6 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories()
         {
             return GetAllForOwnedAndMemberRepositories(new IssueRequest());
@@ -152,7 +175,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -167,7 +189,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
@@ -183,13 +204,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -199,7 +219,6 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOrganization(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -215,7 +234,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -232,7 +250,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
@@ -250,14 +267,13 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -268,7 +284,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -283,10 +298,21 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        public IObservable<Issue> GetAllForRepository(int repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -294,6 +320,21 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all open issues assigned to the authenticated user for the repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return GetAllForRepository(repositoryId, new RepositoryIssueRequest(), options);
         }
 
         /// <summary>
@@ -305,7 +346,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -321,11 +361,25 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>A signal containing one or more <see cref="Issue"/>s.</returns>
         public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -333,7 +387,24 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+        }
+
+        /// <summary>
+        /// Gets issues for a repository.
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">Used to filter and sort the list of issues returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -344,7 +415,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        /// <returns>A signal containing the new <see cref="Issue"/>.</returns>
         public IObservable<Issue> Create(string owner, string name, NewIssue newIssue)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -359,12 +429,25 @@ namespace Octokit.Reactive
         /// issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
+        public IObservable<Issue> Create(int repositoryId, NewIssue newIssue)
+        {
+            Ensure.ArgumentNotNull(newIssue, "newIssue");
+
+            return _client.Create(repositoryId, newIssue).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        /// <returns>A signal containing the updated <see cref="Issue"/>.</returns>
         public IObservable<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -375,20 +458,46 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
+        /// issue.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
+        /// </param>
+        public IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
+        {
+            Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
+
+            return _client.Update(repositoryId, number, issueUpdate).ToObservable();
+        }
+
+        /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
         public IObservable<Unit> Lock(string owner, string name, int number)
-         {
-             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-             Ensure.ArgumentNotNullOrEmptyString(name, "name");
- 
-             return _client.Lock(owner, name, number).ToObservable();
-         }
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Lock(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue number</param>
+        public IObservable<Unit> Lock(int repositoryId, int number)
+        {
+            return _client.Lock(repositoryId, number).ToObservable();
+        }
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -397,13 +506,23 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns>A signal indicating completion.</returns>
         public IObservable<Unit> Unlock(string owner, string name, int number)
-         {
-             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-             Ensure.ArgumentNotNullOrEmptyString(name, "name");
- 
-             return _client.Unlock(owner, name, number).ToObservable();
-         }
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return _client.Unlock(owner, name, number).ToObservable();
+        }
+
+        /// <summary>
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue number</param>
+        public IObservable<Unit> Unlock(int repositoryId, int number)
+        {
+            return _client.Unlock(repositoryId, number).ToObservable();
+        }
     }
 }

@@ -89,7 +89,7 @@ namespace Octokit.Reactive
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
@@ -113,7 +113,7 @@ namespace Octokit.Reactive
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
@@ -140,7 +140,7 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
+        /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make 
@@ -162,7 +162,7 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
+        /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code provided by the user</param>
@@ -184,7 +184,7 @@ namespace Octokit.Reactive
         /// This method requires authentication.
         /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
         IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
@@ -214,18 +214,6 @@ namespace Octokit.Reactive
         IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken);
 
         /// <summary>
-        /// Revokes every OAuth token for an OAuth application.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
-        /// </remarks>
-        /// <param name="clientId">ClientID of the OAuth application for the token</param>
-        /// <returns></returns>
-        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
-        IObservable<Unit> RevokeAllApplicationAuthentications(string clientId);
-
-        /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
         /// </summary>
         /// <param name="id">The id of the <see cref="Authorization"/></param>
@@ -241,7 +229,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
@@ -256,7 +244,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
