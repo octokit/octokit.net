@@ -125,6 +125,7 @@
     <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
     <Compile Include="EnterpriseHelper.cs" />
     <Compile Include="Helpers\ApplicationTestAttribute.cs" />
+    <Compile Include="Helpers\GitHubEnterpriseManagementConsoleTestAttribute.cs" />
     <Compile Include="Helpers\GpgKeyContext.cs" />
     <Compile Include="Helpers\PublicKeyContext.cs" />
     <Compile Include="Helpers\EnterpriseUserContext.cs" />
