@@ -14,7 +14,7 @@ namespace Octokit
     public abstract class FormUrlEncodedParameters
     {
         /// <summary>
-        /// Converts the derived object into a UrlFormEncoded parameter string containing named parameters and their json values (key1={jsonValue1}&key2={jsonValue2})
+        /// Converts the derived object into a UrlFormEncoded parameter string containing named parameters and their json values (key1=jsonValue1&key2=jsonValue2)
         /// This format is required for particular API calls (eg the GitHub Enterprise Management Console API) that take a parameter formatted as json but not in the request body
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
