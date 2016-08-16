@@ -147,6 +147,8 @@ namespace Octokit
         /// </remarks>
         public static MaintenanceDate FromChronicValue(string chronicValue)
         {
+            Ensure.ArgumentNotNullOrEmptyString(chronicValue, "chronicValue");
+
             return new MaintenanceDate(chronicValue);
         }
     }
