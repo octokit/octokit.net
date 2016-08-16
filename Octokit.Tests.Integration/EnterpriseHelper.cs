@@ -173,7 +173,7 @@ namespace Octokit.Tests.Integration
             {
                 var client = new GitHubClient(connection);
                 client.Enterprise.ManagementConsole.EditMaintenanceMode(
-                    new UpdateMaintenanceRequest(enabled, MaintenanceDate.Now()),
+                    new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(enabled)),
                     EnterpriseHelper.ManagementConsolePassword)
                     .Wait(TimeSpan.FromSeconds(15));
             }

@@ -45,7 +45,8 @@ public class EnterpriseManagementConsoleClientTests
             // Set maintenance mode ON now
             var maintenance = await
             _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(true, MaintenanceDate.Now()),
+                new UpdateMaintenanceRequest(
+                    new UpdateMaintenanceRequestDetails(true)),
                 EnterpriseHelper.ManagementConsolePassword);
 
             Assert.Equal(maintenance.Status, MaintenanceModeStatus.On);
@@ -61,7 +62,8 @@ public class EnterpriseManagementConsoleClientTests
             var scheduledTime = DateTimeOffset.Now.AddMinutes(5);
             var maintenance = await
                 _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                    new UpdateMaintenanceRequest(true, MaintenanceDate.FromDateTimeOffset(scheduledTime)),
+                    new UpdateMaintenanceRequest(
+                        new UpdateMaintenanceRequestDetails(true, scheduledTime)),
                     EnterpriseHelper.ManagementConsolePassword);
 
             Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
@@ -76,7 +78,8 @@ public class EnterpriseManagementConsoleClientTests
             // Schedule maintenance mode ON with phrase
             var maintenance = await
             _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(true, MaintenanceDate.FromChronicValue("tomorrow at 5pm")),
+                new UpdateMaintenanceRequest(
+                    new UpdateMaintenanceRequestDetails(true, "tomorrow at 5pm")),
                 EnterpriseHelper.ManagementConsolePassword);
 
             Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);

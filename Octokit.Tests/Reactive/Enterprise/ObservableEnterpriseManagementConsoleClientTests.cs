@@ -49,16 +49,14 @@ namespace Octokit.Tests
                 var client = new ObservableEnterpriseManagementConsoleClient(github);
 
                 client.EditMaintenanceMode(
-                    new UpdateMaintenanceRequest(
-                        true, 
-                        MaintenanceDate.Now()),
+                    new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true)),
                     "Password01");
 
                 github.Enterprise.ManagementConsole.Received(1).
                     EditMaintenanceMode(
                         Arg.Is<UpdateMaintenanceRequest>(a =>
-                            a.Enabled == true &&
-                            a.When.Value == "now"),
+                            a.Maintenance.Enabled == true &&
+                            a.Maintenance.When == "now"),
                         Arg.Is("Password01"));
             }
 
