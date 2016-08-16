@@ -13,7 +13,7 @@ public class EnterpriseManagementConsoleClientTests
         _github = EnterpriseHelper.GetAuthenticatedClient();
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanGetMaintenanceMode()
     {
         var maintenance = await _github.Enterprise.ManagementConsole.GetMaintenanceMode("Password01");
@@ -21,7 +21,7 @@ public class EnterpriseManagementConsoleClientTests
         Assert.NotNull(maintenance);
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanSetMaintenanceModeOff()
     {
         // Set maintenance mode OFF now
@@ -34,7 +34,7 @@ public class EnterpriseManagementConsoleClientTests
         Assert.Equal(maintenance.Status, MaintenanceModeStatus.Off);
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanSetMaintenanceModeOnNow()
     {
         // Set maintenance mode ON now
@@ -52,7 +52,7 @@ public class EnterpriseManagementConsoleClientTests
             EnterpriseHelper.ManagementConsolePassword);
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanScheduleMaintenanceModeOnWithDateTime()
     {
         // Schedule maintenance mode ON in 5 minutes
@@ -71,7 +71,7 @@ public class EnterpriseManagementConsoleClientTests
             EnterpriseHelper.ManagementConsolePassword);
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanScheduleMaintenanceModeOnWithPhrase()
     {
         // Schedule maintenance mode ON
