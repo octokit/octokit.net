@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -45,7 +44,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
-            return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.AsNamedFormEncodingString());
+            return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.ToFormUrlEncodedParameterString());
         }
     }
 }

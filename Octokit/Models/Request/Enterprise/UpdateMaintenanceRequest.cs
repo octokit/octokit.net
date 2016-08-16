@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class UpdateMaintenanceRequest
+    public class UpdateMaintenanceRequest : FormUrlEncodedParameters
     {
         /// <summary>
         /// Maintenance request with default details (results in Maintenance mode being turned off immediately)
@@ -31,12 +29,6 @@ namespace Octokit
         /// Details for the maintenance request
         /// </summary>
         public UpdateMaintenanceRequestDetails Maintenance { get; protected set; }
-
-        public string AsNamedFormEncodingString()
-        {
-            var value = string.Format(CultureInfo.InvariantCulture, "maintenance={0}", new SimpleJsonSerializer().Serialize(this.Maintenance));
-            return value;
-        }
 
         internal string DebuggerDisplay
         {
