@@ -62,7 +62,7 @@ namespace Octokit
         /// Maintenance request details to enable/disable maintenance at a specified time (only applicable when enabling maintenance)
         /// </summary>
         /// <param name="enabled">true to enable, false to disable</param>
-        /// <param name="when">A phrase specifying when maintenance mode will be enabled.  Phrase uses humanised forms supported by the <a href="https://github.com/mojombo/chronic">mojombo/chronic library</a> used by the GitHub API
+        /// <param name="when">A phrase specifying when maintenance mode will be enabled.  Phrase uses humanised forms supported by the <a href="https://github.com/mojombo/chronic">mojombo/chronic library</a> used by the GitHub API</param>
         /// such as "this friday at 5pm" or "5 minutes before midday tomorrow"
         /// <remarks>If enabled is false, the when parameter is ignored and maintenance is turned off immediately</remarks>
         public UpdateMaintenanceRequestDetails(bool enabled, string when)
