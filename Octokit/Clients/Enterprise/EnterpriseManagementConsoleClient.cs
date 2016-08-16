@@ -15,7 +15,7 @@ namespace Octokit
             : base(apiConnection)
         { }
 
-        public Uri CorrectEndpointForManagementConsole(Uri endpoint)
+        internal Uri CorrectEndpointForManagementConsole(Uri endpoint)
         {
             Ensure.ArgumentNotNull(endpoint, "endpoint");
 
@@ -24,7 +24,7 @@ namespace Octokit
             {
                 // We need to get rid of the /api/v3/ for ManagementConsole requests
                 // if we specify the endpoint starting with a leading slash, that will achieve this
-                return string.Concat("/", endpoint.ToString()).FormatUri();
+                return new Uri("/" + endpoint.ToString());
             }
 
             return endpoint;
