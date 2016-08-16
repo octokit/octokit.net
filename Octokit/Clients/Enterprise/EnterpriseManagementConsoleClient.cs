@@ -15,21 +15,6 @@ namespace Octokit
             : base(apiConnection)
         { }
 
-        internal Uri CorrectEndpointForManagementConsole(Uri endpoint)
-        {
-            Ensure.ArgumentNotNull(endpoint, "endpoint");
-
-            if (ApiConnection.Connection.BaseAddress != null &&
-                ApiConnection.Connection.BaseAddress.ToString().EndsWith("/api/v3/", StringComparison.OrdinalIgnoreCase))
-            {
-                // We need to get rid of the /api/v3/ for ManagementConsole requests
-                // if we specify the endpoint starting with a leading slash, that will achieve this
-                return new Uri("/" + endpoint.ToString());
-            }
-
-            return endpoint;
-        }
-
         /// <summary>
         /// Gets GitHub Enterprise Maintenance Mode Status
         /// </summary>
@@ -41,8 +26,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
-            var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword);
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
             return ApiConnection.Get<MaintenanceModeResponse>(endpoint);
         }
@@ -59,8 +43,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(maintenance, "maintenance");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
-            var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword);
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
+            var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
             return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.AsNamedFormEncodingString());
         }
