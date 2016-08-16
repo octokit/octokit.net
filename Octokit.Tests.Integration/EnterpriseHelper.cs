@@ -167,6 +167,19 @@ namespace Octokit.Tests.Integration
             }
         }
 
+        public static void SetMaintenanceMode(IConnection connection, bool enabled)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.Enterprise.ManagementConsole.EditMaintenanceMode(
+                    new UpdateMaintenanceRequest(enabled, MaintenanceDate.Now()),
+                    EnterpriseHelper.ManagementConsolePassword)
+                    .Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
         public static IGitHubClient GetAuthenticatedClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)

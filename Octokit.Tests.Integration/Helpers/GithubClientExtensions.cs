@@ -79,5 +79,10 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             return new GpgKeyContext(client.Connection, key);
         }
+
+        internal static MaintenanceModeContext CreateMaintenanceModeContext(this IGitHubClient client, bool enabled)
+        {
+            return new MaintenanceModeContext(client.Connection, enabled);
+        }
     }
 }
