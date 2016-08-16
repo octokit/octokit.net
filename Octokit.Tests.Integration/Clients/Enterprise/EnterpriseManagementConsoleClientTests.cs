@@ -16,7 +16,7 @@ public class EnterpriseManagementConsoleClientTests
     [GitHubEnterpriseManagementConsoleTest]
     public async Task CanGetMaintenanceMode()
     {
-        var maintenance = await _github.Enterprise.ManagementConsole.GetMaintenanceMode("Password01");
+        var maintenance = await _github.Enterprise.ManagementConsole.GetMaintenanceMode(EnterpriseHelper.ManagementConsolePassword);
 
         Assert.NotNull(maintenance);
     }
