@@ -1,7 +1,11 @@
-﻿using Octokit.Internal;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class AuthorizedKey
     {
         public AuthorizedKey()
@@ -20,5 +24,13 @@ namespace Octokit
         public string PrettyPrint { get; private set; }
 
         public string Comment { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return String.Format(CultureInfo.InvariantCulture, "PrettyPrint: {0} Comment: {1} Key: {2}", PrettyPrint, Comment, Key);
+            }
+        }
     }
 }

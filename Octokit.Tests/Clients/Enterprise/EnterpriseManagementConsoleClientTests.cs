@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -87,6 +88,110 @@ namespace Octokit.Tests.Clients
                 var client = new EnterpriseManagementConsoleClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.EditMaintenanceMode(new UpdateMaintenanceRequest(), ""));
+            }
+        }
+
+        public class TheGetAllAuthorizedKeysMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                string expectedUri = "setup/api/settings/authorized-keys?api_key=Password01";
+                client.GetAllAuthorizedKeys("Password01");
+
+                connection.Received().Get<IReadOnlyList<AuthorizedKey>>(
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizedKeys(null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizedKeys(""));
+            }
+        }
+
+        public class TheAddAuthorizedKeyMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                string expectedUri = "setup/api/settings/authorized-keys?authorized_key=123ABC&api_key=Password01";
+                client.AddAuthorizedKey(new AuthorizedKeyRequest("123ABC"), "Password01");
+
+                connection.Received().Post<IReadOnlyList<AuthorizedKey>>(
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAuthorizedKey(null, "Password01"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAuthorizedKey(new AuthorizedKeyRequest("123ABC"), null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAuthorizedKey(new AuthorizedKeyRequest("123ABC"), ""));
+            }
+        }
+
+        public class TheDeleteAuthorizedKeyMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                string expectedUri = "setup/api/settings/authorized-keys?authorized_key=123ABC&api_key=Password01";
+                client.DeleteAuthorizedKey(new AuthorizedKeyRequest("123ABC"), "Password01");
+
+                connection.Received().Delete<IReadOnlyList<AuthorizedKey>>(
+                    Arg.Is<Uri>(u => u.ToString() == expectedUri));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteAuthorizedKey(null, "Password01"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteAuthorizedKey(new AuthorizedKeyRequest("123ABC"), null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterpriseManagementConsoleClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.DeleteAuthorizedKey(new AuthorizedKeyRequest("123ABC"), ""));
             }
         }
 
