@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/repos/merging/#perform-a-merge
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
         public IObservable<Merge> Create(int repositoryId, NewMerge merge)

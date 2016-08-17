@@ -55,7 +55,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-a-single-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The ID of the <see cref="Authorization"/> to get</param>
+        /// <param name="id">The Id of the <see cref="Authorization"/> to get</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
@@ -110,7 +110,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
@@ -134,7 +134,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
@@ -160,7 +160,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
@@ -184,7 +184,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
@@ -209,7 +209,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
         Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
@@ -239,18 +239,6 @@ namespace Octokit
         Task RevokeApplicationAuthentication(string clientId, string accessToken);
 
         /// <summary>
-        /// Revokes every OAuth token for an OAuth application.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
-        /// </remarks>
-        /// <param name="clientId">ClientID of the OAuth application for the token</param>
-        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
-        Task RevokeAllApplicationAuthentications(string clientId);
-
-        /// <summary>
         /// Updates the specified <see cref="Authorization"/>.
         /// </summary>
         /// <remarks>
@@ -258,7 +246,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">ID of the <see cref="Authorization"/> to update</param>
+        /// <param name="id">Id of the <see cref="Authorization"/> to update</param>
         /// <param name="authorizationUpdate">Describes the changes to make to the authorization</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
@@ -275,7 +263,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
@@ -291,7 +279,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.

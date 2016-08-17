@@ -157,7 +157,6 @@
     <Compile Include="Authentication\AnonymousAuthenticator.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Clients\ReleasesClient.cs" />
-    <Compile Include="Clients\SshKeysClient.cs" />
     <Compile Include="Exceptions\ApiValidationException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
     <Compile Include="Exceptions\LoginAttemptsExceededException.cs" />
@@ -181,7 +180,6 @@
     <Compile Include="Clients\IMiscellaneousClient.cs" />
     <Compile Include="Clients\IReleasesClient.cs" />
     <Compile Include="Clients\INotificationsClient.cs" />
-    <Compile Include="Clients\ISshKeysClient.cs" />
     <Compile Include="Clients\IOrganizationsClient.cs" />
     <Compile Include="Helpers\IReadOnlyPagedCollection.cs" />
     <Compile Include="Clients\IRepositoriesClient.cs" />
@@ -212,7 +210,6 @@
     <Compile Include="Http\IRequest.cs" />
     <Compile Include="Http\IResponse.cs" />
     <Compile Include="Http\Request.cs" />
-    <Compile Include="Helpers\ModelExtensions.cs" />
     <Compile Include="Models\Response\Authorization.cs" />
     <Compile Include="Models\Request\AuthorizationUpdate.cs" />
     <Compile Include="Models\Request\NewAuthorization.cs" />
@@ -225,9 +222,6 @@
     <Compile Include="Models\Response\ReleaseAsset.cs" />
     <Compile Include="Models\Request\ReleaseUpdate.cs" />
     <Compile Include="Models\Response\Repository.cs" />
-    <Compile Include="Models\Response\SshKey.cs" />
-    <Compile Include="Models\Response\SshKeyInfo.cs" />
-    <Compile Include="Models\Request\SshKeyUpdate.cs" />
     <Compile Include="Models\Response\User.cs" />
     <Compile Include="Models\Request\UserUpdate.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
@@ -492,11 +486,24 @@
     <Compile Include="Models\Response\GpgKey.cs" />
     <Compile Include="Models\Response\ReactionSummary.cs" />
     <Compile Include="Models\Response\Verification.cs" />
+    <Compile Include="Models\Response\RepositoryInvitation.cs" />
+    <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\RepositoryInvitationsClient.cs" />
+    <Compile Include="Models\Request\InvitationUpdate.cs" />
+    <Compile Include="Models\Request\CollaboratorRequest.cs" />
+    <Compile Include="Clients\IIssueTimelineClient.cs" />
+    <Compile Include="Clients\IssueTimelineClient.cs" />
+    <Compile Include="Models\Response\RenameInfo.cs" />
+    <Compile Include="Models\Response\SourceInfo.cs" />
+    <Compile Include="Models\Response\TimelineEventInfo.cs" />
+    <Compile Include="Clients\IRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseManagementConsoleClient.cs" />
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeActiveProcesses.cs" />
     <Compile Include="Models\Response\Enterprise\MaintenanceModeResponse.cs" />
+    <Compile Include="Models\Request\FormUrlEncodedParameters.cs" />
     <Compile Include="Models\Request\Enterprise\AuthorizedKeyRequest.cs" />
     <Compile Include="Models\Response\Enterprise\AuthorizedKey.cs" />
   </ItemGroup>

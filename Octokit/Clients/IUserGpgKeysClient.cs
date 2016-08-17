@@ -38,11 +38,11 @@ namespace Octokit
         /// <summary>
         /// View extended details of the <see cref="GpgKey"/> for the specified id.
         /// </summary>
-        /// <param name="id">The ID of the GPG key</param>
+        /// <param name="id">The Id of the GPG key</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>The <see cref="GpgKey"/> for the specified ID.</returns>
+        /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         Task<GpgKey> Get(int id);
@@ -59,9 +59,9 @@ namespace Octokit
         Task<GpgKey> Create(NewGpgKey newGpgKey);
 
         /// <summary>
-        /// Deletes the GPG key for the specified ID.
+        /// Deletes the GPG key for the specified Id.
         /// </summary>
-        /// <param name="id">The ID of the GPG key to delete.</param>
+        /// <param name="id">The Id of the GPG key to delete.</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>

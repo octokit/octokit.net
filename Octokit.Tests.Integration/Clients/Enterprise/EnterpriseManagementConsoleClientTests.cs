@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 public class EnterpriseManagementConsoleClientTests
@@ -14,80 +15,76 @@ public class EnterpriseManagementConsoleClientTests
         _github = EnterpriseHelper.GetAuthenticatedClient();
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanGetMaintenanceMode()
     {
-        var maintenance = await _github.Enterprise.ManagementConsole.GetMaintenanceMode("Password01");
+        var maintenance = await _github.Enterprise.ManagementConsole.GetMaintenanceMode(EnterpriseHelper.ManagementConsolePassword);
 
         Assert.NotNull(maintenance);
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanSetMaintenanceModeOff()
     {
-        // Set maintenance mode OFF now
-        var maintenance = await
-            _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(),
-                EnterpriseHelper.ManagementConsolePassword);
+        using (_github.CreateMaintenanceModeContext(true))
+        {
+            // Set maintenance mode OFF now
+            var maintenance = await
+                _github.Enterprise.ManagementConsole.EditMaintenanceMode(
+                    new UpdateMaintenanceRequest(),
+                    EnterpriseHelper.ManagementConsolePassword);
 
-        Assert.NotNull(maintenance);
-        Assert.Equal(maintenance.Status, MaintenanceModeStatus.Off);
+            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Off);
+        }
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanSetMaintenanceModeOnNow()
     {
-        // Set maintenance mode ON now
-        var maintenance = await
+        using (_github.CreateMaintenanceModeContext(false))
+        {
+            // Set maintenance mode ON now
+            var maintenance = await
             _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(true, MaintenanceDate.Now()),
+                new UpdateMaintenanceRequest(
+                    new UpdateMaintenanceRequestDetails(true)),
                 EnterpriseHelper.ManagementConsolePassword);
 
-        Assert.NotNull(maintenance);
-        Assert.Equal(maintenance.Status, MaintenanceModeStatus.On);
-
-        // Ensure maintenance mode is OFF
-        await _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-            new UpdateMaintenanceRequest(),
-            EnterpriseHelper.ManagementConsolePassword);
+            Assert.Equal(maintenance.Status, MaintenanceModeStatus.On);
+        }
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanScheduleMaintenanceModeOnWithDateTime()
     {
-        // Schedule maintenance mode ON in 5 minutes
-        var scheduledTime = DateTimeOffset.Now.AddMinutes(5);
-        var maintenance = await 
-            _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(true, MaintenanceDate.FromDateTimeOffset(scheduledTime)),
-                EnterpriseHelper.ManagementConsolePassword);
+        using (_github.CreateMaintenanceModeContext(false))
+        {
+            // Schedule maintenance mode ON in 5 minutes
+            var scheduledTime = DateTimeOffset.Now.AddMinutes(5);
+            var maintenance = await
+                _github.Enterprise.ManagementConsole.EditMaintenanceMode(
+                    new UpdateMaintenanceRequest(
+                        new UpdateMaintenanceRequestDetails(true, scheduledTime)),
+                    EnterpriseHelper.ManagementConsolePassword);
 
-        Assert.NotNull(maintenance);
-        Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
-
-        // Ensure maintenance mode is OFF
-        await _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-            new UpdateMaintenanceRequest(),
-            EnterpriseHelper.ManagementConsolePassword);
+            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
+        }
     }
 
-    [GitHubEnterpriseTest]
+    [GitHubEnterpriseManagementConsoleTest]
     public async Task CanScheduleMaintenanceModeOnWithPhrase()
     {
-        // Schedule maintenance mode ON
-        var maintenance = await
+        using (_github.CreateMaintenanceModeContext(false))
+        {
+            // Schedule maintenance mode ON with phrase
+            var maintenance = await
             _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-                new UpdateMaintenanceRequest(true, MaintenanceDate.FromChronicValue("tomorrow at 5pm")),
+                new UpdateMaintenanceRequest(
+                    new UpdateMaintenanceRequestDetails(true, "tomorrow at 5pm")),
                 EnterpriseHelper.ManagementConsolePassword);
 
-        Assert.NotNull(maintenance);
-        Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
-
-        // Ensure maintenance mode is OFF
-        await _github.Enterprise.ManagementConsole.EditMaintenanceMode(
-            new UpdateMaintenanceRequest(),
-            EnterpriseHelper.ManagementConsolePassword);
+            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
+        }
     }
 
     private async Task DeleteManagementAuthorizedKeyIfExists(string keyData)

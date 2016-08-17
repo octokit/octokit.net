@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns the HTML rendered README.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<Readme> GetReadme(int repositoryId)
         {
             return _client.Repository.Content.GetReadme(repositoryId).ToObservable();
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns just the HTML portion of the README without the surrounding HTML document. 
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<string> GetReadmeHtml(int repositoryId)
         {
             return _client.Repository.Content.GetReadmeHtml(repositoryId).ToObservable();
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// Get an archive of a given repository's contents
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<byte[]> GetArchive(int repositoryId)
         {
             return GetArchive(repositoryId, ArchiveFormat.Tarball);
@@ -113,7 +113,7 @@ namespace Octokit.Reactive
         /// Get an archive of a given repository's contents, in a specific format
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat)
         {
@@ -141,7 +141,7 @@ namespace Octokit.Reactive
         /// Get an archive of a given repository's contents, using a specific format and reference
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         public IObservable<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference)
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// Get an archive of a given repository's contents, in a specific format
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
@@ -212,7 +212,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// If given a path to a single file, this method returns a collection containing only that file.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
         public IObservable<RepositoryContent> GetAllContents(int repositoryId, string path)
         {
@@ -241,7 +241,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns the contents of the root directory in a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<RepositoryContent> GetAllContents(int repositoryId)
         {
             return _client
@@ -277,7 +277,7 @@ namespace Octokit.Reactive
         /// If given a path to a single file, this method returns a collection containing only that file.
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <param name="path">The content path</param>
         public IObservable<RepositoryContent> GetAllContentsByRef(int repositoryId, string reference, string path)
@@ -306,7 +306,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns the contents of the home directory in a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         public IObservable<RepositoryContent> GetAllContentsByRef(int repositoryId, string reference)
         {
@@ -335,7 +335,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a commit that creates a new file in a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
         public IObservable<RepositoryContentChangeSet> CreateFile(int repositoryId, string path, CreateFileRequest request)
@@ -366,7 +366,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a commit that updates the contents of a file in a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
         public IObservable<RepositoryContentChangeSet> UpdateFile(int repositoryId, string path, UpdateFileRequest request)
@@ -397,7 +397,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a commit that deletes a file in a repository.
         /// </summary>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
         public IObservable<Unit> DeleteFile(int repositoryId, string path, DeleteFileRequest request)

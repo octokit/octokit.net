@@ -30,7 +30,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
         public Task<TreeResponse> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -44,12 +43,26 @@ namespace Octokit
         /// Gets a Tree Response for a given SHA.
         /// </summary>
         /// <remarks>
+        /// http://developer.github.com/v3/git/trees/#get-a-tree
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The SHA that references the tree</param>
+        public Task<TreeResponse> Get(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return ApiConnection.Get<TreeResponse>(ApiUrls.Tree(repositoryId, reference));
+        }
+
+        /// <summary>
+        /// Gets a Tree Response for a given SHA.
+        /// </summary>
+        /// <remarks>
         /// https://developer.github.com/v3/git/trees/#get-a-tree-recursively
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        /// <returns>The <see cref="TreeResponse"/> for the specified Tree.</returns>
         public Task<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -57,6 +70,21 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             return ApiConnection.Get<TreeResponse>(ApiUrls.TreeRecursive(owner, name, reference));
+        }
+
+        /// <summary>
+        /// Gets a Tree Response for a given SHA.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/git/trees/#get-a-tree-recursively
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The SHA that references the tree</param>
+        public Task<TreeResponse> GetRecursive(int repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+
+            return ApiConnection.Get<TreeResponse>(ApiUrls.TreeRecursive(repositoryId, reference));
         }
 
         /// <summary>
@@ -68,7 +96,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        /// <returns>The <see cref="TreeResponse"/> that was just created.</returns>
         public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -81,6 +108,26 @@ namespace Octokit
             }
 
             return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(owner, name), newTree);
+        }
+
+        /// <summary>
+        /// Creates a new Tree in the specified repo
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/trees/#create-a-tree
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="newTree">The value of the new tree</param>
+        public Task<TreeResponse> Create(int repositoryId, NewTree newTree)
+        {
+            Ensure.ArgumentNotNull(newTree, "newTree");
+
+            if (newTree.Tree.Any(t => string.IsNullOrWhiteSpace(t.Mode)))
+            {
+                throw new ArgumentException("You have specified items in the tree which do not have a Mode value set.");
+            }
+
+            return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(repositoryId), newTree);
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Octokit.Tests.Clients
     {
         public class TheGetMaintenanceModeMethod
         {
-            readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
-
             [Fact]
             public void RequestsCorrectUrl()
             {
@@ -51,7 +49,7 @@ namespace Octokit.Tests.Clients
                 var client = new EnterpriseManagementConsoleClient(connection);
 
                 string expectedUri = "setup/api/maintenance?api_key=Password01";
-                client.EditMaintenanceMode(new UpdateMaintenanceRequest(false, MaintenanceDate.Now()), "Password01");
+                client.EditMaintenanceMode(new UpdateMaintenanceRequest(), "Password01");
 
                 connection.Received().Post<MaintenanceModeResponse>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
@@ -64,12 +62,12 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseManagementConsoleClient(connection);
 
-                client.EditMaintenanceMode(new UpdateMaintenanceRequest(true, MaintenanceDate.Now()), "Password01");
+                client.EditMaintenanceMode(new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true)), "Password01");
 
                 connection.Received().Post<MaintenanceModeResponse>(
                     Arg.Any<Uri>(),
                     Arg.Is<string>(a =>
-                        a == "maintenance={\"enabled\":true, \"when\":\"now\"}"));
+                        a == "maintenance={\"enabled\":true,\"when\":\"now\"}"));
             }
 
             [Fact]
@@ -79,7 +77,7 @@ namespace Octokit.Tests.Clients
                 var client = new EnterpriseManagementConsoleClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditMaintenanceMode(null, "Password01"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditMaintenanceMode(new UpdateMaintenanceRequest(false, MaintenanceDate.Now()), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditMaintenanceMode(new UpdateMaintenanceRequest(), null));
             }
 
             [Fact]
@@ -88,7 +86,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EnterpriseManagementConsoleClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.EditMaintenanceMode(new UpdateMaintenanceRequest(false, MaintenanceDate.Now()), ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.EditMaintenanceMode(new UpdateMaintenanceRequest(), ""));
             }
         }
 

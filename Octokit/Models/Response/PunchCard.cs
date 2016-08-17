@@ -10,6 +10,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCard
     {
+        public PunchCard() { }
+
         public PunchCard(IEnumerable<IList<int>> punchCardData)
         {
             Ensure.ArgumentNotNull(punchCardData, "punchCardData");

@@ -45,7 +45,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#get-a-reference
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
         public Task<Reference> Get(int repositoryId, string reference)
@@ -78,7 +78,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#get-all-references
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(int repositoryId)
         {
@@ -112,7 +112,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#get-all-references
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(int repositoryId, string subNamespace)
@@ -149,7 +149,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#create-a-reference
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
         public Task<Reference> Create(int repositoryId, NewReference reference)
@@ -186,7 +186,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#update-a-reference
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
@@ -223,7 +223,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#delete-a-reference
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
         public Task Delete(int repositoryId, string reference)
