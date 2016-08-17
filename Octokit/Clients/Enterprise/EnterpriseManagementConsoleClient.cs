@@ -50,37 +50,52 @@ namespace Octokit
             return ApiConnection.Post<MaintenanceModeResponse>(endpoint, maintenance.ToFormUrlEncodedParameterString());
         }
 
+        /// <summary>
+        /// Gets the authorized SSH keys for the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
+        /// </remarks>
         public Task<IReadOnlyList<AuthorizedKey>> GetAllAuthorizedKeys(string managementConsolePassword)
         {
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
-            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
             return ApiConnection.Get<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
 
+        /// <summary>
+        /// Adds an authorized SSH key to the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
+        /// </remarks>
         public Task<IReadOnlyList<AuthorizedKey>> AddAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
         {
             Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
-            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword, ApiConnection.Connection.BaseAddress);
             endpoint = endpoint.ApplyParameters(authorizedKey.ToParametersDictionary());
 
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
             return ApiConnection.Post<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
 
+        /// <summary>
+        /// Removes an authorized SSH key from the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
+        /// </remarks>
         public Task<IReadOnlyList<AuthorizedKey>> DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
         {
             Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
-            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword);
+            var endpoint = ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword, ApiConnection.Connection.BaseAddress);
             endpoint = endpoint.ApplyParameters(authorizedKey.ToParametersDictionary());
 
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
             return ApiConnection.Delete<IReadOnlyList<AuthorizedKey>>(endpoint);
         }
     }
