@@ -29,5 +29,29 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
         IObservable<MaintenanceModeResponse> EditMaintenanceMode(UpdateMaintenanceRequest maintenance, string managementConsolePassword);
+
+        /// <summary>
+        /// Gets the authorized SSH keys for the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
+        /// </remarks>
+        IObservable<AuthorizedKey> GetAllAuthorizedKeys(string managementConsolePassword);
+
+        /// <summary>
+        /// Adds an authorized SSH key to the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
+        /// </remarks>
+        IObservable<AuthorizedKey> AddAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword);
+
+        /// <summary>
+        /// Removes an authorized SSH key from the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
+        /// </remarks>
+        IObservable<AuthorizedKey> DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword);
     }
 }
