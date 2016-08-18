@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -12,12 +14,14 @@ namespace Octokit.Reactive
     public class ObservableEnterpriseManagementConsoleClient : IObservableEnterpriseManagementConsoleClient
     {
         readonly IEnterpriseManagementConsoleClient _client;
+        readonly IConnection _connection;
 
         public ObservableEnterpriseManagementConsoleClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 
             _client = client.Enterprise.ManagementConsole;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -47,6 +51,51 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
 
             return _client.EditMaintenanceMode(maintenance, managementConsolePassword).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets the authorized SSH keys for the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
+        /// </remarks>
+        public IObservable<AuthorizedKey> GetAllAuthorizedKeys(string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            return _connection.GetAndFlattenAllPages<AuthorizedKey>(ApiUrls.EnterpriseManagementConsoleAuthorizedKeys(managementConsolePassword, _connection.BaseAddress));
+        }
+
+        /// <summary>
+        /// Adds an authorized SSH key to the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
+        /// </remarks>
+        public IObservable<AuthorizedKey> AddAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            return _client.AddAuthorizedKey(authorizedKey, managementConsolePassword)
+                .ToObservable()
+                .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
+        }
+
+        /// <summary>
+        /// Removes an authorized SSH key from the GitHub Enterprise instance
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
+        /// </remarks>
+        public IObservable<AuthorizedKey> DeleteAuthorizedKey(AuthorizedKeyRequest authorizedKey, string managementConsolePassword)
+        {
+            Ensure.ArgumentNotNull(authorizedKey, "authorizedKey");
+            Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
+
+            return _client.DeleteAuthorizedKey(authorizedKey, managementConsolePassword)
+                .ToObservable()
+                .SelectMany(x => x); // HACK: DELETE is not compatible with GetAndFlattenPages
         }
     }
 }
