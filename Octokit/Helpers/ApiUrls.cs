@@ -1667,7 +1667,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRequiredStatusChecks(int repositoryId, string branchName)
         {
-            return "repos/{0}/branches/{1}/protection/required_status_checks".FormatUri(repositoryId, branchName);
+            return "repositories/{0}/branches/{1}/protection/required_status_checks".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
@@ -1690,7 +1690,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRequiredStatusChecksContexts(int repositoryId, string branchName)
         {
-            return "repos/{0}/branches/{1}/protection/required_status_checks/contexts".FormatUri(repositoryId, branchName);
+            return "repositories/{0}/branches/{1}/protection/required_status_checks/contexts".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
@@ -1713,7 +1713,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRestrictions(int repositoryId, string branchName)
         {
-            return "repos/{0}/branches/{1}/protection/restrictions".FormatUri(repositoryId, branchName);
+            return "repositories/{0}/branches/{1}/protection/restrictions".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
@@ -1736,7 +1736,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRestrictionsTeams(int repositoryId, string branchName)
         {
-            return "repos/{0}/branches/{1}/protection/restrictions/teams".FormatUri(repositoryId, branchName);
+            return "repositories/{0}/branches/{1}/protection/restrictions/teams".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
@@ -1759,7 +1759,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoRestrictionsUsers(int repositoryId, string branchName)
         {
-            return "repos/{0}/branches/{1}/protection/restrictions/users".FormatUri(repositoryId, branchName);
+            return "repositories/{0}/branches/{1}/protection/restrictions/users".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
