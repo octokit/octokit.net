@@ -15,7 +15,7 @@ namespace Octokit.Tests.Conventions
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
             var methodsWhichCanPaginate = methodsOrdered
-                .Where(x => x.Name.StartsWith("GetAll"));
+                .Where(x => x.Name.StartsWith("GetAll") && !x.HasAttribute<ExcludeFromPaginationConventionTestAttribute>());
 
             var invalidMethods = methodsWhichCanPaginate
                 .Where(method => MethodHasAppropriateOverload(method, methodsOrdered) == null)

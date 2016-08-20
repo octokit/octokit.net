@@ -489,6 +489,7 @@
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
+    <Compile Include="Helpers\ExcludeFromTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

@@ -499,6 +499,7 @@
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
+    <Compile Include="Helpers\ExcludeFromTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
