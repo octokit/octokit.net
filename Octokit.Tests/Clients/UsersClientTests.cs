@@ -99,7 +99,6 @@ namespace Octokit.Tests.Clients
 
                 var user = new SimpleJsonSerializer().Deserialize<User>(json);
 
-                Assert.Null(user);
                 Assert.Equal(0, user.Id);
                 Assert.Null(user.Type);
             }
