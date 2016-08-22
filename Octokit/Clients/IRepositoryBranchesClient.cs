@@ -237,6 +237,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch);
 
         /// <summary>
@@ -247,6 +248,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch);
 
         /// <summary>
@@ -369,6 +371,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -379,6 +382,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch);
 
         /// <summary>
@@ -459,6 +463,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -469,6 +474,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationConventionTestAttribute]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
 
         /// <summary>
