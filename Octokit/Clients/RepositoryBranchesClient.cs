@@ -403,7 +403,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -421,7 +420,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
@@ -595,7 +593,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
