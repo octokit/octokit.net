@@ -442,7 +442,7 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                null);
+                new BranchProtectionPushRestrictionsUpdate());
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
@@ -450,7 +450,8 @@ public class RepositoryBranchesClientTests
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-            Assert.Null(protection.Restrictions);
+            Assert.Empty(protection.Restrictions.Teams);
+            Assert.Empty(protection.Restrictions.Users);
         }
 
         [IntegrationTest]
@@ -459,7 +460,7 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                null);
+                new BranchProtectionPushRestrictionsUpdate());
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
@@ -467,7 +468,8 @@ public class RepositoryBranchesClientTests
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-            Assert.Null(protection.Restrictions);
+            Assert.Empty(protection.Restrictions.Teams);
+            Assert.Empty(protection.Restrictions.Users);
         }
 
         public void Dispose()

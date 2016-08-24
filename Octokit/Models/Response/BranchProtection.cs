@@ -108,7 +108,7 @@ namespace Octokit
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, ProtectedBranchRestrictions restrictions)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
@@ -122,7 +122,7 @@ namespace Octokit
         /// <summary>
         /// Push access restrictions for the protected branch
         /// </summary>
-        public ProtectedBranchRestrictions Restrictions { get; protected set; }
+        public BranchProtectionPushRestrictions Restrictions { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -183,11 +183,11 @@ namespace Octokit
     /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ProtectedBranchRestrictions
+    public class BranchProtectionPushRestrictions
     {
-        public ProtectedBranchRestrictions() { }
+        public BranchProtectionPushRestrictions() { }
 
-        public ProtectedBranchRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        public BranchProtectionPushRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
         {
             Teams = teams;
             Users = users;
