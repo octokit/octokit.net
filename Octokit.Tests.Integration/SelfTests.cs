@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
 
@@ -20,7 +21,7 @@ namespace Octokit.Tests.Integration
             var errors = typeof(SelfTests).Assembly.GetAsyncVoidMethodsList();
             Assert.Equal("", errors);
         }
-
+        
         /// <summary>
         /// Extract the current directory from the running assembly
         /// </summary>
@@ -180,6 +181,19 @@ namespace Octokit.Tests.Integration
             Assert.True(exitCode == 0);
             Assert.Empty(output);
             Assert.Empty(error);
+        }
+
+        [Fact(Skip = "test doesn't fail, so let's not worry about it for now")]
+        public async Task DocumentedApiMatchesImplementation()
+        {
+            var documentedApis = WebsiteScraper.GetListOfDocumentedApis();
+
+            var deprecatedEndpoints = documentedApis.SelectMany(a => a.Endpoints)
+                .Where(e => e.IsDeprecated)
+                .ToList();
+
+            var allErrors = documentedApis.SelectMany(api => api.Validate())
+                .ToList();
         }
     }
 }
