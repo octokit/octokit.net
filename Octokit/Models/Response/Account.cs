@@ -55,7 +55,7 @@ namespace Octokit
         /// <summary>
         /// Number of collaborators the account has.
         /// </summary>
-        public int Collaborators { get; protected set; }
+        public int? Collaborators { get; protected set; }
 
         /// <summary>
         /// Company the account works for.
@@ -70,7 +70,7 @@ namespace Octokit
         /// <summary>
         /// Amount of disk space the account is using.
         /// </summary>
-        public int DiskUsage { get; protected set; }
+        public int? DiskUsage { get; protected set; }
 
         /// <summary>
         /// The account's email.
@@ -138,7 +138,7 @@ namespace Octokit
         /// <summary>
         /// Number of private gists the account has created.
         /// </summary>
-        public int PrivateGists { get; protected set; }
+        public int? PrivateGists { get; protected set; }
 
         /// <summary>
         /// Number of public gists the account has created.
