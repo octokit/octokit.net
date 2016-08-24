@@ -441,11 +441,12 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body" };
+        var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body", Base = "my-other-branch" };
         var result = await _fixture.Update(Helper.UserName, _context.RepositoryName, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(updatePullRequest.Title, result.Title);
         Assert.Equal(updatePullRequest.Body, result.Body);
+        Assert.Equal(updatePullRequest.Base, result.Base.Ref);
     }
 
     [IntegrationTest]
@@ -456,11 +457,12 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body" };
+        var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body", Base = "my-other-branch" };
         var result = await _fixture.Update(_context.Repository.Id, pullRequest.Number, updatePullRequest);
 
         Assert.Equal(updatePullRequest.Title, result.Title);
         Assert.Equal(updatePullRequest.Body, result.Body);
+        Assert.Equal(updatePullRequest.Base, result.Base.Ref);
     }
 
     [IntegrationTest]

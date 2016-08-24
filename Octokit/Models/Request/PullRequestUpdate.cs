@@ -24,6 +24,11 @@ namespace Octokit
         /// </summary>
         public string Body { get; set; }
 
+        /// <summary>
+        /// The base branch of the pull request.
+        /// </summary>
+        public string Base { get; set; }
+
         internal string DebuggerDisplay
         {
             get
