@@ -236,7 +236,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch);
+        IObservable<string> GetRequiredStatusChecksContexts(string owner, string name, string branch);
 
         /// <summary>
         /// Get the required status checks contexts for the specified branch />
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch);
+        IObservable<string> GetRequiredStatusChecksContexts(int repositoryId, string branch);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch />
@@ -260,7 +260,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch />
@@ -272,7 +272,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> UpdateRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Add the required status checks context for the specified branch />
@@ -285,7 +285,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Add the required status checks contexts for the specified branch />
@@ -297,7 +297,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> AddRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> AddRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Remove the required status checks context for the specified branch />
@@ -310,7 +310,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Remove the required status checks contexts for the specified branch />
@@ -322,7 +322,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         [ExcludeFromPaginationConventionTest]
-        IObservable<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
+        IObservable<string> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
         /// Get the restrictions for the specified branch />
@@ -375,7 +375,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
+        IObservable<Team> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
         /// Get team restrictions for the specified branch />
@@ -385,7 +385,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch);
+        IObservable<Team> GetProtectedBranchTeamRestrictions(int repositoryId, string branch);
 
         /// <summary>
         /// Replace team restrictions for the specified branch />
@@ -397,7 +397,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Replace team restrictions for the specified branch />
@@ -408,7 +408,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -420,7 +420,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -431,7 +431,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Remove team restrictions for the specified branch />
@@ -443,7 +443,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        IObservable<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Remove team restrictions for the specified branch />
@@ -454,7 +454,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        IObservable<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        IObservable<Team> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
         /// Get user restrictions for the specified branch />
@@ -465,7 +465,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
+        IObservable<User> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
         /// Get user restrictions for the specified branch />
@@ -475,7 +475,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
+        IObservable<User> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
 
         /// <summary>
         /// Replace user restrictions for the specified branch />
@@ -487,7 +487,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        IObservable<User> SetProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
         /// Replace user restrictions for the specified branch />
@@ -498,7 +498,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        IObservable<User> SetProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />
@@ -510,7 +510,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        IObservable<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        IObservable<User> AddProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />
@@ -521,7 +521,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        IObservable<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        IObservable<User> AddProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
 
         /// <summary>
         /// Remove user restrictions for the specified branch />
@@ -533,7 +533,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        IObservable<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        IObservable<User> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
         /// Remove user restrictions for the specified branch />
@@ -544,6 +544,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        IObservable<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        IObservable<User> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
     }
 }
