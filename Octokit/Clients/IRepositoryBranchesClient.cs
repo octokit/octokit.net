@@ -172,7 +172,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch);
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(int repositoryId, string branch);
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch);
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch);
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch);
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
 
         /// <summary>
@@ -563,7 +563,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        [ExcludeFromTest]
+        [ExcludeFromPaginationConventionTest]
         Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
     }
 }
