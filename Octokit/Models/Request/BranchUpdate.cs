@@ -23,7 +23,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Protection: {0}", Protection.DebuggerDisplay);
+                return string.Format(CultureInfo.InvariantCulture, "Protection: {0}", Protection.DebuggerDisplay);
             }
         }
     }

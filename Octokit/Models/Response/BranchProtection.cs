@@ -39,7 +39,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
             }
         }
     }
@@ -70,7 +70,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
+                return string.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
             }
         }
     }
@@ -128,7 +128,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture, 
                     "StatusChecks: {0} Restrictions: {1}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
@@ -170,7 +170,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
                     IncludeAdmins, 
                     Strict, 
@@ -207,7 +207,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture, 
                     "Teams: {0} Users: {1}",
                     Teams == null ? "" : String.Join(",", Teams),
                     Users == null ? "" : String.Join(",", Users));
