@@ -1097,14 +1097,13 @@ public class RepositoryBranchesClientTests
     public class TheGetProtectedBranchRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
-        RepositoryContext _userRepoContext;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheGetProtectedBranchRestrictionsMethod()
         {
             var github = Helper.GetAuthenticatedClient();
             _client = github.Repository.Branch;
-            
+
             _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
@@ -1137,9 +1136,6 @@ public class RepositoryBranchesClientTests
 
         public void Dispose()
         {
-            if (_userRepoContext != null)
-                _userRepoContext.Dispose();
-
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
         }
@@ -1185,7 +1181,6 @@ public class RepositoryBranchesClientTests
     public class TheGetProtectedBranchTeamRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
-        RepositoryContext _userRepoContext;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheGetProtectedBranchTeamRestrictionsMethod()
@@ -1193,7 +1188,6 @@ public class RepositoryBranchesClientTests
             var github = Helper.GetAuthenticatedClient();
             _client = github.Repository.Branch;
 
-            _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
             _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
@@ -1220,9 +1214,6 @@ public class RepositoryBranchesClientTests
 
         public void Dispose()
         {
-            if (_userRepoContext != null)
-                _userRepoContext.Dispose();
-
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
         }
@@ -1231,7 +1222,6 @@ public class RepositoryBranchesClientTests
     public class TheSetProtectedBranchTeamRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
-        RepositoryContext _userRepoContext;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
         IGitHubClient _github;
 
@@ -1239,7 +1229,7 @@ public class RepositoryBranchesClientTests
         {
             _github = Helper.GetAuthenticatedClient();
             _client = _github.Repository.Branch;
-                        
+
             _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
@@ -1258,15 +1248,15 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeams = new List<string>() { contextOrgTeam2.TeamName };
-            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeams);
+            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
         }
 
         [IntegrationTest]
-        public async Task GetsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
+        public async Task SetsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
@@ -1280,8 +1270,8 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeams = new List<string>() { contextOrgTeam2.TeamName };
-            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoId, "master", newTeams);
+            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1289,11 +1279,298 @@ public class RepositoryBranchesClientTests
 
         public void Dispose()
         {
-            if (_userRepoContext != null)
-                _userRepoContext.Dispose();
-
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
+        }
+    }
+
+    public class TheAddProtectedBranchTeamRestrictionsMethod : IDisposable
+    {
+        IRepositoryBranchesClient _client;
+        OrganizationRepositoryWithTeamContext _orgRepoContext;
+        IGitHubClient _github;
+
+        public TheAddProtectedBranchTeamRestrictionsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+
+            _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task AddProtectedBranchTeamRestrictionsForOrgRepo()
+        {
+            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
+            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
+
+            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
+
+            // Grant team push access to repo
+            await _github.Organization.Team.AddRepository(
+                contextOrgTeam2.TeamId,
+                repoOwner,
+                repoName,
+                new RepositoryPermissionRequest(Permission.Push));
+
+            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(2, restrictions.Count);
+        }
+
+        [IntegrationTest]
+        public async Task AddProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
+        {
+            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
+            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
+            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
+            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
+
+            // Grant team push access to repo
+            await _github.Organization.Team.AddRepository(
+                 contextOrgTeam2.TeamId,
+                repoOwner,
+                repoName,
+                new RepositoryPermissionRequest(Permission.Push));
+
+            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(2, restrictions.Count);
+        }
+
+        public void Dispose()
+        {
+            if (_orgRepoContext != null)
+                _orgRepoContext.Dispose();
+        }
+    }
+
+    public class TheDeleteProtectedBranchTeamRestrictions
+    {
+        IGitHubClient _github;
+        IRepositoryBranchesClient _client;
+
+        public TheDeleteProtectedBranchTeamRestrictions()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+        }
+
+        [IntegrationTest]
+        public async Task DeletesRProtectedBranchTeamRestrictionsForOrgRepo()
+        {
+            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+            {
+                var repoOwner = context.RepositoryContext.RepositoryOwner;
+                var repoName = context.RepositoryContext.RepositoryName;
+                var teamToRemove = new List<string>() { context.TeamContext.TeamName };
+                var deleted = await _client.DeleteProtectedBranchTeamRestrictions(repoOwner, repoName, "master", teamToRemove);
+
+                Assert.NotNull(deleted);
+                Assert.Equal(0, deleted.Count);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task DeletesProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
+        {
+            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+            {
+                var repoId = context.RepositoryContext.RepositoryId;
+                var teamToRemove = new List<string>() { context.TeamContext.TeamName };
+                var deleted = await _client.DeleteProtectedBranchTeamRestrictions(repoId, "master", teamToRemove);
+
+                Assert.NotNull(deleted);
+                Assert.Equal(0, deleted.Count);
+            }
+        }
+    }
+
+    public class TheGetProtectedBranchUserRestrictionsMethod : IDisposable
+    {
+        IRepositoryBranchesClient _client;
+        OrganizationRepositoryWithTeamContext _orgRepoContext;
+
+        public TheGetProtectedBranchUserRestrictionsMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
+        {
+            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
+            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
+            var restrictions = await _client.GetProtectedBranchUserRestrictions(repoOwner, repoName, "master");
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(0, restrictions.Count);
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        {
+            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
+            var restrictions = await _client.GetProtectedBranchUserRestrictions(repoId, "master");
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(0, restrictions.Count);
+        }
+
+        public void Dispose()
+        {
+            if (_orgRepoContext != null)
+                _orgRepoContext.Dispose();
+        }
+    }
+
+    public class TheSetProtectedBranchUserRestrictionsMethod : IDisposable
+    {
+        IRepositoryBranchesClient _client;
+        IGitHubClient _github;
+        OrganizationRepositoryWithTeamContext _orgRepoContext;
+
+        public TheSetProtectedBranchUserRestrictionsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+
+            _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
+        {
+            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
+            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
+            var newUser = new List<string>() { _github.User.Current().Result.Login };
+
+            var restrictions = await _client.SetProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(1, restrictions.Count);
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        {
+            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
+            var newUser = new List<string>() { _github.User.Current().Result.Login };
+
+            var restrictions = await _client.SetProtectedBranchUserRestrictions(repoId, "master", newUser);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(1, restrictions.Count);
+        }
+
+        public void Dispose()
+        {
+            if (_orgRepoContext != null)
+                _orgRepoContext.Dispose();
+        }
+    }
+
+    public class TheAddProtectedBranchUserRestrictionsMethod : IDisposable
+    {
+        IRepositoryBranchesClient _client;
+        IGitHubClient _github;
+        OrganizationRepositoryWithTeamContext _orgRepoContext;
+
+        public TheAddProtectedBranchUserRestrictionsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+
+            _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
+        {
+            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
+            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
+            var newUser = new List<string>() { _github.User.Current().Result.Login };
+
+            var restrictions = await _client.AddProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(1, restrictions.Count);
+        }
+
+        [IntegrationTest]
+        public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        {
+            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
+            var newUser = new List<string>() { _github.User.Current().Result.Login };
+
+            var restrictions = await _client.AddProtectedBranchUserRestrictions(repoId, "master", newUser);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(1, restrictions.Count);
+        }
+
+        public void Dispose()
+        {
+            if (_orgRepoContext != null)
+                _orgRepoContext.Dispose();
+        }
+    }
+
+    public class TheDeleteProtectedBranchUserRestrictions
+    {
+        IGitHubClient _github;
+        IRepositoryBranchesClient _client;
+
+        public TheDeleteProtectedBranchUserRestrictions()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+        }
+
+        [IntegrationTest]
+        public async Task DeletesProtectedBranchUserRestrictionsForOrgRepo()
+        {
+            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+            {
+                var repoOwner = context.RepositoryContext.RepositoryOwner;
+                var repoName = context.RepositoryContext.RepositoryName;
+                var user = new List<string>() { _github.User.Current().Result.Login };
+                var restrictions = await _client.AddProtectedBranchUserRestrictions(repoOwner, repoName, "master", user);
+
+                Assert.NotNull(restrictions);
+                Assert.Equal(1, restrictions.Count);
+
+                var deleted = await _client.DeleteProtectedBranchUserRestrictions(repoOwner, repoName, "master", user);
+
+                Assert.NotNull(deleted);
+                Assert.Equal(0, deleted.Count);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task DeletesProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        {
+            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+            {
+                var repoId = context.RepositoryContext.RepositoryId;
+                var user = new List<string>() { _github.User.Current().Result.Login };
+                var restrictions = await _client.AddProtectedBranchUserRestrictions(repoId, "master", user);
+
+                Assert.NotNull(restrictions);
+                Assert.Equal(1, restrictions.Count);
+
+                var deleted = await _client.DeleteProtectedBranchUserRestrictions(repoId, "master", user);
+
+                Assert.NotNull(deleted);
+                Assert.Equal(0, deleted.Count);
+            }
         }
     }
 }
