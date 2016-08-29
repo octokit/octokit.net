@@ -13,11 +13,13 @@ namespace Octokit.Tests.Integration.Helpers
         {
             _connection = connection;
             Repository = repo;
+            RepositoryId = repo.Id;
             RepositoryOwner = repo.Owner.Login;
             RepositoryName = repo.Name;
         }
 
         private IConnection _connection;
+        internal int RepositoryId { get; private set; }
         internal string RepositoryOwner { get; private set; }
         internal string RepositoryName { get; private set; }
 

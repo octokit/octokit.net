@@ -9,11 +9,24 @@ namespace Octokit
     {
         public Branch() { }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        public Branch(string name, GitReference commit, BranchProtection protection)
+        public Branch(string name, GitReference commit, bool @protected)
         {
             Name = name;
             Commit = commit;
+            Protected = @protected;
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        public Branch(string name, GitReference commit, BranchProtection protection)
+            : this(name, commit, protection, false)
+        {
+        }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        public Branch(string name, GitReference commit, BranchProtection protection, bool @protected)
+            : this(name, commit, @protected)
+        {
             Protection = protection;
         }
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -25,10 +38,14 @@ namespace Octokit
 
         /// <summary>
         /// The <see cref="BranchProtection"/> details for this <see cref="Branch"/>.
-        /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
         /// </summary>
         [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.", false)]
         public BranchProtection Protection { get; protected set; }
+
+        /// <summary>
+        /// Whether this <see cref="Branch"/> is protected. 
+        /// </summary>
+        public bool Protected { get; protected set; }
 
         /// <summary>
         /// The <see cref="GitReference"/> history for this <see cref="Branch"/>.
