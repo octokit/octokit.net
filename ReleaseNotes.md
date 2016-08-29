@@ -1,13 +1,25 @@
-### New in 0.22.0 (released 2016/08/17)
+### New in 0.22.0 (released 2016/08/31)
 
 **Features**
 
  - Timeline preview API support - #1435 via @alfhenrik
  - Initial groundwork for Branches API - #1437 via @ryangribble
+ - Base branch can now be updated when updating a pull request - #1450 via @ryangribble
+ - Enhancements to Protected Branches preview API - #1441 via @ryangribble
 
 **Fixes**
 
  - Redirect timeout when repository renamed - #1411 via @maddin2016
+
+**Breaking Changes**
+
+The new Branches client added in #1437 means that existing methods on 
+I(Observable)RepositoryClient are now marked as obsolete. Please update your
+usages to the new endpoints as these will be removed in a future release:
+
+ - `client.Repository.GetBranch()` => `client.Repository.Branch.Get()`
+ - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
+ - `client.Repository.Edit()` => `client.Repository.Branch.Edit()`
 
 ### New in 0.21.1 (released 2016/07/29)
 
