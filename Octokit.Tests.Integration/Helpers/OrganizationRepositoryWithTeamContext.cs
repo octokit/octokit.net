@@ -55,10 +55,10 @@ namespace Octokit.Tests.Integration.Helpers
                 new RepositoryPermissionRequest(Permission.Push));
 
             // Protect master branch
-            var orgUpdate = new BranchProtectionSettingsUpdate(
+            var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "build", "test" }),
-                new ProtectedBranchRestrictionsUpdate(new[] { contextOrgTeam.TeamName }, new string[0]));
-            await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "master", orgUpdate);
+                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }));
+            await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "master", protection);
 
             return new OrganizationRepositoryWithTeamContext
             {

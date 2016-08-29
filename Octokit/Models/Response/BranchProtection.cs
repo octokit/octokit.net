@@ -9,8 +9,10 @@ namespace Octokit
 {
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
     public class BranchProtection
@@ -37,7 +39,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
             }
         }
     }
@@ -68,7 +70,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
+                return string.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
             }
         }
     }
@@ -97,14 +99,16 @@ namespace Octokit
 
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettings
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, ProtectedBranchRestrictions restrictions)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
@@ -118,13 +122,13 @@ namespace Octokit
         /// <summary>
         /// Push access restrictions for the protected branch
         /// </summary>
-        public ProtectedBranchRestrictions Restrictions { get; protected set; }
+        public BranchProtectionPushRestrictions Restrictions { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture, 
                     "StatusChecks: {0} Restrictions: {1}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
@@ -166,7 +170,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
                     IncludeAdmins, 
                     Strict, 
@@ -179,11 +183,11 @@ namespace Octokit
     /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ProtectedBranchRestrictions
+    public class BranchProtectionPushRestrictions
     {
-        public ProtectedBranchRestrictions() { }
+        public BranchProtectionPushRestrictions() { }
 
-        public ProtectedBranchRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        public BranchProtectionPushRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
         {
             Teams = teams;
             Users = users;
@@ -203,7 +207,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture, 
                     "Teams: {0} Users: {1}",
                     Teams == null ? "" : String.Join(",", Teams),
                     Users == null ? "" : String.Join(",", Users));

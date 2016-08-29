@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -9,6 +10,9 @@ namespace Octokit
     /// <summary>
     /// Specifies the requested settings for branch protection
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettingsUpdate
     {
@@ -27,7 +31,7 @@ namespace Octokit
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, ProtectedBranchRestrictionsUpdate restrictions)
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
@@ -43,13 +47,16 @@ namespace Octokit
         /// Push access restrictions for the protected branch
         /// </summary>
         [SerializeNull]
-        public ProtectedBranchRestrictionsUpdate Restrictions { get; protected set; }
+        public BranchProtectionPushRestrictionsUpdate Restrictions { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "StatusChecks: {0} Restrictions: {1}", RequiredStatusChecks.DebuggerDisplay, Restrictions.DebuggerDisplay);
+                return string.Format(CultureInfo.InvariantCulture,
+                    "StatusChecks: {0} Restrictions: {1}",
+                    RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
+                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
             }
         }
     }
@@ -92,23 +99,56 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
+                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
             }
         }
     }
 
     /// <summary>
-    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
+    /// Specifies teams and/or people allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ProtectedBranchRestrictionsUpdate
+    public class BranchProtectionPushRestrictionsUpdate
     {
         /// <summary>
-        /// Specify people or teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
+        /// Specify only administrators are allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
         /// </summary>
-        /// <param name="teams">Teams allowed to push to this branch (pass empty array if no teams)</param>
-        /// <param name="users">Users allowed to push to this branch (pass empty array if no users)</param>
-        public ProtectedBranchRestrictionsUpdate(IReadOnlyList<string> teams, IReadOnlyList<string> users)
+        public BranchProtectionPushRestrictionsUpdate()
+        {
+            Teams = new BranchProtectionTeamCollection();
+            Users = new BranchProtectionUserCollection();
+        }
+
+        /// <summary>
+        /// Specify teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
+        /// </summary>
+        /// <param name="teams">Teams allowed to push to this branch</param>
+        public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams)
+        {
+            Ensure.ArgumentNotNull(teams, "teams");
+
+            Teams = teams;
+            Users = new BranchProtectionUserCollection();
+        }
+
+        /// <summary>
+        /// Specify people (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
+        /// </summary>
+        /// <param name="users">Users allowed to push to this branch</param>
+        public BranchProtectionPushRestrictionsUpdate(BranchProtectionUserCollection users)
+        {
+            Ensure.ArgumentNotNull(users, "users");
+
+            Teams = new BranchProtectionTeamCollection();
+            Users = users;
+        }
+
+        /// <summary>
+        /// Specify teams and/or people (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
+        /// </summary>
+        /// <param name="teams">Teams allowed to push to this branch</param>
+        /// <param name="users">Users allowed to push to this branch</param>
+        public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNull(teams, "teams");
             Ensure.ArgumentNotNull(users, "users");
@@ -120,18 +160,57 @@ namespace Octokit
         /// <summary>
         /// Teams allowed to push to this branch
         /// </summary>
-        public IReadOnlyList<string> Teams { get; private set; }
+        public BranchProtectionTeamCollection Teams { get; private set; }
 
         /// <summary>
         /// Users allowed to push to this branch
         /// </summary>
-        public IReadOnlyList<string> Users { get; private set; }
+        public BranchProtectionUserCollection Users { get; private set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Teams: {0} Users: {1}", Teams == null ? "" : String.Join(",", Teams), Users == null ? "" : String.Join(",", Users));
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : Teams.DebuggerDisplay,
+                    Users == null ? "" : Users.DebuggerDisplay);
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionTeamCollection : Collection<string>
+    {
+        public BranchProtectionTeamCollection()
+        { }
+
+        public BranchProtectionTeamCollection(IList<string> list) : base(list)
+        { }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, String.Join(", ", this));
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionUserCollection : Collection<string>
+    {
+        public BranchProtectionUserCollection()
+        { }
+
+        public BranchProtectionUserCollection(IList<string> list) : base(list)
+        { }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, String.Join(", ", this));
             }
         }
     }
