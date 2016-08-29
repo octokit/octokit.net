@@ -712,7 +712,7 @@ namespace Octokit.Tests.Clients
                 client.GetProtectedBranchRestrictions("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<ProtectedBranchRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
             }
 
             [Fact]
@@ -725,7 +725,7 @@ namespace Octokit.Tests.Clients
                 client.GetProtectedBranchRestrictions(1, "branch");
 
                 connection.Received()
-                    .Get<ProtectedBranchRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
             }
 
             [Fact]

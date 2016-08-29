@@ -333,7 +333,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
+        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
 
         /// <summary>
         /// Get the restrictions for the specified branch />
@@ -343,7 +343,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
+        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
 
         /// <summary>
         /// Remove restrictions for the specified branch />

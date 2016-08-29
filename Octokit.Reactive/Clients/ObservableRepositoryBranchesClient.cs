@@ -508,7 +508,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
+        public IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -525,7 +525,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public IObservable<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
+        public IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 

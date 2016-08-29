@@ -547,13 +547,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
+        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
-            return ApiConnection.Get<ProtectedBranchRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>
@@ -564,11 +564,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
+        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
-            return ApiConnection.Get<ProtectedBranchRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         /// <summary>

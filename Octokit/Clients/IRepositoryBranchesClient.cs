@@ -337,7 +337,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
+        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
 
         /// <summary>
         /// Get restrictions for the specified branch />
@@ -347,7 +347,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<ProtectedBranchRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
+        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
 
         /// <summary>
         /// Remove restrictions for the specified branch />
