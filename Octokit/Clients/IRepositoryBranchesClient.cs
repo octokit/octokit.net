@@ -404,7 +404,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Replace team restrictions for the specified branch />
@@ -416,7 +416,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -429,7 +429,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -441,7 +441,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Remove team restrictions for the specified branch />
@@ -454,7 +454,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Remove team restrictions for the specified branch />
@@ -466,7 +466,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, IReadOnlyList<string> teams);
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Get user restrictions for the specified branch />
@@ -502,7 +502,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Replace user restrictions for the specified branch />
@@ -514,7 +514,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />
@@ -527,7 +527,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />
@@ -539,7 +539,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Remove user restrictions for the specified branch />
@@ -552,7 +552,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Remove user restrictions for the specified branch />
@@ -564,6 +564,6 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, IReadOnlyList<string> users);
+        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
     }
 }

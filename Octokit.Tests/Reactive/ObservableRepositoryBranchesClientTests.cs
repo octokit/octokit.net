@@ -817,7 +817,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 client.SetProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
 
@@ -830,7 +830,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 client.SetProtectedBranchTeamRestrictions(1, "branch", newTeams);
 
@@ -842,7 +842,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.SetProtectedBranchTeamRestrictions(null, "repo", "branch", newTeams));
                 Assert.Throws<ArgumentNullException>(() => client.SetProtectedBranchTeamRestrictions("owner", null, "branch", newTeams));
@@ -867,7 +867,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 client.AddProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
 
@@ -880,7 +880,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 client.AddProtectedBranchTeamRestrictions(1, "branch", newTeams);
 
@@ -892,7 +892,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.AddProtectedBranchTeamRestrictions(null, "repo", "branch", newTeams));
                 Assert.Throws<ArgumentNullException>(() => client.AddProtectedBranchTeamRestrictions("owner", null, "branch", newTeams));
@@ -917,7 +917,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
 
                 client.DeleteProtectedBranchTeamRestrictions("owner", "repo", "branch", teamsToRemove);
 
@@ -930,7 +930,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
 
                 client.DeleteProtectedBranchTeamRestrictions(1, "branch", teamsToRemove);
 
@@ -942,7 +942,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.DeleteProtectedBranchTeamRestrictions(null, "repo", "branch", teamsToRemove));
                 Assert.Throws<ArgumentNullException>(() => client.DeleteProtectedBranchTeamRestrictions("owner", null, "branch", teamsToRemove));
@@ -1012,7 +1012,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 client.SetProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
@@ -1025,7 +1025,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 client.SetProtectedBranchUserRestrictions(1, "branch", newUsers);
 
@@ -1037,7 +1037,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.SetProtectedBranchUserRestrictions(null, "repo", "branch", newUsers));
                 Assert.Throws<ArgumentNullException>(() => client.SetProtectedBranchUserRestrictions("owner", null, "branch", newUsers));
@@ -1062,7 +1062,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 client.AddProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
@@ -1075,7 +1075,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 client.AddProtectedBranchUserRestrictions(1, "branch", newUsers);
 
@@ -1087,7 +1087,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.AddProtectedBranchUserRestrictions(null, "repo", "branch", newUsers));
                 Assert.Throws<ArgumentNullException>(() => client.AddProtectedBranchUserRestrictions("owner", null, "branch", newUsers));
@@ -1112,7 +1112,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
 
                 client.DeleteProtectedBranchUserRestrictions("owner", "repo", "branch", usersToRemove);
 
@@ -1125,7 +1125,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
 
                 client.DeleteProtectedBranchUserRestrictions(1, "branch", usersToRemove);
 
@@ -1137,7 +1137,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
 
                 Assert.Throws<ArgumentNullException>(() => client.DeleteProtectedBranchUserRestrictions(null, "repo", "branch", usersToRemove));
                 Assert.Throws<ArgumentNullException>(() => client.DeleteProtectedBranchUserRestrictions("owner", null, "branch", usersToRemove));

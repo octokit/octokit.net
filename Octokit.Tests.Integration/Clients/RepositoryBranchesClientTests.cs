@@ -1214,7 +1214,7 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
             var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1236,7 +1236,7 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
             var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1279,7 +1279,7 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
             var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1301,7 +1301,7 @@ public class RepositoryBranchesClientTests
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new List<string>() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
             var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1333,7 +1333,7 @@ public class RepositoryBranchesClientTests
             {
                 var repoOwner = context.RepositoryContext.RepositoryOwner;
                 var repoName = context.RepositoryContext.RepositoryName;
-                var teamToRemove = new List<string>() { context.TeamContext.TeamName };
+                var teamToRemove = new BranchProtectionTeamCollection() { context.TeamContext.TeamName };
                 var deleted = await _client.DeleteProtectedBranchTeamRestrictions(repoOwner, repoName, "master", teamToRemove);
 
                 Assert.NotNull(deleted);
@@ -1347,7 +1347,7 @@ public class RepositoryBranchesClientTests
             using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
             {
                 var repoId = context.RepositoryContext.RepositoryId;
-                var teamToRemove = new List<string>() { context.TeamContext.TeamName };
+                var teamToRemove = new BranchProtectionTeamCollection() { context.TeamContext.TeamName };
                 var deleted = await _client.DeleteProtectedBranchTeamRestrictions(repoId, "master", teamToRemove);
 
                 Assert.NotNull(deleted);
@@ -1416,7 +1416,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var newUser = new List<string>() { _github.User.Current().Result.Login };
+            var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
             var restrictions = await _client.SetProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
 
@@ -1428,7 +1428,7 @@ public class RepositoryBranchesClientTests
         public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var newUser = new List<string>() { _github.User.Current().Result.Login };
+            var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
             var restrictions = await _client.SetProtectedBranchUserRestrictions(repoId, "master", newUser);
 
@@ -1462,7 +1462,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var newUser = new List<string>() { _github.User.Current().Result.Login };
+            var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
             var restrictions = await _client.AddProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
 
@@ -1474,7 +1474,7 @@ public class RepositoryBranchesClientTests
         public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var newUser = new List<string>() { _github.User.Current().Result.Login };
+            var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
             var restrictions = await _client.AddProtectedBranchUserRestrictions(repoId, "master", newUser);
 
@@ -1507,7 +1507,7 @@ public class RepositoryBranchesClientTests
             {
                 var repoOwner = context.RepositoryContext.RepositoryOwner;
                 var repoName = context.RepositoryContext.RepositoryName;
-                var user = new List<string>() { _github.User.Current().Result.Login };
+                var user = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
                 var restrictions = await _client.AddProtectedBranchUserRestrictions(repoOwner, repoName, "master", user);
 
                 Assert.NotNull(restrictions);
@@ -1526,7 +1526,7 @@ public class RepositoryBranchesClientTests
             using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
             {
                 var repoId = context.RepositoryContext.RepositoryId;
-                var user = new List<string>() { _github.User.Current().Result.Login };
+                var user = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
                 var restrictions = await _client.AddProtectedBranchUserRestrictions(repoId, "master", user);
 
                 Assert.NotNull(restrictions);

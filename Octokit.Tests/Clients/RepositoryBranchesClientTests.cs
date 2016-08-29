@@ -848,7 +848,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.SetProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
@@ -862,7 +862,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.SetProtectedBranchTeamRestrictions(1, "branch", newTeams);
@@ -875,7 +875,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.SetProtectedBranchTeamRestrictions(null, "repo", "branch", newTeams));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.SetProtectedBranchTeamRestrictions("owner", null, "branch", newTeams));
@@ -900,7 +900,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
@@ -914,7 +914,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchTeamRestrictions(1, "branch", newTeams);
@@ -927,7 +927,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var newTeams = new List<string>() { "test" };
+                var newTeams = new BranchProtectionTeamCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddProtectedBranchTeamRestrictions(null, "repo", "branch", newTeams));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddProtectedBranchTeamRestrictions("owner", null, "branch", newTeams));
@@ -952,7 +952,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchTeamRestrictions("owner", "repo", "branch", teamsToRemove);
@@ -966,7 +966,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchTeamRestrictions(1, "branch", teamsToRemove);
@@ -979,7 +979,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var teamsToRemove = new List<string>() { "test" };
+                var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteProtectedBranchTeamRestrictions(null, "repo", "branch", teamsToRemove));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteProtectedBranchTeamRestrictions("owner", null, "branch", teamsToRemove));
@@ -1051,7 +1051,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.SetProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
@@ -1065,7 +1065,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.SetProtectedBranchUserRestrictions(1, "branch", newUsers);
@@ -1078,7 +1078,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.SetProtectedBranchUserRestrictions(null, "repo", "branch", newUsers));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.SetProtectedBranchUserRestrictions("owner", null, "branch", newUsers));
@@ -1103,7 +1103,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
@@ -1117,7 +1117,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchUserRestrictions(1, "branch", newUsers);
@@ -1130,7 +1130,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var newUsers = new List<string>() { "test" };
+                var newUsers = new BranchProtectionUserCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddProtectedBranchUserRestrictions(null, "repo", "branch", newUsers));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddProtectedBranchUserRestrictions("owner", null, "branch", newUsers));
@@ -1155,7 +1155,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions("owner", "repo", "branch", usersToRemove);
@@ -1169,7 +1169,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions(1, "branch", usersToRemove);
@@ -1182,7 +1182,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var usersToRemove = new List<string>() { "test" };
+                var usersToRemove = new BranchProtectionUserCollection() { "test" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteProtectedBranchUserRestrictions(null, "repo", "branch", usersToRemove));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteProtectedBranchUserRestrictions("owner", null, "branch", usersToRemove));
