@@ -41,7 +41,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture,
+                return string.Format(CultureInfo.InvariantCulture,
                     "Status: {0} ScheduledTime: {1} Connections: {2}",
                     Status,
                     ScheduledTime ?? "",

@@ -24,7 +24,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalPages: {0}", TotalPages);
+                return string.Format(CultureInfo.InvariantCulture, "TotalPages: {0}", TotalPages);
             }
         }
     }
