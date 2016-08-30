@@ -19,7 +19,7 @@ usages to the new endpoints as these will be removed in a future release:
 
  - `client.Repository.GetBranch()` => `client.Repository.Branch.Get()`
  - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
- - `client.Repository.Edit()` => `client.Repository.Branch.Edit()`
+ - `client.Repository.EditBranch()` => `client.Repository.Branch.Edit()`
 
 ### New in 0.21.1 (released 2016/07/29)
 
