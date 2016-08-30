@@ -45,7 +45,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalOrgs: {0} DisabledOrgs: {1} TotalTeams: {2} TotalTeamMembers: {3}", TotalOrgs, DisabledOrgs, TotalTeams, TotalTeamMembers);
+                return string.Format(CultureInfo.InvariantCulture, "TotalOrgs: {0} DisabledOrgs: {1} TotalTeams: {2} TotalTeamMembers: {3}", TotalOrgs, DisabledOrgs, TotalTeams, TotalTeamMembers);
             }
         }
     }

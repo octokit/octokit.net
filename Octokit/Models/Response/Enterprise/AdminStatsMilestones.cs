@@ -38,7 +38,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalMilestones: {0} OpenMilestones: {1} ClosedMilestones: {2}", TotalMilestones, OpenMilestones, ClosedMilestones);
+                return string.Format(CultureInfo.InvariantCulture, "TotalMilestones: {0} OpenMilestones: {1} ClosedMilestones: {2}", TotalMilestones, OpenMilestones, ClosedMilestones);
             }
         }
     }

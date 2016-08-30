@@ -38,7 +38,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalUsers: {0} AdminUsers: {1} SuspendedUsers: {2}", TotalUsers, AdminUsers, SuspendedUsers);
+                return string.Format(CultureInfo.InvariantCulture, "TotalUsers: {0} AdminUsers: {1} SuspendedUsers: {2}", TotalUsers, AdminUsers, SuspendedUsers);
             }
         }
     }
