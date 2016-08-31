@@ -16,7 +16,7 @@ The API will reject you if you don't provide a `User-Agent` header (more details
 
 If you want to access private repositories or perform actions on behalf of a user, you need to pass credentials to the client.
 
-There are two options supported by the API - basic and OAuth authentication.
+There are three options supported by the API - Basic, Personal Access Token, and OAuth authentication.
 
 ```
 var basicAuth = new Credentials("username", "password"); // NOTE: not real credentials
@@ -24,16 +24,23 @@ client.Credentials = basicAuth;
 ```
 
 ```
-var tokenAuth = new Credentials("token"); // NOTE: not real token
+var tokenAuth = new Credentials("personal-access-token"); // NOTE: not real personal access token
 client.Credentials = tokenAuth;
 ```
 
-It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
+```
+var tokenAuth = new Credentials("oauth-token"); // NOTE: not real OAuth token
+client.Credentials = tokenAuth;
+```
+
+It is **strongly recommended** to use the [Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) for interactions via command line operations and build scripts or the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
 
  - the application owner never needs to store a user's password
  - the token can be revoked by the user at a later date
 
 When authenticated, you have 5000 requests per hour available. So this is the recommended approach for interacting with the API.
+ 
+NOTE: While it is not clear on the GitHub documentation, Personal Access Tokens effectively function as persistent OAuth tokens obtained via your personal settings area on GitHub, so they can be used in the same way as OAuth tokens obtained through the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md).
 
 ### Connect to GitHub Enterprise
 
