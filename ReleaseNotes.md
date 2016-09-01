@@ -21,6 +21,19 @@ usages to the new endpoints as these will be removed in a future release:
  - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
  - `client.Repository.EditBranch()` => `client.Repository.Branch.Edit()`
 
+There is also a change in how branch protection works with the API, due to 
+upstream changes. The existing methods have been marked as obsolete, but for
+the sake of brevity here are the details about what you should be doing today.
+
+The process for inspecting branch protection is now two steps:
+
+ - first, check the branch returned by `client.Repository.Branch.Get()` or 
+   `client.Repository.Branch.GetAll()` has it's `Protected` property set to `true`.
+
+ - then, a call to `client.Repository.Branch.GetBranchProtection()` will return
+   the details about the protection settings for the given branch. If no protection
+   is set for this branch, you will received a `HTTP 404` response.
+
 ### New in 0.21.1 (released 2016/07/29)
 
 **Features**
