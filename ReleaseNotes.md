@@ -1,4 +1,4 @@
-### New in 0.22.0 (released 2016/08/31)
+### New in 0.22.0 (released 2016/09/01)
 
 **Features**
 
