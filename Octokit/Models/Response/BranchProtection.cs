@@ -14,7 +14,7 @@ namespace Octokit
     /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionSettings instead.")]
     public class BranchProtection
     {
         public BranchProtection() { }
@@ -45,7 +45,7 @@ namespace Octokit
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionRequiredStatusChecks instead.")]
     public class RequiredStatusChecks
     {
         public RequiredStatusChecks() { }
@@ -78,7 +78,7 @@ namespace Octokit
     /// <summary>
     /// The enforcement levels that are available
     /// </summary>
-    [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionRequiredStatusChecks.IncludeAdmins instead.")]
     public enum EnforcementLevel
     {
         /// <summary>

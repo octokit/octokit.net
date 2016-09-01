@@ -231,6 +231,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetAllBranches(string owner, string name);
 
         /// <summary>
@@ -242,6 +243,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetAllBranches(int repositoryId);
 
         /// <summary>
@@ -255,6 +257,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetAllBranches(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -267,6 +270,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetAllBranches(int repositoryId, ApiOptions options);
 
         /// <summary>
@@ -480,6 +484,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetBranch(string owner, string name, string branchName);
 
         /// <summary>
@@ -491,6 +496,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        [Obsolete("Please use ObservableRepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
         IObservable<Branch> GetBranch(int repositoryId, string branchName);
 
         /// <summary>
@@ -518,7 +524,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the ObservableRepositoryBranchesClient methods instead.")]
         IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
 
         /// <summary>
@@ -528,7 +534,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the ObservableRepositoryBranchesClient methods instead.")]
         IObservable<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
