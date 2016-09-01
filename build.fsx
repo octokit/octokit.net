@@ -1,8 +1,12 @@
 #r @"tools/FAKE.Core/tools/FakeLib.dll"
+#r @"tools/FSharp.Data/lib/net40/FSharp.Data.dll"
+#r "System.Xml.Linq"
 #load "tools/SourceLink.Fake/tools/SourceLink.fsx"
 open Fake 
 open System
+open System.IO
 open SourceLink
+open FSharp.Data
 
 let authors = ["GitHub"]
 
@@ -148,19 +152,65 @@ Target "SourceLink" (fun _ ->
     )
 )
 
-Target "ValidateLINQPadSamples"(fun _ ->
-    "The current LINQPad snippets reference the latest release of Octokit on NuGet, which may be very far behind what is currently on master. " +
-    "These tests have been ported to SelfTests in the integration test suite. If someone would like to port them to F#, have a read of the details in https://github.com/octokit/octokit.net/issues/1081."
-    |> traceImportant 
-    //   directoryInfo(samplesDir @@ "linqpad-samples") 
-    //   |> filesInDir 
-    //   |> Array.map(fun f -> f.FullName)
-    //   |> Seq.iter (fun sample ->
-    //                  let result = ExecProcess (fun info ->
-    //                                                info.FileName <- linqPadDir @@ "lprun.exe"
-    //                                                info.Arguments <- " -compileonly " + sample) (TimeSpan.FromMinutes 5.0)
-    //                  if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
-    //  )
+type LinqPadSampleMetadata = XmlProvider<"""
+    <Query Kind="Program">
+        <NuGetReference>Octokit</NuGetReference>
+        <NuGetReference>Octokit.Reactive</NuGetReference>
+        <NuGetReference>Rx-Main</NuGetReference>
+        <Namespace>Octokit</Namespace>
+        <Namespace>System.Reactive.Linq</Namespace>
+        <Namespace>System.Threading.Tasks</Namespace>
+    </Query>
+""">
+
+Target "ValidateLINQPadSamples" (fun _ ->
+
+    let splitFileContents = fun (file: FileInfo) ->
+        let content = File.ReadAllText(file.FullName)
+        let closeTag = "</Query>"
+        let openTagIndex = content.IndexOf("<Query Kind=\"Program\">")
+        let closeTagIndex = content.IndexOf(closeTag)
+        let endOfXml = closeTagIndex + closeTag.Length
+        let xmlPart = content.Substring(openTagIndex, endOfXml - openTagIndex)
+        let rest = content.Substring(endOfXml)
+
+        (xmlPart, rest)
+
+    let createTempFile = fun(metadataString: string, rest: string) ->
+        let metadata = LinqPadSampleMetadata.Parse(metadataString)
+        let assembliesDir = buildDir @@ "Release/Net45" 
+        let reactiveAssembliesDir = reactiveBuildDir @@ "Release/Net45" 
+        let tempFileName = Path.GetTempFileName()
+        use stream = File.OpenWrite(tempFileName)
+        use writer = new StreamWriter(stream)
+
+        writer.WriteLine("ref {0}\\System.Reactive.Core.dll;", reactiveAssembliesDir);
+        writer.WriteLine("ref {0}\\System.Reactive.Interfaces.dll;", reactiveAssembliesDir);
+        writer.WriteLine("ref {0}\\System.Reactive.Linq.dll;", reactiveAssembliesDir);
+        writer.WriteLine("ref {0}\\Octokit.dll;", assembliesDir);
+        writer.WriteLine("ref {0}\\Octokit.Reactive.dll;", reactiveAssembliesDir);
+        writer.WriteLine("ref C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework\\v4.5\\System.Net.Http.dll;");
+
+        for metadataNamespace in metadata.Namespaces do
+            writer.WriteLine("using {0};", metadataNamespace)
+
+        writer.WriteLine()
+        writer.WriteLine(rest)
+
+        writer.Flush()
+
+        tempFileName
+
+    directoryInfo(samplesDir @@ "linqpad-samples") 
+    |> filesInDir
+    |> Array.map (splitFileContents >> createTempFile)
+    |> Seq.iter (fun sample ->
+        let result = ExecProcess (fun info ->
+            info.FileName <- linqPadDir @@ "lprun.exe"
+            info.Arguments <- " -compileonly -lang=Program " + sample) (TimeSpan.FromMinutes 5.0)
+        
+        if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
+    )
 )
 
 Target "CreateOctokitPackage" (fun _ ->

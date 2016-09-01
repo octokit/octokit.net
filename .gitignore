@@ -76,6 +76,7 @@ tools/FAKE.Core
 tools/SourceLink.Fake
 tools/xunit.runner.console
 tools/Octokit.CodeFormatter
+tools/FSharp.Data
 *.ncrunch*
 *.GhostDoc.xml
 
