@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    public class RepositoryTrafficClient : ApiClient, IRepositoryTrafficClient
+    public class ObservableRepositoryTrafficClient : IObservableRepositoryTrafficClient
     {
-        public RepositoryTrafficClient(IApiConnection apiConnection) : base(apiConnection)
+        readonly IRepositoryTrafficClient _client;
+
+        public ObservableRepositoryTrafficClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, "client");
+
+            _client = client.Repository.Traffic;
         }
 
         /// <summary>
@@ -15,9 +20,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(int repositoryId)
+        public IObservable<RepositoryTrafficPath> GetAllPaths(int repositoryId)
         {
-            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetAllPaths(repositoryId).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -26,9 +31,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
+        public IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name)
         {
-            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetAllPaths(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -36,9 +41,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(int repositoryId)
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(int repositoryId)
         {
-            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetAllReferrers(repositoryId).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -47,9 +52,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name)
         {
-            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetAllReferrers(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -58,11 +63,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#clones</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        public Task<RepositoryTrafficClone> GetClones(int repositoryId, RepositoryTrafficRequest per)
+        public IObservable<RepositoryTrafficClone> GetClones(int repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
-
-            return ApiConnection.Get<RepositoryTrafficClone>(ApiUrls.RepositoryTrafficClones(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetClones(repositoryId, per).ToObservable();
         }
 
         /// <summary>
@@ -72,11 +75,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        public Task<RepositoryTrafficClone> GetClones(string owner, string name, RepositoryTrafficRequest per)
+        public IObservable<RepositoryTrafficClone> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
-
-            return ApiConnection.Get<RepositoryTrafficClone>(ApiUrls.RepositoryTrafficClones(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetClones(owner, name, per).ToObservable();
         }
 
         /// <summary>
@@ -85,11 +86,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#views</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        public Task<RepositoryTrafficView> GetViews(int repositoryId, RepositoryTrafficRequest per)
+        public IObservable<RepositoryTrafficView> GetViews(int repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
-
-            return ApiConnection.Get<RepositoryTrafficView>(ApiUrls.RepositoryTrafficViews(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetViews(repositoryId, per).ToObservable();
         }
 
         /// <summary>
@@ -99,11 +98,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        public Task<RepositoryTrafficView> GetViews(string owner, string name, RepositoryTrafficRequest per)
+        public IObservable<RepositoryTrafficView> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
-
-            return ApiConnection.Get<RepositoryTrafficView>(ApiUrls.RepositoryTrafficViews(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return _client.GetViews(owner, name, per).ToObservable();
         }
     }
 }

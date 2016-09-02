@@ -655,5 +655,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
         /// </remarks>
         IRepositoryInvitationsClient Invitation { get; }
+
+        /// <summary>
+        /// Access GitHub's Repository Traffic API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
+        /// </remarks>
+        IRepositoryTrafficClient Traffic { get; }
     }
 }

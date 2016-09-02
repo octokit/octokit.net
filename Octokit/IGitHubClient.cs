@@ -131,13 +131,5 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IReactionsClient Reaction { get; }
-
-        /// <summary>
-        /// Access GitHub's Repository Traffic API
-        /// </summary>
-        /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
-        /// </remarks>
-        IRepositoryTrafficClient Traffic { get; }
     }
 }
