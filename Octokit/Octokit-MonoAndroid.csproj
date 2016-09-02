@@ -507,6 +507,9 @@
     <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
     <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
     <Compile Include="Models\Response\RepositoryTrafficView.cs" />
+    <Compile Include="Clients\IRepositoryTrafficClient.cs" />
+    <Compile Include="Models\Request\RepositoryTrafficRequest.cs" />
+    <Compile Include="Clients\RepositoryTrafficClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

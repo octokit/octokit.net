@@ -57,4 +57,10 @@ namespace Octokit
             get { return string.Format(CultureInfo.InvariantCulture, "Number: {0} Uniques: {1}", Count, Uniques); }
         }
     }
+
+    public enum TrafficDayOrWeek
+    {
+        Day,
+        Week
+    }
 }

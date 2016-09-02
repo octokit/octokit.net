@@ -98,6 +98,7 @@ namespace Octokit
             Search = new SearchClient(apiConnection);
             User = new UsersClient(apiConnection);
             Reaction = new ReactionsClient(apiConnection);
+            Traffic = new RepositoryTrafficClient(apiConnection);
         }
 
         /// <summary>
@@ -271,6 +272,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         public IReactionsClient Reaction { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Repository Traffic API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
+        /// </remarks>
+        public IRepositoryTrafficClient Traffic { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {
