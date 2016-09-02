@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -10,6 +11,7 @@ namespace Octokit
     {
         public RepositoryTrafficView() { }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public RepositoryTrafficView(int count, int uniques, IReadOnlyList<View> views)
         {
             Count = count;
@@ -19,6 +21,7 @@ namespace Octokit
 
         public int Count { get; protected set; }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public int Uniques { get; protected set; }
 
         public IReadOnlyList<View> Views { get; protected set; }
@@ -34,6 +37,7 @@ namespace Octokit
     {
         public View() { }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public View(DateTimeOffset timeStamp, int count, int uniques)
         {
             TimeStamp = timeStamp;
@@ -45,6 +49,7 @@ namespace Octokit
 
         public int Count { get; protected set; }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public int Uniques { get; protected set; }
 
         internal string DebuggerDisplay

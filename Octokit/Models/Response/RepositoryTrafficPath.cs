@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Octokit
@@ -8,6 +9,7 @@ namespace Octokit
     {
         public RepositoryTrafficPath() { }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public RepositoryTrafficPath(string path, string title, int count, int uniques)
         {
             Path = path;
@@ -22,6 +24,7 @@ namespace Octokit
 
         public int Count { get; protected set; }
 
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public int Uniques { get; protected set; }
 
         internal string DebuggerDisplay
