@@ -38,14 +38,14 @@ namespace Octokit
         public Clone() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public Clone(DateTimeOffset timeStamp, int count, int uniques)
+        public Clone(DateTimeOffset timestamp, int count, int uniques)
         {
-            TimeStamp = timeStamp;
+            Timestamp = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        public DateTimeOffset TimeStamp { get; protected set; }
+        public DateTimeOffset Timestamp { get; protected set; }
 
         public int Count { get; protected set; }
 

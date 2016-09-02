@@ -38,14 +38,14 @@ namespace Octokit
         public View() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public View(DateTimeOffset timeStamp, int count, int uniques)
+        public View(DateTimeOffset timestamp, int count, int uniques)
         {
-            TimeStamp = timeStamp;
+            Timestamp = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        public DateTimeOffset TimeStamp { get; protected set; }
+        public DateTimeOffset Timestamp { get; protected set; }
 
         public int Count { get; protected set; }
 
