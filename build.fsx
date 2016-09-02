@@ -2,7 +2,7 @@
 #r @"tools/FSharp.Data/lib/net40/FSharp.Data.dll"
 #r "System.Xml.Linq"
 #load "tools/SourceLink.Fake/tools/SourceLink.fsx"
-open Fake 
+open Fake
 open System
 open System.IO
 open SourceLink
@@ -29,14 +29,14 @@ let packagingDir = packagingRoot @@ "octokit"
 let reactivePackagingDir = packagingRoot @@ "octokit.reactive"
 let linqPadDir = "./tools/LINQPad"
 
-let releaseNotes = 
+let releaseNotes =
     ReadFile "ReleaseNotes.md"
     |> ReleaseNotesHelper.parseReleaseNotes
 
 let buildMode = getBuildParamOrDefault "buildMode" "Release"
 
-MSBuildDefaults <- { 
-    MSBuildDefaults with 
+MSBuildDefaults <- {
+    MSBuildDefaults with
         ToolsVersion = Some "14.0"
         Verbosity = Some MSBuildVerbosity.Minimal }
 
@@ -115,14 +115,14 @@ Target "BuildMono" (fun _ ->
 )
 Target "ConventionTests" (fun _ ->
     !! (sprintf "./Octokit.Tests.Conventions/bin/%s/**/Octokit.Tests.Conventions.dll" buildMode)
-    |> xUnit2 (fun p -> 
+    |> xUnit2 (fun p ->
             {p with
                 HtmlOutputPath = Some (testResultsDir @@ "xunit.html") })
 )
 
 Target "UnitTests" (fun _ ->
     !! (sprintf "./Octokit.Tests/bin/%s/**/Octokit.Tests*.dll" buildMode)
-    |> xUnit2 (fun p -> 
+    |> xUnit2 (fun p ->
             {p with
                 HtmlOutputPath = Some (testResultsDir @@ "xunit.html") })
 )
@@ -130,14 +130,14 @@ Target "UnitTests" (fun _ ->
 Target "IntegrationTests" (fun _ ->
     if hasBuildParam "OCTOKIT_GITHUBUSERNAME" && hasBuildParam "OCTOKIT_GITHUBPASSWORD" then
         !! (sprintf "./Octokit.Tests.Integration/bin/%s/**/Octokit.Tests.Integration.dll" buildMode)
-        |> xUnit2 (fun p -> 
-                {p with 
+        |> xUnit2 (fun p ->
+                {p with
                     HtmlOutputPath = Some (testResultsDir @@ "xunit.html")
                     TimeOut = TimeSpan.FromMinutes 10.0  })
     else
         "The integration tests were skipped because the OCTOKIT_GITHUBUSERNAME and OCTOKIT_GITHUBPASSWORD environment variables are not set. " +
         "Please configure these environment variables for a GitHub test account (DO NOT USE A \"REAL\" ACCOUNT)."
-        |> traceImportant 
+        |> traceImportant
 )
 
 Target "SourceLink" (fun _ ->
@@ -178,8 +178,8 @@ Target "ValidateLINQPadSamples" (fun _ ->
 
     let createTempFile = fun(metadataString: string, rest: string) ->
         let metadata = LinqPadSampleMetadata.Parse(metadataString)
-        let assembliesDir = buildDir @@ "Release/Net45" 
-        let reactiveAssembliesDir = reactiveBuildDir @@ "Release/Net45" 
+        let assembliesDir = buildDir @@ "Release/Net45"
+        let reactiveAssembliesDir = reactiveBuildDir @@ "Release/Net45"
         let tempFileName = Path.GetTempFileName()
         use stream = File.OpenWrite(tempFileName)
         use writer = new StreamWriter(stream)
@@ -201,14 +201,14 @@ Target "ValidateLINQPadSamples" (fun _ ->
 
         tempFileName
 
-    directoryInfo(samplesDir @@ "linqpad-samples") 
+    directoryInfo(samplesDir @@ "linqpad-samples")
     |> filesInDir
     |> Array.map (splitFileContents >> createTempFile)
     |> Seq.iter (fun sample ->
         let result = ExecProcess (fun info ->
             info.FileName <- linqPadDir @@ "lprun.exe"
             info.Arguments <- " -compileonly -lang=Program " + sample) (TimeSpan.FromMinutes 5.0)
-        
+
         if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
     )
 )
@@ -232,7 +232,7 @@ Target "CreateOctokitPackage" (fun _ ->
     CopyDir packagingDir "./samples" allFiles
     CopyFiles packagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
-    NuGet (fun p -> 
+    NuGet (fun p ->
         {p with
             Authors = authors
             Project = projectName
@@ -256,7 +256,7 @@ Target "CreateOctokitReactivePackage" (fun _ ->
     CopyFile net45Dir (reactiveBuildDir @@ "Release/Net45/Octokit.Reactive.pdb")
     CopyFiles reactivePackagingDir ["LICENSE.txt"; "README.md"; "ReleaseNotes.md"]
 
-    NuGet (fun p -> 
+    NuGet (fun p ->
         {p with
             Authors = authors
             Project = reactiveProjectName
