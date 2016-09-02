@@ -492,6 +492,10 @@
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

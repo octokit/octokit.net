@@ -216,6 +216,10 @@
     <Compile Include="Models\Response\RepositoryInvitation.cs" />
     <Compile Include="Models\Response\SourceInfo.cs" />
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficView.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />
