@@ -174,9 +174,9 @@ Target "ValidateLINQPadSamples" (fun _ ->
         let xmlPart = content.Substring(openTagIndex, endOfXml - openTagIndex)
         let rest = content.Substring(endOfXml)
 
-        (xmlPart, rest)
+        (file.Name, xmlPart, rest)
 
-    let createTempFile = fun(metadataString: string, rest: string) ->
+    let createTempFile = fun(fileName: string, metadataString: string, rest: string) ->
         let metadata = LinqPadSampleMetadata.Parse(metadataString)
         let assembliesDir = buildDir @@ "Release/Net45"
         let reactiveAssembliesDir = reactiveBuildDir @@ "Release/Net45"
@@ -199,15 +199,16 @@ Target "ValidateLINQPadSamples" (fun _ ->
 
         writer.Flush()
 
-        tempFileName
+        (fileName, tempFileName)
 
     directoryInfo(samplesDir @@ "linqpad-samples")
     |> filesInDir
     |> Array.map (splitFileContents >> createTempFile)
-    |> Seq.iter (fun sample ->
+    |> Seq.iter (fun (fileName, sample) ->
+        printfn "Executing sample %s" fileName
         let result = ExecProcess (fun info ->
             info.FileName <- linqPadDir @@ "lprun.exe"
-            info.Arguments <- " -compileonly -lang=Program " + sample) (TimeSpan.FromMinutes 5.0)
+            info.Arguments <- "-compileonly -lang=Program " + sample) (TimeSpan.FromMinutes 5.0)
 
         if result <> 0 then failwithf "lprun.exe returned with a non-zero exit code for %s" sample
     )
