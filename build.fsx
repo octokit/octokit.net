@@ -174,9 +174,9 @@ Target "ValidateLINQPadSamples" (fun _ ->
         let xmlPart = content.Substring(openTagIndex, endOfXml - openTagIndex)
         let rest = content.Substring(endOfXml)
 
-        (file.Name, xmlPart, rest)
+        file.Name, xmlPart, rest
 
-    let createTempFile = fun(fileName: string, metadataString: string, rest: string) ->
+    let createTempFile = fun (fileName: string, metadataString: string, rest: string) ->
         let metadata = LinqPadSampleMetadata.Parse(metadataString)
         let assembliesDir = buildDir @@ "Release/Net45"
         let reactiveAssembliesDir = reactiveBuildDir @@ "Release/Net45"
@@ -199,7 +199,7 @@ Target "ValidateLINQPadSamples" (fun _ ->
 
         writer.Flush()
 
-        (fileName, tempFileName)
+        fileName, tempFileName
 
     directoryInfo(samplesDir @@ "linqpad-samples")
     |> filesInDir
