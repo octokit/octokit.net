@@ -931,7 +931,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddRequiredStatusChecksContexts()
+        public async Task AddsRequiredStatusChecksContexts()
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
@@ -944,7 +944,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddRequiredStatusChecksContextsWithRepositoryId()
+        public async Task AddsRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
             var update = new List<string>() { "newMember1", "newMember2" };
@@ -956,7 +956,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddRequiredStatusChecksContextsForOrgRepo()
+        public async Task AddsRequiredStatusChecksContextsForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
@@ -969,7 +969,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
+        public async Task AddsRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new List<string>() { "newMember1", "newMember2" };
@@ -1185,13 +1185,13 @@ public class RepositoryBranchesClientTests
         }
     }
 
-    public class TheSetProtectedBranchTeamRestrictionsMethod : IDisposable
+    public class TheUpdateProtectedBranchTeamRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
         IGitHubClient _github;
 
-        public TheSetProtectedBranchTeamRestrictionsMethod()
+        public TheUpdateProtectedBranchTeamRestrictionsMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             _client = _github.Repository.Branch;
@@ -1200,7 +1200,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task SetsProtectedBranchTeamRestrictionsForOrgRepo()
+        public async Task UpdatesProtectedBranchTeamRestrictionsForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
@@ -1222,7 +1222,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task SetsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
+        public async Task UpdatesProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
@@ -1265,7 +1265,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddProtectedBranchTeamRestrictionsForOrgRepo()
+        public async Task AddsProtectedBranchTeamRestrictionsForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
@@ -1287,7 +1287,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
+        public async Task AddsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
@@ -1397,13 +1397,13 @@ public class RepositoryBranchesClientTests
         }
     }
 
-    public class TheSetProtectedBranchUserRestrictionsMethod : IDisposable
+    public class TheUpdateProtectedBranchUserRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
         IGitHubClient _github;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
 
-        public TheSetProtectedBranchUserRestrictionsMethod()
+        public TheUpdateProtectedBranchUserRestrictionsMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             _client = _github.Repository.Branch;
@@ -1412,7 +1412,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
+        public async Task UpdatesProtectedBranchUserRestrictionsForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
@@ -1425,7 +1425,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        public async Task UpdatesProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
@@ -1458,7 +1458,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
+        public async Task AddsProtectedBranchUserRestrictionsForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
@@ -1471,7 +1471,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
+        public async Task AddsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
