@@ -404,7 +404,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Replace team restrictions for the specified branch />
@@ -416,7 +416,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
+        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -502,7 +502,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Replace user restrictions for the specified branch />
@@ -514,7 +514,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ExcludeFromPaginationConventionTest]
-        Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
+        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />

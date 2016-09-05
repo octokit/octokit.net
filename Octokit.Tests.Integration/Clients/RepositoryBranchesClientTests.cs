@@ -1215,7 +1215,7 @@ public class RepositoryBranchesClientTests
                 new RepositoryPermissionRequest(Permission.Push));
 
             var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
-            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
+            var restrictions = await _client.UpdateProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1237,7 +1237,7 @@ public class RepositoryBranchesClientTests
                 new RepositoryPermissionRequest(Permission.Push));
 
             var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
-            var restrictions = await _client.SetProtectedBranchTeamRestrictions(repoId, "master", newTeam);
+            var restrictions = await _client.UpdateProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1418,7 +1418,7 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
-            var restrictions = await _client.SetProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
+            var restrictions = await _client.UpdateProtectedBranchUserRestrictions(repoOwner, repoName, "master", newUser);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1430,7 +1430,7 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var newUser = new BranchProtectionUserCollection() { _github.User.Current().Result.Login };
 
-            var restrictions = await _client.SetProtectedBranchUserRestrictions(repoId, "master", newUser);
+            var restrictions = await _client.UpdateProtectedBranchUserRestrictions(repoId, "master", newUser);
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);

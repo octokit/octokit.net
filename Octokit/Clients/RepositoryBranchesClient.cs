@@ -667,7 +667,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        public Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -686,7 +686,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        public Task<IReadOnlyList<Team>> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
@@ -811,7 +811,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        public Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -830,7 +830,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        public Task<IReadOnlyList<User>> SetProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");

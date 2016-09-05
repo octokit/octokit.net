@@ -397,7 +397,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        IObservable<Team> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Replace team restrictions for the specified branch />
@@ -408,7 +408,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
+        IObservable<Team> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
         /// Add team restrictions for the specified branch />
@@ -487,7 +487,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<User> SetProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        IObservable<User> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Replace user restrictions for the specified branch />
@@ -498,7 +498,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<User> SetProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
+        IObservable<User> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
         /// Add user restrictions for the specified branch />

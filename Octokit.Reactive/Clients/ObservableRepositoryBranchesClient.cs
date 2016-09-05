@@ -608,14 +608,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        public IObservable<Team> SetProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
+        public IObservable<Team> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
 
-            return _client.SetProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable().SelectMany(x => x);
+            return _client.UpdateProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -627,12 +627,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        public IObservable<Team> SetProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public IObservable<Team> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
 
-            return _client.SetProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable().SelectMany(x => x);
+            return _client.UpdateProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -752,14 +752,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        public IObservable<User> SetProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
+        public IObservable<User> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");
 
-            return _client.SetProtectedBranchUserRestrictions(owner, name, branch, users).ToObservable().SelectMany(x => x);
+            return _client.UpdateProtectedBranchUserRestrictions(owner, name, branch, users).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -771,12 +771,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        public IObservable<User> SetProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
+        public IObservable<User> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");
 
-            return _client.SetProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
+            return _client.UpdateProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
