@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -28,6 +27,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
         }
 
@@ -49,6 +51,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
         }
 
@@ -74,6 +79,8 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficClone> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(per, "per");
 
             return ApiConnection.Get<RepositoryTrafficClone>(ApiUrls.RepositoryTrafficClones(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
@@ -101,6 +108,8 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficView> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(per, "per");
 
             return ApiConnection.Get<RepositoryTrafficView>(ApiUrls.RepositoryTrafficViews(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);

@@ -33,6 +33,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return _client.GetAllPaths(owner, name).ToObservable().SelectMany(x => x);
         }
 
@@ -54,6 +57,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
             return _client.GetAllReferrers(owner, name).ToObservable().SelectMany(x => x);
         }
 
@@ -77,6 +83,10 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficClone> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(per, "per");
+
             return _client.GetClones(owner, name, per).ToObservable();
         }
 
@@ -88,6 +98,8 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficView> GetViews(int repositoryId, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNull(per, "per");
+
             return _client.GetViews(repositoryId, per).ToObservable();
         }
 
@@ -100,6 +112,10 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficView> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(per, "per");
+
             return _client.GetViews(owner, name, per).ToObservable();
         }
     }
