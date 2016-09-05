@@ -860,24 +860,20 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
-
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
+                       
+            Assert.Equal(1, requiredStatusChecksContexts.Count);
         }
 
         [IntegrationTest]
         public async Task UpdatesRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoId, "master", update);
 
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
+            Assert.Equal(1, requiredStatusChecksContexts.Count);
         }
 
         [IntegrationTest]
@@ -885,24 +881,20 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
 
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
+            Assert.Equal(1, requiredStatusChecksContexts.Count);
         }
 
         [IntegrationTest]
         public async Task UpdatesRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoId, "master", update);
 
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
+            Assert.Equal(1, requiredStatusChecksContexts.Count);
         }
 
         public void Dispose()
@@ -935,7 +927,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2", "deploy" };
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
@@ -947,7 +939,7 @@ public class RepositoryBranchesClientTests
         public async Task AddsRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2", "deploy" };
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoId, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
@@ -960,7 +952,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2", "deploy" };
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
@@ -972,7 +964,7 @@ public class RepositoryBranchesClientTests
         public async Task AddsRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var update = new List<string>() { "newMember1", "newMember2" };
+            var update = new List<string>() { "build2", "deploy" };
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoId, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
@@ -1079,10 +1071,7 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var restrictions = await _client.GetProtectedBranchRestrictions(repoOwner, repoName, "master");
-
-            Assert.NotNull(restrictions);
-            Assert.NotNull(restrictions.Teams);
-            Assert.NotNull(restrictions.Users);
+            
             Assert.Equal(1, restrictions.Teams.Count);
             Assert.Equal(0, restrictions.Users.Count);
         }
@@ -1092,10 +1081,7 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var restrictions = await _client.GetProtectedBranchRestrictions(repoId, "master");
-
-            Assert.NotNull(restrictions);
-            Assert.NotNull(restrictions.Teams);
-            Assert.NotNull(restrictions.Users);
+            
             Assert.Equal(1, restrictions.Teams.Count);
             Assert.Equal(0, restrictions.Users.Count);
         }
@@ -1218,7 +1204,7 @@ public class RepositoryBranchesClientTests
             var restrictions = await _client.UpdateProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
-            Assert.Equal(1, restrictions.Count);
+            Assert.Equal(contextOrgTeam2.TeamName, restrictions[0].Name);
         }
 
         [IntegrationTest]
@@ -1292,20 +1278,21 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
+            using(var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2"))))
+            {
+                // Grant team push access to repo
+                await _github.Organization.Team.AddRepository(
+                     contextOrgTeam2.TeamId,
+                    repoOwner,
+                    repoName,
+                    new RepositoryPermissionRequest(Permission.Push));
 
-            // Grant team push access to repo
-            await _github.Organization.Team.AddRepository(
-                 contextOrgTeam2.TeamId,
-                repoOwner,
-                repoName,
-                new RepositoryPermissionRequest(Permission.Push));
+                var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
+                var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
-            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
-            var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
-
-            Assert.NotNull(restrictions);
-            Assert.Equal(2, restrictions.Count);
+                Assert.NotNull(restrictions);
+                Assert.Equal(2, restrictions.Count);
+            }
         }
 
         public void Dispose()
