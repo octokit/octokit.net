@@ -71,6 +71,8 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficClone> GetClones(int repositoryId, RepositoryTrafficRequest per)
         {
+            Ensure.ArgumentNotNull(per, "per");
+
             return _client.GetClones(repositoryId, per).ToObservable();
         }
 
