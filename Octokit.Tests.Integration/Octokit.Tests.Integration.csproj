@@ -139,6 +139,7 @@
     <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
     <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
     <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
+    <Compile Include="Helpers\OrganizationRepositoryWithTeamContext.cs" />
     <Compile Include="Helpers\MaintenanceModeContext.cs" />
     <Compile Include="Helpers\TeamContext.cs" />
     <Compile Include="Helpers\RepositoryContext.cs" />

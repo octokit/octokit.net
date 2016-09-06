@@ -122,7 +122,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other ObservableRepositoryBranchesClient methods instead.")]
         public IObservable<Branch> Edit(string owner, string name, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -139,13 +139,116 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other ObservableRepositoryBranchesClient methods instead.")]
         public IObservable<Branch> Edit(int repositoryId, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
 
             return _client.Edit(repositoryId, branch, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetBranchProtection(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetBranchProtection(repositoryId, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Update the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">Branch protection settings</param>
+        public IObservable<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return _client.UpdateBranchProtection(owner, name, branch, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Update the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        /// <param name="update">Branch protection settings</param>
+        public IObservable<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, "update");
+
+            return _client.UpdateBranchProtection(repositoryId, branch, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<bool> DeleteBranchProtection(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.DeleteBranchProtection(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove the branch protection settings for the specified branch />
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<bool> DeleteBranchProtection(int repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.DeleteBranchProtection(repositoryId, branch).ToObservable();
         }
     }
 }

@@ -491,6 +491,7 @@
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
+    <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseManagementConsoleClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseManagementConsoleClient.cs" />
     <Compile Include="Models\Request\Enterprise\UpdateMaintenanceRequest.cs" />
