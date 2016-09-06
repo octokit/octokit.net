@@ -151,7 +151,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the branch protection settings for the specified branch />
+        /// Get the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch-protection">API documentation</a> for more details
@@ -169,7 +169,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the branch protection settings for the specified branch />
+        /// Get the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch-protection">API documentation</a> for more details
@@ -184,7 +184,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Update the branch protection settings for the specified branch />
+        /// Update the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
@@ -204,7 +204,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Update the branch protection settings for the specified branch />
+        /// Update the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
@@ -221,7 +221,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove the branch protection settings for the specified branch />
+        /// Remove the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
@@ -248,7 +248,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove the branch protection settings for the specified branch />
+        /// Remove the branch protection settings for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
@@ -272,7 +272,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the required status checks for the specified branch />
+        /// Get the required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -290,7 +290,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the required status checks for the specified branch />
+        /// Get the required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -305,7 +305,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Edit required status checks for the specified branch />
+        /// Replace required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -325,7 +325,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Edit required status checks for the specified branch />
+        /// Replace required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#update-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -342,7 +342,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove required status checks for the specified branch />
+        /// Remove required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -370,7 +370,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove required status checks for the specified branch />
+        /// Remove required status checks for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch">API documentation</a> for more details
@@ -395,7 +395,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the required status checks contexts for the specified branch />
+        /// Get the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -413,7 +413,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get the required status checks contexts for the specified branch />
+        /// Get the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -428,7 +428,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace the required status checks contexts for the specified branch />
+        /// Replace the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -448,7 +448,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace the required status checks contexts for the specified branch />
+        /// Replace the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -465,7 +465,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add the required status checks context for the specified branch />
+        /// Add the required status checks context for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -485,7 +485,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add the required status checks contexts for the specified branch />
+        /// Add the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -502,7 +502,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove the required status checks context for the specified branch />
+        /// Remove the required status checks context for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -522,7 +522,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove the required status checks contexts for the specified branch />
+        /// Remove the required status checks contexts for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
@@ -539,7 +539,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get restrictions for the specified branch />
+        /// Get restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
@@ -557,7 +557,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get restrictions for the specified branch />
+        /// Get restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
@@ -572,7 +572,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove restrictions for the specified branch />
+        /// Remove restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch">API documentation</a> for more details
@@ -600,7 +600,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove restrictions for the specified branch />
+        /// Remove restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch">API documentation</a> for more details
@@ -625,7 +625,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get team restrictions for the specified branch />
+        /// Get team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -643,7 +643,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get team restrictions for the specified branch />
+        /// Get team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -658,7 +658,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace team restrictions for the specified branch />
+        /// Replace team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -678,7 +678,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace team restrictions for the specified branch />
+        /// Replace team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -695,7 +695,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add team restrictions for the specified branch />
+        /// Add team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -715,7 +715,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add team restrictions for the specified branch />
+        /// Add team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -732,7 +732,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove team restrictions for the specified branch />
+        /// Remove team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -752,7 +752,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove team restrictions for the specified branch />
+        /// Remove team restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -769,7 +769,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get user restrictions for the specified branch />
+        /// Get user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -787,7 +787,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Get user restrictions for the specified branch />
+        /// Get user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -802,7 +802,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace user restrictions for the specified branch />
+        /// Replace user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -822,7 +822,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Replace user restrictions for the specified branch />
+        /// Replace user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -839,7 +839,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add user restrictions for the specified branch />
+        /// Add user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -859,7 +859,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add user restrictions for the specified branch />
+        /// Add user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -876,7 +876,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove user restrictions for the specified branch />
+        /// Remove user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -896,7 +896,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove user restrictions for the specified branch />
+        /// Remove user restrictions for the specified branch
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch">API documentation</a> for more details
