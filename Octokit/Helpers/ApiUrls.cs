@@ -1303,18 +1303,6 @@ namespace Octokit
         /// <param name="owner">The owner of the blob</param>
         /// <param name="name">The name of the organization</param>
         /// <returns></returns>
-        [Obsolete("This method is obsolete. Please use ApiUrls.Blobs(owner, name) instead.")]
-        public static Uri Blob(string owner, string name)
-        {
-            return Blob(owner, name, "");
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific blob.
-        /// </summary>
-        /// <param name="owner">The owner of the blob</param>
-        /// <param name="name">The name of the organization</param>
-        /// <returns></returns>
         public static Uri Blobs(string owner, string name)
         {
             return Blob(owner, name, "");
