@@ -587,33 +587,6 @@ public class RepositoryBranchesClientTests
             Assert.Equal(2, requiredStatusChecks.Contexts.Count);
         }
 
-        [IntegrationTest]
-        public async Task GetsRequiredStatusChecksForOrgRepo()
-        {
-            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var requiredStatusChecks = await _client.GetRequiredStatusChecks(repoOwner, repoName, "master");
-
-            Assert.NotNull(requiredStatusChecks);
-            Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
-            Assert.True(requiredStatusChecks.Strict);
-            Assert.Equal(2, requiredStatusChecks.Contexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task GetsRequiredStatusChecksForOrgRepoWithRepositoryId()
-        {
-            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var requiredStatusChecks = await _client.GetRequiredStatusChecks(repoId, "master");
-
-            Assert.NotNull(requiredStatusChecks);
-            Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
-            Assert.True(requiredStatusChecks.Strict);
-            Assert.Equal(2, requiredStatusChecks.Contexts.Count);
-        }
-
         public void Dispose()
         {
             if (_userRepoContext != null)
@@ -670,37 +643,6 @@ public class RepositoryBranchesClientTests
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
 
-        [IntegrationTest]
-        public async Task UpdatesRequiredStatusChecksForOrgRepo()
-        {
-            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
-            var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoOwner, repoName, "master", update);
-
-            Assert.NotNull(requiredStatusChecks);
-            Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
-            Assert.True(requiredStatusChecks.Strict);
-            Assert.Equal(1, requiredStatusChecks.Contexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesRequiredStatusChecksForOrgRepoWithRepositoryId()
-        {
-            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
-            var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoId, "master", update);
-
-            Assert.NotNull(requiredStatusChecks);
-            Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
-            Assert.True(requiredStatusChecks.Strict);
-            Assert.Equal(1, requiredStatusChecks.Contexts.Count);
-        }
-
         public void Dispose()
         {
             if (_userRepoContext != null)
@@ -746,31 +688,6 @@ public class RepositoryBranchesClientTests
                 Assert.True(deleted);
             }
         }
-
-        [IntegrationTest]
-        public async Task DeletesRequiredStatusChecksForOrgRepo()
-        {
-            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
-            {
-                var repoOwner = context.RepositoryContext.RepositoryOwner;
-                var repoName = context.RepositoryContext.RepositoryName;
-                var deleted = await _client.DeleteRequiredStatusChecks(repoOwner, repoName, "master");
-
-                Assert.True(deleted);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task DeletesRequiredStatusChecksForOrgRepoWithRepositoryId()
-        {
-            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
-            {
-                var repoId = context.RepositoryContext.RepositoryId;
-                var deleted = await _client.DeleteRequiredStatusChecks(repoId, "master");
-
-                Assert.True(deleted);
-            }
-        }
     }
 
     public class TheGetRequiredStatusChecksContextsMethod : IDisposable
@@ -803,27 +720,6 @@ public class RepositoryBranchesClientTests
         public async Task GetsRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var requiredStatusChecksContexts = await _client.GetRequiredStatusChecksContexts(repoId, "master");
-
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task GetsRequiredStatusChecksContextsForOrgRepo()
-        {
-            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var requiredStatusChecksContexts = await _client.GetRequiredStatusChecksContexts(repoOwner, repoName, "master");
-
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.Equal(2, requiredStatusChecksContexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task GetsRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
-        {
-            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var requiredStatusChecksContexts = await _client.GetRequiredStatusChecksContexts(repoId, "master");
 
             Assert.NotNull(requiredStatusChecksContexts);
@@ -870,27 +766,6 @@ public class RepositoryBranchesClientTests
         public async Task UpdatesRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var update = new List<string>() { "build2" };
-            var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoId, "master", update);
-
-            Assert.Equal(1, requiredStatusChecksContexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesRequiredStatusChecksContextsForOrgRepo()
-        {
-            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var update = new List<string>() { "build2" };
-            var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
-
-            Assert.Equal(1, requiredStatusChecksContexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
-        {
-            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoId, "master", update);
 
@@ -947,31 +822,6 @@ public class RepositoryBranchesClientTests
             Assert.Equal(4, requiredStatusChecksContexts.Count);
         }
 
-        [IntegrationTest]
-        public async Task AddsRequiredStatusChecksContextsForOrgRepo()
-        {
-            var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-            var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var update = new List<string>() { "build2", "deploy" };
-            var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
-
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(4, requiredStatusChecksContexts.Count);
-        }
-
-        [IntegrationTest]
-        public async Task AddsRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
-        {
-            var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var update = new List<string>() { "build2", "deploy" };
-            var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoId, "master", update);
-
-            Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
-            Assert.Equal(4, requiredStatusChecksContexts.Count);
-        }
-
         public void Dispose()
         {
             if (_userRepoContext != null)
@@ -1014,35 +864,6 @@ public class RepositoryBranchesClientTests
             using (var context = await _github.CreateRepositoryWithProtectedBranch())
             {
                 var repoId = context.RepositoryId;
-                var contextsToRemove = new List<string>() { "build" };
-                var deleted = await _client.DeleteRequiredStatusChecksContexts(repoId, "master", contextsToRemove);
-
-                Assert.NotNull(deleted);
-                Assert.True(deleted.Contains("test"));
-            }
-        }
-
-        [IntegrationTest]
-        public async Task DeletesRequiredStatusChecksContextsForOrgRepo()
-        {
-            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
-            {
-                var repoOwner = context.RepositoryContext.RepositoryOwner;
-                var repoName = context.RepositoryContext.RepositoryName;
-                var contextsToRemove = new List<string>() { "build" };
-                var deleted = await _client.DeleteRequiredStatusChecksContexts(repoOwner, repoName, "master", contextsToRemove);
-
-                Assert.NotNull(deleted);
-                Assert.True(deleted.Contains("test"));
-            }
-        }
-
-        [IntegrationTest]
-        public async Task DeletesRequiredStatusChecksContextsForOrgRepoWithRepositoryId()
-        {
-            using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
-            {
-                var repoId = context.RepositoryContext.RepositoryId;
                 var contextsToRemove = new List<string>() { "build" };
                 var deleted = await _client.DeleteRequiredStatusChecksContexts(repoId, "master", contextsToRemove);
 
