@@ -549,7 +549,6 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheGetRequiredStatusChecksMethod()
         {
@@ -557,7 +556,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -591,9 +589,6 @@ public class RepositoryBranchesClientTests
         {
             if (_userRepoContext != null)
                 _userRepoContext.Dispose();
-
-            if (_orgRepoContext != null)
-                _orgRepoContext.Dispose();
         }
     }
 
@@ -601,7 +596,6 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheUpdateRequiredStatusChecksMethod()
         {
@@ -609,7 +603,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -647,9 +640,6 @@ public class RepositoryBranchesClientTests
         {
             if (_userRepoContext != null)
                 _userRepoContext.Dispose();
-
-            if (_orgRepoContext != null)
-                _orgRepoContext.Dispose();
         }
     }
 
@@ -693,8 +683,7 @@ public class RepositoryBranchesClientTests
     public class TheGetRequiredStatusChecksContextsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
-        RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
+        RepositoryContext _userRepoContext;        
 
         public TheGetRequiredStatusChecksContextsMethod()
         {
@@ -702,7 +691,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -730,9 +718,6 @@ public class RepositoryBranchesClientTests
         {
             if (_userRepoContext != null)
                 _userRepoContext.Dispose();
-
-            if (_orgRepoContext != null)
-                _orgRepoContext.Dispose();
         }
     }
 
@@ -740,7 +725,6 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheUpdateRequiredStatusChecksContextsMethod()
         {
@@ -748,7 +732,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -776,9 +759,6 @@ public class RepositoryBranchesClientTests
         {
             if (_userRepoContext != null)
                 _userRepoContext.Dispose();
-
-            if (_orgRepoContext != null)
-                _orgRepoContext.Dispose();
         }
     }
 
@@ -786,7 +766,6 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheAddRequiredStatusChecksContextsMethod()
         {
@@ -794,7 +773,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -826,9 +804,6 @@ public class RepositoryBranchesClientTests
         {
             if (_userRepoContext != null)
                 _userRepoContext.Dispose();
-
-            if (_orgRepoContext != null)
-                _orgRepoContext.Dispose();
         }
     }
 
