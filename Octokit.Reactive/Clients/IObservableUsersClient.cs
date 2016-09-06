@@ -50,15 +50,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
-        [Obsolete("Ssh key information is now available under the GitSshKey property. This will be removed in a future update.")]
-        IObservableUserKeysClient Keys { get; }
-
-        /// <summary>
-        /// A client for GitHub's User Keys API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
-        ///</remarks>
         IObservableUserKeysClient GitSshKey { get; }
 
         /// <summary>
