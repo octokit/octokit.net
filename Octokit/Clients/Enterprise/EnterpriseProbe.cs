@@ -16,6 +16,11 @@ namespace Octokit
         readonly ProductHeaderValue productHeader;
         readonly IHttpClient httpClient;
 
+        public EnterpriseProbe(ProductHeaderValue productHeader)
+            : this(productHeader, new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault))
+        {
+        }
+
         public EnterpriseProbe(ProductHeaderValue productHeader, IHttpClient httpClient)
         {
             Ensure.ArgumentNotNull(productHeader, "productHeader");
