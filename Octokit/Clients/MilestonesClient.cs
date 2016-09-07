@@ -69,7 +69,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId)
         {
@@ -101,7 +101,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId, ApiOptions options)
@@ -136,7 +136,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId, MilestoneRequest request)
@@ -174,7 +174,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
@@ -210,7 +210,7 @@ namespace Octokit
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
         public Task<Milestone> Create(int repositoryId, NewMilestone newMilestone)
@@ -245,7 +245,7 @@ namespace Octokit
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
@@ -279,7 +279,7 @@ namespace Octokit
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
         public Task Delete(int repositoryId, int number)

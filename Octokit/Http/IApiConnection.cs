@@ -262,6 +262,14 @@ namespace Octokit
         /// <summary>
         /// Updates the API resource at the specified URI.
         /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Patch(Uri uri, string accepts);
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
@@ -311,17 +319,6 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         Task Delete(Uri uri, object data, string accepts);
-
-        /// <summary>
-        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
-        /// API calls which wants to return the redirect URL.
-        /// It expects the API to respond with a 302 Found.
-        /// </summary>
-        /// <param name="uri">URI of the API resource to get</param>
-        /// <returns>The URL returned by the API in the Location header</returns>
-        /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
-        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
-        Task<string> GetRedirect(Uri uri);
 
         /// <summary>
         /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which 

@@ -34,5 +34,11 @@ namespace Octokit
         public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
 
         public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
+
+        public const string InvitationsApiPreview = "application/vnd.github.swamp-thing-preview+json";
+
+        public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
+
+        public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview";
     }
 }

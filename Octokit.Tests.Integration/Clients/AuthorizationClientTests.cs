@@ -235,42 +235,5 @@ namespace Octokit.Tests.Integration.Clients
             Assert.ThrowsAsync<NotFoundException>(() => applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token));
             Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
-
-        [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1078 for explanation of why this is now obsolete")]
-        public async Task CanRevokeAllApplicationAuthentications()
-        {
-            var github = Helper.GetBasicAuthClient();
-
-            var fingerprint = Helper.MakeNameWithTimestamp("authorization-testing");
-            var note = Helper.MakeNameWithTimestamp("Testing authentication");
-            var token1 = await github.Authorization.GetOrCreateApplicationAuthentication(
-                Helper.ClientId,
-                Helper.ClientSecret,
-                new NewAuthorization(
-                    note,
-                    new[] { "user" },
-                    fingerprint));
-
-            fingerprint = Helper.MakeNameWithTimestamp("authorization-testing-2");
-            note = Helper.MakeNameWithTimestamp("Testing authentication 2");
-            var token2 = await github.Authorization.GetOrCreateApplicationAuthentication(
-                Helper.ClientId,
-                Helper.ClientSecret,
-                new NewAuthorization(
-                    note,
-                    new[] { "user" },
-                    fingerprint));
-
-            var applicationClient = Helper.GetAuthenticatedApplicationClient();
-            await applicationClient.Authorization.RevokeAllApplicationAuthentications(Helper.ClientId);
-
-            Assert.ThrowsAsync<NotFoundException>(async () =>
-                await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token1.Token));
-            Assert.ThrowsAsync<NotFoundException>(async () =>
-                await applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, token2.Token));
-
-            Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(token1.Id));
-            Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(token2.Id));
-        }
     }
 }

@@ -93,13 +93,17 @@
     <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservableIssueReactionsClient.cs" />
+    <Compile Include="Clients\IObservableIssueTimelineClient.cs" />
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\IObservableMergingClient.cs" />
     <Compile Include="Clients\IObservableMigrationClient.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\IObservableRepositoryDeployKeysClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\IObservableUserAdministrationClient.cs" />
     <Compile Include="Clients\IObservableUserGpgKeysClient.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
     <Compile Include="Clients\ObservableIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\ObservableIssueReactionsClient.cs" />
+    <Compile Include="Clients\ObservableIssueTimelineClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMergingClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
@@ -134,6 +139,7 @@
     <Compile Include="Clients\ObservableIssuesLabelsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryCommitsClients.cs" />
     <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />
@@ -182,7 +188,6 @@
     <Compile Include="Clients\ObservableReleasesClient.cs" />
     <Compile Include="Clients\ObservableRepositoriesClient.cs" />
     <Compile Include="Clients\ObservableRepositoryHooksClient.cs" />
-    <Compile Include="Clients\ObservableSshKeysClient.cs" />
     <Compile Include="Clients\ObservableStarredClient.cs" />
     <Compile Include="Clients\ObservableStatisticsClient.cs" />
     <Compile Include="Clients\ObservableTagsClient.cs" />
@@ -207,7 +212,6 @@
     <Compile Include="Clients\IObservableReleasesClient.cs" />
     <Compile Include="Clients\IObservableRepositoriesClient.cs" />
     <Compile Include="Clients\IObservableOrganizationsClient.cs" />
-    <Compile Include="Clients\IObservableSshKeysClient.cs" />
     <Compile Include="Clients\IObservableUsersClient.cs" />
     <Compile Include="Clients\ObservableActivitiesClient.cs" />
     <Compile Include="ObservableGitHubClient.cs" />

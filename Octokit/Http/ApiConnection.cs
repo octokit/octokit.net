@@ -390,6 +390,20 @@ namespace Octokit
         /// <summary>
         /// Updates the API resource at the specified URI.
         /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Patch(Uri uri, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            return Connection.Patch(uri, accepts);
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
@@ -478,28 +492,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, "accepts");
 
             return Connection.Delete(uri, data, accepts);
-        }
-        /// <summary>
-        /// Executes a GET to the API object at the specified URI. This operation is appropriate for
-        /// API calls which wants to return the redirect URL.
-        /// It expects the API to respond with a 302 Found.
-        /// </summary>
-        /// <param name="uri">URI of the API resource to get</param>
-        /// <returns>The URL returned by the API in the Location header</returns>
-        /// <exception cref="ApiException">Thrown when an API error occurs, or the API does not respond with a 302 Found</exception>
-        [Obsolete("Octokit's HTTP library now follows redirects by default - this API will be removed in a future release")]
-        public async Task<string> GetRedirect(Uri uri)
-        {
-            Ensure.ArgumentNotNull(uri, "uri");
-            var response = await Connection.GetRedirect<string>(uri).ConfigureAwait(false);
-
-            if (response.HttpResponse.StatusCode == HttpStatusCode.Redirect)
-            {
-                return response.HttpResponse.Headers["Location"];
-            }
-
-            throw new ApiException("Redirect Operation expect status code of Redirect.",
-                response.HttpResponse.StatusCode);
         }
 
         /// <summary>

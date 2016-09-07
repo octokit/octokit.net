@@ -435,9 +435,6 @@ namespace Octokit
 
     public enum IssueTypeQualifier
     {
-        [Obsolete("Use IssueTypeQualifier.PullRequest instead")]
-        [Parameter(Value = "pr")]
-        PR,
         [Parameter(Value = "pr")]
         PullRequest,
         [Parameter(Value = "issue")]

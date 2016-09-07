@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(int repositoryId)
         {
@@ -106,7 +106,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(int repositoryId, ApiOptions options)
@@ -141,7 +141,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(int repositoryId, MilestoneRequest request)
@@ -179,7 +179,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
         /// </remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
@@ -215,7 +215,7 @@ namespace Octokit.Reactive
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#create-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
         public IObservable<Milestone> Create(int repositoryId, NewMilestone newMilestone)
@@ -250,7 +250,7 @@ namespace Octokit.Reactive
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
@@ -284,7 +284,7 @@ namespace Octokit.Reactive
         /// Milestone.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
-        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
         public IObservable<Unit> Delete(int repositoryId, int number)
