@@ -971,6 +971,7 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
+        TeamContext _contextOrgTeam2;
         IGitHubClient _github;
 
         public TheUpdateProtectedBranchTeamRestrictionsMethod()
@@ -978,6 +979,7 @@ public class RepositoryBranchesClientTests
             _github = Helper.GetAuthenticatedClient();
             _client = _github.Repository.Branch;
 
+            _contextOrgTeam2 = _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2"))).Result;
             _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
@@ -987,20 +989,18 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
 
-            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
-
             // Grant team push access to repo
             await _github.Organization.Team.AddRepository(
-                contextOrgTeam2.TeamId,
+                _contextOrgTeam2.TeamId,
                 repoOwner,
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { _contextOrgTeam2.TeamName };
             var restrictions = await _client.UpdateProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
-            Assert.Equal(contextOrgTeam2.TeamName, restrictions[0].Name);
+            Assert.Equal(_contextOrgTeam2.TeamName, restrictions[0].Name);
         }
 
         [IntegrationTest]
@@ -1009,16 +1009,15 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
 
             // Grant team push access to repo
             await _github.Organization.Team.AddRepository(
-                 contextOrgTeam2.TeamId,
+                 _contextOrgTeam2.TeamId,
                 repoOwner,
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { _contextOrgTeam2.TeamName };
             var restrictions = await _client.UpdateProtectedBranchTeamRestrictions(repoId, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1029,6 +1028,9 @@ public class RepositoryBranchesClientTests
         {
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
+
+            if (_contextOrgTeam2 != null)
+                _contextOrgTeam2.Dispose();
         }
     }
 
@@ -1036,6 +1038,7 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
+        TeamContext _contextOrgTeam2;
         IGitHubClient _github;
 
         public TheAddProtectedBranchTeamRestrictionsMethod()
@@ -1043,6 +1046,7 @@ public class RepositoryBranchesClientTests
             _github = Helper.GetAuthenticatedClient();
             _client = _github.Repository.Branch;
 
+            _contextOrgTeam2 = _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2"))).Result;
             _orgRepoContext = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
@@ -1052,16 +1056,14 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
 
-            var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2")));
-
             // Grant team push access to repo
             await _github.Organization.Team.AddRepository(
-                contextOrgTeam2.TeamId,
+                _contextOrgTeam2.TeamId,
                 repoOwner,
                 repoName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
+            var newTeam = new BranchProtectionTeamCollection() { _contextOrgTeam2.TeamName };
             var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoOwner, repoName, "master", newTeam);
 
             Assert.NotNull(restrictions);
@@ -1074,27 +1076,28 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            using(var contextOrgTeam2 = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team2"))))
-            {
-                // Grant team push access to repo
-                await _github.Organization.Team.AddRepository(
-                     contextOrgTeam2.TeamId,
-                    repoOwner,
-                    repoName,
-                    new RepositoryPermissionRequest(Permission.Push));
 
-                var newTeam = new BranchProtectionTeamCollection() { contextOrgTeam2.TeamName };
-                var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
+            // Grant team push access to repo
+            await _github.Organization.Team.AddRepository(
+                _contextOrgTeam2.TeamId,
+                repoOwner,
+                repoName,
+                new RepositoryPermissionRequest(Permission.Push));
 
-                Assert.NotNull(restrictions);
-                Assert.Equal(2, restrictions.Count);
-            }
+            var newTeam = new BranchProtectionTeamCollection() { _contextOrgTeam2.TeamName };
+            var restrictions = await _client.AddProtectedBranchTeamRestrictions(repoId, "master", newTeam);
+
+            Assert.NotNull(restrictions);
+            Assert.Equal(2, restrictions.Count);
         }
 
         public void Dispose()
         {
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
+
+            if (_contextOrgTeam2 != null)
+                _contextOrgTeam2.Dispose();
         }
     }
 
