@@ -1,3 +1,39 @@
+### New in 0.22.0 (released 2016/09/01)
+
+**Features**
+
+ - Timeline preview API support - #1435 via @alfhenrik
+ - Initial groundwork for Branches API - #1437 via @ryangribble
+ - Base branch can now be updated when updating a pull request - #1450 via @ryangribble
+ - Enhancements to Protected Branches preview API - #1441 via @ryangribble
+
+**Fixes**
+
+ - Redirect timeout when repository renamed - #1411 via @maddin2016
+
+**Breaking Changes**
+
+The new Branches client added in #1437 means that existing methods on 
+I(Observable)RepositoryClient are now marked as obsolete. Please update your
+usages to the new endpoints as these will be removed in a future release:
+
+ - `client.Repository.GetBranch()` => `client.Repository.Branch.Get()`
+ - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
+ - `client.Repository.EditBranch()` => `client.Repository.Branch.Edit()`
+
+There is also a change in how branch protection works with the API, due to 
+upstream changes. The existing methods have been marked as obsolete, but for
+the sake of brevity here are the details about what you should be doing today.
+
+The process for inspecting branch protection is now two steps:
+
+ - first, check the branch returned by `client.Repository.Branch.Get()` or 
+   `client.Repository.Branch.GetAll()` has it's `Protected` property set to `true`.
+
+ - then, a call to `client.Repository.Branch.GetBranchProtection()` will return
+   the details about the protection settings for the given branch. If no protection
+   is set for this branch, you will received a `HTTP 404` response.
+
 ### New in 0.21.1 (released 2016/07/29)
 
 **Features**

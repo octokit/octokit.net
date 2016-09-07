@@ -4,6 +4,7 @@
 "tools\nuget\nuget.exe" "install" "FAKE.Core" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "4.28.0" -verbosity quiet
 "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.1.0" -verbosity quiet
 "tools\nuget\nuget.exe" "install" "Octokit.CodeFormatter" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "1.0.0-preview" -Pre -verbosity quiet
+"tools\nuget\nuget.exe" "install" "FSharp.Data" "-OutputDirectory" "tools" "-ExcludeVersion" "-version" "2.3.2" -verbosity quiet
 
 :Build
 cls

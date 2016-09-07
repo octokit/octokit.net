@@ -39,7 +39,7 @@ namespace Octokit
         /// <summary>
         /// The <see cref="BranchProtection"/> details for this <see cref="Branch"/>.
         /// </summary>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.", false)]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see the Branch.Protected property and RepositoryBranchesClient.GetBranchProtection method instead.")]
         public BranchProtection Protection { get; protected set; }
 
         /// <summary>
