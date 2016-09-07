@@ -323,7 +323,7 @@ namespace Octokit
         Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts);
 
         /// <summary>
-        /// Get restrictions for the specified branch
+        /// Get restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
@@ -334,7 +334,7 @@ namespace Octokit
         Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
 
         /// <summary>
-        /// Get restrictions for the specified branch
+        /// Get restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#get-restrictions-of-protected-branch">API documentation</a> for more details
@@ -344,7 +344,7 @@ namespace Octokit
         Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch);
 
         /// <summary>
-        /// Remove restrictions for the specified branch
+        /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch">API documentation</a> for more details
@@ -355,7 +355,7 @@ namespace Octokit
         Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch);
 
         /// <summary>
-        /// Remove restrictions for the specified branch
+        /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-restrictions-of-protected-branch">API documentation</a> for more details
@@ -365,7 +365,7 @@ namespace Octokit
         Task<bool> DeleteProtectedBranchRestrictions(int repositoryId, string branch);
 
         /// <summary>
-        /// Get team restrictions for the specified branch
+        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -377,7 +377,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
-        /// Get team restrictions for the specified branch
+        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -388,7 +388,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch);
 
         /// <summary>
-        /// Replace team restrictions for the specified branch
+        /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -400,7 +400,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Replace team restrictions for the specified branch
+        /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -411,7 +411,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Add team restrictions for the specified branch
+        /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -423,7 +423,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Add team restrictions for the specified branch
+        /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -434,7 +434,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Remove team restrictions for the specified branch
+        /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -446,7 +446,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Remove team restrictions for the specified branch
+        /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-team-restrictions-of-protected-branch">API documentation</a> for more details
@@ -457,7 +457,7 @@ namespace Octokit
         Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams);
 
         /// <summary>
-        /// Get user restrictions for the specified branch
+        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -469,7 +469,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
-        /// Get user restrictions for the specified branch
+        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -480,7 +480,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch);
 
         /// <summary>
-        /// Replace user restrictions for the specified branch
+        /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -492,7 +492,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
-        /// Replace user restrictions for the specified branch
+        /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#replace-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -503,7 +503,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
-        /// Add user restrictions for the specified branch
+        /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -515,7 +515,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
-        /// Add user restrictions for the specified branch
+        /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#add-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -526,7 +526,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
-        /// Remove user restrictions for the specified branch
+        /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch">API documentation</a> for more details
@@ -538,7 +538,7 @@ namespace Octokit
         Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
 
         /// <summary>
-        /// Remove user restrictions for the specified branch
+        /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-user-restrictions-of-protected-branch">API documentation</a> for more details
