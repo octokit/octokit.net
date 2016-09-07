@@ -33,8 +33,6 @@ namespace Octokit
         public string DiffUrl { get; protected set; }
         public string PatchUrl { get; protected set; }
         public GitHubCommit BaseCommit { get; protected set; }
-        [Obsolete("This property is obsolete. Use MergeBaseCommit instead.", false)]
-        public GitHubCommit MergedBaseCommit { get; protected set; }
         public GitHubCommit MergeBaseCommit { get; protected set; }
         public string Status { get; protected set; }
         public int AheadBy { get; protected set; }
