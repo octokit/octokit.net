@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -55,6 +54,25 @@ public class SearchClientTests
         var repos = await _gitHubClient.Search.SearchCode(request);
 
         Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForLanguageInCode()
+    {
+        var request = new SearchCodeRequest("AnonymousAuthenticator")
+        {
+            Language = Language.CSharp
+        };
+        request.Repos.Add("octokit/octokit.net");
+
+        var searchResults = await _gitHubClient.Search.SearchCode(request);
+
+        Assert.NotEmpty(searchResults.Items);
+
+        foreach (var code in searchResults.Items)
+        {
+            Assert.True(code.Name.EndsWith(".cs"));
+        }
     }
 
     [IntegrationTest]

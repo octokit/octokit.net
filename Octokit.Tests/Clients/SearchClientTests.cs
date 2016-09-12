@@ -967,7 +967,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
             [Fact]
@@ -1446,7 +1446,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
             [Fact]

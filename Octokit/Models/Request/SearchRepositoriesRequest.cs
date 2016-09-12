@@ -446,7 +446,7 @@ namespace Octokit
         Coq,
         [Parameter(Value = "C++")]
         CPlusPlus,
-        [Parameter(Value = "C#")]
+        [Parameter(Value = "CSharp")]
         CSharp,
         Css,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cpp")]
