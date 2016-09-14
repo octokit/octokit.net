@@ -12,6 +12,12 @@ matrix:
       mono: latest
       dotnet: 1.0.0-preview2-003121
 
+install:
+  - nuget restore Octokit-Mono.sln
+
 script:
+  - mono tools/nuget/NuGet.exe restore Octokit-Mono.sln
+  - ./build.sh BuildMono
+  - ./build.sh
   - dotnet --info
   - ./build.sh UnitTestsDotNetCore
