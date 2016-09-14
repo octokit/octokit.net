@@ -5,11 +5,11 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      mono: latest
+      mono: 4.2.3
       dotnet: 1.0.0-preview2-003121
     - os: osx
       osx_image: xcode7.2
-      mono: latest
+      mono: 4.2.3
       dotnet: 1.0.0-preview2-003121
 
 install:
