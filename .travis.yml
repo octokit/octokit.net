@@ -13,7 +13,7 @@ matrix:
       dotnet: 1.0.0-preview2-003121
 
 before_install:  
-  - if test "$TRAVIS_OS_NAME" == "osx"; then ln -s /usr/local/Cellar/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/; ln -s /usr/local/Cellar/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/; fi
+  - if test "$TRAVIS_OS_NAME" == "osx"; then ln -s /usr/local/Cellar/openssl/1.0.2h/lib/libcrypto.1.0.0.dylib /usr/local/lib/; ln -s /usr/local/Cellar/openssl/1.0.2h/lib/libssl.1.0.0.dylib /usr/local/lib/; fi
 
 install:
   - nuget restore Octokit-Mono.sln
