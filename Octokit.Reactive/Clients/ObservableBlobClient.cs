@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        public IObservable<Blob> Get(int repositoryId, string reference)
+        public IObservable<Blob> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        public IObservable<BlobReference> Create(int repositoryId, NewBlob newBlob)
+        public IObservable<BlobReference> Create(long repositoryId, NewBlob newBlob)
         {
             Ensure.ArgumentNotNull(newBlob, "newBlob");
 

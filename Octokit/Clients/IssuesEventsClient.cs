@@ -42,7 +42,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -75,7 +75,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -105,7 +105,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -136,7 +136,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -168,7 +168,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The event id</param>
-        public Task<IssueEvent> Get(int repositoryId, int number)
+        public Task<IssueEvent> Get(long repositoryId, int number)
         {
             return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(repositoryId, number));
         }

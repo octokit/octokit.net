@@ -17,7 +17,7 @@ namespace Octokit.Tests.Reactive
             private readonly ObservableDeploymentsClient _client;
             private const string owner = "owner";
             private const string name = "name";
-            private const int repositoryId = 1;
+            private const long repositoryId = 1;
 
             public TheGetAllMethod()
             {

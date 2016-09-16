@@ -25,7 +25,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId);
+        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId);
 
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
@@ -99,7 +99,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<bool> CheckWatched(int repositoryId);
+        Task<bool> CheckWatched(long repositoryId);
 
         /// <summary>
         /// Watches a repository for the authenticated user.
@@ -114,7 +114,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        Task<Subscription> WatchRepo(int repositoryId, NewSubscription newSubscription);
+        Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription);
 
         /// <summary>
         /// Unwatches a repository for the authenticated user.
@@ -131,6 +131,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
-        Task<bool> UnwatchRepo(int repositoryId);
+        Task<bool> UnwatchRepo(long repositoryId);
     }
 }

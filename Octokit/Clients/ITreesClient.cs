@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<TreeResponse> Get(int repositoryId, string reference);
+        Task<TreeResponse> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -52,7 +52,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        Task<TreeResponse> GetRecursive(int repositoryId, string reference);
+        Task<TreeResponse> GetRecursive(long repositoryId, string reference);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -73,6 +73,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        Task<TreeResponse> Create(int repositoryId, NewTree newTree);
+        Task<TreeResponse> Create(long repositoryId, NewTree newTree);
     }
 }

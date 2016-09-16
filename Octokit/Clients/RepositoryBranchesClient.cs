@@ -45,7 +45,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Branch>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -77,7 +77,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Branch>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -110,7 +110,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<Branch> Get(int repositoryId, string branch)
+        public Task<Branch> Get(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branchName");
 
@@ -142,7 +142,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other RepositoryBranchesClient methods instead.")]
-        public Task<Branch> Edit(int repositoryId, string branch, BranchUpdate update)
+        public Task<Branch> Edit(long repositoryId, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -176,7 +176,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch)
+        public Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -212,7 +212,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        public Task<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        public Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -255,7 +255,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public async Task<bool> DeleteBranchProtection(int repositoryId, string branch)
+        public async Task<bool> DeleteBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 

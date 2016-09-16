@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<EventInfo> GetAllForIssue(int repositoryId, int number)
+        public IObservable<EventInfo> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<EventInfo> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        public IObservable<EventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<IssueEvent> GetAllForRepository(int repositoryId)
+        public IObservable<IssueEvent> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -142,7 +142,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForRepository(int repositoryId, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The event id</param>
-        public IObservable<IssueEvent> Get(int repositoryId, int number)
+        public IObservable<IssueEvent> Get(long repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }

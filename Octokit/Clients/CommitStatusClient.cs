@@ -47,7 +47,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<CommitStatus>> GetAll(int repositoryId, string reference, ApiOptions options)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNull(options, "options");
@@ -121,7 +121,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public Task<CombinedCommitStatus> GetCombined(int repositoryId, string reference)
+        public Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -157,7 +157,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        public Task<CommitStatus> Create(int repositoryId, string reference, NewCommitStatus newCommitStatus)
+        public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNull(newCommitStatus, "newCommitStatus");

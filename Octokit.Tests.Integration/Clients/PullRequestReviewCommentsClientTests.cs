@@ -807,7 +807,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         return createdComment;
     }
 
-    async Task<PullRequestReviewComment> CreateComment(string body, int position, int repositoryId, string pullRequestCommitId, int pullRequestNumber)
+    async Task<PullRequestReviewComment> CreateComment(string body, int position, long repositoryId, string pullRequestCommitId, int pullRequestNumber)
     {
         var comment = new PullRequestReviewCommentCreate(body, pullRequestCommitId, path, position);
 

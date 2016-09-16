@@ -31,6 +31,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        Task<Merge> Create(int repositoryId, NewMerge merge);
+        Task<Merge> Create(long repositoryId, NewMerge merge);
     }
 }

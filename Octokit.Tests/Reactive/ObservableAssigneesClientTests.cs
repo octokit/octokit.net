@@ -12,7 +12,7 @@ namespace Octokit.Tests.Reactive
         private const string owner = "owner";
         private const string name = "name";
         private const string assignee = "assignee";
-        private const int repositoryId = 1;
+        private const long repositoryId = 1;
 
         public class TheGetAllMethod
         {

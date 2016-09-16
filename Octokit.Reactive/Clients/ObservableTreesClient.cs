@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> Get(int repositoryId, string reference)
+        public IObservable<TreeResponse> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> GetRecursive(int repositoryId, string reference)
+        public IObservable<TreeResponse> GetRecursive(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -112,7 +112,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        public IObservable<TreeResponse> Create(int repositoryId, NewTree newTree)
+        public IObservable<TreeResponse> Create(long repositoryId, NewTree newTree)
         {
             Ensure.ArgumentNotNull(newTree, "newTree");
 

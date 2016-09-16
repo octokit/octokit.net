@@ -45,7 +45,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        public Task<GitTag> Get(int repositoryId, string reference)
+        public Task<GitTag> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -78,7 +78,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        public Task<GitTag> Create(int repositoryId, NewTag tag)
+        public Task<GitTag> Create(long repositoryId, NewTag tag)
         {
             Ensure.ArgumentNotNull(tag, "tag");
 

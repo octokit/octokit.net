@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Commit> Get(int repositoryId, string reference);
+        IObservable<Commit> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -55,6 +55,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        IObservable<Commit> Create(int repositoryId, NewCommit commit);
+        IObservable<Commit> Create(long repositoryId, NewCommit commit);
     }
 }

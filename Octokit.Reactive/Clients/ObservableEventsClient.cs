@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Activity> GetAllForRepository(int repositoryId)
+        public IObservable<Activity> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -99,7 +99,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Activity> GetAllForRepository(int repositoryId, ApiOptions options)
+        public IObservable<Activity> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -129,7 +129,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Activity> GetAllIssuesForRepository(int repositoryId)
+        public IObservable<Activity> GetAllIssuesForRepository(long repositoryId)
         {
             return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
         }
@@ -160,7 +160,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Activity> GetAllIssuesForRepository(int repositoryId, ApiOptions options)
+        public IObservable<Activity> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 

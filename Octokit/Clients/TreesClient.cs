@@ -47,7 +47,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public Task<TreeResponse> Get(int repositoryId, string reference)
+        public Task<TreeResponse> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -80,7 +80,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public Task<TreeResponse> GetRecursive(int repositoryId, string reference)
+        public Task<TreeResponse> GetRecursive(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -118,7 +118,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        public Task<TreeResponse> Create(int repositoryId, NewTree newTree)
+        public Task<TreeResponse> Create(long repositoryId, NewTree newTree)
         {
             Ensure.ArgumentNotNull(newTree, "newTree");
 

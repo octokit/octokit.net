@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Repository> GetAll(int repositoryId);
+        IObservable<Repository> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets the list of forks defined for a repository
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Repository> GetAll(int repositoryId, ApiOptions options);
+        IObservable<Repository> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the list of forks defined for a repository
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request);
+        IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request);
 
         /// <summary>
         /// Gets the list of forks defined for a repository
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Repository> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options);
+        IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request, ApiOptions options);
 
         /// <summary>
         /// Creates a fork for a repository. Specify organization in the fork parameter to create for an organization.
@@ -113,6 +113,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        IObservable<Repository> Create(int repositoryId, NewRepositoryFork fork);
+        IObservable<Repository> Create(long repositoryId, NewRepositoryFork fork);
     }
 }

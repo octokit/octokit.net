@@ -31,7 +31,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Page> Get(int repositoryId);
+        Task<Page> Get(long repositoryId);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -50,7 +50,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId);
+        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -71,7 +71,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -90,7 +90,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> GetLatest(int repositoryId);
+        Task<PagesBuild> GetLatest(long repositoryId);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -109,6 +109,6 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> RequestPageBuild(int repositoryId);
+        Task<PagesBuild> RequestPageBuild(long repositoryId);
     }
 }

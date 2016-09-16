@@ -29,7 +29,7 @@ namespace Octokit
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        Task<CompareResult> Compare(int repositoryId, string @base, string head);
+        Task<CompareResult> Compare(long repositoryId, string @base, string head);
 
         /// <summary>
         /// Gets a single commit for a given repository
@@ -48,7 +48,7 @@ namespace Octokit
         /// <param name="reference">The reference for the commit (SHA)</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Makes a network request")]
-        Task<GitHubCommit> Get(int repositoryId, string reference);
+        Task<GitHubCommit> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -61,7 +61,7 @@ namespace Octokit
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId);
+        Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -76,7 +76,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -91,7 +91,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request);
+        Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, CommitRequest request);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -108,7 +108,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request, ApiOptions options);
+        Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, CommitRequest request, ApiOptions options);
 
         /// <summary>
         /// Get the SHA-1 of a commit reference
@@ -123,6 +123,6 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The repository reference</param>
-        Task<string> GetSha1(int repositoryId, string reference);
+        Task<string> GetSha1(long repositoryId, string reference);
     }
 }

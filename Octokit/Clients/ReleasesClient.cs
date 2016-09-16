@@ -46,7 +46,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<IReadOnlyList<Release>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Release>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<IReadOnlyList<Release>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Release>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -116,7 +116,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<Release> Get(int repositoryId, int id)
+        public Task<Release> Get(long repositoryId, int id)
         {
             var endpoint = ApiUrls.Releases(repositoryId, id);
             return ApiConnection.Get<Release>(endpoint);
@@ -148,7 +148,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<Release> GetLatest(int repositoryId)
+        public Task<Release> GetLatest(long repositoryId)
         {
             var endpoint = ApiUrls.LatestRelease(repositoryId);
             return ApiConnection.Get<Release>(endpoint);
@@ -183,7 +183,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<Release> Create(int repositoryId, NewRelease data)
+        public Task<Release> Create(long repositoryId, NewRelease data)
         {
             Ensure.ArgumentNotNull(data, "data");
 
@@ -222,7 +222,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<Release> Edit(int repositoryId, int id, ReleaseUpdate data)
+        public Task<Release> Edit(long repositoryId, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
 
@@ -258,7 +258,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task Delete(int repositoryId, int id)
+        public Task Delete(long repositoryId, int id)
         {
             var endpoint = ApiUrls.Releases(repositoryId, id);
             return ApiConnection.Delete(endpoint);
@@ -291,7 +291,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id)
         {
             return GetAllAssets(repositoryId, id, ApiOptions.None);
         }
@@ -327,7 +327,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id, ApiOptions options)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -394,7 +394,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        public Task<ReleaseAsset> GetAsset(int repositoryId, int assetId)
+        public Task<ReleaseAsset> GetAsset(long repositoryId, int assetId)
         {
             var endpoint = ApiUrls.Asset(repositoryId, assetId);
             return ApiConnection.Get<ReleaseAsset>(endpoint);
@@ -429,7 +429,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        public Task<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data)
+        public Task<ReleaseAsset> EditAsset(long repositoryId, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNull(data, "data");
 
@@ -463,7 +463,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        public Task DeleteAsset(int repositoryId, int id)
+        public Task DeleteAsset(long repositoryId, int id)
         {
             var endpoint = ApiUrls.Asset(repositoryId, id);
             return ApiConnection.Delete(endpoint);

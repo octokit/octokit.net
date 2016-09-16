@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="id">The issue comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueComment> Get(int repositoryId, int id);
+        Task<IssueComment> Get(long repositoryId, int id);
 
         /// <summary>
         /// Gets Issue Comments for a repository.
@@ -46,7 +46,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Gets Issue Comments for a repository.
@@ -63,7 +63,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForRepository(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -80,7 +80,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(int repositoryId, int number);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int number);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -99,7 +99,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(int repositoryId, int number, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="newComment">The new comment to add to the issue</param>
-        Task<IssueComment> Create(int repositoryId, int number, string newComment);
+        Task<IssueComment> Create(long repositoryId, int number, string newComment);
 
         /// <summary>
         /// Updates a specified Issue Comment.
@@ -137,7 +137,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        Task<IssueComment> Update(int repositoryId, int id, string commentUpdate);
+        Task<IssueComment> Update(long repositoryId, int id, string commentUpdate);
 
         /// <summary>
         /// Deletes the specified Issue Comment
@@ -154,6 +154,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
-        Task Delete(int repositoryId, int id);
+        Task Delete(long repositoryId, int id);
     }
 }

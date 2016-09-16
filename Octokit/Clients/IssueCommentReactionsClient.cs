@@ -40,7 +40,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        public Task<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
 
@@ -68,7 +68,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
-        public Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
         {
             return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), AcceptHeaders.ReactionsPreview);
         }

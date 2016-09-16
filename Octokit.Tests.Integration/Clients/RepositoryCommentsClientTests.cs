@@ -15,7 +15,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
-        const int repositoryId = 1296269;
+        const long repositoryId = 1296269;
 
         public TheGetMethod()
         {
@@ -71,7 +71,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
-        const int repositoryId = 1296269;
+        const long repositoryId = 1296269;
 
         public TheGetAllForRepositoryMethod()
         {
@@ -246,7 +246,7 @@ public class RepositoryCommentsClientTests
         readonly IRepositoryCommentsClient _fixture;
         const string owner = "octocat";
         const string name = "Hello-World";
-        const int repositoryId = 1296269;
+        const long repositoryId = 1296269;
 
         public TheGetAllForCommitMethod()
         {

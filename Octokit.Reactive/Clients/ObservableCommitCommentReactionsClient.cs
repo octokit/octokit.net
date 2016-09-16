@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create </param>
         /// <returns></returns>
-        public IObservable<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        public IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
 
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
-        public IObservable<Reaction> GetAll(int repositoryId, int number)
+        public IObservable<Reaction> GetAll(long repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.CommitCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }

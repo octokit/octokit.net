@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        public IObservable<Branch> GetAll(int repositoryId)
+        public IObservable<Branch> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Branch> GetAll(int repositoryId, ApiOptions options)
+        public IObservable<Branch> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -108,7 +108,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        public IObservable<Branch> Get(int repositoryId, string branch)
+        public IObservable<Branch> Get(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -140,7 +140,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other ObservableRepositoryBranchesClient methods instead.")]
-        public IObservable<Branch> Edit(int repositoryId, string branch, BranchUpdate update)
+        public IObservable<Branch> Edit(long repositoryId, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public IObservable<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch)
+        public IObservable<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -210,7 +210,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        public IObservable<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        public IObservable<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -244,7 +244,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public IObservable<bool> DeleteBranchProtection(int repositoryId, string branch)
+        public IObservable<bool> DeleteBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
