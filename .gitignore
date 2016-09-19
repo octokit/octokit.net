@@ -92,3 +92,6 @@ docs/_build
 
 # it's 2015, no need to keep this around when migrating projects
 Backup/
+
+# .NET Core
+project.lock.json

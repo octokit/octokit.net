@@ -48,7 +48,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
-        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(int repositoryId, string path)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
 
@@ -82,7 +82,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(int repositoryId)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId)
         {
             var url = ApiUrls.RepositoryContent(repositoryId, string.Empty);
 
@@ -121,7 +121,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(int repositoryId, string path, string reference)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string path, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
@@ -160,7 +160,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
-        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(int repositoryId, string reference)
+        public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -197,7 +197,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public async Task<Readme> GetReadme(int repositoryId)
+        public async Task<Readme> GetReadme(long repositoryId)
         {
             var endpoint = ApiUrls.RepositoryReadme(repositoryId);
             var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
@@ -230,7 +230,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<string> GetReadmeHtml(int repositoryId)
+        public Task<string> GetReadmeHtml(long repositoryId)
         {
             return ApiConnection.GetHtml(ApiUrls.RepositoryReadme(repositoryId), null);
         }
@@ -254,7 +254,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<byte[]> GetArchive(int repositoryId)
+        public Task<byte[]> GetArchive(long repositoryId)
         {
             return GetArchive(repositoryId, ArchiveFormat.Tarball, string.Empty);
         }
@@ -280,7 +280,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        public Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat)
+        public Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat)
         {
             return GetArchive(repositoryId, archiveFormat, string.Empty);
         }
@@ -309,7 +309,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        public Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference)
+        public Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNull(reference, "reference");
 
@@ -347,7 +347,7 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        public async Task<byte[]> GetArchive(int repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
+        public async Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.ArgumentNotNull(reference, "reference");
             Ensure.GreaterThanZero(timeout, "timeout");
@@ -383,7 +383,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        public Task<RepositoryContentChangeSet> CreateFile(int repositoryId, string path, CreateFileRequest request)
+        public Task<RepositoryContentChangeSet> CreateFile(long repositoryId, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNull(request, "request");
@@ -416,7 +416,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        public Task<RepositoryContentChangeSet> UpdateFile(int repositoryId, string path, UpdateFileRequest request)
+        public Task<RepositoryContentChangeSet> UpdateFile(long repositoryId, string path, UpdateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNull(request, "request");
@@ -449,7 +449,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        public Task DeleteFile(int repositoryId, string path, DeleteFileRequest request)
+        public Task DeleteFile(long repositoryId, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, "path");
             Ensure.ArgumentNotNull(request, "request");

@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
-        public IObservable<DeployKey> Get(int repositoryId, int number)
+        public IObservable<DeployKey> Get(long repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        public IObservable<DeployKey> GetAll(int repositoryId)
+        public IObservable<DeployKey> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -108,7 +108,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeployKey> GetAll(int repositoryId, ApiOptions options)
+        public IObservable<DeployKey> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        public IObservable<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey)
+        public IObservable<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey)
         {
             Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
 
@@ -187,7 +187,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
-        public IObservable<Unit> Delete(int repositoryId, int number)
+        public IObservable<Unit> Delete(long repositoryId, int number)
         {
             return _client.Delete(repositoryId, number).ToObservable();
         }

@@ -48,7 +48,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
-        public Task<Reference> Get(int repositoryId, string reference)
+        public Task<Reference> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -80,7 +80,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Reference>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId)
         {
             return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId));
         }
@@ -115,7 +115,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(int repositoryId, string subNamespace)
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace)
         {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
 
@@ -152,7 +152,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        public Task<Reference> Create(int repositoryId, NewReference reference)
+        public Task<Reference> Create(long repositoryId, NewReference reference)
         {
             Ensure.ArgumentNotNull(reference, "reference");
 
@@ -190,7 +190,7 @@ namespace Octokit
         /// <param name="reference">The name of the reference</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        public Task<Reference> Update(int repositoryId, string reference, ReferenceUpdate referenceUpdate)
+        public Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
             Ensure.ArgumentNotNull(referenceUpdate, "update");
@@ -226,7 +226,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
-        public Task Delete(int repositoryId, string reference)
+        public Task Delete(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 

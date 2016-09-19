@@ -45,7 +45,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Branch>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -77,7 +77,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Branch>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -110,7 +110,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<Branch> Get(int repositoryId, string branch)
+        public Task<Branch> Get(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branchName");
 
@@ -142,7 +142,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other RepositoryBranchesClient methods instead.")]
-        public Task<Branch> Edit(int repositoryId, string branch, BranchUpdate update)
+        public Task<Branch> Edit(long repositoryId, string branch, BranchUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -176,7 +176,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<BranchProtectionSettings> GetBranchProtection(int repositoryId, string branch)
+        public Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -212,7 +212,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        public Task<BranchProtectionSettings> UpdateBranchProtection(int repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        public Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -255,7 +255,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public async Task<bool> DeleteBranchProtection(int repositoryId, string branch)
+        public async Task<bool> DeleteBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -297,7 +297,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(int repositoryId, string branch)
+        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -333,7 +333,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
-        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(int repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update)
+        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(update, "update");
@@ -377,7 +377,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public async Task<bool> DeleteRequiredStatusChecks(int repositoryId, string branch)
+        public async Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -420,7 +420,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(int repositoryId, string branch)
+        public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -456,7 +456,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(contexts, "contexts");
@@ -493,7 +493,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(contexts, "contexts");
@@ -530,7 +530,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(int repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(contexts, "contexts");
@@ -564,7 +564,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(int repositoryId, string branch)
+        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -607,7 +607,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public async Task<bool> DeleteProtectedBranchRestrictions(int repositoryId, string branch)
+        public async Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -650,7 +650,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(int repositoryId, string branch)
+        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -686,7 +686,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
@@ -723,7 +723,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
-        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
@@ -760,7 +760,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(int repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(teams, "teams");
@@ -794,7 +794,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        public Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(int repositoryId, string branch)
+        public Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
@@ -830,7 +830,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");
@@ -867,7 +867,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");
@@ -904,7 +904,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(int repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
             Ensure.ArgumentNotNull(users, "users");

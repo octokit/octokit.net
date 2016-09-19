@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>        
-        IObservable<bool> Delete(int repositoryId, int invitationId);
+        IObservable<bool> Delete(long repositoryId, int invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -50,7 +50,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>         
-        IObservable<RepositoryInvitation> GetAllForRepository(int repositoryId);
+        IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Updates a repository invitation.
@@ -62,6 +62,6 @@ namespace Octokit.Reactive
         /// <param name="invitationId">The id of the invitation.</param>   
         /// <param name="permissions">The permission to set.</param>
         /// <returns><see cref="RepositoryInvitation"/></returns>
-        IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions);
+        IObservable<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions);
     }
 }

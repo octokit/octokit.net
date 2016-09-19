@@ -31,7 +31,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number);
+        Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<EventInfo>> GetAllForIssue(int repositoryId, int number, ApiOptions options);
+        Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -73,7 +73,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -94,7 +94,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets a single event
@@ -119,6 +119,6 @@ namespace Octokit
         /// <param name="number">The event id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueEvent> Get(int repositoryId, int number);
+        Task<IssueEvent> Get(long repositoryId, int number);
     }
 }

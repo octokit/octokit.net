@@ -41,7 +41,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
-        public Task<IReadOnlyList<Label>> GetAllForIssue(int repositoryId, int number)
+        public Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -74,7 +74,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Label>> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        public Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -104,7 +104,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Label>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -135,7 +135,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Label>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -167,7 +167,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
-        public Task<IReadOnlyList<Label>> GetAllForMilestone(int repositoryId, int number)
+        public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number)
         {
             return GetAllForMilestone(repositoryId, number, ApiOptions.None);
         }
@@ -200,7 +200,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Label>> GetAllForMilestone(int repositoryId, int number, ApiOptions options)
+        public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -233,7 +233,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        public Task<Label> Get(int repositoryId, string labelName)
+        public Task<Label> Get(long repositoryId, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
 
@@ -266,7 +266,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        public Task Delete(int repositoryId, string labelName)
+        public Task Delete(long repositoryId, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
 
@@ -299,7 +299,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        public Task<Label> Create(int repositoryId, NewLabel newLabel)
+        public Task<Label> Create(long repositoryId, NewLabel newLabel)
         {
             Ensure.ArgumentNotNull(newLabel, "newLabel");
 
@@ -335,7 +335,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        public Task<Label> Update(int repositoryId, string labelName, LabelUpdate labelUpdate)
+        public Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
             Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
@@ -371,7 +371,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        public Task<IReadOnlyList<Label>> AddToIssue(int repositoryId, int number, string[] labels)
+        public Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int number, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, "labels");
 
@@ -406,7 +406,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public Task RemoveFromIssue(int repositoryId, int number, string labelName)
+        public Task RemoveFromIssue(long repositoryId, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
 
@@ -441,7 +441,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        public Task<IReadOnlyList<Label>> ReplaceAllForIssue(int repositoryId, int number, string[] labels)
+        public Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int number, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, "labels");
 
@@ -473,7 +473,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
-        public Task RemoveAllFromIssue(int repositoryId, int number)
+        public Task RemoveAllFromIssue(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.IssueLabels(repositoryId, number));
         }

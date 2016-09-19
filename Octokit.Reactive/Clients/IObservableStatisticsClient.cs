@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<IEnumerable<Contributor>> GetContributors(int repositoryId);
+        IObservable<IEnumerable<Contributor>> GetContributors(long repositoryId);
 
         /// <summary>
         /// Returns the last year of commit activity grouped by week.
@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<CommitActivity> GetCommitActivity(int repositoryId);
+        IObservable<CommitActivity> GetCommitActivity(long repositoryId);
 
         /// <summary>
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<CodeFrequency> GetCodeFrequency(int repositoryId);
+        IObservable<CodeFrequency> GetCodeFrequency(long repositoryId);
 
         /// <summary>
         /// Returns the total commit counts for the owner and total commit counts in total. 
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Participation> GetParticipation(int repositoryId);
+        IObservable<Participation> GetParticipation(long repositoryId);
 
         /// <summary>
         /// Returns a list of the number of commits per hour in each day
@@ -74,6 +74,6 @@ namespace Octokit.Reactive
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<PunchCard> GetPunchCard(int repositoryId);
+        IObservable<PunchCard> GetPunchCard(long repositoryId);
     }
 }

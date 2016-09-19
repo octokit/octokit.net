@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(int repositoryId);
+        IObservable<Release> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(int repositoryId, ApiOptions options);
+        IObservable<Release> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
-        IObservable<Release> Get(int repositoryId, int id);
+        IObservable<Release> Get(long repositoryId, int id);
 
         /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.
@@ -100,7 +100,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetLatest(int repositoryId);
+        IObservable<Release> GetLatest(long repositoryId);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
@@ -123,7 +123,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Create(int repositoryId, NewRelease data);
+        IObservable<Release> Create(long repositoryId, NewRelease data);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Edit(int repositoryId, int id, ReleaseUpdate data);
+        IObservable<Release> Edit(long repositoryId, int id, ReleaseUpdate data);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -171,7 +171,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(int repositoryId, int id);
+        IObservable<Unit> Delete(long repositoryId, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -194,7 +194,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(int repositoryId, int id);
+        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -219,7 +219,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(int repositoryId, int id, ApiOptions options);
+        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, int id, ApiOptions options);
 
         /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
@@ -251,7 +251,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        IObservable<ReleaseAsset> GetAsset(int repositoryId, int assetId);
+        IObservable<ReleaseAsset> GetAsset(long repositoryId, int assetId);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -274,7 +274,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        IObservable<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data);
+        IObservable<ReleaseAsset> EditAsset(long repositoryId, int assetId, ReleaseAssetUpdate data);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -295,6 +295,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        IObservable<Unit> DeleteAsset(int repositoryId, int id);
+        IObservable<Unit> DeleteAsset(long repositoryId, int id);
     }
 }

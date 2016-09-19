@@ -32,7 +32,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<User>> GetAll(int repositoryId);
+        Task<IReadOnlyList<User>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<User>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
@@ -78,7 +78,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> IsCollaborator(int repositoryId, string user);
+        Task<bool> IsCollaborator(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -114,7 +114,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Add(int repositoryId, string user);
+        Task Add(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -126,7 +126,7 @@ namespace Octokit
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Add(int repositoryId, string user, CollaboratorRequest permission);
+        Task<bool> Add(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Invites a new collaborator to the repo
@@ -162,7 +162,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="user">The name of the user to invite.</param>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Invite(int repositoryId, string user);
+        Task<RepositoryInvitation> Invite(long repositoryId, string user);
 
         /// <summary>
         /// Invites a new collaborator to the repo
@@ -174,7 +174,7 @@ namespace Octokit
         /// <param name="user">The name of the user to invite.</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        Task<RepositoryInvitation> Invite(int repositoryId, string user, CollaboratorRequest permission);
+        Task<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Deletes a collaborator from the repository.
@@ -197,6 +197,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(int repositoryId, string user);
+        Task Delete(long repositoryId, string user);
     }
 }

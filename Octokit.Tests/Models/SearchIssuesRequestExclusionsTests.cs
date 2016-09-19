@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Octokit;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 public class SearchIssuesRequestExclusionsTests
@@ -68,7 +67,7 @@ public class SearchIssuesRequestExclusionsTests
 
             request.Language = Language.CSharp;
 
-            Assert.True(request.MergedQualifiers().Contains("-language:C#"));
+            Assert.True(request.MergedQualifiers().Contains("-language:CSharp"));
         }
 
         [Fact]

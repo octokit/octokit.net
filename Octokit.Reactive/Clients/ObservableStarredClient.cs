@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        public IObservable<User> GetAllStargazers(int repositoryId)
+        public IObservable<User> GetAllStargazers(long repositoryId)
         {
             return GetAllStargazers(repositoryId, ApiOptions.None);
         }
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
-        public IObservable<User> GetAllStargazers(int repositoryId, ApiOptions options)
+        public IObservable<User> GetAllStargazers(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -95,7 +95,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<UserStar> GetAllStargazersWithTimestamps(int repositoryId)
+        public IObservable<UserStar> GetAllStargazersWithTimestamps(long repositoryId)
         {
             return GetAllStargazersWithTimestamps(repositoryId, ApiOptions.None);
         }
@@ -122,7 +122,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<UserStar> GetAllStargazersWithTimestamps(int repositoryId, ApiOptions options)
+        public IObservable<UserStar> GetAllStargazersWithTimestamps(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 

@@ -19,7 +19,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private IConnection _connection;
-        internal int RepositoryId { get; private set; }
+        internal long RepositoryId { get; private set; }
         internal string RepositoryOwner { get; private set; }
         internal string RepositoryName { get; private set; }
 

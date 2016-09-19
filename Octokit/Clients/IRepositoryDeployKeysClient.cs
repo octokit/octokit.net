@@ -33,7 +33,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key.</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<DeployKey> Get(int repositoryId, int number);
+        Task<DeployKey> Get(long repositoryId, int number);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -52,7 +52,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId);
+        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -73,7 +73,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Creates a new deploy key for a repository.
@@ -94,7 +94,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        Task<DeployKey> Create(int repositoryId, NewDeployKey newDeployKey);
+        Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey);
 
         /// <summary>
         /// Deletes a deploy key from a repository.
@@ -115,6 +115,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="number">The id of the deploy key to delete.</param>
-        Task Delete(int repositoryId, int number);
+        Task Delete(long repositoryId, int number);
     }
 }

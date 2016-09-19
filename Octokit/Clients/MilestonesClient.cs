@@ -41,7 +41,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        public Task<Milestone> Get(int repositoryId, int number)
+        public Task<Milestone> Get(long repositoryId, int number)
         {
             return ApiConnection.Get<Milestone>(ApiUrls.Milestone(repositoryId, number));
         }
@@ -71,7 +71,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, new MilestoneRequest());
         }
@@ -104,7 +104,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -139,7 +139,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId, MilestoneRequest request)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -178,7 +178,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(int repositoryId, MilestoneRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -213,7 +213,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        public Task<Milestone> Create(int repositoryId, NewMilestone newMilestone)
+        public Task<Milestone> Create(long repositoryId, NewMilestone newMilestone)
         {
             Ensure.ArgumentNotNull(newMilestone, "newMilestone");
 
@@ -250,7 +250,7 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        public Task<Milestone> Update(int repositoryId, int number, MilestoneUpdate milestoneUpdate)
+        public Task<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
 
@@ -282,7 +282,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        public Task Delete(int repositoryId, int number)
+        public Task Delete(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.Milestone(repositoryId, number));
         }
