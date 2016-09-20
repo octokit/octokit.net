@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllMethod
+        public class TheGetAllForUserMethod
         {
             [Fact]
             public async Task RequestsTheCorrectUrl()
@@ -130,7 +130,48 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));
             }
         }
+        
+        public class TheGetAllOrganizationsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
 
+                await client.GetAllOrganizations();
+
+                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAllOrganizations(options);
+
+                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"), options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllOrganizations(null));
+            }
+        }
+        
         public class TheUpdateMethod
         {
             [Fact]
