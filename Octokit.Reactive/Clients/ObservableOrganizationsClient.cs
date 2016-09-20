@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations());
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
         }
 
         /// <summary>
@@ -90,7 +90,27 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
+        }
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <returns></returns>
+        public IObservable<Organization> GetAllOrganizations()
+        {
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
+        }
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public IObservable<Organization> GetAllOrganizations(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(), options);
         }
 
         /// <summary>
