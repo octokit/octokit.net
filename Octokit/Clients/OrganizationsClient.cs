@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
         }
 
         /// <summary>
@@ -95,7 +95,29 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAllOrganizations()
+        {
+          return GetAllOrganizations(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAllOrganizations(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
         }
 
         /// <summary>
