@@ -70,6 +70,21 @@ namespace Octokit
         Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options);
 
         /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        Task<IReadOnlyList<Organization>> GetAllOrganizations();
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        Task<IReadOnlyList<Organization>> GetAllOrganizations(ApiOptions options);
+        
+        /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
         /// <param name="organizationName">The name of the organization to update.</param>
