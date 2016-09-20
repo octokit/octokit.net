@@ -492,6 +492,7 @@
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
+    <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
