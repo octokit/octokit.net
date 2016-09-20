@@ -57,6 +57,20 @@ namespace Octokit.Reactive
         IObservable<Organization> GetAll(string user, ApiOptions options);
 
         /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <returns></returns>
+        IObservable<Organization> GetAllOrganizations();
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAllOrganizations(ApiOptions options);
+
+
+        /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
         /// <param name="organizationName">The name of the organization to update.</param>
