@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        IObservable<TimelineEventInfo> GetAllForIssue(int repositoryId, int number);
+        IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int number);
 
         /// <summary>
         /// Gets all the various events that have occurred around an issue or pull request.
@@ -52,6 +52,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<TimelineEventInfo> GetAllForIssue(int repositoryId, int number, ApiOptions options);
+        IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options);
     }
 }

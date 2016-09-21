@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(int repositoryId, int number)
+        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(int repositoryId, int number, ApiOptions options)
+        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 

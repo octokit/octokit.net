@@ -37,7 +37,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Reference> Get(int repositoryId, string reference);
+        Task<Reference> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Gets all references for a given repository
@@ -58,7 +58,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAll(int repositoryId);
+        Task<IReadOnlyList<Reference>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(int repositoryId, string subNamespace);
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace);
 
         /// <summary>
         /// Creates a reference for a given repository
@@ -104,7 +104,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        Task<Reference> Create(int repositoryId, NewReference reference);
+        Task<Reference> Create(long repositoryId, NewReference reference);
 
         /// <summary>
         /// Updates a reference for a given repository by reference name
@@ -129,7 +129,7 @@ namespace Octokit
         /// <param name="reference">The name of the reference</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        Task<Reference> Update(int repositoryId, string reference, ReferenceUpdate referenceUpdate);
+        Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate);
 
         /// <summary>
         /// Deletes a reference for a given repository by reference name
@@ -152,6 +152,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the reference</param>
         /// <returns></returns>
-        Task Delete(int repositoryId, string reference);
+        Task Delete(long repositoryId, string reference);
     }
 }

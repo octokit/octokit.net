@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<CommitComment> Get(int repositoryId, int number);
+        Task<CommitComment> Get(long repositoryId, int number);
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -46,7 +46,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -63,7 +63,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -80,7 +80,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha);
+        Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha);
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -99,7 +99,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options);
+        Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options);
 
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment);
+        Task<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment);
 
         /// <summary>
         /// Updates a specified Commit Comment.
@@ -137,7 +137,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
-        Task<CommitComment> Update(int repositoryId, int number, string commentUpdate);
+        Task<CommitComment> Update(long repositoryId, int number, string commentUpdate);
 
         /// <summary>
         /// Deletes the specified Commit Comment
@@ -154,6 +154,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
-        Task Delete(int repositoryId, int number);
+        Task Delete(long repositoryId, int number);
     }
 }

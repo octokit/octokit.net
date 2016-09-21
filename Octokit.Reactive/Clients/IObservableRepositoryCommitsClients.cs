@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(int repositoryId, string @base, string head);
+        IObservable<CompareResult> Compare(long repositoryId, string @base, string head);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The reference for the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<GitHubCommit> Get(int repositoryId, string reference);
+        IObservable<GitHubCommit> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<GitHubCommit> GetAll(int repositoryId);
+        IObservable<GitHubCommit> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(int repositoryId, ApiOptions options);
+        IObservable<GitHubCommit> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        IObservable<GitHubCommit> GetAll(int repositoryId, CommitRequest request);
+        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -107,7 +107,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(int repositoryId, CommitRequest request, ApiOptions options);
+        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request, ApiOptions options);
 
         /// <summary>
         /// Get the SHA-1 of a commit reference
@@ -122,6 +122,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The repository reference</param>
-        IObservable<string> GetSha1(int repositoryId, string reference);
+        IObservable<string> GetSha1(long repositoryId, string reference);
     }
 }

@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        public IObservable<Commit> Get(int repositoryId, string reference)
+        public IObservable<Commit> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        public IObservable<Commit> Create(int repositoryId, NewCommit commit)
+        public IObservable<Commit> Create(long repositoryId, NewCommit commit)
         {
             Ensure.ArgumentNotNull(commit, "commit");
 

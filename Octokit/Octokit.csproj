@@ -84,6 +84,8 @@
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\IMigrationsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseProbe.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseProbe.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IMigrationClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />

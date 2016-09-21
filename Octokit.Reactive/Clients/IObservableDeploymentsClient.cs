@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Deployment> GetAll(int repositoryId);
+        IObservable<Deployment> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Deployment> GetAll(int repositoryId, ApiOptions options);
+        IObservable<Deployment> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        IObservable<Deployment> Create(int repositoryId, NewDeployment newDeployment);
+        IObservable<Deployment> Create(long repositoryId, NewDeployment newDeployment);
 
         /// <summary>
         /// Client for managing deployment status.

@@ -39,9 +39,17 @@ When authenticated, you have 5000 requests per hour available. So this is the re
 
 Octokit also supports connecting to GitHub Enterprise environments - just provide the URL to your GitHub Enterprise server when creating the client.
 
-```
+```csharp
 var ghe = new Uri("https://github.myenterprise.com/");
 var client = new GitHubClient(new ProductHeaderValue("my-cool-app"), ghe);
+```
+
+You can use the `EnterpriseProbe` class to test whether a URL points to a Github Enterprise instance.
+
+```csharp
+var probe = new EnterpriseProbe(new ProductHeaderValue("my-cool-app"));
+var result = await probe.Probe(new Uri("http://ghe.example.com/"));
+Assert.Equal(EnterpriseProbeResult.Ok, result); 
 ```
 
 ### Get some data

@@ -16,9 +16,6 @@ namespace Octokit.Reactive
 
             Followers = new ObservableFollowersClient(client);
             Email = new ObservableUserEmailsClient(client);
-#pragma warning disable CS0618 // Type or member is obsolete
-            Keys = new ObservableUserKeysClient(client);
-#pragma warning restore CS0618 // Type or member is obsolete
             GitSshKey = new ObservableUserKeysClient(client);
             GpgKey = new ObservableUserGpgKeysClient(client);
             Administration = new ObservableUserAdministrationClient(client);
@@ -73,15 +70,6 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/emails/">Emails API documentation</a> for more information.
         ///</remarks>
         public IObservableUserEmailsClient Email { get; private set; }
-
-        /// <summary>
-        /// A client for GitHub's User Keys API
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
-        ///</remarks>
-        [Obsolete("Ssh key information is now available under the GitSshKey property. This will be removed in a future update.")]
-        public IObservableUserKeysClient Keys { get; private set; }
 
         /// <summary>
         /// A client for GitHub's User Keys API

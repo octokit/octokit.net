@@ -41,7 +41,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Delete(int repositoryId, int invitationId);
+        Task<bool> Delete(long repositoryId, int invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -61,7 +61,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Updates a repository invitation.
@@ -73,6 +73,6 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collsborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions);
+        Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions);
     }
 }

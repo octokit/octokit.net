@@ -76,6 +76,7 @@ tools/FAKE.Core
 tools/SourceLink.Fake
 tools/xunit.runner.console
 tools/Octokit.CodeFormatter
+tools/FSharp.Data
 *.ncrunch*
 *.GhostDoc.xml
 
@@ -91,3 +92,6 @@ docs/_build
 
 # it's 2015, no need to keep this around when migrating projects
 Backup/
+
+# .NET Core
+project.lock.json

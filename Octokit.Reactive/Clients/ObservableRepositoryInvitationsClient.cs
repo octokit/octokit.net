@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>        
-        public IObservable<bool> Delete(int repositoryId, int invitationId)
+        public IObservable<bool> Delete(long repositoryId, int invitationId)
         {
             return _client.Delete(repositoryId, invitationId).ToObservable();
         }
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitatio.n</param>   
         /// <param name="permissions">The permission to set.</param>
-        public IObservable<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
+        public IObservable<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, "persmissions");
 
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>  
-        public IObservable<RepositoryInvitation> GetAllForRepository(int repositoryId)
+        public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId)
         {
             return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, ApiOptions.None);
         }

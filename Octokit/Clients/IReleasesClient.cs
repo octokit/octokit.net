@@ -33,7 +33,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<Release>> GetAll(int repositoryId);
+        Task<IReadOnlyList<Release>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -56,7 +56,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<Release>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Release>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
-        Task<Release> Get(int repositoryId, int id);
+        Task<Release> Get(long repositoryId, int id);
 
         /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.
@@ -102,7 +102,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<Release> GetLatest(int repositoryId);
+        Task<Release> GetLatest(long repositoryId);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
@@ -125,7 +125,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<Release> Create(int repositoryId, NewRelease data);
+        Task<Release> Create(long repositoryId, NewRelease data);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -150,7 +150,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<Release> Edit(int repositoryId, int id, ReleaseUpdate data);
+        Task<Release> Edit(long repositoryId, int id, ReleaseUpdate data);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -173,7 +173,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(int repositoryId, int id);
+        Task Delete(long repositoryId, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -196,7 +196,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id);
+        Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -221,7 +221,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(int repositoryId, int id, ApiOptions options);
+        Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id, ApiOptions options);
 
         /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
@@ -253,7 +253,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        Task<ReleaseAsset> GetAsset(int repositoryId, int assetId);
+        Task<ReleaseAsset> GetAsset(long repositoryId, int assetId);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -276,7 +276,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        Task<ReleaseAsset> EditAsset(int repositoryId, int assetId, ReleaseAssetUpdate data);
+        Task<ReleaseAsset> EditAsset(long repositoryId, int assetId, ReleaseAssetUpdate data);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -297,6 +297,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        Task DeleteAsset(int repositoryId, int id);
+        Task DeleteAsset(long repositoryId, int id);
     }
 }

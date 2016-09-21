@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        public IObservable<CommitComment> Get(int repositoryId, int number)
+        public IObservable<CommitComment> Get(long repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        public IObservable<CommitComment> GetAllForRepository(int repositoryId)
+        public IObservable<CommitComment> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        public IObservable<CommitComment> GetAllForRepository(int repositoryId, ApiOptions options)
+        public IObservable<CommitComment> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -125,7 +125,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        public IObservable<CommitComment> GetAllForCommit(int repositoryId, string sha)
+        public IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
@@ -157,7 +157,7 @@ namespace Octokit.Reactive
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        public IObservable<CommitComment> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
+        public IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
@@ -190,7 +190,7 @@ namespace Octokit.Reactive
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
-        public IObservable<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment)
+        public IObservable<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
@@ -222,7 +222,7 @@ namespace Octokit.Reactive
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
-        public IObservable<CommitComment> Update(int repositoryId, int number, string commentUpdate)
+        public IObservable<CommitComment> Update(long repositoryId, int number, string commentUpdate)
         {
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
@@ -250,7 +250,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
-        public IObservable<Unit> Delete(int repositoryId, int number)
+        public IObservable<Unit> Delete(long repositoryId, int number)
         {
             return _client.Delete(repositoryId, number).ToObservable();
         }

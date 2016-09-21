@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<Page> Get(int repositoryId)
+        public IObservable<Page> Get(long repositoryId)
         {
             return _client.Get(repositoryId).ToObservable();
         }
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(int repositoryId)
+        public IObservable<PagesBuild> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -107,7 +107,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(int repositoryId, ApiOptions options)
+        public IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -137,7 +137,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetLatest(int repositoryId)
+        public IObservable<PagesBuild> GetLatest(long repositoryId)
         {
             return _client.GetLatest(repositoryId).ToObservable();
         }
@@ -165,7 +165,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> RequestPageBuild(int repositoryId)
+        public IObservable<PagesBuild> RequestPageBuild(long repositoryId)
         {
             return _client.RequestPageBuild(repositoryId).ToObservable();
         }

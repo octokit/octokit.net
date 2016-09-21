@@ -42,7 +42,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        public Task<Page> Get(int repositoryId)
+        public Task<Page> Get(long repositoryId)
         {
             return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId));
         }
@@ -70,7 +70,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -102,7 +102,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public Task<IReadOnlyList<PagesBuild>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -133,7 +133,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        public Task<PagesBuild> GetLatest(int repositoryId)
+        public Task<PagesBuild> GetLatest(long repositoryId)
         {
             return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId));
         }
@@ -161,7 +161,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        public Task<PagesBuild> RequestPageBuild(int repositoryId)
+        public Task<PagesBuild> RequestPageBuild(long repositoryId)
         {
             return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), AcceptHeaders.PagesApiPreview);
         }

@@ -57,7 +57,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
@@ -74,7 +74,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
@@ -91,7 +91,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request);
+        Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request);
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
@@ -110,7 +110,7 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<Notification>> GetAllForRepository(int repositoryId, NotificationsRequest request, ApiOptions options);
+        Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
         /// Marks all notifications as read.
@@ -138,7 +138,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        Task MarkAsReadForRepository(int repositoryId);
+        Task MarkAsReadForRepository(long repositoryId);
 
         /// <summary>
         /// Marks the notifications for a given repository as read.
@@ -155,7 +155,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        Task MarkAsReadForRepository(int repositoryId, MarkAsReadRequest markAsReadRequest);
+        Task MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
         /// Retrives a single <see cref="Notification"/> by Id.

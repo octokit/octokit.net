@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        public Task<Reaction> Create(int repositoryId, int number, NewReaction reaction)
+        public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, "reaction");
 
@@ -72,7 +72,7 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
-        public Task<IReadOnlyList<Reaction>> GetAll(int repositoryId, int number)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
         {
             return ApiConnection.GetAll<Reaction>(ApiUrls.CommitCommentReactions(repositoryId, number), AcceptHeaders.ReactionsPreview);
         }

@@ -31,7 +31,7 @@ namespace Octokit
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Deployment>> GetAll(int repositoryId);
+        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -54,7 +54,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Deployment>> GetAll(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -77,7 +77,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        Task<Deployment> Create(int repositoryId, NewDeployment newDeployment);
+        Task<Deployment> Create(long repositoryId, NewDeployment newDeployment);
 
         /// <summary>
         /// Client for managing deployment status.
