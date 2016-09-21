@@ -47,8 +47,7 @@ var client = new GitHubClient(new ProductHeaderValue("my-cool-app"), ghe);
 You can use the `EnterpriseProbe` class to test whether a URL points to a Github Enterprise instance.
 
 ```csharp
-var httpClient = new HttpClientAdapter(HttpMessageHandlerFactory.CreateDefault);
-var probe = new EnterpriseProbe(new ProductHeaderValue("my-cool-app"), httpClient);
+var probe = new EnterpriseProbe(new ProductHeaderValue("my-cool-app"));
 var result = await probe.Probe(new Uri("http://ghe.example.com/"));
 Assert.Equal(EnterpriseProbeResult.Ok, result); 
 ```
