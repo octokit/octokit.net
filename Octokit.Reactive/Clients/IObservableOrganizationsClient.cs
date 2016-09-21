@@ -69,7 +69,6 @@ namespace Octokit.Reactive
         /// <returns></returns>
         IObservable<Organization> GetAllOrganizations(ApiOptions options);
 
-
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
