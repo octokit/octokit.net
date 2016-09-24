@@ -16,14 +16,14 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name);
+        IObservable<RepositoryTrafficReferrer> GetReferrers(string owner, string name);
 
         /// <summary>
         /// List the top 10 referrers over the last 14 days
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        IObservable<RepositoryTrafficReferrer> GetAllReferrers(int repositoryId);
+        IObservable<RepositoryTrafficReferrer> GetReferrers(long repositoryId);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days
@@ -31,14 +31,14 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name);
+        IObservable<RepositoryTrafficPath> GetPaths(string owner, string name);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        IObservable<RepositoryTrafficPath> GetAllPaths(int repositoryId);
+        IObservable<RepositoryTrafficPath> GetPaths(long repositoryId);
 
         /// <summary>
         /// Get the total number of views and breakdown per day or week for the last 14 days
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficView> GetViews(string owner, string name, RepositoryTrafficRequest per);
+        IObservable<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per);
 
         /// <summary>
         /// Get the total number of views and breakdown per day or week for the last 14 days
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#views</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficView> GetViews(int repositoryId, RepositoryTrafficRequest per);
+        IObservable<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per);
 
         /// <summary>
         /// Get the total number of clones and breakdown per day or week for the last 14 days
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficClone> GetClones(string owner, string name, RepositoryTrafficRequest per);
+        IObservable<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per);
 
         /// <summary>
         /// Get the total number of clones and breakdown per day or week for the last 14 days
@@ -72,6 +72,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#clones</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficClone> GetClones(int repositoryId, RepositoryTrafficRequest per);
+        IObservable<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per);
     }
 }

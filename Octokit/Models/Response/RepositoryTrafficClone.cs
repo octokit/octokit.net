@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Helpers;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryTrafficClone
+    public class RepositoryTrafficCloneSummary
     {
-        public RepositoryTrafficClone() { }
+        public RepositoryTrafficCloneSummary() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public RepositoryTrafficClone(int count, int uniques, IReadOnlyList<Clone> clones)
+        public RepositoryTrafficCloneSummary(int count, int uniques, IReadOnlyList<RepositoryTrafficClone> clones)
         {
             Count = count;
             Uniques = uniques;
@@ -24,7 +26,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public int Uniques { get; protected set; }
 
-        public IReadOnlyList<Clone> Clones { get; protected set; }
+        public IReadOnlyList<RepositoryTrafficClone> Clones { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -33,19 +35,26 @@ namespace Octokit
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class Clone
+    public class RepositoryTrafficClone
     {
-        public Clone() { }
+        public RepositoryTrafficClone() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public Clone(DateTimeOffset timestamp, int count, int uniques)
+        public RepositoryTrafficClone(long timestamp, int count, int uniques)
         {
-            Timestamp = timestamp;
+            TimestampAsUtcEpochSeconds = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        public DateTimeOffset Timestamp { get; protected set; }
+        [Parameter(Key = "ignoreThisField")]
+        public DateTimeOffset Timestamp
+        {
+            get { return TimestampAsUtcEpochSeconds.FromUnixTime(); }
+        }
+
+        [Parameter(Key = "timestamp")]
+        public long TimestampAsUtcEpochSeconds { get; protected set; }
 
         public int Count { get; protected set; }
 

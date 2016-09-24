@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllRefererrsMethod
+        public class TheGetAllReferrersMethod
         {
             [Fact]
             public async Task RequestsCorrectUrl()
@@ -27,7 +26,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryTrafficClient(connection);
 
-                await client.GetAllReferrers("fake", "repo");
+                await client.GetReferrers("fake", "repo");
 
                 connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/referrers"), "application/vnd.github.spiderman-preview");
             }
@@ -38,7 +37,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryTrafficClient(connection);
 
-                await client.GetAllReferrers(1);
+                await client.GetReferrers(1);
 
                 connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/referrers"), "application/vnd.github.spiderman-preview");
             }
@@ -48,11 +47,11 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryTrafficClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllReferrers(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllReferrers("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReferrers(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReferrers("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllReferrers("", "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllReferrers("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetReferrers("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetReferrers("owner", ""));
             }
         }
 
@@ -64,7 +63,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryTrafficClient(connection);
 
-                await client.GetAllPaths("fake", "repo");
+                await client.GetPaths("fake", "repo");
 
                 connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/paths"), "application/vnd.github.spiderman-preview");
             }
@@ -75,7 +74,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryTrafficClient(connection);
 
-                await client.GetAllPaths(1);
+                await client.GetPaths(1);
 
                 connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/paths"), "application/vnd.github.spiderman-preview");
             }
@@ -85,11 +84,11 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryTrafficClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPaths(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPaths("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPaths(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPaths("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPaths("", "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPaths("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPaths("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPaths("owner", ""));
             }
         }
 
@@ -104,7 +103,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetClones("fake", "repo", per);
 
-                connection.Received().Get<RepositoryTrafficClone>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
             }
 
             [Fact]
@@ -116,7 +115,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetClones(1, per);
 
-                connection.Received().Get<RepositoryTrafficClone>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
             }
 
             [Fact]
@@ -147,7 +146,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetViews("fake", "repo", per);
 
-                connection.Received().Get<RepositoryTrafficView>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
             }
 
             [Fact]
@@ -159,7 +158,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetViews(1, per);
 
-                connection.Received().Get<RepositoryTrafficView>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
             }
 
             [Fact]

@@ -1,64 +1,111 @@
 ﻿using Octokit;
 using Octokit.Tests.Integration;
-using Octokit.Tests.Integration.Helpers;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 public class RepositoryTrafficClientTests
 {
     readonly IRepositoryTrafficClient _fixture;
-    IGitHubClient _github;
+    readonly IGitHubClient _github;
+    readonly string _owner;
+    readonly string _repo;
+    readonly long _repoId;
 
     public RepositoryTrafficClientTests()
     {
         _github = Helper.GetAuthenticatedClient();
         _fixture = _github.Repository.Traffic;
+
+        _owner = "octokit";
+        _repo = "octokit.net";
+        _repoId = _github.Repository.Get(_owner, _repo).Result.Id;
     }
 
-    [IntegrationTest(Skip = "Skipped due to requiring admin permissions")]
-    public async Task TheGetAllRefererrsMethod()
+    public class TheGetReferrersMethod : RepositoryTrafficClientTests
     {
-        var refererrs = await _fixture.GetAllReferrers("octokit", "ocotkit.net");
+        [IntegrationTest]
+        public async Task GetsReferrers()
+        {
+            var referrers = await _fixture.GetReferrers(_owner, _repo);
 
-        Assert.Equal(1, refererrs.Count);
+            Assert.True(referrers.Count > 0);
+        }
+
+        [IntegrationTest]
+        public async Task GetsReferrersWithRepositoryId()
+        {
+            var referrers = await _fixture.GetReferrers(_repoId);
+
+            Assert.True(referrers.Count > 0);
+        }
     }
 
-    [IntegrationTest(Skip = "Skipped due to requiring admin permissions")]
-    public async Task TheGetAllPathsMethod()
+    public class TheGetPathsMethod : RepositoryTrafficClientTests
     {
-        var paths = await _fixture.GetAllPaths("octokit", "ocotkit.net");
+        [IntegrationTest]
+        public async Task GetsPaths()
+        {
+            var paths = await _fixture.GetPaths(_owner, _repo);
 
-        Assert.Equal(1, paths.Count);
+            Assert.True(paths.Count > 0);
+        }
+
+        [IntegrationTest]
+        public async Task GetsPathsWithRepositoryId()
+        {
+            var paths = await _fixture.GetPaths(_repoId);
+
+            Assert.True(paths.Count > 0);
+        }
     }
 
-    [IntegrationTest(Skip = "Skipped due to requiring admin permissions")]
-    public async Task TheGetClonesMethod()
+    public class TheGetClonesMethod : RepositoryTrafficClientTests
     {
-        var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
-        var clones = await _fixture.GetClones("octokit", "ocotkit.net", request);
+        [IntegrationTest]
+        public async Task GetsClones()
+        {
+            var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
+            var clones = await _fixture.GetClones(_owner, _repo, request);
 
-        Assert.Equal(2, clones.Count);
-        Assert.Equal(clones.Count, clones.Clones.Count);
-        Assert.Equal(3, clones.Uniques);
+            Assert.True(clones.Count > 0);
+            Assert.True(clones.Clones.Count > 0);
+            Assert.True(clones.Uniques > 0);
+        }
 
-        var uniques = clones.Clones.Where(x => x.Uniques > 0);
+        [IntegrationTest]
+        public async Task GetsClonesWithRepositoryId()
+        {
+            var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
+            var clones = await _fixture.GetClones(_repoId, request);
 
-        Assert.Equal(clones.Uniques, uniques.Count());
+            Assert.True(clones.Count > 0);
+            Assert.True(clones.Clones.Count > 0);
+            Assert.True(clones.Uniques > 0);
+        }
     }
 
-    [IntegrationTest(Skip = "Skipped due to requiring admin permissions")]
-    public async Task TheGetViewsMethod()
+    public class TheGetViewsMethod : RepositoryTrafficClientTests
     {
-        var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
-        var views = await _fixture.GetViews("octokit", "ocotkit.net", request);
+        [IntegrationTest]
+        public async Task GetsViews()
+        {
+            var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
+            var views = await _fixture.GetViews(_owner, _repo, request);
 
-        Assert.Equal(2, views.Count);
-        Assert.Equal(1, views.Views.Count);
-        Assert.Equal(3, views.Uniques);
+            Assert.True(views.Count > 0);
+            Assert.True(views.Views.Count > 0);
+            Assert.True(views.Uniques > 0);
+        }
 
-        var uniques = views.Views.Where(x => x.Uniques > 0);
+        [IntegrationTest]
+        public async Task GetsViewsWithRepositoryId()
+        {
+            var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
+            var views = await _fixture.GetViews(_repoId, request);
 
-        Assert.Equal(views.Uniques, uniques.Count());
+            Assert.True(views.Count > 0);
+            Assert.True(views.Views.Count > 0);
+            Assert.True(views.Uniques > 0);
+        }
     }
 }

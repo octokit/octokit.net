@@ -3220,7 +3220,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic referrers.</returns>
-        public static Uri RepositoryTrafficReferrers(int repositoryId)
+        public static Uri RepositoryTrafficReferrers(long repositoryId)
         {
             return "repositories/{0}/traffic/popular/referrers".FormatUri(repositoryId);
         }
@@ -3241,7 +3241,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic paths.</returns>
-        public static Uri RepositoryTrafficPaths(int repositoryId)
+        public static Uri RepositoryTrafficPaths(long repositoryId)
         {
             return "repositories/{0}/traffic/popular/paths".FormatUri(repositoryId);
         }
@@ -3262,7 +3262,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic views.</returns>
-        public static Uri RepositoryTrafficViews(int repositoryId)
+        public static Uri RepositoryTrafficViews(long repositoryId)
         {
             return "repositories/{0}/traffic/views".FormatUri(repositoryId);
         }
@@ -3283,7 +3283,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic clones.</returns>
-        public static Uri RepositoryTrafficClones(int repositoryId)
+        public static Uri RepositoryTrafficClones(long repositoryId)
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
         }

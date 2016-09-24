@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Helpers;
+using Octokit.Internal;
 
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryTrafficView
+    public class RepositoryTrafficViewSummary
     {
-        public RepositoryTrafficView() { }
+        public RepositoryTrafficViewSummary() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public RepositoryTrafficView(int count, int uniques, IReadOnlyList<View> views)
+        public RepositoryTrafficViewSummary(int count, int uniques, IReadOnlyList<RepositoryTrafficView> views)
         {
             Count = count;
             Uniques = uniques;
@@ -24,7 +26,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
         public int Uniques { get; protected set; }
 
-        public IReadOnlyList<View> Views { get; protected set; }
+        public IReadOnlyList<RepositoryTrafficView> Views { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -33,19 +35,26 @@ namespace Octokit
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class View
+    public class RepositoryTrafficView
     {
-        public View() { }
+        public RepositoryTrafficView() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public View(DateTimeOffset timestamp, int count, int uniques)
+        public RepositoryTrafficView(long timestamp, int count, int uniques)
         {
-            Timestamp = timestamp;
+            TimestampAsUtcEpochSeconds = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        public DateTimeOffset Timestamp { get; protected set; }
+        [Parameter(Key = "ignoreThisField")]
+        public DateTimeOffset Timestamp
+        {
+            get { return TimestampAsUtcEpochSeconds.FromUnixTime(); }
+        }
+
+        [Parameter(Key = "timestamp")]
+        public long TimestampAsUtcEpochSeconds { get; protected set; }
 
         public int Count { get; protected set; }
 
@@ -54,7 +63,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return string.Format(CultureInfo.InvariantCulture, "Number: {0} Uniques: {1}", Count, Uniques); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Timestamp: {0} Number: {1} Uniques: {2}", Timestamp, Count, Uniques); }
         }
     }
 }
