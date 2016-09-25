@@ -14,7 +14,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int watchersCount, int subscribersCount, long size)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -47,7 +47,6 @@ namespace Octokit
             HasDownloads = hasDownloads;
             HasPages = hasPages;
             SubscribersCount = subscribersCount;
-            WatchersCount = watchersCount;
             Size = size;
         }
 
@@ -112,8 +111,6 @@ namespace Octokit
         public bool HasPages { get; protected set; }
 
         public int SubscribersCount { get; protected set; }
-
-        public int WatchersCount { get; protected set; }
 
         public long Size { get; protected set; }
 
