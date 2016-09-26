@@ -93,6 +93,7 @@
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
+    <Compile Include="Models\Request\OrganizationRequest.cs" />
     <Compile Include="Models\Response\Feed.cs" />
     <Compile Include="Models\Response\FeedLink.cs" />
     <Compile Include="Models\Request\PullRequestRequest.cs" />

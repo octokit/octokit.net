@@ -77,7 +77,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll((string)null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("username", null));
 

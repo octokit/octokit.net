@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllForUserMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public async Task RequestsTheCorrectUrl()
@@ -81,13 +81,59 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll((string)null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("username", null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", ApiOptions.None));
             }
+        }
+
+        public class TheGetAllForUserMethod
+        {
+          [Fact]
+          public async Task RequestsTheCorrectUrl()
+          {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new OrganizationsClient(connection);
+
+            await client.GetAllForUser("username");
+
+            connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), Args.ApiOptions);
+          }
+
+          [Fact]
+          public async Task RequestsTheCorrectUrlWithApiOptions()
+          {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new OrganizationsClient(connection);
+
+            var options = new ApiOptions
+            {
+              StartPage = 1,
+              PageCount = 1,
+              PageSize = 1
+            };
+
+            await client.GetAllForUser("username", options);
+
+            connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), options);
+          }
+
+          [Fact]
+          public async Task EnsuresNonNullArguments()
+          {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new OrganizationsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser(null, ApiOptions.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser("username", null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser(""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser("", ApiOptions.None));
+          }
         }
 
         public class TheGetAllForCurrentMethod
@@ -139,9 +185,9 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                await client.GetAllOrganizations();
+                await client.GetAll();
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"), Args.ApiOptions);
+                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"));
             }
 
             [Fact]
@@ -150,16 +196,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1,
-                    PageSize = 1
-                };
+                var request =  new OrganizationRequest(1);
 
-                await client.GetAllOrganizations(options);
+                await client.GetAll(request);
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"), options);
+                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations?since=1"));
             }
 
             [Fact]
@@ -168,7 +209,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllOrganizations(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll((OrganizationRequest)null));
             }
         }
         
