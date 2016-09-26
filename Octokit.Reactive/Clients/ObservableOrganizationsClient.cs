@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations());
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
         }
 
         /// <summary>
@@ -72,11 +72,12 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [Obsolete("Please use ObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public IObservable<Organization> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
         }
 
         /// <summary>
@@ -85,32 +86,62 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [Obsolete("Please use ObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public IObservable<Organization> GetAll(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
         }
 
         /// <summary>
-        /// Returns all the organizations
+        /// Returns all the organizations for the specified user
         /// </summary>
+        /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public IObservable<Organization> GetAllOrganizations()
+        public IObservable<Organization> GetAllForUser(string user)
         {
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
+          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
         }
 
         /// <summary>
-        /// Returns all the organizations
+        /// Returns all the organizations for the specified user
         /// </summary>
+        /// <param name="user">The login for the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        public IObservable<Organization> GetAllOrganizations(ApiOptions options)
+        public IObservable<Organization> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(), options);
+          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+          Ensure.ArgumentNotNull(options, "options");
+
+          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
+        }
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <returns></returns>
+        public IObservable<Organization> GetAll()
+        {
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.AllOrganizations());
+        }
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <param name="request">Search parameters of the last organization seen</param>
+        /// <returns></returns>
+        public IObservable<Organization> GetAll(OrganizationRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            var url = ApiUrls.AllOrganizations(request.Since);
+
+            return _connection.GetAndFlattenAllPages<Organization>(url);
         }
 
         /// <summary>

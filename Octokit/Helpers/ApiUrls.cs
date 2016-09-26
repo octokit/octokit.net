@@ -20,7 +20,6 @@ namespace Octokit
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
         static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
         static readonly Uri _oauthAccessToken = new Uri("login/oauth/access_token", UriKind.Relative);
-        static readonly Uri _organizationUrl = new Uri("organizations", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
@@ -76,7 +75,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
-        public static Uri UserOrganizations()
+        public static Uri Organizations()
         {
             return _currentUserOrganizationsUrl;
         }
@@ -86,18 +85,28 @@ namespace Octokit
         /// </summary>
         /// <param name="login">The login for the user</param>
         /// <returns></returns>
-        public static Uri UserOrganizations(string login)
+        public static Uri Organizations(string login)
         {
             return "users/{0}/orgs".FormatUri(login);
         }
         
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
+        /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
         /// <returns></returns>
-        public static Uri Organizations()
+        public static Uri AllOrganizations()
         {
-          return _organizationUrl;
+          return "organizations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organizations.
+        /// </summary>
+        /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
+        /// <returns></returns>
+        public static Uri AllOrganizations(long since)
+        {
+          return "organizations?since={0}".FormatUri(since);
         }
 
         /// <summary>
