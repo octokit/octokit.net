@@ -191,7 +191,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsTheCorrectUrlWithApiOptions()
+            public async Task RequestsTheCorrectUrlWithRequestParameter()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
