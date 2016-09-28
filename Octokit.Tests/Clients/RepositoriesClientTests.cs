@@ -258,7 +258,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("owner", "name");
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"));
+                connection.Received().Get<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
+                    null,
+                    "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
@@ -269,7 +272,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1);
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"));
+                connection.Received().Get<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
+                    null,
+                    "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]

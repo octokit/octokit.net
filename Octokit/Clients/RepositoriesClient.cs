@@ -259,7 +259,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.SquashCommitPreview);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Get(long repositoryId)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.SquashCommitPreview);
         }
 
         /// <summary>
