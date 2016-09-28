@@ -112,6 +112,7 @@
     <Compile Include="Clients\RepositoryHooksClientTests.cs" />
     <Compile Include="Clients\RepositoryInvitationsClientTests.cs" />
     <Compile Include="Clients\RepositoryPagesClientTests.cs" />
+    <Compile Include="Clients\RepositoryTrafficClientTests.cs" />
     <Compile Include="Clients\SearchClientTests.cs" />
     <Compile Include="Clients\StarredClientTests.cs" />
     <Compile Include="Clients\StatisticsClientTests.cs" />

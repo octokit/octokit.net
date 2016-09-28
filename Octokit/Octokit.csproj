@@ -65,6 +65,7 @@
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IRepositoryTrafficClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
     <Compile Include="Clients\IssueTimelineClient.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
+    <Compile Include="Models\Request\RepositoryTrafficRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
@@ -219,6 +222,10 @@
     <Compile Include="Models\Response\RepositoryInvitation.cs" />
     <Compile Include="Models\Response\SourceInfo.cs" />
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficView.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />

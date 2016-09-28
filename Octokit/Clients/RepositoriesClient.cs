@@ -39,6 +39,7 @@ namespace Octokit
             Page = new RepositoryPagesClient(apiConnection);
             Invitation = new RepositoryInvitationsClient(apiConnection);
             Branch = new RepositoryBranchesClient(apiConnection);
+            Traffic = new RepositoryTrafficClient(apiConnection);
         }
 
         /// <summary>
@@ -957,5 +958,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
         /// </remarks>
         public IRepositoryInvitationsClient Invitation { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Repository Traffic API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
+        /// </remarks>
+        public IRepositoryTrafficClient Traffic { get; private set; }
     }
 }
