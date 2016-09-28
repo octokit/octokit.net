@@ -94,4 +94,13 @@ docs/_build
 Backup/
 
 # .NET Core
-project.lock.json
+*.lock.json
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# CAKE
+tools/
