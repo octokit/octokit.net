@@ -664,6 +664,36 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptionsWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryId);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
     }
 
     public class TheGetAllPublicMethod
