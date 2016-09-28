@@ -18,7 +18,25 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [GitHubEnterpriseTest]
-            public async Task CanListOrganizations()
+            public async Task CanListAllOrganizations()
+            {
+                string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
+                string orgName1 = string.Concat(orgLogin1, " Display Name 1");
+                string orgLogin2 = Helper.MakeNameWithTimestamp("MyOrganization2");
+                string orgName2 = string.Concat(orgLogin2, " Display Name 2");
+
+                var newOrganization1 = new NewOrganization(orgLogin1, EnterpriseHelper.UserName, orgName1);
+                var newOrganization2 = new NewOrganization(orgLogin2, EnterpriseHelper.UserName, orgName2);
+                await _github.Enterprise.Organization.Create(newOrganization1);
+                await _github.Enterprise.Organization.Create(newOrganization2);
+
+                var organizations = await _organizationsClient.GetAll();
+
+                Assert.Equal(2, organizations.Count);
+            }
+
+            [GitHubEnterpriseTest]
+            public async Task CanListUserOrganizations()
             {
                 string orgLogin = Helper.MakeNameWithTimestamp("MyOrganization");
                 string orgName = string.Concat(orgLogin, " Display Name");
@@ -35,7 +53,34 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [GitHubEnterpriseTest]
-            public async Task ReturnsCorrectCountOfOrganizationsWithoutStart()
+            public async Task ReturnsCorrectCountOfAllOrganizationsWithSince()
+            {
+                string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
+                string orgName1 = string.Concat(orgLogin1, " Display Name 1");
+                string orgLogin2 = Helper.MakeNameWithTimestamp("MyOrganization2");
+                string orgName2 = string.Concat(orgLogin2, " Display Name 2");
+                string orgLogin3 = Helper.MakeNameWithTimestamp("MyOrganization3");
+                string orgName3 = string.Concat(orgLogin3, " Display Name 3");
+
+                var newOrganization1 = new NewOrganization(orgLogin1, EnterpriseHelper.UserName, orgName1);
+                var newOrganization2 = new NewOrganization(orgLogin2, EnterpriseHelper.UserName, orgName2);
+                var newOrganization3 = new NewOrganization(orgLogin3, EnterpriseHelper.UserName, orgName3);
+
+                var createdOrganization1 = await _github.Enterprise.Organization.Create(newOrganization1);
+                var createdOrganization2 = await _github.Enterprise.Organization.Create(newOrganization2);
+                var createdOrganization3 = await _github.Enterprise.Organization.Create(newOrganization3);
+
+                var requestParameter = new OrganizationRequest(createdOrganization1.Id);
+
+                var organizations = await _organizationsClient.GetAll(requestParameter);
+
+                Assert.Equal(2, organizations.Count);
+                Assert.Equal(createdOrganization2.Id, organizations[0].Id);
+                Assert.Equal(createdOrganization3.Id, organizations[1].Id);
+            }
+
+            [GitHubEnterpriseTest]
+            public async Task ReturnsCorrectCountOfUserOrganizationsWithoutStart()
             {
                 string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
                 string orgName1 = string.Concat(orgLogin1, " Display Name 1");
@@ -59,7 +104,7 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [GitHubEnterpriseTest]
-            public async Task ReturnsCorrectCountOfOrganizationsWithStart()
+            public async Task ReturnsCorrectCountOfUserOrganizationsWithStart()
             {
                 string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
                 string orgName1 = string.Concat(orgLogin1, " Display Name 1");
