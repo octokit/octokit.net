@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations());
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations());
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         {
           Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user));
+          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Octokit.Reactive
           Ensure.ArgumentNotNullOrEmptyString(user, "user");
           Ensure.ArgumentNotNull(options, "options");
 
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.Organizations(user), options);
+          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
         /// <summary>

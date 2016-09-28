@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Octokit
           Ensure.ArgumentNotNullOrEmptyString(user, "user");
           Ensure.ArgumentNotNull(options, "options");
 
-          return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user), options);
+          return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
 
