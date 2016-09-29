@@ -1,3 +1,4 @@
+using System.IO;
 using Cake.Core;
 using Cake.Frosting;
 
@@ -16,8 +17,11 @@ public class Program
                 // Use a custom lifetime to initialize the context.
                 services.UseLifetime<BuildLifetime>();
 
-                // Use the parent directory as the working directory.
-                services.UseWorkingDirectory("..");
+                if (Directory.GetCurrentDirectory().EndsWith("build"))
+                {
+                    // Use the parent directory as the working directory.
+                    services.UseWorkingDirectory("..");
+                }
             })
             .Build();
 
