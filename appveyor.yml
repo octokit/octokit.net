@@ -1,10 +1,7 @@
 init:
   - git config --global core.autocrlf input
 build_script:
-  - cmd: pushd build
-  - dotnet restore --verbosity info
-  - dotnet run
-  - cmd: popd
+  - ps: .\build\build.ps1
 test: off
 nuget:
   account_feed: true
