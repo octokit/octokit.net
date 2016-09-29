@@ -42,5 +42,7 @@ namespace Octokit
         public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview";
 
         public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
+
+        public const string ProjectsApiPreview = "  application/vnd.github.inertia-preview+json";
     }
 }
