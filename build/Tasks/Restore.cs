@@ -6,9 +6,11 @@ public class Restore : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        context.DotNetCoreRestore(".", new DotNetCoreRestoreSettings
-        {
-            Verbose = false
-        });
+        context.DotNetCoreRestore(
+            ".",
+            new DotNetCoreRestoreSettings
+            {
+                Verbose = false
+            });
     }
 }

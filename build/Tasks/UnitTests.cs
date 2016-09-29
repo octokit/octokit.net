@@ -12,11 +12,14 @@ public class UnitTests : FrostingTask<BuildContext>
         foreach (var project in context.Projects.Where(x => x.Tests))
         {
             context.Information("Executing Test Project {0}...", project.Name);
-            context.DotNetCoreTest(project.Path.FullPath, new DotNetCoreTestSettings {
-                Configuration = context.Configuration,
-                NoBuild = true,
-                Verbose = false
-            });
+            context.DotNetCoreTest(
+                project.Path.FullPath,
+                new DotNetCoreTestSettings
+                {
+                    Configuration = context.Configuration,
+                    NoBuild = true,
+                    Verbose = false
+                });
         }
     }
 }

@@ -18,10 +18,13 @@ public class Build : FrostingTask<BuildContext>
         foreach(var project in context.Projects)
         {
             context.Information("Building {0}...", project.Name);
-            context.DotNetCoreBuild(project.Path.FullPath, new DotNetCoreBuildSettings(){
-                Configuration = context.Configuration,
-                VersionSuffix = context.Suffix
-            });
+            context.DotNetCoreBuild(
+                project.Path.FullPath,
+                new DotNetCoreBuildSettings
+                {
+                    Configuration = context.Configuration,
+                    VersionSuffix = context.Suffix
+                });
         }
     }
 }

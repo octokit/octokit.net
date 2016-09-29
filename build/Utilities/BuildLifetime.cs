@@ -54,7 +54,8 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
         {
             PackagesDirectory = "./tools",
             Verbosity = DotNetCoreRestoreVerbosity.Error,
-            Sources = new[] {
+            Sources = new[]
+            {
                 "https://api.nuget.org/v3/index.json"
             }
         });
