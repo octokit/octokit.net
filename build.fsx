@@ -125,6 +125,7 @@ Target "RestoreDotNetCore" (fun _ ->
 
 Target "BuildDotNetCore" (fun _ ->
     !! "./**/project.json"
+    -- "./build/**"
     |> Fake.DotNetCli.Build id
 )
 
