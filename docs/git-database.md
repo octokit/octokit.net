@@ -23,4 +23,6 @@ Console.WriteLine("Created a tag for {0} at {1}", result.Tag, result.Sha);
 
 Or you can fetch an existing tag from the API:
 
+```
 var tag = await client.GitDatabase.Tags.Get("octokit", "octokit.net", "v1.0.0");
+```
