@@ -48,10 +48,24 @@ namespace Octokit
         }
     }
 
+    /// <summary>
+    /// Method to use when merging a PR
+    /// </summary>
     public enum PullRequestMergeMethod
     {
+        /// <summary>
+        /// Create a merge commit
+        /// </summary>
         Merge,
+
+        /// <summary>
+        /// Squash and merge
+        /// </summary>
         Squash,
+
+        /// <summary>
+        /// Rebase and merge
+        /// </summary>
         Rebase
     }
 }
