@@ -4,24 +4,20 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewRepositoryProject
+    public class RepositoryProjectUpdate
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewRepositoryProject"/> class.
-        /// </summary>
-        /// <param name="name">The name of the project.</param>
-        public NewRepositoryProject(string name)
+        public RepositoryProjectUpdate(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// Required. Gets or sets the name of the project.
+        /// Required. Gets or sets the new name of the project.
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        /// Optional. Gets or sets the body of the project.
+        /// Optional. Gets or sets the new body of the project.
         /// </summary>
         public string Body { get; set; }
 

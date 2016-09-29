@@ -510,6 +510,7 @@
     <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Models\Request\NewRepositoryProject.cs" />
+    <Compile Include="Models\Request\RepositoryProjectUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
