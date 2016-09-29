@@ -5,14 +5,9 @@ using Cake.Core;
 using Cake.Frosting;
 
 [Dependency(typeof(Restore))]
+[TaskName("Dotnet-Build")]
 public class Build : FrostingTask<BuildContext>
 {
-    public override bool ShouldRun(BuildContext context)
-    {
-        // Don't run this task on OSX.
-        return context.Environment.Platform.Family != PlatformFamily.OSX;
-    }
-
     public override void Run(BuildContext context)
     {
         foreach(var project in context.Projects)
