@@ -508,6 +508,7 @@
     <Compile Include="Models\Request\RepositoryProjectColumnUpdate.cs" />
     <Compile Include="Models\Request\NewRepositoryProjectCard.cs" />
     <Compile Include="Models\Request\RepositoryProjectCardUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryProject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
