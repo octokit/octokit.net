@@ -160,6 +160,7 @@
     <Compile Include="Models\Request\NewRepositoryProjectColumn.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\RepositoryProjectCardUpdate.cs" />
     <Compile Include="Models\Request\RepositoryProjectColumnUpdate.cs" />
     <Compile Include="Models\Request\RepositoryProjectUpdate.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />

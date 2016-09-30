@@ -1,7 +1,10 @@
 ﻿using Octokit.Internal;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRepositoryProjectCard
     {
         public NewRepositoryProjectCard(string note)
@@ -30,6 +33,14 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "content_type")]
         public ProjectCardContentType ContentType { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Note: {0}, Id: {1}", Note, ContentId);
+            }
+        }
     }
 
     public enum ProjectCardContentType
