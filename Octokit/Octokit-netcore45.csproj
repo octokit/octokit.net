@@ -513,6 +513,7 @@
     <Compile Include="Models\Request\NewRepositoryProjectCard.cs" />
     <Compile Include="Models\Request\RepositoryProjectCardUpdate.cs" />
     <Compile Include="Models\Response\RepositoryProject.cs" />
+    <Compile Include="Models\Response\RepositoryProjectColumn.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">

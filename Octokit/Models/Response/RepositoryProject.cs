@@ -38,7 +38,7 @@ namespace Octokit
         public int Id { get; protected set; }
 
         /// <summary>
-        /// The Name for this project.
+        /// The name for this project.
         /// </summary>
         public string Name { get; protected set; }
 

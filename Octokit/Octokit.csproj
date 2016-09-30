@@ -227,6 +227,7 @@
     <Compile Include="Models\Response\RenameInfo.cs" />
     <Compile Include="Models\Response\RepositoryInvitation.cs" />
     <Compile Include="Models\Response\RepositoryProject.cs" />
+    <Compile Include="Models\Response\RepositoryProjectColumn.cs" />
     <Compile Include="Models\Response\SourceInfo.cs" />
     <Compile Include="Models\Response\TimelineEventInfo.cs" />
     <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
