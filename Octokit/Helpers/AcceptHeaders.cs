@@ -43,6 +43,6 @@ namespace Octokit
 
         public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
 
-        public const string ProjectsApiPreview = "  application/vnd.github.inertia-preview+json";
+        public const string ProjectsApiPreview = "application/vnd.github.inertia-preview+json";
     }
 }

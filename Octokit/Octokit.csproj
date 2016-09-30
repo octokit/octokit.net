@@ -65,6 +65,7 @@
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IRepositoryProjectsClient.cs" />
     <Compile Include="Clients\IRepositoryTrafficClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
