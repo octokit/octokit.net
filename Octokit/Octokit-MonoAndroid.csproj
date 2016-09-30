@@ -521,6 +521,7 @@
     <Compile Include="Models\Request\RepositoryProjectCardUpdate.cs" />
     <Compile Include="Models\Response\RepositoryProject.cs" />
     <Compile Include="Models\Response\RepositoryProjectColumn.cs" />
+    <Compile Include="Models\Response\RepositoryProjectCard.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
