@@ -504,6 +504,7 @@
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Models\Request\NewRepositoryProject.cs" />
     <Compile Include="Models\Request\RepositoryProjectUpdate.cs" />
+    <Compile Include="Models\Request\NewRepositoryProjectColumn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -156,6 +156,7 @@
     <Compile Include="Models\Request\NewMerge.cs" />
     <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Models\Request\NewRepositoryProject.cs" />
+    <Compile Include="Models\Request\NewRepositoryProjectColumn.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\RepositoryProjectUpdate.cs" />
