@@ -268,6 +268,36 @@ public class RepositoriesClientTests
                 Task.WhenAll(deleteRepos).Wait();
             }
         }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithRequestedMergeMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            var newRepository = new NewRepository(repoName)
+            {
+                AllowMergeCommit = false,
+                AllowSquashMerge = true,
+                AllowRebaseMerge = false
+            };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                Assert.Equal(repoName, createdRepository.Name);
+                Assert.False(createdRepository.AllowMergeCommit);
+                Assert.True(createdRepository.AllowSquashMerge);
+                Assert.False(createdRepository.AllowRebaseMerge);
+
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.Equal(repoName, repository.Name);
+                Assert.False(repository.AllowMergeCommit);
+                Assert.True(repository.AllowSquashMerge);
+                Assert.False(repository.AllowRebaseMerge);
+            }
+        }
     }
 
     public class TheCreateMethodForOrganization

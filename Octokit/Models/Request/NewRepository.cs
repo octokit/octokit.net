@@ -82,6 +82,21 @@ namespace Octokit
         /// </summary>
         public int? TeamId { get; set; }
 
+        /// <summary>
+        /// Optional. Allows the "Rebase and Merge" method to be used.
+        /// </summary>
+        public bool? AllowRebaseMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Allows the "Squash Merge" merge method to be used.
+        /// </summary>
+        public bool? AllowSquashMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Allows the "Create a merge commit" merge method to be used.
+        /// </summary>
+        public bool? AllowMergeCommit { get; set; }
+
         internal string DebuggerDisplay
         {
             get
