@@ -192,8 +192,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNull(update.Name, "update.Name");
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.SquashCommitPreview);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(update, "update");
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.SquashCommitPreview);
         }
 
         /// <summary>
