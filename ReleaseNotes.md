@@ -1,3 +1,30 @@
+### New in 0.23.0 (released 06/10/2016)
+
+**Features**
+
+ - Added support for probing for an GitHub Enterprise instance - #1404 via @haacked
+ - Added more methods for the new Protected Branches preview API - #1443 via @maddin2016
+ - Repository Traffic preview API support -#1457 via @maddin2016
+
+**Fixes**
+
+ - Repository identifiers now use `long` instead of `int` - #1445 via @shana
+ - Searching for C# through the GitHub API now uses the correct alias - #1463 via @dampir
+
+**Other**
+
+ - LINQPad samples are now verified at build time - #1456 via @mderriey
+ - More obsolete APIs removed - #1458 via @ryangribble
+ - .NET Core support has been started - #1462 via @mderriey
+
+**Breaking Changes**
+
+Repository identifiers returned from the GitHub API will exceed `Int32.MaxValue` in
+around 12 months, based on current growth. We've decided to update everywhere we
+require (or return) a repository identifier from `int` to `long` so that these will
+continue to work in the future, and the implicit conversion from `int` to `long`
+means the impact should be manageable now.
+
 ### New in 0.22.0 (released 2016/09/01)
 
 **Features**
