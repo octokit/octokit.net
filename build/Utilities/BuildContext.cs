@@ -8,6 +8,8 @@ public class BuildContext : FrostingContext
     public string Version { get; set; }
     public string Suffix { get; set; }
 
+    public string OutputDir { get; set; }
+
     public string MyGetSource { get; set; }
     public string MyGetApiKey { get; set; }
     

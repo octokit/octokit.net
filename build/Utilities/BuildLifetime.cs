@@ -16,6 +16,8 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
         context.Target = context.Argument<string>("target", "Default");
         context.Configuration = context.Argument<string>("configuration", "Release");
 
+        context.OutputDir = "./packaging/";
+
         // Build system information.
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;

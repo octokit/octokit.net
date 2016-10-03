@@ -2,6 +2,7 @@ using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Restore;
 using Cake.Frosting;
 
+[Dependency(typeof(Clean))]
 [Dependency(typeof(UpdateVersionInfo))]
 [TaskName("Dotnet-Restore")]
 public class Restore : FrostingTask<BuildContext>
