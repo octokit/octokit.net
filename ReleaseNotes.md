@@ -3,8 +3,9 @@
 **Features**
 
  - Added support for probing for an GitHub Enterprise instance - #1404 via @haacked
- - Added more methods for the new Protected Branches preview API - #1443 via @maddin2016
+ - Added granular methods for Protected Branches preview API - #1443 via @maddin2016
  - Repository Traffic preview API support -#1457 via @maddin2016
+ - Added support for performing a rebase and merge through the API- #1479 via @ryangribble
 
 **Fixes**
 
@@ -24,6 +25,10 @@ around 12 months, based on current growth. We've decided to update everywhere we
 require (or return) a repository identifier from `int` to `long` so that these will
 continue to work in the future, and the implicit conversion from `int` to `long`
 means the impact should be manageable now.
+
+`MergePullRequest.Squash` has been marked as obsolete in favour of the `MergeMethod`
+property - use `PullRequestMergeMethod.Squash` or `PullRequestMergeMethod.Rebase` if
+you want to change the merge behaviour when merging a pull request.
 
 ### New in 0.22.0 (released 2016/09/01)
 
