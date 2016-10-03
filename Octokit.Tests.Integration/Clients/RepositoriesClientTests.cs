@@ -683,7 +683,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var request = new PublicRepositoryRequest(32732250);
+            var request = new PublicRepositoryRequest(32732250L);
             var repositories = await github.Repository.GetAllPublic(request);
 
             Assert.NotNull(repositories);

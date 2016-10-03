@@ -311,7 +311,7 @@ namespace Octokit.Tests.Reactive
 
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
-                var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364)).ToArray();
+                var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364L)).ToArray();
 
                 Assert.Equal(7, results.Length);
                 gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
