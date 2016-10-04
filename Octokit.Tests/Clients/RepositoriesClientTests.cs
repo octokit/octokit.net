@@ -258,7 +258,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("owner", "name");
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"));
+                connection.Received().Get<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
+                    null,
+                    "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
@@ -269,7 +272,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1);
 
-                connection.Received().Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"));
+                connection.Received().Get<Repository>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
+                    null,
+                    "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
@@ -1009,12 +1015,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("repo");
 
                 client.Edit("owner", "repo", update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>());
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
@@ -1022,12 +1028,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("repo");
 
                 client.Edit(1, update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>());
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json");
             }
 
             [Fact]
