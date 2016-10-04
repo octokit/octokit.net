@@ -4,13 +4,15 @@
 
  - Added support to test whether a URL points to a GitHub Enterprise instance - #1404 via @haacked
  - Added granular methods for Protected Branches preview API - #1443 via @maddin2016
- - Repository Traffic preview API support -#1457 via @maddin2016
+ - Repository Traffic preview API support - #1457 via @maddin2016
+ - Preview API for merge/squash/rebase in repository settings - #1477 via @ryangribble
  - Added support for performing a rebase and merge through the API- #1479 via @ryangribble
 
 **Fixes**
 
- - Repository identifiers now use `long` instead of `int` - #1445 via @shana
+ - Repository identifiers now use `long` instead of `int` - #1445 via @shana, #1485 via @ryangribble
  - Searching for C# through the GitHub API now uses the correct alias - #1463 via @dampir
+ - Resolved deadlocking scenario in async/await usage - #1486 via @zzzprojects
 
 **Other**
 
