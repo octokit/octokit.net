@@ -2,7 +2,7 @@
 
 **Features**
 
- - Added support for probing for an GitHub Enterprise instance - #1404 via @haacked
+ - Added support to test whether a URL points to a GitHub Enterprise instance - #1404 via @haacked
  - Added granular methods for Protected Branches preview API - #1443 via @maddin2016
  - Repository Traffic preview API support -#1457 via @maddin2016
  - Added support for performing a rebase and merge through the API- #1479 via @ryangribble
