@@ -174,7 +174,7 @@ namespace Octokit.Internal
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Clone the request/content incase we get a redirect
-            var clonedRequest = await CloneHttpRequestMessageAsync(request);
+            var clonedRequest = await CloneHttpRequestMessageAsync(request).ConfigureAwait(false);
 
             // Send initial response
             var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
