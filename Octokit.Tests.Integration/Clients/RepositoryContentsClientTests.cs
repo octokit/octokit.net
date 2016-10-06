@@ -308,7 +308,7 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Owner.Login,
                     repository.Name,
                     "somefile.txt",
-                    new CreateFileRequest("Test commit", "Some Content"));
+                    new CreateFileRequest("Test commit", "U29tZSBDb250ZW50"));
                 Assert.Equal("somefile.txt", file.Content.Name);
 
                 var contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
@@ -319,7 +319,7 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Owner.Login,
                     repository.Name,
                     "somefile.txt",
-                    new UpdateFileRequest("Updating file", "New Content", fileSha));
+                    new UpdateFileRequest("Updating file", "TmV3IENvbnRlbnQ=", fileSha));
                 Assert.Equal("somefile.txt", update.Content.Name);
 
                 contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
@@ -351,7 +351,7 @@ namespace Octokit.Tests.Integration.Clients
                 var file = await fixture.CreateFile(
                     repository.Id,
                     "somefile.txt",
-                    new CreateFileRequest("Test commit", "Some Content"));
+                    new CreateFileRequest("Test commit", "U29tZSBDb250ZW50"));
                 Assert.Equal("somefile.txt", file.Content.Name);
 
                 var contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
@@ -361,7 +361,7 @@ namespace Octokit.Tests.Integration.Clients
                 var update = await fixture.UpdateFile(
                     repository.Id,
                     "somefile.txt",
-                    new UpdateFileRequest("Updating file", "New Content", fileSha));
+                    new UpdateFileRequest("Updating file", "TmV3IENvbnRlbnQ=", fileSha));
                 Assert.Equal("somefile.txt", update.Content.Name);
 
                 contents = await fixture.GetAllContents(repository.Owner.Login, repository.Name, "somefile.txt");
@@ -396,7 +396,7 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Owner.Login,
                     repository.Name,
                     "somefile.txt",
-                    new CreateFileRequest("Test commit", "Some Content", branchName));
+                    new CreateFileRequest("Test commit", "U29tZSBDb250ZW50", branchName));
                 Assert.Equal("somefile.txt", file.Content.Name);
 
                 var contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);
@@ -407,7 +407,7 @@ namespace Octokit.Tests.Integration.Clients
                     repository.Owner.Login,
                     repository.Name,
                     "somefile.txt",
-                    new UpdateFileRequest("Updating file", "New Content", fileSha, branchName));
+                    new UpdateFileRequest("Updating file", "TmV3IENvbnRlbnQ=", fileSha, branchName));
                 Assert.Equal("somefile.txt", update.Content.Name);
 
                 contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);
@@ -442,7 +442,7 @@ namespace Octokit.Tests.Integration.Clients
                 var file = await fixture.CreateFile(
                     repository.Id,
                     "somefile.txt",
-                    new CreateFileRequest("Test commit", "Some Content", branchName));
+                    new CreateFileRequest("Test commit", "U29tZSBDb250ZW50", branchName));
                 Assert.Equal("somefile.txt", file.Content.Name);
 
                 var contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);
@@ -452,7 +452,7 @@ namespace Octokit.Tests.Integration.Clients
                 var update = await fixture.UpdateFile(
                     repository.Id,
                     "somefile.txt",
-                    new UpdateFileRequest("Updating file", "New Content", fileSha, branchName));
+                    new UpdateFileRequest("Updating file", "TmV3IENvbnRlbnQ=", fileSha, branchName));
                 Assert.Equal("somefile.txt", update.Content.Name);
 
                 contents = await fixture.GetAllContentsByRef(repository.Owner.Login, repository.Name, "somefile.txt", branchName);

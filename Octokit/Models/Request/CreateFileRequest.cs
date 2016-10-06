@@ -106,7 +106,7 @@ namespace Octokit
         /// Creates an instance of a <see cref="CreateFileRequest" />.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="content">The content.</param>
+        /// <param name="content">The content encoded in base64.</param>
         public CreateFileRequest(string message, string content) : base(message)
         {
             Ensure.ArgumentNotNull(content, "content");
@@ -118,7 +118,7 @@ namespace Octokit
         /// Initializes a new instance of the <see cref="CreateFileRequest"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <param name="content">The content.</param>
+        /// <param name="content">The content encoded in base64.</param>
         /// <param name="branch">The branch the request is for.</param>
         public CreateFileRequest(string message, string content, string branch) : base(message, branch)
         {
@@ -126,10 +126,10 @@ namespace Octokit
 
             Content = content;
         }
+
         /// <summary>
-        /// The contents of the file to create. This is required.
+        /// The contents of the file to create, Base64 encoded. This is required.
         /// </summary>
-        [SerializeAsBase64]
         public string Content { get; private set; }
 
         internal virtual string DebuggerDisplay

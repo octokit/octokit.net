@@ -320,7 +320,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -343,13 +343,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<CreateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Branch == "mybranch"));
             }
 
@@ -359,13 +359,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<CreateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Branch == "mybranch"));
             }
 
@@ -480,7 +480,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -492,7 +492,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -503,13 +503,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<UpdateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Sha == "1234abc"
                         && a.Branch == "mybranch"));
             }
@@ -520,13 +520,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<UpdateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Sha == "1234abc"
                         && a.Branch == "mybranch"));
             }

@@ -406,7 +406,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -419,7 +419,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -431,13 +431,13 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
-                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<CreateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Branch == "mybranch"));
             }
 
@@ -448,13 +448,13 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
-                client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+                client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<CreateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Branch == "mybranch"));
             }
 
@@ -575,7 +575,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -588,7 +588,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -600,13 +600,13 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
-                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<UpdateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Sha == "1234abc"
                         && a.Branch == "mybranch"));
             }
@@ -618,13 +618,13 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
-                client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+                client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
 
                 gitHubClient.Connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
                     Arg.Is<UpdateFileRequest>(a =>
                         a.Message == "message"
-                        && a.Content == "myfilecontents"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
                         && a.Sha == "1234abc"
                         && a.Branch == "mybranch"));
             }
