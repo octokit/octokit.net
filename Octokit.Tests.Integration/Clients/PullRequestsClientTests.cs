@@ -751,7 +751,7 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(1, result.Count);
+        Assert.Equal(2, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
     }
 
@@ -765,7 +765,7 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(_context.Repository.Id, pullRequest.Number);
 
-        Assert.Equal(1, result.Count);
+        Assert.Equal(2, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
     }
 
@@ -794,11 +794,11 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
         Assert.Equal(0, result[0].Commit.CommentCount);
-        Assert.Equal(commitMessage, result[1].Commit.Message);
-        Assert.Equal(1, result[1].Commit.CommentCount);
+        Assert.Equal(commitMessage, result[2].Commit.Message);
+        Assert.Equal(1, result[2].Commit.CommentCount);
     }
 
     [IntegrationTest]
@@ -826,11 +826,11 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(_context.Repository.Id, pullRequest.Number);
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
         Assert.Equal(0, result[0].Commit.CommentCount);
-        Assert.Equal(commitMessage, result[1].Commit.Message);
-        Assert.Equal(1, result[1].Commit.CommentCount);
+        Assert.Equal(commitMessage, result[2].Commit.Message);
+        Assert.Equal(1, result[2].Commit.CommentCount);
     }
 
     [IntegrationTest]

@@ -217,7 +217,7 @@ public class IssuesEventsClientTests : IDisposable
         Assert.NotNull(reopened1);
 
         // close issue2
-        var closed2 = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new IssueUpdate { State = ItemState.Closed });
+        var closed2 = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue2.Number, new IssueUpdate { State = ItemState.Closed });
         Assert.NotNull(closed2);
 
         var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);

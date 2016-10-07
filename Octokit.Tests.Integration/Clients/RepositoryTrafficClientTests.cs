@@ -23,7 +23,7 @@ public class RepositoryTrafficClientTests
 
     public class TheGetReferrersMethod : RepositoryTrafficClientTests
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsReferrers()
         {
             var referrers = await _fixture.GetReferrers(_owner, _repo);
@@ -31,7 +31,7 @@ public class RepositoryTrafficClientTests
             Assert.True(referrers.Count > 0);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsReferrersWithRepositoryId()
         {
             var referrers = await _fixture.GetReferrers(_repoId);
@@ -42,7 +42,7 @@ public class RepositoryTrafficClientTests
 
     public class TheGetPathsMethod : RepositoryTrafficClientTests
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsPaths()
         {
             var paths = await _fixture.GetPaths(_owner, _repo);
@@ -50,7 +50,7 @@ public class RepositoryTrafficClientTests
             Assert.True(paths.Count > 0);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsPathsWithRepositoryId()
         {
             var paths = await _fixture.GetPaths(_repoId);
@@ -61,7 +61,7 @@ public class RepositoryTrafficClientTests
 
     public class TheGetClonesMethod : RepositoryTrafficClientTests
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsClones()
         {
             var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
@@ -72,7 +72,7 @@ public class RepositoryTrafficClientTests
             Assert.True(clones.Uniques > 0);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsClonesWithRepositoryId()
         {
             var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
@@ -86,7 +86,7 @@ public class RepositoryTrafficClientTests
 
     public class TheGetViewsMethod : RepositoryTrafficClientTests
     {
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsViews()
         {
             var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
@@ -97,7 +97,7 @@ public class RepositoryTrafficClientTests
             Assert.True(views.Uniques > 0);
         }
 
-        [IntegrationTest]
+        [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsViewsWithRepositoryId()
         {
             var request = new RepositoryTrafficRequest(TrafficDayOrWeek.Day);
