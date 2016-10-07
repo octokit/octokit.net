@@ -1,4 +1,4 @@
-### New in 0.23.0 (released 06/10/2016)
+### New in 0.23.0 (released 07/10/2016)
 
 **Features**
 
