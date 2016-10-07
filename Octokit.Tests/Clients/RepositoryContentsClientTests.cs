@@ -320,7 +320,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -343,7 +343,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
@@ -359,7 +359,63 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch"));
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "myfilecontents", "mybranch"));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<CreateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repos/org/repo/contents/path/to/file";
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repositories/1/contents/path/to/file";
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task PassesRequestObjectWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await client.CreateFile("org", "repo", "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<CreateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task PassesRequestObjectWithRepositoryIdWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await client.CreateFile(1, "path/to/file", new CreateFileRequest("message", "bXlmaWxlY29udGVudHM=", "mybranch", false));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
@@ -480,7 +536,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repos/org/repo/contents/path/to/file";
-                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -492,7 +548,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryContentsClient(connection);
 
                 string expectedUri = "repositories/1/contents/path/to/file";
-                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
@@ -503,7 +559,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
@@ -520,7 +576,65 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryContentsClient(connection);
 
-                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch"));
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "myfilecontents", "1234abc", "mybranch"));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<UpdateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
+                        && a.Sha == "1234abc"
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repos/org/repo/contents/path/to/file";
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                string expectedUri = "repositories/1/contents/path/to/file";
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task PassesRequestObjectWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await client.UpdateFile("org", "repo", "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch", false));
+
+                connection.Received().Put<RepositoryContentChangeSet>(
+                    Arg.Any<Uri>(),
+                    Arg.Is<UpdateFileRequest>(a =>
+                        a.Message == "message"
+                        && a.Content == "bXlmaWxlY29udGVudHM="
+                        && a.Sha == "1234abc"
+                        && a.Branch == "mybranch"));
+            }
+
+            [Fact]
+            public async Task PassesRequestObjectWithRepositoriesIdWithExplicitBase64()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await client.UpdateFile(1, "path/to/file", new UpdateFileRequest("message", "bXlmaWxlY29udGVudHM=", "1234abc", "mybranch", false));
 
                 connection.Received().Put<RepositoryContentChangeSet>(
                     Arg.Any<Uri>(),
