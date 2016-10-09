@@ -14,9 +14,11 @@ namespace Octokit
             Number = number;
         }
 
-        public Milestone(Uri url, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
+        public Milestone(Uri url, Uri htmlUrl, Uri labelsUrl, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
         {
             Url = url;
+            HtmlUrl = htmlUrl;
+            LabelsUrl = labelsUrl;
             Number = number;
             State = state;
             Title = title;
@@ -33,6 +35,16 @@ namespace Octokit
         /// The URL for this milestone.
         /// </summary>
         public Uri Url { get; protected set; }
+
+        /// <summary>
+        /// The Html page for this milestone.
+        /// </summary>
+        public Uri HtmlUrl { get; protected set; }
+
+        /// <summary>
+        /// The URL for this milestone's labels.
+        /// </summary>
+        public Uri LabelsUrl { get; protected set; }
 
         /// <summary>
         /// The milestone number.
