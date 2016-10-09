@@ -107,14 +107,14 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets all the events for a given repository
+        /// Gets all the issue events for a given repository
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<Activity> GetAllIssuesForRepository(string owner, string name)
+        public IObservable<IssueEvent> GetAllIssuesForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -129,13 +129,13 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Activity> GetAllIssuesForRepository(long repositoryId)
+        public IObservable<IssueEvent> GetAllIssuesForRepository(long repositoryId)
         {
             return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
         }
 
         /// <summary>
-        /// Gets all the events for a given repository
+        /// Gets all the issue events for a given repository
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
@@ -143,13 +143,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Activity> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
+        public IObservable<IssueEvent> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(owner, name), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options);
         }
 
         /// <summary>
@@ -160,11 +160,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Activity> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
+        public IObservable<IssueEvent> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Activity>(ApiUrls.IssuesEvents(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options);
         }
 
         /// <summary>
