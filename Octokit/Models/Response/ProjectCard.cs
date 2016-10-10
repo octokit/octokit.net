@@ -5,11 +5,11 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryProjectCard
+    public class ProjectCard
     {
-        public RepositoryProjectCard() { }
+        public ProjectCard() { }
 
-        public RepositoryProjectCard(string columnUrl, string contentUrl, int id, string note, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectCard(string columnUrl, string contentUrl, int id, string note, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             ColumnUrl = columnUrl;
             ContentUrl = contentUrl;

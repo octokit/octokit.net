@@ -4,13 +4,13 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewRepositoryProject
+    public class NewProject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewRepositoryProject"/> class.
+        /// Initializes a new instance of the <see cref="NewProject"/> class.
         /// </summary>
         /// <param name="name">The name of the project.</param>
-        public NewRepositoryProject(string name)
+        public NewProject(string name)
         {
             Name = name;
         }

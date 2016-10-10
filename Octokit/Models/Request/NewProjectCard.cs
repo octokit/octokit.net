@@ -5,14 +5,14 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewRepositoryProjectCard
+    public class NewProjectCard
     {
-        public NewRepositoryProjectCard(string note)
+        public NewProjectCard(string note)
         {
             Note = note;
         }
 
-        public NewRepositoryProjectCard(int contentId)
+        public NewProjectCard(int contentId)
         {
             ContentId = contentId;
         }

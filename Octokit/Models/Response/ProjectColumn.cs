@@ -5,11 +5,11 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryProjectColumn
+    public class ProjectColumn
     {
-        public RepositoryProjectColumn() { }
+        public ProjectColumn() { }
 
-        public RepositoryProjectColumn(int id, string name, string projectUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectColumn(int id, string name, string projectUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             Id = id;
             Name = name;

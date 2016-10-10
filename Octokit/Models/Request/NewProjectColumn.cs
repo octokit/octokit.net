@@ -4,9 +4,9 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class NewRepositoryProjectColumn
+    public class NewProjectColumn
     {
-        public NewRepositoryProjectColumn(string name)
+        public NewProjectColumn(string name)
         {
             Name = name;
         }

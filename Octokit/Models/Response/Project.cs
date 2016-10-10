@@ -5,11 +5,11 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryProject
+    public class Project
     {
-        public RepositoryProject() { }
+        public Project() { }
 
-        public RepositoryProject(string ownerUrl, string url, int id, string name, string body, int number, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public Project(string ownerUrl, string url, int id, string name, string body, int number, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             OwnerUrl = ownerUrl;
             Url = url;

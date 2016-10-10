@@ -4,23 +4,23 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryProjectCardUpdate
+    public class ProjectColumnUpdate
     {
-        public RepositoryProjectCardUpdate(string note)
+        public ProjectColumnUpdate(string name)
         {
-            Note = note;
+            Name = name;
         }
 
         /// <summary>
-        /// The new note of the card.
+        /// Required. Gets or sets the name of the column.
         /// </summary>
-        public string Note { get; private set; }
+        public string Name { get; private set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Note: {0}", Note);
+                return string.Format(CultureInfo.InvariantCulture, "Name: {0}", Name);
             }
         }
     }
