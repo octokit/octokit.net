@@ -3287,5 +3287,72 @@ namespace Octokit
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for projects.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri Projects(string owner, string name)
+        {
+            return "repos/{0}/{1}/projects".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for projects.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri Projects(long repositoryId)
+        {
+            return "repositories/{0}/projects".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="number">The number of the project</param>
+        /// <returns>The <see cref="Uri"/> for a specific project.</returns>
+        public static Uri Project(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/projects/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific repository projects.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="number">The number of the project</param>
+        /// <returns>The <see cref="Uri"/> for repository projects.</returns>
+        public static Uri Project(long repositoryId, int number)
+        {
+            return "repositories/{0}/projects/{1}".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project columns.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="number">The number of the project</param>
+        /// <returns>The <see cref="Uri"/> for project columns.</returns>
+        public static Uri ProjectColumns(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/projects/{2}/columns".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project columns.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="number">The number of the project</param>
+        /// <returns>The <see cref="Uri"/> for project columns.</returns>
+        public static Uri ProjectColumns(long repositoryId, int number)
+        {
+            return "repositories/{0}/projects/{1}/columns".FormatUri(repositoryId, number);
+        }
     }
 }

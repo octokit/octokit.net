@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -9,7 +10,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/projects/">Repository Projects API documentation</a> for more information.
     /// </remarks>
-    public interface IRepositoryProjectsClient
+    public class RepositoryProjectClient : IRepositoryProjectsClient
     {
         /// <summary>
         /// Get all projects for this repository.
@@ -19,7 +20,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name);
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Get all projects for this repository.
@@ -28,7 +32,10 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Project>> GetAllForRepository(int repositoryId);
+        public Task<IReadOnlyList<Project>> GetAllForRepository(int repositoryId)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single project for this repository.
@@ -39,7 +46,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<Project> Get(string owner, string name, int number);
+        public Task<Project> Get(string owner, string name, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single project for this repository.
@@ -49,7 +59,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<Project> Get(int repositoryId, int number);
+        public Task<Project> Get(int repositoryId, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a project for this repository.
@@ -60,7 +73,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        Task<Project> Create(string owner, string name, NewProject newRepositoryProject);
+        public Task<Project> Create(string owner, string name, NewProject newRepositoryProject)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a project for this repository.
@@ -70,7 +86,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        Task<Project> Create(int repositoryId, NewProject newRepositoryProject);
+        public Task<Project> Create(int repositoryId, NewProject newRepositoryProject)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a project for this repository.
@@ -82,7 +101,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="repositoryProjectUpdate">The modified project</param>
-        Task<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate);
+        public Task<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a project for this repository.
@@ -93,7 +115,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="repositoryProjectUpdate">The modified project</param>
-        Task<Project> Update(int repositoryId, int number, ProjectUpdate repositoryProjectUpdate);
+        public Task<Project> Update(int repositoryId, int number, ProjectUpdate repositoryProjectUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a project.
@@ -104,7 +129,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<bool> Delete(string owner, string name, int number);
+        public Task<bool> Delete(string owner, string name, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a project.
@@ -114,7 +142,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<bool> Delete(int repositoryId, int number);
+        public Task<bool> Delete(int repositoryId, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets all columns for this project.
@@ -125,7 +156,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<IReadOnlyList<ProjectColumn>> GetAllColumns(string owner, string name, int number);
+        public Task<IReadOnlyList<ProjectColumn>> GetAllColumns(string owner, string name, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets all columns for this project.
@@ -135,7 +169,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<IReadOnlyList<ProjectColumn>> GetAllColumns(int repositoryId, int number);
+        public Task<IReadOnlyList<ProjectColumn>> GetAllColumns(int repositoryId, int number)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single column for this project.
@@ -146,7 +183,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<ProjectColumn> GetColumn(string owner, string name, int id);
+        public Task<ProjectColumn> GetColumn(string owner, string name, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single column for this project.
@@ -156,7 +196,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<ProjectColumn> GetColumn(int repositoryId, int id);
+        public Task<ProjectColumn> GetColumn(int repositoryId, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a column for this project.
@@ -168,7 +211,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="newRepositoryProjectColumn">The column to create</param>
-        Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn);
+        public Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a column for this project.
@@ -179,7 +225,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="newRepositoryProjectColumn">The column to create</param>
-        Task<ProjectColumn> CreateColumn(int repositoryId, int number, NewProjectColumn newRepositoryProjectColumn);
+        public Task<ProjectColumn> CreateColumn(int repositoryId, int number, NewProjectColumn newRepositoryProjectColumn)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a column for this project.
@@ -190,8 +239,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// 
-        Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
+        public Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a column for this project.
@@ -201,7 +252,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<ProjectColumn> UpdateColumn(int repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
+        public Task<ProjectColumn> UpdateColumn(int repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a column.
@@ -212,7 +266,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<bool> DeleteColumn(string owner, string name, int id);
+        public Task<bool> DeleteColumn(string owner, string name, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a column.
@@ -222,7 +279,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<bool> DeleteColumn(int repositoryId, int id);
+        public Task<bool> DeleteColumn(int repositoryId, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Moves a column.
@@ -234,7 +294,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>        
         /// <param name="position">The position to move the column</param>
-        Task<bool> MoveColumn(string owner, string name, int id, ProjectColumnMove position);
+        public Task<bool> MoveColumn(string owner, string name, int id, ProjectColumnMove position)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Moves a column.
@@ -245,7 +308,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        Task<bool> MoveColumn(int repositoryId, int id, ProjectColumnMove position);
+        public Task<bool> MoveColumn(int repositoryId, int id, ProjectColumnMove position)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets all cards for a specific column.
@@ -256,7 +322,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="columnId">The id of the column</param>
-        Task<IReadOnlyList<ProjectCard>> GetAllCards(string owner, string name, int columnId);
+        public Task<IReadOnlyList<ProjectCard>> GetAllCards(string owner, string name, int columnId)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets all cards for this project.
@@ -266,7 +335,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
-        Task<IReadOnlyList<ProjectCard>> GetAllCards(int repositoryId, int columnId);
+        public Task<IReadOnlyList<ProjectCard>> GetAllCards(int repositoryId, int columnId)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single card.
@@ -277,7 +349,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<ProjectCard> GetCard(string owner, string name, int id);
+        public Task<ProjectCard> GetCard(string owner, string name, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a single card.
@@ -287,7 +362,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<ProjectCard> GetCard(int repositoryId, int id);
+        public Task<ProjectCard> GetCard(int repositoryId, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a card.
@@ -299,7 +377,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        Task<ProjectCard> CreateCard(string owner, string name, int columnId, NewProjectCard newProjectCard);
+        public Task<ProjectCard> CreateCard(string owner, string name, int columnId, NewProjectCard newProjectCard)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Creates a card.
@@ -310,7 +391,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        Task<ProjectCard> CreateCard(int repositoryId, int columnId, NewProjectCard newProjectCard);
+        public Task<ProjectCard> CreateCard(int repositoryId, int columnId, NewProjectCard newProjectCard)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a card.
@@ -322,7 +406,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">The card to create</param>
-        Task<ProjectCard> UpdateCard(string owner, string name, int id, ProjectCardUpdate projectCardUpdate);
+        public Task<ProjectCard> UpdateCard(int repositoryId, int id, ProjectCardUpdate projectCardUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates a card.
@@ -333,7 +420,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">The card to create</param>
-        Task<ProjectCard> UpdateCard(int repositoryId, int id, ProjectCardUpdate projectCardUpdate);
+        public Task<ProjectCard> UpdateCard(string owner, string name, int id, ProjectCardUpdate projectCardUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a card.
@@ -344,7 +434,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<bool> DeleteCard(string owner, string name, int id);
+        public Task<bool> DeleteCard(int repositoryId, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a card.
@@ -354,7 +447,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<bool> DeleteCard(int repositoryId, int id);
+        public Task<bool> DeleteCard(string owner, string name, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Moves a card.
@@ -365,7 +461,11 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<bool> MoveCard(string owner, string name, int id, ProjectCardMove position);
+        /// <param name="position">The position to move the card</param>
+        public Task<bool> MoveCard(string owner, string name, int id, ProjectCardMove position)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Moves a card.
@@ -376,6 +476,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        Task<bool> MoveCard(int repositoryId, int id, ProjectCardMove position);
+        public Task<bool> MoveCard(int repositoryId, int id, ProjectCardMove position)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

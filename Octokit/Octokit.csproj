@@ -112,6 +112,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Clients\RepositoryProjectClient.cs" />
     <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />
