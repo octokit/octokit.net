@@ -162,6 +162,7 @@
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\ProjectCardUpdate.cs" />
+    <Compile Include="Models\Request\ProjectColumnMove.cs" />
     <Compile Include="Models\Request\ProjectColumnUpdate.cs" />
     <Compile Include="Models\Request\ProjectUpdate.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />

@@ -519,6 +519,7 @@
     <Compile Include="Models\Request\NewProject.cs" />
     <Compile Include="Models\Request\NewProjectCard.cs" />
     <Compile Include="Models\Request\NewProjectColumn.cs" />
+    <Compile Include="Models\Request\ProjectColumnMove.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

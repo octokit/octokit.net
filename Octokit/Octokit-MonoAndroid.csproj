@@ -523,6 +523,7 @@
     <Compile Include="Models\Request\NewProject.cs" />
     <Compile Include="Models\Request\NewProjectCard.cs" />
     <Compile Include="Models\Request\NewProjectColumn.cs" />
+    <Compile Include="Models\Request\ProjectColumnMove.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
