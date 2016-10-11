@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -10,8 +11,13 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/projects/">Repository Projects API documentation</a> for more information.
     /// </remarks>
-    public class RepositoryProjectClient : IRepositoryProjectsClient
+    public class RepositoryProjectsClient : ApiClient, IRepositoryProjectsClient
     {
+        public RepositoryProjectsClient(IApiConnection apiConnection) :
+            base(apiConnection)
+        {
+        }
+
         /// <summary>
         /// Get all projects for this repository.
         /// </summary>
@@ -22,7 +28,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<Project>(ApiUrls.Projects(owner, name), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -32,9 +41,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Project>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
         {
-            throw new NotImplementedException();
+            return ApiConnection.GetAll<Project>(ApiUrls.Projects(repositoryId), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -48,7 +57,10 @@ namespace Octokit
         /// <param name="number">The number of the project</param>
         public Task<Project> Get(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Get<Project>(ApiUrls.Project(owner, name, number), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -59,9 +71,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        public Task<Project> Get(int repositoryId, int number)
+        public Task<Project> Get(long repositoryId, int number)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Get<Project>(ApiUrls.Project(repositoryId, number), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -75,7 +87,11 @@ namespace Octokit
         /// <param name="newRepositoryProject">The new project to create for this repository</param>
         public Task<Project> Create(string owner, string name, NewProject newRepositoryProject)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+
+            return ApiConnection.Post<Project>(ApiUrls.Projects(owner, name), newRepositoryProject, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -86,9 +102,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        public Task<Project> Create(int repositoryId, NewProject newRepositoryProject)
+        public Task<Project> Create(long repositoryId, NewProject newRepositoryProject)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+
+            return ApiConnection.Post<Project>(ApiUrls.Projects(repositoryId), newRepositoryProject, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -103,7 +121,11 @@ namespace Octokit
         /// <param name="repositoryProjectUpdate">The modified project</param>
         public Task<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+
+            return ApiConnection.Patch<Project>(ApiUrls.Project(owner, name, number), repositoryProjectUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -115,9 +137,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="repositoryProjectUpdate">The modified project</param>
-        public Task<Project> Update(int repositoryId, int number, ProjectUpdate repositoryProjectUpdate)
+        public Task<Project> Update(long repositoryId, int number, ProjectUpdate repositoryProjectUpdate)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+
+            return ApiConnection.Patch<Project>(ApiUrls.Project(repositoryId, number), repositoryProjectUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -129,9 +153,21 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        public Task<bool> Delete(string owner, string name, int number)
+        public async Task<bool> Delete(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.Project(owner, name, number);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -142,9 +178,18 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        public Task<bool> Delete(int repositoryId, int number)
+        public async Task<bool> Delete(long repositoryId, int number)
         {
-            throw new NotImplementedException();
+            var endpoint = ApiUrls.Project(repositoryId, number);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -158,7 +203,10 @@ namespace Octokit
         /// <param name="number">The number of the project</param>
         public Task<IReadOnlyList<ProjectColumn>> GetAllColumns(string owner, string name, int number)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(owner, name, number), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -169,9 +217,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        public Task<IReadOnlyList<ProjectColumn>> GetAllColumns(int repositoryId, int number)
+        public Task<IReadOnlyList<ProjectColumn>> GetAllColumns(long repositoryId, int number)
         {
-            throw new NotImplementedException();
+            return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(repositoryId, number), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -185,7 +233,10 @@ namespace Octokit
         /// <param name="id">The id of the column</param>
         public Task<ProjectColumn> GetColumn(string owner, string name, int id)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(owner, name, id), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -196,9 +247,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        public Task<ProjectColumn> GetColumn(int repositoryId, int id)
+        public Task<ProjectColumn> GetColumn(long repositoryId, int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(repositoryId, id), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -213,7 +264,11 @@ namespace Octokit
         /// <param name="newRepositoryProjectColumn">The column to create</param>
         public Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+
+            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(owner, name, number), newRepositoryProjectColumn, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -225,9 +280,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="newRepositoryProjectColumn">The column to create</param>
-        public Task<ProjectColumn> CreateColumn(int repositoryId, int number, NewProjectColumn newRepositoryProjectColumn)
+        public Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newRepositoryProjectColumn)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+
+            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(repositoryId, number), newRepositoryProjectColumn, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -241,7 +298,11 @@ namespace Octokit
         /// <param name="id">The id of the column</param>
         public Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(owner, name, id), repositoryProjectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -252,9 +313,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        public Task<ProjectColumn> UpdateColumn(int repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        public Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(repositoryId, id), repositoryProjectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -266,9 +329,21 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        public Task<bool> DeleteColumn(string owner, string name, int id)
+        public async Task<bool> DeleteColumn(string owner, string name, int id)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.ProjectColumn(owner, name, id);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -279,9 +354,18 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        public Task<bool> DeleteColumn(int repositoryId, int id)
+        public async Task<bool> DeleteColumn(long repositoryId, int id)
         {
-            throw new NotImplementedException();
+            var endpoint = ApiUrls.ProjectColumn(repositoryId, id);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -294,9 +378,21 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>        
         /// <param name="position">The position to move the column</param>
-        public Task<bool> MoveColumn(string owner, string name, int id, ProjectColumnMove position)
+        public async Task<bool> MoveColumn(string owner, string name, int id, ProjectColumnMove position)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.ProjectColumnMove(owner, name, id);
+            try
+            {
+                var httpStatusCode = await Connection.Post(endpoint, position, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.Created;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -308,9 +404,18 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        public Task<bool> MoveColumn(int repositoryId, int id, ProjectColumnMove position)
+        public async Task<bool> MoveColumn(long repositoryId, int id, ProjectColumnMove position)
         {
-            throw new NotImplementedException();
+            var endpoint = ApiUrls.ProjectColumnMove(repositoryId, id);
+            try
+            {
+                var httpStatusCode = await Connection.Post(endpoint, position, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.Created;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -324,7 +429,10 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         public Task<IReadOnlyList<ProjectCard>> GetAllCards(string owner, string name, int columnId)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.GetAll<ProjectCard>(ApiUrls.ProjectCards(owner, name, columnId), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -335,9 +443,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
-        public Task<IReadOnlyList<ProjectCard>> GetAllCards(int repositoryId, int columnId)
+        public Task<IReadOnlyList<ProjectCard>> GetAllCards(long repositoryId, int columnId)
         {
-            throw new NotImplementedException();
+            return ApiConnection.GetAll<ProjectCard>(ApiUrls.ProjectCards(repositoryId, columnId), AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -351,7 +459,10 @@ namespace Octokit
         /// <param name="id">The id of the card</param>
         public Task<ProjectCard> GetCard(string owner, string name, int id)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(owner, name, id), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -362,9 +473,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        public Task<ProjectCard> GetCard(int repositoryId, int id)
+        public Task<ProjectCard> GetCard(long repositoryId, int id)
         {
-            throw new NotImplementedException();
+            return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(repositoryId, id), null, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -379,7 +490,11 @@ namespace Octokit
         /// <param name="newProjectCard">The card to create</param>
         public Task<ProjectCard> CreateCard(string owner, string name, int columnId, NewProjectCard newProjectCard)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(newProjectCard, "newProjectCard");
+
+            return ApiConnection.Post<ProjectCard>(ApiUrls.ProjectCards(owner, name, columnId), newProjectCard, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -391,9 +506,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        public Task<ProjectCard> CreateCard(int repositoryId, int columnId, NewProjectCard newProjectCard)
+        public Task<ProjectCard> CreateCard(long repositoryId, int columnId, NewProjectCard newProjectCard)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(newProjectCard, "newProjectCard");
+
+            return ApiConnection.Post<ProjectCard>(ApiUrls.ProjectCards(repositoryId, columnId), newProjectCard, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -404,25 +521,31 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The id of the card</param>
-        /// <param name="projectCardUpdate">The card to create</param>
-        public Task<ProjectCard> UpdateCard(int repositoryId, int id, ProjectCardUpdate projectCardUpdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Updates a card.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project-card">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">The card to create</param>
         public Task<ProjectCard> UpdateCard(string owner, string name, int id, ProjectCardUpdate projectCardUpdate)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(projectCardUpdate, "projectCardUpdate");
+
+            return ApiConnection.Patch<ProjectCard>(ApiUrls.ProjectCard(owner, name, id), projectCardUpdate, AcceptHeaders.ProjectsApiPreview);
+        }
+
+        /// <summary>
+        /// Updates a card.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project-card">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="id">The id of the card</param>
+        /// <param name="projectCardUpdate">The card to create</param>
+        public Task<ProjectCard> UpdateCard(long repositoryId, int id, ProjectCardUpdate projectCardUpdate)
+        {
+            Ensure.ArgumentNotNull(projectCardUpdate, "projectCardUpdate");
+
+            return ApiConnection.Patch<ProjectCard>(ApiUrls.ProjectCard(repositoryId, id), projectCardUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -434,9 +557,21 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
-        public Task<bool> DeleteCard(int repositoryId, int id)
+        public async Task<bool> DeleteCard(string owner, string name, int id)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.ProjectCard(owner, name, id);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -447,9 +582,18 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        public Task<bool> DeleteCard(string owner, string name, int id)
+        public async Task<bool> DeleteCard(long repositoryId, int id)
         {
-            throw new NotImplementedException();
+            var endpoint = ApiUrls.ProjectCard(repositoryId, id);
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -462,9 +606,21 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        public Task<bool> MoveCard(string owner, string name, int id, ProjectCardMove position)
+        public async Task<bool> MoveCard(string owner, string name, int id, ProjectCardMove position)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.ProjectCardMove(owner, name, id);
+            try
+            {
+                var httpStatusCode = await Connection.Post(endpoint, position, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.Created;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -476,9 +632,18 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        public Task<bool> MoveCard(int repositoryId, int id, ProjectCardMove position)
+        public async Task<bool> MoveCard(long repositoryId, int id, ProjectCardMove position)
         {
-            throw new NotImplementedException();
+            var endpoint = ApiUrls.ProjectCardMove(repositoryId, id);
+            try
+            {
+                var httpStatusCode = await Connection.Post(endpoint, position, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.Created;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Project>> GetAllForRepository(int repositoryId);
+        Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Gets a single project for this repository.
@@ -49,7 +49,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<Project> Get(int repositoryId, int number);
+        Task<Project> Get(long repositoryId, int number);
 
         /// <summary>
         /// Creates a project for this repository.
@@ -70,7 +70,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        Task<Project> Create(int repositoryId, NewProject newRepositoryProject);
+        Task<Project> Create(long repositoryId, NewProject newRepositoryProject);
 
         /// <summary>
         /// Updates a project for this repository.
@@ -93,7 +93,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="repositoryProjectUpdate">The modified project</param>
-        Task<Project> Update(int repositoryId, int number, ProjectUpdate repositoryProjectUpdate);
+        Task<Project> Update(long repositoryId, int number, ProjectUpdate repositoryProjectUpdate);
 
         /// <summary>
         /// Deletes a project.
@@ -114,7 +114,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<bool> Delete(int repositoryId, int number);
+        Task<bool> Delete(long repositoryId, int number);
 
         /// <summary>
         /// Gets all columns for this project.
@@ -135,7 +135,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        Task<IReadOnlyList<ProjectColumn>> GetAllColumns(int repositoryId, int number);
+        Task<IReadOnlyList<ProjectColumn>> GetAllColumns(long repositoryId, int number);
 
         /// <summary>
         /// Gets a single column for this project.
@@ -156,7 +156,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<ProjectColumn> GetColumn(int repositoryId, int id);
+        Task<ProjectColumn> GetColumn(long repositoryId, int id);
 
         /// <summary>
         /// Creates a column for this project.
@@ -179,7 +179,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
         /// <param name="newRepositoryProjectColumn">The column to create</param>
-        Task<ProjectColumn> CreateColumn(int repositoryId, int number, NewProjectColumn newRepositoryProjectColumn);
+        Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newRepositoryProjectColumn);
 
         /// <summary>
         /// Updates a column for this project.
@@ -201,7 +201,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<ProjectColumn> UpdateColumn(int repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
+        Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
 
         /// <summary>
         /// Deletes a column.
@@ -222,7 +222,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        Task<bool> DeleteColumn(int repositoryId, int id);
+        Task<bool> DeleteColumn(long repositoryId, int id);
 
         /// <summary>
         /// Moves a column.
@@ -245,7 +245,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        Task<bool> MoveColumn(int repositoryId, int id, ProjectColumnMove position);
+        Task<bool> MoveColumn(long repositoryId, int id, ProjectColumnMove position);
 
         /// <summary>
         /// Gets all cards for a specific column.
@@ -266,7 +266,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
-        Task<IReadOnlyList<ProjectCard>> GetAllCards(int repositoryId, int columnId);
+        Task<IReadOnlyList<ProjectCard>> GetAllCards(long repositoryId, int columnId);
 
         /// <summary>
         /// Gets a single card.
@@ -287,7 +287,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<ProjectCard> GetCard(int repositoryId, int id);
+        Task<ProjectCard> GetCard(long repositoryId, int id);
 
         /// <summary>
         /// Creates a card.
@@ -310,7 +310,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        Task<ProjectCard> CreateCard(int repositoryId, int columnId, NewProjectCard newProjectCard);
+        Task<ProjectCard> CreateCard(long repositoryId, int columnId, NewProjectCard newProjectCard);
 
         /// <summary>
         /// Updates a card.
@@ -333,7 +333,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">The card to create</param>
-        Task<ProjectCard> UpdateCard(int repositoryId, int id, ProjectCardUpdate projectCardUpdate);
+        Task<ProjectCard> UpdateCard(long repositoryId, int id, ProjectCardUpdate projectCardUpdate);
 
         /// <summary>
         /// Deletes a card.
@@ -354,7 +354,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        Task<bool> DeleteCard(int repositoryId, int id);
+        Task<bool> DeleteCard(long repositoryId, int id);
 
         /// <summary>
         /// Moves a card.
@@ -376,6 +376,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        Task<bool> MoveCard(int repositoryId, int id, ProjectCardMove position);
+        Task<bool> MoveCard(long repositoryId, int id, ProjectCardMove position);
     }
 }

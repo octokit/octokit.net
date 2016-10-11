@@ -514,6 +514,7 @@
     <Compile Include="Models\Request\NewProjectColumn.cs" />
     <Compile Include="Models\Request\ProjectColumnMove.cs" />
     <Compile Include="Models\Request\ProjectCardMove.cs" />
+    <Compile Include="Clients\RepositoryProjectsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

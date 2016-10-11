@@ -3400,5 +3400,74 @@ namespace Octokit
         {
             return "repositories/{0}/projects/columns/{1}/move".FormatUri(repositoryId, id);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="id">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCards(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/projects/columns/{2}/cards".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="id">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCards(long repositoryId, int id)
+        {
+            return "repositories/{0}/projects/columns/{1}/cards".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project card.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="id">The id of the card</param>
+        /// <returns>The <see cref="Uri"/> for a specific project card.</returns>
+        public static Uri ProjectCard(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/projects/columns/cards/{2}".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project card.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="id">The id of the card</param>
+        /// <returns>The <see cref="Uri"/> for a specific project card.</returns>
+        public static Uri ProjectCard(long repositoryId, int id)
+        {
+            return "repositories/{0}/projects/columns/cards/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project card.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="id">The id of the card to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project card.</returns>
+        public static Uri ProjectCardMove(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/projects/columns/cards/{2}/move".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project card.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="id">The id of the card to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project card.</returns>
+        public static Uri ProjectCardMove(long repositoryId, int id)
+        {
+            return "repositories/{0}/projects/columns/cards/{1}/move".FormatUri(repositoryId, id);
+        }
     }
 }
