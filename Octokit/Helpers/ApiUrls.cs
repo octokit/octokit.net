@@ -3354,5 +3354,51 @@ namespace Octokit
         {
             return "repositories/{0}/projects/{1}/columns".FormatUri(repositoryId, number);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project column.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="id">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
+        public static Uri ProjectColumn(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/projects/columns/{2}".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project column.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="id">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
+        public static Uri ProjectColumn(long repositoryId, int id)
+        {
+            return "repositories/{0}/projects/columns/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project column.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="name">The name of repo</param>
+        /// <param name="id">The id of the column to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project column.</returns>
+        public static Uri ProjectColumnMove(string owner, string name, int id)
+        {
+            return "repos/{0}/{1}/projects/columns/{2}/move".FormatUri(owner, name, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project column.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="id">The id of the column to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project column.</returns>
+        public static Uri ProjectColumnMove(long repositoryId, int id)
+        {
+            return "repositories/{0}/projects/columns/{1}/move".FormatUri(repositoryId, id);
+        }
     }
 }
