@@ -12,7 +12,7 @@ namespace Octokit
             {
                 case ProjectColumnPosition.After:
                     Ensure.ArgumentNotNull(columnId, "columnId");
-                    Position = string.Format("after:{0}", columnId);
+                    Position = string.Format(CultureInfo.InvariantCulture, "after:{0}", columnId);
                     break;
                 case ProjectColumnPosition.First:
                     Position = "first";
