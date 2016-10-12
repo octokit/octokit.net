@@ -296,6 +296,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
+        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
         public Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -313,6 +314,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
+        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
         public Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
         {
             Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
@@ -522,7 +524,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the card</param>
-        /// <param name="projectCardUpdate">The card to create</param>
+        /// <param name="projectCardUpdate">New values to update the card with</param>
         public Task<ProjectCard> UpdateCard(string owner, string name, int id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -540,7 +542,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the card</param>
-        /// <param name="projectCardUpdate">The card to create</param>
+        /// <param name="projectCardUpdate">New values to update the card with</param>
         public Task<ProjectCard> UpdateCard(long repositoryId, int id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, "projectCardUpdate");
