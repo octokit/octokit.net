@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Security;
 
 namespace Octokit
 {
@@ -117,6 +118,7 @@ namespace Octokit
             ExistingRepositoryWebUrl = (Uri) info.GetValue("ExistingRepositoryWebUrl", typeof(Uri));
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

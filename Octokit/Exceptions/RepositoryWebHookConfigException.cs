@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security;
 
 namespace Octokit
 {
@@ -48,6 +49,7 @@ namespace Octokit
             message = info.GetString("Message");
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
