@@ -37,6 +37,7 @@ namespace Octokit.Reactive
             Page = new ObservableRepositoryPagesClient(client);
             Invitation = new ObservableRepositoryInvitationsClient(client);
             Traffic = new ObservableRepositoryTrafficClient(client);
+            Projects = new ObservableRepositoryProjectsClient(client);
         }
 
         /// <summary>
@@ -890,5 +891,13 @@ namespace Octokit.Reactive
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
         /// </remarks>
         public IObservableRepositoryTrafficClient Traffic { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Repository Projects API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
+        /// </remarks>
+        public IObservableRepositoryProjectsClient Projects { get; private set; }
     }
 }

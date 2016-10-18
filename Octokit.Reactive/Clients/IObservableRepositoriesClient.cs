@@ -600,5 +600,13 @@ namespace Octokit.Reactive
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
         /// </remarks>
         IObservableRepositoryTrafficClient Traffic { get; }
+
+        /// <summary>
+        /// Access GitHub's Repository Projects API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
+        /// </remarks>
+        IObservableRepositoryProjectsClient Projects { get; }
     }
 }
