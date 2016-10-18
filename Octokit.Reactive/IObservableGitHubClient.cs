@@ -21,5 +21,6 @@ namespace Octokit.Reactive
         IObservableEnterpriseClient Enterprise { get; }
         IObservableMigrationClient Migration { get; }
         IObservableReactionsClient Reaction { get; }
+        IObservableRepositoryProjectsClient Projects { get; }
     }
 }
