@@ -96,14 +96,14 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        public IObservable<Project> Create(string owner, string name, NewProject newRepositoryProject)
+        /// <param name="newProject">The new project to create for this repository</param>
+        public IObservable<Project> Create(string owner, string name, NewProject newProject)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
 
-            return _client.Create(owner, name, newRepositoryProject).ToObservable();
+            return _client.Create(owner, name, newProject).ToObservable();
         }
 
         /// <summary>
@@ -113,12 +113,12 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#create-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        public IObservable<Project> Create(long repositoryId, NewProject newRepositoryProject)
+        /// <param name="newProject">The new project to create for this repository</param>
+        public IObservable<Project> Create(long repositoryId, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
 
-            return _client.Create(repositoryId, newRepositoryProject).ToObservable();
+            return _client.Create(repositoryId, newProject).ToObservable();
         }
 
         /// <summary>
@@ -130,14 +130,14 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        public IObservable<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate)
+        /// <param name="projectUpdate">The modified project</param>
+        public IObservable<Project> Update(string owner, string name, int number, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, "repositoryProjectUpdate");
 
-            return _client.Update(owner, name, number, repositoryProjectUpdate).ToObservable();
+            return _client.Update(owner, name, number, projectUpdate).ToObservable();
         }
 
         /// <summary>
@@ -148,12 +148,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        public IObservable<Project> Update(long repositoryId, int number, ProjectUpdate repositoryProjectUpdate)
+        /// <param name="projectUpdate">The modified project</param>
+        public IObservable<Project> Update(long repositoryId, int number, ProjectUpdate projectUpdate)
         {
-            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, "repositoryProjectUpdate");
 
-            return _client.Update(repositoryId, number, repositoryProjectUpdate).ToObservable();
+            return _client.Update(repositoryId, number, projectUpdate).ToObservable();
         }
 
         /// <summary>
@@ -259,14 +259,14 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        public IObservable<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn)
+        /// <param name="newProjectColumn">The column to create</param>
+        public IObservable<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newProjectColumn)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, "newRepositoryProjectColumn");
 
-            return _client.CreateColumn(owner, name, number, newRepositoryProjectColumn).ToObservable();
+            return _client.CreateColumn(owner, name, number, newProjectColumn).ToObservable();
         }
 
         /// <summary>
@@ -277,12 +277,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        public IObservable<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newRepositoryProjectColumn)
+        /// <param name="newProjectColumn">The column to create</param>
+        public IObservable<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newProjectColumn)
         {
-            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, "newRepositoryProjectColumn");
 
-            return _client.CreateColumn(repositoryId, number, newRepositoryProjectColumn).ToObservable();
+            return _client.CreateColumn(repositoryId, number, newProjectColumn).ToObservable();
         }
 
         /// <summary>
@@ -294,14 +294,14 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        public IObservable<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        public IObservable<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate projectColumnUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, "repositoryProjectColumnUpdate");
 
-            return _client.UpdateColumn(owner, name, id, repositoryProjectColumnUpdate).ToObservable();
+            return _client.UpdateColumn(owner, name, id, projectColumnUpdate).ToObservable();
         }
 
         /// <summary>
@@ -312,12 +312,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        public IObservable<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        public IObservable<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate projectColumnUpdate)
         {
-            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, "repositoryProjectColumnUpdate");
 
-            return _client.UpdateColumn(repositoryId, id, repositoryProjectColumnUpdate).ToObservable();
+            return _client.UpdateColumn(repositoryId, id, projectColumnUpdate).ToObservable();
         }
 
         /// <summary>

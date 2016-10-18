@@ -62,8 +62,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        Task<Project> Create(string owner, string name, NewProject newRepositoryProject);
+        /// <param name="newProject">The new project to create for this repository</param>
+        Task<Project> Create(string owner, string name, NewProject newProject);
 
         /// <summary>
         /// Creates a project for this repository.
@@ -72,8 +72,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#create-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        Task<Project> Create(long repositoryId, NewProject newRepositoryProject);
+        /// <param name="newProject">The new project to create for this repository</param>
+        Task<Project> Create(long repositoryId, NewProject newProject);
 
         /// <summary>
         /// Updates a project for this repository.
@@ -84,8 +84,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        Task<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate);
+        /// <param name="projectUpdate">The modified project</param>
+        Task<Project> Update(string owner, string name, int number, ProjectUpdate projectUpdate);
 
         /// <summary>
         /// Updates a project for this repository.
@@ -95,8 +95,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        Task<Project> Update(long repositoryId, int number, ProjectUpdate repositoryProjectUpdate);
+        /// <param name="projectUpdate">The modified project</param>
+        Task<Project> Update(long repositoryId, int number, ProjectUpdate projectUpdate);
 
         /// <summary>
         /// Deletes a project.
@@ -170,8 +170,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn);
+        /// <param name="newProjectColumn">The column to create</param>
+        Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newProjectColumn);
 
         /// <summary>
         /// Creates a column for this project.
@@ -181,8 +181,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newRepositoryProjectColumn);
+        /// <param name="newProjectColumn">The column to create</param>
+        Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newProjectColumn);
 
         /// <summary>
         /// Updates a column for this project.
@@ -193,8 +193,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate projectColumnUpdate);
 
         /// <summary>
         /// Updates a column for this project.
@@ -204,8 +204,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate);
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate projectColumnUpdate);
 
         /// <summary>
         /// Deletes a column.

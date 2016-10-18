@@ -84,14 +84,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        public Task<Project> Create(string owner, string name, NewProject newRepositoryProject)
+        /// <param name="newProject">The new project to create for this repository</param>
+        public Task<Project> Create(string owner, string name, NewProject newProject)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
 
-            return ApiConnection.Post<Project>(ApiUrls.Projects(owner, name), newRepositoryProject, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Post<Project>(ApiUrls.Projects(owner, name), newProject, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -101,12 +101,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#create-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="newRepositoryProject">The new project to create for this repository</param>
-        public Task<Project> Create(long repositoryId, NewProject newRepositoryProject)
+        /// <param name="newProject">The new project to create for this repository</param>
+        public Task<Project> Create(long repositoryId, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newRepositoryProject, "newRepositoryProject");
+            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
 
-            return ApiConnection.Post<Project>(ApiUrls.Projects(repositoryId), newRepositoryProject, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Post<Project>(ApiUrls.Projects(repositoryId), newProject, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -118,14 +118,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        public Task<Project> Update(string owner, string name, int number, ProjectUpdate repositoryProjectUpdate)
+        /// <param name="projectUpdate">The modified project</param>
+        public Task<Project> Update(string owner, string name, int number, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, "repositoryProjectUpdate");
 
-            return ApiConnection.Patch<Project>(ApiUrls.Project(owner, name, number), repositoryProjectUpdate, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Patch<Project>(ApiUrls.Project(owner, name, number), projectUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="repositoryProjectUpdate">The modified project</param>
-        public Task<Project> Update(long repositoryId, int number, ProjectUpdate repositoryProjectUpdate)
+        /// <param name="projectUpdate">The modified project</param>
+        public Task<Project> Update(long repositoryId, int number, ProjectUpdate projectUpdate)
         {
-            Ensure.ArgumentNotNull(repositoryProjectUpdate, "repositoryProjectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, "repositoryProjectUpdate");
 
-            return ApiConnection.Patch<Project>(ApiUrls.Project(repositoryId, number), repositoryProjectUpdate, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Patch<Project>(ApiUrls.Project(repositoryId, number), projectUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -261,14 +261,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        public Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newRepositoryProjectColumn)
+        /// <param name="newProjectColumn">The column to create</param>
+        public Task<ProjectColumn> CreateColumn(string owner, string name, int number, NewProjectColumn newProjectColumn)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, "newRepositoryProjectColumn");
 
-            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(owner, name, number), newRepositoryProjectColumn, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(owner, name, number), newProjectColumn, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -279,12 +279,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the project</param>
-        /// <param name="newRepositoryProjectColumn">The column to create</param>
-        public Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newRepositoryProjectColumn)
+        /// <param name="newProjectColumn">The column to create</param>
+        public Task<ProjectColumn> CreateColumn(long repositoryId, int number, NewProjectColumn newProjectColumn)
         {
-            Ensure.ArgumentNotNull(newRepositoryProjectColumn, "newRepositoryProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, "newRepositoryProjectColumn");
 
-            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(repositoryId, number), newRepositoryProjectColumn, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(repositoryId, number), newProjectColumn, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -296,14 +296,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        public Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        public Task<ProjectColumn> UpdateColumn(string owner, string name, int id, ProjectColumnUpdate projectColumnUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, "repositoryProjectColumnUpdate");
 
-            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(owner, name, id), repositoryProjectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(owner, name, id), projectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
@@ -314,12 +314,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
-        /// <param name="repositoryProjectColumnUpdate">New values to update the column with</param>
-        public Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate repositoryProjectColumnUpdate)
+        /// <param name="projectColumnUpdate">New values to update the column with</param>
+        public Task<ProjectColumn> UpdateColumn(long repositoryId, int id, ProjectColumnUpdate projectColumnUpdate)
         {
-            Ensure.ArgumentNotNull(repositoryProjectColumnUpdate, "repositoryProjectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, "repositoryProjectColumnUpdate");
 
-            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(repositoryId, id), repositoryProjectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(repositoryId, id), projectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
         }
 
         /// <summary>
