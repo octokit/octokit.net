@@ -214,6 +214,8 @@
     <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
     <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryProjectsClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryProjectsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
