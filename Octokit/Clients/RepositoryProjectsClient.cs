@@ -159,9 +159,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = ApiUrls.Project(owner, name, number);
+
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -181,9 +182,10 @@ namespace Octokit
         public async Task<bool> Delete(long repositoryId, int number)
         {
             var endpoint = ApiUrls.Project(repositoryId, number);
+
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -339,7 +341,7 @@ namespace Octokit
             var endpoint = ApiUrls.ProjectColumn(owner, name, id);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -361,7 +363,7 @@ namespace Octokit
             var endpoint = ApiUrls.ProjectColumn(repositoryId, id);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -565,9 +567,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
             var endpoint = ApiUrls.ProjectCard(owner, name, id);
+
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -587,9 +590,10 @@ namespace Octokit
         public async Task<bool> DeleteCard(long repositoryId, int id)
         {
             var endpoint = ApiUrls.ProjectCard(repositoryId, id);
+
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.ProjectsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
