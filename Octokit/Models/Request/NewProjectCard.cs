@@ -12,9 +12,10 @@ namespace Octokit
             Note = note;
         }
 
-        public NewProjectCard(int contentId)
+        public NewProjectCard(int contentId, ProjectCardContentType contentType)
         {
             ContentId = contentId;
+            ContentType = contentType;
         }
 
         /// <summary>
@@ -26,13 +27,13 @@ namespace Octokit
         /// The id of the Issue or Pull Request to associate with this card.
         /// </summary>
         [Parameter(Key = "content_id")]
-        public int ContentId { get; protected set; }
+        public int? ContentId { get; protected set; }
 
         /// <summary>
         /// The type of content to associate with this card.
         /// </summary>
         [Parameter(Key = "content_type")]
-        public ProjectCardContentType ContentType { get; set; }
+        public ProjectCardContentType? ContentType { get; protected set; }
 
         internal string DebuggerDisplay
         {

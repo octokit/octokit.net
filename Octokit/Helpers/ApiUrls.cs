@@ -3387,7 +3387,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
         public static Uri ProjectColumnMove(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/projects/columns/{2}/move".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/projects/columns/{2}/moves".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -3398,7 +3398,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
         public static Uri ProjectColumnMove(long repositoryId, int id)
         {
-            return "repositories/{0}/projects/columns/{1}/move".FormatUri(repositoryId, id);
+            return "repositories/{0}/projects/columns/{1}/moves".FormatUri(repositoryId, id);
         }
 
         /// <summary>
@@ -3456,7 +3456,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
         public static Uri ProjectCardMove(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/projects/columns/cards/{2}/move".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/projects/columns/cards/{2}/moves".FormatUri(owner, name, id);
         }
 
         /// <summary>
@@ -3467,7 +3467,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
         public static Uri ProjectCardMove(long repositoryId, int id)
         {
-            return "repositories/{0}/projects/columns/cards/{1}/move".FormatUri(repositoryId, id);
+            return "repositories/{0}/projects/columns/cards/{1}/moves".FormatUri(repositoryId, id);
         }
     }
 }
