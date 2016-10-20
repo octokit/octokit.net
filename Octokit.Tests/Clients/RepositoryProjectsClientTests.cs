@@ -415,7 +415,7 @@ namespace Octokit.Tests.Clients
 
                 await client.MoveColumn("fake", "repo", 1, position);
 
-                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/projects/columns/1/move"), position, "application/vnd.github.inertia-preview+json");
+                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/projects/columns/1/moves"), position, "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
@@ -427,7 +427,7 @@ namespace Octokit.Tests.Clients
 
                 await client.MoveColumn(1, 2, position);
 
-                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects/columns/2/move"), position, "application/vnd.github.inertia-preview+json");
+                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects/columns/2/moves"), position, "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
@@ -649,7 +649,7 @@ namespace Octokit.Tests.Clients
 
                 await client.MoveCard("fake", "repo", 1, position);
 
-                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/projects/columns/cards/1/move"), position, "application/vnd.github.inertia-preview+json");
+                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/projects/columns/cards/1/moves"), position, "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
@@ -661,7 +661,7 @@ namespace Octokit.Tests.Clients
 
                 await client.MoveCard(1, 2, position);
 
-                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects/columns/cards/2/move"), position, "application/vnd.github.inertia-preview+json");
+                connection.Connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects/columns/cards/2/moves"), position, "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
