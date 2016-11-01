@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive
 {
@@ -26,6 +27,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#get-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the column</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<ProjectColumn> Get(int id);
 
         /// <summary>
