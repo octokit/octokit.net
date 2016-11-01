@@ -7,6 +7,16 @@ namespace Octokit.Tests.Clients
 {
     public class ProjectColumnsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                () => new ProjectColumnsClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
