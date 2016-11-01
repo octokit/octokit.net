@@ -482,7 +482,7 @@ namespace Octokit
         /// Client for GitHub's Repository Deployments API
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/deployments/">Collaborators API documentation</a> for more details
+        /// See the <a href="https://developer.github.com/v3/repos/deployments/">Deployments API documentation</a> for more details
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
 
