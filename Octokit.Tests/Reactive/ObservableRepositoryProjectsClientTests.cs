@@ -14,7 +14,7 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(
-                () => new ObservableRepositoryProjectsClient(null));
+                () => new ObservableProjectsClient(null));
             }
         }
 
@@ -24,7 +24,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllForRepository("fake", "repo");
 
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllForRepository(1);
 
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.Get("fake", "repo", 1);
 
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.Get(1, 2);
 
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1));
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newProject = new NewProject("someName");
 
                 client.Create("fake", "repo", newProject);
@@ -110,18 +110,18 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newProject = new NewProject("test");
 
                 client.Create(1, newProject);
 
-                gitHubClient.Repository.Projects.Received().Create(1, newProject);
+                gitHubClient.Repository.Projects.Received().CreateForRepository(1, newProject);
             }
 
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var newProject = new NewProject("someName");
 
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", newProject));
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updateProject = new ProjectUpdate("someNewName");
 
                 client.Update("fake", "repo", 1, updateProject);
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updateProject = new ProjectUpdate("someNewName");
 
                 client.Update(1, 2, updateProject);
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var updateProject = new ProjectUpdate("someNewName");
 
                 Assert.Throws<ArgumentNullException>(() => client.Update(null, "name", 1, updateProject));
@@ -180,7 +180,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.Delete("fake", "repo", 1);
 
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.Delete(1, 2);
 
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1));
@@ -217,7 +217,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllColumns("fake", "repo", 1);
 
@@ -228,7 +228,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllColumns(1, 2);
 
@@ -238,7 +238,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllColumns("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllColumns(null, "name", 1));
@@ -254,7 +254,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetColumn("fake", "repo", 1);
 
@@ -265,7 +265,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetColumn(1, 2);
 
@@ -275,7 +275,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetColumn("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetColumn(null, "name", 1));
@@ -291,7 +291,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 client.CreateColumn("fake", "repo", 1, newProjectColumn);
@@ -303,7 +303,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 client.CreateColumn(1, 2, newProjectColumn);
@@ -314,7 +314,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 Assert.Throws<ArgumentNullException>(() => client.CreateColumn(null, "owner", 1, newProjectColumn));
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updatePorjectColumn = new ProjectColumnUpdate("someNewName");
 
                 client.UpdateColumn("fake", "repo", 1, updatePorjectColumn);
@@ -344,7 +344,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updatePorjectColumn = new ProjectColumnUpdate("someNewName");
 
                 client.UpdateColumn(1, 2, updatePorjectColumn);
@@ -355,7 +355,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var updateProjectColumn = new ProjectColumnUpdate("someNewName");
 
                 Assert.Throws<ArgumentNullException>(() => client.UpdateColumn(null, "owner", 1, updateProjectColumn));
@@ -373,7 +373,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.DeleteColumn("fake", "repo", 1);
 
@@ -384,7 +384,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.DeleteColumn(1, 2);
 
@@ -394,7 +394,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.DeleteColumn(null, "owner", 1));
                 Assert.Throws<ArgumentNullException>(() => client.DeleteColumn("name", null, 1));
@@ -410,7 +410,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 client.MoveColumn("fake", "repo", 1, position);
@@ -422,7 +422,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 client.MoveColumn(1, 2, position);
@@ -433,7 +433,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 Assert.Throws<ArgumentNullException>(() => client.MoveColumn(null, "name", 1, position));
@@ -451,7 +451,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllCards("fake", "repo", 1);
 
@@ -462,7 +462,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllCards(1, 2);
 
@@ -472,7 +472,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllCards("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllCards(null, "name", 1));
@@ -488,7 +488,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetCard("fake", "repo", 1);
 
@@ -499,7 +499,7 @@ namespace Octokit.Tests.Reactive
             public void RequestCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetCard(1, 2);
 
@@ -509,7 +509,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetCard("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetCard(null, "name", 1));
@@ -525,7 +525,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newCard = new NewProjectCard("someNote");
 
                 client.CreateCard("fake", "repo", 1, newCard);
@@ -537,7 +537,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var newCard = new NewProjectCard("someNote");
 
                 client.CreateCard(1, 2, newCard);
@@ -548,7 +548,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var newCard = new NewProjectCard("someNote");
 
                 Assert.Throws<ArgumentNullException>(() => client.CreateCard(null, "name", 1, newCard));
@@ -566,7 +566,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 client.UpdateCard("fake", "repo", 1, updateCard);
@@ -578,7 +578,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectURLWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 client.UpdateCard(1, 2, updateCard);
@@ -589,7 +589,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 Assert.Throws<ArgumentNullException>(() => client.UpdateCard(null, "name", 1, updateCard));
@@ -607,7 +607,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.DeleteCard("fake", "repo", 1);
 
@@ -618,7 +618,7 @@ namespace Octokit.Tests.Reactive
             public void DeletesCorrectURLWithRepositoryID()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
 
                 client.DeleteCard(1, 2);
 
@@ -628,7 +628,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.DeleteCard("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.DeleteCard(null, "name", 1));
@@ -644,7 +644,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 client.MoveCard("fake", "repo", 1, position);
@@ -656,7 +656,7 @@ namespace Octokit.Tests.Reactive
             public void PostToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryProjectsClient(gitHubClient);
+                var client = new ObservableProjectsClient(gitHubClient);
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 client.MoveCard(1, 2, position);
@@ -667,7 +667,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void EnsureNonNullArguments()
             {
-                var client = new ObservableRepositoryProjectsClient(Substitute.For<IGitHubClient>());
+                var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 Assert.Throws<ArgumentNullException>(() => client.MoveCard(null, "name", 1, position));

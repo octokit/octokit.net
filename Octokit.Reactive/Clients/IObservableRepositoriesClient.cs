@@ -607,6 +607,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
-        IObservableRepositoryProjectsClient Projects { get; }
+        IObservableProjectsClient Projects { get; }
     }
 }

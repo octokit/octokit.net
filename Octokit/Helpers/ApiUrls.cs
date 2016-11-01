@@ -3289,185 +3289,93 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for projects.
-        /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <returns>The <see cref="Uri"/> for projects.</returns>
-        public static Uri Projects(string owner, string name)
-        {
-            return "repos/{0}/{1}/projects".FormatUri(owner, name);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for projects.
+        /// Returns the <see cref="Uri"/> for the specified project projects.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for projects.</returns>
-        public static Uri Projects(long repositoryId)
+        public static Uri RepositoryProjects(long repositoryId)
         {
             return "repositories/{0}/projects".FormatUri(repositoryId);
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific project.
+        /// Returns the <see cref="Uri"/> for the specified organization projects.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <param name="number">The number of the project</param>
-        /// <returns>The <see cref="Uri"/> for a specific project.</returns>
-        public static Uri Project(string owner, string name, int number)
+        /// <param name="organization">The name of the organization</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri OrganizationProjects(string organization)
         {
-            return "repos/{0}/{1}/projects/{2}".FormatUri(owner, name, number);
+            return "orgs/{0}/projects".FormatUri(organization);
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific repository projects.
+        /// Returns the <see cref="Uri"/> for a project.
         /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="number">The number of the project</param>
+        /// <param name="id">The id of the project</param>
         /// <returns>The <see cref="Uri"/> for repository projects.</returns>
-        public static Uri Project(long repositoryId, int number)
+        public static Uri Project(int id)
         {
-            return "repositories/{0}/projects/{1}".FormatUri(repositoryId, number);
+            return "projects/{0}".FormatUri(id);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for project columns.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <param name="number">The number of the project</param>
+        /// <param name="id">The id of the columns</param>
         /// <returns>The <see cref="Uri"/> for project columns.</returns>
-        public static Uri ProjectColumns(string owner, string name, int number)
+        public static Uri ProjectColumn(int id)
         {
-            return "repos/{0}/{1}/projects/{2}/columns".FormatUri(owner, name, number);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for project columns.
-        /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="number">The number of the project</param>
-        /// <returns>The <see cref="Uri"/> for project columns.</returns>
-        public static Uri ProjectColumns(long repositoryId, int number)
-        {
-            return "repositories/{0}/projects/{1}/columns".FormatUri(repositoryId, number);
+            return "projects/columns/{0}".FormatUri(id);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specific project column.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <param name="id">The id of the column</param>
+        /// <param name="projectId">The id of the project</param>
         /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
-        public static Uri ProjectColumn(string owner, string name, int id)
+        public static Uri ProjectColumns(int projectId)
         {
-            return "repos/{0}/{1}/projects/columns/{2}".FormatUri(owner, name, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific project column.
-        /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="id">The id of the column</param>
-        /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
-        public static Uri ProjectColumn(long repositoryId, int id)
-        {
-            return "repositories/{0}/projects/columns/{1}".FormatUri(repositoryId, id);
+            return "projects/{0}/columns".FormatUri(projectId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> to move a project column.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
         /// <param name="id">The id of the column to move</param>
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
-        public static Uri ProjectColumnMove(string owner, string name, int id)
+        public static Uri ProjectColumnMove(int id)
         {
-            return "repos/{0}/{1}/projects/columns/{2}/moves".FormatUri(owner, name, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> to move a project column.
-        /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="id">The id of the column to move</param>
-        /// <returns>The <see cref="Uri"/> to move a project column.</returns>
-        public static Uri ProjectColumnMove(long repositoryId, int id)
-        {
-            return "repositories/{0}/projects/columns/{1}/moves".FormatUri(repositoryId, id);
+            return "projects/columns/{0}/moves".FormatUri(id);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for project cards.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <param name="id">The id of the column</param>
+        /// <param name="id">The id of the card</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCards(string owner, string name, int id)
+        public static Uri ProjectCard(int id)
         {
-            return "repos/{0}/{1}/projects/columns/{2}/cards".FormatUri(owner, name, id);
+            return "projects/columns/cards/{0}".FormatUri(id);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for project cards.
         /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="id">The id of the column</param>
+        /// <param name="columnId">The id of the column</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCards(long repositoryId, int id)
+        public static Uri ProjectCards(int columnId)
         {
-            return "repositories/{0}/projects/columns/{1}/cards".FormatUri(repositoryId, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific project card.
-        /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
-        /// <param name="id">The id of the card</param>
-        /// <returns>The <see cref="Uri"/> for a specific project card.</returns>
-        public static Uri ProjectCard(string owner, string name, int id)
-        {
-            return "repos/{0}/{1}/projects/columns/cards/{2}".FormatUri(owner, name, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> for a specific project card.
-        /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="id">The id of the card</param>
-        /// <returns>The <see cref="Uri"/> for a specific project card.</returns>
-        public static Uri ProjectCard(long repositoryId, int id)
-        {
-            return "repositories/{0}/projects/columns/cards/{1}".FormatUri(repositoryId, id);
+            return "projects/columns/{0}/cards".FormatUri(columnId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> to move a project card.
         /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="name">The name of repo</param>
         /// <param name="id">The id of the card to move</param>
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(string owner, string name, int id)
+        public static Uri ProjectCardMove(int id)
         {
-            return "repos/{0}/{1}/projects/columns/cards/{2}/moves".FormatUri(owner, name, id);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> to move a project card.
-        /// </summary>
-        /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="id">The id of the card to move</param>
-        /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(long repositoryId, int id)
-        {
-            return "repositories/{0}/projects/columns/cards/{1}/moves".FormatUri(repositoryId, id);
+            return "projects/columns/cards/{0}".FormatUri(id);
         }
     }
 }

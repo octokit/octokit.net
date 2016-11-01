@@ -14,7 +14,7 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(
-                () => new RepositoryProjectsClient(null));
+                () => new ProjectsClient(null));
             }
         }
 
@@ -24,7 +24,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllForRepository("fake", "repo");
 
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllForRepository(1);
 
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "name"));
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.Get("fake", "repo", 1);
 
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.Get(1, 2);
 
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1));
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newProject = new NewProject("someName");
 
                 await client.Create("fake", "repo", newProject);
@@ -110,10 +110,10 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newProject = new NewProject("test");
 
-                await client.Create(1, newProject);
+                await client.CreateForRepository(1, newProject);
 
                 connection.Received().Post<Project>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"), newProject, "application/vnd.github.inertia-preview+json");
             }
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var newProject = new NewProject("someName");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", newProject));
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updateProject = new ProjectUpdate("someNewName");
 
                 await client.Update("fake", "repo", 1, updateProject);
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updateProject = new ProjectUpdate("someNewName");
 
                 await client.Update(1, 2, updateProject);
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var updateProject = new ProjectUpdate("someNewName");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "name", 1, updateProject));
@@ -180,7 +180,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.Delete("fake", "repo", 1);
 
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.Delete(1, 2);
 
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 1));
@@ -217,7 +217,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllColumns("fake", "repo", 1);
 
@@ -228,7 +228,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllColumns(1, 2);
 
@@ -238,7 +238,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllColumns("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllColumns(null, "name", 1));
@@ -254,7 +254,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetColumn("fake", "repo", 1);
 
@@ -265,7 +265,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetColumn(1, 2);
 
@@ -275,7 +275,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetColumn("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetColumn(null, "name", 1));
@@ -291,7 +291,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 await client.CreateColumn("fake", "repo", 1, newProjectColumn);
@@ -303,7 +303,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 await client.CreateColumn(1, 2, newProjectColumn);
@@ -314,7 +314,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var newProjectColumn = new NewProjectColumn("someName");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateColumn(null, "owner", 1, newProjectColumn));
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updatePorjectColumn = new ProjectColumnUpdate("someNewName");
 
                 await client.UpdateColumn("fake", "repo", 1, updatePorjectColumn);
@@ -344,7 +344,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updatePorjectColumn = new ProjectColumnUpdate("someNewName");
 
                 await client.UpdateColumn(1, 2, updatePorjectColumn);
@@ -355,7 +355,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var updateProjectColumn = new ProjectColumnUpdate("someNewName");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateColumn(null, "owner", 1, updateProjectColumn));
@@ -373,7 +373,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.DeleteColumn("fake", "repo", 1);
 
@@ -384,7 +384,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.DeleteColumn(1, 2);
 
@@ -394,7 +394,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteColumn(null, "owner", 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteColumn("name", null, 1));
@@ -410,7 +410,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 await client.MoveColumn("fake", "repo", 1, position);
@@ -422,7 +422,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 await client.MoveColumn(1, 2, position);
@@ -433,7 +433,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.MoveColumn(null, "name", 1, position));
@@ -451,7 +451,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllCards("fake", "repo", 1);
 
@@ -462,7 +462,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetAllCards(1, 2);
 
@@ -472,7 +472,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCards("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCards(null, "name", 1));
@@ -488,7 +488,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetCard("fake", "repo", 1);
 
@@ -499,7 +499,7 @@ namespace Octokit.Tests.Clients
             public async Task RequestCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.GetCard(1, 2);
 
@@ -509,7 +509,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCard("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCard(null, "name", 1));
@@ -525,7 +525,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newCard = new NewProjectCard("someNote");
 
                 await client.CreateCard("fake", "repo", 1, newCard);
@@ -537,7 +537,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var newCard = new NewProjectCard("someNote");
 
                 await client.CreateCard(1, 2, newCard);
@@ -548,7 +548,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var newCard = new NewProjectCard("someNote");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateCard(null, "name", 1, newCard));
@@ -566,7 +566,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 await client.UpdateCard("fake", "repo", 1, updateCard);
@@ -578,7 +578,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectURLWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 await client.UpdateCard(1, 2, updateCard);
@@ -589,7 +589,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateCard(null, "name", 1, updateCard));
@@ -607,7 +607,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.DeleteCard("fake", "repo", 1);
 
@@ -618,7 +618,7 @@ namespace Octokit.Tests.Clients
             public async Task DeletesCorrectURLWithRepositoryID()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
 
                 await client.DeleteCard(1, 2);
 
@@ -628,7 +628,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteCard("owner", null, 1));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteCard(null, "name", 1));
@@ -644,7 +644,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 await client.MoveCard("fake", "repo", 1, position);
@@ -656,7 +656,7 @@ namespace Octokit.Tests.Clients
             public async Task PostToCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryProjectsClient(connection);
+                var client = new ProjectsClient(connection);
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 await client.MoveCard(1, 2, position);
@@ -667,7 +667,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var client = new RepositoryProjectsClient(Substitute.For<IApiConnection>());
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.MoveCard(null, "name", 1, position));

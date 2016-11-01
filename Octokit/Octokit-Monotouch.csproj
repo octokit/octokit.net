@@ -509,7 +509,6 @@
     <Compile Include="Models\Request\RepositoryTrafficRequest.cs" />
     <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
-    <Compile Include="Clients\IRepositoryProjectsClient.cs" />
     <Compile Include="Models\Request\ProjectCardUpdate.cs" />
     <Compile Include="Models\Request\ProjectColumnUpdate.cs" />
     <Compile Include="Models\Request\ProjectUpdate.cs" />
@@ -521,7 +520,12 @@
     <Compile Include="Models\Request\NewProjectColumn.cs" />
     <Compile Include="Models\Request\ProjectColumnMove.cs" />
     <Compile Include="Models\Request\ProjectCardMove.cs" />
-    <Compile Include="Clients\RepositoryProjectsClient.cs" />
+    <Compile Include="Clients\IProjectCardsClient.cs" />
+    <Compile Include="Clients\IProjectColumnsClient.cs" />
+    <Compile Include="Clients\IProjectsClient.cs" />
+    <Compile Include="Clients\ProjectCardsClient.cs" />
+    <Compile Include="Clients\ProjectColumnsClient.cs" />
+    <Compile Include="Clients\ProjectsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

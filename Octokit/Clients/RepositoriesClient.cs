@@ -40,7 +40,7 @@ namespace Octokit
             Invitation = new RepositoryInvitationsClient(apiConnection);
             Branch = new RepositoryBranchesClient(apiConnection);
             Traffic = new RepositoryTrafficClient(apiConnection);
-            Projects = new RepositoryProjectsClient(apiConnection);
+            Projects = new ProjectsClient(apiConnection);
         }
 
         /// <summary>
@@ -974,6 +974,6 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
-        public IRepositoryProjectsClient Projects { get; private set; }
+        public IProjectsClient Projects { get; private set; }
     }
 }

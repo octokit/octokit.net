@@ -98,9 +98,13 @@
     <Compile Include="Clients\IObservableMergingClient.cs" />
     <Compile Include="Clients\IObservableMigrationClient.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
+    <Compile Include="Clients\IObservableProjectCardsClient.cs" />
+    <Compile Include="Clients\IObservableProjectColumnsClient.cs" />
     <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
-    <Compile Include="Clients\IObservableRepositoryProjectsClient.cs" />
+    <Compile Include="Clients\IObservableProjectsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
+    <Compile Include="Clients\ObservableProjectCardsClient.cs" />
+    <Compile Include="Clients\ObservableProjectColumnsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
@@ -143,7 +147,7 @@
     <Compile Include="Clients\ObservableRepositoryContentsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryPagesClient.cs" />
-    <Compile Include="Clients\ObservableRepositoryProjectsClient.cs" />
+    <Compile Include="Clients\ObservableProjectsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
     <Compile Include="Clients\ObservableSearchClient.cs" />
     <Compile Include="Clients\IObservableBlobsClient.cs" />

@@ -214,8 +214,12 @@
     <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
     <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
-    <Compile Include="Clients\IObservableRepositoryProjectsClient.cs" />
-    <Compile Include="Clients\ObservableRepositoryProjectsClient.cs" />
+    <Compile Include="Clients\IObservableProjectCardsClient.cs" />
+    <Compile Include="Clients\IObservableProjectColumnsClient.cs" />
+    <Compile Include="Clients\IObservableProjectsClient.cs" />
+    <Compile Include="Clients\ObservableProjectCardsClient.cs" />
+    <Compile Include="Clients\ObservableProjectColumnsClient.cs" />
+    <Compile Include="Clients\ObservableProjectsClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
