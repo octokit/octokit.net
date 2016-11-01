@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class RepositoryProjectsClientTests
+    public class ProjectClientTests
     {
         public class TheCtor
         {

@@ -79,7 +79,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/columns/#delete-a-project-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
         public IObservable<bool> Delete(int id)
         {
@@ -92,7 +91,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#move-a-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
         public IObservable<bool> Move(int id, ProjectColumnMove position)
