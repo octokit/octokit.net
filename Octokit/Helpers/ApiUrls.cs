@@ -3375,7 +3375,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
         public static Uri ProjectCardMove(int id)
         {
-            return "projects/columns/cards/{0}".FormatUri(id);
+            return "projects/columns/cards/{0}/moves".FormatUri(id);
         }
     }
 }
