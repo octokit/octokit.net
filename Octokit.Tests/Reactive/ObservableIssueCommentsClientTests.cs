@@ -57,8 +57,8 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
-                    Args.EmptyDictionary, 
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
+                    Arg.Any<IDictionary<string, string>>(), 
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(1);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/comments", UriKind.Relative), Args.EmptyDictionary, null);
+                    new Uri("repositories/1/issues/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>(), null);
             }
 
             [Fact]
