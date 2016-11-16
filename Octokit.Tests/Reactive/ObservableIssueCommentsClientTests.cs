@@ -80,6 +80,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
+                var request = new IssueCommentRequest()
+                {
+                    Direction = SortDirection.Ascending,
+                    Since = DateTime.UtcNow,
+                    Sort = PullRequestReviewCommentSort.Created
+                };
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -89,10 +95,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", options);
 
-                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                gitHubClient.Received().Issue.Comment.GetAllForRepository("fake", "repo", request, options);
             }
 
             [Fact]
@@ -101,6 +104,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
+                var request = new IssueCommentRequest()
+                {
+                    Direction = SortDirection.Ascending,
+                    Since = DateTime.UtcNow,
+                    Sort = PullRequestReviewCommentSort.Created
+                };
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -110,8 +119,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
 
-                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+                gitHubClient.Received().Issue.Comment.GetAllForRepository(1, request, options);
             }
 
             [Fact]
