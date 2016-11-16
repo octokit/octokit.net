@@ -8,7 +8,7 @@ namespace Octokit.Internal
     internal static class ApiInfoParser
     {
         const RegexOptions regexOptions =
-#if NETFX_CORE
+#if !HAS_REGEX_COMPILED_OPTIONS
             RegexOptions.IgnoreCase;
 #else
             RegexOptions.Compiled | RegexOptions.IgnoreCase;

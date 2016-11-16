@@ -1,0 +1,46 @@
+﻿{
+  "version": "1.0.0-*",
+  "title": "Octokit",
+  "authors": [ "GitHub" ],
+  "description": "An async-based GitHub API client library for .NET",
+  "summary": "An async-based GitHub API client library for .NET",
+
+  "xmlDoc": true,
+  "buildOptions": {
+    "compile": {
+      "includeFiles": [ "../SolutionInfo.cs" ]
+    }
+  },
+
+  "frameworks": {
+    "netstandard1.1": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      },
+      "buildOptions": {
+        "": null,
+        "define": [
+          "HAS_TYPEINFO",
+          "SIMPLE_JSON_INTERNAL",
+          "SIMPLE_JSON_OBJARRAYINTERNAL",
+          "SIMPLE_JSON_READONLY_COLLECTIONS",
+          "SIMPLE_JSON_TYPEINFO",
+          "NO_SERIALIZABLE"
+        ]
+      }
+    },
+    "net45": {
+      "dependencies": {
+        "Microsoft.Net.Http": "2.2.28"
+      },
+      "buildOptions": {
+        "define": [
+          "HAS_ENVIRONMENT",
+          "SIMPLE_JSON_INTERNAL",
+          "SIMPLE_JSON_OBJARRAYINTERNAL",
+          "SIMPLE_JSON_READONLY_COLLECTIONS"
+        ]
+      }
+    }
+  }
+}

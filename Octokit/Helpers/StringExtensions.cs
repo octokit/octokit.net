@@ -68,7 +68,7 @@ namespace Octokit
             return new Uri(template);
         }
 
-#if NETFX_CORE
+#if HAS_TYPEINFO
         public static PropertyInfo GetProperty(this Type t, string propertyName)
         {
             return t.GetTypeInfo().GetDeclaredProperty(propertyName);
@@ -123,7 +123,7 @@ namespace Octokit
         // Username may only contain alphanumeric characters or single hyphens
         // and cannot begin or end with a hyphen
         static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-_]{1,}",
-#if (!PORTABLE && !NETFX_CORE)
+#if HAS_REGEX_COMPILED_OPTIONS
             RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);

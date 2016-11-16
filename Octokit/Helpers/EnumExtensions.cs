@@ -14,7 +14,11 @@ namespace Octokit
             if (prop == null) return null;
 
             var propString = prop.ToString();
+#if HAS_TYPEINFO
+            var member = prop.GetType().GetTypeInfo().DeclaredMembers.FirstOrDefault(x => x.Name == propString);
+#else
             var member = prop.GetType().GetMember(propString).FirstOrDefault();
+#endif
             if (member == null) return null;
 
             var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)

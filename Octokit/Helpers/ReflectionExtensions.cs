@@ -39,14 +39,14 @@ namespace Octokit
             return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         public static Type GetTypeInfo(this Type type)
         {
             return type;
         }
 #endif
 
-#if NETFX_CORE
+#if HAS_TYPEINFO
         public static IEnumerable<MemberInfo> GetMember(this Type type, string name)
         {
             return type.GetTypeInfo().DeclaredMembers.Where(m => m.Name == name);
@@ -59,7 +59,7 @@ namespace Octokit
 #endif
         public static IEnumerable<PropertyInfo> GetAllProperties(this Type type)
         {
-#if NETFX_CORE
+#if HAS_TYPEINFO
             var typeInfo = type.GetTypeInfo();
             var properties = typeInfo.DeclaredProperties;
 
@@ -73,7 +73,7 @@ namespace Octokit
 
         public static bool IsEnumeration(this Type type)
         {
-#if NETFX_CORE
+#if HAS_TYPEINFO
             return type.GetTypeInfo().IsEnum;
 #else
             return type.IsEnum;

@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
+#if !HAS_ENVIRONMENT
+using System.Runtime.InteropServices;
+#endif
 
 namespace Octokit
 {
@@ -644,10 +647,21 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
+            var format =
+#if !HAS_ENVIRONMENT
+                "{0} ({1}; {2}; {3}; Octokit {4})";
+#else
+                "{0} ({1} {2}; {3}; {4}; Octokit {5})";
+#endif
+
             return string.Format(CultureInfo.InvariantCulture,
+                format,
+#if !HAS_ENVIRONMENT
+                RuntimeInformation.OSDescription,
+                RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant(),
+#elif NETFX_CORE
                 "{0} ({1} {2}; {3}; {4}; Octokit {5})",
                 productInformation,
-#if NETFX_CORE
                 // Microsoft doesn't want you changing your Windows Store Application based on the processor or
                 // Windows version. If we really wanted this information, we could do a best guess based on
                 // this approach: http://attackpattern.com/2013/03/device-information-in-windows-8-store-apps/

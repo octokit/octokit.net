@@ -59,7 +59,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Text;
 using Octokit.Reflection;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -546,7 +548,12 @@ namespace Octokit
             object obj;
             if (TryDeserializeObject(json, out obj))
                 return obj;
+
+#if !NO_SERIALIZABLE
             throw new SerializationException("Invalid JSON string");
+#else
+            throw new Exception("Invalid JSON string");
+#endif
         }
 
         /// <summary>

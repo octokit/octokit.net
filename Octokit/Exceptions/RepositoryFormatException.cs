@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+#if !NO_SERIALIZABLE
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
+#endif
 using System.Security;
 
 namespace Octokit
 {
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -33,7 +37,7 @@ namespace Octokit
             }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LoginAttemptsExceededException
         /// </summary>
