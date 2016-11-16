@@ -9,6 +9,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Octokit.Next.Tests", "Octok
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Octokit", "Octokit\Octokit.xproj", "{104E8324-C2B9-43BE-8040-36B736A64D45}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Octokit.Reactive", "Octokit.Reactive\Octokit.Reactive.xproj", "{06B32A68-FEE5-4C0C-989A-8A75D00D6D3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{104E8324-C2B9-43BE-8040-36B736A64D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{104E8324-C2B9-43BE-8040-36B736A64D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{104E8324-C2B9-43BE-8040-36B736A64D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B32A68-FEE5-4C0C-989A-8A75D00D6D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B32A68-FEE5-4C0C-989A-8A75D00D6D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B32A68-FEE5-4C0C-989A-8A75D00D6D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B32A68-FEE5-4C0C-989A-8A75D00D6D3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
