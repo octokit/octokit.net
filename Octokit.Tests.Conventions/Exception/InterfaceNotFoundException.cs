@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace Octokit.Tests.Conventions
 {
@@ -13,10 +12,6 @@ namespace Octokit.Tests.Conventions
 
         public InterfaceNotFoundException(string type, Exception innerException)
             : base(CreateMessage(type), innerException)
-        { }
-
-        protected InterfaceNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         static string CreateMessage(string type)

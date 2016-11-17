@@ -1,0 +1,38 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "title": "Octokit.Tests.Conventions",
+  "authors": [ "GitHub" ],
+  "description": "Convention-based tests for Octokit",
+  "summary": "Convention-based tests for Octokit",
+
+  "xmlDoc": true,
+  "buildOptions": {
+    "compile": {
+      "includeFiles": [ "../Octokit.Tests/Helpers/AssertEx.cs" ]
+    }
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [
+          "NO_SERIALIZABLE",
+          "HAS_TYPEINFO"
+        ]
+      },
+      "dependencies": {
+        "Octokit": { "target": "project" },
+        "Octokit.Reactive": { "target": "project" },
+        "Octokit.Tests": { "target": "project" },
+        "NETStandard.Library": "1.6.0",
+        "xunit": "2.2.0-beta2-build3300",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        }
+      }
+    }
+  }
+}

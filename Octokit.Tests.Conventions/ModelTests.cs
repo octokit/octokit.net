@@ -14,7 +14,7 @@ namespace Octokit.Tests.Conventions
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
-            var attribute = modelType.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+            var attribute = modelType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
             if (attribute == null)
             {
                 throw new MissingDebuggerDisplayAttributeException(modelType);
@@ -110,6 +110,7 @@ namespace Octokit.Tests.Conventions
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IGitHubClient)
+                .GetTypeInfo()
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
@@ -131,7 +132,7 @@ namespace Octokit.Tests.Conventions
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(IGitHubClient).Assembly.ExportedTypes
+            var clientInterfaces = typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)
@@ -191,7 +192,7 @@ namespace Octokit.Tests.Conventions
 
         private static IEnumerable<Type> UnwrapGenericArguments(Type returnType)
         {
-            if (returnType.IsGenericType)
+            if (returnType.GetTypeInfo().IsGenericType)
             {
                 var arguments = returnType.GetGenericArguments();
 
