@@ -18,7 +18,6 @@
         "NETStandard.Library": "1.6.0"
       },
       "buildOptions": {
-        "": null,
         "define": [
           "HAS_TYPEINFO",
           "SIMPLE_JSON_INTERNAL",
