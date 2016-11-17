@@ -657,6 +657,7 @@ namespace Octokit
             return string.Format(CultureInfo.InvariantCulture,
                 format,
 #if !HAS_ENVIRONMENT
+                productInformation,
                 RuntimeInformation.OSDescription,
                 RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant(),
 #elif NETFX_CORE
