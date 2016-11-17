@@ -20,7 +20,13 @@ namespace Octokit.Tests
 
         public string GetResourceAsString(Encoding encoding = null)
         {
-            encoding = encoding ?? Encoding.Default;
+            encoding = encoding ??
+#if HAS_DEFAULT_ENCODING
+                Encoding.Default;
+#else
+                // http://stackoverflow.com/questions/35929391/how-can-i-determine-the-default-encoding-in-a-portable-class-library
+                Encoding.GetEncoding(0);
+#endif
 
             using (var sr = new StreamReader(GetResourceStream(), encoding))
             {
@@ -30,7 +36,7 @@ namespace Octokit.Tests
 
         public Stream GetResourceStream()
         {
-            var assembly = Assembly ?? Assembly.GetExecutingAssembly();
+            var assembly = Assembly ?? typeof(EmbeddedResource).GetTypeInfo().Assembly;
             return assembly.GetManifestResourceStream(ResourceName);
         }
 
