@@ -141,6 +141,10 @@ namespace Octokit
     public enum WebHookContentType
     {
         Form,
-        Json
+        Json,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

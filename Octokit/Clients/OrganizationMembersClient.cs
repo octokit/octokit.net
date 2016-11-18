@@ -22,7 +22,11 @@ namespace Octokit
         /// Members without two-factor authentication enabled
         /// </summary>
         [Parameter(Value = "2fa_disabled")]
-        TwoFactorAuthenticationDisabled
+        TwoFactorAuthenticationDisabled,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     public enum OrganizationMembersRole
@@ -34,7 +38,12 @@ namespace Octokit
         Admin,
 
         [Parameter(Value = "member")]
-        Member
+        Member,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>

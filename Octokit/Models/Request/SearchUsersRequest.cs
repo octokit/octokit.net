@@ -153,7 +153,11 @@ namespace Octokit
         /// <summary>
         /// Organization account
         /// </summary>
-        Org
+        Org,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -174,7 +178,11 @@ namespace Octokit
         /// Search by the user's full name
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
-        Fullname
+        Fullname,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -184,6 +192,10 @@ namespace Octokit
     {
         Followers,
         Repositories,
-        Joined
+        Joined,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

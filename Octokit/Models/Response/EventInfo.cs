@@ -184,6 +184,11 @@ namespace Octokit
         /// url of the reference's source.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
-        Crossreferenced
+        Crossreferenced,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

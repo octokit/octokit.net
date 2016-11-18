@@ -48,6 +48,10 @@ namespace Octokit
     public enum EncodingType
     {
         Utf8,
-        Base64
+        Base64,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

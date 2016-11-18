@@ -23,6 +23,11 @@
         /// <summary>
         /// Greater than or equal to. "&gt;="
         /// </summary>
-        GreaterThanOrEqualTo
+        GreaterThanOrEqualTo,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

@@ -27,6 +27,10 @@ namespace Octokit
         Commit,
         Blob,
         Tree,
-        Tag
+        Tag,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

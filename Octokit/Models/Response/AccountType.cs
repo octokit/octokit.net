@@ -10,6 +10,11 @@
         /// <summary>
         /// Organization account
         /// </summary>
-        Organization
+        Organization,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

@@ -100,6 +100,11 @@ namespace Octokit
         /// <summary>
         /// The build completed and reports a failure.
         /// </summary>
-        Failure
+        Failure,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

@@ -121,7 +121,12 @@ namespace Octokit
             /// <summary>
             /// The migration failed.
             /// </summary>
-            Failed
+            Failed,
+
+            /// <summary>
+            /// Used as a placeholder for unknown fields
+            /// </summary>
+            UnknownType
         }
     }
 }

@@ -306,7 +306,7 @@ namespace Octokit.Tests
 
                 Assert.Equal(SomeEnum.Unicode, sample.SomeEnum);
             }
-            
+
             [Fact]
             public void RemovesDashFromEnums()
             {
@@ -364,7 +364,11 @@ namespace Octokit.Tests
         Utf8,
         [Parameter(Value = "something else")]
         SomethingElse,
-        Unicode
+        Unicode,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
 }

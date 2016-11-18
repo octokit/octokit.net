@@ -120,6 +120,11 @@ namespace Octokit
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
-        Updated
+        Updated,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

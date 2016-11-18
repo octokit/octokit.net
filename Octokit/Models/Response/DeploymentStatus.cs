@@ -97,6 +97,10 @@ namespace Octokit
         Success,
         Error,
         Failure,
-        Inactive
+        Inactive,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

@@ -85,6 +85,11 @@ namespace Octokit
         Invalid,
 
         [Parameter(Value = "valid")]
-        Valid
+        Valid,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

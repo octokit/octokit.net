@@ -70,6 +70,10 @@ namespace Octokit
     public enum TrafficDayOrWeek
     {
         Day,
-        Week
+        Week,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

@@ -71,6 +71,10 @@ namespace Octokit
         /// Sort by age (filtering by pulls updated in the last month)
         /// </summary>
         [Parameter(Value = "long-running")]
-        LongRunning
+        LongRunning,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

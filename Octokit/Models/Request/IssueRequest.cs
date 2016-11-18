@@ -117,7 +117,12 @@ namespace Octokit
         /// <summary>
         /// All issues the authenticated user can see, regardless of participation or creation.
         /// </summary>
-        All
+        All,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -138,7 +143,12 @@ namespace Octokit
         /// <summary>
         /// All the items.
         /// </summary>
-        All
+        All,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -154,7 +164,12 @@ namespace Octokit
         /// <summary>
         /// Items that are closed
         /// </summary>
-        Closed
+        Closed,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -175,7 +190,12 @@ namespace Octokit
         /// <summary>
         /// Sort by the number of comments
         /// </summary>
-        Comments
+        Comments,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>
@@ -193,6 +213,11 @@ namespace Octokit
         /// Sort descending
         /// </summary>
         [Parameter(Value = "desc")]
-        Descending
+        Descending,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

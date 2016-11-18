@@ -94,7 +94,12 @@ namespace Octokit
         /// <summary>
         /// Required status checks will be enforced for everyone (including admins).
         /// </summary>
-        Everyone
+        Everyone,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>

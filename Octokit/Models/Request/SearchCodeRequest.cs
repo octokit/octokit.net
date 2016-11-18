@@ -223,7 +223,11 @@ namespace Octokit
     public enum CodeSearchSort
     {
         [Parameter(Value = "indexed")]
-        Indexed
+        Indexed,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     public enum CodeInQualifier
@@ -231,6 +235,10 @@ namespace Octokit
         [Parameter(Value = "file")]
         File,
         [Parameter(Value = "path")]
-        Path
+        Path,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

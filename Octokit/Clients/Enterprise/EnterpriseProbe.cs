@@ -118,6 +118,11 @@ namespace Octokit
         /// Request timed out or DNS failed. So it's probably the case it's not an enterprise server but 
         /// we can't know for sure.
         /// </summary>
-        Failed
+        Failed,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 }

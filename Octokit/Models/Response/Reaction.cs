@@ -14,7 +14,11 @@ namespace Octokit
         Laugh,
         Confused,
         Heart,
-        Hooray
+        Hooray,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

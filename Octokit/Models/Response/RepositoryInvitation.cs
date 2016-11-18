@@ -8,7 +8,11 @@ namespace Octokit
     {
         Read,
         Write,
-        Admin
+        Admin,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

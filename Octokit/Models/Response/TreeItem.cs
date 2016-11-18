@@ -61,7 +61,11 @@ namespace Octokit
     {
         Blob,
         Tree,
-        Commit
+        Commit,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        UnknownType
     }
 
     /// <summary>

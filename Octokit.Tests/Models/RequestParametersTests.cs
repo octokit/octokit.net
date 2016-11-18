@@ -158,7 +158,11 @@ namespace Octokit.Tests.Models
                 Yuck,
 
                 [Parameter(Value = "noms")]
-                NomNomNom
+                NomNomNom,
+                /// <summary>
+                /// Used as a placeholder for unknown fields
+                /// </summary>
+                UnknownType
             }
         }
     }
