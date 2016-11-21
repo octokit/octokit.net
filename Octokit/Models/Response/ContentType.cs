@@ -15,6 +15,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

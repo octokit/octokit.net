@@ -23,6 +23,7 @@ namespace Octokit
             ReposCount = reposCount;
             Organization = organization;
             LdapDistinguishedName = ldapDistinguishedName;
+            PermissionText = permission.ToString();
         }
 
         /// <summary>
@@ -44,6 +45,8 @@ namespace Octokit
         /// permission attached to this team
         /// </summary>
         public Permission Permission { get; protected set; }
+
+        public string PermissionText { get; protected set; }
 
         /// <summary>
         /// how many members in this team

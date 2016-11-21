@@ -52,11 +52,6 @@ namespace Octokit
         /// <summary>
         /// Sort by the number of stargazers.
         /// </summary>
-        Stargazers,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Stargazers
     }
 }

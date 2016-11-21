@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 
     ///<summary>
@@ -48,6 +48,7 @@ namespace Octokit
             Status = status;
             CName = cname;
             Custom404 = custom404;
+            StatusText = status.ToString();
         }
 
         /// <summary>
@@ -64,6 +65,8 @@ namespace Octokit
         /// Build status of the pages site.
         /// </summary>
         public PagesBuildStatus Status { get; protected set; }
+
+        public string StatusText { get; protected set; }
 
         /// <summary>
         /// CName of the pages site. Will be null if no CName was provided by the user.

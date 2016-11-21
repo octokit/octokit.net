@@ -12,11 +12,14 @@ namespace Octokit
             : base(url, label, @ref, sha, user, repository)
         {
             Type = type;
+            TypeText = type.ToString();
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods",
             Justification = "Name defined by web api and required for deserialization")]
         public TaggedType Type { get; protected set; }
+
+        public string TypeText { get; protected set; }
     }
 
     /// <summary>
@@ -31,6 +34,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

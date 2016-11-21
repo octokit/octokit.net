@@ -41,10 +41,6 @@ namespace Octokit
     {
         [Parameter(Value = "due_date")]
         DueDate,
-        Completeness,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Completeness
     }
 }

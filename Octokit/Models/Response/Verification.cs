@@ -21,6 +21,8 @@ namespace Octokit
         [Parameter(Key = "reason")]
         public VerificationReason Reason { get; protected set; }
 
+        public string ReasonText { get; protected set; }
+
         /// <summary>
         /// The signature that was extracted from the commit.
         /// </summary>
@@ -90,6 +92,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

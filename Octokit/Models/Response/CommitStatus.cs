@@ -20,6 +20,7 @@ namespace Octokit
             Id = id;
             Url = url;
             Creator = creator;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -36,6 +37,8 @@ namespace Octokit
         /// The state of the commit
         /// </summary>
         public CommitState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the
@@ -105,6 +108,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

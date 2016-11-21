@@ -22,6 +22,7 @@ namespace Octokit
             Duration = duration;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            StatusText = status.ToString();
         }
 
         /// <summary>
@@ -32,6 +33,9 @@ namespace Octokit
         /// The status of the build.
         /// </summary>
         public PagesBuildStatus Status { get; protected set; }
+
+        public string StatusText { get; protected set; }
+
         /// <summary>
         /// Error details - if there was one.
         /// </summary>

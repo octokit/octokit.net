@@ -22,6 +22,7 @@ namespace Octokit
             Milestone = milestone;
             Source = source;
             Rename = rename;
+            EventText = @event.ToString();
         }
 
         public int Id { get; protected set; }
@@ -29,6 +30,7 @@ namespace Octokit
         public User Actor { get; protected set; }
         public string CommitId { get; protected set; }
         public EventInfoState Event { get; protected set; }
+        public string EventText { get; protected set; }
         public DateTimeOffset CreatedAt { get; protected set; }
         public Label Label { get; protected set; }
         public User Assignee { get; protected set; }

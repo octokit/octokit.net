@@ -16,12 +16,15 @@ namespace Octokit
             TotalCount = totalCount;
             Statuses = statuses;
             Repository = repository;
+            StateText = state.ToString();
         }
 
         /// <summary>
         /// The combined state of the commits.
         /// </summary>
         public CommitState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// The SHA of the reference.

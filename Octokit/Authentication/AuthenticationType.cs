@@ -16,10 +16,6 @@
         /// <summary>
         /// Delegated access to a third party
         /// </summary>
-        Oauth,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Oauth
     }
 }

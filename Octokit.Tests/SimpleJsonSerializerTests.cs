@@ -364,11 +364,7 @@ namespace Octokit.Tests
         Utf8,
         [Parameter(Value = "something else")]
         SomethingElse,
-        Unicode,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Unicode
     }
 
 }

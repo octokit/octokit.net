@@ -181,11 +181,7 @@ namespace Octokit
     {
         Name,
         Description,
-        Readme,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Readme
     }
 
     /// <summary>
@@ -743,11 +739,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xtend")]
         Xtend,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Yaml")]
-        Yaml,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Yaml
 #pragma warning restore 1591
     }
 
@@ -771,11 +763,7 @@ namespace Octokit
         /// search by last updated
         /// </summary>
         [Parameter(Value = "updated")]
-        Updated,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Updated
     }
 
     /// <summary>
@@ -793,10 +781,6 @@ namespace Octokit
         /// include forked repos into the search
         /// </summary>
         [Parameter(Value = "True")]
-        IncludeForks,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        IncludeForks
     }
 }

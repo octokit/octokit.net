@@ -12,7 +12,7 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -30,6 +30,7 @@ namespace Octokit
             CreatedAt = createdAt;
             Url = url;
             HtmlUrl = htmlUrl;
+            PermissionsText = permissions.ToString();
         }
 
         public int Id { get; protected set; }
@@ -41,6 +42,8 @@ namespace Octokit
         public User Inviter { get; protected set; }
 
         public InvitationPermissionType Permissions { get; protected set; }
+
+        public string PermissionsText { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 

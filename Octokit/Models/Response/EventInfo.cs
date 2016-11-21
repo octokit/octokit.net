@@ -52,6 +52,8 @@ namespace Octokit
         /// </summary>
         public EventInfoState Event { get; protected set; }
 
+        public string EventText { get; protected set; }
+
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
         /// </summary>
@@ -189,6 +191,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

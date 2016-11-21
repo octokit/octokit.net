@@ -33,6 +33,7 @@ namespace Octokit
             UpdatedAt = updatedAt;
             Locked = locked;
             Repository = repository;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -69,6 +70,8 @@ namespace Octokit
         /// Whether the issue is open or closed.
         /// </summary>
         public ItemState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Title of the issue

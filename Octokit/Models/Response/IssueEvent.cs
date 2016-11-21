@@ -21,6 +21,7 @@ namespace Octokit
             CreatedAt = createdAt;
             Issue = issue;
             CommitUrl = commitUrl;
+            EventText = @event.ToString();
         }
 
         /// <summary>
@@ -52,6 +53,8 @@ namespace Octokit
         /// Identifies the actual type of Event that occurred.
         /// </summary>
         public EventInfoState Event { get; protected set; }
+
+        public string EventText { get; protected set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.

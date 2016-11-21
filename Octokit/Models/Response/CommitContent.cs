@@ -24,6 +24,7 @@ namespace Octokit
             Url = url;
             GitUrl = gitUrl;
             HtmlUrl = htmlUrl;
+            TypeText = type.ToString();
         }
 
         /// <summary>
@@ -51,6 +52,8 @@ namespace Octokit
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
         public ContentType Type { get; protected set; }
+
+        public string TypeText { get; protected set; }
 
         /// <summary>
         /// URL to the raw content

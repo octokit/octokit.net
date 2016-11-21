@@ -14,6 +14,7 @@ namespace Octokit
             Encoding = encoding;
             Sha = sha;
             Size = size;
+            EncodingText = encoding.ToString();
         }
 
         /// <summary>
@@ -25,6 +26,8 @@ namespace Octokit
         /// The encoding of the blob.
         /// </summary>
         public EncodingType Encoding { get; protected set; }
+
+        public string EncodingText { get; protected set; }
 
         /// <summary>
         /// The SHA of the blob.
@@ -52,6 +55,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

@@ -18,7 +18,7 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -31,6 +31,7 @@ namespace Octokit
             Id = id;
             User = user;
             Content = content;
+            ContentText = content.ToString();
         }
 
         /// <summary>
@@ -48,6 +49,8 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "content")]
         public ReactionType Content { get; protected set; }
+
+        public string ContentText { get; protected set; }
 
         internal string DebuggerDisplay
         {

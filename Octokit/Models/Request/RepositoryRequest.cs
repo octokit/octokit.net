@@ -102,12 +102,7 @@ namespace Octokit
         /// <summary>
         /// Return repositories for which the current authenticated user is a member of the org or team.
         /// </summary>
-        Member,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Member
     }
 
     /// <summary>
@@ -134,12 +129,7 @@ namespace Octokit
         /// Sort by the repository name.
         /// </summary>
         [Parameter(Value = "full_name")]
-        FullName,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        FullName
     }
 
     /// <summary>
@@ -160,12 +150,7 @@ namespace Octokit
         /// <summary>
         /// Return both public and private repositories
         /// </summary>
-        All,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        All
     }
 
     /// <summary>
@@ -212,11 +197,6 @@ namespace Octokit
         /// Returns all repositories where user is owner,collaborator or organization member.
         /// </summary>
         [Parameter(Value = "owner, collaborator, organization_member")]
-        All,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        All
     }
 }

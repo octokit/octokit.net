@@ -112,11 +112,6 @@ namespace Octokit
         /// <summary>
         /// Receive via application
         /// </summary>
-        AuthenticatorApp,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        AuthenticatorApp
     }
 }

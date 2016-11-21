@@ -66,11 +66,6 @@ namespace Octokit
         /// <summary>
         /// Rebase and merge
         /// </summary>
-        Rebase,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Rebase
     }
 }

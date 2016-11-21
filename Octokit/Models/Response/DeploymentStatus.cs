@@ -21,6 +21,7 @@ namespace Octokit
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Description = description;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -37,6 +38,8 @@ namespace Octokit
         /// The state of this deployment status.
         /// </summary>
         public DeploymentState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created this deployment status.
@@ -101,6 +104,6 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 }

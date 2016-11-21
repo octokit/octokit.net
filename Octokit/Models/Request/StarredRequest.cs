@@ -59,10 +59,6 @@ namespace Octokit
         /// <summary>
         /// Sort by the date the star was last updated.
         /// </summary>
-        Updated,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Updated
     }
 }

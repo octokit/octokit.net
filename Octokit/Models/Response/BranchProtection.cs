@@ -54,12 +54,15 @@ namespace Octokit
         {
             EnforcementLevel = enforcementLevel;
             Contexts = new ReadOnlyCollection<string>(contexts.ToList());
+            EnforcementText = enforcementLevel.ToString();
         }
 
         /// <summary>
         /// Who required status checks apply to
         /// </summary>
         public EnforcementLevel EnforcementLevel { get; protected set; }
+
+        public string EnforcementText { get; protected set; }
 
         /// <summary>
         /// The list of status checks to require in order to merge into this <see cref="Branch"/>
@@ -99,7 +102,7 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 
     /// <summary>

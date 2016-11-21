@@ -43,6 +43,7 @@ namespace Octokit
             ChangedFiles = changedFiles;
             Milestone = milestone;
             Locked = locked;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -84,6 +85,8 @@ namespace Octokit
         /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
         public ItemState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Title of the pull request.

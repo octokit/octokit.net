@@ -430,11 +430,7 @@ namespace Octokit
         /// search by last merged
         /// </summary>
         [Parameter(Value = "merged")]
-        Merged,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Merged
     }
 
     public enum IssueTypeQualifier
@@ -442,11 +438,7 @@ namespace Octokit
         [Parameter(Value = "pr")]
         PullRequest,
         [Parameter(Value = "issue")]
-        Issue,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Issue
     }
 
     public enum IssueInQualifier
@@ -456,11 +448,7 @@ namespace Octokit
         [Parameter(Value = "body")]
         Body,
         [Parameter(Value = "comment")]
-        Comment,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Comment
     }
 
     public enum IssueIsQualifier
@@ -480,11 +468,7 @@ namespace Octokit
         [Parameter(Value = "private")]
         Private,
         [Parameter(Value = "public")]
-        Public,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Public
     }
 
     public enum IssueNoMetadataQualifier
@@ -494,11 +478,7 @@ namespace Octokit
         [Parameter(Value = "milestone")]
         Milestone,
         [Parameter(Value = "assignee")]
-        Assignee,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        Assignee
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

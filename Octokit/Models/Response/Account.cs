@@ -35,6 +35,7 @@ namespace Octokit
             PublicRepos = publicRepos;
             Type = type;
             Url = url;
+            AccountText = type.ToString();
         }
 
         /// <summary>
@@ -124,6 +125,7 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public AccountType? Type { get; protected set; }
 
+        public string AccountText { get; protected set; }
 
         /// <summary>
         /// Number of private repos owned by the account.

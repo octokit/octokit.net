@@ -36,6 +36,8 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
         public TreeType Type { get; protected set; }
 
+        public string TypeText { get; protected set; }
+
         /// <summary>
         /// The size of this Tree Item.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Octokit
         /// <summary>
         /// Used as a placeholder for unknown fields
         /// </summary>
-        UnknownType
+        Unknown
     }
 
     /// <summary>

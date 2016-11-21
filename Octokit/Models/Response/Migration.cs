@@ -40,6 +40,7 @@ namespace Octokit
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Repositories = repositories;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -56,6 +57,8 @@ namespace Octokit
         /// The state of migration. Can be one of pending, exporting, exported and failed.
         /// </summary>
         public MigrationState State { get; private set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Whether to lock repositories.
@@ -126,7 +129,7 @@ namespace Octokit
             /// <summary>
             /// Used as a placeholder for unknown fields
             /// </summary>
-            UnknownType
+            Unknown
         }
     }
 }

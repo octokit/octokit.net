@@ -109,11 +109,6 @@ namespace Octokit
         /// Deploy migrations only.
         /// </summary>
         [Parameter(Value = "deploy:migrations")]
-        DeployMigrations,
-
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        DeployMigrations
     }
 }

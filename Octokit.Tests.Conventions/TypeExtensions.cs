@@ -121,11 +121,7 @@ namespace Octokit.Tests.Conventions
         Task,
         GenericTask,
         ReadOnlyList,
-        ClientInterface,
-        /// <summary>
-        /// Used as a placeholder for unknown fields
-        /// </summary>
-        UnknownType
+        ClientInterface
     }
 
     public struct TypeInfo

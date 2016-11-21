@@ -28,6 +28,7 @@ namespace Octokit
             CreatedAt = createdAt;
             DueOn = dueOn;
             ClosedAt = closedAt;
+            StateText = state.ToString();
         }
 
         /// <summary>
@@ -49,6 +50,8 @@ namespace Octokit
         /// Whether the milestone is open or closed.
         /// </summary>
         public ItemState State { get; protected set; }
+
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Title of the milestone
