@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
-                    request.ToParametersDictionary(),
+                    Arg.Is(request.ToParametersDictionary()),
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/comments", UriKind.Relative),
-                    request.ToParametersDictionary(),
+                    Arg.Is(request.ToParametersDictionary()),
                     null);
             }
 
