@@ -16,8 +16,8 @@ namespace Octokit
         public ProjectsClient(IApiConnection apiConnection) :
             base(apiConnection)
         {
-            Cards = new ProjectCardsClient(apiConnection);
-            Columns = new ProjectColumnsClient(apiConnection);
+            Card = new ProjectCardsClient(apiConnection);
+            Column = new ProjectColumnsClient(apiConnection);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/cards/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        public IProjectCardsClient Cards { get; private set; }
+        public IProjectCardsClient Card { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Project Columns API.
@@ -137,6 +137,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/columns/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        public IProjectColumnsClient Columns { get; private set; }
+        public IProjectColumnsClient Column { get; private set; }
     }
 }

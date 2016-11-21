@@ -26,7 +26,7 @@ namespace Octokit.Tests.Reactive
 
                     client.GetAll(1);
 
-                    gitHubClient.Received().Repository.Projects.Cards.GetAll(1);
+                    gitHubClient.Received().Repository.Project.Card.GetAll(1);
                 }
             }
 
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Reactive
 
                     client.Get(1);
 
-                    gitHubClient.Repository.Projects.Cards.Received().Get(1);
+                    gitHubClient.Repository.Project.Card.Received().Get(1);
                 }
             }
 
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Reactive
 
                     client.Create(1, newCard);
 
-                    gitHubClient.Repository.Projects.Cards.Received().Create(1, newCard);
+                    gitHubClient.Repository.Project.Card.Received().Create(1, newCard);
                 }
 
                 [Fact]
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Reactive
 
                     client.Update(1, updateCard);
 
-                    gitHubClient.Repository.Projects.Cards.Received().Update(1, updateCard);
+                    gitHubClient.Repository.Project.Card.Received().Update(1, updateCard);
                 }
 
                 [Fact]
@@ -102,7 +102,7 @@ namespace Octokit.Tests.Reactive
 
                     client.Delete(1);
 
-                    gitHubClient.Repository.Projects.Cards.Received().Delete(1);
+                    gitHubClient.Repository.Project.Card.Received().Delete(1);
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Reactive
 
                     client.Move(1, position);
 
-                    gitHubClient.Repository.Projects.Cards.Received().Move(1, position);
+                    gitHubClient.Repository.Project.Card.Received().Move(1, position);
                 }
 
                 [Fact]

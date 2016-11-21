@@ -670,6 +670,6 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
-        IProjectsClient Projects { get; }
+        IProjectsClient Project { get; }
     }
 }

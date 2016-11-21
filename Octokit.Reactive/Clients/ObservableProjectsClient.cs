@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Repository.Projects;
+            _client = client.Repository.Project;
             _connection = client.Connection;
             Cards = new ObservableProjectCardsClient(client);
             Columns = new ObservableProjectColumnsClient(client);

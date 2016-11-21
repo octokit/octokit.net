@@ -28,7 +28,7 @@ public class ProjectsClientTests
             var project1 = await CreateRepositoryProjectHelper(_github, _context);
             var project2 = await CreateRepositoryProjectHelper(_github, _context);
 
-            var projects = await _github.Repository.Projects.GetAllForRepository(_context.RepositoryId);
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId);
 
             Assert.Equal(2, projects.Count);
             Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
@@ -60,7 +60,7 @@ public class ProjectsClientTests
             var project1 = await CreateOrganizationProjectHelper(_github, _context);
             var project2 = await CreateOrganizationProjectHelper(_github, _context);
 
-            var projects = await _github.Repository.Projects.GetAllForOrganization(_context.RepositoryContext.RepositoryName);
+            var projects = await _github.Repository.Project.GetAllForOrganization(_context.RepositoryContext.RepositoryName);
 
             Assert.Equal(2, projects.Count);
             Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
@@ -92,7 +92,7 @@ public class ProjectsClientTests
         {
             var project = await CreateRepositoryProjectHelper(_github, _context);
 
-            var result = await _github.Repository.Projects.Get(project.Id);
+            var result = await _github.Repository.Project.Get(project.Id);
 
             Assert.NotNull(result);
             Assert.Equal(project.Name, result.Name);
@@ -125,7 +125,7 @@ public class ProjectsClientTests
 
             var projectUpdate = new ProjectUpdate("newName");
 
-            var result = await _github.Repository.Projects.Update(project.Id, projectUpdate);
+            var result = await _github.Repository.Project.Update(project.Id, projectUpdate);
 
             Assert.Equal("newName", result.Name);
             Assert.Equal(project.Id, result.Id);
@@ -156,7 +156,7 @@ public class ProjectsClientTests
         {
             var project = await CreateRepositoryProjectHelper(_github, _context);
 
-            var result = await _github.Repository.Projects.Delete(project.Id);
+            var result = await _github.Repository.Project.Delete(project.Id);
 
             Assert.True(result);
         }
@@ -188,7 +188,7 @@ public class ProjectsClientTests
             var column1 = await CreateColumnHelper(_github, _context, project.Id);
             var column2 = await CreateColumnHelper(_github, _context, project.Id);
 
-            var result = await _github.Repository.Projects.Columns.GetAll(project.Id);
+            var result = await _github.Repository.Project.Column.GetAll(project.Id);
 
             Assert.Equal(2, result.Count);
             Assert.True(result.FirstOrDefault(x => x.Id == column1.Id).Id == column1.Id);
@@ -221,7 +221,7 @@ public class ProjectsClientTests
             var project = await CreateRepositoryProjectHelper(_github, _context);
             var column = await CreateColumnHelper(_github, _context, project.Id);
 
-            var result = await _github.Repository.Projects.Columns.Get(column.Id);
+            var result = await _github.Repository.Project.Column.Get(column.Id);
 
             Assert.Equal(column.Id, result.Id);
         }
@@ -283,7 +283,7 @@ public class ProjectsClientTests
 
             var columnUpdate = new ProjectColumnUpdate("newName");
 
-            var result = await _github.Repository.Projects.Columns.Update(column.Id, columnUpdate);
+            var result = await _github.Repository.Project.Column.Update(column.Id, columnUpdate);
 
             Assert.Equal("newName", result.Name);
             Assert.Equal(column.Id, result.Id);
@@ -315,7 +315,7 @@ public class ProjectsClientTests
             var project = await CreateRepositoryProjectHelper(_github, _context);
             var column = await CreateColumnHelper(_github, _context, project.Id);
 
-            var result = await _github.Repository.Projects.Columns.Delete(column.Id);
+            var result = await _github.Repository.Project.Column.Delete(column.Id);
 
             Assert.True(result);
         }
@@ -351,9 +351,9 @@ public class ProjectsClientTests
             var positionLast = new ProjectColumnMove(ProjectColumnPosition.Last, null);
             var positionAfter = new ProjectColumnMove(ProjectColumnPosition.After, column1.Id);
 
-            var resultFirst = await _github.Repository.Projects.Columns.Move(column2.Id, positionFirst);
-            var resultLast = await _github.Repository.Projects.Columns.Move(column2.Id, positionLast);
-            var resultAfter = await _github.Repository.Projects.Columns.Move(column2.Id, positionAfter);
+            var resultFirst = await _github.Repository.Project.Column.Move(column2.Id, positionFirst);
+            var resultLast = await _github.Repository.Project.Column.Move(column2.Id, positionLast);
+            var resultAfter = await _github.Repository.Project.Column.Move(column2.Id, positionAfter);
 
             Assert.True(resultFirst);
             Assert.True(resultLast);
@@ -388,7 +388,7 @@ public class ProjectsClientTests
             var card1 = await CreateCardHelper(_github, _context, column.Id);
             var card2 = await CreateCardHelper(_github, _context, column.Id);
 
-            var result = await _github.Repository.Projects.Cards.GetAll(column.Id);
+            var result = await _github.Repository.Project.Card.GetAll(column.Id);
 
             Assert.Equal(2, result.Count);
             Assert.True(result.FirstOrDefault(x => x.Id == card1.Id).Id == card1.Id);
@@ -422,7 +422,7 @@ public class ProjectsClientTests
             var column = await CreateColumnHelper(_github, _context, project.Id);
             var card = await CreateCardHelper(_github, _context, column.Id);
 
-            var result = await _github.Repository.Projects.Cards.Get(card.Id);
+            var result = await _github.Repository.Project.Card.Get(card.Id);
 
             Assert.Equal(card.Id, result.Id);
         }
@@ -485,7 +485,7 @@ public class ProjectsClientTests
             var card = await CreateCardHelper(_github, _context, column.Id);
             var cardUpdate = new ProjectCardUpdate("newNameOfNote");
 
-            var result = await _github.Repository.Projects.Cards.Update(card.Id, cardUpdate);
+            var result = await _github.Repository.Project.Card.Update(card.Id, cardUpdate);
 
             Assert.Equal("newNameOfNote", result.Note);
             Assert.Equal(card.Id, result.Id);
@@ -518,7 +518,7 @@ public class ProjectsClientTests
             var column = await CreateColumnHelper(_github, _context, project.Id);
             var card = await CreateCardHelper(_github, _context, column.Id);
 
-            var result = await _github.Repository.Projects.Cards.Delete(card.Id);
+            var result = await _github.Repository.Project.Card.Delete(card.Id);
 
             Assert.True(result);
         }
@@ -556,9 +556,9 @@ public class ProjectsClientTests
             var positionBottom = new ProjectCardMove(ProjectCardPosition.Top, column.Id, null);
             var positionAfter = new ProjectCardMove(ProjectCardPosition.Top, column.Id, card1.Id);
 
-            var resultTop = await _github.Repository.Projects.Cards.Move(card2.Id, positionTop);
-            var resultBottom = await _github.Repository.Projects.Cards.Move(card2.Id, positionBottom);
-            var resultAfter = await _github.Repository.Projects.Cards.Move(card2.Id, positionTop);
+            var resultTop = await _github.Repository.Project.Card.Move(card2.Id, positionTop);
+            var resultBottom = await _github.Repository.Project.Card.Move(card2.Id, positionBottom);
+            var resultAfter = await _github.Repository.Project.Card.Move(card2.Id, positionTop);
 
             Assert.True(resultTop);
             Assert.True(resultBottom);
@@ -579,9 +579,9 @@ public class ProjectsClientTests
             var positionBottom = new ProjectCardMove(ProjectCardPosition.Top, column2.Id, null);
             var positionAfter = new ProjectCardMove(ProjectCardPosition.Top, column2.Id, card1.Id);
 
-            var resultTop = await _github.Repository.Projects.Cards.Move(card1.Id, positionTop);
-            var resultBottom = await _github.Repository.Projects.Cards.Move(card2.Id, positionBottom);
-            var resultAfter = await _github.Repository.Projects.Cards.Move(card3.Id, positionTop);
+            var resultTop = await _github.Repository.Project.Card.Move(card1.Id, positionTop);
+            var resultBottom = await _github.Repository.Project.Card.Move(card2.Id, positionBottom);
+            var resultAfter = await _github.Repository.Project.Card.Move(card3.Id, positionTop);
 
             Assert.True(resultTop);
             Assert.True(resultBottom);
@@ -598,7 +598,7 @@ public class ProjectsClientTests
     private static async Task<Project> CreateRepositoryProjectHelper(IGitHubClient githubClient, RepositoryContext context)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Projects.CreateForRepository(context.RepositoryId, newProject);
+        var result = await githubClient.Repository.Project.CreateForRepository(context.RepositoryId, newProject);
 
         return result;
     }
@@ -606,7 +606,7 @@ public class ProjectsClientTests
     private static async Task<Project> CreateOrganizationProjectHelper(IGitHubClient githubClient, OrganizationRepositoryWithTeamContext context)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Projects.CreateForOrganization(context.RepositoryContext.RepositoryName, newProject);
+        var result = await githubClient.Repository.Project.CreateForOrganization(context.RepositoryContext.RepositoryName, newProject);
 
         return result;
     }
@@ -614,7 +614,7 @@ public class ProjectsClientTests
     private static async Task<ProjectColumn> CreateColumnHelper(IGitHubClient githubClient, RepositoryContext context, int projectId)
     {
         var newColumn = new NewProjectColumn(Helper.MakeNameWithTimestamp("new-project-column"));
-        var result = await githubClient.Repository.Projects.Columns.Create(projectId, newColumn);
+        var result = await githubClient.Repository.Project.Column.Create(projectId, newColumn);
 
         return result;
     }
@@ -622,7 +622,7 @@ public class ProjectsClientTests
     private static async Task<ProjectCard> CreateCardHelper(IGitHubClient githubClient, RepositoryContext context, int columnId)
     {
         var newCard = new NewProjectCard(Helper.MakeNameWithTimestamp("new-card"));
-        var result = await githubClient.Repository.Projects.Cards.Create(columnId, newCard);
+        var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
 
         return result;
     }

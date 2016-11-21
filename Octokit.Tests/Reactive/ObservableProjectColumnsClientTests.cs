@@ -27,7 +27,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1);
 
-                gitHubClient.Received().Repository.Projects.Columns.GetAll(1);
+                gitHubClient.Received().Repository.Project.Column.GetAll(1);
             }
         }
 
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                gitHubClient.Repository.Projects.Columns.Received().Get(1);
+                gitHubClient.Repository.Project.Column.Received().Get(1);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(1, newProjectColumn);
 
-                gitHubClient.Repository.Projects.Columns.Received().Create(1, newProjectColumn);
+                gitHubClient.Repository.Project.Column.Received().Create(1, newProjectColumn);
             }
 
             [Fact]
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Update(1, updatePorjectColumn);
 
-                gitHubClient.Repository.Projects.Columns.Received().Update(1, updatePorjectColumn);
+                gitHubClient.Repository.Project.Column.Received().Update(1, updatePorjectColumn);
             }
 
             [Fact]
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1);
 
-                gitHubClient.Repository.Projects.Columns.Received().Delete(1);
+                gitHubClient.Repository.Project.Column.Received().Delete(1);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Move(1, position);
 
-                gitHubClient.Repository.Projects.Columns.Received().Move(1, position);
+                gitHubClient.Repository.Project.Column.Received().Move(1, position);
             }
 
             [Fact]
