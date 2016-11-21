@@ -107,10 +107,32 @@ namespace Octokit
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="content">The content.</param>
-        public CreateFileRequest(string message, string content) : base(message)
+        public CreateFileRequest(string message, string content) : this(message, content, true)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateFileRequest"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        public CreateFileRequest(string message, string content, string branch) : this(message, content, branch, true)
+        { }
+
+        /// <summary>
+        /// Creates an instance of a <see cref="CreateFileRequest" />.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="convertContentToBase64">True to convert content to base64.</param>
+        public CreateFileRequest(string message, string content, bool convertContentToBase64) : base(message)
         {
             Ensure.ArgumentNotNull(content, "content");
 
+            if (convertContentToBase64)
+            {
+                content = content.ToBase64String();
+            }
             Content = content;
         }
 
@@ -120,16 +142,21 @@ namespace Octokit
         /// <param name="message">The message.</param>
         /// <param name="content">The content.</param>
         /// <param name="branch">The branch the request is for.</param>
-        public CreateFileRequest(string message, string content, string branch) : base(message, branch)
+        /// <param name="convertContentToBase64">True to convert content to base64.</param>
+        public CreateFileRequest(string message, string content, string branch, bool convertContentToBase64) : base(message, branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(content, "content");
 
+            if (convertContentToBase64)
+            {
+                content = content.ToBase64String();
+            }
             Content = content;
         }
+
         /// <summary>
-        /// The contents of the file to create. This is required.
+        /// The contents of the file to create, Base64 encoded. This is required.
         /// </summary>
-        [SerializeAsBase64]
         public string Content { get; private set; }
 
         internal virtual string DebuggerDisplay
@@ -154,7 +181,29 @@ namespace Octokit
         /// <param name="content">The content.</param>
         /// <param name="sha">The sha.</param>
         public UpdateFileRequest(string message, string content, string sha)
-            : base(message, content)
+            : this(message, content, sha, true)
+        { }
+
+        /// <summary>
+        /// Creates an instance of a <see cref="UpdateFileRequest" />.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="sha">The sha.</param>
+        /// <param name="branch">The branch the request is for.</param>
+        public UpdateFileRequest(string message, string content, string sha, string branch)
+           : this(message, content, sha, branch, true)
+        { }
+
+        /// <summary>
+        /// Creates an instance of a <see cref="UpdateFileRequest" />.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="sha">The sha.</param>
+        /// <param name="convertContentToBase64">True to convert content to base64.</param>
+        public UpdateFileRequest(string message, string content, string sha, bool convertContentToBase64)
+            : base(message, content, convertContentToBase64)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
@@ -168,8 +217,9 @@ namespace Octokit
         /// <param name="content">The content.</param>
         /// <param name="sha">The sha.</param>
         /// <param name="branch">The branch the request is for.</param>
-        public UpdateFileRequest(string message, string content, string sha, string branch)
-           : base(message, content, branch)
+        /// <param name="convertContentToBase64">True to convert content to base64.</param>
+        public UpdateFileRequest(string message, string content, string sha, string branch, bool convertContentToBase64)
+           : base(message, content, branch, convertContentToBase64)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
