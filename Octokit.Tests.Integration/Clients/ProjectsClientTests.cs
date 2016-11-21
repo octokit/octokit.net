@@ -25,8 +25,8 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetsAllProjects()
         {
-            var project1 = await CreateRepositoryProjectHelper(_github, _context);
-            var project2 = await CreateRepositoryProjectHelper(_github, _context);
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
             var projects = await _github.Repository.Projects.GetAllForRepository(_context.RepositoryId);
 
@@ -42,35 +42,25 @@ public class ProjectsClientTests
         }
     }
 
-    public class TheGetAllForOrganizationMethod : IDisposable
+    public class TheGetAllForOrganizationMethod
     {
         IGitHubClient _github;
-        OrganizationRepositoryWithTeamContext _context;
 
         public TheGetAllForOrganizationMethod()
         {
-            _github = EnterpriseHelper.GetAuthenticatedClient();
-
-            _context = _github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+            _github = Helper.GetAuthenticatedClient();
         }
 
         [IntegrationTest]
         public async Task GetsAllProjects()
         {
-            var project1 = await CreateOrganizationProjectHelper(_github, _context);
-            var project2 = await CreateOrganizationProjectHelper(_github, _context);
+            var project1 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
+            var project2 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
 
-            var projects = await _github.Repository.Projects.GetAllForOrganization(_context.RepositoryContext.RepositoryName);
+            var projects = await _github.Repository.Projects.GetAllForOrganization(Helper.Organization);
 
-            Assert.Equal(2, projects.Count);
             Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
-        }
-
-        public void Dispose()
-        {
-            if (_context != null)
-                _context.Dispose();
         }
     }
 
@@ -90,7 +80,7 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetProject()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
             var result = await _github.Repository.Projects.Get(project.Id);
 
@@ -121,7 +111,7 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task UpdateProject()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
             var projectUpdate = new ProjectUpdate("newName");
 
@@ -154,7 +144,7 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task DeleteProject()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
             var result = await _github.Repository.Projects.Delete(project.Id);
 
@@ -184,9 +174,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetsAllColumns()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column1 = await CreateColumnHelper(_github, _context, project.Id);
-            var column2 = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
 
             var result = await _github.Repository.Projects.Columns.GetAll(project.Id);
 
@@ -218,8 +208,8 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
 
             var result = await _github.Repository.Projects.Columns.Get(column.Id);
 
@@ -249,8 +239,8 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task CreateColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
 
             Assert.Equal(project.Url, column.ProjectUrl);
         }
@@ -278,8 +268,8 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task UpdateColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
 
             var columnUpdate = new ProjectColumnUpdate("newName");
 
@@ -312,8 +302,8 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task DeleteColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
 
             var result = await _github.Repository.Projects.Columns.Delete(column.Id);
 
@@ -343,9 +333,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task MoveColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column1 = await CreateColumnHelper(_github, _context, project.Id);
-            var column2 = await CreateColumnHelper(_github, _context, project.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
 
             var positionFirst = new ProjectColumnMove(ProjectColumnPosition.First, null);
             var positionLast = new ProjectColumnMove(ProjectColumnPosition.Last, null);
@@ -383,10 +373,10 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetAllCards()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card1 = await CreateCardHelper(_github, _context, column.Id);
-            var card2 = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column.Id);
+            var card2 = await CreateCardHelper(_github, column.Id);
 
             var result = await _github.Repository.Projects.Cards.GetAll(column.Id);
 
@@ -418,9 +408,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetCard()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateCardHelper(_github, column.Id);
 
             var result = await _github.Repository.Projects.Cards.Get(card.Id);
 
@@ -450,9 +440,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task CreateCard()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateCardHelper(_github, column.Id);
 
             Assert.NotNull(card);
         }
@@ -480,9 +470,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task UpdateCard()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateCardHelper(_github, column.Id);
             var cardUpdate = new ProjectCardUpdate("newNameOfNote");
 
             var result = await _github.Repository.Projects.Cards.Update(card.Id, cardUpdate);
@@ -514,9 +504,9 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task DeleteCard()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateCardHelper(_github, column.Id);
 
             var result = await _github.Repository.Projects.Cards.Delete(card.Id);
 
@@ -546,11 +536,11 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task MoveCardInsideSameColumn()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column = await CreateColumnHelper(_github, _context, project.Id);
-            var card1 = await CreateCardHelper(_github, _context, column.Id);
-            var card2 = await CreateCardHelper(_github, _context, column.Id);
-            var card3 = await CreateCardHelper(_github, _context, column.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column.Id);
+            var card2 = await CreateCardHelper(_github, column.Id);
+            var card3 = await CreateCardHelper(_github, column.Id);
 
             var positionTop = new ProjectCardMove(ProjectCardPosition.Top, column.Id, null);
             var positionBottom = new ProjectCardMove(ProjectCardPosition.Top, column.Id, null);
@@ -568,12 +558,12 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task MoveCardBetweenDifferentColumns()
         {
-            var project = await CreateRepositoryProjectHelper(_github, _context);
-            var column1 = await CreateColumnHelper(_github, _context, project.Id);
-            var column2 = await CreateColumnHelper(_github, _context, project.Id);
-            var card1 = await CreateCardHelper(_github, _context, column1.Id);
-            var card2 = await CreateCardHelper(_github, _context, column1.Id);
-            var card3 = await CreateCardHelper(_github, _context, column1.Id);
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column1.Id);
+            var card2 = await CreateCardHelper(_github, column1.Id);
+            var card3 = await CreateCardHelper(_github, column1.Id);
 
             var positionTop = new ProjectCardMove(ProjectCardPosition.Top, column2.Id, null);
             var positionBottom = new ProjectCardMove(ProjectCardPosition.Top, column2.Id, null);
@@ -595,23 +585,23 @@ public class ProjectsClientTests
         }
     }
 
-    private static async Task<Project> CreateRepositoryProjectHelper(IGitHubClient githubClient, RepositoryContext context)
+    private static async Task<Project> CreateRepositoryProjectHelper(IGitHubClient githubClient, long repositoryId)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Projects.CreateForRepository(context.RepositoryId, newProject);
+        var result = await githubClient.Repository.Projects.CreateForRepository(repositoryId, newProject);
 
         return result;
     }
 
-    private static async Task<Project> CreateOrganizationProjectHelper(IGitHubClient githubClient, OrganizationRepositoryWithTeamContext context)
+    private static async Task<Project> CreateOrganizationProjectHelper(IGitHubClient githubClient, string organization)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Projects.CreateForOrganization(context.RepositoryContext.RepositoryName, newProject);
+        var result = await githubClient.Repository.Projects.CreateForOrganization(organization, newProject);
 
         return result;
     }
 
-    private static async Task<ProjectColumn> CreateColumnHelper(IGitHubClient githubClient, RepositoryContext context, int projectId)
+    private static async Task<ProjectColumn> CreateColumnHelper(IGitHubClient githubClient, int projectId)
     {
         var newColumn = new NewProjectColumn(Helper.MakeNameWithTimestamp("new-project-column"));
         var result = await githubClient.Repository.Projects.Columns.Create(projectId, newColumn);
@@ -619,7 +609,7 @@ public class ProjectsClientTests
         return result;
     }
 
-    private static async Task<ProjectCard> CreateCardHelper(IGitHubClient githubClient, RepositoryContext context, int columnId)
+    private static async Task<ProjectCard> CreateCardHelper(IGitHubClient githubClient, int columnId)
     {
         var newCard = new NewProjectCard(Helper.MakeNameWithTimestamp("new-card"));
         var result = await githubClient.Repository.Projects.Cards.Create(columnId, newCard);
