@@ -93,9 +93,12 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                client.GetAllForRepository("fake", "repo", options);
+                client.GetAllForRepository("fake", "repo", request, options);
 
-                gitHubClient.Received().Issue.Comment.GetAllForRepository("fake", "repo", request, options);
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
+                    request.ToParametersDictionary(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -117,9 +120,12 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                client.GetAllForRepository(1, options);
+                client.GetAllForRepository(1, request, options);
 
-                gitHubClient.Received().Issue.Comment.GetAllForRepository(1, request, options);
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repositories/1/issues/comments", UriKind.Relative),
+                    request.ToParametersDictionary(),
+                    null);
             }
 
             [Fact]
