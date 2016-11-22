@@ -28,7 +28,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                gitHubClient.Received().Repository.Projects.GetAllForRepository(1);
+                gitHubClient.Received().Repository.Project.GetAllForRepository(1);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForOrganization("org");
 
-                gitHubClient.Received().Repository.Projects.GetAllForOrganization("org");
+                gitHubClient.Received().Repository.Project.GetAllForOrganization("org");
             }
         }
 
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                gitHubClient.Repository.Projects.Received().Get(1);
+                gitHubClient.Repository.Project.Received().Get(1);
             }                     
         }
 
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Reactive
 
                 client.CreateForRepository(1, newProject);
 
-                gitHubClient.Repository.Projects.Received().CreateForRepository(1, newProject);
+                gitHubClient.Repository.Project.Received().CreateForRepository(1, newProject);
             }          
 
             [Fact]
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Reactive
 
                 client.CreateForOrganization("org", newProject);
 
-                gitHubClient.Repository.Projects.Received().CreateForOrganization("org", newProject);
+                gitHubClient.Repository.Project.Received().CreateForOrganization("org", newProject);
             }
 
             [Fact]
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Update(1, updateProject);
 
-                gitHubClient.Repository.Projects.Received().Update(1, updateProject);
+                gitHubClient.Repository.Project.Received().Update(1, updateProject);
             }            
 
             [Fact]
@@ -142,7 +142,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1);
 
-                gitHubClient.Repository.Projects.Received().Delete(1);
+                gitHubClient.Repository.Project.Received().Delete(1);
             }            
         }
     }

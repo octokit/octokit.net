@@ -85,7 +85,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/cards/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        IProjectCardsClient Cards { get; }
+        IProjectCardsClient Card { get; }
 
         /// <summary>
         /// A client for GitHub's Project Columns API.
@@ -93,6 +93,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/columns/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        IProjectColumnsClient Columns { get; }
+        IProjectColumnsClient Column { get; }
     }
 }
