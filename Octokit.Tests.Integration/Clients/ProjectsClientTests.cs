@@ -57,7 +57,7 @@ public class ProjectsClientTests
             var project1 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
             var project2 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
 
-            var projects = await _github.Repository.Projects.GetAllForOrganization(_context.RepositoryContext.RepositoryName);
+            var projects = await _github.Repository.Project.GetAllForOrganization(Helper.Organization);
 
             Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
@@ -588,7 +588,7 @@ public class ProjectsClientTests
     private static async Task<Project> CreateRepositoryProjectHelper(IGitHubClient githubClient, long repositoryId)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Project.CreateForRepository(context.RepositoryId, newProject);
+        var result = await githubClient.Repository.Project.CreateForRepository(repositoryId, newProject);
 
         return result;
     }
@@ -596,7 +596,7 @@ public class ProjectsClientTests
     private static async Task<Project> CreateOrganizationProjectHelper(IGitHubClient githubClient, string organization)
     {
         var newProject = new NewProject(Helper.MakeNameWithTimestamp("new-project"));
-        var result = await githubClient.Repository.Project.CreateForOrganization(context.RepositoryContext.RepositoryName, newProject);
+        var result = await githubClient.Repository.Project.CreateForOrganization(organization, newProject);
 
         return result;
     }
