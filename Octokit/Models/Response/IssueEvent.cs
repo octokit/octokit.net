@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -9,19 +10,17 @@ namespace Octokit
     {
         public IssueEvent() { }
 
-        public IssueEvent(int id, Uri url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, Uri commitUrl)
+        public IssueEvent(int id, Uri url, User actor, User assignee, Label label, string commitId, DateTimeOffset createdAt, Issue issue, Uri commitUrl)
         {
             Id = id;
             Url = url;
             Actor = actor;
             Assignee = assignee;
             Label = label;
-            Event = @event;
             CommitId = commitId;
             CreatedAt = createdAt;
             Issue = issue;
             CommitUrl = commitUrl;
-            EventText = @event.ToString();
         }
 
         /// <summary>
@@ -52,8 +51,10 @@ namespace Octokit
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState Event { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public EventInfoState? Event { get { return EventText.ParseEnumWithDefault(EventInfoState.Unknown); } }
 
+        [Parameter(Key = "event")]
         public string EventText { get; protected set; }
 
         /// <summary>

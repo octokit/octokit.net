@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -13,18 +14,16 @@ namespace Octokit
     {
         public RepositoryContentInfo() { }
 
-        public RepositoryContentInfo(string name, string path, string sha, int size, ContentType type, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl)
+        public RepositoryContentInfo(string name, string path, string sha, int size, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl)
         {
             Name = name;
             Path = path;
             Sha = sha;
             Size = size;
-            Type = type;
             DownloadUrl = downloadUrl;
             Url = url;
             GitUrl = gitUrl;
             HtmlUrl = htmlUrl;
-            TypeText = type.ToString();
         }
 
         /// <summary>
@@ -51,8 +50,10 @@ namespace Octokit
         /// The type of this content. It might be a File, Directory, Submodule, or Symlink
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
-        public ContentType Type { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public ContentType? Type { get { return TypeText.ParseEnumWithDefault(ContentType.Unknown); } }
 
+        [Parameter(Key = "type")]
         public string TypeText { get; protected set; }
 
         /// <summary>

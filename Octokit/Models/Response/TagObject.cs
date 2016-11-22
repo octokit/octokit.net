@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Octokit.Internal;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
@@ -8,17 +9,17 @@ namespace Octokit
     {
         public TagObject() { }
 
-        public TagObject(string url, string label, string @ref, string sha, User user, Repository repository, TaggedType type)
+        public TagObject(string url, string label, string @ref, string sha, User user, Repository repository)
             : base(url, label, @ref, sha, user, repository)
         {
-            Type = type;
-            TypeText = type.ToString();
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods",
             Justification = "Name defined by web api and required for deserialization")]
-        public TaggedType Type { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public TaggedType? Type { get { return TypeText.ParseEnumWithDefault(TaggedType.Unknown); } }
 
+        [Parameter(Key = "type")]
         public string TypeText { get; protected set; }
     }
 

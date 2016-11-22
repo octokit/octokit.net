@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Octokit.Internal;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -8,13 +9,11 @@ namespace Octokit
     {
         public Blob() { }
 
-        public Blob(string content, EncodingType encoding, string sha, int size)
+        public Blob(string content, string sha, int size)
         {
             Content = content;
-            Encoding = encoding;
             Sha = sha;
             Size = size;
-            EncodingText = encoding.ToString();
         }
 
         /// <summary>
@@ -25,8 +24,10 @@ namespace Octokit
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public EncodingType Encoding { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public EncodingType? Encoding { get { return EncodingText.ParseEnumWithDefault<EncodingType>(EncodingType.Unknown); } }
 
+        [Parameter(Key = "encoding")]
         public string EncodingText { get; protected set; }
 
         /// <summary>

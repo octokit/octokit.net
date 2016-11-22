@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,7 +11,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
         {
             Id = id;
             Url = url;
@@ -18,7 +19,6 @@ namespace Octokit
             CommentsUrl = commentsUrl;
             EventsUrl = eventsUrl;
             Number = number;
-            State = state;
             Title = title;
             Body = body;
             ClosedBy = closedBy;
@@ -33,7 +33,6 @@ namespace Octokit
             UpdatedAt = updatedAt;
             Locked = locked;
             Repository = repository;
-            StateText = state.ToString();
         }
 
         /// <summary>
@@ -69,8 +68,10 @@ namespace Octokit
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public ItemState? State { get { return StateText.ParseEnumWithDefault(ItemState.Unknown); } }
 
+        [Parameter(Key = "state")]
         public string StateText { get; protected set; }
 
         /// <summary>

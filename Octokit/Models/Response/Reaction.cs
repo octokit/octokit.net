@@ -26,12 +26,10 @@ namespace Octokit
     {
         public Reaction() { }
 
-        public Reaction(int id, User user, ReactionType content)
+        public Reaction(int id, User user)
         {
             Id = id;
             User = user;
-            Content = content;
-            ContentText = content.ToString();
         }
 
         /// <summary>
@@ -47,9 +45,10 @@ namespace Octokit
         /// <summary>
         /// The reaction type for this commit comment.
         /// </summary>
-        [Parameter(Key = "content")]
-        public ReactionType Content { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public ReactionType? Content { get { return ContentText.ParseEnumWithDefault(ReactionType.Unknown); } }
 
+        [Parameter(Key = "content")]
         public string ContentText { get; protected set; }
 
         internal string DebuggerDisplay

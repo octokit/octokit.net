@@ -95,6 +95,15 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(value, "s");
             return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
         }
+
+        public static TEnum? ParseEnumWithDefault<TEnum>(this string input, TEnum defaultValue) where TEnum : struct
+        {
+            if (input == null) return null;
+
+            TEnum value;
+            return Enum.TryParse(input, true, out value) ? value : defaultValue;
+        }
+
         static IEnumerable<string> SplitUpperCase(this string source)
         {
             Ensure.ArgumentNotNullOrEmptyString(source, "source");

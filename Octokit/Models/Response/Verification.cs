@@ -18,9 +18,10 @@ namespace Octokit
         /// <summary>
         /// The reason for verified value.
         /// </summary>
-        [Parameter(Key = "reason")]
-        public VerificationReason Reason { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public VerificationReason? Reason { get { return ReasonText.ParseEnumWithDefault(VerificationReason.Unknown); } }
 
+        [Parameter(Key = "reason")]
         public string ReasonText { get; protected set; }
 
         /// <summary>

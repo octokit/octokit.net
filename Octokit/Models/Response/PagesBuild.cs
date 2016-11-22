@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -12,17 +13,15 @@ namespace Octokit
     {
         public PagesBuild() { }
 
-        public PagesBuild(string url, PagesBuildStatus status, ApiError error, User pusher, Commit commit, TimeSpan duration, DateTime createdAt, DateTime updatedAt)
+        public PagesBuild(string url, ApiError error, User pusher, Commit commit, TimeSpan duration, DateTime createdAt, DateTime updatedAt)
         {
             Url = url;
-            Status = status;
             Error = error;
             Pusher = pusher;
             Commit = commit;
             Duration = duration;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
-            StatusText = status.ToString();
         }
 
         /// <summary>
@@ -32,8 +31,10 @@ namespace Octokit
         /// <summary>
         /// The status of the build.
         /// </summary>
-        public PagesBuildStatus Status { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public PagesBuildStatus? Status { get { return StatusText.ParseEnumWithDefault(PagesBuildStatus.Unknown); } }
 
+        [Parameter(Key = "status")]
         public string StatusText { get; protected set; }
 
         /// <summary>

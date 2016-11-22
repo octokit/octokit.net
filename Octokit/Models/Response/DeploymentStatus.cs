@@ -1,3 +1,4 @@
+using Octokit.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,18 +11,16 @@ namespace Octokit
     {
         public DeploymentStatus() { }
 
-        public DeploymentStatus(int id, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
+        public DeploymentStatus(int id, string url, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
         {
             Id = id;
             Url = url;
-            State = state;
             Creator = creator;
             Payload = payload;
             TargetUrl = targetUrl;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Description = description;
-            StateText = state.ToString();
         }
 
         /// <summary>
@@ -37,8 +36,10 @@ namespace Octokit
         /// <summary>
         /// The state of this deployment status.
         /// </summary>
-        public DeploymentState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public DeploymentState? State { get { return StateText.ParseEnumWithDefault(DeploymentState.Unknown); } }
 
+        [Parameter(Key = "state")]
         public string StateText { get; protected set; }
 
         /// <summary>

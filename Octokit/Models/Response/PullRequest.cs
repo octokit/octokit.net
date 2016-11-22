@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -14,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -23,7 +24,6 @@ namespace Octokit
             IssueUrl = issueUrl;
             StatusesUrl = statusesUrl;
             Number = number;
-            State = state;
             Title = title;
             Body = body;
             CreatedAt = createdAt;
@@ -43,7 +43,6 @@ namespace Octokit
             ChangedFiles = changedFiles;
             Milestone = milestone;
             Locked = locked;
-            StateText = state.ToString();
         }
 
         /// <summary>
@@ -84,8 +83,10 @@ namespace Octokit
         /// <summary>
         /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
-        public ItemState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public ItemState? State { get { return StateText.ParseEnumWithDefault(ItemState.Unknown); } }
 
+        [Parameter(Key = "state")]
         public string StateText { get; protected set; }
 
         /// <summary>
