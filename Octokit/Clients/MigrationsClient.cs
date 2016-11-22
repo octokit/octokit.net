@@ -36,7 +36,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Post<Migration>(endpoint, migration, AcceptHeaders.MigrationsApiPreview);
+            return await ApiConnection.Post<Migration>(endpoint, migration, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Get<List<Migration>>(endpoint, null, AcceptHeaders.MigrationsApiPreview);
+            return await ApiConnection.Get<List<Migration>>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
-            return await ApiConnection.Get<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview);
+            return await ApiConnection.Get<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
-            var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview);
+            var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
 
             return response.Body;
         }

@@ -67,7 +67,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
         }
 
         /// <summary>
@@ -76,6 +76,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public Task<IReadOnlyList<Organization>> GetAll(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
@@ -90,12 +91,67 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.Organizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
+        {
+          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+
+          return GetAllForUser(user, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
+        {
+          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+          Ensure.ArgumentNotNull(options, "options");
+
+          return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+        }
+
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAll()
+        {
+          return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <param name="request">Search parameters of the last organization seen</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        public Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            var url = ApiUrls.AllOrganizations(request.Since);
+
+            return ApiConnection.GetAll<Organization>(url);
         }
 
         /// <summary>

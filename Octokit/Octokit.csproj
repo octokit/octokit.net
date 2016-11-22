@@ -166,6 +166,7 @@
     <Compile Include="Models\Request\NewProjectColumn.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\OrganizationRequest.cs" />
     <Compile Include="Models\Request\ProjectCardMove.cs" />
     <Compile Include="Models\Request\ProjectCardUpdate.cs" />
     <Compile Include="Models\Request\ProjectColumnMove.cs" />

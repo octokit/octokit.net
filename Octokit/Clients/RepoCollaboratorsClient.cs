@@ -176,7 +176,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission);
+                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch
@@ -217,7 +217,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(repositoryId, user), permission);
+                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(repositoryId, user), permission).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch
