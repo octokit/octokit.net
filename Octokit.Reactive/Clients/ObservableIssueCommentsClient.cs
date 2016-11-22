@@ -87,7 +87,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return GetAllForRepository(owner, name, new IssueCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(owner, name, new IssueCommentRequest(), options);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return GetAllForRepository(repositoryId, new IssueCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(repositoryId, new IssueCommentRequest(), options);
         }
 
         /// <summary>
