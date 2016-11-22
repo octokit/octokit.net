@@ -78,7 +78,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetProject()
+        public async Task GetsProject()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
@@ -95,12 +95,12 @@ public class ProjectsClientTests
         }
     }
 
-    public class TheUpdateProjectMethod : IDisposable
+    public class TheUpdateMethod : IDisposable
     {
         IGitHubClient _github;
         RepositoryContext _context;
 
-        public TheUpdateProjectMethod()
+        public TheUpdateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -109,7 +109,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task UpdateProject()
+        public async Task UpdatesProject()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
@@ -142,7 +142,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task DeleteProject()
+        public async Task DeletesProject()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
@@ -206,7 +206,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetColumn()
+        public async Task GetsColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -237,7 +237,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task CreateColumn()
+        public async Task CreatesColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -266,7 +266,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task UpdateColumn()
+        public async Task UpdatesColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -300,7 +300,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task DeleteColumn()
+        public async Task DeletesColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -331,7 +331,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task MoveColumn()
+        public async Task MovesColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column1 = await CreateColumnHelper(_github, project.Id);
@@ -371,7 +371,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetAllCards()
+        public async Task GetsAllCards()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -406,7 +406,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetCard()
+        public async Task GetsCard()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -438,7 +438,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task CreateCard()
+        public async Task CreatesCard()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -468,7 +468,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task UpdateCard()
+        public async Task UpdatesCard()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -502,7 +502,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task DeleteCard()
+        public async Task DeletesCard()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -534,7 +534,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task MoveCardInsideSameColumn()
+        public async Task MovesCardWithinColumn()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
@@ -556,7 +556,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task MoveCardBetweenDifferentColumns()
+        public async Task MovesCardBetweenColumns()
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column1 = await CreateColumnHelper(_github, project.Id);
