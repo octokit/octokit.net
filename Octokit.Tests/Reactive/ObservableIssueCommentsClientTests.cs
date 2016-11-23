@@ -84,9 +84,9 @@ namespace Octokit.Tests.Reactive
 
                 var request = new IssueCommentRequest()
                 {
-                    Direction = SortDirection.Ascending,
-                    Since = DateTime.UtcNow,
-                    Sort = PullRequestReviewCommentSort.Created
+                    Direction = SortDirection.Descending,
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                    Sort = PullRequestReviewCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -97,7 +97,13 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", request, options);
 
-                gitHubClient.Received().Issue.Comment.GetAllForRepository("fake", "repo", request, options);
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["since"] == "2016-11-23T11:11:11Z"
+                        && d["sort"] == "updated"),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -108,9 +114,9 @@ namespace Octokit.Tests.Reactive
 
                 var request = new IssueCommentRequest()
                 {
-                    Direction = SortDirection.Ascending,
-                    Since = DateTime.UtcNow,
-                    Sort = PullRequestReviewCommentSort.Created
+                    Direction = SortDirection.Descending,
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                    Sort = PullRequestReviewCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -121,7 +127,13 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, request, options);
 
-                gitHubClient.Received().Issue.Comment.GetAllForRepository(1, request, options);
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repositories/1/issues/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                        && d["direction"] == "desc"
+                        && d["since"] == "2016-11-23T11:11:11Z"
+                        && d["sort"] == "updated"),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
