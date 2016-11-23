@@ -99,7 +99,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
                         && d["sort"] == "updated"),
@@ -129,7 +129,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/comments", UriKind.Relative),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
                         && d["sort"] == "updated"),
