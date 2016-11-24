@@ -10,6 +10,7 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary
     // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
     //       ensure it goes through there. :)
     /// <summary>
