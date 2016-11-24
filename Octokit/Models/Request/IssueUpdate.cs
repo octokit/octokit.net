@@ -129,5 +129,21 @@ namespace Octokit
                 Labels.Clear();
             }
         }
+
+        /// <summary>
+        /// Removes the specified label from the issue
+        /// </summary>
+        /// <param name="name">The name of the label to remove</param>
+        public void RemoveLabel(string name)
+        {
+            if(Labels == null)
+            {
+                Labels = new List<string>();
+            }
+            else
+            {
+                Labels.Remove(name);
+            }
+        }
     }
 }
