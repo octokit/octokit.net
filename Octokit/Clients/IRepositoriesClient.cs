@@ -24,6 +24,15 @@ namespace Octokit
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>
+        /// Client for managing branches in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/">Branches API documentation</a> for more details
+        /// </remarks>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
+        IRepositoryBranchesClient Branch { get; }
+
+        /// <summary>
         /// Client for managing commit comments in a repository.
         /// </summary>
         /// <remarks>
@@ -91,7 +100,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(int repositoryId);
+        Task Delete(long repositoryId);
 
         /// <summary>
         /// Gets the specified repository.
@@ -116,7 +125,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Repository> Get(int repositoryId);
+        Task<Repository> Get(long repositoryId);
 
         /// <summary>
         /// Gets all public repositories.
@@ -279,7 +288,7 @@ namespace Octokit
         /// Client for GitHub's Repository Deployments API
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// See the <a href="http://developer.github.com/v3/repos/deployments/">Deployments API documentation</a> for more details
         /// </remarks>
         IDeploymentsClient Deployment { get; }
 
@@ -325,6 +334,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name);
 
         /// <summary>
@@ -336,7 +346,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
-        Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId);
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
+        Task<IReadOnlyList<Branch>> GetAllBranches(long repositoryId);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -349,6 +360,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name, ApiOptions options);
 
         /// <summary>
@@ -361,7 +373,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>All <see cref="T:Octokit.Branch"/>es of the repository</returns>
-        Task<IReadOnlyList<Branch>> GetAllBranches(int repositoryId, ApiOptions options);
+        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
+        Task<IReadOnlyList<Branch>> GetAllBranches(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -382,7 +395,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -405,7 +418,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -428,7 +441,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, bool includeAnonymous);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -453,7 +466,7 @@ namespace Octokit
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(int repositoryId, bool includeAnonymous, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options);
 
         /// <summary>
         /// Gets all languages for the specified repository.
@@ -474,7 +487,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(int repositoryId);
+        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -495,7 +508,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(int repositoryId);
+        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -518,7 +531,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -539,7 +552,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(int repositoryId);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -562,7 +575,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(int repositoryId, ApiOptions options);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets the specified branch.
@@ -574,6 +587,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
+        [Obsolete("Please use RepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
         Task<Branch> GetBranch(string owner, string name, string branchName);
 
         /// <summary>
@@ -585,7 +599,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branchName">The name of the branch</param>
         /// <returns>The specified <see cref="T:Octokit.Branch"/></returns>
-        Task<Branch> GetBranch(int repositoryId, string branchName);
+        [Obsolete("Please use RepositoriesClient.Branch.Get() instead.  This method will be removed in a future version")]
+        Task<Branch> GetBranch(long repositoryId, string branchName);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
@@ -602,7 +617,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        Task<Repository> Edit(int repositoryId, RepositoryUpdate update);
+        Task<Repository> Edit(long repositoryId, RepositoryUpdate update);
 
         /// <summary>
         /// Edit the specified branch with the values given in <paramref name="update"/>
@@ -612,7 +627,7 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the RepositoryBranchesClient methods instead.")]
         Task<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
 
         /// <summary>
@@ -622,8 +637,8 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">New values to update the branch with</param>
         /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("BranchProtection preview functionality in the GitHub API has had breaking changes.  This existing implementation will cease to work when the preview period ends.")]
-        Task<Branch> EditBranch(int repositoryId, string branch, BranchUpdate update);
+        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the RepositoryBranchesClient methods instead.")]
+        Task<Branch> EditBranch(long repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// A client for GitHub's Repository Pages API.
@@ -640,5 +655,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
         /// </remarks>
         IRepositoryInvitationsClient Invitation { get; }
+
+        /// <summary>
+        /// Access GitHub's Repository Traffic API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
+        /// </remarks>
+        IRepositoryTrafficClient Traffic { get; }
     }
 }

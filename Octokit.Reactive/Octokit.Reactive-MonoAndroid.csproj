@@ -208,6 +208,12 @@
     <Compile Include="Clients\ObservableUserGpgKeysClient.cs" />
     <Compile Include="Clients\IObservableRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\IObservableIssueTimelineClient.cs" />
+    <Compile Include="Clients\ObservableIssueTimelineClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

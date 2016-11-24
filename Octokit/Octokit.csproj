@@ -61,10 +61,14 @@
     <Compile Include="Clients\ICommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IIssueReactionsClient.cs" />
+    <Compile Include="Clients\IIssueTimelineClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
+    <Compile Include="Clients\IRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IRepositoryTrafficClient.cs" />
     <Compile Include="Clients\IssueCommentReactionsClient.cs" />
     <Compile Include="Clients\IssueReactionsClient.cs" />
+    <Compile Include="Clients\IssueTimelineClient.cs" />
     <Compile Include="Clients\IUserGpgKeysClient.cs" />
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClient.cs" />
@@ -80,6 +84,8 @@
     <Compile Include="Clients\Enterprise\IEnterpriseClient.cs" />
     <Compile Include="Clients\Enterprise\IEnterpriseSearchIndexingClient.cs" />
     <Compile Include="Clients\IMigrationsClient.cs" />
+    <Compile Include="Clients\Enterprise\EnterpriseProbe.cs" />
+    <Compile Include="Clients\Enterprise\IEnterpriseProbe.cs" />
     <Compile Include="Clients\IMergingClient.cs" />
     <Compile Include="Clients\IMigrationClient.cs" />
     <Compile Include="Clients\IOAuthClient.cs" />
@@ -96,6 +102,7 @@
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
+    <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
     <Compile Include="Clients\IRepositoryCommentsClient.cs" />
     <Compile Include="Clients\FeedsClient.cs" />
@@ -104,6 +111,7 @@
     <Compile Include="Clients\RepositoryDeployKeysClient.cs" />
     <Compile Include="Clients\RepositoryInvitationsClient.cs" />
     <Compile Include="Clients\RepositoryPagesClient.cs" />
+    <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Clients\UserAdministrationClient.cs" />
     <Compile Include="Clients\UserGpgKeysClient.cs" />
     <Compile Include="Clients\UserKeysClient.cs" />
@@ -121,6 +129,7 @@
     <Compile Include="Helpers\ApiErrorExtensions.cs" />
     <Compile Include="Helpers\ApiUrls.Authorizations.cs" />
     <Compile Include="Helpers\ConcurrentCache.cs" />
+    <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
@@ -132,6 +141,7 @@
     <Compile Include="Http\ProductHeaderValue.cs" />
     <Compile Include="Http\RequestBody.cs" />
     <Compile Include="Clients\IReactionsClient.cs" />
+    <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
     <Compile Include="Models\Request\BranchUpdate.cs" />
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Models\Request\AssigneesUpdate.cs" />
@@ -148,11 +158,13 @@
     <Compile Include="Models\Request\NewPublicKey.cs" />
     <Compile Include="Models\Request\NewRepositoryWebHook.cs" />
     <Compile Include="Models\Request\NewUser.cs" />
+    <Compile Include="Models\Request\OrganizationRequest.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
     <Compile Include="Models\Request\Enterprise\SearchIndexingTarget.cs" />
+    <Compile Include="Models\Request\RepositoryTrafficRequest.cs" />
     <Compile Include="Models\Request\SearchIssuesRequestExclusions.cs" />
     <Compile Include="Models\Request\Signature.cs" />
     <Compile Include="Models\Request\CreateFileRequest.cs" />
@@ -208,7 +220,14 @@
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\PublicKey.cs" />
     <Compile Include="Models\Response\PullRequestFile.cs" />
+    <Compile Include="Models\Response\RenameInfo.cs" />
     <Compile Include="Models\Response\RepositoryInvitation.cs" />
+    <Compile Include="Models\Response\SourceInfo.cs" />
+    <Compile Include="Models\Response\TimelineEventInfo.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficView.cs" />
     <Compile Include="Models\Response\UserRenameResponse.cs" />
     <Compile Include="Models\Response\ResourceRateLimit.cs" />
     <Compile Include="Models\Response\RepositoryContent.cs" />

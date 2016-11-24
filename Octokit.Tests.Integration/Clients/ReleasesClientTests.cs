@@ -173,7 +173,7 @@ public class ReleasesClientTests
         readonly IReleasesClient _releaseClient;
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int repositoryId = 252774;
+        const long repositoryId = 252774;
 
         public TheGetAllMethod()
         {
@@ -414,7 +414,7 @@ public class ReleasesClientTests
         const string owner = "octokit";
         const string name = "octokit.net";
         const int releaseId = 2248679;
-        const int repositoryId = 7528679;
+        const long repositoryId = 7528679;
 
         public TheUploadAssetMethod()
         {

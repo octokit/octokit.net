@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        public IObservable<Merge> Create(int repositoryId, NewMerge merge)
+        public IObservable<Merge> Create(long repositoryId, NewMerge merge)
         {
             Ensure.ArgumentNotNull(merge, "merge");
 

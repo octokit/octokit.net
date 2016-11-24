@@ -12,7 +12,7 @@ public class DeploymentsClientTests
     {
         const string name = "name";
         const string owner = "owner";
-        const int repositoryId = 1;
+        const long repositoryId = 1;
 
         [Fact]
         public async Task EnsuresNonNullArguments()

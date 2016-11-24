@@ -36,7 +36,7 @@ namespace Octokit
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<User>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -63,7 +63,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">The options to change API's response.</param>
-        public Task<IReadOnlyList<User>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -134,7 +134,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        public async Task<bool> CheckAssignee(int repositoryId, string assignee)
+        public async Task<bool> CheckAssignee(long repositoryId, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
 

@@ -41,7 +41,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        public Task<CommitComment> Get(int repositoryId, int number)
+        public Task<CommitComment> Get(long repositoryId, int number)
         {
             return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
@@ -65,7 +65,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -92,7 +92,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -121,7 +121,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
 
@@ -153,7 +153,7 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(int repositoryId, string sha, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(options, "options");
@@ -186,7 +186,7 @@ namespace Octokit
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
-        public Task<CommitComment> Create(int repositoryId, string sha, NewCommitComment newCommitComment)
+        public Task<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
             Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
@@ -218,7 +218,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
-        public Task<CommitComment> Update(int repositoryId, int number, string commentUpdate)
+        public Task<CommitComment> Update(long repositoryId, int number, string commentUpdate)
         {
             Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
 
@@ -246,7 +246,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
-        public Task Delete(int repositoryId, int number)
+        public Task Delete(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.CommitComment(repositoryId, number));
         }

@@ -22,6 +22,7 @@ namespace Octokit
             Labels = new IssuesLabelsClient(apiConnection);
             Milestone = new MilestonesClient(apiConnection);
             Comment = new IssueCommentsClient(apiConnection);
+            Timeline = new IssueTimelineClient(apiConnection);
         }
 
         /// <summary>
@@ -52,6 +53,11 @@ namespace Octokit
         public IIssueCommentsClient Comment { get; private set; }
 
         /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        public IIssueTimelineClient Timeline { get; private set; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>
@@ -76,7 +82,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task<Issue> Get(int repositoryId, int number)
+        public Task<Issue> Get(long repositoryId, int number)
         {
             return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
         }
@@ -288,7 +294,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, new RepositoryIssueRequest());
         }
@@ -319,7 +325,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -352,7 +358,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -388,7 +394,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Issue>> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -420,7 +426,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        public Task<Issue> Create(int repositoryId, NewIssue newIssue)
+        public Task<Issue> Create(long repositoryId, NewIssue newIssue)
         {
             Ensure.ArgumentNotNull(newIssue, "newIssue");
 
@@ -454,7 +460,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public Task<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
+        public Task<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
 
@@ -482,7 +488,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task Lock(int repositoryId, int number)
+        public Task Lock(long repositoryId, int number)
         {
             return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object(), null, AcceptHeaders.IssueLockingUnlockingApiPreview);
         }
@@ -508,7 +514,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task Unlock(int repositoryId, int number)
+        public Task Unlock(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
         }

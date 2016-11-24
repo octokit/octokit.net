@@ -38,7 +38,7 @@ namespace Octokit
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId)
+        public Task<IReadOnlyList<Contributor>> GetContributors(long repositoryId)
         {
             return GetContributors(repositoryId, CancellationToken.None);
         }
@@ -62,7 +62,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        public Task<IReadOnlyList<Contributor>> GetContributors(int repositoryId, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<Contributor>> GetContributors(long repositoryId, CancellationToken cancellationToken)
         {
             return ApiConnection.GetQueuedOperation<Contributor>(ApiUrls.StatsContributors(repositoryId), cancellationToken);
         }
@@ -84,7 +84,7 @@ namespace Octokit
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<CommitActivity> GetCommitActivity(int repositoryId)
+        public Task<CommitActivity> GetCommitActivity(long repositoryId)
         {
             return GetCommitActivity(repositoryId, CancellationToken.None);
         }
@@ -100,8 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(
-                ApiUrls.StatsCommitActivity(owner, name), cancellationToken).ConfigureAwait(false);
+            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(ApiUrls.StatsCommitActivity(owner, name), cancellationToken).ConfigureAwait(false);
             return new CommitActivity(activity);
         }
 
@@ -110,10 +109,9 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        public async Task<CommitActivity> GetCommitActivity(int repositoryId, CancellationToken cancellationToken)
+        public async Task<CommitActivity> GetCommitActivity(long repositoryId, CancellationToken cancellationToken)
         {
-            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(
-                ApiUrls.StatsCommitActivity(repositoryId), cancellationToken).ConfigureAwait(false);
+            var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(ApiUrls.StatsCommitActivity(repositoryId), cancellationToken).ConfigureAwait(false);
             return new CommitActivity(activity);
         }
 
@@ -134,7 +132,7 @@ namespace Octokit
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<CodeFrequency> GetCodeFrequency(int repositoryId)
+        public Task<CodeFrequency> GetCodeFrequency(long repositoryId)
         {
             return GetCodeFrequency(repositoryId, CancellationToken.None);
         }
@@ -150,8 +148,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(
-                ApiUrls.StatsCodeFrequency(owner, name), cancellationToken).ConfigureAwait(false);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(ApiUrls.StatsCodeFrequency(owner, name), cancellationToken).ConfigureAwait(false);
             return new CodeFrequency(rawFrequencies);
         }
 
@@ -160,10 +157,9 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        public async Task<CodeFrequency> GetCodeFrequency(int repositoryId, CancellationToken cancellationToken)
+        public async Task<CodeFrequency> GetCodeFrequency(long repositoryId, CancellationToken cancellationToken)
         {
-            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(
-                ApiUrls.StatsCodeFrequency(repositoryId), cancellationToken).ConfigureAwait(false);
+            var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(ApiUrls.StatsCodeFrequency(repositoryId), cancellationToken).ConfigureAwait(false);
             return new CodeFrequency(rawFrequencies);
         }
 
@@ -184,7 +180,7 @@ namespace Octokit
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<Participation> GetParticipation(int repositoryId)
+        public Task<Participation> GetParticipation(long repositoryId)
         {
             return GetParticipation(repositoryId, CancellationToken.None);
         }
@@ -200,8 +196,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var result = await ApiConnection.GetQueuedOperation<Participation>(
-                ApiUrls.StatsParticipation(owner, name), cancellationToken).ConfigureAwait(false);
+            var result = await ApiConnection.GetQueuedOperation<Participation>(ApiUrls.StatsParticipation(owner, name), cancellationToken).ConfigureAwait(false);
             return result.FirstOrDefault();
         }
 
@@ -210,10 +205,9 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        public async Task<Participation> GetParticipation(int repositoryId, CancellationToken cancellationToken)
+        public async Task<Participation> GetParticipation(long repositoryId, CancellationToken cancellationToken)
         {
-            var result = await ApiConnection.GetQueuedOperation<Participation>(
-                ApiUrls.StatsParticipation(repositoryId), cancellationToken).ConfigureAwait(false);
+            var result = await ApiConnection.GetQueuedOperation<Participation>(ApiUrls.StatsParticipation(repositoryId), cancellationToken).ConfigureAwait(false);
             return result.FirstOrDefault();
         }
 
@@ -234,7 +228,7 @@ namespace Octokit
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<PunchCard> GetPunchCard(int repositoryId)
+        public Task<PunchCard> GetPunchCard(long repositoryId)
         {
             return GetPunchCard(repositoryId, CancellationToken.None);
         }
@@ -250,8 +244,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(
-                ApiUrls.StatsPunchCard(owner, name), cancellationToken).ConfigureAwait(false);
+            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(ApiUrls.StatsPunchCard(owner, name), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
 
@@ -260,10 +253,9 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        public async Task<PunchCard> GetPunchCard(int repositoryId, CancellationToken cancellationToken)
+        public async Task<PunchCard> GetPunchCard(long repositoryId, CancellationToken cancellationToken)
         {
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(
-                ApiUrls.StatsPunchCard(repositoryId), cancellationToken).ConfigureAwait(false);
+            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(ApiUrls.StatsPunchCard(repositoryId), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
     }

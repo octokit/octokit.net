@@ -504,6 +504,20 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Delete, data, null, null, CancellationToken.None);
         }
 
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(accepts, "accepts");
+
+            return SendData<T>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None);
+        }
+
         /// <summary>
         /// Base address for the connection.
         /// </summary>

@@ -67,7 +67,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public async Task<bool> Delete(int repositoryId, int invitationId)
+        public async Task<bool> Delete(long repositoryId, int invitationId)
         {
             var endpoint = ApiUrls.RepositoryInvitations(repositoryId, invitationId);
 
@@ -102,7 +102,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(int repositoryId)
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId)
         {
             return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), AcceptHeaders.InvitationsApiPreview);
         }
@@ -117,7 +117,7 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collsborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<RepositoryInvitation> Edit(int repositoryId, int invitationId, InvitationUpdate permissions)
+        public Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, "permissions");
 

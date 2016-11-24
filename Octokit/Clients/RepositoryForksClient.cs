@@ -43,7 +43,7 @@ namespace Octokit
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Repository>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<Repository>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -74,7 +74,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -107,7 +107,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request)
+        public Task<IReadOnlyList<Repository>> GetAll(long repositoryId, RepositoryForksListRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -143,7 +143,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Repository>> GetAll(int repositoryId, RepositoryForksListRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAll(long repositoryId, RepositoryForksListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -177,7 +177,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        public Task<Repository> Create(int repositoryId, NewRepositoryFork fork)
+        public Task<Repository> Create(long repositoryId, NewRepositoryFork fork)
         {
             Ensure.ArgumentNotNull(fork, "fork");
 

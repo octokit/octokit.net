@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
-        public Task<CompareResult> Compare(int repositoryId, string @base, string head)
+        public Task<CompareResult> Compare(long repositoryId, string @base, string head)
         {
             Ensure.ArgumentNotNullOrEmptyString(@base, "base");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
@@ -67,7 +67,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference for the commit (SHA)</param>
-        public Task<GitHubCommit> Get(int repositoryId, string reference)
+        public Task<GitHubCommit> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -91,7 +91,7 @@ namespace Octokit
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId)
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, new CommitRequest(), ApiOptions.None);
         }
@@ -115,7 +115,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, ApiOptions options)
         {
             return GetAll(repositoryId, new CommitRequest(), options);
         }
@@ -140,7 +140,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        public Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request)
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, CommitRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -170,7 +170,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<GitHubCommit>> GetAll(int repositoryId, CommitRequest request, ApiOptions options)
+        public Task<IReadOnlyList<GitHubCommit>> GetAll(long repositoryId, CommitRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -198,7 +198,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The repository reference</param>
-        public Task<string> GetSha1(int repositoryId, string reference)
+        public Task<string> GetSha1(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 

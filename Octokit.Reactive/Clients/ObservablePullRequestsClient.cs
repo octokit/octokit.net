@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the pull request</param>
-        public IObservable<PullRequest> Get(int repositoryId, int number)
+        public IObservable<PullRequest> Get(long repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/pulls/#list-pull-requests
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<PullRequest> GetAllForRepository(int repositoryId)
+        public IObservable<PullRequest> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequest> GetAllForRepository(int repositoryId, ApiOptions options)
+        public IObservable<PullRequest> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -143,7 +143,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        public IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request)
+        public IObservable<PullRequest> GetAllForRepository(long repositoryId, PullRequestRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -180,7 +180,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequest> GetAllForRepository(int repositoryId, PullRequestRequest request, ApiOptions options)
+        public IObservable<PullRequest> GetAllForRepository(long repositoryId, PullRequestRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -211,7 +211,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
-        public IObservable<PullRequest> Create(int repositoryId, NewPullRequest newPullRequest)
+        public IObservable<PullRequest> Create(long repositoryId, NewPullRequest newPullRequest)
         {
             Ensure.ArgumentNotNull(newPullRequest, "newPullRequest");
 
@@ -244,7 +244,7 @@ namespace Octokit.Reactive
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
-        public IObservable<PullRequest> Update(int repositoryId, int number, PullRequestUpdate pullRequestUpdate)
+        public IObservable<PullRequest> Update(long repositoryId, int number, PullRequestUpdate pullRequestUpdate)
         {
             Ensure.ArgumentNotNull(pullRequestUpdate, "pullRequestUpdate");
 
@@ -275,7 +275,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        public IObservable<PullRequestMerge> Merge(int repositoryId, int number, MergePullRequest mergePullRequest)
+        public IObservable<PullRequestMerge> Merge(long repositoryId, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
 
@@ -303,7 +303,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<bool> Merged(int repositoryId, int number)
+        public IObservable<bool> Merged(long repositoryId, int number)
         {
             return _client.Merged(repositoryId, number).ToObservable();
         }
@@ -329,7 +329,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/#list-commits-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<PullRequestCommit> Commits(int repositoryId, int number)
+        public IObservable<PullRequestCommit> Commits(long repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, number));
         }
@@ -355,7 +355,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<PullRequestFile> Files(int repositoryId, int number)
+        public IObservable<PullRequestFile> Files(long repositoryId, int number)
         {
             return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number));
         }

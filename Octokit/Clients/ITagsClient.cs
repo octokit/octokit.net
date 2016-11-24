@@ -34,7 +34,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the tag</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<GitTag> Get(int repositoryId, string reference);
+        Task<GitTag> Get(long repositoryId, string reference);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -55,6 +55,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        Task<GitTag> Create(int repositoryId, NewTag tag);
+        Task<GitTag> Create(long repositoryId, NewTag tag);
     }
 }

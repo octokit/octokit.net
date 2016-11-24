@@ -43,6 +43,11 @@ namespace Octokit.Reactive
         /// </summary>
         public IObservableMilestonesClient Milestone { get; private set; }
 
+        /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        public IObservableIssueTimelineClient Timeline { get; private set; }
+
         public ObservableIssuesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
@@ -54,6 +59,7 @@ namespace Octokit.Reactive
             Labels = new ObservableIssuesLabelsClient(client);
             Milestone = new ObservableMilestonesClient(client);
             Comment = new ObservableIssueCommentsClient(client);
+            Timeline = new ObservableIssueTimelineClient(client);
         }
 
         /// <summary>
@@ -81,7 +87,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Issue> Get(int repositoryId, int number)
+        public IObservable<Issue> Get(long repositoryId, int number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }
@@ -293,7 +299,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Issue> GetAllForRepository(int repositoryId)
+        public IObservable<Issue> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
         }
@@ -324,7 +330,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -357,7 +363,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNull(request, "request");
 
@@ -393,7 +399,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
@@ -425,7 +431,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        public IObservable<Issue> Create(int repositoryId, NewIssue newIssue)
+        public IObservable<Issue> Create(long repositoryId, NewIssue newIssue)
         {
             Ensure.ArgumentNotNull(newIssue, "newIssue");
 
@@ -460,7 +466,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, "issueUpdate");
 
@@ -488,7 +494,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Lock(int repositoryId, int number)
+        public IObservable<Unit> Lock(long repositoryId, int number)
         {
             return _client.Lock(repositoryId, number).ToObservable();
         }
@@ -514,7 +520,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Unlock(int repositoryId, int number)
+        public IObservable<Unit> Unlock(long repositoryId, int number)
         {
             return _client.Unlock(repositoryId, number).ToObservable();
         }

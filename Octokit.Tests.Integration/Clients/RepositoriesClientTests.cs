@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -530,6 +531,58 @@ public class RepositoriesClientTests
             Assert.Equal(false, _repository.HasWiki);
         }
 
+        [IntegrationTest]
+        public async Task UpdatesMergeMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    AllowMergeCommit = false,
+                    AllowSquashMerge = false,
+                    AllowRebaseMerge = true
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
+                Assert.False(editedRepository.AllowMergeCommit);
+                Assert.False(editedRepository.AllowSquashMerge);
+                Assert.True(editedRepository.AllowRebaseMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+                Assert.False(repository.AllowMergeCommit);
+                Assert.False(repository.AllowSquashMerge);
+                Assert.True(repository.AllowRebaseMerge);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesMergeMethodWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    AllowMergeCommit = true,
+                    AllowSquashMerge = true,
+                    AllowRebaseMerge = false
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                Assert.True(editedRepository.AllowMergeCommit);
+                Assert.True(editedRepository.AllowSquashMerge);
+                Assert.False(editedRepository.AllowRebaseMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryId);
+                Assert.True(repository.AllowMergeCommit);
+                Assert.True(repository.AllowSquashMerge);
+                Assert.False(repository.AllowRebaseMerge);
+            }
+        }
+
         public void Dispose()
         {
             Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, _repository);
@@ -605,6 +658,31 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsRenamedRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("michael-wolfenden", "Polly");
+
+            Assert.Equal("https://github.com/App-vNext/Polly.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+            //Assert.Equal(AccountType.User, repository.Owner.Type);
+
+            repository = await github.Repository.Get("fsprojects", "FSharp.Atom");
+
+            Assert.Equal("https://github.com/ionide/ionide-atom-fsharp.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+
+            repository = await github.Repository.Get("cabbage89", "Orchard.Weixin");
+
+            Assert.Equal("https://github.com/cabbage89/Orchard.WeChat.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsOrganizationRepositoryWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -638,6 +716,36 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptionsWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryId);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
     }
 
     public class TheGetAllPublicMethod
@@ -657,7 +765,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var request = new PublicRepositoryRequest(32732250);
+            var request = new PublicRepositoryRequest(32732250L);
             var repositories = await github.Repository.GetAllPublic(request);
 
             Assert.NotNull(repositories);
@@ -1370,6 +1478,12 @@ public class RepositoriesClientTests
             var branches = await github.Repository.GetAllBranches(7528679);
 
             Assert.NotEmpty(branches);
+
+            // Ensure Protection attribute is deserialized
+            foreach (var branch in branches)
+            {
+                Assert.NotNull(branch.Protection);
+            }
         }
 
         [IntegrationTest]
@@ -1682,6 +1796,104 @@ public class RepositoriesClientTests
             Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
             Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
             Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
+        }
+    }
+
+    public class TheEditBranchMethod
+    {
+        private readonly IRepositoriesClient _fixture;
+        private readonly RepositoryContext _context;
+
+        public TheEditBranchMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _context = github.CreateRepositoryContext("source-repo").Result;
+            _fixture = github.Repository;
+        }
+
+        public async Task CreateTheWorld()
+        {
+            // Set master branch to be protected, with some status checks
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1", "check2" });
+
+            var update = new BranchUpdate();
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
+
+            var newBranch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+        }
+
+        [IntegrationTest]
+        public async Task ProtectsBranch()
+        {
+            // Set master branch to be protected, with some status checks
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1", "check2", "check3" });
+
+            var update = new BranchUpdate();
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
+
+            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+
+            // Ensure a branch object was returned
+            Assert.NotNull(branch);
+
+            // Retrieve master branch
+            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
+
+            // Assert the changes were made
+            Assert.Equal(branch.Protection.Enabled, true);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Everyone);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 3);
+        }
+
+        [IntegrationTest]
+        public async Task RemoveStatusCheckEnforcement()
+        {
+            await CreateTheWorld();
+
+            // Remove status check enforcement
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Off, new List<string> { "check1" });
+
+            var update = new BranchUpdate();
+            update.Protection = new BranchProtection(true, requiredStatusChecks);
+
+            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+
+            // Ensure a branch object was returned
+            Assert.NotNull(branch);
+
+            // Retrieve master branch
+            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
+
+            // Assert the changes were made
+            Assert.Equal(branch.Protection.Enabled, true);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Off);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 1);
+        }
+
+        [IntegrationTest]
+        public async Task UnprotectsBranch()
+        {
+            await CreateTheWorld();
+
+            // Unprotect branch
+            // Deliberately set Enforcement and Contexts to some values (these should be ignored)
+            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1" });
+
+            var update = new BranchUpdate();
+            update.Protection = new BranchProtection(false, requiredStatusChecks);
+
+            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+
+            // Ensure a branch object was returned
+            Assert.NotNull(branch);
+
+            // Retrieve master branch
+            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
+
+            // Assert the branch is unprotected, and enforcement/contexts are cleared
+            Assert.Equal(branch.Protection.Enabled, false);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Off);
+            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 0);
         }
     }
 }

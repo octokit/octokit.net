@@ -39,7 +39,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId)
+        public Task<IReadOnlyList<User>> GetAllStargazers(long repositoryId)
         {
             return GetAllStargazers(repositoryId, ApiOptions.None);
         }
@@ -66,7 +66,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public Task<IReadOnlyList<User>> GetAllStargazers(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllStargazers(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
@@ -92,7 +92,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId)
+        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(long repositoryId)
         {
             return GetAllStargazersWithTimestamps(repositoryId, ApiOptions.None);
         }
@@ -119,7 +119,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(int repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 

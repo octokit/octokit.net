@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Security;
 using Octokit.Internal;
 
 namespace Octokit
@@ -158,6 +159,7 @@ namespace Octokit
             ApiError = (ApiError) info.GetValue("ApiError", typeof(ApiError));
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

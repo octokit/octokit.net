@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        public IObservable<GitTag> Get(int repositoryId, string reference)
+        public IObservable<GitTag> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        public IObservable<GitTag> Create(int repositoryId, NewTag tag)
+        public IObservable<GitTag> Create(long repositoryId, NewTag tag)
         {
             Ensure.ArgumentNotNull(tag, "tag");
 

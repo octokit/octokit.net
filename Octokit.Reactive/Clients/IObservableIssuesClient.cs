@@ -40,6 +40,11 @@ namespace Octokit.Reactive
         IObservableIssueCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for reading the timeline of events for an issue
+        /// </summary>
+        IObservableIssueTimelineClient Timeline { get; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>
@@ -62,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Issue> Get(int repositoryId, int number);
+        IObservable<Issue> Get(long repositoryId, int number);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
@@ -203,7 +208,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Issue> GetAllForRepository(int repositoryId);
+        IObservable<Issue> GetAllForRepository(long repositoryId);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -224,7 +229,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(int repositoryId, ApiOptions options);
+        IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -245,7 +250,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request);
+        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -268,7 +273,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(int repositoryId, RepositoryIssueRequest request, ApiOptions options);
+        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -287,7 +292,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        IObservable<Issue> Create(int repositoryId, NewIssue newIssue);
+        IObservable<Issue> Create(long repositoryId, NewIssue newIssue);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -310,7 +315,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        IObservable<Issue> Update(int repositoryId, int number, IssueUpdate issueUpdate);
+        IObservable<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate);
 
         /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
@@ -327,7 +332,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        IObservable<Unit> Lock(int repositoryId, int number);
+        IObservable<Unit> Lock(long repositoryId, int number);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -344,6 +349,6 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        IObservable<Unit> Unlock(int repositoryId, int number);
+        IObservable<Unit> Unlock(long repositoryId, int number);
     }
 }
