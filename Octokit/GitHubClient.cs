@@ -84,7 +84,6 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Activity = new ActivitiesClient(apiConnection);
             Authorization = new AuthorizationsClient(apiConnection);
-            Deployment = new DeploymentsClient(apiConnection);
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
@@ -246,15 +245,6 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/search/
         /// </remarks>
         public ISearchClient Search { get; private set; }
-
-        // TODO: this should be under Repositories to align with the API docs
-        /// <summary>
-        /// Access GitHub's Deployments API.
-        /// </summary>
-        /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/deployments/
-        /// </remarks>
-        public IDeploymentsClient Deployment { get; private set; }
 
         /// <summary>
         /// Access GitHub's Enterprise API.

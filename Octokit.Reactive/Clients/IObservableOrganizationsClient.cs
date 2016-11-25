@@ -46,6 +46,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         IObservable<Organization> GetAll(string user);
 
         /// <summary>
@@ -54,7 +55,36 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]  
         IObservable<Organization> GetAll(string user, ApiOptions options);
+
+        /// <summary>
+        /// Returns all the organizations for the specified user
+        /// </summary>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAllForUser(string user);
+
+        /// <summary>
+        /// Returns all the organizations for the specified user
+        /// </summary>
+        /// <param name="user">The login for the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAllForUser(string user, ApiOptions options);
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <returns></returns>
+        IObservable<Organization> GetAll();
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <param name="request">Search parameters of the last organization seen</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAll(OrganizationRequest request);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
