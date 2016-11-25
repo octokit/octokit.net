@@ -134,12 +134,12 @@ Target "BuildDotNetCore" (fun _ ->
 
 Target "UnitTestsDotNetCore" (fun _ ->
     [ "./Octokit.Tests"
-      "./Octokit.Tests.Convention"
+      "./Octokit.Tests.Conventions"
       "./Octokit.Next.Tests" ]
     |> Seq.iter (fun d ->
         Fake.DotNetCli.Test (fun p ->
             { p with
-                WorkingDir - d })
+                WorkingDir = d })
     )
 )
 
