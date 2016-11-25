@@ -118,7 +118,6 @@ Target "RestoreDotNetCore" (fun _ ->
       "./Octokit.Reactive"
       "./Octokit.Tests"
       "./Octokit.Tests.Conventions"
-      "./Octokit.Tests.Integration"
       "./Octokit.Next"
       "./Octokit.Next.Tests" ]
     |> Seq.iter (fun d ->
