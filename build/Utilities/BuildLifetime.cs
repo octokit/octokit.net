@@ -42,12 +42,14 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
 
         // Force publish?
         context.ForcePublish = context.Argument<bool>("forcepublish", false);
-        
+
         // Setup projects.
         context.Projects = new Project[]
         {
-            new Project { Name = "Octokit.Next", Path = "./Octokit.Next/project.json", Publish = true },
-            new Project { Name = "Octokit.Next.Tests", Path = "./Octokit.Next.Tests/project.json", Tests = true }
+            new Project { Name = "Octokit", Path = "./Octokit/project.json", Publish = true },
+            new Project { Name = "Octokit.Reactive", Path = "./Octokit.Reactive/project.json", Publish = true },
+            new Project { Name = "Octokit.Tests", Path = "./Octokit.Tests/project.json", Tests = true },
+            new Project { Name = "Octokit.Tests.Conventions", Path = "./Octokit.Tests.Conventions/project.json", Tests = true }
         };
 
         // Install tools
