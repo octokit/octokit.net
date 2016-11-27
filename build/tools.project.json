@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "GitVersion.CommandLine": "3.6.2"
+  },
+  "frameworks": {
+    "net45": {
+    }
+  }
+}

@@ -1,7 +1,8 @@
 init:
   - git config --global core.autocrlf input
 build_script:
-  - cmd: build.cmd UnitTestsDotNetCore
+  - dotnet restore .\build --verbosity error
+  - dotnet run -p .\build
 test: off
 nuget:
   account_feed: true
