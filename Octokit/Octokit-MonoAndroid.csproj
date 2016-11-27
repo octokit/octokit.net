@@ -97,6 +97,7 @@
     <Compile Include="Models\Request\NewTag.cs" />
     <Compile Include="Models\Request\NewTree.cs" />
     <Compile Include="Models\Request\NewTreeItem.cs" />
+    <Compile Include="Models\Request\OrganizationRequest.cs" />
     <Compile Include="Models\Request\PullRequestRequest.cs" />
     <Compile Include="Models\Request\PullRequestUpdate.cs" />
     <Compile Include="Models\Request\RequestParameters.cs" />
@@ -505,6 +506,13 @@
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Models\Request\BranchProtectionUpdate.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficClone.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficPath.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficReferrer.cs" />
+    <Compile Include="Models\Response\RepositoryTrafficView.cs" />
+    <Compile Include="Clients\IRepositoryTrafficClient.cs" />
+    <Compile Include="Models\Request\RepositoryTrafficRequest.cs" />
+    <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />

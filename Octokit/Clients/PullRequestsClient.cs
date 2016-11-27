@@ -259,8 +259,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(owner, name, number);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null,
-                    AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null, AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -292,8 +291,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(repositoryId, number);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null,
-                    AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null, AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {

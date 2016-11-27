@@ -196,6 +196,8 @@
     <Compile Include="Clients\ObservableIssueTimelineClient.cs" />
     <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
+    <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
+    <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

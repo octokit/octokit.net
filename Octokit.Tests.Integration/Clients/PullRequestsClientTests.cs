@@ -638,6 +638,54 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanBeMergedWithMergeMethod()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Merge };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
+        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
+
+        Assert.True(result.Merged);
+        Assert.Equal("fake title\n\nfake commit message", commit.Commit.Message);
+    }
+
+    [IntegrationTest]
+    public async Task CanBeMergedWithSquashMethod()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Squash };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
+        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
+
+        Assert.True(result.Merged);
+        Assert.Equal("fake title\n\nfake commit message", commit.Commit.Message);
+    }
+
+    [IntegrationTest]
+    public async Task CanBeMergedWithRebaseMethod()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Rebase };
+        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
+        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
+
+        Assert.True(result.Merged);
+        Assert.Equal("this is a 2nd commit to merge into the pull request", commit.Commit.Message);
+    }
+
+    [IntegrationTest]
     public async Task CannotBeMergedDueMismatchConflict()
     {
         await CreateTheWorld();
@@ -703,7 +751,7 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(1, result.Count);
+        Assert.Equal(2, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
     }
 
@@ -717,7 +765,7 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(_context.Repository.Id, pullRequest.Number);
 
-        Assert.Equal(1, result.Count);
+        Assert.Equal(2, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
     }
 
@@ -746,11 +794,11 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
         Assert.Equal(0, result[0].Commit.CommentCount);
-        Assert.Equal(commitMessage, result[1].Commit.Message);
-        Assert.Equal(1, result[1].Commit.CommentCount);
+        Assert.Equal(commitMessage, result[2].Commit.Message);
+        Assert.Equal(1, result[2].Commit.CommentCount);
     }
 
     [IntegrationTest]
@@ -778,11 +826,11 @@ public class PullRequestsClientTests : IDisposable
 
         var result = await _fixture.Commits(_context.Repository.Id, pullRequest.Number);
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
         Assert.Equal("this is the commit to merge into the pull request", result[0].Commit.Message);
         Assert.Equal(0, result[0].Commit.CommentCount);
-        Assert.Equal(commitMessage, result[1].Commit.Message);
-        Assert.Equal(1, result[1].Commit.CommentCount);
+        Assert.Equal(commitMessage, result[2].Commit.Message);
+        Assert.Equal(1, result[2].Commit.CommentCount);
     }
 
     [IntegrationTest]
@@ -848,8 +896,11 @@ public class PullRequestsClientTests : IDisposable
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
         var featureBranchCommit = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
+        var featureBranchTree2 = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new a 2nd time" } });
+        var featureBranchCommit2 = await CreateCommit("this is a 2nd commit to merge into the pull request", featureBranchTree2.Sha, featureBranchCommit.Sha);
+
         // create branch
-        await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
 
         var otherFeatureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something else" } });
         var otherFeatureBranchCommit = await CreateCommit("this is the other commit to merge into the other pull request", otherFeatureBranchTree.Sha, newMaster.Sha);

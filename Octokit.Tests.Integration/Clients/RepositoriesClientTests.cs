@@ -531,6 +531,58 @@ public class RepositoriesClientTests
             Assert.Equal(false, _repository.HasWiki);
         }
 
+        [IntegrationTest]
+        public async Task UpdatesMergeMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    AllowMergeCommit = false,
+                    AllowSquashMerge = false,
+                    AllowRebaseMerge = true
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
+                Assert.False(editedRepository.AllowMergeCommit);
+                Assert.False(editedRepository.AllowSquashMerge);
+                Assert.True(editedRepository.AllowRebaseMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+                Assert.False(repository.AllowMergeCommit);
+                Assert.False(repository.AllowSquashMerge);
+                Assert.True(repository.AllowRebaseMerge);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesMergeMethodWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    AllowMergeCommit = true,
+                    AllowSquashMerge = true,
+                    AllowRebaseMerge = false
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                Assert.True(editedRepository.AllowMergeCommit);
+                Assert.True(editedRepository.AllowSquashMerge);
+                Assert.False(editedRepository.AllowRebaseMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryId);
+                Assert.True(repository.AllowMergeCommit);
+                Assert.True(repository.AllowSquashMerge);
+                Assert.False(repository.AllowRebaseMerge);
+            }
+        }
+
         public void Dispose()
         {
             Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, _repository);
@@ -664,6 +716,36 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryMergeOptionsWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryId);
+
+                Assert.NotNull(repository.AllowRebaseMerge);
+                Assert.NotNull(repository.AllowSquashMerge);
+                Assert.NotNull(repository.AllowMergeCommit);
+            }
+        }
     }
 
     public class TheGetAllPublicMethod
@@ -683,7 +765,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var request = new PublicRepositoryRequest(32732250);
+            var request = new PublicRepositoryRequest(32732250L);
             var repositories = await github.Repository.GetAllPublic(request);
 
             Assert.NotNull(repositories);
