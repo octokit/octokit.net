@@ -1,6 +1,6 @@
 using Cake.Frosting;
 
-[Dependency(typeof(UnitTests))]
+[Dependency(typeof(Package))]
 public class Default : FrostingTask
 {
 }
