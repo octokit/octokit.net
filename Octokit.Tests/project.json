@@ -1,13 +1,16 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "xunit",
   "title": "Octokit.Tests",
-  "authors": [ "GitHub" ],
+  "authors": [
+    "GitHub"
+  ],
   "description": "Tests for Octokit",
   "summary": "Tests for Octokit",
-
   "xmlDoc": true,
-
+  "buildOptions": {
+    "nowarn": [ "CS4014", "CS1998" ]
+  },
   "frameworks": {
     "netcoreapp1.0": {
       "buildOptions": {
@@ -17,8 +20,12 @@
         ]
       },
       "dependencies": {
-        "Octokit": { "target": "project" },
-        "Octokit.Reactive": { "target": "project" },
+        "Octokit": {
+          "target": "project"
+        },
+        "Octokit.Reactive": {
+          "target": "project"
+        },
         "NETStandard.Library": "1.6.0",
         "NSubstitute": "2.0.0-rc",
         "xunit": "2.2.0-beta2-build3300",

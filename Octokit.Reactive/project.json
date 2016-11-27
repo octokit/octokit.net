@@ -1,10 +1,11 @@
 ﻿{
   "version": "1.0.0-*",
   "title": "Octokit.Reactive",
-  "authors": [ "GitHub" ],
+  "authors": [
+    "GitHub"
+  ],
   "description": "An IObservable based GitHub API client library for .NET using Reactive Extensions",
   "summary": "An IObservable based GitHub API client library for .NET using Reactive Extensions",
-
   "xmlDoc": true,
   "buildOptions": {
     "compile": {
@@ -15,12 +16,12 @@
       ]
     }
   },
-
   "dependencies": {
-    "Octokit": { "target": "project" },
+    "Octokit": {
+      "target": "project"
+    },
     "System.Reactive": "3.1.0"
   },
-
   "frameworks": {
     "netstandard1.1": {},
     "net45": {}
