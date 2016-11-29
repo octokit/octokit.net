@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Octokit.net by waxmihs2902</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Octokit.net</h1>
+      <h2 class="project-tagline">A GitHub API client library for .NET </h2>
+      <a href="https://github.com/waxmihs2902/octokit.net" class="btn">View on GitHub</a>
+      <a href="https://github.com/waxmihs2902/octokit.net/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/waxmihs2902/octokit.net/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="octokit---github-api-client-library-for-net" class="anchor" href="#octokit---github-api-client-library-for-net" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Octokit - GitHub API Client Library for .NET</h1>
+
+<p><a href="https://ci.appveyor.com/project/github-windows/octokit-net/branch/master"><img src="https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true" alt="Build status"></a> <a href="https://travis-ci.org/octokit/octokit.net"><img src="https://travis-ci.org/octokit/octokit.net.svg" alt="Build Status"></a> <a href="https://gitter.im/octokit/octokit.net?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/octokit/octokit.net"></a></p>
+
+<p><img src="octokit-dotnet_2.png" alt="logo"></p>
+
+<p>Octokit is a client library targeting .NET 4.5 and above that provides an easy
+way to interact with the <a href="http://developer.github.com/v3/">GitHub API</a>.</p>
+
+<h2>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage examples</h2>
+
+<p>Get public info on a specific user.</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> github = <span class="pl-k">new</span> GitHubClient(<span class="pl-k">new</span> ProductHeaderValue(<span class="pl-s"><span class="pl-pds">"</span>MyAmazingApp<span class="pl-pds">"</span></span>));
+<span class="pl-k">var</span> user = <span class="pl-k">await</span> github.User.Get(<span class="pl-s"><span class="pl-pds">"</span>half-ogre<span class="pl-pds">"</span></span>);
+Console.WriteLine(user.Followers + <span class="pl-s"><span class="pl-pds">"</span> folks love the half ogre!<span class="pl-pds">"</span></span>);</pre></div>
+
+<h2>
+<a id="supported-platforms" class="anchor" href="#supported-platforms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported Platforms</h2>
+
+<ul>
+<li>.NET 4.5 (Desktop / Server)</li>
+<li>Xamarin.iOS / Xamarin.Android / Xamarin.Mac</li>
+<li>Mono 3.x</li>
+<li>Windows 8 / 8.1 Store Apps</li>
+</ul>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>Octokit is available on NuGet.</p>
+
+<pre><code>Install-Package Octokit
+</code></pre>
+
+<p>or an IObservable based GitHub API client library for .NET using Reactive Extensions</p>
+
+<pre><code>Install-Package Octokit.Reactive
+</code></pre>
+
+<h3>
+<a id="beta-packages" class="anchor" href="#beta-packages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Beta packages</h3>
+
+<p>Unstable NuGet packages that track the master branch of this repository are available at
+<a href="https://ci.appveyor.com/nuget/octokit-net">https://ci.appveyor.com/nuget/octokit-net</a></p>
+
+<p>In Xamarin Studio you can find this option under the project's context menu: <strong>Add | Add Packages...</strong>*.</p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>Documentation is available at <a href="http://octokitnet.readthedocs.io/en/latest/">http://octokitnet.readthedocs.io/en/latest/</a>.</p>
+
+<h2>
+<a id="build" class="anchor" href="#build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build</h2>
+
+<p>Octokit is a single assembly designed to be easy to deploy anywhere. If you
+prefer to compile it yourself, you’ll need:</p>
+
+<ul>
+<li>Visual Studio 2015 or Xamarin Studio</li>
+<li>Windows 8.1 or higher to build and test the WinRT projects</li>
+</ul>
+
+<p>To clone it locally click the "Clone in Desktop" button above or run the 
+following git commands.</p>
+
+<pre><code>git clone git@github.com:octokit/Octokit.net.git Octokit
+cd Octokit
+.\build.cmd
+</code></pre>
+
+<h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p>Visit the <a href="https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md">Contributor Guidelines</a>
+for more details.</p>
+
+<h2>
+<a id="problems" class="anchor" href="#problems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Problems?</h2>
+
+<p>Octokit is 100% certified to be bug free. If you find an issue with our
+certification, please visit the <a href="https://github.com/octokit/octokit.net/issues">issue tracker</a>
+and report the issue.</p>
+
+<p>Please be kind and search to see if the issue is already logged before creating
+a new one. If you're pressed for time, log it anyways.</p>
+
+<p>When creating an issue, clearly explain</p>
+
+<ul>
+<li>What you were trying to do.</li>
+<li>What you expected to happen.</li>
+<li>What actually happened.</li>
+<li>Steps to reproduce the problem.</li>
+</ul>
+
+<p>Also include any other information you think is relevant to reproduce the
+problem.</p>
+
+<h2>
+<a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Related Projects</h2>
+
+<ul>
+<li>
+<a href="https://github.com/alfhenrik/ScriptCs.OctoKit">ScriptCs.OctoKit</a> - a <a href="https://github.com/scriptcs/scriptcs/wiki/Script-Packs">script pack</a> to use Octokit in scriptcs </li>
+<li>
+<a href="https://github.com/ryanrousseau/ScriptCs.OctokitLibrary">ScriptCs.OctokitLibrary</a> - a <a href="https://github.com/scriptcs/scriptcs/wiki/Script-Libraries">script library</a> to use Octokit in scriptcs</li>
+</ul>
+
+<h2>
+<a id="copyright-and-license" class="anchor" href="#copyright-and-license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copyright and License</h2>
+
+<p>Copyright 2013 GitHub, Inc.</p>
+
+<p>Licensed under the <a href="https://github.com/octokit/octokit.net/blob/master/LICENSE.txt">MIT License</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/waxmihs2902/octokit.net">Octokit.net</a> is maintained by <a href="https://github.com/waxmihs2902">waxmihs2902</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
