@@ -17,5 +17,5 @@ before_install:
 
 script:
   - dotnet --info
-  - dotnet restore .\build --verbosity error
-  - dotnet run -p .\build
+  - dotnet restore ./build --verbosity error
+  - dotnet run -p ./build
