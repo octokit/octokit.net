@@ -17,4 +17,5 @@ before_install:
 
 script:
   - dotnet --info
-  - ./build.sh UnitTestsDotNetCore
+  - dotnet restore .\build --verbosity error
+  - dotnet run -p .\build
