@@ -447,6 +447,17 @@ public class ProjectsClientTests
             Assert.NotNull(card);
         }
 
+        [IntegrationTest]
+        public async Task CreatesIssueCard()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var issue = await _github.Issue.Create(_context.RepositoryId, new NewIssue("a test issue"));
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateIssueCardHelper(_github, issue.Id, column.Id);
+
+            Assert.NotNull(card);
+        }
+
         public void Dispose()
         {
             if (_context != null)
@@ -612,6 +623,14 @@ public class ProjectsClientTests
     private static async Task<ProjectCard> CreateCardHelper(IGitHubClient githubClient, int columnId)
     {
         var newCard = new NewProjectCard(Helper.MakeNameWithTimestamp("new-card"));
+        var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
+
+        return result;
+    }
+
+    private static async Task<ProjectCard> CreateIssueCardHelper(IGitHubClient githubClient, int issueId, int columnId)
+    {
+        var newCard = new NewProjectCard(issueId, ProjectCardContentType.Issue);
         var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
 
         return result;
