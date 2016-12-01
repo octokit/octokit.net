@@ -22,8 +22,8 @@ namespace Octokit.Reactive
 
             _client = client.Repository.Project;
             _connection = client.Connection;
-            Cards = new ObservableProjectCardsClient(client);
-            Columns = new ObservableProjectColumnsClient(client);
+            Card = new ObservableProjectCardsClient(client);
+            Column = new ObservableProjectColumnsClient(client);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/cards/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        public IObservableProjectCardsClient Cards { get; private set; }
+        public IObservableProjectCardsClient Card { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Project Columns API.
@@ -138,6 +138,6 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/columns/">Repository Projects API documentation</a> for more information.
         /// </remarks>
-        public IObservableProjectColumnsClient Columns { get; private set; }
+        public IObservableProjectColumnsClient Column { get; private set; }
     }
 }
