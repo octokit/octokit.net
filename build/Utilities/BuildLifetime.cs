@@ -48,8 +48,9 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
         {
             new Project { Name = "Octokit", Path = "./Octokit/project.json", Publish = true },
             new Project { Name = "Octokit.Reactive", Path = "./Octokit.Reactive/project.json", Publish = true },
-            new Project { Name = "Octokit.Tests", Path = "./Octokit.Tests/project.json", Tests = true },
-            new Project { Name = "Octokit.Tests.Conventions", Path = "./Octokit.Tests.Conventions/project.json", Tests = true }
+            new Project { Name = "Octokit.Tests", Path = "./Octokit.Tests/project.json", UnitTests = true },
+            new Project { Name = "Octokit.Tests.Conventions", Path = "./Octokit.Tests.Conventions/project.json", UnitTests = true },
+            new Project { Name = "Octokit.Tests.Integration", Path = "./Octokit.Tests.Integration/project.json", IntegrationTests = true }
         };
 
         // Install tools

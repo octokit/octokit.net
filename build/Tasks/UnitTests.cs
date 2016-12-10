@@ -5,14 +5,14 @@ using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
-[TaskName("Dotnet-Test")]
+[TaskName("Dotnet-Unit-Tests")]
 public class UnitTests : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
-        foreach (var project in context.Projects.Where(x => x.Tests))
+        foreach (var project in context.Projects.Where(x => x.UnitTests))
         {
-            context.Information("Executing Test Project {0}...", project.Name);
+            context.Information("Executing Unit Tests Project {0}...", project.Name);
             context.DotNetCoreTest(
                 project.Path.FullPath,
                 new DotNetCoreTestSettings

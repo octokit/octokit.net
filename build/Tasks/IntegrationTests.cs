@@ -1,0 +1,40 @@
+﻿using System.Linq;
+using Cake.Common.Diagnostics;
+using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNetCore.Test;
+using Cake.Frosting;
+
+[Dependency(typeof(Build))]
+[TaskName("Dotnet-Integration-Tests")]
+public class IntegrationTests : FrostingTask<BuildContext>
+{
+    public override void Run(BuildContext context)
+    {
+        foreach (var project in context.Projects.Where(x => x.IntegrationTests))
+        {
+            context.Information("Executing Integration Tests Project {0}...", project.Name);
+            context.DotNetCoreTest(
+                project.Path.FullPath,
+                new DotNetCoreTestSettings
+                {
+                    Configuration = context.Configuration,
+                    NoBuild = true,
+                    Verbose = false
+                });
+        }
+    }
+
+    public override bool ShouldRun(BuildContext context)
+    {
+        var environmentVariablesNames = new[] { "OCTOKIT_GITHUBUSERNAME", "OCTOKIT_GITHUBPASSWORD" };
+        var areEnvironmentVariablesSet = environmentVariablesNames.All(x => !string.IsNullOrEmpty(context.Environment.GetEnvironmentVariable(x)));
+
+        if (!areEnvironmentVariablesSet)
+        {
+            context.Warning($"The integration tests were skipped because the following environment variables are not set: {string.Join(", ", environmentVariablesNames)}.");
+            context.Warning("Please configure these environment variables for a GitHub test account (DO NOT USE A \"REAL\" ACCOUNT).");
+        }
+
+        return areEnvironmentVariablesSet;
+    }
+}

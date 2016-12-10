@@ -1,7 +1,6 @@
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Build;
-using Cake.Core;
 using Cake.Frosting;
 
 [Dependency(typeof(Restore))]
