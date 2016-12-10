@@ -2,9 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 #if !NO_SERIALIZABLE
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 #endif
 using System.Security;
 

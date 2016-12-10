@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 #if !NO_SERIALIZABLE
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 #endif
 
 namespace Octokit

@@ -3,9 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 #if !NO_SERIALIZABLE
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 #endif
 
 namespace Octokit
