@@ -109,7 +109,8 @@ namespace Octokit
             if (Assignees == null)
             {
                 Assignees = new List<string>();
-            }else
+            }
+            else
             {
                 Assignees.Remove(name);
             }
