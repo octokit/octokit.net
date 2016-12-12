@@ -100,6 +100,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Removes the specified assignee from the issue
+        /// </summary>
+        /// <param name="name">The login of the assignee to remove</param>
+        public void RemoveAssignee(string name)
+        {
+            // lazily create the label array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }else
+            {
+                Assignees.Remove(name);
+            }
+        }
+
+        /// <summary>
         /// Adds the specified label to the issue.
         /// </summary>
         /// <param name="name">The name of the label.</param>
