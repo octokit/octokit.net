@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using System.Security;
 
 namespace Octokit
 {
@@ -64,7 +65,7 @@ namespace Octokit
             if (info == null) return;
             AuthorizationCode = info.GetString("AuthorizationCode");
         }
-
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

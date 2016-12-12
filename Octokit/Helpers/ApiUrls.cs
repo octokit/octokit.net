@@ -75,6 +75,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
         public static Uri Organizations()
         {
             return _currentUserOrganizationsUrl;
@@ -85,9 +86,48 @@ namespace Octokit
         /// </summary>
         /// <param name="login">The login for the user</param>
         /// <returns></returns>
+        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
         public static Uri Organizations(string login)
         {
             return "users/{0}/orgs".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri UserOrganizations()
+        {
+            return "user/orgs".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.
+        /// </summary>
+        /// <param name="login">The login for the user</param>
+        /// <returns></returns>
+        public static Uri UserOrganizations(string login)
+        {
+            return "users/{0}/orgs".FormatUri(login);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organizations.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AllOrganizations()
+        {
+          return "organizations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organizations.
+        /// </summary>
+        /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
+        /// <returns></returns>
+        public static Uri AllOrganizations(long since)
+        {
+          return "organizations?since={0}".FormatUri(since);
         }
 
         /// <summary>
@@ -3202,6 +3242,90 @@ namespace Octokit
         public static Uri UserInvitations(int invitationId)
         {
             return "user/repository_invitations/{0}".FormatUri(invitationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic referrers.</returns>
+        public static Uri RepositoryTrafficReferrers(string owner, string repo)
+        {
+            return "repos/{0}/{1}/traffic/popular/referrers".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic referrers.</returns>
+        public static Uri RepositoryTrafficReferrers(long repositoryId)
+        {
+            return "repositories/{0}/traffic/popular/referrers".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic paths.</returns>
+        public static Uri RepositoryTrafficPaths(string owner, string repo)
+        {
+            return "repos/{0}/{1}/traffic/popular/paths".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic paths.</returns>
+        public static Uri RepositoryTrafficPaths(long repositoryId)
+        {
+            return "repositories/{0}/traffic/popular/paths".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic views.</returns>
+        public static Uri RepositoryTrafficViews(string owner, string repo)
+        {
+            return "repos/{0}/{1}/traffic/views".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic views.</returns>
+        public static Uri RepositoryTrafficViews(long repositoryId)
+        {
+            return "repositories/{0}/traffic/views".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic clones.</returns>
+        public static Uri RepositoryTrafficClones(string owner, string repo)
+        {
+            return "repos/{0}/{1}/traffic/clones".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository traffic clones.</returns>
+        public static Uri RepositoryTrafficClones(long repositoryId)
+        {
+            return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
         }
     }
 }

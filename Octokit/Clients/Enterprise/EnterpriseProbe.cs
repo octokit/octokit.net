@@ -77,7 +77,7 @@ namespace Octokit
             IResponse response;
             try
             {
-                response = await httpClient.Send(request);
+                response = await httpClient.Send(request).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {

@@ -154,7 +154,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllIssuesForRepository("fake", "repo");
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.ApiOptions);
             }
 
             [Fact]
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllIssuesForRepository(1);
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Args.ApiOptions);
             }
 
             [Fact]
@@ -183,7 +183,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllIssuesForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), options);
             }
 
             [Fact]
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllIssuesForRepository(1, options);
 
-                connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), options);
             }
 
             [Fact]

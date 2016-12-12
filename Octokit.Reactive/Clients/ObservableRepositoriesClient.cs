@@ -36,6 +36,7 @@ namespace Octokit.Reactive
             Merging = new ObservableMergingClient(client);
             Page = new ObservableRepositoryPagesClient(client);
             Invitation = new ObservableRepositoryInvitationsClient(client);
+            Traffic = new ObservableRepositoryTrafficClient(client);
         }
 
         /// <summary>
@@ -880,6 +881,14 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/">Repository Invitations API documentation</a> for more information.
         /// </remarks>
-        public IObservableRepositoryInvitationsClient Invitation { get; private set; }        
+        public IObservableRepositoryInvitationsClient Invitation { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Repository Traffic API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/traffic/
+        /// </remarks>
+        public IObservableRepositoryTrafficClient Traffic { get; private set; }
     }
 }
