@@ -21,7 +21,7 @@ namespace Octokit
         /// Client for managing comments.
         /// </summary>
         public IPullRequestReviewCommentsClient Comment { get; private set; }
-
+        public IPullRequestReviewCommentsClient ReviewComment { get; set; }
         /// <summary>
         /// Get a pull request by number.
         /// </summary>
