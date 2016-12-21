@@ -14,7 +14,9 @@ namespace Octokit.Reactive
         /// <summary>
         /// Client for managing comments.
         /// </summary>
+        [Obsolete("Please use IObservablePullRequestsClient.ReviewComment. This will be removed in a future version")]
         IObservablePullRequestReviewCommentsClient Comment { get; }
+        IObservablePullRequestReviewCommentsClient ReviewComment { get; }
 
         /// <summary>
         /// Gets a single Pull Request by number.
