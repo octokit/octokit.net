@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,13 +15,17 @@ namespace Octokit
     {
         public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
-            Comment = new PullRequestReviewCommentsClient(apiConnection);
+            ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
         }
 
         /// <summary>
         /// Client for managing comments.
         /// </summary>
-        public IPullRequestReviewCommentsClient Comment { get; private set; }
+        [Obsolete("Please use PullRequestsClient.ReviewComment instead. This method will be removed in a future version")]
+        public IPullRequestReviewCommentsClient Comment { get;  set; }
+        /// <summary>
+        /// Client for managing comments.
+        /// </summary>
         public IPullRequestReviewCommentsClient ReviewComment { get; set; }
         /// <summary>
         /// Get a pull request by number.
