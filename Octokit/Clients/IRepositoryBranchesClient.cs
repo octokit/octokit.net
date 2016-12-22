@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
-
 namespace Octokit
 {
     /// <summary>

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 
-
 namespace Octokit
 {
     /// <summary>

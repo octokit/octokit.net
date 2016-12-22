@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-
 namespace Octokit
 {
     /// <summary>

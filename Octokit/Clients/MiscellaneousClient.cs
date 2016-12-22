@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-
 namespace Octokit
 {
     /// <summary>
