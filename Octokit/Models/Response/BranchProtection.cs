@@ -108,10 +108,11 @@ namespace Octokit
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredPullRequestReviews requiredPullRequestReviews)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
         }
 
         /// <summary>
@@ -124,14 +125,20 @@ namespace Octokit
         /// </summary>
         public BranchProtectionPushRestrictions Restrictions { get; protected set; }
 
+        /// <summary>
+        /// Pull Request Review required settings for the protected branch
+        /// </summary>
+        public BranchProtectionRequiredPullRequestReviews RequiredPullRequestReviews { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "StatusChecks: {0} Restrictions: {1}",
-                    RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
-                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
+                     "StatusChecks: {0} Restrictions: {1} PullRequestReviews: {2}",
+                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
+                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
+                     RequiredPullRequestReviews.DebuggerDisplay);
             }
         }
     }
@@ -211,6 +218,33 @@ namespace Octokit
                     "Teams: {0} Users: {1}",
                     Teams == null ? "" : String.Join(",", Teams),
                     Users == null ? "" : String.Join(",", Users));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies if pull request reviews are required before merging a pull request made by a repository administrator.
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredPullRequestReviews
+    {
+        public BranchProtectionRequiredPullRequestReviews() { }
+
+        public BranchProtectionRequiredPullRequestReviews(bool includeAdmins)
+        {
+            IncludeAdmins = includeAdmins;
+        }
+
+        /// <summary>
+        /// Enforce pull request reviews for repository administrators
+        /// </summary>
+        public bool IncludeAdmins { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0}", IncludeAdmins);
             }
         }
     }

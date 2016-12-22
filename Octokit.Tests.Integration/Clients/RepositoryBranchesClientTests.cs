@@ -409,7 +409,7 @@ public class RepositoryBranchesClientTests
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
@@ -425,7 +425,7 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _userRepoContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
@@ -443,7 +443,7 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionPushRestrictionsUpdate(), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
@@ -461,7 +461,7 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionPushRestrictionsUpdate(), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 

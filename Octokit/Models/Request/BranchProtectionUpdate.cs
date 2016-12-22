@@ -20,10 +20,24 @@ namespace Octokit
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
+        /// <param name="requiredPullRequestReviews">Specifies whether repository administrators need to pass pull requests checks before being able to merge a pull request</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredPullRequestReviewsUpdate requiredPullRequestReviews)
         {
             RequiredStatusChecks = requiredStatusChecks;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = null;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
+        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
+        /// <param name="requiredPullRequestReviews">Specifies whether repository administrators need to pass pull requests checks before being able to merge a pull request</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionPushRestrictionsUpdate restrictions, BranchProtectionRequiredPullRequestReviewsUpdate requiredPullRequestReviews)
+        {
+            RequiredStatusChecks = null;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
+            Restrictions = restrictions;
         }
 
         /// <summary>
@@ -31,10 +45,12 @@ namespace Octokit
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions)
+        /// <param name="requiredPullRequestReviews">Specifies whether repository administrators need to pass pull request reviews before being able to merge a pull request</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, BranchProtectionRequiredPullRequestReviewsUpdate requiredPullRequestReviews)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
         }
 
         /// <summary>
@@ -42,6 +58,11 @@ namespace Octokit
         /// </summary>
         [SerializeNull]
         public BranchProtectionRequiredStatusChecksUpdate RequiredStatusChecks { get; protected set; }
+
+        /// <summary>
+        /// Pull Request review settings for the protected branch
+        /// </summary>
+        public BranchProtectionRequiredPullRequestReviewsUpdate RequiredPullRequestReviews { get; protected set; }
 
         /// <summary>
         /// Push access restrictions for the protected branch
@@ -54,9 +75,10 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "StatusChecks: {0} Restrictions: {1}",
+                    "StatusChecks: {0} Restrictions: {1} PullRequestReviews: {2}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
-                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
+                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
+                    RequiredPullRequestReviews.DebuggerDisplay);
             }
         }
     }
@@ -213,5 +235,35 @@ namespace Octokit
                 return string.Format(CultureInfo.InvariantCulture, String.Join(", ", this));
             }
         }
+    }
+
+    /// <summary>
+    /// Specifies whether repository administrators need to pass pull request reviews before being able to merge a pull request
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredPullRequestReviewsUpdate
+    {
+        /// <summary>
+        /// Sets whether repository administrators are allowed to merge a pull request without going through the review status checks
+        /// </summary>
+        /// <param name="includeAdmins">Enforce pull request reviews for repository administrators</param>
+        public BranchProtectionRequiredPullRequestReviewsUpdate(bool includeAdmins)
+        {
+            IncludeAdmins = includeAdmins;
+        }
+
+        /// <summary>
+        /// Enforce pull request reviews for repository administrators
+        /// </summary>
+        public bool IncludeAdmins { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0}", IncludeAdmins);
+            }
+        }
+
     }
 }
