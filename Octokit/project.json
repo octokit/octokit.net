@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "title": "Octokit",
   "authors": [
@@ -31,16 +31,17 @@
       }
     },
     "net45": {
-      "dependencies": {
-        "Microsoft.Net.Http": "2.2.28"
-      },
       "buildOptions": {
         "define": [
           "HAS_ENVIRONMENT",
+          "HAS_REGEX_COMPILED_OPTIONS",
           "SIMPLE_JSON_INTERNAL",
           "SIMPLE_JSON_OBJARRAYINTERNAL",
           "SIMPLE_JSON_READONLY_COLLECTIONS"
         ]
+      },
+      "frameworkAssemblies": {
+        "System.Net.Http": "4.0.0.0"
       }
     }
   }
