@@ -1,0 +1,12 @@
+{
+  "projects": [
+    "Octokit",
+    "Octokit.Reactive",
+    "Octokit.Tests",
+    "Octokit.Tests.Conventions",
+    "Octokit.Tests.Integration"
+  ],
+  "sdk": {
+    "version": "1.0.0-preview2-003131"
+  }
+}
