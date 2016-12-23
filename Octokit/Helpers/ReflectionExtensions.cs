@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Octokit.Internal;
+using Octokit.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Octokit.Internal;
-using Octokit.Reflection;
 
 namespace Octokit
 {
@@ -39,17 +39,20 @@ namespace Octokit
             return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-#if !NO_SERIALIZABLE
+#if !HAS_TYPEINFO
         public static Type GetTypeInfo(this Type type)
         {
             return type;
         }
-#endif
-
-#if HAS_TYPEINFO
+#else
         public static IEnumerable<MemberInfo> GetMember(this Type type, string name)
         {
             return type.GetTypeInfo().DeclaredMembers.Where(m => m.Name == name);
+        }
+
+        public static PropertyInfo GetProperty(this Type t, string propertyName)
+        {
+            return t.GetTypeInfo().GetDeclaredProperty(propertyName);
         }
 
         public static bool IsAssignableFrom(this Type type, Type otherType)
@@ -73,11 +76,7 @@ namespace Octokit
 
         public static bool IsEnumeration(this Type type)
         {
-#if HAS_TYPEINFO
             return type.GetTypeInfo().IsEnum;
-#else
-            return type.IsEnum;
-#endif
         }
     }
 }

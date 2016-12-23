@@ -100,11 +100,7 @@ namespace Octokit
 
         static string GetParameterAttributeValueForEnumName(Type enumType, string name)
         {
-#if HAS_TYPEINFO
-            var member = enumType.GetTypeInfo().DeclaredMembers.FirstOrDefault(x => x.Name == name);
-#else
             var member = enumType.GetMember(name).FirstOrDefault();
-#endif
 
             if (member == null) return null;
             var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)

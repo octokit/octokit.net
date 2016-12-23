@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -67,13 +66,6 @@ namespace Octokit
             }
             return new Uri(template);
         }
-
-#if HAS_TYPEINFO
-        public static PropertyInfo GetProperty(this Type t, string propertyName)
-        {
-            return t.GetTypeInfo().GetDeclaredProperty(propertyName);
-        }
-#endif
 
         // :trollface:
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
