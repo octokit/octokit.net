@@ -85,6 +85,6 @@ var apiInfo = client.GetLastApiInfo();
 var rateLimit = apiInfo?.RateLimit;
 
 var howManyRequestsCanIMakePerHour = rateLimit?.Limit;
-var howManyRequestsToIHaveLeft = rateLimit?.Remaining;
+var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
 var whenDoesTheLimitReset = rateLimit?.Reset;
 ```
