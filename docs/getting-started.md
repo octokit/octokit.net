@@ -88,3 +88,5 @@ var howManyRequestsCanIMakePerHour = rateLimit?.Limit;
 var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
 var whenDoesTheLimitReset = rateLimit?.Reset;
 ```
+
+For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/rate_limit/).
