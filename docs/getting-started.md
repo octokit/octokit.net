@@ -91,4 +91,4 @@ var whenDoesTheLimitReset = rateLimit?.Reset;
 
 An authenticated client will have a significantly higher limit than an anonymous client. 
 
-For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/rate_limit/).
+For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/#rate-limiting).
