@@ -76,7 +76,8 @@ Like any popular API, Github needs to throttle some requests. The OctoKit.NET cl
 Example usage:
 
 ```csharp
-var client; //Create the client up here
+GithubClient client; 
+//Create & initialize the client here
 
 // Prior to first API call, this will be null, because it only deals with the last call.
 var apiInfo = client.GetLastApiInfo();
