@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -13,9 +14,15 @@ namespace Octokit
     public interface IPullRequestsClient
     {
         /// <summary>
-        /// Client for managing comments.
+        /// Client for managing review comments.
         /// </summary>
+        [Obsolete("Please use IPullRequestsClient.ReviewComment instead. This method will be removed in a future version")]
         IPullRequestReviewCommentsClient Comment { get; }
+
+        /// <summary>
+        /// Client for managing review comments.
+        /// </summary>
+        IPullRequestReviewCommentsClient ReviewComment { get; }
 
         /// <summary>
         /// Get a pull request by number.
