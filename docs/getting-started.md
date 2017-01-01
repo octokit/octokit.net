@@ -69,3 +69,27 @@ If you've authenticated as a given user, you can query their details directly:
 ```
 var user = await client.User.Current();
 ```
+
+### Too Much of a Good Thing: Dealing with API Rate Limits
+Like any popular API, Github needs to throttle some requests. The OctoKit.NET client allows you to get some insight into how many requests you have left and when you can start making requests again. It does this via the `ApiInfo` object and the `GetLastApiInfo()` method.
+
+Example usage:
+
+```csharp
+GithubClient client; 
+//Create & initialize the client here
+
+// Prior to first API call, this will be null, because it only deals with the last call.
+var apiInfo = client.GetLastApiInfo();
+
+// If the ApiInfo isn't null, there will be a property called RateLimit
+var rateLimit = apiInfo?.RateLimit;
+
+var howManyRequestsCanIMakePerHour = rateLimit?.Limit;
+var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
+var whenDoesTheLimitReset = rateLimit?.Reset;
+```
+
+An authenticated client will have a significantly higher limit than an anonymous client. 
+
+For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/#rate-limiting).
