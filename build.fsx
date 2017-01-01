@@ -114,8 +114,10 @@ Target "BuildMono" (fun _ ->
 )
 
 Target "RestoreDotNetCore" (fun _ ->
-    [ "./Octokit.Next"
-      "./Octokit.Next.Tests" ]
+    [ "./Octokit"
+      "./Octokit.Reactive"
+      "./Octokit.Tests"
+      "./Octokit.Tests.Conventions" ]
     |> Seq.iter (fun d ->
         Fake.DotNetCli.Restore (fun p ->
             { p with
@@ -125,12 +127,18 @@ Target "RestoreDotNetCore" (fun _ ->
 
 Target "BuildDotNetCore" (fun _ ->
     !! "./**/project.json"
+    -- "./build/**"
     |> Fake.DotNetCli.Build id
 )
 
 Target "UnitTestsDotNetCore" (fun _ ->
-    !! "./Octokit.Next.Tests"
-    |> Fake.DotNetCli.Test id
+    [ "./Octokit.Tests"
+      "./Octokit.Tests.Conventions" ]
+    |> Seq.iter (fun d ->
+        Fake.DotNetCli.Test (fun p ->
+            { p with
+                WorkingDir = d })
+    )
 )
 
 Target "ConventionTests" (fun _ ->

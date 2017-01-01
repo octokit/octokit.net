@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-#if NET_45
 using System.Collections.ObjectModel;
-#endif
+
 
 namespace Octokit
 {

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+#if !NO_SERIALIZABLE
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
+#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a "Login Attempts Exceeded" response returned from the API.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -38,7 +42,7 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Maximum number of login attempts exceeded"; }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LoginAttemptsExceededException
         /// </summary>

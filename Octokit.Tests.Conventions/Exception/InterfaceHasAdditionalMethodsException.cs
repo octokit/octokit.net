@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 
 namespace Octokit.Tests.Conventions
 {
@@ -13,10 +12,6 @@ namespace Octokit.Tests.Conventions
 
         public InterfaceHasAdditionalMethodsException(Type type, IEnumerable<string> methodsMissingOnReactiveClient, Exception innerException)
             : base(CreateMessage(type, methodsMissingOnReactiveClient), innerException)
-        { }
-
-        protected InterfaceHasAdditionalMethodsException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         static string CreateMessage(Type type, IEnumerable<string> methods)
