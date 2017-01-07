@@ -152,6 +152,7 @@
     <Compile Include="Models\Request\ApiOptions.cs" />
     <Compile Include="Models\Request\CollaboratorRequest.cs" />
     <Compile Include="Models\Request\InvitationUpdate.cs" />
+    <Compile Include="Models\Request\IssueCommentRequest.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Request\NewGpgKey.cs" />
     <Compile Include="Models\Request\NewImpersonationToken.cs" />

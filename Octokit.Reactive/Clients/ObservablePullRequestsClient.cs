@@ -16,9 +16,15 @@ namespace Octokit.Reactive
         readonly IConnection _connection;
 
         /// <summary>
-        /// Client for managing comments.
+        /// Client for managing review comments.
         /// </summary>
-        public IObservablePullRequestReviewCommentsClient Comment { get; private set; }
+        [Obsolete("Please use ObservablePullRequestsClient.ReviewComment. This will be removed in a future version")]
+        public IObservablePullRequestReviewCommentsClient Comment { get { return this.ReviewComment; } }
+
+        /// <summary>
+        /// Client for managing review comments.
+        /// </summary>
+        public IObservablePullRequestReviewCommentsClient ReviewComment { get; private set; }
 
         public ObservablePullRequestsClient(IGitHubClient client)
         {
@@ -26,7 +32,7 @@ namespace Octokit.Reactive
 
             _client = client.Repository.PullRequest;
             _connection = client.Connection;
-            Comment = new ObservablePullRequestReviewCommentsClient(client);
+            ReviewComment = new ObservablePullRequestReviewCommentsClient(client);
         }
 
         /// <summary>

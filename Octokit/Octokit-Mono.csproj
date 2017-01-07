@@ -520,6 +520,7 @@
     <Compile Include="Clients\ProjectCardsClient.cs" />
     <Compile Include="Clients\ProjectColumnsClient.cs" />
     <Compile Include="Clients\ProjectsClient.cs" />
+    <Compile Include="Models\Request\IssueCommentRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
