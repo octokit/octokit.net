@@ -87,7 +87,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
+            return GetAllForRepository(owner, name, new IssueCommentRequest(), options);
         }
 
         /// <summary>
@@ -100,7 +100,69 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId), options);
+            return GetAllForRepository(repositoryId, new IssueCommentRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        public IObservable<IssueComment> GetAllForRepository(string owner, string name, IssueCommentRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        public IObservable<IssueComment> GetAllForRepository(long repositoryId, IssueCommentRequest request)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<IssueComment> GetAllForRepository(string owner, string name, IssueCommentRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+        }
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<IssueComment> GetAllForRepository(long repositoryId, IssueCommentRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>

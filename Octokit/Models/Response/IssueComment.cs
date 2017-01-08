@@ -62,4 +62,17 @@ namespace Octokit
             get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt); }
         }
     }
+
+    public enum IssueCommentSort
+    {
+        /// <summary>
+        /// Sort by create date (default)
+        /// </summary>
+        Created,
+
+        /// <summary>
+        /// Sort by the date of the last update
+        /// </summary>
+        Updated
+    }
 }

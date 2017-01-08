@@ -38,7 +38,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("fake", "repo", 1);
 
-                gitHubClient.Received().PullRequest.Comment.GetAll("fake", "repo", 1);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAll("fake", "repo", 1);
             }
 
             [Fact]
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1, 1);
 
-                gitHubClient.Received().PullRequest.Comment.GetAll(1, 1);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAll(1, 1);
             }
 
             [Fact]
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("fake", "repo", 1, options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAll("fake", "repo", 1, options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAll("fake", "repo", 1, options);
             }
 
             [Fact]
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1, 1, options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAll(1, 1, options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAll(1, 1, options);
             }
 
             [Fact]
@@ -237,7 +237,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", request);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository("fake", "repo", request);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository("fake", "repo", request);
             }
 
             [Fact]
@@ -255,7 +255,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, request);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository(1, request);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository(1, request);
             }
 
             [Fact]
@@ -280,7 +280,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", request, options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository("fake", "repo", request, options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository("fake", "repo", request, options);
             }
 
             [Fact]
@@ -305,7 +305,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, request, options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository(1, request, options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository(1, request, options);
             }
 
             [Fact]
@@ -483,7 +483,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository("fake", "repo");
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository("fake", "repo");
             }
 
             [Fact]
@@ -494,7 +494,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository(1);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository(1);
             }
 
             [Fact]
@@ -512,7 +512,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository("fake", "repo", options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository("fake", "repo", options);
             }
 
             [Fact]
@@ -530,7 +530,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
 
-                gitHubClient.Received().PullRequest.Comment.GetAllForRepository(1, options);
+                gitHubClient.Received().PullRequest.ReviewComment.GetAllForRepository(1, options);
             }
 
             [Fact]
@@ -721,7 +721,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetComment("owner", "name", 53);
 
-                gitHubClient.PullRequest.Comment.Received().GetComment("owner", "name", 53);
+                gitHubClient.PullRequest.ReviewComment.Received().GetComment("owner", "name", 53);
             }
 
             [Fact]
@@ -732,7 +732,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetComment(1, 53);
 
-                gitHubClient.PullRequest.Comment.Received().GetComment(1, 53);
+                gitHubClient.PullRequest.ReviewComment.Received().GetComment(1, 53);
             }
 
             [Fact]
@@ -760,7 +760,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("owner", "name", 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().Create("owner", "name", 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().Create("owner", "name", 13, comment);
             }
 
             [Fact]
@@ -773,7 +773,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(1, 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().Create(1, 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().Create(1, 13, comment);
             }
 
             [Fact]
@@ -812,7 +812,7 @@ namespace Octokit.Tests.Reactive
 
                 client.CreateReply("owner", "name", 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().CreateReply("owner", "name", 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().CreateReply("owner", "name", 13, comment);
             }
 
             [Fact]
@@ -825,7 +825,7 @@ namespace Octokit.Tests.Reactive
 
                 client.CreateReply(1, 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().CreateReply(1, 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().CreateReply(1, 13, comment);
             }
 
             [Fact]
@@ -862,7 +862,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Edit("owner", "name", 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().Edit("owner", "name", 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().Edit("owner", "name", 13, comment);
             }
 
             [Fact]
@@ -875,7 +875,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Edit(1, 13, comment);
 
-                gitHubClient.PullRequest.Comment.Received().Edit(1, 13, comment);
+                gitHubClient.PullRequest.ReviewComment.Received().Edit(1, 13, comment);
             }
 
             [Fact]
@@ -909,7 +909,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete("owner", "name", 13);
 
-                gitHubClient.PullRequest.Comment.Received().Delete("owner", "name", 13);
+                gitHubClient.PullRequest.ReviewComment.Received().Delete("owner", "name", 13);
             }
 
             [Fact]
@@ -920,7 +920,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1, 13);
 
-                gitHubClient.PullRequest.Comment.Received().Delete(1, 13);
+                gitHubClient.PullRequest.ReviewComment.Received().Delete(1, 13);
             }
 
             [Fact]

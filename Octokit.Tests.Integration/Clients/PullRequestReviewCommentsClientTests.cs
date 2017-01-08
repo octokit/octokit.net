@@ -20,7 +20,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     {
         _github = Helper.GetAuthenticatedClient();
 
-        _client = _github.PullRequest.Comment;
+        _client = _github.PullRequest.ReviewComment;
 
         // We'll create a pull request that can be used by most tests
         _context = _github.CreateRepositoryContext("test-repo").Result;
