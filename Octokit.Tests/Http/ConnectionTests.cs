@@ -325,8 +325,10 @@ namespace Octokit.Tests.Http
                 var messageText = "You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.";
 
                 var httpClient = Substitute.For<IHttpClient>();
-                var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", "45");
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "45" }
+                };
 
                 IResponse response = new Response(
                     HttpStatusCode.Forbidden,

@@ -43,10 +43,13 @@ namespace Octokit
         private void SetRetryAfterSeconds(IResponse response)
         {
             string secondsValue;
+
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (response.Headers.TryGetValue("Retry-After", out secondsValue))
             {
                 RetryAfterSeconds = ParseRetryAfterSeconds(secondsValue);
             }
+
             else
             {
                 RetryAfterSeconds = RetrySecondsDefault;
