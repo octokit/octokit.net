@@ -43,7 +43,33 @@ namespace Octokit.Tests.Exceptions
             public void WithRetryAfterHeader_PopulatesRetryAfterSeconds()
             {
                 var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", "60");
+                headerDictionary.Add("Retry-After", "30");
+
+                var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                var abuseException = new AbuseException(response);
+
+                Assert.Equal(30, abuseException.RetryAfterSeconds);
+            }
+
+            [Fact]
+            public void NoRetryAfterHeader_RetryAfterSecondsIsSetToTheDefault()
+            {
+                var headerDictionary = new Dictionary<string, string>();
+
+                var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                var abuseException = new AbuseException(response);
+
+                Assert.Equal(60, abuseException.RetryAfterSeconds);
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData("    ")]
+            public void EmptyHeaderValue_RetryAfterSecondsDefaultsTo60(string emptyValueToTry)
+            {
+                var headerDictionary = new Dictionary<string, string>();
+                headerDictionary.Add("Retry-After", emptyValueToTry);
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
@@ -52,30 +78,27 @@ namespace Octokit.Tests.Exceptions
             }
 
             [Fact]
-            public void NoHeader_RetryAfterSecondsDefaultsTo60()
+            public void NonParseableIntHeaderValue_RetryAfterSecondsDefaultsTo60()
             {
-                throw new NotImplementedException();
-            }
+                var headerDictionary = new Dictionary<string, string>();
+                headerDictionary.Add("Retry-After", "ABC");
 
-            [Theory]
-            [InlineData(null)]
-            [InlineData("")]
-            [InlineData("    ")]
-            public void EmptyHeaderValue_RetryAfterSecondsDefaultsTo60()
-            {
-                throw new NotImplementedException();
-            }
+                var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                var abuseException = new AbuseException(response);
 
-            [Fact]
-            public void NonParseableHeaderValue_RetryAfterSecondsDefaultsTo60()
-            {
-                throw new NotImplementedException();
+                Assert.Equal(60, abuseException.RetryAfterSeconds);
             }
 
             [Fact]
             public void NegativeHeaderValue_RetryAfterSecondsDefaultsTo60()
             {
-                throw new NotImplementedException();
+                var headerDictionary = new Dictionary<string, string>();
+                headerDictionary.Add("Retry-After", "-123");
+
+                var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                var abuseException = new AbuseException(response);
+
+                Assert.Equal(60, abuseException.RetryAfterSeconds);
             }
         }
     }

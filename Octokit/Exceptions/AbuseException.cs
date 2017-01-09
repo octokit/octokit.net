@@ -17,6 +17,7 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class AbuseException : ForbiddenException
     {
+        public const int RetrySecondsDefault = 60;
         /// <summary>
         /// Constructs an instance of AbuseException
         /// </summary>
@@ -41,7 +42,31 @@ namespace Octokit
 
         private void SetRetryAfterSeconds(IResponse response)
         {
-            RetryAfterSeconds = 60;
+            string secondsValue;
+            if (response.Headers.TryGetValue("Retry-After", out secondsValue))
+            {
+                RetryAfterSeconds = ParseRetryAfterSeconds(secondsValue);
+            }
+            else
+            {
+                RetryAfterSeconds = RetrySecondsDefault;
+            }
+        }
+
+        private int ParseRetryAfterSeconds(string retryAfterString)
+        {
+            if (string.IsNullOrWhiteSpace(retryAfterString))
+            {
+                return RetrySecondsDefault;
+            }
+
+            int retrySeconds;
+            if (int.TryParse(retryAfterString, out retrySeconds))
+            {
+                return retrySeconds <= 0 ? RetrySecondsDefault : retrySeconds;
+            }
+
+            return RetrySecondsDefault;
         }
 
         public int RetryAfterSeconds { get; private set; }
