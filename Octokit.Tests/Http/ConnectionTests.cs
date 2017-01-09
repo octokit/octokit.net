@@ -329,13 +329,14 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task ThrowsAbuseExceptionWithDefaultMessageForUnsafeAbuseResponse()
             {
-                string bodyResponse = null; 
+                var messageText = string.Empty;
 
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response(
                     HttpStatusCode.Forbidden,
-                    bodyResponse,
-                    new Dictionary<string, string>(),
+                     "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
+                   new Dictionary<string, string>(),
                     "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
