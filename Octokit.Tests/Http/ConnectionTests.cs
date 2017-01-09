@@ -348,6 +348,31 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal(45, exception.RetryAfterSeconds);
             }
+
+            [Fact(Skip = "Fails due to https://github.com/octokit/octokit.net/issues/1529. The message is empty but the default message isn't displayed. However, this isn't due to the introduction of AbuseException, but rather something else.")]
+            public async Task ThrowsAbuseExceptionWithDefaultMessageForUnsafeAbuseResponse()
+            {
+                string messageText = string.Empty;
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                     "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
+                   new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Equal("Request Forbidden - Abuse Detection", exception.Message);
+            }
         }
 
         public class TheGetHtmlMethod
