@@ -273,6 +273,31 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
+            {
+                var messageText = "blahblahblah this does not matter because we are testing the URL";
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Contains(messageText, exception.Message);
+            }
+
+            [Fact]
             public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
             {
                 //TODO
@@ -287,26 +312,10 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
-            public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
+            public async Task ThrowsAbuseExceptionWithDefaultMessageForUnsafeAbuseResponse()
             {
-                var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
-                    HttpStatusCode.Forbidden,
-                    "{\"message\":\"blahblahblah this does not matter because we are testing the URL\"," +
-                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
-                    new Dictionary<string, string>(),
-                    "application/json");
-                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
-                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    _exampleUri,
-                    Substitute.For<ICredentialStore>(),
-                    httpClient,
-                    Substitute.For<IJsonSerializer>());
-
-                var exception = await Assert.ThrowsAsync<AbuseException>(
-                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
-
-                Assert.Contains("abuse-rate", exception.Message);
+                //TODO
+                throw new NotImplementedException();
             }
 
         }
