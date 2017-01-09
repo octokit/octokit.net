@@ -293,8 +293,6 @@ namespace Octokit.Tests.Http
 
                 var exception = await Assert.ThrowsAsync<AbuseException>(
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
-
-                Assert.Contains(messageText, exception.Message);
             }
 
             [Fact]
