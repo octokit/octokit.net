@@ -289,13 +289,11 @@ namespace Octokit.Tests.Http
             [Fact]
             public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
             {
-                //TODO
-                throw new NotImplementedException();
-
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response(
                     HttpStatusCode.Forbidden,
-                    "YOU SHALL NOT PASS!",
+                    "{\"message\":\"blahblahblah this does not matter because we are testing the URL\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
                     new Dictionary<string, string>(),
                     "application/json");
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
@@ -305,10 +303,10 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await Assert.ThrowsAsync<ForbiddenException>(
+                var exception = await Assert.ThrowsAsync<AbuseException>(
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
-                Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
+                Assert.Contains("abuse-rate", exception.Message);
             }
 
         }
