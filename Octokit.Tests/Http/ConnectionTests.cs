@@ -296,14 +296,31 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
-            public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDescription()
             {
-                //TODO
-                throw new NotImplementedException();
+                var messageText = "You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.";
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
             }
 
+
             [Fact]
-            public async Task ThrowsAbuseExceptionForResponseWithAbuseDescription()
+            public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
             {
                 //TODO
                 throw new NotImplementedException();

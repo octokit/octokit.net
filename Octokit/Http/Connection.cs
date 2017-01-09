@@ -622,10 +622,9 @@ namespace Octokit
                 return new LoginAttemptsExceededException(response);
             }
 
-            if (body.Contains("abuse-rate-limits"))
+            if (body.Contains("abuse-rate-limits") || body.Contains("abuse detection mechanism"))
             {
-                return new AbuseException(response);
-                
+                return new AbuseException(response);                
             }
 
             return new ForbiddenException(response);
