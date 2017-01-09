@@ -56,7 +56,7 @@ namespace Octokit
             }
         }
 
-        private int ParseRetryAfterSeconds(string retryAfterString)
+        private static int ParseRetryAfterSeconds(string retryAfterString)
         {
             if (string.IsNullOrWhiteSpace(retryAfterString))
             {
