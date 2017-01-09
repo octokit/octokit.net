@@ -914,6 +914,44 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task DoesNotChangeEmptyLabelsByDefault()
+    {
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Labels);
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeEmptyLabelsByDefaultWithRepositoryId()
+    {
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Labels);
+    }
+
+    [IntegrationTest]
     public async Task CanUpdateLabelForAnIssue()
     {
         // create some labels
