@@ -27,7 +27,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(1);
 
-                connection.Received().GetAll<ProjectCard>(Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"), "application/vnd.github.inertia-preview+json");
+                connection.Received().GetAll<ProjectCard>(Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
             }
         }
 

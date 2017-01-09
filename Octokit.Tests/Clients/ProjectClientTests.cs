@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1);
 
-                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"), "application/vnd.github.inertia-preview+json");
+                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForOrganization("org");
 
-                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"), "application/vnd.github.inertia-preview+json");
+                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
             }
 
             [Fact]
