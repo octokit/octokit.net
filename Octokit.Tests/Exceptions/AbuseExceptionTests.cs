@@ -104,6 +104,21 @@ namespace Octokit.Tests.Exceptions
 
                 Assert.Equal(60, abuseException.RetryAfterSeconds);
             }
+
+            [Fact]
+            public void ZeroHeaderValue_RetryAfterSecondsIsZero()
+            {
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "0" }
+                };
+
+                var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                var abuseException = new AbuseException(response);
+
+                Assert.Equal(0, abuseException.RetryAfterSeconds);
+            }
+
         }
     }
 }

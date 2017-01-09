@@ -63,7 +63,7 @@ namespace Octokit
             int retrySeconds;
             if (int.TryParse(retryAfterString, out retrySeconds))
             {
-                return retrySeconds <= 0 ? RetrySecondsDefault : retrySeconds;
+                return retrySeconds < 0 ? RetrySecondsDefault : retrySeconds;
             }
 
             return RetrySecondsDefault;
