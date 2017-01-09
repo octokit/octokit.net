@@ -22,6 +22,16 @@ namespace Octokit
         Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId);
 
         /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options);
+
+        /// <summary>
         /// Get all projects for the specified organization.
         /// </summary>
         /// <remarks>
@@ -29,6 +39,16 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organziation</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization);
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organziation</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options);
 
         /// <summary>
         /// Gets a single project for this repository.

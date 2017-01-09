@@ -26,7 +26,20 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId)
         {
-            return ApiConnection.GetAll<ProjectCard>(ApiUrls.ProjectCards(columnId), AcceptHeaders.ProjectsApiPreview);
+            return GetAll(columnId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options)
+        {
+            return ApiConnection.GetAll<ProjectCard>(ApiUrls.ProjectCards(columnId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>

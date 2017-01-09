@@ -26,7 +26,20 @@ namespace Octokit
         /// <param name="projectId">The Id of the project</param>
         public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId)
         {
-            return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(projectId), AcceptHeaders.ProjectsApiPreview);
+            return GetAll(projectId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all columns for this project.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="projectId">The Id of the project</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options)
+        {
+            return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(projectId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>

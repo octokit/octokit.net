@@ -35,9 +35,22 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<Project> GetAllForRepository(long repositoryId)
         {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Project> GetAllForRepository(long repositoryId, ApiOptions options)
+        {
             var url = ApiUrls.RepositoryProjects(repositoryId);
 
-            return _connection.GetAndFlattenAllPages<Project>(url);
+            return _connection.GetAndFlattenAllPages<Project>(url, options);
         }
 
         /// <summary>
@@ -49,9 +62,22 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         public IObservable<Project> GetAllForOrganization(string organization)
         {
+            return GetAllForOrganization(organization, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Project> GetAllForOrganization(string organization, ApiOptions options)
+        {
             var url = ApiUrls.OrganizationProjects(organization);
 
-            return _connection.GetAndFlattenAllPages<Project>(url);
+            return _connection.GetAndFlattenAllPages<Project>(url, options);
         }
 
         /// <summary>

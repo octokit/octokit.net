@@ -29,7 +29,20 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
         {
-            return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(repositoryId), AcceptHeaders.ProjectsApiPreview);
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options)
+        {
+            return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(repositoryId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
@@ -41,7 +54,19 @@ namespace Octokit
         /// <param name="organization">The name of the organziation</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization)
         {
-            return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), AcceptHeaders.ProjectsApiPreview);
+            return GetAllForOrganization(organization, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organziation</param>
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
+        {
+            return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>

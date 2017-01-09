@@ -21,6 +21,16 @@ namespace Octokit.Reactive
         IObservable<ProjectColumn> GetAll(int projectId);
 
         /// <summary>
+        /// Gets all columns.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="projectId">The Id of the project</param>  
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options);
+
+        /// <summary>
         /// Gets a single column.
         /// </summary>
         /// <remarks>

@@ -23,6 +23,16 @@ namespace Octokit
         Task<IReadOnlyList<ProjectCard>> GetAll(int columnId);
 
         /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options);
+
+        /// <summary>
         /// Gets a single card.
         /// </summary>
         /// <remarks>
