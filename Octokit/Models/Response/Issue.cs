@@ -160,10 +160,6 @@ namespace Octokit
                 ? new int?()
                 : Milestone.Number;
 
-            var assignee = Assignee == null
-                ? null
-                : Assignee.Login;
-
             var assignees = Assignees == null
                 ? null
                 : Assignees.Select(x => x.Login);
@@ -174,22 +170,21 @@ namespace Octokit
 
             var issueUpdate = new IssueUpdate
             {
-                Assignee = assignee,
                 Body = Body,
                 Milestone = milestoneId,
                 State = State,
                 Title = Title
             };
 
-            if(assignees != null)
+            if (assignees != null)
             {
-                foreach (var asignee in assignees)
+                foreach (var assignee in assignees)
                 {
-                    issueUpdate.AddAssignee(asignee);
+                    issueUpdate.AddAssignee(assignee);
                 }
             }
 
-            if(labels != null)
+            if (labels != null)
             {
                 foreach (var label in labels)
                 {

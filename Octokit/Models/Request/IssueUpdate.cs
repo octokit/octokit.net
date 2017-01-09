@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -27,6 +28,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
+        [Obsolete("Please use Assignees property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
         public string Assignee { get; set; }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace Octokit
         /// </summary>
         public void ClearAssignees()
         {
-            // lazily create the label array
+            // lazily create the assignees array
             if (Assignees == null)
             {
                 Assignees = new List<string>();
@@ -105,7 +107,7 @@ namespace Octokit
         /// <param name="name">The login of the assignee to remove</param>
         public void RemoveAssignee(string name)
         {
-            // lazily create the label array
+            // lazily create the assignees array
             if (Assignees == null)
             {
                 Assignees = new List<string>();
@@ -153,7 +155,8 @@ namespace Octokit
         /// <param name="name">The name of the label to remove</param>
         public void RemoveLabel(string name)
         {
-            if(Labels == null)
+            // lazily create the label array
+            if (Labels == null)
             {
                 Labels = new List<string>();
             }
