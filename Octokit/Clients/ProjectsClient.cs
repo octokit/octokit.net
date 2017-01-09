@@ -64,6 +64,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organziation</param>
+        /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
         {
             return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
