@@ -271,6 +271,42 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
             }
+
+            [Fact]
+            public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
+            {
+                //TODO
+            }
+
+            [Fact]
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDescription()
+            {
+                //TODO
+            }
+
+            [Fact]
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
+            {
+                //TODO
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "YOU SHALL NOT PASS!",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<ForbiddenException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
+            }
+
         }
 
         public class TheGetHtmlMethod
