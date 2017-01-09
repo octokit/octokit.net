@@ -35,7 +35,16 @@ namespace Octokit
         {
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Forbidden,
                 "AbuseException created with wrong status code");
+
+            SetRetryAfterSeconds(response);
         }
+
+        private void SetRetryAfterSeconds(IResponse response)
+        {
+            RetryAfterSeconds = 60;
+        }
+
+        public int RetryAfterSeconds { get; private set; }
 
         public override string Message
         {
