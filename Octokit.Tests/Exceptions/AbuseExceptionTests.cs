@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Octokit.Internal;
 using Xunit;
 
@@ -42,8 +38,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void WithRetryAfterHeader_PopulatesRetryAfterSeconds()
             {
-                var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", "30");
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "30" }
+                };
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
@@ -68,8 +66,10 @@ namespace Octokit.Tests.Exceptions
             [InlineData("    ")]
             public void EmptyHeaderValue_RetryAfterSecondsDefaultsTo60(string emptyValueToTry)
             {
-                var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", emptyValueToTry);
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", emptyValueToTry }
+                };
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
@@ -80,8 +80,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void NonParseableIntHeaderValue_RetryAfterSecondsDefaultsTo60()
             {
-                var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", "ABC");
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "ABC" }
+                };
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
@@ -92,8 +94,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void NegativeHeaderValue_RetryAfterSecondsDefaultsTo60()
             {
-                var headerDictionary = new Dictionary<string, string>();
-                headerDictionary.Add("Retry-After", "-123");
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "-123" }
+                };
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
