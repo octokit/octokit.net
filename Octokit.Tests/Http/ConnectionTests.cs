@@ -276,18 +276,22 @@ namespace Octokit.Tests.Http
             public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
             {
                 //TODO
+                throw new NotImplementedException();
             }
 
             [Fact]
             public async Task ThrowsAbuseExceptionForResponseWithAbuseDescription()
             {
                 //TODO
+                throw new NotImplementedException();
             }
 
             [Fact]
             public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
             {
                 //TODO
+                throw new NotImplementedException();
+
                 var httpClient = Substitute.For<IHttpClient>();
                 IResponse response = new Response(
                     HttpStatusCode.Forbidden,
