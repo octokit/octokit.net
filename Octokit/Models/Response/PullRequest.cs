@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -134,6 +135,11 @@ namespace Octokit
         /// The user who is assigned the pull request.
         /// </summary>
         public User Assignee { get; protected set; }
+
+        /// <summary>
+        ///The multiple users this pull request is assigned to.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
 
         /// <summary>
         /// The milestone, if any, that this pull request is assigned to.
