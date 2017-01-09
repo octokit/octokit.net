@@ -39,7 +39,7 @@ namespace Octokit
 
         public override string Message
         {
-            get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
+            get { return ApiErrorMessageSafe ?? "Request Forbidden - Abuse Detection"; }
         }
 
 #if !NETFX_CORE
