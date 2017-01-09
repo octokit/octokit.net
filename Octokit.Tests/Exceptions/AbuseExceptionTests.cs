@@ -50,21 +50,21 @@ namespace Octokit.Tests.Exceptions
             }
 
             [Fact]
-            public void NoRetryAfterHeader_RetryAfterSecondsIsSetToTheDefault()
+            public void NoRetryAfterHeader_RetryAfterSecondsIsSetToTheDefaultOfNull()
             {
                 var headerDictionary = new Dictionary<string, string>();
 
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
 
-                Assert.Equal(60, abuseException.RetryAfterSeconds);
+                Assert.False(abuseException.RetryAfterSeconds.HasValue);
             }
 
             [Theory]
             [InlineData(null)]
             [InlineData("")]
             [InlineData("    ")]
-            public void EmptyHeaderValue_RetryAfterSecondsDefaultsTo60(string emptyValueToTry)
+            public void EmptyHeaderValue_RetryAfterSecondsDefaultsToNull(string emptyValueToTry)
             {
                 var headerDictionary = new Dictionary<string, string>
                 {
@@ -74,11 +74,11 @@ namespace Octokit.Tests.Exceptions
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
 
-                Assert.Equal(60, abuseException.RetryAfterSeconds);
+                Assert.False(abuseException.RetryAfterSeconds.HasValue);
             }
 
             [Fact]
-            public void NonParseableIntHeaderValue_RetryAfterSecondsDefaultsTo60()
+            public void NonParseableIntHeaderValue_RetryAfterSecondsDefaultsToNull()
             {
                 var headerDictionary = new Dictionary<string, string>
                 {
@@ -88,11 +88,11 @@ namespace Octokit.Tests.Exceptions
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
 
-                Assert.Equal(60, abuseException.RetryAfterSeconds);
+                Assert.False(abuseException.RetryAfterSeconds.HasValue);
             }
 
             [Fact]
-            public void NegativeHeaderValue_RetryAfterSecondsDefaultsTo60()
+            public void NegativeHeaderValue_RetryAfterSecondsDefaultsToNull()
             {
                 var headerDictionary = new Dictionary<string, string>
                 {
@@ -102,7 +102,7 @@ namespace Octokit.Tests.Exceptions
                 var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
                 var abuseException = new AbuseException(response);
 
-                Assert.Equal(60, abuseException.RetryAfterSeconds);
+                Assert.False(abuseException.RetryAfterSeconds.HasValue);
             }
 
             [Fact]
