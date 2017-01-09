@@ -291,7 +291,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await Assert.ThrowsAsync<AbuseException>(
+                await Assert.ThrowsAsync<AbuseException>(
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
             }
 
@@ -314,7 +314,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await Assert.ThrowsAsync<AbuseException>(
+                await Assert.ThrowsAsync<AbuseException>(
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
             }
 
