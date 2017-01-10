@@ -12,7 +12,7 @@ namespace Octokit.Tests.Exceptions
             public class Message
             {
                 [Fact]
-                public void PostsAbuseMessageFromApi()
+                public void ContainsAbuseMessageFromApi()
                 {
                     const string responseBody = "{\"message\":\"You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.\"," +
                                                 "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}";
@@ -54,7 +54,7 @@ namespace Octokit.Tests.Exceptions
                     }
 
                     [Fact]
-                    public void ZeroHeaderValue_RetryAfterSecondsIsZero()
+                    public void WithZeroHeaderValue_RetryAfterSecondsIsZero()
                     {
                         var headerDictionary = new Dictionary<string, string> { { "Retry-After", "0" } };
 
