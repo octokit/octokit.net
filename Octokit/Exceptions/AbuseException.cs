@@ -44,7 +44,6 @@ namespace Octokit
         {
             string secondsValue;
             if (!response.Headers.TryGetValue("Retry-After", out secondsValue)) { return null; }
-            if (string.IsNullOrWhiteSpace(secondsValue)){ return null; }
 
             int retrySeconds;
             if (!int.TryParse(secondsValue, out retrySeconds)) { return null; }
