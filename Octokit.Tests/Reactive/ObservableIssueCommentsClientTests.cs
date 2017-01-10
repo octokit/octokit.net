@@ -57,8 +57,8 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
-                    Args.EmptyDictionary, 
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
+                    Arg.Any<IDictionary<string, string>>(), 
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -71,7 +71,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(1);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/comments", UriKind.Relative), Args.EmptyDictionary, null);
+                    new Uri("repositories/1/issues/comments", UriKind.Relative),
+                    Arg.Any<IDictionary<string, string>>(),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -80,6 +82,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
+                var request = new IssueCommentRequest()
+                {
+                    Direction = SortDirection.Descending,
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                    Sort = PullRequestReviewCommentSort.Updated
+                };
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -87,11 +95,14 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                client.GetAllForRepository("fake", "repo", options);
+                client.GetAllForRepository("fake", "repo", request, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative), 
-                    Arg.Any<Dictionary<string, string>>(),
+                    new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["direction"] == "desc"
+                        && d["since"] == "2016-11-23T11:11:11Z"
+                        && d["sort"] == "updated"),
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -101,6 +112,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableIssueCommentsClient(gitHubClient);
 
+                var request = new IssueCommentRequest()
+                {
+                    Direction = SortDirection.Descending,
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                    Sort = PullRequestReviewCommentSort.Updated
+                };
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -108,10 +125,15 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                client.GetAllForRepository(1, options);
+                client.GetAllForRepository(1, request, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+                    new Uri("repositories/1/issues/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 5
+                        && d["direction"] == "desc"
+                        && d["since"] == "2016-11-23T11:11:11Z"
+                        && d["sort"] == "updated"),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -124,9 +146,11 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(null, "name", ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", request: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository("owner", "name", options: null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, request: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(1, options: null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("", "name"));
                 Assert.Throws<ArgumentException>(() => client.GetAllForRepository("owner", ""));

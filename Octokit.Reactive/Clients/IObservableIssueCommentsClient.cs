@@ -66,6 +66,42 @@ namespace Octokit.Reactive
         IObservable<IssueComment> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        IObservable<IssueComment> GetAllForRepository(string owner, string name, IssueCommentRequest request);
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        IObservable<IssueComment> GetAllForRepository(long repositoryId, IssueCommentRequest request);
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<IssueComment> GetAllForRepository(string owner, string name, IssueCommentRequest request, ApiOptions options);
+
+        /// <summary>
+        /// Gets Issue Comments for a repository.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-in-a-repository</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<IssueComment> GetAllForRepository(long repositoryId, IssueCommentRequest request, ApiOptions options);
+
+        /// <summary>
         /// Gets Issue Comments for a specified Issue.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
