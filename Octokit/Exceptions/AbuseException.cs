@@ -43,26 +43,14 @@ namespace Octokit
         private static int? ParseRetryAfterSeconds(IResponse response)
         {
             string secondsValue;
-            if (response.Headers.TryGetValue("Retry-After", out secondsValue))
-            {
-                if (string.IsNullOrWhiteSpace(secondsValue))
-                {
-                    return null;
-                }
+            if (!response.Headers.TryGetValue("Retry-After", out secondsValue)) { return null; }
+            if (string.IsNullOrWhiteSpace(secondsValue)){ return null; }
 
-                int retrySeconds;
-                if (int.TryParse(secondsValue, out retrySeconds))
-                {
-                    if (retrySeconds < 0)
-                    {
-                        return null;
-                    }
-                    return retrySeconds;
-                }
+            int retrySeconds;
+            if (!int.TryParse(secondsValue, out retrySeconds)) { return null; }
+            if (retrySeconds < 0) { return null; }
 
-                return null;
-            }
-            return null;
+            return retrySeconds;
         }
 
         public int? RetryAfterSeconds { get; private set; }
