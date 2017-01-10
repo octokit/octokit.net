@@ -18,7 +18,6 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class AbuseException : ForbiddenException
     {
-        private readonly int? RetrySecondsDefault = null;
         /// <summary>
         /// Constructs an instance of AbuseException
         /// </summary>
@@ -38,39 +37,32 @@ namespace Octokit
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Forbidden,
                 "AbuseException created with wrong status code");
 
-            SetRetryAfterSeconds(response);
+            RetryAfterSeconds = ParseRetryAfterSeconds(response);
         }
 
-        private void SetRetryAfterSeconds(IResponse response)
+        private static int? ParseRetryAfterSeconds(IResponse response)
         {
             string secondsValue;
-
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (response.Headers.TryGetValue("Retry-After", out secondsValue))
             {
-                RetryAfterSeconds = ParseRetryAfterSeconds(secondsValue);
-            }
+                if (string.IsNullOrWhiteSpace(secondsValue))
+                {
+                    return null;
+                }
 
-            else
-            {
-                RetryAfterSeconds = RetrySecondsDefault;
-            }
-        }
+                int retrySeconds;
+                if (int.TryParse(secondsValue, out retrySeconds))
+                {
+                    if (retrySeconds < 0)
+                    {
+                        return null;
+                    }
+                    return retrySeconds;
+                }
 
-        private int? ParseRetryAfterSeconds(string retryAfterString)
-        {
-            if (string.IsNullOrWhiteSpace(retryAfterString))
-            {
-                return RetrySecondsDefault;
+                return null;
             }
-
-            int retrySeconds;
-            if (int.TryParse(retryAfterString, out retrySeconds))
-            {
-                return retrySeconds < 0 ? RetrySecondsDefault : retrySeconds;
-            }
-
-            return RetrySecondsDefault;
+            return null;
         }
 
         public int? RetryAfterSeconds { get; private set; }
