@@ -83,7 +83,6 @@ namespace Octokit
             base.GetObjectData(info, context);
             info.AddValue("RetryAfterSeconds", RetryAfterSeconds);
         }
-
 #endif
     }
 }
