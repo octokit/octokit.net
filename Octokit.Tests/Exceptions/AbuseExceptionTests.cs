@@ -10,7 +10,6 @@ namespace Octokit.Tests.Exceptions
         [Fact]
         public void PostsAbuseMessageFromApi()
         {
-
             const string responseBody = "{\"message\":\"You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.\"," +
                                         "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}";
 
@@ -19,6 +18,7 @@ namespace Octokit.Tests.Exceptions
                 responseBody,
                 new Dictionary<string, string>(),
                 "application/json");
+
             var abuseException = new AbuseException(response);
 
             Assert.Equal("You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.", abuseException.ApiError.Message);
@@ -118,7 +118,6 @@ namespace Octokit.Tests.Exceptions
 
                 Assert.Equal(0, abuseException.RetryAfterSeconds);
             }
-
         }
     }
 }
