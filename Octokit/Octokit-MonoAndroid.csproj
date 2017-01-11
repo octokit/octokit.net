@@ -516,6 +516,7 @@
     <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Models\Request\IssueCommentRequest.cs" />
+    <Compile Include="Exceptions\AbuseException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
