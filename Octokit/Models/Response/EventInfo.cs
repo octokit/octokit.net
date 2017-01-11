@@ -152,10 +152,10 @@ namespace Octokit
         /// </summary>
         Unlocked,
 
-		/// <summary>
-		/// The pull request’s branch was deleted.
-		/// </summary>
-		HeadRefDeleted,
+        /// <summary>
+        /// The pull request’s branch was deleted.
+        /// </summary>
+        HeadRefDeleted,
 
         /// <summary>
         /// The pull request’s branch was restored.
@@ -178,25 +178,25 @@ namespace Octokit
         /// </summary>
         Committed,
 
-		/// <summary>
-		/// The actor requested review from the subject on this pull request.
-		/// </summary>
-		ReviewRequested,
+        /// <summary>
+        /// The actor requested review from the subject on this pull request.
+        /// </summary>
+        ReviewRequested,
 
-		/// <summary>
-		/// The actor dismissed a review from the pull request.
-		/// </summary>
-		ReviewDismissed,
+        /// <summary>
+        /// The actor dismissed a review from the pull request.
+        /// </summary>
+        ReviewDismissed,
 
-		/// <summary>
-		/// The actor removed the review request for the subject on this pull request.
-		/// </summary>
-		ReviewRequestRemoved,
+        /// <summary>
+        /// The actor removed the review request for the subject on this pull request.
+        /// </summary>
+        ReviewRequestRemoved,
 
-		/// <summary>
-		/// Not documented in GitHub API.
-		/// </summary>
-		BaseRefChanged,
+        /// <summary>
+        /// Not documented in GitHub API.
+        /// </summary>
+        BaseRefChanged,
 
         /// <summary>
         /// The issue was referenced from another issue.
