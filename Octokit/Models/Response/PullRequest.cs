@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -14,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -34,6 +35,7 @@ namespace Octokit
             Base = @base;
             User = user;
             Assignee = assignee;
+            Assignees = assignees;
             Mergeable = mergeable;
             MergedBy = mergedBy;
             Comments = comments;
@@ -134,6 +136,11 @@ namespace Octokit
         /// The user who is assigned the pull request.
         /// </summary>
         public User Assignee { get; protected set; }
+
+        /// <summary>
+        ///The multiple users this pull request is assigned to.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
 
         /// <summary>
         /// The milestone, if any, that this pull request is assigned to.

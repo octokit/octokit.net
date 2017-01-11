@@ -196,6 +196,66 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheAddAssigneesMethod
+        {
+            [Fact]
+            public async Task PostsToCorrectUrl()
+            {
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new AssigneesClient(connection);
+
+                await client.AddAssignees("fake", "repo", 2, newAssignees);
+
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new AssigneesClient(Substitute.For<IApiConnection>());
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAssignees("owner", null, 2, newAssignees));
+            }
+        }
+
+        public class TheRemoveAssigneesMethod
+        {
+            [Fact]
+            public async Task PostsToCorrectUrl()
+            {
+                var removeAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new AssigneesClient(connection);
+
+                await client.RemoveAssignees("fake", "repo", 2, removeAssignees);
+
+                connection.Received().Delete<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/2/assignees"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new AssigneesClient(Substitute.For<IApiConnection>());
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("", "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAssignees("owner", "", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees("owner", "name", 2, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees(null, "name", 2, newAssignees));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAssignees("owner", null, 2, newAssignees));
+            }
+        }
+
         public class TheCtor
         {
             [Fact]

@@ -406,8 +406,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", newIssue);
 
-                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                    newIssue);
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), newIssue);
             }
 
             [Fact]
@@ -451,8 +450,7 @@ namespace Octokit.Tests.Clients
 
                 client.Update("fake", "repo", 42, issueUpdate);
 
-                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
-                    issueUpdate);
+                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"), issueUpdate);
             }
 
             [Fact]

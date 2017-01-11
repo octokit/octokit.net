@@ -462,6 +462,7 @@
     <Compile Include="Clients\MigrationsClient.cs" />
     <Compile Include="Models\Request\StartMigrationRequest.cs" />
     <Compile Include="Models\Response\Migration.cs" />
+    <Compile Include="Models\Request\AssigneesUpdate.cs" />
     <Compile Include="Models\Request\NewReaction.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
@@ -504,6 +505,7 @@
     <Compile Include="Clients\RepositoryTrafficClient.cs" />
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Models\Request\IssueCommentRequest.cs" />
+    <Compile Include="Exceptions\AbuseException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

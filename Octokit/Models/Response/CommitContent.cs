@@ -37,7 +37,7 @@ namespace Octokit
         public string Path { get; protected set; }
 
         /// <summary>
-        /// SHA of the last commit that modified this content.
+        /// SHA of this content.
         /// </summary>
         public string Sha { get; protected set; }
 

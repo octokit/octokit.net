@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -9,6 +10,7 @@ public class AssigneesClientTests
 {
     readonly IGitHubClient _github;
     readonly RepositoryContext _context;
+    readonly IIssuesClient _issuesClient;
 
     public AssigneesClientTests()
     {
@@ -53,6 +55,30 @@ public class AssigneesClientTests
     }
 
     [IntegrationTest]
+    public async Task CanAddAndRemoveAssignees()
+    {
+        var newAssignees = new AssigneesUpdate(new List<string>() { _context.RepositoryOwner });
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issuesClient = _github.Issue;
+
+        var issue = await issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        Assert.NotNull(issue);
+
+        var addAssignees = await _github.Issue.Assignee.AddAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newAssignees);
+
+        Assert.IsType<Issue>(addAssignees);
+
+        //Check if assignee was added to issue
+        Assert.True(addAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
+
+        //Test to remove assignees
+        var removeAssignees = await _github.Issue.Assignee.RemoveAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newAssignees);
+
+        //Check if assignee was removed
+        Assert.False(removeAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
+    }
+
     public async Task CanListAssigneesWithRepositoryId()
     {
         // Repository owner is always an assignee
