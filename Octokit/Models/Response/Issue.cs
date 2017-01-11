@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -10,7 +11,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
         {
             Id = id;
             Url = url;
@@ -25,6 +26,7 @@ namespace Octokit
             User = user;
             Labels = labels;
             Assignee = assignee;
+            Assignees = assignees;
             Milestone = milestone;
             Comments = comments;
             PullRequest = pullRequest;
@@ -101,6 +103,11 @@ namespace Octokit
         public User Assignee { get; protected set; }
 
         /// <summary>
+        ///The multiple users this issue is assigned to.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
+
+        /// <summary>
         /// The milestone, if any, that this issue is assigned to.
         /// </summary>
         public Milestone Milestone { get; protected set; }
@@ -153,18 +160,37 @@ namespace Octokit
                 ? new int?()
                 : Milestone.Number;
 
-            var assignee = Assignee == null
+            var assignees = Assignees == null
                 ? null
-                : Assignee.Login;
+                : Assignees.Select(x => x.Login);
+
+            var labels = Labels == null
+                ? null
+                : Labels.Select(x => x.Name);
 
             var issueUpdate = new IssueUpdate
             {
-                Assignee = assignee,
                 Body = Body,
                 Milestone = milestoneId,
                 State = State,
                 Title = Title
             };
+
+            if (assignees != null)
+            {
+                foreach (var assignee in assignees)
+                {
+                    issueUpdate.AddAssignee(assignee);
+                }
+            }
+
+            if (labels != null)
+            {
+                foreach (var label in labels)
+                {
+                    issueUpdate.AddLabel(label);
+                }
+            }
 
             return issueUpdate;
         }

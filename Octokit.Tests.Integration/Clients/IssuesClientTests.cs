@@ -98,7 +98,7 @@ public class IssuesClientTests : IDisposable
         var options = new ApiOptions
         {
             PageSize = 5,
-            PageCount = 1, 
+            PageCount = 1,
             StartPage = 2
         };
 
@@ -186,20 +186,30 @@ public class IssuesClientTests : IDisposable
     public async Task CanCreateRetrieveAndCloseIssue()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        newIssue.Labels.Add("test");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         try
         {
             Assert.NotNull(issue);
+            Assert.True(issue.Assignees.All(x => x.Login == _context.RepositoryOwner));
 
             var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.NotNull(retrieved);
+            Assert.True(retrieved.Assignees.Count == 1);
+            Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
+            var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.True(all.Any(i => i.Number == retrieved.Number));
+            Assert.True(all.Any(i => i.Assignees.Count == 1));
+            Assert.True(all.Any(i => i.Assignees[0].Login == _context.RepositoryOwner));
         }
         finally
         {
             var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
+            Assert.Equal(1, closed.Assignees.Count);
+            Assert.Equal(_context.RepositoryOwner, closed.Assignees[0].Login);
         }
     }
 
@@ -569,6 +579,28 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanRetrieveIssueWithMultipleAssignees()
+    {
+        var issue = await _issuesClient.Get("octokit", "octokit.net", 1171);
+
+        Assert.Equal(2, issue.Assignees.Count);
+    }
+
+    [IntegrationTest]
+    public async Task CanRetrieveIssuesWithMultipleAssignees()
+    {
+        var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
+        var issue1 = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+
+        await _issuesClient.Assignee.AddAssignees(_context.RepositoryOwner, _context.RepositoryName, issue1.Number, new AssigneesUpdate(new List<string>() { _context.RepositoryOwner }));
+
+        var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
+        var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
+
+        Assert.True(issues.Any(x => x.Assignees.Count > 0));
+    }
+
+    [IntegrationTest]
     public async Task CanRetrieveAllIssuesReturnsDistinctReulstsBasedOnApiOptions()
     {
         var newIssue1 = new NewIssue("A test issue1") { Body = "A new unassigned issue" };
@@ -882,6 +914,44 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task DoesNotChangeEmptyLabelsByDefault()
+    {
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Labels);
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeEmptyLabelsByDefaultWithRepositoryId()
+    {
+        await _issuesClient.Labels.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("something", "FF0000"));
+
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Labels);
+    }
+
+    [IntegrationTest]
     public async Task CanUpdateLabelForAnIssue()
     {
         // create some labels
@@ -983,6 +1053,163 @@ public class IssuesClientTests : IDisposable
         var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
 
         Assert.Empty(updatedIssue.Labels);
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeAssigneesByDefault()
+    {
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Equal(1, updatedIssue.Assignees.Count);
+        Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeAssigneesByDefaultWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Equal(1, updatedIssue.Assignees.Count);
+        Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeEmptyAssigneesByDefault()
+    {
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Assignees);
+
+    }
+
+    [IntegrationTest]
+    public async Task DoesNotChangeEmptyAssigneesByDefaultWithRepositoryId()
+    {
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+
+        var issueUpdate = issue.ToUpdate();
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Assignees);
+    }
+
+    [IntegrationTest]
+    public async Task CanUpdateAssigneeForAnIssue()
+    {
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.AddAssignee(_context.RepositoryOwner);
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
+    }
+
+    [IntegrationTest]
+    public async Task CanUpdateAssigneeForAnIssueWithRepositoryId()
+    {
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.AddAssignee(_context.RepositoryOwner);
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
+    }
+
+    [IntegrationTest]
+    public async Task CanClearAssigneesForAnIssue()
+    {
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.Equal(1, issue.Assignees.Count);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.ClearAssignees();
+
+        var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Assignees);
+    }
+
+    [IntegrationTest]
+    public async Task CanClearAssigneesForAnIssueWithRepositoryId()
+    {
+        // setup us the issue
+        var newIssue = new NewIssue("A test issue1")
+        {
+            Body = "A new unassigned issue"
+        };
+        newIssue.Assignees.Add(_context.RepositoryOwner);
+
+        var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
+        Assert.Equal(1, issue.Assignees.Count);
+
+        // update the issue
+        var issueUpdate = issue.ToUpdate();
+        issueUpdate.ClearAssignees();
+
+        var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
+
+        Assert.Empty(updatedIssue.Assignees);
     }
 
     [IntegrationTest]

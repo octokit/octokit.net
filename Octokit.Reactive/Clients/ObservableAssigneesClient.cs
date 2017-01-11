@@ -88,6 +88,39 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Add assignees to a specified Issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="assignees">List of names of assignees to add</param>
+        public IObservable<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(assignees, "assignees");
+
+            return _client.AddAssignees(owner, name, number, assignees).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove assignees from a specified Issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <param name="assignees">List of assignees to remove </param>
+        /// <returns></returns>
+        public IObservable<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(assignees, "assignees");
+
+            return _client.RemoveAssignees(owner, name, number, assignees).ToObservable();
+        }
+
+        /// <summary>
         /// Checks to see if a user is an assignee for a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
