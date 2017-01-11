@@ -14,7 +14,11 @@ namespace Octokit
         Laugh,
         Confused,
         Heart,
-        Hooray
+        Hooray,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -22,11 +26,10 @@ namespace Octokit
     {
         public Reaction() { }
 
-        public Reaction(int id, User user, ReactionType content)
+        public Reaction(int id, User user)
         {
             Id = id;
             User = user;
-            Content = content;
         }
 
         /// <summary>
@@ -42,8 +45,11 @@ namespace Octokit
         /// <summary>
         /// The reaction type for this commit comment.
         /// </summary>
+        [Parameter(Key = "IgnoreThisField")]
+        public ReactionType? Content { get { return ContentText.ParseEnumWithDefault(ReactionType.Unknown); } }
+
         [Parameter(Key = "content")]
-        public ReactionType Content { get; protected set; }
+        public string ContentText { get; protected set; }
 
         internal string DebuggerDisplay
         {

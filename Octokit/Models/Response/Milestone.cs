@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -14,12 +15,11 @@ namespace Octokit
             Number = number;
         }
 
-        public Milestone(Uri url, Uri htmlUrl, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
+        public Milestone(Uri url, Uri htmlUrl, int number, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
         {
             Url = url;
             HtmlUrl = htmlUrl;
             Number = number;
-            State = state;
             Title = title;
             Description = description;
             Creator = creator;
@@ -48,7 +48,11 @@ namespace Octokit
         /// <summary>
         /// Whether the milestone is open or closed.
         /// </summary>
-        public ItemState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public ItemState? State { get { return StateText.ParseEnumWithDefault(ItemState.Unknown); } }
+
+        [Parameter(Key = "state")]
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Title of the milestone

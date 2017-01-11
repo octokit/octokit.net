@@ -13,12 +13,11 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(Uri url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
+        public Team(Uri url, int id, string name, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
             Name = name;
-            Permission = permission;
             MembersCount = membersCount;
             ReposCount = reposCount;
             Organization = organization;
@@ -43,7 +42,11 @@ namespace Octokit
         /// <summary>
         /// permission attached to this team
         /// </summary>
-        public Permission Permission { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public Permission? Permission { get { return PermissionText.ParseEnumWithDefault(Octokit.Permission.Unknown); } }
+
+        [Parameter(Key = "permission")]
+        public string PermissionText { get; protected set; }
 
         /// <summary>
         /// how many members in this team

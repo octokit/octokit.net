@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Octokit.Internal;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -9,9 +10,8 @@ namespace Octokit
     {
         public CombinedCommitStatus() { }
 
-        public CombinedCommitStatus(CommitState state, string sha, int totalCount, IReadOnlyList<CommitStatus> statuses, Repository repository)
+        public CombinedCommitStatus(string sha, int totalCount, IReadOnlyList<CommitStatus> statuses, Repository repository)
         {
-            State = state;
             Sha = sha;
             TotalCount = totalCount;
             Statuses = statuses;
@@ -21,7 +21,11 @@ namespace Octokit
         /// <summary>
         /// The combined state of the commits.
         /// </summary>
-        public CommitState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public CommitState? State { get { return StateText.ParseEnumWithDefault(CommitState.Unknown); } }
+
+        [Parameter(Key = "state")]
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// The SHA of the reference.

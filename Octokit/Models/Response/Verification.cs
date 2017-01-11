@@ -18,8 +18,11 @@ namespace Octokit
         /// <summary>
         /// The reason for verified value.
         /// </summary>
+        [Parameter(Key = "IgnoreThisField")]
+        public VerificationReason? Reason { get { return ReasonText.ParseEnumWithDefault(VerificationReason.Unknown); } }
+
         [Parameter(Key = "reason")]
-        public VerificationReason Reason { get; protected set; }
+        public string ReasonText { get; protected set; }
 
         /// <summary>
         /// The signature that was extracted from the commit.
@@ -85,6 +88,11 @@ namespace Octokit
         Invalid,
 
         [Parameter(Value = "valid")]
-        Valid
+        Valid,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 }

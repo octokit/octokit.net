@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -10,14 +11,13 @@ namespace Octokit
     {
         public EventInfo() { }
 
-        public EventInfo(int id, Uri url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
+        public EventInfo(int id, Uri url, User actor, User assignee, Label label, string commitId, DateTimeOffset createdAt)
         {
             Id = id;
             Url = url;
             Actor = actor;
             Assignee = assignee;
             Label = label;
-            Event = @event;
             CommitId = commitId;
             CreatedAt = createdAt;
         }
@@ -50,7 +50,11 @@ namespace Octokit
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState Event { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public EventInfoState? Event { get { return EventText.ParseEnumWithDefault(EventInfoState.Unknown); } }
+
+        [Parameter(Key = "event")]
+        public string EventText { get; protected set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
@@ -184,6 +188,11 @@ namespace Octokit
         /// url of the reference's source.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
-        Crossreferenced
+        Crossreferenced,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 }

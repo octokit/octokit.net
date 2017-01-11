@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -50,16 +51,19 @@ namespace Octokit
     {
         public RequiredStatusChecks() { }
 
-        public RequiredStatusChecks(EnforcementLevel enforcementLevel, IEnumerable<string> contexts)
+        public RequiredStatusChecks(IEnumerable<string> contexts)
         {
-            EnforcementLevel = enforcementLevel;
             Contexts = new ReadOnlyCollection<string>(contexts.ToList());
         }
 
         /// <summary>
         /// Who required status checks apply to
         /// </summary>
-        public EnforcementLevel EnforcementLevel { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public EnforcementLevel? EnforcementLevel { get { return EnforcementText.ParseEnumWithDefault(Octokit.EnforcementLevel.Unknown); } }
+
+        [Parameter(Key = "enforcement_level")]
+        public string EnforcementText { get; protected set; }
 
         /// <summary>
         /// The list of status checks to require in order to merge into this <see cref="Branch"/>
@@ -94,7 +98,12 @@ namespace Octokit
         /// <summary>
         /// Required status checks will be enforced for everyone (including admins).
         /// </summary>
-        Everyone
+        Everyone,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 
     /// <summary>
@@ -128,7 +137,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture,
                     "StatusChecks: {0} Restrictions: {1}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
@@ -172,8 +181,8 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture,
                     "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
-                    IncludeAdmins, 
-                    Strict, 
+                    IncludeAdmins,
+                    Strict,
                     Contexts == null ? "" : String.Join(",", Contexts));
             }
         }
@@ -207,7 +216,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, 
+                return string.Format(CultureInfo.InvariantCulture,
                     "Teams: {0} Users: {1}",
                     Teams == null ? "" : String.Join(",", Teams),
                     Users == null ? "" : String.Join(",", Users));

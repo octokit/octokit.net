@@ -122,8 +122,19 @@ namespace Octokit.Internal
                             //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
                             // remove '-' from values coming in to be able to enum utf-8
                             stringValue = RemoveHyphenAndUnderscore(stringValue);
-                            var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
-                            _cachedEnums[type].Add(value, parsed);
+                            object parsed = new object();
+                            try
+                            {
+                                parsed = Enum.Parse(type, stringValue, ignoreCase: true);
+                                _cachedEnums[type].Add(value, parsed);
+                            }
+                            catch(ArgumentException)
+                            {
+                                //We have a value that is actually not a member of the enum. So add it on the fly and maybe create an issue so that we get informed
+                                parsed = Enum.Parse(type, "unknowntype", ignoreCase: true);
+                                _cachedEnums[type].Add(value, parsed);
+                            }
+                            
                             return parsed;
                         }
                     }

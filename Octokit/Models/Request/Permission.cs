@@ -21,6 +21,11 @@ namespace Octokit
         /// <summary>
         /// team members can pull, but not push to or administer these repositories
         /// </summary>
-        Pull
+        Pull,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 }

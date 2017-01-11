@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -9,11 +10,10 @@ namespace Octokit
     {
         public CommitStatus() { }
 
-        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, Uri targetUrl, string description, string context, int id, Uri url, User creator)
+        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, Uri targetUrl, string description, string context, int id, Uri url, User creator)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
-            State = state;
             TargetUrl = targetUrl;
             Description = description;
             Context = context;
@@ -35,7 +35,11 @@ namespace Octokit
         /// <summary>
         /// The state of the commit
         /// </summary>
-        public CommitState State { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public CommitState? State { get { return StateText.ParseEnumWithDefault(CommitState.Unknown); } }
+
+        [Parameter(Key = "state")]
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the
@@ -100,6 +104,11 @@ namespace Octokit
         /// <summary>
         /// The build completed and reports a failure.
         /// </summary>
-        Failure
+        Failure,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 }

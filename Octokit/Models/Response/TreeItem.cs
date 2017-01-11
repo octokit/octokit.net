@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -10,11 +11,10 @@ namespace Octokit
     {
         public TreeItem() { }
 
-        public TreeItem(string path, string mode, TreeType type, int size, string sha, Uri url)
+        public TreeItem(string path, string mode, int size, string sha, Uri url)
         {
             Path = path;
             Mode = mode;
-            Type = type;
             Size = size;
             Sha = sha;
             Url = url;
@@ -34,7 +34,11 @@ namespace Octokit
         /// The type of this Tree Item.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public TreeType Type { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public TreeType? Type { get { return TypeText.ParseEnumWithDefault(TreeType.Unknown); } }
+
+        [Parameter(Key = "type")]
+        public string TypeText { get; protected set; }
 
         /// <summary>
         /// The size of this Tree Item.
@@ -61,7 +65,11 @@ namespace Octokit
     {
         Blob,
         Tree,
-        Commit
+        Commit,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 
     /// <summary>

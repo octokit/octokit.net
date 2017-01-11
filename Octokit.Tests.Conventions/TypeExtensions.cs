@@ -115,7 +115,14 @@ namespace Octokit.Tests.Conventions
         }
     }
 
-    public enum TypeCategory { Other, Task, GenericTask, ReadOnlyList, ClientInterface }
+    public enum TypeCategory
+    {
+        Other,
+        Task,
+        GenericTask,
+        ReadOnlyList,
+        ClientInterface
+    }
 
     public struct TypeInfo
     {

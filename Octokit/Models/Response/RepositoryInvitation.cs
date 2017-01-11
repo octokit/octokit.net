@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -8,7 +9,11 @@ namespace Octokit
     {
         Read,
         Write,
-        Admin
+        Admin,
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -16,13 +21,12 @@ namespace Octokit
     {
         public RepositoryInvitation() { }
 
-        public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, string url, string htmlUrl)
+        public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, DateTimeOffset createdAt, string url, string htmlUrl)
         {
             Id = id;
             Repository = repository;
             Invitee = invitee;
             Inviter = inviter;
-            Permissions = permissions;
             CreatedAt = createdAt;
             Url = url;
             HtmlUrl = htmlUrl;
@@ -36,7 +40,11 @@ namespace Octokit
 
         public User Inviter { get; protected set; }
 
-        public InvitationPermissionType Permissions { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public InvitationPermissionType? Permissions { get { return PermissionsText.ParseEnumWithDefault(InvitationPermissionType.Unknown); } }
+
+        [Parameter(Key = "permissions")]
+        public string PermissionsText { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 

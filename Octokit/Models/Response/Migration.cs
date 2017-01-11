@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Octokit.Internal;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -23,7 +24,6 @@ namespace Octokit
         public Migration(
             int id,
             string guid,
-            MigrationState state,
             bool lockRepositories,
             bool excludeAttachments,
             string url,
@@ -33,7 +33,6 @@ namespace Octokit
         {
             Id = id;
             Guid = guid;
-            State = state;
             LockRepositories = lockRepositories;
             ExcludeAttachments = excludeAttachments;
             Url = url;
@@ -55,7 +54,11 @@ namespace Octokit
         /// <summary>
         /// The state of migration. Can be one of pending, exporting, exported and failed.
         /// </summary>
-        public MigrationState State { get; private set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public MigrationState? State { get { return StateText.ParseEnumWithDefault(MigrationState.Unknown); } }
+
+        [Parameter(Key = "state")]
+        public string StateText { get; protected set; }
 
         /// <summary>
         /// Whether to lock repositories.
@@ -121,7 +124,12 @@ namespace Octokit
             /// <summary>
             /// The migration failed.
             /// </summary>
-            Failed
+            Failed,
+
+            /// <summary>
+            /// Used as a placeholder for unknown fields
+            /// </summary>
+            Unknown
         }
     }
 }

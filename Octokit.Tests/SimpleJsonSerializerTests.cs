@@ -306,7 +306,7 @@ namespace Octokit.Tests
 
                 Assert.Equal(SomeEnum.Unicode, sample.SomeEnum);
             }
-            
+
             [Fact]
             public void RemovesDashFromEnums()
             {

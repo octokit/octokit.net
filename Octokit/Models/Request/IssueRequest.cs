@@ -154,7 +154,12 @@ namespace Octokit
         /// <summary>
         /// Items that are closed
         /// </summary>
-        Closed
+        Closed,
+
+        /// <summary>
+        /// Used as a placeholder for unknown fields
+        /// </summary>
+        Unknown
     }
 
     /// <summary>

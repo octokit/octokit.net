@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -9,13 +10,12 @@ namespace Octokit
     {
         public TimelineEventInfo() { }
 
-        public TimelineEventInfo(int id, string url, User actor, string commitId, EventInfoState @event, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename)
+        public TimelineEventInfo(int id, string url, User actor, string commitId, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename)
         {
             Id = id;
             Url = url;
             Actor = actor;
             CommitId = commitId;
-            Event = @event;
             CreatedAt = createdAt;
             Label = label;
             Assignee = assignee;
@@ -28,7 +28,10 @@ namespace Octokit
         public string Url { get; protected set; }
         public User Actor { get; protected set; }
         public string CommitId { get; protected set; }
-        public EventInfoState Event { get; protected set; }
+        [Parameter(Key = "IgnoreThisField")]
+        public EventInfoState? Event { get { return EventText.ParseEnumWithDefault(EventInfoState.Unknown); } }
+        [Parameter(Key = "event")]
+        public string EventText { get; protected set; }
         public DateTimeOffset CreatedAt { get; protected set; }
         public Label Label { get; protected set; }
         public User Assignee { get; protected set; }
