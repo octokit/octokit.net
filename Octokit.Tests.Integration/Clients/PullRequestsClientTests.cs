@@ -76,6 +76,52 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetWithAssigneesForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        // Add an assignee
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddAssignee(Helper.UserName);
+        await _github.Issue.Update(Helper.UserName, _context.RepositoryName, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Assignees.Count);
+        Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithAssigneesForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        // Add an assignee
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddAssignee(Helper.UserName);
+        await _github.Issue.Update(_context.Repository.Id, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Assignees.Count);
+        Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfPullRequestsWithoutStart()
     {
         await CreateTheWorld();

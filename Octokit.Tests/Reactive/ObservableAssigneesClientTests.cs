@@ -64,10 +64,10 @@ namespace Octokit.Tests.Reactive
                     StartPage = 1,
                     PageCount = 1
                 };
-
+                client.GetAllForRepository(owner, name, new ApiOptions { PageSize = 1, StartPage = 1 });
                 client.GetAllForRepository(owner, name, options);
 
-                gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUri,
+                gitHubClient.Connection.Received(2).Get<List<User>>(_expectedUri,
                     Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
             }
 
@@ -148,6 +148,66 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.CheckAssignee(owner, name, string.Empty));
 
                 Assert.Throws<ArgumentException>(() => client.CheckAssignee(1, string.Empty));
+            }
+        }
+
+        public class TheAddAssigneesMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(gitHubClient);
+
+                client.AddAssignees("fake", "repo", 2, newAssignees);
+
+                gitHubClient.Issue.Assignee.Received().AddAssignees("fake", "repo", 2, newAssignees);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(githubClient);
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees(null, "name", 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("name", null, 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.AddAssignees("owner", "name", 2, null));
+
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("owner", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.AddAssignees("", "name", 2, newAssignees));
+            }
+        }
+
+        public class TheRemoveAssigneesMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(gitHubClient);
+
+                client.RemoveAssignees("fake", "repo", 2, newAssignees);
+
+                gitHubClient.Issue.Assignee.Received().RemoveAssignees("fake", "repo", 2, newAssignees);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableAssigneesClient(githubClient);
+                var newAssignees = new AssigneesUpdate(new List<string>() { "assignee1", "assignee2" });
+
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees(null, "name", 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees("owner", null, 2, newAssignees));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAssignees("owner", "name", 2, null));
+
+                Assert.Throws<ArgumentException>(() => client.RemoveAssignees("owner", "", 2, newAssignees));
+                Assert.Throws<ArgumentException>(() => client.RemoveAssignees("", "name", 2, newAssignees));
             }
         }
 

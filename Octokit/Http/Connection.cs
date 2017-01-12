@@ -495,6 +495,20 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return SendData<T>(uri, HttpMethod.Delete, data, null, null, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
@@ -614,11 +628,23 @@ namespace Octokit
         static Exception GetExceptionForForbidden(IResponse response)
         {
             string body = response.Body as string ?? "";
-            return body.Contains("rate limit exceeded")
-                ? new RateLimitExceededException(response)
-                : body.Contains("number of login attempts exceeded")
-                    ? new LoginAttemptsExceededException(response)
-                    : new ForbiddenException(response);
+
+            if (body.Contains("rate limit exceeded"))
+            {
+                return new RateLimitExceededException(response);
+            }
+
+            if (body.Contains("number of login attempts exceeded"))
+            {
+                return new LoginAttemptsExceededException(response);
+            }
+
+            if (body.Contains("abuse-rate-limits") || body.Contains("abuse detection mechanism"))
+            {
+                return new AbuseException(response);                
+            }
+
+            return new ForbiddenException(response);
         }
 
         internal static TwoFactorType ParseTwoFactorType(IResponse restResponse)
