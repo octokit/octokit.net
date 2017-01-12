@@ -5,7 +5,6 @@
     "GitHub"
   ],
   "description": "An IObservable based GitHub API client library for .NET using Reactive Extensions",
-  "summary": "An IObservable based GitHub API client library for .NET using Reactive Extensions",
   "xmlDoc": true,
   "buildOptions": {
     "compile": {
@@ -15,6 +14,9 @@
         "../Octokit/Helpers/Pagination.cs"
       ]
     }
+  },
+  "packOptions": {
+    "summary": "An IObservable based GitHub API client library for .NET using Reactive Extensions"
   },
   "dependencies": {
     "Octokit": {

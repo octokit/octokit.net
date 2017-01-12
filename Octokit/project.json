@@ -1,11 +1,10 @@
-{
+﻿{
   "version": "1.0.0-*",
   "title": "Octokit",
   "authors": [
     "GitHub"
   ],
   "description": "An async-based GitHub API client library for .NET",
-  "summary": "An async-based GitHub API client library for .NET",
   "xmlDoc": true,
   "buildOptions": {
     "compile": {
@@ -13,6 +12,9 @@
         "../SolutionInfo.cs"
       ]
     }
+  },
+  "packOptions": {
+    "summary": "An async-based GitHub API client library for .NET"
   },
   "frameworks": {
     "netstandard1.1": {

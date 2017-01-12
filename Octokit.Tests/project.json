@@ -6,7 +6,6 @@
     "GitHub"
   ],
   "description": "Tests for Octokit",
-  "summary": "Tests for Octokit",
   "xmlDoc": true,
   "buildOptions": {
     "nowarn": [ "CS4014", "CS1998" ]

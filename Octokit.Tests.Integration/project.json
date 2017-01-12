@@ -6,7 +6,6 @@
     "GitHub"
   ],
   "description": "Integration tests for Octokit",
-  "summary": "Integration tests for Octokit",
   "xmlDoc": true,
   "buildOptions": {
     "nowarn": ["CS4014","CS1998"],

@@ -6,7 +6,6 @@
     "GitHub"
   ],
   "description": "Convention-based tests for Octokit",
-  "summary": "Convention-based tests for Octokit",
   "xmlDoc": true,
   "buildOptions": {
     "nowarn": ["CS4014","CS1998"],
