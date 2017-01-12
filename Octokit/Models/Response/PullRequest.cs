@@ -15,8 +15,9 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(int id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
+            Id = id;
             Url = url;
             HtmlUrl = htmlUrl;
             DiffUrl = diffUrl;
@@ -46,6 +47,11 @@ namespace Octokit
             Milestone = milestone;
             Locked = locked;
         }
+
+        /// <summary>
+        /// The universal Id (different from the pull request number) this pull request.
+        /// </summary>
+        public int Id { get; protected set; }
 
         /// <summary>
         /// The URL for this pull request.
