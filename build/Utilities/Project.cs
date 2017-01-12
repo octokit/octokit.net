@@ -7,4 +7,5 @@ public class Project
     public bool Publish { get; set; }
     public bool UnitTests { get; set; }
     public bool IntegrationTests { get; set; }
+    public bool IsTests => UnitTests || IntegrationTests;
 }
