@@ -59,7 +59,7 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
-        Assert.NotNull(pullRequests[0].Id);
+        Assert.True(pullRequests[0].Id > 0);
     }
 
     [IntegrationTest]
