@@ -3,7 +3,12 @@ using Cake.Core.IO;
 
 public static class PdbGitAliases
 {
-    public static void PdbGitLinkSources(this ICakeContext context, FilePath pdbFile)
+    public static void PdbGit(this ICakeContext context, FilePath pdbFile)
+    {
+        context.PdbGit(pdbFile, new PdbGitSettings());
+    }
+
+    public static void PdbGit(this ICakeContext context, FilePath pdbFile, PdbGitSettings settings)
     {
         var tool = new PdbGitTool(
             context.FileSystem,
@@ -11,8 +16,6 @@ public static class PdbGitAliases
             context.ProcessRunner,
             context.Tools);
 
-        var settings = new PdbGitSettings(pdbFile);
-
-        tool.LinkSources(settings);
+        tool.Run(pdbFile, settings);
     }
 }
