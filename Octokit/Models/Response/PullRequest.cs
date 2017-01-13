@@ -49,7 +49,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The universal Id (different from the pull request number) this pull request.
         /// </summary>
         public long Id { get; protected set; }
 
