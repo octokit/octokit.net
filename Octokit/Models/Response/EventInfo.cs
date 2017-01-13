@@ -194,7 +194,7 @@ namespace Octokit
         ReviewRequestRemoved,
 
         /// <summary>
-        /// Not documented in GitHub API.
+        /// Base branch of the pull request was changed.
         /// </summary>
         BaseRefChanged,
 
