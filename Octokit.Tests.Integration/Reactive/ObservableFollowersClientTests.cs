@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Xunit;
@@ -153,7 +154,7 @@ namespace Octokit.Tests.Integration.Reactive
             }
         }
 
-        public class TheGetAllFollowingForCurrentMethod
+        public class TheGetAllFollowingForCurrentMethod : IDisposable
         {
             readonly ObservableFollowersClient _followersClient;
 
@@ -162,6 +163,10 @@ namespace Octokit.Tests.Integration.Reactive
                 var github = Helper.GetAuthenticatedClient();
 
                 _followersClient = new ObservableFollowersClient(github);
+
+                // Follow someone to set initial state
+                _followersClient.Follow("alfhenrik").ToList();
+                _followersClient.Follow("ryangribble").ToList();
             }
 
             [IntegrationTest]
@@ -222,6 +227,12 @@ namespace Octokit.Tests.Integration.Reactive
                 var secondFollowingPage = await _followersClient.GetAllFollowingForCurrent(skipStartOptions).ToList();
 
                 Assert.NotEqual(firstFollowingPage[0].Id, secondFollowingPage[0].Id);
+            }
+
+            public void Dispose()
+            {
+                _followersClient.Unfollow("alfhenrik");
+                _followersClient.Unfollow("ryangribble");
             }
         }
 
