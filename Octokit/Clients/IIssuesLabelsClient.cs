@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number);
-        
+
         /// <summary>
         /// Gets all  labels for the issue.
         /// </summary>

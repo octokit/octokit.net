@@ -110,7 +110,7 @@ namespace Octokit
         public bool HasWiki { get; protected set; }
 
         public bool HasDownloads { get; protected set; }
-        
+
         public bool? AllowRebaseMerge { get; protected set; }
 
         public bool? AllowSquashMerge { get; protected set; }

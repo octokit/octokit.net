@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
         IObservable<Milestone> Get(string owner, string name, int number);
-        
+
         /// <summary>
         /// Gets a single Milestone by number.
         /// </summary>
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         IObservable<Milestone> GetAllForRepository(string owner, string name);
-        
+
         /// <summary>
         /// Gets all open milestones for the repository.
         /// </summary>

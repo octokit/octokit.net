@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options);
-        
+
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>

@@ -83,7 +83,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repositories/1/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repositories/1/events", UriKind.Relative),
                     Args.EmptyDictionary, null);
             }
 
@@ -102,7 +102,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", options);
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repos/fake/repo/events", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
             }
 
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, apiOptions);
 
-                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repositories/1/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<Activity>>(new Uri("repositories/1/events", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
             }
 
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllIssuesForRepository("fake", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative),
                     Args.EmptyDictionary, null);
             }
 
@@ -168,7 +168,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllIssuesForRepository(1);
 
-                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repositories/1/issues/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repositories/1/issues/events", UriKind.Relative),
                     Args.EmptyDictionary, null);
             }
 
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllIssuesForRepository("fake", "repo", options);
 
-                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repos/fake/repo/issues/events", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
             }
 
@@ -206,7 +206,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllIssuesForRepository(1, options);
 
-                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repositories/1/issues/events", UriKind.Relative), 
+                gitHubClient.Connection.Received(1).Get<List<IssueEvent>>(new Uri("repositories/1/issues/events", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
             }
 

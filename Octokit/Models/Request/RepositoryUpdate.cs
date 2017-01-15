@@ -15,7 +15,6 @@ namespace Octokit
         [Obsolete("Please use the ctor RepositoryUpdate(string name) as Name is a required field")]
         public RepositoryUpdate()
         {
-
         }
 
         /// <summary>
@@ -33,42 +32,42 @@ namespace Octokit
         /// Required. Gets or sets the repository name.
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Optional. Gets or sets the repository description. The default is null (do not update)
         /// </summary>
         public string Description { get; set; }
-        
+
         /// <summary>
         /// Optional. Gets or sets the repository homepage url. The default is null (do not update).
         /// </summary>
         public string Homepage { get; set; }
-        
+
         /// <summary>
         /// Gets or sets whether to make the repository private. The default is null (do not update).
         /// </summary>
         public bool? Private { get; set; }
-        
+
         /// <summary>
         /// Gets or sets whether to enable issues for the repository. The default is null (do not update).
         /// </summary>
         public bool? HasIssues { get; set; }
-        
+
         /// <summary>
         /// Optional. Gets or sets whether to enable the wiki for the repository. The default is null (do not update).
         /// </summary>
         public bool? HasWiki { get; set; }
-        
+
         /// <summary>
         /// Optional. Gets or sets whether to enable downloads for the repository. The default is null (do not update).
         /// </summary>
         public bool? HasDownloads { get; set; }
-        
+
         /// <summary>
         /// Optional. Gets or sets the default branch. The default is null (do not update).
         /// </summary>
         public string DefaultBranch { get; set; }
-        
+
         /// <summary>
         /// Optional. Allows the "Rebase and Merge" method to be used.
         /// </summary>

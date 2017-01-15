@@ -109,7 +109,6 @@ namespace Octokit.Internal
                                 {
                                     if (attribute.Value.Equals(value))
                                         _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
-
                                 }
                             }
                         }

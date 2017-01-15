@@ -638,7 +638,7 @@ namespace Octokit
 
             if (body.Contains("abuse-rate-limits") || body.Contains("abuse detection mechanism"))
             {
-                return new AbuseException(response);                
+                return new AbuseException(response);
             }
 
             return new ForbiddenException(response);

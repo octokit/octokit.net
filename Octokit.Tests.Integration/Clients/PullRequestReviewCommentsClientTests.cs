@@ -406,7 +406,6 @@ public class PullRequestReviewCommentsClientTests : IDisposable
         var pullRequestComments = await _client.GetAllForRepository(_context.Repository.Id);
 
         AssertComments(pullRequestComments, commentsToCreate, position);
-
     }
 
     [IntegrationTest]
@@ -855,7 +854,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
 
         var repoName = context.RepositoryName;
-        
+
         // Creating a commit in master
 
         var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");

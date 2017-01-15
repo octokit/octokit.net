@@ -59,7 +59,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            
+
             return GetAllForRepository(owner, name, new MilestoneRequest());
         }
 

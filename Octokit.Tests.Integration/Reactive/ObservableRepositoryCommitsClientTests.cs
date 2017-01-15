@@ -17,7 +17,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var client = Helper.GetAuthenticatedClient();
                 _repositoryCommitsClient = new ObservableRepositoryCommitsClient(client);
             }
-            
+
             [IntegrationTest]
             public async Task CanGetCorrectCountOfCommitsWithoutStart()
             {

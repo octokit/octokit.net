@@ -1108,7 +1108,6 @@ public class IssuesClientTests : IDisposable
         var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Empty(updatedIssue.Assignees);
-
     }
 
     [IntegrationTest]

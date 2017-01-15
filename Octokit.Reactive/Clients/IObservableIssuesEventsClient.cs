@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         IObservable<EventInfo> GetAllForIssue(string owner, string name, int number);
-        
+
         /// <summary>
         /// Gets all events for the issue.
         /// </summary>

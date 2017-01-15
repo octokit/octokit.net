@@ -81,11 +81,11 @@ public class MigrationsClientTests : IDisposable
     {
         while (!isExported)
         {
-            Thread.Sleep(2000);    
+            Thread.Sleep(2000);
         }
 
         var contents = await _gitHub.Migration.Migrations.GetArchive(_orgName, _migrationContext.Id);
-        
+
         Assert.NotEmpty(contents);
     }
 
@@ -127,6 +127,6 @@ public class MigrationsClientTests : IDisposable
 
     public void Dispose()
     {
-        _repos.ForEach( (repo) => repo.Dispose() );
+        _repos.ForEach((repo) => repo.Dispose());
     }
 }

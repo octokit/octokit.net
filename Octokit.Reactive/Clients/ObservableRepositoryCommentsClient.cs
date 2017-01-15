@@ -15,7 +15,7 @@ namespace Octokit.Reactive
     {
         readonly IRepositoryCommentsClient _client;
         readonly IConnection _connection;
-        
+
         public ObservableRepositoryCommentsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");

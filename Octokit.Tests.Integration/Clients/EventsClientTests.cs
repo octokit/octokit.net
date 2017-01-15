@@ -109,7 +109,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsDistinctEventsBasedOnStartPage()
             {
                 var github = Helper.GetAuthenticatedClient();
-                 
+
                 var startOptions = new ApiOptions
                 {
                     PageSize = 1,
@@ -134,7 +134,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsDistinctEventsBasedOnStartPageWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
-                 
+
                 var startOptions = new ApiOptions
                 {
                     PageSize = 1,

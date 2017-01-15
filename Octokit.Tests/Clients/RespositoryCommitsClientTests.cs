@@ -317,7 +317,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetSha1("fake", "repo", "ref");
 
-                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref"), 
+                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref"),
                     null, "application/vnd.github.chitauri-preview+sha");
             }
 

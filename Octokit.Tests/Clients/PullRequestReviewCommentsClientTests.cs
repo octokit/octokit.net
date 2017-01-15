@@ -200,7 +200,7 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview", 
+                "application/vnd.github.squirrel-girl-preview",
                 Args.ApiOptions);
         }
 
@@ -254,7 +254,7 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview", 
+                "application/vnd.github.squirrel-girl-preview",
                 options);
         }
 

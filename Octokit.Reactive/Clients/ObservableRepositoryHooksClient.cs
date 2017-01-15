@@ -15,7 +15,7 @@ namespace Octokit.Reactive
     {
         readonly IRepositoryHooksClient _client;
         readonly IConnection _connection;
-        
+
         public ObservableRepositoryHooksClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");

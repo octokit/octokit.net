@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class IssueTimelineClientTests :IDisposable
+    public class IssueTimelineClientTests : IDisposable
     {
         private readonly IIssueTimelineClient _issueTimelineClient;
         private readonly IIssuesClient _issuesClient;

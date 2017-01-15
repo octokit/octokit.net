@@ -30,7 +30,7 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CanGetAuthorization()
         {
             var github = Helper.GetBasicAuthClient();
-            
+
             var authorizations = await github.Authorization.GetAll();
             Assert.NotEmpty(authorizations);
         }

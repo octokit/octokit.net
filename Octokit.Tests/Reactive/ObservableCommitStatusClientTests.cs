@@ -149,7 +149,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("owner", "repo", "sha", newCommitStatus);
 
-                gitHubClient.Received(). Repository.Status.Create("owner", "repo", "sha", newCommitStatus);
+                gitHubClient.Received().Repository.Status.Create("owner", "repo", "sha", newCommitStatus);
             }
 
             [Fact]

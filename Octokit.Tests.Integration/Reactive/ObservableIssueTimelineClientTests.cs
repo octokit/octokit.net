@@ -5,7 +5,7 @@ using Octokit.Reactive;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Reactive
-{    
+{
     public class ObservableIssueTimelineClientTests
     {
         private readonly RepositoryContext _context;

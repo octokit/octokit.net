@@ -231,7 +231,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [PaidAccountTest(Skip="Paid plans now have unlimited repositories. We shouldn't test this now.")]
+        [PaidAccountTest(Skip = "Paid plans now have unlimited repositories. We shouldn't test this now.")]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -782,7 +782,7 @@ public class RepositoriesClientTests
         public async Task ReturnsRepositoriesForOrganization()
         {
             var github = Helper.GetAuthenticatedClient();
-            
+
             var options = new ApiOptions
             {
                 PageSize = 20,
@@ -1134,7 +1134,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var firstPage = await github.Repository.GetAllContributors("ruby", "ruby",  true, firstPageOptions);
+            var firstPage = await github.Repository.GetAllContributors("ruby", "ruby", true, firstPageOptions);
 
             var secondPageOptions = new ApiOptions
             {
@@ -1646,7 +1646,7 @@ public class RepositoriesClientTests
 
     public class TheGetAllTeamsMethod
     {
-        [IntegrationTest(Skip="Test requires administration rights to access this endpoint")]
+        [IntegrationTest(Skip = "Test requires administration rights to access this endpoint")]
         public async Task GetsAllTeams()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1656,7 +1656,7 @@ public class RepositoriesClientTests
             Assert.NotEmpty(branches);
         }
 
-        [IntegrationTest(Skip="Test requires administration rights to access this endpoint")]
+        [IntegrationTest(Skip = "Test requires administration rights to access this endpoint")]
         public async Task GetsAllTeamsWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
