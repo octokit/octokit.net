@@ -79,7 +79,8 @@ public class ObservableIssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsAllIssuesForCurrentUser()
     {
-        var newIssue = new NewIssue("Integration test issue") { Assignee = _context.RepositoryOwner };
+        var newIssue = new NewIssue("Integration test issue");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
         await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         var issues = await _client.GetAllForCurrent().ToList();
@@ -90,7 +91,8 @@ public class ObservableIssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsAllIssuesForOwnedAndMemberRepositories()
     {
-        var newIssue = new NewIssue("Integration test issue") { Assignee = _context.RepositoryOwner };
+        var newIssue = new NewIssue("Integration test issue");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
         await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         var result = await _client.GetAllForOwnedAndMemberRepositories().ToList();
 

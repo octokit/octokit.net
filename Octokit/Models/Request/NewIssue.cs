@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -37,6 +38,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
+        [Obsolete("Please use Assignees property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
         public string Assignee { get; set; }
 
         /// <summary>

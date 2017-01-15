@@ -666,9 +666,11 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByAssigned()
     {
-        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = _context.RepositoryOwner };
-        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself" };
+        newIssue1.Assignees.Add(_context.RepositoryOwner);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
         var allIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
@@ -692,9 +694,11 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByAssignedWithRepositoryId()
     {
-        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = _context.RepositoryOwner };
-        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself" };
+        newIssue1.Assignees.Add(_context.RepositoryOwner);
         await _issuesClient.Create(_context.Repository.Id, newIssue1);
+
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.Repository.Id, newIssue2);
 
         var allIssues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
