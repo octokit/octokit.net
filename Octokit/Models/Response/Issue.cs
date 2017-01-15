@@ -38,7 +38,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The Id for this issue
+        /// The internal Id for this issue (not the issue number)
         /// </summary>
         public int Id { get; protected set; }
 
