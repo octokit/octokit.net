@@ -1,3 +1,27 @@
+### New in 0.24.0 (released 17/1/2017)
+
+**Features/Enhancements**
+
+Add GetAll method to OrganizationsClient - [#1469](https://github.com/octokit/octokit.net/pull/1469) via [malamour-work](https://github.com/malamour-work)
+Add missing fields to Repository class - HasPages, SubscribersCount, Size - [#1473](https://github.com/octokit/octokit.net/pull/1473) via [ryangribble](https://github.com/ryangribble)
+Allow base64 content for create/update file - [#1488](https://github.com/octokit/octokit.net/pull/1488) via [laedit](https://github.com/laedit)
+Add missing fields to Milestone class - [#1489](https://github.com/octokit/octokit.net/pull/1489) via [StanleyGoldman](https://github.com/StanleyGoldman)
+Add support for passing sort options to IssueCommentsClient.GetAllForRepository() - [#1501](https://github.com/octokit/octokit.net/pull/1501) via [pjc0247](https://github.com/pjc0247)
+Rename PullRequest.Comment to PullRequest.ReviewComment for better accuracy - [#1520](https://github.com/octokit/octokit.net/pull/1520) via [bmeverett](https://github.com/bmeverett)
+Introduce AbuseException - [#1528](https://github.com/octokit/octokit.net/pull/1528) via [SeanKilleen](https://github.com/SeanKilleen)
+Add Id field to PullRequest class - [#1537](https://github.com/octokit/octokit.net/pull/1537) via [YunLi1988](https://github.com/YunLi1988)
+
+**Fixes**
+
+Fix errors in ObservableEventsClient caused by incorrect return types - [#1490](https://github.com/octokit/octokit.net/pull/1490) via [StanleyGoldman](https://github.com/StanleyGoldman)
+Add missing SecurityCritical attribute on GetObjectData() overrides - [#1493](https://github.com/octokit/octokit.net/pull/1493) via [M-Zuber](https://github.com/M-Zuber)
+Fix exceptions in Events API by adding missing event types to EventInfo enumeration - [#1536](https://github.com/octokit/octokit.net/pull/1536) via [lynnfaraday](https://github.com/lynnfaraday)
+
+**Documentation Updates**
+
+Clarify ApiInfo rate limiting usage in docs - [#1524](https://github.com/octokit/octokit.net/pull/1524) via [SeanKilleen](https://github.com/SeanKilleen)
+Clarify label coloring usage in docs - [#1530](https://github.com/octokit/octokit.net/pull/1530) via [SeanKilleen](https://github.com/SeanKilleen)
+
 ### New in 0.23.0 (released 07/10/2016)
 
 **Features**
