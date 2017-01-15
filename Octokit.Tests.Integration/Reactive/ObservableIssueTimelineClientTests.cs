@@ -95,7 +95,7 @@ namespace Octokit.Tests.Integration.Reactive
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
         [IntegrationTest]
@@ -152,7 +152,7 @@ namespace Octokit.Tests.Integration.Reactive
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
     }
 }
