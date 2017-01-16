@@ -178,7 +178,12 @@ namespace Octokit
         {
             get
             {
-                return ApiError != null ? ApiError.Message : null;
+                if (ApiError != null && !string.IsNullOrWhiteSpace(ApiError.Message))
+                {
+                    return ApiError.Message;
+                }
+
+                return null;
             }
         }
 
