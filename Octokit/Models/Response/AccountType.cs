@@ -10,6 +10,11 @@
         /// <summary>
         /// Organization account
         /// </summary>
-        Organization
+        Organization,
+
+        /// <summary>
+        /// Bot account
+        /// </summary>
+        Bot
     }
 }
