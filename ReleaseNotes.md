@@ -17,6 +17,7 @@ Unparseable ApiErrors should now fall back to better default error messages - [#
 Fix errors in ObservableEventsClient caused by incorrect return types - [#1490](https://github.com/octokit/octokit.net/pull/1490) via [StanleyGoldman](https://github.com/StanleyGoldman)
 Add missing SecurityCritical attribute on GetObjectData() overrides - [#1493](https://github.com/octokit/octokit.net/pull/1493) via [M-Zuber](https://github.com/M-Zuber)
 Fix exceptions in Events API by adding missing event types to EventInfo enumeration - [#1536](https://github.com/octokit/octokit.net/pull/1536) via [lynnfaraday](https://github.com/lynnfaraday)
+Add new AccountType "Bot" to prevent deserialization errors - [#1541](https://github.com/octokit/octokit.net/pull/1541) via [ryangribble](https://github.com/ryangribble)
 
 **Documentation Updates**
 
