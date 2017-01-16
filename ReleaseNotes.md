@@ -22,6 +22,22 @@ Fix exceptions in Events API by adding missing event types to EventInfo enumerat
 Clarify ApiInfo rate limiting usage in docs - [#1524](https://github.com/octokit/octokit.net/pull/1524) via [SeanKilleen](https://github.com/SeanKilleen)
 Clarify label coloring usage in docs - [#1530](https://github.com/octokit/octokit.net/pull/1530) via [SeanKilleen](https://github.com/SeanKilleen)
 
+**Breaking Changes**
+
+Creating and Editing Issues (and PullRequests) using `NewIssue` and `IssueUpdate` requests 
+should now use the `Assignees` collection rather than the now deprecated 'Assignee` field. 
+Both fields can't be specified on the same request, so any code still using `Assignee` will 
+need to explicitly set `Assignees` to `null` to avoid Api validation errors.
+
+`OrganizationsClient.GetAll(string user)` has been marked obsolete in favour of 
+`OrganizationsClient.GetAllForUser(string user)`
+
+`PullRequest.Comment` has been marked obsolete in favour of `PullRequest.ReviewComment`
+
+Several `EventsClient` methods previously returned the incorrect `Activity` response class. 
+This has been corrected to `IssueEvent` which although is now correct could break calling 
+code that was written assuming this previous incorrect return type.
+
 ### New in 0.23.0 (released 07/10/2016)
 
 **Features**
