@@ -10,6 +10,7 @@ Add support for passing sort options to IssueCommentsClient.GetAllForRepository(
 Rename PullRequest.Comment to PullRequest.ReviewComment for better accuracy - [#1520](https://github.com/octokit/octokit.net/pull/1520) via [bmeverett](https://github.com/bmeverett)
 Introduce AbuseException - [#1528](https://github.com/octokit/octokit.net/pull/1528) via [SeanKilleen](https://github.com/SeanKilleen)
 Add Id field to PullRequest class - [#1537](https://github.com/octokit/octokit.net/pull/1537) via [YunLi1988](https://github.com/YunLi1988)
+Unparseable ApiErrors should now fall back to better default error messages - [#1540](https://github.com/octokit/octokit.net/pull/1540) via [SeanKilleen](https://github.com/SeanKilleen)
 
 **Fixes**
 
