@@ -35,6 +35,68 @@ public class ProjectsClientTests
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
         }
 
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfProjectsWithoutStartForRepositories()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 3,
+                PageCount = 1
+            };
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options);
+
+            Assert.Equal(1, projects.Count);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project.Name).Id == project.Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfProjectsWithStartForRepositories()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options);
+
+            Assert.Equal(1, projects.Count);
+            Assert.Equal(project1.Id, projects[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctProjectsWithBasedOnStartPageForRepositories()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
+
         public void Dispose()
         {
             if (_context != null)
