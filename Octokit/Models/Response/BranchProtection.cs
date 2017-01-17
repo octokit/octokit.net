@@ -108,7 +108,7 @@ namespace Octokit
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredPullRequestReviews requiredPullRequestReviews)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredReviews requiredPullRequestReviews)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
@@ -128,7 +128,7 @@ namespace Octokit
         /// <summary>
         /// Pull Request Review required settings for the protected branch
         /// </summary>
-        public BranchProtectionRequiredPullRequestReviews RequiredPullRequestReviews { get; protected set; }
+        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; protected set; }
 
         internal string DebuggerDisplay
         {
@@ -223,14 +223,14 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Specifies if pull request reviews are required before merging a pull request made by a repository administrator.
+    /// Specifies if pull request reviews are required before merging a pull request. Can optionally enforce the policy on repository administrators also.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class BranchProtectionRequiredPullRequestReviews
+    public class BranchProtectionRequiredReviews
     {
-        public BranchProtectionRequiredPullRequestReviews() { }
+        public BranchProtectionRequiredReviews() { }
 
-        public BranchProtectionRequiredPullRequestReviews(bool includeAdmins)
+        public BranchProtectionRequiredReviews(bool includeAdmins)
         {
             IncludeAdmins = includeAdmins;
         }

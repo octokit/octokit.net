@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Helpers
 
             // Protect master branch
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "build", "test" }), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
+                new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "build", "test" }));
 
             await client.Repository.Branch.UpdateBranchProtection(contextUserRepo.RepositoryOwner, contextUserRepo.RepositoryName, "master", update);
 
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Integration.Helpers
             // Protect master branch
             var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "build", "test" }),
-                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), new BranchProtectionRequiredPullRequestReviewsUpdate(false));
+                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }));
             await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "master", protection);
 
             return new OrganizationRepositoryWithTeamContext
