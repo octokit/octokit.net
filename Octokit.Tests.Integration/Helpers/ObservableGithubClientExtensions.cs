@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration.Helpers
         {
             // Create a key
             string keyTitle = "title";
-            string keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjo4DqFKg8dOxiz/yjypmN1A4itU5QOStyYrfOFuTinesU/2zm9hqxJ5BctIhgtSHJ5foxkhsiBji0qrUg73Q25BThgNg8YFE8njr4EwjmqSqW13akx/zLV0GFFU0SdJ2F6rBldhi93lMnl0ex9swBqa3eLTY8C+HQGBI6MQUMw+BKp0oFkz87Kv+Pfp6lt/Uo32ejSxML1PT5hTH5n+fyl0ied+sRmPGZWmWoHB5Bc9mox7lB6I6A/ZgjtBqbEEn4HQ2/6vp4ojKfSgA4Mm7XMu0bZzX0itKjH1QWD9Lr5apV1cmZsj49Xf8SHucTtH+bq98hb8OOXEGFzplwsX2MQ==";
+            string keyData = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAq42HufbSy1BUbZTdKyEy8nX44gdchbh1A/cYuVFkRXETrFr6XYLETi4tauXGS3Wp3E4s3oG272O4JW+fIBX0kuOJXnRgYz52H3BDk6aY9B0ny+PYFJrYrpG43px5EVfojj9o7oxugNq4zLCGqWTqZU1maTf5T4Mopjt0ggA7cyNnM5B645cBxXjD2KNfrTIyLI+meYxptzjRiB6fHLGFRA9fxpVqUnbq7EcGbwsTlILRuEPt58hZ9He88M45m0F8rkVZOewt4JSzsLsC+sQs+h/LXI8dbrg6xWpxJVi0trzYuMuY/MwygloWKtaFQYuPkJ7yqMZ3Aew+J3DupF6uxQ==";
 
             var key = await client.User.GitSshKey.Create(new NewPublicKey(keyTitle, keyData));
 

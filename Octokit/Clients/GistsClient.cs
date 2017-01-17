@@ -129,7 +129,6 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
         {
-                        
             return GetAll(since, ApiOptions.None);
         }
 
@@ -183,8 +182,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
-        {            
-
+        {
             return GetAllPublic(since, ApiOptions.None);
         }
 
@@ -212,7 +210,6 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<Gist>> GetAllStarred()
         {
-
             return GetAllStarred(ApiOptions.None);
         }
 
@@ -238,8 +235,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
-        {            
-
+        {
             return GetAllStarred(since, ApiOptions.None);
         }
 
@@ -300,7 +296,7 @@ namespace Octokit
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            
+
             return GetAllForUser(user, since, ApiOptions.None);
         }
 

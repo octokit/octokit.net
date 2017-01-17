@@ -836,7 +836,7 @@ public class ReleasesClientTests
 
             await _releaseClient.Delete(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id);
 
-            Assert.ThrowsAsync<NotFoundException>(async ()=> await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id));
+            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id));
         }
 
         [IntegrationTest]

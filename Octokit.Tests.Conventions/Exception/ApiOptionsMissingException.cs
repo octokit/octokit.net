@@ -8,7 +8,8 @@ namespace Octokit.Tests.Conventions
     public class ApiOptionsMissingException : Exception
     {
         public ApiOptionsMissingException(Type type, IEnumerable<MethodInfo> methods)
-            : base(CreateMessage(type, methods)) { }
+            : base(CreateMessage(type, methods))
+        { }
 
         static string CreateMessage(Type type, IEnumerable<MethodInfo> methods)
         {

@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         IObservable<string> GetReadmeHtml(long repositoryId);
-        
+
         /// <summary>
         /// Get an archive of a given repository's contents
         /// </summary>
@@ -167,7 +167,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         /// <param name="path">The content path</param>
         IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference, string path);
-        
+
         /// <summary>
         /// Returns the contents of the home directory in a repository.
         /// </summary>

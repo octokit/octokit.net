@@ -162,7 +162,7 @@ public class DeploymentStatusClientTests : IDisposable
         var newStatus1 = new NewDeploymentStatus(DeploymentState.Success);
         var newStatus2 = new NewDeploymentStatus(DeploymentState.Success);
         var newStatus3 = new NewDeploymentStatus(DeploymentState.Success);
-        await _deploymentsClient.Status.Create(_context.Repository.Id,_deployment.Id, newStatus1);
+        await _deploymentsClient.Status.Create(_context.Repository.Id, _deployment.Id, newStatus1);
         await _deploymentsClient.Status.Create(_context.Repository.Id, _deployment.Id, newStatus2);
         await _deploymentsClient.Status.Create(_context.Repository.Id, _deployment.Id, newStatus3);
 

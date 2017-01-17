@@ -562,9 +562,9 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", newLabel));
                 Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, newLabel));
                 Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
-                
+
                 Assert.Throws<ArgumentNullException>(() => client.Create(1, null));
-                
+
                 Assert.Throws<ArgumentException>(() => client.Create("", "name", newLabel));
                 Assert.Throws<ArgumentException>(() => client.Create("owner", "", newLabel));
             }

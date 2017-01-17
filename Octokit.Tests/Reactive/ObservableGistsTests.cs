@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAll(options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), 
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"),
                                   DictionaryWithApiOptions, null);
             }
 
@@ -99,8 +99,8 @@ namespace Octokit.Tests.Reactive
             {
                 var gitsClient = new ObservableGistsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAll(null));                
-                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAll(DateTimeOffset.Now, null));                
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAll(null));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAll(DateTimeOffset.Now, null));
             }
         }
 
@@ -321,8 +321,8 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser(""));
                 Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser(null, DateTimeOffset.Now));
                 Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser("", DateTimeOffset.Now));
-                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser("samthedev",DateTimeOffset.Now, null));
-                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser("",DateTimeOffset.Now, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForUser("samthedev", DateTimeOffset.Now, null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllForUser("", DateTimeOffset.Now, ApiOptions.None));
             }
         }
 
@@ -355,7 +355,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"),
                                   DictionaryWithApiOptions, null);
-            }            
+            }
 
 
             [Fact]
@@ -365,9 +365,8 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllCommits(null));
                 Assert.Throws<ArgumentException>(() => gitsClient.GetAllCommits(""));
-                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllCommits("id", null));                
-                Assert.Throws<ArgumentException>(() => gitsClient.GetAllCommits("", ApiOptions.None));                
-                
+                Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllCommits("id", null));
+                Assert.Throws<ArgumentException>(() => gitsClient.GetAllCommits("", ApiOptions.None));
             }
         }
 
@@ -412,7 +411,6 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => gitsClient.GetAllForks(""));
                 Assert.Throws<ArgumentNullException>(() => gitsClient.GetAllForks("id", null));
                 Assert.Throws<ArgumentException>(() => gitsClient.GetAllForks("", ApiOptions.None));
-
             }
         }
     }

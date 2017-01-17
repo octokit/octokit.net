@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll("fake", "repo");
 
-                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"), 
+                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks"),
                     Args.ApiOptions);
             }
 
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(1);
 
-                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/hooks"), 
+                connection.Received().GetAll<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/hooks"),
                     Args.ApiOptions);
             }
 

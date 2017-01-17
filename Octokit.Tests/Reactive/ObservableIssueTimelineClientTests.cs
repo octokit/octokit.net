@@ -43,8 +43,8 @@ namespace Octokit.Tests.Reactive
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"), 
-                    Arg.Any<Dictionary<string, string>>(), 
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
+                    Arg.Any<Dictionary<string, string>>(),
                     "application/vnd.github.mockingbird-preview");
                 Assert.Equal(1, timelineEvents.Count);
             }
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview")
                     .Returns(Task.FromResult(response));
 
-                var timelineEvents = await client.GetAllForIssue("fake", "repo", 42, new ApiOptions {PageSize = 30}).ToList();
+                var timelineEvents = await client.GetAllForIssue("fake", "repo", 42, new ApiOptions { PageSize = 30 }).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
                 githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview")
                     .Returns(Task.FromResult(response));
 
-                var timelineEvents = await client.GetAllForIssue(1, 42, new ApiOptions {PageSize = 30}).ToList();
+                var timelineEvents = await client.GetAllForIssue(1, 42, new ApiOptions { PageSize = 30 }).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
@@ -137,7 +137,6 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForIssue("", "repo", 42));
                 Assert.Throws<ArgumentException>(() => client.GetAllForIssue("owner", "", 42));
-
             }
         }
     }

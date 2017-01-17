@@ -79,12 +79,10 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstEventsPage[3].Id, secondEventsPage[3].Id);
                 Assert.NotEqual(firstEventsPage[4].Id, secondEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllForRepositoryMethod
         {
-
             readonly ObservableEventsClient _eventsClient;
             const string owner = "octokit";
             const string name = "octokit.net";
@@ -156,7 +154,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstRepositoryEventsPage[3].Id, secondRepositoryEventsPage[3].Id);
                 Assert.NotEqual(firstRepositoryEventsPage[4].Id, secondRepositoryEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllIssuesForRepositoryMethod
@@ -240,7 +237,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstRepositoryEventsPage[3].Id, secondRepositoryEventsPage[3].Id);
                 Assert.NotEqual(firstRepositoryEventsPage[4].Id, secondRepositoryEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllForRepositoryNetworkMethod
@@ -316,14 +312,12 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstRepositoryNetworkEventsPage[3].Id, secondRepositoryNetworkEventsPage[3].Id);
                 Assert.NotEqual(firstRepositoryNetworkEventsPage[4].Id, secondRepositoryNetworkEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllForOrganizationMethod
         {
-
             readonly ObservableEventsClient _eventsClient;
-            const string organization = "octokit";            
+            const string organization = "octokit";
 
             public TheGetAllForOrganizationMethod()
             {
@@ -360,7 +354,7 @@ namespace Octokit.Tests.Integration.Reactive
                     PageSize = 5,
                     PageCount = 1,
                     StartPage = 2
-                };  
+                };
 
                 var organizationEvents = await _eventsClient.GetAllForOrganization(organization, options).ToList();
 
@@ -393,7 +387,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstOrganizationEventsPage[3].Id, secondOrganizationEventsPage[3].Id);
                 Assert.NotEqual(firstOrganizationEventsPage[4].Id, secondOrganizationEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllUserReceivedMethod
@@ -473,7 +466,6 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllUserReceivedPublicMethod
         {
-
             readonly ObservableEventsClient _eventsClient;
             const string user = "shiftkey";
 
@@ -545,7 +537,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstUserReceivedPublicEventsPage[3].Id, secondUserReceivedPublicEventsPage[3].Id);
                 Assert.NotEqual(firstUserReceivedPublicEventsPage[4].Id, secondUserReceivedPublicEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllUserPerformedMethod
@@ -585,7 +576,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var options = new ApiOptions
                 {
-                    PageSize = 5,   
+                    PageSize = 5,
                     PageCount = 1,
                     StartPage = 2
                 };
@@ -621,7 +612,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstUserPerformedEventsPage[3].Id, secondUserPerformedEventsPage[3].Id);
                 Assert.NotEqual(firstUserPerformedEventsPage[4].Id, secondUserPerformedEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllUserPerformedPublicMethod
@@ -697,7 +687,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstUserPerformedPublicEventsPage[3].Id, secondUserPerformedPublicEventsPage[3].Id);
                 Assert.NotEqual(firstUserPerformedPublicEventsPage[4].Id, secondUserPerformedPublicEventsPage[4].Id);
             }
-
         }
 
         public class TheGetAllForAnOrganizationMethod
@@ -717,7 +706,7 @@ namespace Octokit.Tests.Integration.Reactive
             [IntegrationTest]
             public async Task ReturnsUserOrganizationEvents()
             {
-                var userOrganizationEvents = await _eventsClient.GetAllForAnOrganization(_user,_organization).ToList();
+                var userOrganizationEvents = await _eventsClient.GetAllForAnOrganization(_user, _organization).ToList();
 
                 Assert.NotEmpty(userOrganizationEvents);
             }
@@ -777,7 +766,6 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstUserOrganizationEventsPage[3].Id, secondUserOrganizationEventsPage[3].Id);
                 Assert.NotEqual(firstUserOrganizationEventsPage[4].Id, secondUserOrganizationEventsPage[4].Id);
             }
-
         }
     }
 }

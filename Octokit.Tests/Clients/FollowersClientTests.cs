@@ -34,7 +34,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent();
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "user/followers"),Args.ApiOptions);
+                    Arg.Is<Uri>(u => u.ToString() == "user/followers"), Args.ApiOptions);
             }
 
             [Fact]
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllForCurrent(options);
 
                 connection.Received().GetAll<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "user/followers"),options);
+                    Arg.Is<Uri>(u => u.ToString() == "user/followers"), options);
             }
 
             [Fact]
@@ -61,8 +61,8 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new FollowersClient(connection);
-                                
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));                
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAll("alfhenrik",options);
+                client.GetAll("alfhenrik", options);
 
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/followers"), options);
@@ -107,8 +107,8 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake",null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("",ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", ApiOptions.None));
             }
         }
 

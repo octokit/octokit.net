@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public IObservable<Gist> GetAll(DateTimeOffset since)
-        {            
+        {
             return GetAll(since, ApiOptions.None);
         }
 
@@ -179,7 +179,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllPublic(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options"); 
+            Ensure.ArgumentNotNull(options, "options");
 
             var request = new GistRequest(since);
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);

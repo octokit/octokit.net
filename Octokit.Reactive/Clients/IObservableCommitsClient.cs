@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
         IObservable<Commit> Create(string owner, string name, NewCommit commit);
-        
+
         /// <summary>
         /// Create a commit for a given repository
         /// </summary>

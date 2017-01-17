@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
         IObservable<Reference> Get(string owner, string name, string reference);
-        
+
         /// <summary>
         /// Gets a reference for a given repository by reference name
         /// </summary>

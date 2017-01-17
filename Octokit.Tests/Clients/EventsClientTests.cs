@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
                     PageCount = 1,
                     StartPage = 1
                 };
-                
+
                 await client.GetAll(options);
 
                 connection.Received().GetAll<Activity>(Arg.Is<Uri>(u => u.ToString() == "events"), options);
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new EventsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));              
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
             }
         }
 

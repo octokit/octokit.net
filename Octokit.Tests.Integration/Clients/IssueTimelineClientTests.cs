@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class IssueTimelineClientTests :IDisposable
+    public class IssueTimelineClientTests : IDisposable
     {
         private readonly IIssueTimelineClient _issueTimelineClient;
         private readonly IIssuesClient _issuesClient;
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Integration.Clients
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
         [IntegrationTest]
@@ -133,7 +133,7 @@ namespace Octokit.Tests.Integration.Clients
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.Repository.Id, issue.Number);
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
         public void Dispose()

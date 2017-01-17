@@ -295,7 +295,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic("org", null));
-                
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic(""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic("", ApiOptions.None));
             }

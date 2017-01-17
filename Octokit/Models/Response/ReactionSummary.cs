@@ -24,14 +24,14 @@ namespace Octokit
             get
             {
                 return string.Format(
-                    CultureInfo.InvariantCulture, 
-                    "TotalCount: {0} +1: {1} -1: {2} Laugh: {3} Confused: {4} Heart: {5} Hooray: {6}", 
-                    TotalCount, 
-                    Plus1, 
-                    Minus1, 
-                    Laugh, 
-                    Confused, 
-                    Heart, 
+                    CultureInfo.InvariantCulture,
+                    "TotalCount: {0} +1: {1} -1: {2} Laugh: {3} Confused: {4} Heart: {5} Hooray: {6}",
+                    TotalCount,
+                    Plus1,
+                    Minus1,
+                    Laugh,
+                    Confused,
+                    Heart,
                     Hooray);
             }
         }
