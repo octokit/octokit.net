@@ -16,7 +16,11 @@
       "includeFiles": [
         "../Octokit.Tests/Helpers/AssertEx.cs"
       ]
-    }
+    },
+    "embed": [
+      "fixtures/hello-world.txt",
+      "fixtures/hello-world.zip"
+    ]
   },
   "frameworks": {
     "netcoreapp1.0": {
