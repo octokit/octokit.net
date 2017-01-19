@@ -4,7 +4,6 @@ using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
-[Dependency(typeof(IntegrationTests))]
 [Dependency(typeof(LinkSources))]
 public class Package : FrostingTask<BuildContext>
 {
