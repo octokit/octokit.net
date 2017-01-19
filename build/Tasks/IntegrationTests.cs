@@ -5,7 +5,6 @@ using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
-[TaskName("Dotnet-Integration-Tests")]
 public class IntegrationTests : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)

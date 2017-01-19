@@ -4,7 +4,6 @@ using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Frosting;
 
 [Dependency(typeof(Restore))]
-[TaskName("Dotnet-Build")]
 public class Build : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)

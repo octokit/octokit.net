@@ -4,7 +4,6 @@ using Cake.Frosting;
 
 [Dependency(typeof(Clean))]
 [Dependency(typeof(UpdateVersionInfo))]
-[TaskName("Dotnet-Restore")]
 public class Restore : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)

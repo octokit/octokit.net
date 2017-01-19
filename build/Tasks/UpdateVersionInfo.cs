@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Cake.Frosting;
 
-[TaskName("Update-Version-Information")]
 public class UpdateVersionInfo : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
