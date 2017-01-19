@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "1.0.0-*",
   "testRunner": "xunit",
   "title": "Octokit.Tests",
@@ -8,7 +8,10 @@
   "description": "Tests for Octokit",
   "xmlDoc": true,
   "buildOptions": {
-    "nowarn": [ "CS4014", "CS1998" ]
+    "nowarn": [
+      "CS4014",
+      "CS1998"
+    ]
   },
   "frameworks": {
     "netcoreapp1.0": {
