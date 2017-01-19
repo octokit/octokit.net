@@ -44,7 +44,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<User>(ApiUrls.Followers(),options);
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(), options);
         }
 
         /// <summary>

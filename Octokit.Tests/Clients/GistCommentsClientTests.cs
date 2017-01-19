@@ -71,7 +71,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist(""));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForGist("24", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForGist("", ApiOptions.None));
-
             }
         }
 

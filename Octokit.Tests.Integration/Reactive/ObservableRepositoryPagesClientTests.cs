@@ -33,7 +33,7 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var options = new ApiOptions
                 {
-                    PageSize= 5,
+                    PageSize = 5,
                     PageCount = 1
                 };
 

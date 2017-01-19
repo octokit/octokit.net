@@ -16,7 +16,7 @@ namespace Octokit.Tests.Conventions
             const string constructorTestMethodName = "EnsuresNonNullArguments";
 
             var classes = new HashSet<string>(type.GetTypeInfo().GetNestedTypes().Select(t => t.Name));
-            
+
             if (!classes.Contains(constructorTestClassName))
             {
                 throw new MissingClientConstructorTestClassException(type);

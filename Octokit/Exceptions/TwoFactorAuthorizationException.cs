@@ -80,7 +80,7 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            TwoFactorType = (TwoFactorType) info.GetInt32("TwoFactorType");
+            TwoFactorType = (TwoFactorType)info.GetInt32("TwoFactorType");
         }
 
         [SecurityCritical]

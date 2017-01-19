@@ -53,7 +53,7 @@ namespace Octokit
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");            
+            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options);

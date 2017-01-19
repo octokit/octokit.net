@@ -43,7 +43,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events(),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(), options);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true), options);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), options);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization), options);
         }
     }
 }

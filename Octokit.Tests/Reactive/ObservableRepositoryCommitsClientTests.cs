@@ -44,7 +44,6 @@ namespace Octokit.Tests.Reactive
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, request, options).ToTask());
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null, options).ToTask());
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", request, null).ToTask());
-
             }
 
             [Fact]

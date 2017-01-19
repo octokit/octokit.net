@@ -20,7 +20,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsMembers()
             {
-                var members = await 
+                var members = await
                     _gitHub.Organization.Member.GetAll(_organizationFixture);
                 Assert.NotEmpty(members);
             }
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Integration.Clients
                 };
 
                 var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
-                
+
                 Assert.Equal(1, members.Count);
             }
 

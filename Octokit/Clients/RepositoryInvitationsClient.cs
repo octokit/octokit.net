@@ -29,7 +29,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Patch(endpoint, AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
@@ -52,7 +52,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
@@ -76,7 +76,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }

@@ -102,9 +102,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAllForUser(string user)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
         }
 
         /// <summary>
@@ -115,10 +115,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAllForUser(string user, ApiOptions options)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
-          Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
         /// <summary>

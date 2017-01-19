@@ -106,9 +106,9 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-          return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None);
         }
 
         /// <summary>
@@ -120,10 +120,10 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
-          Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNull(options, "options");
 
-          return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
 
@@ -134,7 +134,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll()
         {
-          return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
         }
 
         /// <summary>

@@ -117,7 +117,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri AllOrganizations()
         {
-          return "organizations".FormatUri();
+            return "organizations".FormatUri();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri AllOrganizations(long since)
         {
-          return "organizations?since={0}".FormatUri(since);
+            return "organizations?since={0}".FormatUri(since);
         }
 
         /// <summary>
@@ -2844,8 +2844,6 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for comparing two commits.</returns>
         public static Uri RepoCompare(long repositoryId, string @base, string head)
         {
-
-
             Ensure.ArgumentNotNullOrEmptyString(@base, "base");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
             var encodedBase = @base.UriEncode();

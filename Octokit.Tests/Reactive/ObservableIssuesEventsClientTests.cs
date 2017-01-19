@@ -77,7 +77,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
-                
+
                 var options = new ApiOptions
                 {
                     StartPage = 1,
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
-                
+
                 var options = new ApiOptions
                 {
                     StartPage = 1,

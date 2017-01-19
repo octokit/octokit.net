@@ -125,9 +125,9 @@ public class ObservableIssuesClientTests
 
             client.GetAllForRepository("fake", "repo", options);
 
-            gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), 
-                Arg.Is<IDictionary<string, string>>(d => d.Count == 6 
-                && d["filter"] == "assigned" 
+            gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
+                Arg.Is<IDictionary<string, string>>(d => d.Count == 6
+                && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
@@ -636,7 +636,6 @@ public class ObservableIssuesClientTests
 
             Assert.Throws<ArgumentException>(() => client.Update("", "name", 42, new IssueUpdate()));
             Assert.Throws<ArgumentException>(() => client.Update("owner", "", 42, new IssueUpdate()));
-            
         }
     }
 

@@ -23,7 +23,7 @@ namespace Octokit.Tests
 
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (ICredentialStore)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore));
-                
+
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (Uri)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, baseAddress));
 
@@ -33,7 +33,7 @@ namespace Octokit.Tests
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, null, baseAddress));
-                
+
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, baseAddress));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, baseAddress));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, credentialStore, null));

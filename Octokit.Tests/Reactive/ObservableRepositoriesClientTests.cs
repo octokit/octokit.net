@@ -656,7 +656,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages(null, "repo"));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages("owner", null));
-                
+
                 Assert.Throws<ArgumentException>(() => client.GetAllLanguages("", "repo"));
                 Assert.Throws<ArgumentException>(() => client.GetAllLanguages("owner", ""));
             }

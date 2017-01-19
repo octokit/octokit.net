@@ -176,7 +176,7 @@ namespace Octokit.Tests.Reactive
                 githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repos/fake/repo/commits/sha/comments", UriKind.Relative)),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), "application/vnd.github.squirrel-girl-preview");
             }
-            
+
             [Fact]
             public void RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAllForCommit(1, "sha", options);
-                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)), 
+                githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2), "application/vnd.github.squirrel-girl-preview");
             }
 

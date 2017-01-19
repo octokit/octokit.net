@@ -499,7 +499,7 @@ public class RepositoryCommentsClientTests
             {
                 var newReaction = new NewReaction(reactionType);
 
-                var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
 
                 Assert.IsType<Reaction>(reaction);
                 Assert.Equal(reactionType, reaction.Content);

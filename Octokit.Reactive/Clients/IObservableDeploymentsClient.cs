@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         IObservable<Deployment> GetAll(string owner, string name);
-        
+
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
         /// to a repository can view deployments.
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<Deployment> GetAll(string owner, string name, ApiOptions options);
-        
+
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
         /// to a repository can view deployments.

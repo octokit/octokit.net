@@ -11,7 +11,7 @@ namespace Octokit
     /// </remarks>
     public class RepositoryCommitsClient : ApiClient, IRepositoryCommitsClient
     {
-        public RepositoryCommitsClient(IApiConnection apiConnection) 
+        public RepositoryCommitsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
         }

@@ -349,7 +349,7 @@ namespace Octokit.Tests.Http
                 Assert.Equal(45, exception.RetryAfterSeconds);
             }
 
-            [Fact(Skip = "Fails due to https://github.com/octokit/octokit.net/issues/1529. The message is empty but the default message isn't displayed. However, this isn't due to the introduction of AbuseException, but rather something else.")]
+            [Fact]
             public async Task ThrowsAbuseExceptionWithDefaultMessageForUnsafeAbuseResponse()
             {
                 string messageText = string.Empty;
