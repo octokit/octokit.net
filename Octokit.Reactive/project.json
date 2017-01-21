@@ -13,7 +13,10 @@
         "../Octokit/Helpers/Ensure.cs",
         "../Octokit/Helpers/Pagination.cs"
       ]
-    }
+    },
+    "additionalArguments": [
+      "/ruleset:../Octokit.ruleset"
+    ]
   },
   "packOptions": {
     "summary": "An IObservable based GitHub API client library for .NET using Reactive Extensions"

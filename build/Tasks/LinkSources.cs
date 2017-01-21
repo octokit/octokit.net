@@ -1,9 +1,9 @@
-﻿using Cake.Common.Build;
+﻿using System.Linq;
+using Cake.Common;
+using Cake.Common.Build;
 using Cake.Common.Diagnostics;
-using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
-using System.Linq;
 
 [Dependency(typeof(Build))]
 public class LinkSources : FrostingTask<BuildContext>
@@ -43,6 +43,6 @@ public class LinkSources : FrostingTask<BuildContext>
 
     public override bool ShouldRun(BuildContext context)
     {
-        return !context.Environment.Platform.IsUnix();
+        return context.IsRunningOnWindows();
     }
 }
