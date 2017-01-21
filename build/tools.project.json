@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "GitVersion.CommandLine": "3.6.2",
-    "PdbGit": "3.0.38"
+    "PdbGit": "3.0.38",
+    "Octokit.CodeFormatter": "1.0.0-preview"
   },
   "frameworks": {
     "net45": {
