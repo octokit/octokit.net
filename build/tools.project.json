@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "GitVersion.CommandLine": "3.6.2",
+    "PdbGit": "3.0.38"
+  },
+  "frameworks": {
+    "net45": {
+    }
+  }
+}

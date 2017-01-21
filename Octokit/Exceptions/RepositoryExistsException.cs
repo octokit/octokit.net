@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Security;
 
 namespace Octokit
@@ -9,7 +11,7 @@ namespace Octokit
     /// <summary>
     /// Exception thrown when creating a repository, but it already exists on the server.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -95,7 +97,7 @@ namespace Octokit
         /// </summary>
         public bool OwnerIsOrganization { get; private set; }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of RepositoryExistsException.
         /// </summary>

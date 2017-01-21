@@ -1,0 +1,48 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "title": "Octokit.Tests.Integration",
+  "authors": [
+    "GitHub"
+  ],
+  "description": "Integration tests for Octokit",
+  "xmlDoc": true,
+  "buildOptions": {
+    "nowarn": [
+      "CS4014",
+      "CS1998"
+    ],
+    "compile": {
+      "includeFiles": [
+        "../Octokit.Tests/Helpers/AssertEx.cs"
+      ]
+    },
+    "embed": [
+      "fixtures/hello-world.txt",
+      "fixtures/hello-world.zip"
+    ]
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": {},
+      "dependencies": {
+        "Octokit": {
+          "target": "project"
+        },
+        "Octokit.Reactive": {
+          "target": "project"
+        },
+        "Octokit.Tests": {
+          "target": "project"
+        },
+        "NETStandard.Library": "1.6.0",
+        "xunit": "2.2.0-beta2-build3300",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        }
+      }
+    }
+  }
+}

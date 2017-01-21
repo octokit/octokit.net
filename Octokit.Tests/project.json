@@ -1,0 +1,42 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "title": "Octokit.Tests",
+  "authors": [
+    "GitHub"
+  ],
+  "description": "Tests for Octokit",
+  "xmlDoc": true,
+  "buildOptions": {
+    "nowarn": [
+      "CS4014",
+      "CS1998"
+    ]
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [
+          "NO_SERIALIZABLE",
+          "HAS_TYPEINFO"
+        ]
+      },
+      "dependencies": {
+        "Octokit": {
+          "target": "project"
+        },
+        "Octokit.Reactive": {
+          "target": "project"
+        },
+        "NETStandard.Library": "1.6.0",
+        "NSubstitute": "2.0.0-rc",
+        "xunit": "2.2.0-beta2-build3300",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        }
+      }
+    }
+  }
+}

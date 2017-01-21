@@ -4,7 +4,6 @@ using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
 
-
 namespace Octokit.Tests.Reactive
 {
     public class ObservableGistsTests

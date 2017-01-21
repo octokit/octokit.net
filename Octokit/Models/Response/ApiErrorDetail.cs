@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Octokit
 {
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

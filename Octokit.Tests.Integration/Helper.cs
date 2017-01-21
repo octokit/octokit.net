@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Octokit.Reactive;
+using System.Reflection;
 
 namespace Octokit.Tests.Integration
 {
@@ -183,7 +183,7 @@ namespace Octokit.Tests.Integration
         public static Stream LoadFixture(string fileName)
         {
             var key = "Octokit.Tests.Integration.fixtures." + fileName;
-            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
+            var stream = typeof(Helper).GetTypeInfo().Assembly.GetManifestResourceStream(key);
             if (stream == null)
             {
                 throw new InvalidOperationException(

@@ -34,7 +34,7 @@ namespace Octokit.Tests.Conventions
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
             var methodsThatCanPaginate = methodsOrdered
-                .Where(x => x.ReturnType.GetTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.ReturnType.GetCustomTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
                 .Where(x => x.Name.StartsWith("Get") && !x.HasAttribute<ExcludeFromPaginationConventionTestAttribute>());
 
             var invalidMethods = methodsThatCanPaginate
@@ -89,7 +89,10 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IGitHubClient).Assembly.ExportedTypes
+            return typeof(IGitHubClient)
+                .GetTypeInfo()
+                .Assembly
+                .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
                 .Where(type => type != typeof(IStatisticsClient))
                 .Select(type => new[] { type });

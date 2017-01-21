@@ -2,7 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 
 namespace Octokit
 {
@@ -11,7 +13,7 @@ namespace Octokit
     /// This will returned if GitHub has been asked to takedown the requested resource due to
     /// a DMCA takedown.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -52,7 +54,7 @@ namespace Octokit
                 "LegalRestrictionException created with wrong status code");
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LegalRestrictionException
         /// </summary>
