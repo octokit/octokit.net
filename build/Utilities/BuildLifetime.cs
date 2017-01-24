@@ -2,15 +2,24 @@ using System;
 using System.Text;
 using Cake.Common;
 using Cake.Common.Build;
+using Cake.Common.Build.AppVeyor.Data;
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Restore;
 using Cake.Common.Tools.GitVersion;
 using Cake.Core;
 using Cake.Frosting;
+using Octokit;
 
 public class BuildLifetime : FrostingLifetime<BuildContext>
 {
+    private readonly IGitHubClient _githubClient;
+
+    public BuildLifetime(IGitHubClient githubClient)
+    {
+        _githubClient = githubClient;
+    }
+
     public override void Setup(BuildContext context)
     {
         context.Target = context.Argument<string>("target", "Default");
@@ -28,17 +37,19 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
 
         if (context.AppVeyor)
         {
-            context.IsPullRequest = buildSystem.AppVeyor.Environment.PullRequest.IsPullRequest;
-            context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.AppVeyor.Environment.Repository.Name);
-            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch);
+            var buildInformation = GetAppVeyorBuildInformation(buildSystem.AppVeyor.Environment);
+
+            context.IsPullRequest = buildInformation.IsPullRequest;
+            context.RepositoryName = buildInformation.RepositoryName;
+            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals(Constants.MasterBranchName, buildInformation.BranchName);
+            context.IsReleaseBranch = buildInformation.BranchName.StartsWith(Constants.ReleaseBranchPrefix, StringComparison.OrdinalIgnoreCase);
         }
         else if (context.TravisCI)
         {
             context.IsPullRequest = !string.IsNullOrEmpty(buildSystem.TravisCI.Environment.Repository.PullRequest);
-            context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.TravisCI.Environment.Repository.Slug);
+            context.RepositoryName = buildSystem.TravisCI.Environment.Repository.Slug;
             context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.TravisCI.Environment.Build.Branch);
         }
-
 
         // Force publish?
         context.ForcePublish = context.Argument<bool>("forcepublish", false);
@@ -129,6 +140,36 @@ public class BuildLifetime : FrostingLifetime<BuildContext>
     {
         return buildSystem.AppVeyor.Environment.Repository.Tag.IsTag
             && !string.IsNullOrWhiteSpace(buildSystem.AppVeyor.Environment.Repository.Tag.Name);
+    }
+
+    private BuildInformation GetAppVeyorBuildInformation(AppVeyorEnvironmentInfo appVeyor)
+    {
+        if (appVeyor.PullRequest.IsPullRequest)
+        {
+            return GetAppVeyorPullRequestInformation(appVeyor);
+        }
+
+        return new BuildInformation
+        {
+            BranchName = appVeyor.Repository.Branch,
+            IsPullRequest = false,
+            RepositoryName = appVeyor.Repository.Name
+        };
+    }
+
+    private BuildInformation GetAppVeyorPullRequestInformation(AppVeyorEnvironmentInfo appVeyor)
+    {
+        var pullRequestNumber = appVeyor.PullRequest.Number;
+
+        var pullRequest = AsyncHelper.RunSync(() => _githubClient.PullRequest.Get(Constants.OwnerName, Constants.RepositoryName, pullRequestNumber));
+
+        // https://developer.github.com/v3/pulls/#get-a-single-pull-request
+        return new BuildInformation
+        {
+            BranchName = pullRequest.Base.Label,
+            IsPullRequest = true,
+            RepositoryName = pullRequest.Base.Repository.Name
+        };
     }
 
     private static string GetEnvironmentValueOrArgument(BuildContext context, string environmentVariable, string argumentName)
