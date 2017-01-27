@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Octokit.Tests.Clients
 {
@@ -236,6 +237,49 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("org", null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", new OrganizationUpdate()));
+            }
+        }
+
+        public class TheAddMembershipMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+
+                var client = new OrganizationsClient(connection);
+
+                await client.AddMembership("initrode", "user");
+                
+                connection.Received().Put<Dictionary<string, string>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/initrode/members/user"),
+                    Args.Object);
+            }
+
+            [Fact]
+            public async Task AllowsEmptyBody()
+            {
+                var connection = Substitute.For<IConnection>();
+
+                var apiConnection = new ApiConnection(connection);
+
+                var client = new OrganizationsClient(apiConnection);
+
+                await client.AddMembership("initrode", "user");
+
+                connection.Received().Put<Dictionary<string, string>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/initrode/members/user"),
+                    Arg.Is<object>(u => u == RequestBody.Empty));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddMembership("initrode", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddMembership("initrode", ""));
             }
         }
     }

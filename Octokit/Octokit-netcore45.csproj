@@ -272,6 +272,7 @@
     <Compile Include="Models\Response\Notification.cs" />
     <Compile Include="Models\Response\NotificationInfo.cs" />
     <Compile Include="Models\Response\Organization.cs" />
+    <Compile Include="Models\Response\OrganizationMembership.cs" />
     <Compile Include="Models\Response\Page.cs" />
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\Plan.cs" />

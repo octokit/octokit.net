@@ -94,5 +94,18 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest);
+
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Organization"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organizationName">The organization's name.</param>
+        /// <param name="login">The user to add to the organization.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns>A <see cref="OrganizationMembership"/> result indicating the membership status</returns>
+        IObservable<OrganizationMembership> AddMembership(string organizationName, string login);
     }
 }
