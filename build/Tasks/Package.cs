@@ -5,6 +5,7 @@ using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
 [Dependency(typeof(LinkSources))]
+[Dependency(typeof(ValidateLINQPadSamples))]
 public class Package : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)

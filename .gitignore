@@ -103,4 +103,5 @@ Backup/
 !.vscode/launch.json
 
 # CAKE
-tools/
+tools/*
+!tools/LINQPad
