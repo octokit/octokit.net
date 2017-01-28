@@ -11,7 +11,10 @@
       "includeFiles": [
         "../SolutionInfo.cs"
       ]
-    }
+    },
+    "additionalArguments": [
+      "/ruleset:../Octokit.ruleset"
+    ]
   },
   "packOptions": {
     "summary": "An async-based GitHub API client library for .NET"
