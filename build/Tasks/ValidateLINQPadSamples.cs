@@ -9,7 +9,7 @@ using Cake.Core.IO;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
-public class RunLinqPadSamples : FrostingTask<BuildContext>
+public class ValidateLINQPadSamples : FrostingTask<BuildContext>
 {
     public override void Run(BuildContext context)
     {
@@ -21,7 +21,7 @@ public class RunLinqPadSamples : FrostingTask<BuildContext>
             .MakeAbsolute(context.Environment)
             .FullPath;
 
-        var linqpadSamplesFiles = context.FileSystem
+        var linqpadSamples = context.FileSystem
             .GetDirectory("samples/linqpad-samples")
             .GetFiles("*.linq", SearchScope.Current)
             .Select(x => x.Path)
@@ -33,19 +33,19 @@ public class RunLinqPadSamples : FrostingTask<BuildContext>
             .CombineWithFilePath("lprun.exe")
             .MakeAbsolute(context.Environment);
 
-        foreach (var linqpadSample in linqpadSamplesFiles)
+        foreach (var linqpadSample in linqpadSamples)
         {
-            var linqpadSampleName = linqpadSample.GetFilename();
+            var sampleName = linqpadSample.GetFilename();
             var rewrittenSample = RewriteLinqpadScriptToUseLocalAssemblies(assembliesDirectoryPath, linqpadSample.FullPath);
 
-            context.Information("Executing sample {0}...", linqpadSampleName);
+            context.Information("Executing sample {0}...", sampleName);
             var exitCode = context.StartProcess(
                 linqpadExe,
                 $"-compileonly -lang=Program {rewrittenSample}");
 
             if (exitCode != 0)
             {
-                throw new CakeException($"Execution of sample {linqpadSampleName} failed");
+                throw new CakeException($"Execution of sample {sampleName} failed");
             }
         }
 
