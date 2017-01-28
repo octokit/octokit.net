@@ -23,6 +23,8 @@ public class FormatCode : FrostingTask<BuildContext>
             context.Information("Formatting code of {0}", project.Name);
 
             var tempCsprojFile = CreateTempCsproj(context, project.Name);
+            context.Information("Generated temporary {0} file to run the formatter", new FilePath(tempCsprojFile).GetFilename());
+
             var exitCode = context.StartProcess(
                 codeFormatterExe,
                 $"{tempCsprojFile} /nocopyright /nounicode");
