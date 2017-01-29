@@ -2,7 +2,7 @@ branches:
   master:
     mode: ContinuousDeployment
     increment: Minor
-    tag: alpha
+    tag: beta
   dotnetcore:
     mode: ContinuousDeployment
     increment: Minor
