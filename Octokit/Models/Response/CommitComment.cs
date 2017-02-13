@@ -79,6 +79,8 @@ namespace Octokit
         /// </summary>
         public DateTimeOffset? UpdatedAt { get; protected set; }
 
+        public ReactionSummary Reactions { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get

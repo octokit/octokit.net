@@ -49,6 +49,9 @@ namespace Octokit
             Justification = "GitHub API depends on lower case strings")]
         static Func<PropertyInfo, object, string> GetValueFunc(Type propertyType)
         {
+            // get underlying type if nullable
+            propertyType = Nullable.GetUnderlyingType(propertyType) ?? propertyType;
+
             if (typeof(IEnumerable<string>).IsAssignableFrom(propertyType))
             {
                 return (prop, value) =>

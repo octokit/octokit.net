@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -29,7 +28,7 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "Weeks of activity: {0}", Activity.Count());
+                    "Weeks of activity: {0}", Activity.Count);
             }
         }
     }

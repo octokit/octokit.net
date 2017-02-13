@@ -79,7 +79,7 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             // Remove user if it was already renamed
-            EnterpriseHelper.DeleteUser(renamedUsername);
+            EnterpriseHelper.DeleteUser(_github.Connection, renamedUsername);
         }
 
         [GitHubEnterpriseTest]
@@ -91,11 +91,11 @@ namespace Octokit.Tests.Integration.Clients
                 // Create Impersonation token
                 var token = await _github.User.Administration.CreateImpersonationToken(
                     context.UserLogin,
-                    new NewImpersonationToken(new string[] { "public_repo" }));
+                    new NewImpersonationToken(new[] { "public_repo" }));
 
                 Assert.NotNull(token);
                 Assert.True(
-                    token.Scopes.Count() == 1 && 
+                    token.Scopes.Count() == 1 &&
                     token.Scopes.All(s => s == "public_repo"));
 
                 // Delete Impersonation token
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 // Ensure user has a key
                 //var key = await _github.User.Keys.Create(new NewPublicKey("title", "key"));
-                
+
                 // Delete key
                 //await _github.User.Administration.DeletePublicKey(key.Id);
             }

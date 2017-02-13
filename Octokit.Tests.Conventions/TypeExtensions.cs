@@ -70,7 +70,7 @@ namespace Octokit.Tests.Conventions
 
         public static bool IsClientInterface(this Type type)
         {
-            return type.IsInterface && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IEventsClient).Namespace;
+            return type.IsInterface && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IGitHubClient).Namespace;
         }
 
         public static Type GetObservableClientInterface(this Type type)

@@ -8,7 +8,7 @@ public class GitDatabaseClientTests
     public class TheCtor
     {
         [Fact]
-        public void EnsuresArgument()
+        public void EnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new GitDatabaseClient(null));
         }

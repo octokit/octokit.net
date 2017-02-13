@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -13,15 +12,15 @@ namespace Octokit
     {
         public PullRequestRequest()
         {
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             SortProperty = PullRequestSort.Created;
             SortDirection = SortDirection.Descending;
         }
 
         /// <summary>
-        /// "open" or "closed" to filter by state. Default is "open".
+        /// Which PullRequests to get. The default is <see cref="ItemStateFilter.Open"/>
         /// </summary>
-        public ItemState State { get; set; }
+        public ItemStateFilter State { get; set; }
 
         /// <summary>
         /// Filter pulls by head user and branch name in the format of "user:ref-name".

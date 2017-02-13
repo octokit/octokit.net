@@ -39,6 +39,18 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("ResponseModelTypes")]
+        public void AllResponseModelsHavePublicParameterlessCtors(Type modelType)
+        {
+            var ctor = modelType.GetConstructor(Type.EmptyTypes);
+
+            if (ctor == null || !ctor.IsPublic)
+            {
+                throw new MissingPublicParameterlessCtorException(modelType);
+            }
+        }
+
+        [Theory]
+        [MemberData("ResponseModelTypes")]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
@@ -97,7 +109,7 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IEventsClient)
+            return typeof(IGitHubClient)
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
@@ -119,7 +131,7 @@ namespace Octokit.Tests.Conventions
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(IEventsClient).Assembly.ExportedTypes
+            var clientInterfaces = typeof(IGitHubClient).Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)

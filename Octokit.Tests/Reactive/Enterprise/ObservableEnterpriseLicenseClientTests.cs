@@ -7,6 +7,16 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseLicenseClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEnterpriseLicenseClient(null));
+            }
+        }
+
         public class TheGetMethod
         {
             [Fact]

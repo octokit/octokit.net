@@ -150,7 +150,7 @@ namespace Octokit.Tests.Http
                 var responseMessage = new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new ByteArrayContent(new byte[] { 0, 1, 1, 0, 1 }),
+                    Content = new ByteArrayContent(new byte[] { 0, 1, 1, 0, 1 })
                 };
                 responseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
                 var tester = new HttpClientAdapterTester();
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Http
                 var responseMessage = new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("{}", Encoding.UTF8, "application/json"),
+                    Content = new StringContent("{}", Encoding.UTF8, "application/json")
                 };
                 var tester = new HttpClientAdapterTester();
 

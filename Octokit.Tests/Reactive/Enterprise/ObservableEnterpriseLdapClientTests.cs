@@ -7,10 +7,20 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseLDAPClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEnterpriseLdapClient(null));
+            }
+        }
+
         public class TheUpdateUserMappingMethod
         {
             readonly string _distinguishedName = "uid=test-user,ou=users,dc=company,dc=com";
-            
+
             [Fact]
             public void CallsIntoClient()
             {
@@ -20,11 +30,11 @@ namespace Octokit.Tests
                 client.UpdateUserMapping("test-user", new NewLdapMapping(_distinguishedName));
                 github.Enterprise.Ldap.Received(1).UpdateUserMapping(
                     Arg.Is<string>(a => a == "test-user"),
-                    Arg.Is<NewLdapMapping>(a => 
+                    Arg.Is<NewLdapMapping>(a =>
                         a.LdapDistinguishedName == _distinguishedName));
             }
         }
-        
+
         public class TheQueueSyncUserMappingMethod
         {
             [Fact]
@@ -38,11 +48,11 @@ namespace Octokit.Tests
                     Arg.Is<string>(a => a == "test-user"));
             }
         }
-        
+
         public class TheUpdateTeamMappingMethod
         {
             readonly string _distinguishedName = "cn=test-team,ou=groups,dc=company,dc=com";
-            
+
             [Fact]
             public void CallsIntoClient()
             {
@@ -52,11 +62,11 @@ namespace Octokit.Tests
                 client.UpdateTeamMapping(1, new NewLdapMapping(_distinguishedName));
                 github.Enterprise.Ldap.Received(1).UpdateTeamMapping(
                     Arg.Is<int>(a => a == 1),
-                    Arg.Is<NewLdapMapping>(a => 
+                    Arg.Is<NewLdapMapping>(a =>
                         a.LdapDistinguishedName == _distinguishedName));
             }
         }
-        
+
         public class TheQueueSyncTeamMappingMethod
         {
             [Fact]

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -13,12 +12,15 @@ namespace Octokit
     {
         public MilestoneRequest()
         {
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             SortProperty = MilestoneSort.DueDate;
             SortDirection = SortDirection.Ascending;
         }
 
-        public ItemState State { get; set; }
+        /// <summary>
+        /// Which Milestones to get. The default is <see cref="ItemStateFilter.Open"/>.
+        /// </summary>
+        public ItemStateFilter State { get; set; }
 
         [Parameter(Key = "sort")]
         public MilestoneSort SortProperty { get; set; }

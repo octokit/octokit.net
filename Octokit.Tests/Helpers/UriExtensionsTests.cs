@@ -29,7 +29,7 @@ namespace Octokit.Tests.Helpers
 
                 var parameters = new Dictionary<string, string>
                 {
-                    {"foo", null },
+                    {"foo", null }
                 };
 
                 Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));

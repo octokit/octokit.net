@@ -44,7 +44,7 @@ In Xamarin Studio you can find this option under the project's context menu: **A
 
 ## Documentation
 
-Documentation is available at http://octokitnet.readthedocs.org/en/latest/.
+Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
 
 ## Build
 
@@ -66,7 +66,8 @@ cd Octokit
 ## Contribute
 
 Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
-for more details.
+for more details. All contributors are expected to follow our
+[Code of Conduct](https://github.com/octokit/octokit.net/blob/master/CODE_OF_CONDUCT.md).
 
 ## Problems?
 

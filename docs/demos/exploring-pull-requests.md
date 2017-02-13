@@ -6,7 +6,7 @@ the descriptions what the changes actually represent.
 file (most popular at the top). This then gives me a list of pull requests that I
 can review as a group.
 
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;

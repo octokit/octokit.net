@@ -34,18 +34,18 @@ namespace Octokit.Reactive
             Authorization = new ObservableAuthorizationsClient(gitHubClient);
             Activity = new ObservableActivitiesClient(gitHubClient);
             Issue = new ObservableIssuesClient(gitHubClient);
-            Miscellaneous = new ObservableMiscellaneousClient(gitHubClient.Miscellaneous);
-            Notification = new ObservableNotificationsClient(gitHubClient);
+            Miscellaneous = new ObservableMiscellaneousClient(gitHubClient);
             Oauth = new ObservableOauthClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
             PullRequest = new ObservablePullRequestsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
-            SshKey = new ObservableSshKeysClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
             Git = new ObservableGitDatabaseClient(gitHubClient);
             Gist = new ObservableGistsClient(gitHubClient);
             Search = new ObservableSearchClient(gitHubClient);
             Enterprise = new ObservableEnterpriseClient(gitHubClient);
+            Migration = new ObservableMigrationClient(gitHubClient);
+            Reaction = new ObservableReactionsClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -62,16 +62,12 @@ namespace Octokit.Reactive
         public IObservablePullRequestsClient PullRequest { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableGistsClient Gist { get; private set; }
-        [Obsolete("Use Repository.Release instead")]
-        public IObservableReleasesClient Release { get { return Repository.Release; } }
-        public IObservableSshKeysClient SshKey { get; private set; }
         public IObservableUsersClient User { get; private set; }
-        public IObservableNotificationsClient Notification { get; private set; }
-        [Obsolete("Use Git instead")]
-        public IObservableGitDatabaseClient GitDatabase { get { return Git; } }
         public IObservableGitDatabaseClient Git { get; private set; }
         public IObservableSearchClient Search { get; private set; }
         public IObservableEnterpriseClient Enterprise { get; private set; }
+        public IObservableMigrationClient Migration { get; private set; }
+        public IObservableReactionsClient Reaction { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

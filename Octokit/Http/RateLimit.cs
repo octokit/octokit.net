@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Security;
 using Octokit.Helpers;
 using Octokit.Internal;
 
@@ -82,6 +83,7 @@ namespace Octokit
             ResetAsUtcEpochSeconds = info.GetInt64("ResetAsUtcEpochSeconds");
         }
 
+        [SecurityCritical]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             Ensure.ArgumentNotNull(info, "info");

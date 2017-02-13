@@ -21,7 +21,9 @@ namespace Octokit
         {
             Email = new UserEmailsClient(apiConnection);
             Followers = new FollowersClient(apiConnection);
-            Keys = new UserKeysClient(apiConnection);
+            GitSshKey = new UserKeysClient(apiConnection);
+            GpgKey = new UserGpgKeysClient(apiConnection);
+
             Administration = new UserAdministrationClient(apiConnection);
         }
 
@@ -39,7 +41,15 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
-        public IUserKeysClient Keys { get; private set; }
+        public IUserKeysClient GitSshKey { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's UserUser GPG Keys API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
+        /// </remarks>
+        public IUserGpgKeysClient GpgKey { get; private set; }
 
         /// <summary>
         /// Returns the user specified by the login.
@@ -49,8 +59,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
-            var endpoint = "users/{0}".FormatUri(login);
-            return ApiConnection.Get<User>(endpoint);
+            return ApiConnection.Get<User>(ApiUrls.User(login));
         }
 
         /// <summary>

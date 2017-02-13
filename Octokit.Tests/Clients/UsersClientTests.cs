@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 #if NET_45
 using System.Collections.ObjectModel;
 #endif
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -17,10 +15,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class UsersClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void ThrowsForBadArgs()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new UsersClient(null));
             }

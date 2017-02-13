@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -26,18 +26,21 @@ namespace Octokit
         /// <param name="hooks">An array of IP addresses in CIDR format specifying the addresses that incoming service hooks will originate from on GitHub.com.</param>
         /// <param name="git">An array of IP addresses in CIDR format specifying the Git servers for the GitHub server</param>
         /// <param name="pages">An array of IP addresses in CIDR format specifying the A records for GitHub Pages.</param>
+        /// <param name="importer">An Array of IP addresses specifying the addresses that source imports will originate from on GitHub.com.</param>
         public Meta(
             bool verifiablePasswordAuthentication,
             string gitHubServicesSha,
             IReadOnlyList<string> hooks,
             IReadOnlyList<string> git,
-            IReadOnlyList<string> pages)
+            IReadOnlyList<string> pages,
+            IReadOnlyList<string> importer)
         {
             VerifiablePasswordAuthentication = verifiablePasswordAuthentication;
             GitHubServicesSha = gitHubServicesSha;
             Hooks = hooks;
             Git = git;
             Pages = pages;
+            Importer = importer;
         }
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace Octokit
         /// <summary>
         /// The currently-deployed SHA of github-services.
         /// </summary>
+        [Parameter(Key = "github_services_sha")]
         public string GitHubServicesSha { get; private set; }
 
         /// <summary>
@@ -68,6 +72,11 @@ namespace Octokit
         /// An Array of IP addresses in CIDR format specifying the A records for GitHub Pages.
         /// </summary>
         public IReadOnlyList<string> Pages { get; private set; }
+
+        /// <summary>
+        /// An Array of IP addresses specifying the addresses that source imports will originate from on GitHub.com.
+        /// </summary>
+        public IReadOnlyList<string> Importer { get; private set; }
 
         internal string DebuggerDisplay
         {

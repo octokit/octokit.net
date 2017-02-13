@@ -7,6 +7,16 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseOrganizationClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEnterpriseOrganizationClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]
@@ -17,9 +27,9 @@ namespace Octokit.Tests
 
                 client.Create(new NewOrganization("org", "admin", "org name"));
                 github.Enterprise.Organization.Received(1).Create(
-                    Arg.Is<NewOrganization>(a => 
-                        a.Login == "org" 
-                        && a.Admin == "admin" 
+                    Arg.Is<NewOrganization>(a =>
+                        a.Login == "org"
+                        && a.Admin == "admin"
                         && a.ProfileName == "org name"));
             }
         }

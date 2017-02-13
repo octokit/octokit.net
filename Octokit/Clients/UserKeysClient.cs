@@ -17,15 +17,18 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets all public keys for the authenticated user.
+        /// Gets all verified public keys for a user.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns>The <see cref="PublicKey"/>s for the authenticated user.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll()
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys());
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+
+            return GetAll(userName, ApiOptions.None);
         }
 
         /// <summary>
@@ -34,10 +37,83 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns>The <see cref="PublicKey"/>s for the user.</returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName));
+            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
+        {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to chagne API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="PublicKey"/> for the specified id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
+        /// </remarks>
+        /// <param name="id">The Id of the SSH key</param>
+        /// <returns></returns>
+        public Task<PublicKey> Get(int id)
+        {
+            return ApiConnection.Get<PublicKey>(ApiUrls.Keys(id));
+        }
+
+        /// <summary>
+        /// Create a public key <see cref="NewPublicKey"/>.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#create-a-public-key
+        /// </remarks>
+        /// <param name="newKey">The SSH Key contents</param>
+        /// <returns></returns>
+        public Task<PublicKey> Create(NewPublicKey newKey)
+        {
+            Ensure.ArgumentNotNull(newKey, "newKey");
+
+            return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey);
+        }
+
+        /// <summary>
+        /// Delete a public key.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#delete-a-public-key
+        /// </remarks>
+        /// <param name="id">The id of the key to delete</param>
+        /// <returns></returns>
+        public Task Delete(int id)
+        {
+            return ApiConnection.Delete(ApiUrls.Keys(id));
         }
     }
 }

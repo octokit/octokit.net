@@ -42,14 +42,28 @@ namespace Octokit
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
         /// </summary>
+        /// <param name="org">Organization to list teams of.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current org.
+        /// </summary>
+        /// <param name="org">Organization to list teams of.</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<Team>(endpoint);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -59,8 +73,22 @@ namespace Octokit
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAllForCurrent()
         {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="Team" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        public Task<IReadOnlyList<Team>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.UserTeams();
-            return ApiConnection.GetAll<Team>(endpoint);
+
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -73,9 +101,25 @@ namespace Octokit
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
+            return GetAllMembers(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all members of the given team. 
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint);
+            return ApiConnection.GetAll<User>(endpoint, options);
         }
 
         /// <summary>
@@ -93,7 +137,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint);
+                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -164,7 +208,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty);
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -198,7 +242,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -209,55 +253,30 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
-        /// is a member of the team with the given <paramref name="id"/>.
+        /// Returns all team's repositories.
         /// </summary>
-        /// <param name="id">The team to check.</param>
-        /// <param name="login">The user to check.</param>
-        /// <returns><see langword="true"/> if the user is a member of the team; <see langword="false"/> otherwise.</returns>
-        [Obsolete("Use GetMembership(id, login) as this will report on pending requests")]
-        public async Task<bool> IsMember(int id, string login)
+        /// <param name="id">Team Id.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The team's repositories</returns>
+        public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-
-            try
-            {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
-                return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return GetAllRepositories(id, ApiOptions.None);
         }
 
         /// <summary>
         /// Returns all team's repositories.
         /// </summary>
+        /// <param name="id">Team Id.</param>
+        /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
+        public Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Repository"/>(ies) associated with the given team. 
-        /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-team-repos">API documentation</a> for more information.
-        /// </remarks>
-        /// <returns>A list of the team's <see cref="Repository"/>(ies).</returns>
-        public Task<IReadOnlyList<Repository>> GetRepositories(int id)
-        {
-            var endpoint = ApiUrls.TeamRepositories(id);
-
-            return ApiConnection.GetAll<Repository>(endpoint);
+            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.OrganizationPermissionsPreview, options);
         }
 
         /// <summary>
@@ -274,8 +293,35 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Add a repository to the team
+        /// </summary>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="organization">Org to associate the repo with.</param>
+        /// <param name="repoName">Name of the repo.</param>
+        /// <param name="permission">The permission to grant the team on this repository.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+
+            var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
+
+            try
+            {
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.OrganizationPermissionsPreview).ConfigureAwait(false);
+                return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
             {
@@ -290,14 +336,14 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -326,7 +372,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint);
+                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

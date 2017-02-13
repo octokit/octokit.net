@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
 {
     /// <summary>
     /// Used to watch a repository (subscribe to repository's notifications). Called by the 
-    /// <see cref="IWatchedClient.WatchRepo"/> method.
+    /// <see cref="IWatchedClient.WatchRepo(string,string,NewSubscription)"/> method.
     /// </summary>
     /// <remarks>
     /// API: https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
@@ -20,7 +19,7 @@ namespace Octokit
         /// <remarks>
         /// If you would like to watch a repository, set subscribed to true. If you would like to ignore notifications
         /// made within a repository, set ignored to true. If you would like to stop watching a repository, delete the 
-        /// repository’s subscription completely using the <see cref="IWatchedClient.UnwatchRepo"/> method.
+        /// repository’s subscription completely using the <see cref="IWatchedClient.UnwatchRepo(string,string)"/> method.
         /// </remarks>
         public bool Subscribed { get; set; }
 

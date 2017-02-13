@@ -130,5 +130,15 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseLdapClient(null));
+            }
+        }
     }
 }

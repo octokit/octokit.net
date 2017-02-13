@@ -4,43 +4,118 @@ using System.Reactive;
 
 namespace Octokit.Reactive
 {
+    /// <summary>
+    /// A client for GitHub's Activity Notifications API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/activity/notifications/">Activity Notifications API documentation</a> for more information.
+    /// </remarks>
     public interface IObservableNotificationsClient
     {
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Notification> GetAllForCurrent();
 
         /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Notification> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IObservable{Notification}"/> of <see cref="Notification"/>.</returns>
         IObservable<Notification> GetAllForRepository(string owner, string name);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(long repositoryId);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<Notification> GetAllForCurrent(NotificationsRequest request);
 
         /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user.
+        /// </summary>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        IObservable<Notification> GetAllForCurrent(NotificationsRequest request, ApiOptions options);
+
+        /// <summary>
         /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
         /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        /// <returns>A <see cref="IReadOnlyPagedCollection{Notification}"/> of <see cref="Notification"/>.</returns>
         IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options);
+
+        /// <summary>
+        /// Retrieves all of the <see cref="Notification"/>s for the current user specific to the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="request">Specifies the parameters to filter notifications by</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options);
 
         /// <summary>
         /// Marks all notifications as read.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        /// <returns></returns>
         IObservable<Unit> MarkAsRead();
 
         /// <summary>
@@ -48,7 +123,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        /// <returns></returns>
         IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
@@ -57,25 +131,37 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
         IObservable<Unit> MarkAsReadForRepository(string owner, string name);
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        IObservable<Unit> MarkAsReadForRepository(long repositoryId);
 
         /// <summary>
         /// Marks the notifications for a given repository as read.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="markAsRead">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        /// <returns></returns>
-        IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsRead);
+        IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest);
+
+        /// <summary>
+        /// Marks the notifications for a given repository as read.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
+        /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
+        IObservable<Unit> MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest);
 
         /// <summary>
         /// Retrives a single <see cref="Notification"/> by Id.
         /// </summary>
         /// <param name="id">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
-        /// <returns>A <see cref="Notification"/> for the given Id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Notification> Get(int id);
 
@@ -84,7 +170,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
-        /// <returns></returns>
         IObservable<Unit> MarkAsRead(int id);
 
         /// <summary>
@@ -92,7 +177,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        /// <returns>A <see cref="ThreadSubscription"/> for the chosen thread.</returns>
         IObservable<ThreadSubscription> GetThreadSubscription(int id);
 
         /// <summary>
@@ -101,7 +185,6 @@ namespace Octokit.Reactive
         /// <param name="id">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
-        /// <returns></returns>
         IObservable<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription);
 
         /// <summary>
@@ -109,7 +192,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
-        /// <returns></returns>
         IObservable<Unit> DeleteThreadSubscription(int id);
     }
 }

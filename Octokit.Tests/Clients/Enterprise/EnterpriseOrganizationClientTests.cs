@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
 
                 string expectedUri = "admin/organizations";
                 client.Create(new NewOrganization("org", "admin", "org name"));
-                
+
                 connection.Received().Post<Organization>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<object>());
             }
 
@@ -44,6 +44,16 @@ namespace Octokit.Tests.Clients
                 var client = new EnterpriseOrganizationClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null));
+            }
+        }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseOrganizationClient(null));
             }
         }
     }

@@ -1,20 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
+using Octokit.Tests;
 using Xunit;
 
 public class DeploymentsClientTests
 {
     public class TheGetAllMethod
     {
+        const string name = "name";
+        const string owner = "owner";
+        const long repositoryId = 1;
+
         [Fact]
         public async Task EnsuresNonNullArguments()
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, name));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(owner, name, null));
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(repositoryId, null));
         }
 
         [Fact]
@@ -22,8 +31,8 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, ""));
         }
 
         [Theory]
@@ -36,25 +45,102 @@ public class DeploymentsClientTests
         {
             var client = new DeploymentsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, "name"));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", whitespace));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(whitespace, name));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(owner, whitespace));
         }
 
         [Fact]
-        public void RequestsCorrectUrl()
+        public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
-            var expectedUrl = "repos/owner/name/deployments";
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
 
-            client.GetAll("owner", "name");
-            connection.Received(1).GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
+            await client.GetAll(owner, name);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), null,
+                                    "application/vnd.github.ant-man-preview+json",
+                                    Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repositories/{0}/deployments", repositoryId);
+
+            await client.GetAll(repositoryId);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            await client.GetAll(owner, name, options);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    null,
+                                    "application/vnd.github.ant-man-preview+json",
+                                    options);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithRepostoryIdWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repositories/{0}/deployments", repositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            await client.GetAll(repositoryId, options);
+
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    options);
+        }
+
+        [Fact]
+        public void RequestsCorrectUrlWithPreviewAcceptHeaders()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = string.Format("repos/{0}/{1}/deployments", owner, name);
+
+            client.GetAll(owner, name);
+            connection.Received(1)
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                                    Arg.Any<IDictionary<string, string>>(),
+                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview),
+                                    Args.ApiOptions);
         }
     }
 
     public class TheCreateMethod
     {
-        readonly NewDeployment newDeployment = new NewDeployment("aRef");
+        private readonly NewDeployment newDeployment = new NewDeployment("aRef");
 
         [Fact]
         public async Task EnsuresNonNullArguments()
@@ -99,11 +185,25 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                    Arg.Any<NewDeployment>());
+                                                    newDeployment,
+                                                    "application/vnd.github.ant-man-preview+json");
         }
 
         [Fact]
-        public void PassesNewDeploymentRequest()
+        public void PostsToDeploymentsUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new DeploymentsClient(connection);
+            var expectedUrl = "repositories/1/deployments";
+
+            client.Create(1, newDeployment);
+
+            connection.Received(1).Post<Deployment>(Arg.Is<Uri>(uri => uri.ToString() == expectedUrl),
+                                                    newDeployment);
+        }
+
+        [Fact]
+        public void SendsPreviewAcceptHeaders()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
@@ -111,14 +211,15 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
-                                                    newDeployment);
+                                                    Arg.Any<NewDeployment>(),
+                                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview));
         }
     }
 
     public class TheCtor
     {
         [Fact]
-        public void EnsuresArgument()
+        public void EnsuresNonNullArguments()
         {
             Assert.Throws<ArgumentNullException>(() => new DeploymentsClient(null));
         }

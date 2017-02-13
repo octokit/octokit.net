@@ -1,3 +1,273 @@
+### New in 0.24.0 (released 17/1/2017)
+
+**Features/Enhancements**
+
+ - Add `GetAll` method to `OrganizationsClient` - [#1469](https://github.com/octokit/octokit.net/pull/1469) via [malamour-work](https://github.com/malamour-work)
+ - Add missing fields to `Repository` class - `HasPages`, `SubscribersCount`, `Size` - [#1473](https://github.com/octokit/octokit.net/pull/1473) via [ryangribble](https://github.com/ryangribble)
+ - Allow base64 content for create/update file - [#1488](https://github.com/octokit/octokit.net/pull/1488) via [laedit](https://github.com/laedit)
+ - Add `HtmlUrl` field to `Milestone` class - [#1489](https://github.com/octokit/octokit.net/pull/1489) via [StanleyGoldman](https://github.com/StanleyGoldman)
+ - Add support for passing sort options to `IssueCommentsClient.GetAllForRepository()` - [#1501](https://github.com/octokit/octokit.net/pull/1501) via [pjc0247](https://github.com/pjc0247)
+ - Rename `PullRequest.Comment` to `PullRequest.ReviewComment` for better accuracy - [#1520](https://github.com/octokit/octokit.net/pull/1520) via [bmeverett](https://github.com/bmeverett)
+ - Introduce `AbuseException` - [#1528](https://github.com/octokit/octokit.net/pull/1528) via [SeanKilleen](https://github.com/SeanKilleen)
+ - Add `Id` field to `PullRequest` class - [#1537](https://github.com/octokit/octokit.net/pull/1537) via [YunLi1988](https://github.com/YunLi1988)
+ - Unparseable `ApiErrors` should now fall back to better default error messages - [#1540](https://github.com/octokit/octokit.net/pull/1540) via [SeanKilleen](https://github.com/SeanKilleen)
+
+**Fixes**
+
+ - Fix errors in `ObservableEventsClient` caused by incorrect return types - [#1490](https://github.com/octokit/octokit.net/pull/1490) via [StanleyGoldman](https://github.com/StanleyGoldman)
+ - Add missing `SecurityCritical` attribute on `GetObjectData()` overrides - [#1493](https://github.com/octokit/octokit.net/pull/1493) via [M-Zuber](https://github.com/M-Zuber)
+ - Fix exceptions in Events API by adding missing event types to `EventInfo` enumeration - [#1536](https://github.com/octokit/octokit.net/pull/1536) via [lynnfaraday](https://github.com/lynnfaraday)
+ - Add new AccountType "Bot" to prevent deserialization errors - [#1541](https://github.com/octokit/octokit.net/pull/1541) via [ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+ - Clarify `ApiInfo` rate limiting usage in docs - [#1524](https://github.com/octokit/octokit.net/pull/1524) via [SeanKilleen](https://github.com/SeanKilleen)
+ - Clarify label coloring usage in docs - [#1530](https://github.com/octokit/octokit.net/pull/1530) via [SeanKilleen](https://github.com/SeanKilleen)
+
+**Breaking Changes**
+
+ - Creating and Editing Issues (and PullRequests) using `NewIssue` and `IssueUpdate` requests 
+should now use the `Assignees` collection rather than the now deprecated 'Assignee` field. 
+Both fields can't be specified on the same request, so any code still using `Assignee` will 
+need to explicitly set `Assignees` to `null` to avoid Api validation errors.
+
+ - `OrganizationsClient.GetAll(string user)` has been marked obsolete in favour of 
+`OrganizationsClient.GetAllForUser(string user)`
+
+ - `PullRequest.Comment` has been marked obsolete in favour of `PullRequest.ReviewComment`
+
+- Several `EventsClient` methods previously returned the incorrect `Activity` response class. 
+This has been corrected to `IssueEvent` which although is now correct could break calling 
+code that was written assuming this previous incorrect return type.
+
+### New in 0.23.0 (released 07/10/2016)
+
+**Features**
+
+ - Added support to test whether a URL points to a GitHub Enterprise instance - #1404 via @haacked
+ - Added granular methods for Protected Branches preview API - #1443 via @maddin2016
+ - Repository Traffic preview API support - #1457 via @maddin2016
+ - Preview API for merge/squash/rebase in repository settings - #1477 via @ryangribble
+ - Added support for performing a rebase and merge through the API- #1479 via @ryangribble
+
+**Fixes**
+
+ - Repository identifiers now use `long` instead of `int` - #1445 via @shana, #1485 via @ryangribble
+ - Searching for C# through the GitHub API now uses the correct alias - #1463 via @dampir
+ - Resolved deadlocking scenario in async/await usage - #1486 via @zzzprojects
+
+**Other**
+
+ - LINQPad samples are now verified at build time - #1456 via @mderriey
+ - More obsolete APIs removed - #1458 via @ryangribble
+ - .NET Core support has been started - #1462 via @mderriey
+
+**Breaking Changes**
+
+Repository identifiers returned from the GitHub API will exceed `Int32.MaxValue` in
+around 12 months, based on current growth. We've decided to update everywhere we
+require (or return) a repository identifier from `int` to `long` so that these will
+continue to work in the future, and the implicit conversion from `int` to `long`
+means the impact should be manageable now.
+
+`MergePullRequest.Squash` has been marked as obsolete in favour of the `MergeMethod`
+property - use `PullRequestMergeMethod.Squash` or `PullRequestMergeMethod.Rebase` if
+you want to change the merge behaviour when merging a pull request.
+
+### New in 0.22.0 (released 2016/09/01)
+
+**Features**
+
+ - Timeline preview API support - #1435 via @alfhenrik
+ - Initial groundwork for Branches API - #1437 via @ryangribble
+ - Base branch can now be updated when updating a pull request - #1450 via @ryangribble
+ - Enhancements to Protected Branches preview API - #1441 via @ryangribble
+
+**Fixes**
+
+ - Redirect timeout when repository renamed - #1411 via @maddin2016
+
+**Breaking Changes**
+
+The new Branches client added in #1437 means that existing methods on 
+I(Observable)RepositoryClient are now marked as obsolete. Please update your
+usages to the new endpoints as these will be removed in a future release:
+
+ - `client.Repository.GetBranch()` => `client.Repository.Branch.Get()`
+ - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
+ - `client.Repository.EditBranch()` => `client.Repository.Branch.Edit()`
+
+There is also a change in how branch protection works with the API, due to 
+upstream changes. The existing methods have been marked as obsolete, but for
+the sake of brevity here are the details about what you should be doing today.
+
+The process for inspecting branch protection is now two steps:
+
+ - first, check the branch returned by `client.Repository.Branch.Get()` or 
+   `client.Repository.Branch.GetAll()` has it's `Protected` property set to `true`.
+
+ - then, a call to `client.Repository.Branch.GetBranchProtection()` will return
+   the details about the protection settings for the given branch. If no protection
+   is set for this branch, you will received a `HTTP 404` response.
+
+### New in 0.21.1 (released 2016/07/29)
+
+**Features**
+
+Due to a programming error in the tool to generate these release notes, additional
+features were not properly documented for the previous release:
+
+ - Reactions preview API support for issues, issue comments, commit comments and PR comments - #1335, #1341, #1405 via @maddin2016, @alfhenrik 
+ - Repository Invitation preview API support - #1410 via @maddin2016
+ - Added new fields for signature verification to Git Data Commit API - #1398 via @Sarmad93
+
+No additional code changes have been made to this release.
+
+### New in 0.21.0 (released 2016/07/29)
+
+**Features**
+
+This release adds support across Octokit.net for providing the repository Id
+rather than a name/owner pair. The repository Id does not change when transferring
+ownership of a repository, and is more robust for API callers. This work
+was lead by @dampir as part of Google Summer of Code 2016.
+
+ - Added new fields for Deployment and DeploymentStatus preview API - #1365 via @ErikSchierboom
+ - Added new fields for signature verification to Git Data Tag API - #1420 via @Sarmad93
+ - Added new fields for GitHub Pages preview API - #1421 via @dampir
+
+**Fixes**
+
+ - Fix serialization of enum value attributes - #1402 via @maddin2016
+ - Fix searching for repositories with underscore in name - #1418 via @dsplaisted, @shiftkey
+
+**Other**
+
+ - Clarified obsolete warnings for Protected Branch preview API - #1428 via @ryangribble
+ - Remove Obsolete items - #1422 via @ryangribble
+
+**Breaking Changes**
+
+After a long grace period, #1422 has removed these obsoleted members. These features
+exist in other parts of the API surface:
+
+ - `I(Observable)GitHubClient.Release`
+ - `I(Observable)GitHubClient.Notification`
+ - `I(Observable)GitHubClient.GitDatabase`
+ - `I(Observable)GitHubClient.SshKey`
+ - `I(Observable)GitHubClient.Repository.RepositoryComments`
+ - `I(Observable)GitHubClient.Repository.CommitStatus`
+ - `I(Observable)GitHubClient.Repository.RepoCollaborators`
+ - `I(Observable)GitHubClient.Repository.Commits`
+
+This method is no longer supported through the API and has been removed from Octokit.net.: 
+
+ - `I(Observable)GitHubClient.Authorization.RevokeAllApplicationAuthentications()`
+
+### New in 0.20.0 (released 2016/06/15)
+
+**Features**
+
+The big focus for this release is pagination support. This lets the caller
+control how much data to retrieve for `GetAll*` endpoints throughout Octokit.
+This was a team effort to apply this across the entire codebase, with
+contributions from @dampir, @devkhan, @prayankmathur, @SamTheDev and @shiftkey.
+
+For more information about how to use pagination in your projects refer to the
+documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#pagination
+
+ - Add Migrations preview API - #1141 via @devkhan
+ - Add Issue Lock/Unlock functionality - #1185 via @prayankmathur
+ - Added Commit Reference SHA-1 API - #1195 via @ryangribble
+ - Add additional parameters to `SearchIssuesRequest` -  #1228 via @ryangribble
+ - Add `Importer` property to Meta endpoint - #1235 via @ryangribble
+ - Raise HTTP 451 exception when repository has DMCA notice - #1239 via @devkhan
+ - Add Merge and Squash preview API - #1245 via @Sarmad93
+ - Add additional methods to `IEventsClient` - #1288 via @drasticactions
+ - Add Organization Permissions preview API - #1342 via @ryangribble
+ - Add GPG Keys preview API - #1343 via @alfhenrik
+ 
+**Fixes**
+
+ - Renamed `IUserKeysClient.GetAll()` to `IUserKeysClient.GetAllForCurrent()` - #1139 via @M-Zuber
+ - Add `ItemStateFilter` enum to differentiate between search and list endpoints - #1140 via @prayankmathur
+ - `RepositoriesClient.GetAllPublic()` fails for Enterprise instanes due to URI structure - #1204 via @ryangribble 
+ - `ConfigureAwait(false)` usages added, eliminating deadlocks - #1248 via @shiftkey
+ - Renamed `CompareResult.MergedBaseCommit` to fix serialization issue - #1265 via @kivancmuslu
+ - Activity Feed now returns issues and repository events - #1288 via @drasticactions
+ - Add `Repository` property to `Issue` response - #1292 via @M-Zuber
+ - `SearchCodeRequest` now supports searching without specifying a term - #1338 via @dsplaisted
+ - Add required Permission parameter to team management APIs - #1347 via @ryangribble
+ - Add `ClosedBy` property to `Issue` - #1353 via @maddin2016
+
+**Other**
+ 
+ - Deleting now-obsolete code - #1224 via @M-Zuber
+ - Centralize and cleanup the `Uri`s created in Octokit - #1287, #1290 via @dampir
+ - Updated documentation links - #1289 via @radu-matei, #1250 via @SamTheDev 
+ 
+**Breaking Changes**
+
+ - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemented
+   and only works for the current user's keys. Update all usages to `GetAllForCurrent()`.
+
+ - `CompareResult.MergedBaseCommit` was never deserialized correctly, and has
+   been marked as obsolete. You should use `CompareResult.MergeBaseCommit`
+   instead (note the lack of a `d`).
+
+ - `IEventsClient.GetAllForRepository` was incorrectly retrieving issue
+    events before this release. Use the new `IEventsClient.GetAllIssuesForRepository`
+    method if you still require issues, or continue to use `IEventsClient.GetAllForRepository`
+    if you require all repository events.
+
+ - `IUsersClient` has a property named `Keys` which has been renamed in the
+   GitHub API documentation - Octokit has added the name `GitSshKey` to
+   reflect this change, and `Keys` will be removed in a later release.
+
+### New in 0.19.0 (released 2016/03/11)
+
+**Features**
+
+ - Add `GetLatest` endpoint for Releases API - #975 via @chenjiaming93
+ - Add Enterprise License and Organization APIs - #1073 via @ryangribble
+ - Add Locked property to `PullRequest` - #1089 via @M-Zuber
+ - Add Enterprise Search Indexing API - #1095 via @ryangribble
+ - Add support for `Visibility` and `Affiliation` to repository search - #1096, #1132 via  @Sarmad93, @AlexP11223
+ - Add Enterprise LDAP API - #1099 via @ryangribble
+ - Add `CreateBranch` extension methods to IReferencesClient - #1103 via @M-Zuber
+ - Additional Enterprise methods on User Administration Client - #1108  via @ryangribble
+ - Complete `UserKeysClient` API - #1112 via @ryangribble
+ - `RepositoryContentsClient` create, update and delete actions now specify branch - #1093 via @M-Zuber
+
+**Fixes**
+
+ - `StatisticsClient` should not clobber /api/v3/ in path - #1085 via @shiftkey
+ - Fix JSON deserialization of string containing hyphens to List<string> property - #1094 via @ryangribble
+ - Incorrect reference passed to `RepositoryContentsClient.GetArchive` - #1113 via @michael-kokorin
+
+**Other**
+
+ - Add failing integration test for Issue Search API - #1083 via @hahmed
+ - Add integration tests for `IReleasesClient.GetLatest` - #1090 via @M-Zuber
+ - Remove extraneous Bcl .targets reference - #1100 via @shana
+ - Add proper syntax highlighting to exploring-pull-requests.md -  #1117 via @tiesmaster
+ - Fix issue with optional parameters in .\script\configure-integration-tests - #1118 via @Anubhav10
+ - Update Issue creation sample code - #1131 via @AlexP11223
+ - `IJsonSerializer` not used inside `Connection` - #1133 via @devkhan
+
+**Breaking Changes**
+
+`ISshKeysClient` has a number of methods which at the time should have been
+implemented in `IUserKeysClient` - these methods are marked as obsolete and will
+be removed in a future release:
+
+ - `ISshKeysClient.Get(int id)`
+ - `ISshKeysClient.GetAll(string user)`
+ - `ISshKeysClient.GetAllForCurrent()`
+ - `ISshKeysClient.Create(SshKeyUpdate key)`
+ - `ISshKeysClient.Update(int id, SshKeyUpdate key)`
+ - `ISshKeysClient.Delete(int id)`
+
 ### New in 0.18.0 (released 2016/02/03)
 
 * New: support for User Administration API (GitHub Enterprise) - #1068 via @paladique

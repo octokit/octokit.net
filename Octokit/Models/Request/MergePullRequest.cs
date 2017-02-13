@@ -23,12 +23,49 @@ namespace Octokit
         /// </summary>
         public string Sha { get; set; }
 
+        /// <summary>
+        /// The Title for the automatic commit message (optional)
+        /// </summary>
+        public string CommitTitle { get; set; }
+
+        /// <summary>
+        ///  Commit a single commit to the head branch (optional)
+        /// </summary>
+        [Obsolete("Please use MergeMethod property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
+        public bool Squash { get; set; }
+
+        /// <summary>
+        /// Specify the Merge method to use (optional - default is Merge)
+        /// </summary>
+        public PullRequestMergeMethod? MergeMethod { get; set; }
+
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Message: '{0}', Sha: '{1}'", CommitMessage, Sha);
+                return string.Format(CultureInfo.InvariantCulture, "Title: '{0}'  Message: '{1}', Sha: '{2}' , MergeMethod: '{3}'", CommitTitle, CommitMessage, Sha, MergeMethod.HasValue ? MergeMethod.Value.ToString() : "null");
             }
         }
+    }
+
+    /// <summary>
+    /// Method to use when merging a PR
+    /// </summary>
+    public enum PullRequestMergeMethod
+    {
+        /// <summary>
+        /// Create a merge commit
+        /// </summary>
+        Merge,
+
+        /// <summary>
+        /// Squash and merge
+        /// </summary>
+        Squash,
+
+        /// <summary>
+        /// Rebase and merge
+        /// </summary>
+        Rebase
     }
 }

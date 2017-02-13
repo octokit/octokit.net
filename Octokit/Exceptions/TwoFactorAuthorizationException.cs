@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Security;
 
 namespace Octokit
 {
@@ -77,9 +78,10 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            TwoFactorType = (TwoFactorType)(info.GetInt32("TwoFactorType"));
+            TwoFactorType = (TwoFactorType)info.GetInt32("TwoFactorType");
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

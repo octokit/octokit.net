@@ -10,7 +10,7 @@ namespace Octokit.Tests.Exceptions
         public class TheConstructor
         {
             [Fact]
-            public void IdentifiesMaxLoginAttepmtsExceededReason()
+            public void IdentifiesMaxLoginAttemptsExceededReason()
             {
                 const string responseBody = "{\"message\":\"YOU SHALL NOT PASS!\"," +
                                             "\"documentation_url\":\"http://developer.github.com/v3\"}";

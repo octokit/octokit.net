@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -86,7 +85,14 @@ namespace Octokit
             get
             {
                 var mergedParameters = string.Join("+", MergedQualifiers());
-                return Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : "");
+                if (string.IsNullOrEmpty(Term))
+                {
+                    return mergedParameters;
+                }
+                else
+                {
+                    return Term + (mergedParameters.IsNotBlank() ? "+" + mergedParameters : "");
+                }
             }
         }
 

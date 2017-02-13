@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -15,7 +16,8 @@ namespace Octokit.Reactive
 
             Followers = new ObservableFollowersClient(client);
             Email = new ObservableUserEmailsClient(client);
-            Keys = new ObservableUserKeysClient(client);
+            GitSshKey = new ObservableUserKeysClient(client);
+            GpgKey = new ObservableUserGpgKeysClient(client);
             Administration = new ObservableUserAdministrationClient(client);
         }
 
@@ -75,7 +77,15 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/keys/">Keys API documentation</a> for more information.
         ///</remarks>
-        public IObservableUserKeysClient Keys { get; private set; }
+        public IObservableUserKeysClient GitSshKey { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's UserUser GPG Keys API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/users/gpg_keys/">User GPG Keys documentation</a> for more information.
+        /// </remarks>
+        public IObservableUserGpgKeysClient GpgKey { get; private set; }
 
         /// <summary>
         /// A client for GitHub's User Administration API

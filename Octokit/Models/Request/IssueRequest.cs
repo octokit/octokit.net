@@ -18,7 +18,7 @@ namespace Octokit
         public IssueRequest()
         {
             Filter = IssueFilter.Assigned;
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             Labels = new Collection<string>();
             SortProperty = IssueSort.Created;
             SortDirection = SortDirection.Descending;
@@ -33,12 +33,12 @@ namespace Octokit
         public IssueFilter Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ItemState"/> for the issues to return.
+        /// Gets or sets the <see cref="ItemStateFilter"/> for the issues to return.
         /// </summary>
         /// <value>
         /// The state.
         /// </value>
-        public ItemState State { get; set; }
+        public ItemStateFilter State { get; set; }
 
         /// <summary>
         /// Gets the labels to filter by. Add labels to the collection to only request issues with those labels.
@@ -121,24 +121,40 @@ namespace Octokit
     }
 
     /// <summary>
-    /// The range of states that an issue can be in.
+    /// Range of states for Issues, Milestones and PullRequest API.
     /// </summary>
-    public enum ItemState
+    public enum ItemStateFilter
     {
         /// <summary>
-        /// Isuses that are open (default).
+        /// Items that are open.
         /// </summary>
         Open,
 
         /// <summary>
-        /// Isuses that are closed.
+        /// Items that are closed.
         /// </summary>
         Closed,
 
         /// <summary>
-        /// All the issues.
+        /// All the items.
         /// </summary>
         All
+    }
+
+    /// <summary>
+    /// Items that are open OR closed
+    /// </summary>
+    public enum ItemState
+    {
+        /// <summary>
+        /// Items that are open
+        /// </summary>
+        Open,
+
+        /// <summary>
+        /// Items that are closed
+        /// </summary>
+        Closed
     }
 
     /// <summary>

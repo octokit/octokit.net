@@ -165,6 +165,45 @@ namespace Octokit
         /// <summary>
         /// The actor unsubscribed from notifications for an issue.
         /// </summary>
-        Unsubscribed
+        Unsubscribed,
+
+        /// <summary>
+        /// A comment was added to the issue.
+        /// </summary>
+        Commented,
+
+        /// <summary>
+        /// A commit was added to the pull request's HEAD branch.
+        /// Only provided for pull requests.
+        /// </summary>
+        Committed,
+
+        /// <summary>
+        /// The actor requested review from the subject on this pull request.
+        /// </summary>
+        ReviewRequested,
+
+        /// <summary>
+        /// The actor dismissed a review from the pull request.
+        /// </summary>
+        ReviewDismissed,
+
+        /// <summary>
+        /// The actor removed the review request for the subject on this pull request.
+        /// </summary>
+        ReviewRequestRemoved,
+
+        /// <summary>
+        /// Base branch of the pull request was changed.
+        /// </summary>
+        BaseRefChanged,
+
+        /// <summary>
+        /// The issue was referenced from another issue.
+        /// The source attribute contains the id, actor, and
+        /// url of the reference's source.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
+        Crossreferenced
     }
 }

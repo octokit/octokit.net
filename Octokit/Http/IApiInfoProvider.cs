@@ -1,7 +1,7 @@
 ﻿namespace Octokit
 {
     /// <summary>
-    /// Provides a property for the Last recorded API infomation
+    /// Provides a property for the Last recorded API information
     /// </summary>
     public interface IApiInfoProvider
     {

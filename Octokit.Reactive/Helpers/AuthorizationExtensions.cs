@@ -22,7 +22,7 @@ namespace Octokit
         /// </para>
         /// </remarks>
         /// <param name="authorizationsClient">The <see cref="IAuthorizationsClient" /> this method extends</param>
-        /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
+        /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <param name="twoFactorChallengeHandler">Callback used to retrieve the two-factor authentication code
@@ -38,7 +38,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(authorizationsClient, "authorizationsClient");
             Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
 
             return authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
                 .Catch<ApplicationAuthorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
@@ -72,7 +72,7 @@ namespace Octokit
         /// </para>
         /// </remarks>
         /// <param name="authorizationsClient">The <see cref="IAuthorizationsClient" /> this method extends</param>
-        /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
+        /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <param name="twoFactorChallengeHandler">Callback used to retrieve the two-factor authentication code

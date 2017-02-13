@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -17,10 +14,12 @@ namespace Octokit.Tests.Http
         [Fact]
         public async Task OkStatusShouldPassThrough()
         {
-            var invoker = CreateInvoker(new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(response.StatusCode, HttpStatusCode.OK);
             Assert.Same(response.RequestMessage, httpRequestMessage);
@@ -35,11 +34,12 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(statusCode);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Post);
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(response.RequestMessage.Method, httpRequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
@@ -51,11 +51,12 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(HttpStatusCode.SeeOther);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Post);
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(HttpMethod.Get, response.RequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
@@ -67,12 +68,13 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(HttpStatusCode.Redirect);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("fooAuth", "aparam");
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
             Assert.Equal("fooAuth", response.RequestMessage.Headers.Authorization.Scheme);
@@ -89,12 +91,13 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(statusCode);
             redirectResponse.Headers.Location = new Uri("http://example.net/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
             httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("fooAuth", "aparam");
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
             Assert.Null(response.RequestMessage.Headers.Authorization);
@@ -109,16 +112,16 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(statusCode);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Post);
             httpRequestMessage.Content = new StringContent("Hello World");
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(response.RequestMessage.Method, httpRequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
-            Assert.Equal("Hello World", await response.RequestMessage.Content.ReadAsStringAsync());
         }
 
         // POST see other with content
@@ -128,12 +131,13 @@ namespace Octokit.Tests.Http
             var redirectResponse = new HttpResponseMessage(HttpStatusCode.SeeOther);
             redirectResponse.Headers.Location = new Uri("http://example.org/bar");
 
-            var invoker = CreateInvoker(redirectResponse,
-                                        new HttpResponseMessage(HttpStatusCode.OK));
+            var handler = CreateMockHttpHandler(redirectResponse, new HttpResponseMessage(HttpStatusCode.OK));
+            var adapter = new HttpClientAdapter(handler);
+
             var httpRequestMessage = CreateRequest(HttpMethod.Post);
             httpRequestMessage.Content = new StringContent("Hello World");
 
-            var response = await invoker.SendAsync(httpRequestMessage, new CancellationToken());
+            var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(HttpMethod.Get, response.RequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
@@ -149,13 +153,13 @@ namespace Octokit.Tests.Http
             var redirectResponse2 = new HttpResponseMessage(HttpStatusCode.Found);
             redirectResponse2.Headers.Location = new Uri("http://example.org/foo");
 
-
-            var invoker = CreateInvoker(redirectResponse, redirectResponse2);
+            var handler = CreateMockHttpHandler(redirectResponse, redirectResponse2);
+            var adapter = new HttpClientAdapter(handler);
 
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
 
             Assert.ThrowsAsync<InvalidOperationException>(
-                () => invoker.SendAsync(httpRequestMessage, new CancellationToken()));
+                () => adapter.SendAsync(httpRequestMessage, new CancellationToken()));
         }
 
         static HttpRequestMessage CreateRequest(HttpMethod method)
@@ -166,14 +170,9 @@ namespace Octokit.Tests.Http
             return httpRequestMessage;
         }
 
-        static HttpMessageInvoker CreateInvoker(HttpResponseMessage httpResponseMessage1, HttpResponseMessage httpResponseMessage2 = null)
+        static Func<HttpMessageHandler> CreateMockHttpHandler(HttpResponseMessage httpResponseMessage1, HttpResponseMessage httpResponseMessage2 = null)
         {
-            var redirectHandler = new RedirectHandler()
-            {
-                InnerHandler = new MockRedirectHandler(httpResponseMessage1, httpResponseMessage2)
-            };
-            var invoker = new HttpMessageInvoker(redirectHandler);
-            return invoker;
+            return () => new MockRedirectHandler(httpResponseMessage1, httpResponseMessage2);
         }
     }
 
@@ -181,7 +180,7 @@ namespace Octokit.Tests.Http
     {
         readonly HttpResponseMessage _response1;
         readonly HttpResponseMessage _response2;
-        private bool _Response1Sent = false;
+        private bool _Response1Sent;
 
         public MockRedirectHandler(HttpResponseMessage response1, HttpResponseMessage response2 = null)
         {
@@ -189,7 +188,7 @@ namespace Octokit.Tests.Http
             _response2 = response2;
         }
 
-        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (!_Response1Sent)
             {

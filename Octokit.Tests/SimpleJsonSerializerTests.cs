@@ -81,12 +81,12 @@ namespace Octokit.Tests
                 var data = sb.ToString();
 
                 var json = new SimpleJsonSerializer().Serialize(data);
-                var lastTabCharacter = (json
-                        .Reverse()
-                        .Skip(1)
-                        .Take(2)
-                        .Reverse()
-                    .Aggregate(new StringBuilder(), (a, b) => a.Append(b)));
+                var lastTabCharacter = json
+                    .Reverse()
+                    .Skip(1)
+                    .Take(2)
+                    .Reverse()
+                    .Aggregate(new StringBuilder(), (a, b) => a.Append(b));
 
                 var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
 
@@ -107,6 +107,20 @@ namespace Octokit.Tests
                 var json = new SimpleJsonSerializer().Serialize(item);
 
                 Assert.Equal("{\"name\":\"RmVycmlzIEJ1ZWxsZXI=\",\"description\":\"stuff\",\"content\":\"RGF5IG9mZg==\"}", json);
+            }
+
+            [Fact]
+            public void HandlesEnum()
+            {
+                var item = new ObjectWithEnumProperty
+                {
+                    Name = "Ferris Bueller",
+                    SomeEnum = SomeEnum.PlusOne
+                };
+
+                var json = new SimpleJsonSerializer().Serialize(item);
+
+                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"+1\"}", json);
             }
         }
 
@@ -282,6 +296,36 @@ namespace Octokit.Tests
                 Assert.False(sample.IsSomething);
                 Assert.True(sample.Private);
             }
+
+            [Fact]
+            public void DeserializesEnum()
+            {
+                const string json = @"{""some_enum"":""unicode""}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
+
+                Assert.Equal(SomeEnum.Unicode, sample.SomeEnum);
+            }
+
+            [Fact]
+            public void RemovesDashFromEnums()
+            {
+                const string json = @"{""some_enum"":""utf-8""}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
+
+                Assert.Equal(SomeEnum.Utf8, sample.SomeEnum);
+            }
+
+            [Fact]
+            public void UnderstandsParameterAttribute()
+            {
+                const string json = @"{""some_enum"":""+1""}";
+
+                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
+
+                Assert.Equal(SomeEnum.PlusOne, sample.SomeEnum);
+            }
         }
 
         public class Sample
@@ -304,5 +348,22 @@ namespace Octokit.Tests
 
             public string Description { get; set; }
         }
+    }
+
+    public class ObjectWithEnumProperty
+    {
+        public string Name { get; set; }
+
+        public SomeEnum SomeEnum { get; set; }
+    }
+
+    public enum SomeEnum
+    {
+        [Parameter(Value = "+1")]
+        PlusOne,
+        Utf8,
+        [Parameter(Value = "something else")]
+        SomethingElse,
+        Unicode
     }
 }

@@ -22,13 +22,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="newOrganization">A <see cref="NewOrganization"/> instance describing the organization to be created</param>
         /// <returns>The <see cref="Organization"/> created.</returns>
-        public async Task<Organization> Create(NewOrganization newOrganization)
+        public Task<Organization> Create(NewOrganization newOrganization)
         {
             Ensure.ArgumentNotNull(newOrganization, "newOrganization");
 
             var endpoint = ApiUrls.EnterpriseOrganization();
 
-            return await ApiConnection.Post<Organization>(endpoint, newOrganization);
+            return ApiConnection.Post<Organization>(endpoint, newOrganization);
         }
     }
 }
