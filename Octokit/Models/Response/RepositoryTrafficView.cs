@@ -40,21 +40,14 @@ namespace Octokit
         public RepositoryTrafficView() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public RepositoryTrafficView(long timestamp, int count, int uniques)
+        public RepositoryTrafficView(DateTimeOffset timestamp, int count, int uniques)
         {
-            TimestampAsUtcEpochSeconds = timestamp;
+            Timestamp = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        [Parameter(Key = "ignoreThisField")]
-        public DateTimeOffset Timestamp
-        {
-            get { return TimestampAsUtcEpochSeconds.FromUnixTime(); }
-        }
-
-        [Parameter(Key = "timestamp")]
-        public long TimestampAsUtcEpochSeconds { get; protected set; }
+        public DateTimeOffset Timestamp { get; protected set; }
 
         public int Count { get; protected set; }
 
