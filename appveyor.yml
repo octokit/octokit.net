@@ -4,9 +4,6 @@ build_script:
   - dotnet --info
   - cmd: build.cmd
 test: off
-nuget:
-  account_feed: true
-  project_feed: true
 artifacts:
 - path: 'packaging\octokit*.nupkg'
   name: OctokitPackages
