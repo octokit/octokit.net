@@ -1,3 +1,4 @@
+using System;
 using Cake.Core;
 using Cake.Frosting;
 
@@ -15,9 +16,11 @@ public class BuildContext : FrostingContext
     
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
-    public bool IsOriginalRepo { get; set; }
+    public string RepositoryName { get; set; }
+    public bool IsOriginalRepo => !IsPullRequest && RepositoryName.Equals(Constants.OriginalRepositoryName, StringComparison.OrdinalIgnoreCase);
     public bool IsTagged { get; set; }
     public bool IsMasterBranch { get; set; }
+    public bool IsReleaseBranch { get; set; }
     public bool ForcePublish { get; set; }
 
     public bool AppVeyor { get; set; }
