@@ -7,9 +7,6 @@ build_script:
   - cmd: build.cmd CreatePackages
   - cmd: build.cmd UnitTestsDotNetCore
 test: off
-nuget:
-  account_feed: true
-  project_feed: true
 artifacts:
 - path: 'packaging\octokit*.nupkg'
   name: OctokitPackages
