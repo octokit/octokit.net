@@ -15,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(long id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Id = id;
             Url = url;
@@ -39,6 +39,7 @@ namespace Octokit
             Assignees = assignees;
             Mergeable = mergeable;
             MergedBy = mergedBy;
+            MergeCommitSha = mergeCommitSha;
             Comments = comments;
             Commits = commits;
             Additions = additions;
@@ -170,6 +171,11 @@ namespace Octokit
         /// The user who merged the pull request.
         /// </summary>
         public User MergedBy { get; protected set; }
+
+        /// <summary>
+        /// The sha of the merge commit of this pull request.
+        /// </summary>
+        public string MergeCommitSha { get; protected set; }
 
         /// <summary>
         /// Total number of comments contained in the pull request.
