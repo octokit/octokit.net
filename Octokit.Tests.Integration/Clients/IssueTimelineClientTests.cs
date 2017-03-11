@@ -51,6 +51,42 @@ namespace Octokit.Tests.Integration.Clients
         }
 
         [IntegrationTest]
+        public async Task CanRetrieveTimelineForRecentIssues()
+        {
+            // Make sure we can deserialize the event timeline for the 20 most recent closed PRs and 20 most recent open Issues from octokit.net
+
+            // Search request
+            var github = Helper.GetAuthenticatedClient();
+            var search = new SearchIssuesRequest
+            {
+                PerPage = 20,
+                Page = 1
+            };
+            search.Repos.Add("octokit", "octokit.net");
+
+            // 20 most recent closed PRs
+            search.Type = IssueTypeQualifier.PullRequest;
+            search.State = ItemState.Closed;
+            var pullRequestResults = await github.Search.SearchIssues(search);
+            foreach (var pullRequest in pullRequestResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", pullRequest.Number);
+                Assert.NotEmpty(timelineEventInfos);
+            }
+
+            // 20 most recent open Issues
+            search.Type = IssueTypeQualifier.Issue;
+            search.State = ItemState.Open;
+            var issueResults = await github.Search.SearchIssues(search);
+            foreach (var issue in issueResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", issue.Number);
+
+                Assert.NotNull(timelineEventInfos);
+            }
+        }
+
+        [IntegrationTest]
         public async Task CanDeserializeRenameEvent()
         {
             var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
