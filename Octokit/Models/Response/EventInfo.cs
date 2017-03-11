@@ -215,6 +215,12 @@ namespace Octokit
         /// A line comment was made.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Linecommented")]
-        Linecommented
+        Linecommented,
+
+        /// <summary>
+        /// A commit comment was made.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Commitcommented")]
+        Commitcommented
     }
 }
