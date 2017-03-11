@@ -24,28 +24,16 @@ namespace Octokit.Tests.Integration.Reactive
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssue()
         {
-            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
-            var observable = _client.Issue.Create(_context.Repository.Id, newIssue);
-            var issue = await observable;
-
-            var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+            var observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1503);
             var timelineEventInfos = await observableTimeline.ToList();
-            Assert.Empty(timelineEventInfos);
-
-            observable = _client.Issue.Update(_context.Repository.Id, issue.Number, new IssueUpdate { State = ItemState.Closed });
-            var closed = await observable;
-            Assert.NotNull(closed);
-
-            observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
+            Assert.NotEmpty(timelineEventInfos);
+            Assert.NotEqual(0, timelineEventInfos.Count);
         }
 
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssueWithApiOptions()
         {
-            var observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1115);
+            var observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1503);
             var timelineEventInfos = await observableTimeline.ToList();
             Assert.NotEmpty(timelineEventInfos);
             Assert.NotEqual(1, timelineEventInfos.Count);
@@ -56,7 +44,7 @@ namespace Octokit.Tests.Integration.Reactive
                 PageCount = 1,
                 StartPage = 1
             };
-            observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1115, pageOptions);
+            observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1503, pageOptions);
             timelineEventInfos = await observableTimeline.ToList();
             Assert.NotEmpty(timelineEventInfos);
             Assert.Equal(1, timelineEventInfos.Count);

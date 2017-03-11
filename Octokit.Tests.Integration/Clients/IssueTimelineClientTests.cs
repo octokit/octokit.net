@@ -26,24 +26,15 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssue()
         {
-            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
-            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-
-            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Empty(timelineEventInfos);
-
-            var closed = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate() { State = ItemState.Closed });
-            Assert.NotNull(closed);
-
-            timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
+            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503);
+            Assert.NotEmpty(timelineEventInfos);
+            Assert.NotEqual(0, timelineEventInfos.Count);
         }
 
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssueWithApiOptions()
         {
-            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115);
+            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503);
             Assert.NotEmpty(timelineEventInfos);
             Assert.NotEqual(1, timelineEventInfos.Count);
 
@@ -54,7 +45,7 @@ namespace Octokit.Tests.Integration.Clients
                 StartPage = 1
             };
 
-            timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115, pageOptions);
+            timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503, pageOptions);
             Assert.NotEmpty(timelineEventInfos);
             Assert.Equal(1, timelineEventInfos.Count);
         }
