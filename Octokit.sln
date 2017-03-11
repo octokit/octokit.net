@@ -32,11 +32,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{397C742D-2
 		SolutionInfo.cs = SolutionInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-NetCore45", "Octokit\Octokit-NetCore45.csproj", "{C8BC13B6-3FA3-4716-827D-E7706F976FE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-netcore45", "Octokit\Octokit-netcore45.csproj", "{C8BC13B6-3FA3-4716-827D-E7706F976FE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Reactive", "Octokit.Reactive\Octokit.Reactive.csproj", "{674B69B8-0780-4D54-AE2B-C15821FA51CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-NetCore45", "Octokit.Tests\Octokit.Tests-NetCore45.csproj", "{3F4686DA-8774-4940-823E-9138F4B42060}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Tests-NetCore45", "Octokit.Tests\OctoKit.Tests-NetCore45.csproj", "{3F4686DA-8774-4940-823E-9138F4B42060}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit-Mono", "Octokit\Octokit-Mono.csproj", "{49EF16A2-5ED1-480F-80A1-D1D05D6C1BE4}"
 EndProject
