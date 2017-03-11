@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanRetrieveTimelineForRecentIssues()
         {
-            // Make sure we can deserialize the event timeline for the 20 most recent closed PRs and 20 most recent open Issues from octokit.net
+            // Make sure we can deserialize the event timeline for recent closed PRs and open Issues in a heavy activity repository (microsoft/vscode)
 
             // Search request
             var github = Helper.GetAuthenticatedClient();
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Integration.Clients
                 PerPage = 20,
                 Page = 1
             };
-            search.Repos.Add("octokit", "octokit.net");
+            search.Repos.Add("microsoft", "vscode");
 
             // 20 most recent closed PRs
             search.Type = IssueTypeQualifier.PullRequest;
@@ -70,7 +70,7 @@ namespace Octokit.Tests.Integration.Clients
             var pullRequestResults = await github.Search.SearchIssues(search);
             foreach (var pullRequest in pullRequestResults.Items)
             {
-                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", pullRequest.Number);
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
                 Assert.NotEmpty(timelineEventInfos);
             }
 
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Integration.Clients
             var issueResults = await github.Search.SearchIssues(search);
             foreach (var issue in issueResults.Items)
             {
-                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", issue.Number);
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
 
                 Assert.NotNull(timelineEventInfos);
             }
