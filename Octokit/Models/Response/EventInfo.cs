@@ -204,6 +204,17 @@ namespace Octokit
         /// url of the reference's source.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
-        Crossreferenced
+        Crossreferenced,
+
+        /// <summary>
+        /// The issue was reveiewed.
+        /// </summary>
+        Reviewed,
+
+        /// <summary>
+        /// A line comment was made.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Linecommented")]
+        Linecommented
     }
 }
