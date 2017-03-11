@@ -15,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(long id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Id = id;
             Url = url;
@@ -39,6 +39,7 @@ namespace Octokit
             Assignees = assignees;
             Mergeable = mergeable;
             MergedBy = mergedBy;
+            MergeCommitSha = mergeCommitSha;
             Comments = comments;
             Commits = commits;
             Additions = additions;
@@ -170,6 +171,15 @@ namespace Octokit
         /// The user who merged the pull request.
         /// </summary>
         public User MergedBy { get; protected set; }
+
+        /// <summary>
+        /// The value of this field changes depending on the state of the pull request.
+        /// Not Merged - the hash of the test commit used to determine mergability.
+        /// Merged with merge commit - the hash of said merge commit.
+        /// Merged via squashing - the hash of the squashed commit added to the base branch.
+        /// Merged via rebase - the hash of the commit that the base branch was updated to.
+        /// </summary>
+        public string MergeCommitSha { get; protected set; }
 
         /// <summary>
         /// Total number of comments contained in the pull request.
