@@ -4,11 +4,10 @@ using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
-[Dependency(typeof(LinkSources))]
 [Dependency(typeof(ValidateLINQPadSamples))]
-public class Package : FrostingTask<BuildContext>
+public sealed class Package : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
         foreach (var project in context.Projects)
         {
@@ -17,11 +16,11 @@ public class Package : FrostingTask<BuildContext>
                 context.Information("Packing {0}...", project.Name);
                 context.DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings()
                 {
-                    OutputDirectory = context.OutputDir,
                     Configuration = context.Configuration,
                     VersionSuffix = context.Suffix,
                     NoBuild = true,
-                    Verbose = false
+                    Verbose = false,
+                    OutputDirectory = context.Artifacts
                 });
             }
         }

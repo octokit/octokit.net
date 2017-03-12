@@ -2,7 +2,7 @@ init:
   - git config --global core.autocrlf input
 build_script:
   - dotnet --info
-  - cmd: build.cmd
+  - powershell: build.ps1
 test: off
 artifacts:
 - path: 'packaging\octokit*.nupkg'

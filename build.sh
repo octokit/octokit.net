@@ -1,3 +1,4 @@
 #!/bin/bash
-dotnet restore ./build --verbosity=error
-dotnet run -p ./build -- "$@"
+cd build
+dotnet restore --verbosity=error
+dotnet run -- "$@"

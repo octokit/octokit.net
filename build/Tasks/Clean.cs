@@ -1,14 +1,17 @@
 ﻿using Cake.Common.IO;
 using Cake.Frosting;
 
-public class Clean : FrostingTask<BuildContext>
+public sealed class Clean : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
-        if (context.DirectoryExists(context.OutputDir))
+        var directories = context.GetDirectories("./**/bin", x => !x.Path.FullPath.Contains("build"))
+            + context.GetDirectories("./**/obj", x => !x.Path.FullPath.Contains("build"))
+            + context.Artifacts;
+
+        foreach (var directory in directories)
         {
-            context.DeleteDirectory(context.OutputDir, recursive: true);
+            context.CleanDirectory(directory);
         }
-        context.CreateDirectory(context.OutputDir);
     }
 }

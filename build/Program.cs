@@ -1,31 +1,24 @@
-using System.IO;
 using Cake.Core;
 using Cake.Frosting;
 
-public class Program
+public class Program : IFrostingStartup
 {
     public static int Main(string[] args)
     {
         // Create the host.
         var host = new CakeHostBuilder()
             .WithArguments(args)
-            .ConfigureServices(services =>
-            {
-                // Use a custom settings class.
-                services.UseContext<BuildContext>();
-
-                // Use a custom lifetime to initialize the context.
-                services.UseLifetime<BuildLifetime>();
-
-                if (Directory.GetCurrentDirectory().EndsWith("build"))
-                {
-                    // Use the parent directory as the working directory.
-                    services.UseWorkingDirectory("..");
-                }
-            })
+            .UseStartup<Program>()
             .Build();
 
         // Run the host.
         return host.Run();
+    }
+
+    public void Configure(ICakeServices services)
+    {
+        services.UseContext<Context>();
+        services.UseLifetime<Lifetime>();
+        services.UseWorkingDirectory("..");
     }
 }

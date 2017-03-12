@@ -5,25 +5,23 @@ using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
-public class IntegrationTests : FrostingTask<BuildContext>
+public sealed class IntegrationTests : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
         foreach (var project in context.Projects.Where(x => x.IntegrationTests))
         {
             context.Information("Executing Integration Tests Project {0}...", project.Name);
-            context.DotNetCoreTest(
-                project.Path.FullPath,
-                new DotNetCoreTestSettings
-                {
-                    Configuration = context.Configuration,
-                    NoBuild = true,
-                    Verbose = false
-                });
+            context.DotNetCoreTest(project.Path.FullPath, new DotNetCoreTestSettings
+            {
+                Configuration = context.Configuration,
+                NoBuild = true,
+                Verbose = false
+            });
         }
     }
 
-    public override bool ShouldRun(BuildContext context)
+    public override bool ShouldRun(Context context)
     {
         var environmentVariablesNames = new[] { "OCTOKIT_GITHUBUSERNAME", "OCTOKIT_GITHUBPASSWORD" };
         var areEnvironmentVariablesSet = environmentVariablesNames.All(x => !string.IsNullOrEmpty(context.Environment.GetEnvironmentVariable(x)));

@@ -97,11 +97,12 @@ Backup/
 *.lock.json
 
 # VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+**/.vscode/*
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
 
 # CAKE
+.dotnet/*
 tools/*
 !tools/LINQPad
