@@ -17,7 +17,7 @@ public sealed class Package : FrostingTask<Context>
                 context.DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings()
                 {
                     Configuration = context.Configuration,
-                    VersionSuffix = context.Suffix,
+                    VersionSuffix = context.Version.Suffix,
                     NoBuild = true,
                     Verbose = false,
                     OutputDirectory = context.Artifacts
