@@ -82,7 +82,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
 
-                Assert.NotNull(timelineEventInfos);
+                Assert.NotEmpty(timelineEventInfos);
             }
         }
 
