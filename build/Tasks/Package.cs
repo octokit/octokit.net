@@ -1,6 +1,7 @@
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Pack;
+using Cake.Core;
 using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
@@ -17,10 +18,10 @@ public sealed class Package : FrostingTask<Context>
                 context.DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings()
                 {
                     Configuration = context.Configuration,
-                    VersionSuffix = context.Version.Suffix,
                     NoBuild = true,
                     Verbose = false,
-                    OutputDirectory = context.Artifacts
+                    OutputDirectory = context.Artifacts,
+                    ArgumentCustomization = args => args.Append("/p:Version={0}", context.Version.GetSemanticVersion())
                 });
             }
         }
