@@ -12,4 +12,4 @@ matrix:
 
 script:
   - dotnet --info
-  - ./build.sh | tee /dev/null
+  - ./build.sh
