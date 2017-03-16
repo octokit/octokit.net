@@ -5,7 +5,7 @@ init:
   
 build_script:
   - dotnet --info
-  - ps: build.ps1
+  - ps: .\build.ps1
   
 test: off
 
