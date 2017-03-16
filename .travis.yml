@@ -12,4 +12,5 @@ matrix:
 
 script:
   - dotnet --info
-  - sudo ./build.sh
+  - ls -la .
+  - ./build.sh
