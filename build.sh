@@ -1,4 +1,4 @@
 #!/bin/bash
 cd build
-dotnet restore --verbosity=error
+dotnet restore
 dotnet run
