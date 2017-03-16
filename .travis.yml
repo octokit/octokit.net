@@ -5,10 +5,10 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      dotnet: 1.0.0-preview2-1-003177
+      dotnet: 1.0.1
     - os: osx
       osx_image: xcode8
-      dotnet: 1.0.0-preview2-1-003177
+      dotnet: 1.0.1
 
 script:
   - dotnet --info
