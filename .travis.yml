@@ -12,5 +12,5 @@ matrix:
 
 script:
   - dotnet --info
-  - ls -la .
+  - mono ./tools/GitVersion.CommandLine/tools/GitVersion.exe
   - ./build.sh
