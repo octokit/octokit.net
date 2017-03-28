@@ -33,21 +33,27 @@ public class BuildVersion
         string version = null;
         string semVersion = null;
 
+        var settings = new GitVersionSettings();
+        if (!context.IsRunningOnWindows())
+        {
+            // On non windows, use our wrapper that uses mono to run GitVersion.exe
+            settings.ToolPath = "./tools/gitversion_wrapper";
+        }
+
         context.Information("Calculating semantic version...");
         if (!context.IsLocalBuild)
         {
-            context.GitVersion(new GitVersionSettings
-            {
-                OutputType = GitVersionOutput.BuildServer
-            });
+            // Run to set the version properties inside the CI server
+            settings.OutputType = GitVersionOutput.BuildServer;
+            context.GitVersion(settings);
         }
 
-        GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
-        {
-            OutputType = GitVersionOutput.Json
-        });
-        version = assertedVersions.MajorMinorPatch;
-        semVersion = assertedVersions.LegacySemVerPadded;
+        // Run in interactive mode to get the properties for the rest of the script
+        settings.OutputType = GitVersionOutput.Json;
+        GitVersion assertedversions = context.GitVersion(settings);
+
+        version = assertedversions.MajorMinorPatch;
+        semVersion = assertedversions.LegacySemVerPadded;
 
         if (string.IsNullOrWhiteSpace(version))
         {
