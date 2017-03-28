@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
-    <None Include="App.config" />
+    <None Include="app.config" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">

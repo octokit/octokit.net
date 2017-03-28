@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs;..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
-    <None Include="App.config" />
+    <None Include="app.config" />
   </ItemGroup>
 
   <ItemGroup>

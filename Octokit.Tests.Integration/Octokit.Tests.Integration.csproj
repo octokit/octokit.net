@@ -24,7 +24,7 @@
   <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
-    <None Include="App.config" />
+    <None Include="app.config" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
