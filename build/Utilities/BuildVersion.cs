@@ -38,6 +38,14 @@ public class BuildVersion
         {
             // On non windows, use our wrapper that uses mono to run GitVersion.exe
             settings.ToolPath = "./tools/gitversion_wrapper.sh";
+
+            context.Information("Overriding GitVersion ToolPath");
+            var toolPath = settings.ToolPath;
+            var absolutePath = settings.ToolPath.MakeAbsolute(context.Environment);
+            var exists = System.IO.File.Exists(absolutePath.FullPath);
+            context.Information("ToolsPath:     {0}", toolPath);
+            context.Information("AbsolutePath:  {0}", absolutePath);
+            context.Information("File.Exists(): {0}", exists);
         }
 
         context.Information("Calculating semantic version...");
