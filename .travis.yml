@@ -13,5 +13,5 @@ matrix:
 script:
   - git fetch --unshallow --tags
   - dotnet --info
-  - mono ./tools/GitVersion.CommandLine/tools/GitVersion.exe
+  - export FrameworkPathOverride=/usr/lib/mono/4.5/
   - ./build.sh
