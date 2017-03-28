@@ -37,7 +37,8 @@ public class BuildVersion
         if (!context.IsRunningOnWindows())
         {
             // On non windows, use our wrapper that uses mono to run GitVersion.exe
-            settings.ToolPath = "./tools/gitversion_wrapper.sh";
+            settings.ToolPath = "/bin/sh";
+            settings.ArgumentCustomization = args => args.Prepend("./tools/gitversion_wrapper.sh");
 
             context.Information("Overriding GitVersion ToolPath");
             var toolPath = settings.ToolPath;
