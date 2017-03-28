@@ -33,24 +33,21 @@ public class BuildVersion
         string version = null;
         string semVersion = null;
 
-        if (context.IsRunningOnWindows())
+        context.Information("Calculating semantic version...");
+        if (!context.IsLocalBuild)
         {
-            context.Information("Calculating semantic version...");
-            if (!context.IsLocalBuild)
+            context.GitVersion(new GitVersionSettings
             {
-                context.GitVersion(new GitVersionSettings
-                {
-                    OutputType = GitVersionOutput.BuildServer
-                });
-            }
-
-            GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
-            {
-                OutputType = GitVersionOutput.Json
+                OutputType = GitVersionOutput.BuildServer
             });
-            version = assertedVersions.MajorMinorPatch;
-            semVersion = assertedVersions.LegacySemVerPadded;
         }
+
+        GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
+        {
+            OutputType = GitVersionOutput.Json
+        });
+        version = assertedVersions.MajorMinorPatch;
+        semVersion = assertedVersions.LegacySemVerPadded;
 
         if (string.IsNullOrWhiteSpace(version))
         {

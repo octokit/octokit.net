@@ -66,6 +66,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Configuration: {0}", context.Configuration);
         context.Information("Target: {0}", context.Target);
         context.Information("AppVeyor: {0}", context.AppVeyor);
+        context.Information("TravisCI: {0}", context.TravisCI);
     }
 
     private static bool IsBuildTagged(BuildSystem buildSystem)
