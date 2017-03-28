@@ -37,7 +37,7 @@ public class BuildVersion
         if (!context.IsRunningOnWindows())
         {
             // On non windows, use our wrapper that uses mono to run GitVersion.exe
-            settings.ToolPath = "./tools/gitversion_wrapper";
+            settings.ToolPath = "./tools/gitversion_wrapper.sh";
         }
 
         context.Information("Calculating semantic version...");
