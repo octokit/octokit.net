@@ -3,16 +3,13 @@ using Cake.Common.Tools.DotNetCore.Restore;
 using Cake.Frosting;
 
 [Dependency(typeof(Clean))]
-[Dependency(typeof(UpdateVersionInfo))]
-public class Restore : FrostingTask<BuildContext>
+public sealed class Restore : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
-        context.DotNetCoreRestore(
-            ".",
-            new DotNetCoreRestoreSettings
-            {
-                Verbose = false
-            });
+        context.DotNetCoreRestore(".", new DotNetCoreRestoreSettings
+        {
+            Verbose = false
+        });
     }
 }

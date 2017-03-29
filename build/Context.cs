@@ -1,18 +1,15 @@
 using Cake.Core;
+using Cake.Core.IO;
 using Cake.Frosting;
 
-public class BuildContext : FrostingContext
+public class Context : FrostingContext
 {
     public string Target { get; set; }
     public string Configuration { get; set; }
-    public string Version { get; set; }
-    public string Suffix { get; set; }
+    public BuildVersion Version { get; set; }
 
-    public string OutputDir { get; set; }
+    public DirectoryPath Artifacts { get; set; }
 
-    public string MyGetSource { get; set; }
-    public string MyGetApiKey { get; set; }
-    
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
     public bool IsOriginalRepo { get; set; }
@@ -22,9 +19,10 @@ public class BuildContext : FrostingContext
 
     public bool AppVeyor { get; set; }
     public bool TravisCI { get; set; }
+
     public Project[] Projects { get; set; }
 
-    public BuildContext(ICakeContext context)
+    public Context(ICakeContext context)
         : base(context)
     {
     }
