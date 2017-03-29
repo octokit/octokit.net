@@ -1,4 +1,3 @@
-using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.GitVersion;
 using Cake.Core;
@@ -33,34 +32,16 @@ public class BuildVersion
         string version = null;
         string semVersion = null;
 
-        var settings = new GitVersionSettings();
-        if (!context.IsRunningOnWindows())
-        {
-            // On non windows, use our wrapper that uses mono to run GitVersion.exe
-            settings.ToolPath = "/bin/sh";
-            settings.ArgumentCustomization = args => args.Prepend("./tools/gitversion_wrapper.sh");
-
-            context.Information("Overriding GitVersion ToolPath");
-            var toolPath = settings.ToolPath;
-            var absolutePath = settings.ToolPath.MakeAbsolute(context.Environment);
-            var exists = System.IO.File.Exists(absolutePath.FullPath);
-            context.Information("ToolsPath:     {0}", toolPath);
-            context.Information("AbsolutePath:  {0}", absolutePath);
-            context.Information("File.Exists(): {0}", exists);
-        }
-
         context.Information("Calculating semantic version...");
         if (!context.IsLocalBuild)
         {
             // Run to set the version properties inside the CI server
-            settings.OutputType = GitVersionOutput.BuildServer;
-            context.GitVersion(settings);
+            GitVersionRunner.Run(context, GitVersionOutput.BuildServer);
         }
 
         // Run in interactive mode to get the properties for the rest of the script
-        settings.OutputType = GitVersionOutput.Json;
-        GitVersion assertedversions = context.GitVersion(settings);
-
+        var assertedversions = GitVersionRunner.Run(context, GitVersionOutput.Json);
+        
         version = assertedversions.MajorMinorPatch;
         semVersion = assertedversions.LegacySemVerPadded;
 
