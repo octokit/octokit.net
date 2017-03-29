@@ -101,5 +101,4 @@ Backup/
 .dotnet/*
 tools/*
 !tools/gitversion_wrapper.sh
-!tools/nuget
 !tools/LINQPad
