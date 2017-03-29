@@ -11,7 +11,7 @@ matrix:
       dotnet: 1.0.1
 
 before_script:
-  - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/4.6.2/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
+  - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
 
 script:
   - git fetch --unshallow --tags
