@@ -7,9 +7,9 @@ using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 
-public class FormatCode : FrostingTask<BuildContext>
+public sealed class FormatCode : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
         var codeFormatterExe = context.FileSystem
             .GetDirectory("tools")
@@ -38,12 +38,12 @@ public class FormatCode : FrostingTask<BuildContext>
         context.Information("Successfully formatted code of all the projects");
     }
 
-    public override bool ShouldRun(BuildContext context)
+    public override bool ShouldRun(Context context)
     {
         return context.IsRunningOnWindows();
     }
 
-    private static string CreateTempCsproj(BuildContext context, string projectName)
+    private static string CreateTempCsproj(Context context, string projectName)
     {
         DirectoryPath tempFolder = System.IO.Path.GetTempPath();
         var projectCsproj = tempFolder.CombineWithFilePath($"{projectName}.csproj").FullPath;

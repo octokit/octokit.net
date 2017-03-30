@@ -9,9 +9,9 @@ using Cake.Core.IO;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
-public class ValidateLINQPadSamples : FrostingTask<BuildContext>
+public sealed class ValidateLINQPadSamples : FrostingTask<Context>
 {
-    public override void Run(BuildContext context)
+    public override void Run(Context context)
     {
         var assembliesDirectoryPath = context.Environment.WorkingDirectory
             .Combine("Octokit.Reactive")
@@ -52,7 +52,7 @@ public class ValidateLINQPadSamples : FrostingTask<BuildContext>
         context.Information("All samples executed successfully");
     }
 
-    public override bool ShouldRun(BuildContext context)
+    public override bool ShouldRun(Context context)
     {
         return context.IsRunningOnWindows();
     }
