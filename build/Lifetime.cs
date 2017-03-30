@@ -4,7 +4,6 @@ using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Frosting;
 using Cake.Core.Diagnostics;
-using Cake.Core.IO;
 
 public class Lifetime : FrostingLifetime<Context>
 {
@@ -36,7 +35,6 @@ public class Lifetime : FrostingLifetime<Context>
             context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.TravisCI.Environment.Build.Branch);
         }
 
-
         // Force publish?
         context.ForcePublish = context.Argument<bool>("forcepublish", false);
 
@@ -54,7 +52,6 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Installing tools...");
         ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
         ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
-
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
