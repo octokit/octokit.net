@@ -174,15 +174,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            try
-            {
-                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
-                return response.HttpResponse.IsTrue();
-            }
-            catch
-            {
-                return false;
-            }
+            var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
+            return response.HttpResponse.IsTrue();
         }
 
         /// <summary>
