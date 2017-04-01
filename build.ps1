@@ -24,6 +24,7 @@ Param(
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
+    [switch]$LinkSources,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Verbose",
     [switch]$WhatIf,
@@ -83,7 +84,7 @@ if($FoundDotNetCliVersion -ne $DotNetVersion) {
 ###########################################################################
 
 # Make sure nuget.exe exists.
-$NugetPath = Join-Path $ToolPath "nuget.exe" 
+$NugetPath = Join-Path $ToolPath "nuget.exe"
 if (!(Test-Path $NugetPath)) {
     Write-Host "Downloading NuGet.exe..."
     (New-Object System.Net.WebClient).DownloadFile($NugetUrl, $NugetPath);
@@ -97,6 +98,7 @@ if (!(Test-Path $NugetPath)) {
 $Arguments = @{
     target=$Target;
     configuration=$Configuration;
+    linkSources=$LinkSources;
     verbosity=$Verbosity;
     dryrun=$WhatIf;
 }.GetEnumerator() | %{"--{0}=`"{1}`"" -f $_.key, $_.value };
