@@ -59,12 +59,13 @@ public class Lifetime : FrostingLifetime<Context>
         context.Version.Prefix = context.Argument<string>("version", context.Version.Prefix);
         context.Version.Suffix = context.Argument<string>("suffix", context.Version.Suffix);
 
-        context.Information("Version: {0}", context.Version.Prefix);
+        context.Information("Version:        {0}", context.Version.Prefix);
         context.Information("Version suffix: {0}", context.Version.Suffix);
-        context.Information("Configuration: {0}", context.Configuration);
-        context.Information("Target: {0}", context.Target);
-        context.Information("AppVeyor: {0}", context.AppVeyor);
-        context.Information("TravisCI: {0}", context.TravisCI);
+        context.Information("Configuration:  {0}", context.Configuration);
+        context.Information("LinkSources:    {0}", context.LinkSources);
+        context.Information("Target:         {0}", context.Target);
+        context.Information("AppVeyor:       {0}", context.AppVeyor);
+        context.Information("TravisCI:       {0}", context.TravisCI);
     }
 
     private static bool IsBuildTagged(BuildSystem buildSystem)
