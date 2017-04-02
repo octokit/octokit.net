@@ -4,7 +4,6 @@ using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
 using Cake.Frosting;
 
-[Dependency(typeof(TestSourceLink))]
 [Dependency(typeof(UnitTests))]
 [Dependency(typeof(ValidateLINQPadSamples))]
 public sealed class Package : FrostingTask<Context>

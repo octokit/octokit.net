@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
@@ -8,22 +6,20 @@ using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 
-[Dependency(typeof(Build))]
+[Dependency(typeof(Package))]
 public class TestSourceLink : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        var linkedAssemblies = new List<FilePath>();
-        linkedAssemblies.AddRange(context.GetFiles($"Octokit/bin/{context.Configuration}/*/Octokit.dll"));
-        linkedAssemblies.AddRange(context.GetFiles($"Octokit.Reactive/bin/{context.Configuration}/*/Octokit.Reactive.dll"));
+        var nugetPackages = context.GetFiles($"./{context.Artifacts}/*.nupkg");
 
-        foreach (var assembly in linkedAssemblies)
+        foreach (var nugetPackage in nugetPackages)
         {
-            context.Information("Testing sourcelink info in {0}", context.Environment.WorkingDirectory.GetRelativePath(assembly));
+            context.Information("Testing sourcelink info in {0}", context.Environment.WorkingDirectory.GetRelativePath(nugetPackage));
             var exitCode = context.StartProcess("dotnet", new ProcessSettings
             {
                 WorkingDirectory = "Octokit",
-                Arguments = $"sourcelink test {assembly.FullPath}"
+                Arguments = $"sourcelink test {nugetPackage.FullPath}"
             });
 
             if (exitCode != 0)
