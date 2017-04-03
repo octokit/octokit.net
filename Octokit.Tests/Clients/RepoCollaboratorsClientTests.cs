@@ -237,6 +237,7 @@ namespace Octokit.Tests.Clients
                 connection.Put(Arg.Any<Uri>()).Returns(x => { throw new AuthorizationException(); });
 
                 await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1"));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1"));
             }
 
             [Fact]
@@ -248,6 +249,7 @@ namespace Octokit.Tests.Clients
                 connection.Connection.Put<object>(Arg.Any<Uri>(), Arg.Any<object>()).ThrowsAsync(new AuthorizationException());
 
                 await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest(Permission.Pull)));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest(Permission.Pull)));
             }
         }
 

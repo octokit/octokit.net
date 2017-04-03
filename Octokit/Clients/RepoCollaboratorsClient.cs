@@ -174,8 +174,15 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
-            var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
-            return response.HttpResponse.IsTrue();
+            try
+            { 
+                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -213,7 +220,7 @@ namespace Octokit
                 var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(repositoryId, user), permission).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
-            catch
+            catch (NotFoundException)
             {
                 return false;
             }
