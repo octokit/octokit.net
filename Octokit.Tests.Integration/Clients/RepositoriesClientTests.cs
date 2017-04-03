@@ -1465,7 +1465,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net");
+            var branches = await github.Repository.Branch.GetAll("octokit", "octokit.net");
 
             Assert.NotEmpty(branches);
         }

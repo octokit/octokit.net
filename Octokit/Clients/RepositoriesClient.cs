@@ -556,23 +556,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
-        public Task<IReadOnlyList<Branch>> GetAllBranches(string owner, string name)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            return Branch.GetAll(owner, name);
-        }
-
-        /// <summary>
-        /// Gets all the branches for the specified repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
-        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [Obsolete("Please use RepositoriesClient.Branch.GetAll() instead.  This method will be removed in a future version")]
         public Task<IReadOnlyList<Branch>> GetAllBranches(long repositoryId)

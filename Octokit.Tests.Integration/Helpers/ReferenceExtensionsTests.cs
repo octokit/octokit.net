@@ -22,7 +22,7 @@ namespace Octokit.Tests.Integration.Helpers
 
                 var branchFromPath = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-2", branchFromMaster);
 
-                var allBranchNames = (await client.Repository.GetAllBranches(context.RepositoryOwner, context.RepositoryName)).Select(b => b.Name);
+                var allBranchNames = (await client.Repository.Branch.GetAll(context.RepositoryOwner, context.RepositoryName)).Select(b => b.Name);
 
                 Assert.Contains("patch-1", allBranchNames);
                 Assert.Contains("patch-2", allBranchNames);
