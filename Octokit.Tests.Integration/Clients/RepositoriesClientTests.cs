@@ -1475,7 +1475,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var branches = await github.Repository.GetAllBranches(7528679);
+            var branches = await github.Repository.Branch.GetAll(7528679);
 
             Assert.NotEmpty(branches);
 
