@@ -6,6 +6,7 @@ public class Context : FrostingContext
 {
     public string Target { get; set; }
     public string Configuration { get; set; }
+    public bool LinkSources { get; set; }
     public BuildVersion Version { get; set; }
 
     public DirectoryPath Artifacts { get; set; }

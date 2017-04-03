@@ -11,7 +11,9 @@ public class Build : FrostingTask<Context>
         context.DotNetCoreBuild("./Octokit.sln", new DotNetCoreBuildSettings
         {
             Configuration = context.Configuration,
-            ArgumentCustomization = args => args.Append("/p:Version={0}", context.Version.GetSemanticVersion())
+            ArgumentCustomization = args => args
+                .Append("/p:Version={0}", context.Version.GetSemanticVersion())
+                .AppendIfTrue(context.LinkSources, "/p:SourceLinkCreate=true")
         });
     }
 }
