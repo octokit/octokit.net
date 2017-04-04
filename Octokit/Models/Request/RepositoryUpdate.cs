@@ -12,10 +12,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryUpdate
     {
-        [Obsolete("Please use the ctor RepositoryUpdate(string name) as Name is a required field")]
-        public RepositoryUpdate()
-        {
-        }
 
         /// <summary>
         /// Creates an object that describes an update to a repository on GitHub.

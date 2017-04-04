@@ -227,6 +227,30 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "test", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add(1, ""));
             }
+
+            [Fact]
+            public async Task SurfacesAuthorizationException()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                connection.Put(Arg.Any<Uri>()).Returns(x => { throw new AuthorizationException(); });
+
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1"));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1"));
+            }
+
+            [Fact]
+            public async Task SurfacesAuthorizationExceptionWhenSpecifyingCollaboratorRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                connection.Connection.Put<object>(Arg.Any<Uri>(), Arg.Any<object>()).ThrowsAsync(new AuthorizationException());
+
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest(Permission.Pull)));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest(Permission.Pull)));
+            }
         }
 
         public class TheInviteMethod
