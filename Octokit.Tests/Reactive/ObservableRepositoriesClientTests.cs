@@ -379,7 +379,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAllBranches(1, options);
+                client.Branch.GetAll(1, options);
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
             }
@@ -396,7 +396,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll(1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "name"));
                 Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", ""));
