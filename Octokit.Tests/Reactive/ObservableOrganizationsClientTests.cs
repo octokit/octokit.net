@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("username");
 
-                gitHubClient.Received().Organization.GetAll("username");
+                gitHubClient.Received().Organization.GetAllForUser("username");
             }
 
             [Fact]

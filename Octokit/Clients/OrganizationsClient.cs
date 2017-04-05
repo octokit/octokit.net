@@ -74,20 +74,6 @@ namespace Octokit
         /// Returns all <see cref="Organization" />s for the specified user.
         /// </summary>
         /// <param name="user">The login of the user</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
-        [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public Task<IReadOnlyList<Organization>> GetAll(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return GetAll(user, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
-        /// </summary>
-        /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
