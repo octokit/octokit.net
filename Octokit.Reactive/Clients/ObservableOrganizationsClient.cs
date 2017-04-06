@@ -84,21 +84,6 @@ namespace Octokit.Reactive
         /// Returns all the organizations for the specified user
         /// </summary>
         /// <param name="user">The login for the user</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
-        [Obsolete("Please use ObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public IObservable<Organization> GetAll(string user, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
-
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
-        }
-
-        /// <summary>
-        /// Returns all the organizations for the specified user
-        /// </summary>
-        /// <param name="user">The login for the user</param>
         /// <returns></returns>
         public IObservable<Organization> GetAllForUser(string user)
         {

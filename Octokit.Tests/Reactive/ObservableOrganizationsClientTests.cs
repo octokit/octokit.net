@@ -66,7 +66,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAll("username", options);
+                client.GetAllForUser("username", options);
 
                 gitHubClient.Received().Organization.GetAll("username", options);
             }
@@ -78,11 +78,11 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableOrganizationsClient(gitHubClient);
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll((string)null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("username", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForUser(null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForUser("username", null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAll(""));
-                Assert.Throws<ArgumentException>(() => client.GetAll("", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForUser("", ApiOptions.None));
             }
         }
 
