@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("username", options);
 
-                gitHubClient.Received().Organization.GetAll("username", options);
+                gitHubClient.Received().Organization.GetAllForUser("username", options);
             }
 
             [Fact]

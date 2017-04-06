@@ -70,7 +70,7 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                await client.GetAll("username", options);
+                await client.GetAllForUser("username", options);
 
                 connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), options);
             }
@@ -82,11 +82,11 @@ namespace Octokit.Tests.Clients
                 var client = new OrganizationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser((string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("username", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser("username", null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser(""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser("", ApiOptions.None));
             }
         }
 
