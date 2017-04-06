@@ -63,6 +63,7 @@
     <Compile Include="Clients\IIssueReactionsClient.cs" />
     <Compile Include="Clients\IIssueTimelineClient.cs" />
     <Compile Include="Clients\IPullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\IPullRequestReviewRequestsClient.cs" />
     <Compile Include="Clients\IRepositoryInvitationsClient.cs" />
     <Compile Include="Clients\IRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IRepositoryTrafficClient.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Clients\OrganizationMembersClient.cs" />
     <Compile Include="Clients\CommitCommentReactionsClient.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewRequestsClient.cs" />
     <Compile Include="Clients\ReactionsClient.cs" />
     <Compile Include="Clients\RepositoryBranchesClient.cs" />
     <Compile Include="Clients\RepositoryCommentsClient.cs" />
@@ -162,6 +164,7 @@
     <Compile Include="Models\Request\NewUser.cs" />
     <Compile Include="Models\Request\OrganizationRequest.cs" />
     <Compile Include="Models\Request\PublicRepositoryRequest.cs" />
+    <Compile Include="Models\Request\PullRequestReviewRequest.cs" />
     <Compile Include="Models\Request\ReleaseAssetUpload.cs" />
     <Compile Include="Models\Request\RepositoryForksListRequest.cs" />
     <Compile Include="Models\Request\RepositoryRequest.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
+    <Compile Include="Models\Response\PullRequestReviewRequestCreate.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStats.cs" />

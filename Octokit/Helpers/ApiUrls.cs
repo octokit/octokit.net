@@ -3337,5 +3337,10 @@ namespace Octokit
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
         }
+
+        public static Uri PullRequestReviewRequests(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, name, number);
+        }
     }
 }

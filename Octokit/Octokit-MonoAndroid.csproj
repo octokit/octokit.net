@@ -517,6 +517,10 @@
     <Compile Include="Helpers\ExcludeFromPaginationConventionTest.cs" />
     <Compile Include="Models\Request\IssueCommentRequest.cs" />
     <Compile Include="Exceptions\AbuseException.cs" />
+    <Compile Include="Clients\IPullRequestReviewRequestsClient.cs" />
+    <Compile Include="Clients\PullRequestReviewRequestsClient.cs" />
+    <Compile Include="Models\Response\PullRequestReviewRequestCreate.cs" />
+    <Compile Include="Models\Request\PullRequestReviewRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
