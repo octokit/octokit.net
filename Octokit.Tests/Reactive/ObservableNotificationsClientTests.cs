@@ -302,7 +302,7 @@ namespace Octokit.Tests.Reactive
 
                 client.MarkAsRead();
 
-                connection.Received().Put(endpoint);
+                connection.Received().Put<object>(endpoint, Args.Object);
             }
         }
 
