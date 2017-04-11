@@ -59,11 +59,11 @@ namespace Octokit
         /// <returns>A clone of <seealso cref="ApiInfo"/></returns>
         public ApiInfo Clone()
         {
-            return new ApiInfo(Links?.Clone() ?? new Dictionary<string, Uri>(),
-                                OauthScopes?.Clone() ?? new List<String>(),
-                                AcceptedOauthScopes?.Clone() ?? new List<String>(),
-                                new string(Etag?.ToCharArray()),
-                                RateLimit?.Clone());
+            return new ApiInfo(Links != null ? Links.Clone() : new Dictionary<string, Uri>(),
+                               OauthScopes != null ? OauthScopes.Clone() : new List<String>(),
+                               AcceptedOauthScopes != null ? AcceptedOauthScopes.Clone() : new List<String>(),
+                               Etag != null ? new string(Etag.ToCharArray()) : null,
+                               RateLimit != null ? RateLimit.Clone() : null);
         }
     }
 }
