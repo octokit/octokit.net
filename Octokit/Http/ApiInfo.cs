@@ -19,6 +19,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(links, "links");
             Ensure.ArgumentNotNull(oauthScopes, "oauthScopes");
+            Ensure.ArgumentNotNull(acceptedOauthScopes, "acceptedOauthScopes");
 
             Links = new ReadOnlyDictionary<string, Uri>(links);
             OauthScopes = new ReadOnlyCollection<string>(oauthScopes);
@@ -58,16 +59,11 @@ namespace Octokit
         /// <returns>A clone of <seealso cref="ApiInfo"/></returns>
         public ApiInfo Clone()
         {
-            // Seem to have to do this to pass a whole bunch of tests (for example Octokit.Tests.Clients.EventsClientTests.DeserializesCommitCommentEventCorrectly)
-            // I believe this has something to do with the Mocking framework.
-            if (Links == null || OauthScopes == null || RateLimit == null || Etag == null)
-                return null;
-
-            return new ApiInfo(Links.Clone(),
-                                OauthScopes.Clone(),
-                                AcceptedOauthScopes.Clone(),
-                                new string(Etag.ToCharArray()),
-                                RateLimit.Clone());
+            return new ApiInfo(Links?.Clone() ?? new Dictionary<string, Uri>(),
+                                OauthScopes?.Clone() ?? new List<String>(),
+                                AcceptedOauthScopes?.Clone() ?? new List<String>(),
+                                new string(Etag?.ToCharArray()),
+                                RateLimit?.Clone());
         }
     }
 }
