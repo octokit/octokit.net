@@ -59,9 +59,9 @@ namespace Octokit
         /// <returns>A clone of <seealso cref="ApiInfo"/></returns>
         public ApiInfo Clone()
         {
-            return new ApiInfo(Links != null ? Links.Clone() : new Dictionary<string, Uri>(),
-                               OauthScopes != null ? OauthScopes.Clone() : new List<String>(),
-                               AcceptedOauthScopes != null ? AcceptedOauthScopes.Clone() : new List<String>(),
+            return new ApiInfo(Links.Clone(),
+                               OauthScopes.Clone(),
+                               AcceptedOauthScopes.Clone(),
                                Etag != null ? new string(Etag.ToCharArray()) : null,
                                RateLimit != null ? RateLimit.Clone() : null);
         }
