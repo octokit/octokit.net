@@ -284,7 +284,7 @@ namespace Octokit.Tests.Clients
 
                 client.MarkAsRead();
 
-                connection.Received().Put(endpoint);
+                connection.Received().Put<object>(endpoint, Args.Object);
             }
         }
 

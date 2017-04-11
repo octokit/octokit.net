@@ -187,7 +187,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
         public Task MarkAsRead()
         {
-            return ApiConnection.Put(ApiUrls.Notifications());
+            return ApiConnection.Put<object>(ApiUrls.Notifications(), new object());
         }
 
         /// <summary>
