@@ -302,7 +302,7 @@ namespace Octokit.Tests.Reactive
 
                 client.MarkAsRead();
 
-                connection.Received().Put(endpoint);
+                connection.Received().Put<object>(endpoint, Args.Object);
             }
         }
 
@@ -318,7 +318,7 @@ namespace Octokit.Tests.Reactive
 
                 client.MarkAsReadForRepository("banana", "split");
 
-                connection.Received().Put(endpoint);
+                connection.Received().Put<object>(endpoint, Args.Object);
             }
 
             [Fact]
@@ -331,7 +331,7 @@ namespace Octokit.Tests.Reactive
 
                 client.MarkAsReadForRepository(1);
 
-                connection.Received().Put(endpoint);
+                connection.Received().Put<object>(endpoint, Args.Object);
             }
 
             [Fact]
