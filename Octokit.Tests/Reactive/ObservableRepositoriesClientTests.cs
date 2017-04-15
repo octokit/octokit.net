@@ -341,7 +341,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var expected = new Uri("repositories/1/branches", UriKind.Relative);
 
-                client.GetAllBranches(1);
+                client.Branch.GetAll(1);
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
             }
