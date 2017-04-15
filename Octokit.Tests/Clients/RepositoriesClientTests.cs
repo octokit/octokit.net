@@ -571,7 +571,7 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                await client.GetAllBranches(1, options);
+                await client.Branch.GetAll(1, options);
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", options);
@@ -589,7 +589,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll(1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("owner", ""));
