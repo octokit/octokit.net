@@ -1,7 +1,6 @@
-﻿using Octokit.Internal;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
