@@ -1228,9 +1228,9 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments"), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events"), issue.EventsUrl);
     }
 
     [IntegrationTest]
@@ -1246,9 +1246,9 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments"), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events"), issue.EventsUrl);
     }
 
     [IntegrationTest]
