@@ -109,7 +109,7 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("ModelTypes")]
-        public void ModelsUrlPropertiesAreOfTypeString(Type modelType)
+        public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
             var propertiesWithInvalidType = modelType
                 .GetProperties()
