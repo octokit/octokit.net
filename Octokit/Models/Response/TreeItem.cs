@@ -10,7 +10,7 @@ namespace Octokit
     {
         public TreeItem() { }
 
-        public TreeItem(string path, string mode, TreeType type, int size, string sha, Uri url)
+        public TreeItem(string path, string mode, TreeType type, int size, string sha, string url)
         {
             Path = path;
             Mode = mode;
@@ -49,7 +49,7 @@ namespace Octokit
         /// <summary>
         /// The URL of this Tree Item.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         internal string DebuggerDisplay
         {

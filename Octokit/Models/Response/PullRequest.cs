@@ -15,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(long id, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
         {
             Id = id;
             Url = url;
@@ -57,32 +57,32 @@ namespace Octokit
         /// <summary>
         /// The URL for this pull request.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request page.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request's diff (.diff) file.
         /// </summary>
-        public Uri DiffUrl { get; protected set; }
+        public string DiffUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request's patch (.patch) file.
         /// </summary>
-        public Uri PatchUrl { get; protected set; }
+        public string PatchUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the specific pull request issue.
         /// </summary>
-        public Uri IssueUrl { get; protected set; }
+        public string IssueUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request statuses.
         /// </summary>
-        public Uri StatusesUrl { get; protected set; }
+        public string StatusesUrl { get; protected set; }
 
         /// <summary>
         /// The pull request number.

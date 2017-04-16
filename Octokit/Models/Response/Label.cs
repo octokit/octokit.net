@@ -9,7 +9,7 @@ namespace Octokit
     {
         public Label() { }
 
-        public Label(Uri url, string name, string color)
+        public Label(string url, string name, string color)
         {
             Url = url;
             Name = name;
@@ -19,7 +19,7 @@ namespace Octokit
         /// <summary>
         /// Url of the label
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// Name of the label

@@ -7,7 +7,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class LicenseMetadata
     {
-        public LicenseMetadata(string key, string name, Uri url)
+        public LicenseMetadata(string key, string name, string url)
         {
             Ensure.ArgumentNotNullOrEmptyString(key, "key");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
@@ -35,7 +35,7 @@ namespace Octokit
         /// <summary>
         /// URL to retrieve details about a license.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         internal virtual string DebuggerDisplay
         {
