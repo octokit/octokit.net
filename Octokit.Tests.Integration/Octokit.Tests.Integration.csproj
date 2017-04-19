@@ -98,6 +98,7 @@
     <Compile Include="Clients\IssuesEventsClientTests.cs" />
     <Compile Include="Clients\MigrationsClientTests.cs" />
     <Compile Include="Clients\MilestonesClientTests.cs" />
+    <Compile Include="Clients\NotificationsClientTests.cs" />
     <Compile Include="Clients\OrganizationClientTests.cs" />
     <Compile Include="Clients\OrganizationMembersClientTests.cs" />
     <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Reactive\ObservableFollowersClientTests.cs" />
     <Compile Include="Reactive\ObservableGistClientTests.cs" />
     <Compile Include="Reactive\ObservableIssueTimelineClientTests.cs" />
+    <Compile Include="Reactive\ObservableNotificationsClientTests.cs" />
     <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
     <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
     <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />

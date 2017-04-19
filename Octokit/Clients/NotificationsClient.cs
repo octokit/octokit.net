@@ -187,7 +187,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
         public Task MarkAsRead()
         {
-            return ApiConnection.Put(ApiUrls.Notifications());
+            return ApiConnection.Put<object>(ApiUrls.Notifications(), new object());
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Put(ApiUrls.Notifications(owner, name));
+            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), new object());
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         public Task MarkAsReadForRepository(long repositoryId)
         {
-            return ApiConnection.Put(ApiUrls.Notifications(repositoryId));
+            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), new object());
         }
 
         /// <summary>
