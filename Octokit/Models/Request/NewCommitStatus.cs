@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -19,7 +20,7 @@ namespace Octokit
         /// ‘source’ of the Status. For example, if your Continuous Integration system is posting build status, 
         /// you would want to provide the deep link for the build output for this specific sha.
         /// </summary>
-        public string TargetUrl { get; set; }
+        public Uri TargetUrl { get; set; }
 
         /// <summary>
         /// Short description of the status.

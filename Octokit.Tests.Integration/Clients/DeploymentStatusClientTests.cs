@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class DeploymentStatusClientTests : IDisposable
 {
@@ -69,15 +69,15 @@ public class DeploymentStatusClientTests : IDisposable
     [IntegrationTest]
     public async Task CanReadDeploymentStatuses()
     {
-        var newStatus = new NewDeploymentStatus(DeploymentState.Success) { LogUrl = "http://test.com/log", EnvironmentUrl = "http:test.com/staging" };
+        var newStatus = new NewDeploymentStatus(DeploymentState.Success) { LogUrl = new Uri("http://test.com/log"), EnvironmentUrl = new Uri("http:test.com/staging") };
         await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus);
 
         var statuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id);
 
         Assert.NotEmpty(statuses);
         Assert.Equal(DeploymentState.Success, statuses[0].State);
-        Assert.Equal(newStatus.LogUrl, statuses[0].LogUrl);
-        Assert.Equal(newStatus.EnvironmentUrl, statuses[0].EnvironmentUrl);
+        Assert.Equal(newStatus.LogUrl.AbsoluteUri, statuses[0].LogUrl);
+        Assert.Equal(newStatus.EnvironmentUrl.AbsoluteUri, statuses[0].EnvironmentUrl);
     }
 
     [IntegrationTest]

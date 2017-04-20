@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -33,7 +34,7 @@ namespace Octokit
         /// <summary>
         /// An optional URL to remind you what app the OAuth token is for.
         /// </summary>
-        public string NoteUrl { get; set; }
+        public Uri NoteUrl { get; set; }
 
         /// <summary>
         /// Optional parameter that allows an OAuth application to create multiple authorizations for a single user

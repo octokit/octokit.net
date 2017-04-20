@@ -125,7 +125,7 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData("RequestModelTypes")]
-        public void RequestModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        public void RequestModelsHaveUrlPropertiesOfTypeUri(Type modelType)
         {
             var propertiesWithInvalidType = modelType
                 .GetProperties()
