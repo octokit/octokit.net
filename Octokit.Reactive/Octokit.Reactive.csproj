@@ -99,7 +99,9 @@
     <Compile Include="Clients\IObservableMigrationClient.cs" />
     <Compile Include="Clients\IObservableOauthClient.cs" />
     <Compile Include="Clients\IObservablePullRequestReviewCommentReactionsClient.cs" />
+    <Compile Include="Clients\IObservablePullRequestReviewRequestsClient.cs" />
     <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
+    <Compile Include="Clients\ObservablePullRequestReviewRequestsClient.cs" />
     <Compile Include="Clients\ObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryBranchesClient.cs" />
     <Compile Include="Clients\IObservableRepositoryCommitsClients.cs" />
