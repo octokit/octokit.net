@@ -108,8 +108,8 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ModelTypes")]
-        public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        [MemberData("ResponseModelTypes")]
+        public void ResponseModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
             var propertiesWithInvalidType = modelType
                 .GetProperties()
@@ -119,7 +119,23 @@ namespace Octokit.Tests.Conventions
 
             if (propertiesWithInvalidType.Count > 0)
             {
-                throw new InvalidUrlPropertyTypeException(modelType, propertiesWithInvalidType);
+                throw new InvalidUrlPropertyTypeException(modelType, typeof(string), propertiesWithInvalidType);
+            }
+        }
+
+        [Theory]
+        [MemberData("RequestModelTypes")]
+        public void RequestModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        {
+            var propertiesWithInvalidType = modelType
+                .GetProperties()
+                .Where(x => x.Name.EndsWith("Url"))
+                .Where(x => x.PropertyType != typeof(Uri))
+                .ToList();
+
+            if (propertiesWithInvalidType.Count > 0)
+            {
+                throw new InvalidUrlPropertyTypeException(modelType, typeof(Uri), propertiesWithInvalidType);
             }
         }
 
@@ -143,7 +159,12 @@ namespace Octokit.Tests.Conventions
             get { return GetModelTypes(includeRequestModels: false).Select(type => new[] { type }); }
         }
 
-        private static IEnumerable<Type> GetModelTypes(bool includeRequestModels)
+        public static IEnumerable<object[]> RequestModelTypes
+        {
+            get { return GetModelTypes(includeResponseModels: false, includeRequestModels: true).Select(type => new[] { type }); }
+        }
+
+        private static IEnumerable<Type> GetModelTypes(bool includeRequestModels, bool includeResponseModels = true)
         {
             var allModelTypes = new HashSet<Type>();
 
@@ -153,13 +174,18 @@ namespace Octokit.Tests.Conventions
             foreach (var exportedType in clientInterfaces)
             {
                 var methods = exportedType.GetMethods();
+                var modelTypes = Enumerable.Empty<Type>();
 
-                var modelTypes = methods.SelectMany(method => UnwrapGenericArguments(method.ReturnType));
+                if (includeResponseModels)
+                {
+                    modelTypes = methods.SelectMany(method => UnwrapGenericArguments(method.ReturnType));
+                }
 
                 if (includeRequestModels)
                 {
-                    var requestModels = methods.SelectMany(method => method.GetParameters(),
-                        (method, parameter) => parameter.ParameterType);
+                    var requestModels = methods
+                        .SelectMany(method => method.GetParameters(), (method, parameter) => parameter.ParameterType)
+                        .Where(t => t != typeof(Release)); // Release is a response model used as a parameter in IReleasesClient.UploadAsset
 
                     modelTypes = modelTypes.Union(requestModels);
                 }
