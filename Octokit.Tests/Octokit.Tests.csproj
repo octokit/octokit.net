@@ -229,6 +229,7 @@
     <Compile Include="Reactive\ObservableNotificationsClientTests.cs" />
     <Compile Include="Reactive\ObservableIssuesLabelsClientTests.cs" />
     <Compile Include="Reactive\ObservablePullRequestReviewCommentReactionsClientTests.cs" />
+    <Compile Include="Reactive\ObservablePullRequestReviewRequestsClientTests.cs" />
     <Compile Include="Reactive\ObservableReactionsClientTests.cs" />
     <Compile Include="Reactive\ObservableReferencesClientTests.cs" />
     <Compile Include="Reactive\ObservableRepoCollaboratorsClientTests.cs" />
