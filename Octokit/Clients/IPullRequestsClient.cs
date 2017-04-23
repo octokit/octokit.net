@@ -27,7 +27,7 @@ namespace Octokit
         /// <summary>
         /// Client for managing review requests.
         /// </summary>
-        IPullRequestReviewRequestsClient ReviewRequests { get; }
+        IPullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
         /// Get a pull request by number.

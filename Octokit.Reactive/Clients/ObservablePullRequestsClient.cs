@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Client for managing review requests.
         /// </summary>
-        public IObservablePullRequestReviewRequestsClient ReviewRequests { get; private set; }
+        public IObservablePullRequestReviewRequestsClient ReviewRequest { get; private set; }
 
         public ObservablePullRequestsClient(IGitHubClient client)
         {
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
             _client = client.Repository.PullRequest;
             _connection = client.Connection;
             ReviewComment = new ObservablePullRequestReviewCommentsClient(client);
-            ReviewRequests = new ObservablePullRequestReviewRequestsClient(client);
+            ReviewRequest = new ObservablePullRequestReviewRequestsClient(client);
         }
 
         /// <summary>

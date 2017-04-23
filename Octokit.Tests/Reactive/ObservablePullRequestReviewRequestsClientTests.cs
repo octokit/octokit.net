@@ -65,7 +65,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);
 
-                gitHubClient.Received().PullRequest.ReviewRequests.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);
+                gitHubClient.Received().PullRequest.ReviewRequest.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);
             }
 
             [Fact]
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Reactive
 
                 await client.Delete("owner", "name", 13, pullRequestReviewRequest);
 
-                gitHubClient.Received().PullRequest.ReviewRequests.Delete("owner", "name", 13, pullRequestReviewRequest);
+                gitHubClient.Received().PullRequest.ReviewRequest.Delete("owner", "name", 13, pullRequestReviewRequest);
             }
 
             [Fact]

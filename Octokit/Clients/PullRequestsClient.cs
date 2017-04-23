@@ -16,7 +16,7 @@ namespace Octokit
         public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
             ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
-            ReviewRequests = new PullRequestReviewRequestsClient(apiConnection);
+            ReviewRequest = new PullRequestReviewRequestsClient(apiConnection);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Octokit
         /// <summary>
         /// Client for managing review requests.
         /// </summary>
-        public IPullRequestReviewRequestsClient ReviewRequests { get; set; }
+        public IPullRequestReviewRequestsClient ReviewRequest { get; set; }
 
         /// <summary>
         /// Get a pull request by number.
