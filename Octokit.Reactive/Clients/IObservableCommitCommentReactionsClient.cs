@@ -40,7 +40,7 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
         IObservable<Reaction> GetAll(string owner, string name, int number);
-        
+
         /// <summary>
         /// List reactions for a specified Commit Comment
         /// </summary>

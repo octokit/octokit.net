@@ -6,7 +6,7 @@ using Xunit;
 namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableGistCommentsClientTests
-    {   
+    {
         public class TheGetAllForGistMethod
         {
             readonly ObservableGistCommentsClient _gistCommentsClient;
@@ -79,8 +79,8 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEqual(firstCommentsPage[0].Id, secondCommentsPage[0].Id);
                 Assert.NotEqual(firstCommentsPage[1].Id, secondCommentsPage[1].Id);
                 Assert.NotEqual(firstCommentsPage[2].Id, secondCommentsPage[2].Id);
-                Assert.NotEqual(firstCommentsPage[3].Id, secondCommentsPage[3].Id);                
+                Assert.NotEqual(firstCommentsPage[3].Id, secondCommentsPage[3].Id);
             }
         }
-    }    
+    }
 }

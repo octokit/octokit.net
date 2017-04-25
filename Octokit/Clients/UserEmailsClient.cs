@@ -32,7 +32,7 @@ namespace Octokit
         {
             return GetAll(ApiOptions.None);
         }
-        
+
         /// <summary>
         /// Gets all email addresses for the authenticated user.
         /// </summary>

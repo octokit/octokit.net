@@ -13,7 +13,7 @@ public class IssueCommentsClientTests
     {
         readonly IGitHubClient _github;
         readonly IIssueCommentsClient _issueCommentsClient;
-        
+
         const string owner = "octokit";
         const string name = "octokit.net";
         const int id = 12067722;
@@ -220,7 +220,7 @@ public class IssueCommentsClientTests
             using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
-                
+
                 // Create multiple test issues
                 for (int count = 1; count <= numberToCreate; count++)
                 {

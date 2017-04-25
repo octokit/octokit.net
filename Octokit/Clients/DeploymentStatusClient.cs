@@ -66,7 +66,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId), 
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                           null,
                                                           AcceptHeaders.DeploymentApiPreview,
                                                           options);

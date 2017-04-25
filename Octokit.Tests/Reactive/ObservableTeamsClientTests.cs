@@ -41,6 +41,6 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
             }
-        } 
+        }
     }
 }

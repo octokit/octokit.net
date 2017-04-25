@@ -44,7 +44,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(productInformation, "productHeader");
             Ensure.ArgumentNotNull(httpClient, "httpClient");
 
-            this.productHeader = productInformation;
+            productHeader = productInformation;
             this.httpClient = httpClient;
         }
 
@@ -93,7 +93,6 @@ namespace Octokit
                 : (IsEnterpriseResponse(response)
                     ? EnterpriseProbeResult.Ok
                     : EnterpriseProbeResult.NotFound);
-
         }
 
         static bool IsEnterpriseResponse(IResponse response)

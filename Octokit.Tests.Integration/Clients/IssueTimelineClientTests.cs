@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class IssueTimelineClientTests :IDisposable
+    public class IssueTimelineClientTests : IDisposable
     {
         private readonly IIssueTimelineClient _issueTimelineClient;
         private readonly IIssuesClient _issuesClient;
@@ -26,24 +26,15 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssue()
         {
-            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
-            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-
-            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Empty(timelineEventInfos);
-
-            var closed = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate() { State = ItemState.Closed });
-            Assert.NotNull(closed);
-
-            timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
+            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503);
+            Assert.NotEmpty(timelineEventInfos);
+            Assert.NotEqual(0, timelineEventInfos.Count);
         }
 
         [IntegrationTest]
         public async Task CanRetrieveTimelineForIssueWithApiOptions()
         {
-            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115);
+            var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503);
             Assert.NotEmpty(timelineEventInfos);
             Assert.NotEqual(1, timelineEventInfos.Count);
 
@@ -54,9 +45,45 @@ namespace Octokit.Tests.Integration.Clients
                 StartPage = 1
             };
 
-            timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1115, pageOptions);
+            timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503, pageOptions);
             Assert.NotEmpty(timelineEventInfos);
             Assert.Equal(1, timelineEventInfos.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanRetrieveTimelineForRecentIssues()
+        {
+            // Make sure we can deserialize the event timeline for recent closed PRs and open Issues in a heavy activity repository (microsoft/vscode)
+
+            // Search request
+            var github = Helper.GetAuthenticatedClient();
+            var search = new SearchIssuesRequest
+            {
+                PerPage = 20,
+                Page = 1
+            };
+            search.Repos.Add("microsoft", "vscode");
+
+            // 20 most recent closed PRs
+            search.Type = IssueTypeQualifier.PullRequest;
+            search.State = ItemState.Closed;
+            var pullRequestResults = await github.Search.SearchIssues(search);
+            foreach (var pullRequest in pullRequestResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
+                Assert.NotEmpty(timelineEventInfos);
+            }
+
+            // 20 most recent open Issues
+            search.Type = IssueTypeQualifier.Issue;
+            search.State = ItemState.Open;
+            var issueResults = await github.Search.SearchIssues(search);
+            foreach (var issue in issueResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
+
+                Assert.NotEmpty(timelineEventInfos);
+            }
         }
 
         [IntegrationTest]
@@ -86,7 +113,7 @@ namespace Octokit.Tests.Integration.Clients
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
         [IntegrationTest]
@@ -133,7 +160,7 @@ namespace Octokit.Tests.Integration.Clients
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.Repository.Id, issue.Number);
             Assert.Equal(1, timelineEventInfos.Count);
-            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Id);
+            Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
         public void Dispose()

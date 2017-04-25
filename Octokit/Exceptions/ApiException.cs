@@ -155,8 +155,8 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            StatusCode = (HttpStatusCode) info.GetInt32("HttpStatusCode");
-            ApiError = (ApiError) info.GetValue("ApiError", typeof(ApiError));
+            StatusCode = (HttpStatusCode)info.GetInt32("HttpStatusCode");
+            ApiError = (ApiError)info.GetValue("ApiError", typeof(ApiError));
         }
 
         [SecurityCritical]
@@ -178,7 +178,12 @@ namespace Octokit
         {
             get
             {
-                return ApiError != null ? ApiError.Message : null;
+                if (ApiError != null && !string.IsNullOrWhiteSpace(ApiError.Message))
+                {
+                    return ApiError.Message;
+                }
+
+                return null;
             }
         }
 

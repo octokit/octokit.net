@@ -115,7 +115,7 @@ namespace Octokit
             RepositoryName = info.GetString("RepositoryName");
             Organization = info.GetString("Organization");
             OwnerIsOrganization = info.GetBoolean("OwnerIsOrganization");
-            ExistingRepositoryWebUrl = (Uri) info.GetValue("ExistingRepositoryWebUrl", typeof(Uri));
+            ExistingRepositoryWebUrl = (Uri)info.GetValue("ExistingRepositoryWebUrl", typeof(Uri));
         }
 
         [SecurityCritical]

@@ -1040,7 +1040,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("anyreponame");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", null, update));

@@ -101,7 +101,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options);
-        
+
 
 
         /// <summary>

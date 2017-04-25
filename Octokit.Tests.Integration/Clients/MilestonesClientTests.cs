@@ -94,7 +94,7 @@ public class MilestonesClientTests : IDisposable
         var result1 = await _milestonesClient.Get(_context.Repository.Id, created.Number);
         Assert.Equal("a milestone", result1.Title);
 
-        await _milestonesClient.Update(_context.Repository.Id, created.Number, new MilestoneUpdate {Title = "New title"});
+        await _milestonesClient.Update(_context.Repository.Id, created.Number, new MilestoneUpdate { Title = "New title" });
 
         var result2 = await _milestonesClient.Get(_context.Repository.Id, created.Number);
         Assert.Equal("New title", result2.Title);
@@ -315,7 +315,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
-        
+
         var startOptions = new ApiOptions
         {
             PageSize = 1,
@@ -345,7 +345,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone1);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone2);
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
-        
+
         var startOptions = new ApiOptions
         {
             PageSize = 1,
@@ -486,7 +486,7 @@ public class MilestonesClientTests : IDisposable
             PageCount = 1,
             StartPage = 2
         };
-        
+
         var secondPage = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, milestoneRequest, skipStartOptions);
 
         Assert.NotEqual(firstPage[0].Number, secondPage[0].Number);
@@ -518,7 +518,7 @@ public class MilestonesClientTests : IDisposable
             PageCount = 1,
             StartPage = 2
         };
-        
+
         var secondPage = await _milestonesClient.GetAllForRepository(_context.Repository.Id, milestoneRequest, skipStartOptions);
 
         Assert.NotEqual(firstPage[0].Number, secondPage[0].Number);

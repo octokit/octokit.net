@@ -94,6 +94,92 @@ namespace Octokit.Tests.Http
                 Assert.Equal(original.RateLimit.Reset, clone.RateLimit.Reset);
                 Assert.NotSame(original.RateLimit.Reset, clone.RateLimit.Reset);
             }
+
+            [Fact]
+            public void CanCloneWithNullETag()
+            {
+                var original = new ApiInfo(
+                    new Dictionary<string, Uri>
+                    {
+                        {
+                            "next",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5")
+                        },
+                        {
+                            "last",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5")
+                        },
+                        {
+                            "first",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5")
+                        },
+                        {
+                            "prev",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5")
+                        }
+                    },
+                    new List<string>
+                    {
+                        "user"
+                    },
+                    new List<string>(),
+                    null,
+                    new RateLimit(100, 75, 1372700873)
+                );
+
+                var clone = original.Clone();
+
+                Assert.NotNull(clone);
+                Assert.Equal(4, clone.Links.Count);
+                Assert.Equal(1, clone.OauthScopes.Count);
+                Assert.Equal(0, clone.AcceptedOauthScopes.Count);
+                Assert.Null(clone.Etag);
+                Assert.Equal(100, clone.RateLimit.Limit);
+                Assert.Equal(75, clone.RateLimit.Remaining);
+                Assert.Equal(1372700873, clone.RateLimit.ResetAsUtcEpochSeconds);
+            }
+
+            [Fact]
+            public void CanCloneWithNullRateLimit()
+            {
+                var original = new ApiInfo(
+                    new Dictionary<string, Uri>
+                    {
+                        {
+                            "next",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=4&per_page=5")
+                        },
+                        {
+                            "last",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5")
+                        },
+                        {
+                            "first",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=1&per_page=5")
+                        },
+                        {
+                            "prev",
+                            new Uri("https://api.github.com/repos/rails/rails/issues?page=2&per_page=5")
+                        }
+                    },
+                    new List<string>
+                    {
+                        "user"
+                    },
+                    new List<string>(),
+                    "123abc",
+                    null
+                );
+
+                var clone = original.Clone();
+
+                Assert.NotNull(clone);
+                Assert.Equal(4, clone.Links.Count);
+                Assert.Equal(1, clone.OauthScopes.Count);
+                Assert.Equal(0, clone.AcceptedOauthScopes.Count);
+                Assert.Equal("123abc", clone.Etag);
+                Assert.Null(clone.RateLimit);
+            }
         }
     }
 }

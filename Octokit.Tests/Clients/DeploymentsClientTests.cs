@@ -60,7 +60,7 @@ public class DeploymentsClientTests
 
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), null,
-                                    "application/vnd.github.ant-man-preview+json", 
+                                    "application/vnd.github.ant-man-preview+json",
                                     Args.ApiOptions);
         }
 
@@ -74,7 +74,7 @@ public class DeploymentsClientTests
             await client.GetAll(repositoryId);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                     Args.ApiOptions);
         }
 
@@ -95,7 +95,7 @@ public class DeploymentsClientTests
             await client.GetAll(owner, name, options);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), 
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                     null,
                                     "application/vnd.github.ant-man-preview+json",
                                     options);

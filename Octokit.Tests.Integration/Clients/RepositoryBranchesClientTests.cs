@@ -683,7 +683,7 @@ public class RepositoryBranchesClientTests
     public class TheGetRequiredStatusChecksContextsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
-        RepositoryContext _userRepoContext;        
+        RepositoryContext _userRepoContext;
 
         public TheGetRequiredStatusChecksContextsMethod()
         {
@@ -741,7 +741,7 @@ public class RepositoryBranchesClientTests
             var repoName = _userRepoContext.RepositoryName;
             var update = new List<string>() { "build2" };
             var requiredStatusChecksContexts = await _client.UpdateRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
-                       
+
             Assert.Equal(1, requiredStatusChecksContexts.Count);
         }
 
@@ -867,7 +867,7 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var restrictions = await _client.GetProtectedBranchRestrictions(repoOwner, repoName, "master");
-            
+
             Assert.Equal(1, restrictions.Teams.Count);
             Assert.Equal(0, restrictions.Users.Count);
         }
@@ -877,7 +877,7 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var restrictions = await _client.GetProtectedBranchRestrictions(repoId, "master");
-            
+
             Assert.Equal(1, restrictions.Teams.Count);
             Assert.Equal(0, restrictions.Users.Count);
         }

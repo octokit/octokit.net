@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, int number, ApiOptions options);
-        
+
         /// <summary>
         /// Gets all the various events that have occurred around an issue or pull request.
         /// </summary>

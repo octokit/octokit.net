@@ -32,7 +32,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var repositories = await _fixture.GetAllForCurrent();
             Assert.NotEmpty(repositories);
-            
+
             var repo = repositories.FirstOrDefault(repository => repository.Owner.Login == _repositoryContext.RepositoryOwner && repository.Name == _repositoryContext.RepositoryName);
             Assert.NotNull(repo);
         }

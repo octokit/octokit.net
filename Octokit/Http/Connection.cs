@@ -625,11 +625,23 @@ namespace Octokit
         static Exception GetExceptionForForbidden(IResponse response)
         {
             string body = response.Body as string ?? "";
-            return body.Contains("rate limit exceeded")
-                ? new RateLimitExceededException(response)
-                : body.Contains("number of login attempts exceeded")
-                    ? new LoginAttemptsExceededException(response)
-                    : new ForbiddenException(response);
+
+            if (body.Contains("rate limit exceeded"))
+            {
+                return new RateLimitExceededException(response);
+            }
+
+            if (body.Contains("number of login attempts exceeded"))
+            {
+                return new LoginAttemptsExceededException(response);
+            }
+
+            if (body.Contains("abuse-rate-limits") || body.Contains("abuse detection mechanism"))
+            {
+                return new AbuseException(response);
+            }
+
+            return new ForbiddenException(response);
         }
 
         internal static TwoFactorType ParseTwoFactorType(IResponse restResponse)

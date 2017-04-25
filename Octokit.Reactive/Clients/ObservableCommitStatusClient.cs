@@ -37,7 +37,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return GetAll(owner, name ,reference, ApiOptions.None);
+            return GetAll(owner, name, reference, ApiOptions.None);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(options, "options"); 
+            Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference), options);
         }

@@ -271,6 +271,108 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal("YOU SHALL NOT PASS!", exception.Message);
             }
+
+            [Fact]
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDocumentationLink()
+            {
+                var messageText = "blahblahblah this does not matter because we are testing the URL";
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+            }
+
+            [Fact]
+            public async Task ThrowsAbuseExceptionForResponseWithAbuseDescription()
+            {
+                var messageText = "You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.";
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}",
+                    new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+            }
+
+
+            [Fact]
+            public async Task AbuseExceptionContainsTheRetryAfterHeaderAmount()
+            {
+                var messageText = "You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.";
+
+                var httpClient = Substitute.For<IHttpClient>();
+                var headerDictionary = new Dictionary<string, string>
+                {
+                    { "Retry-After", "45" }
+                };
+
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}",
+                    headerDictionary,
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Equal(45, exception.RetryAfterSeconds);
+            }
+
+            [Fact]
+            public async Task ThrowsAbuseExceptionWithDefaultMessageForUnsafeAbuseResponse()
+            {
+                string messageText = string.Empty;
+
+                var httpClient = Substitute.For<IHttpClient>();
+                IResponse response = new Response(
+                    HttpStatusCode.Forbidden,
+                     "{\"message\":\"" + messageText + "\"," +
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
+                   new Dictionary<string, string>(),
+                    "application/json");
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<AbuseException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Equal("Request Forbidden - Abuse Detection", exception.Message);
+            }
         }
 
         public class TheGetHtmlMethod

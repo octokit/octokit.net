@@ -560,7 +560,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssuesLabelsClient(connection);
-                
+
                 var labelUpdate = new LabelUpdate("name", "FF0000");
 
                 client.Update("fake", "repo", "labelName", labelUpdate);

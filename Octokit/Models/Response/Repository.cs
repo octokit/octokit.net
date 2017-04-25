@@ -14,7 +14,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -45,6 +45,9 @@ namespace Octokit
             HasIssues = hasIssues;
             HasWiki = hasWiki;
             HasDownloads = hasDownloads;
+            HasPages = hasPages;
+            SubscribersCount = subscribersCount;
+            Size = size;
             AllowRebaseMerge = allowRebaseMerge;
             AllowSquashMerge = allowSquashMerge;
             AllowMergeCommit = allowMergeCommit;
@@ -107,12 +110,18 @@ namespace Octokit
         public bool HasWiki { get; protected set; }
 
         public bool HasDownloads { get; protected set; }
-        
+
         public bool? AllowRebaseMerge { get; protected set; }
 
         public bool? AllowSquashMerge { get; protected set; }
 
         public bool? AllowMergeCommit { get; protected set; }
+
+        public bool HasPages { get; protected set; }
+
+        public int SubscribersCount { get; protected set; }
+
+        public long Size { get; protected set; }
 
         internal string DebuggerDisplay
         {

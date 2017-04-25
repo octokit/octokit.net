@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         IObservable<CommitStatus> GetAll(string owner, string name, string reference);
-        
+
         /// <summary>
         /// Retrieves commit statuses for the specified reference. A reference can be a commit SHA, a branch name, or
         /// a tag name.

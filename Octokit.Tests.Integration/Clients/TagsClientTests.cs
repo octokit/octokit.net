@@ -125,7 +125,6 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(gitTag.Verification.Reason, VerificationReason.Unsigned);
                 Assert.Null(gitTag.Verification.Signature);
                 Assert.Null(gitTag.Verification.Payload);
-
             }
         }
     }

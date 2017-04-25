@@ -109,7 +109,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsDistinctEventsBasedOnStartPage()
             {
                 var github = Helper.GetAuthenticatedClient();
-                 
+
                 var startOptions = new ApiOptions
                 {
                     PageSize = 1,
@@ -134,7 +134,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsDistinctEventsBasedOnStartPageWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
-                 
+
                 var startOptions = new ApiOptions
                 {
                     PageSize = 1,
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllIssuesForRepositoryMethod
         {
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task CanListIssues()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotEmpty(issues);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task CanListIssuesWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -176,7 +176,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotEmpty(issues);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsCorrectCountOfEventsWithoutStart()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -192,7 +192,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(3, eventInfos.Count);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsCorrectCountOfEventsWithoutStartWitRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -208,7 +208,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(3, eventInfos.Count);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsCorrectCountOfEventsWithStart()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -225,7 +225,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(2, eventInfos.Count);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsCorrectCountOfEventsWithStartWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -242,7 +242,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(2, eventInfos.Count);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsDistinctEventsBasedOnStartPage()
             {
                 var github = Helper.GetAuthenticatedClient();
@@ -267,7 +267,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             }
 
-            [IntegrationTest(Skip = "Fails because of SimpleJsonSerializer, see https://github.com/octokit/octokit.net/issues/1374 for details.")]
+            [IntegrationTest]
             public async Task ReturnsDistinctEventsBasedOnStartPageWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();

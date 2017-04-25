@@ -273,7 +273,6 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.Edit("", "name", 1, releaseUpdate));
                 await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.Edit("owner", "", 1, releaseUpdate));
-                
             }
         }
 
@@ -390,7 +389,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ReleasesClient(Substitute.For<IApiConnection>());
-                
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAssets("owner", null, 1));
 
