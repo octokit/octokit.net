@@ -127,6 +127,18 @@ namespace Octokit.Tests.Conventions
         [MemberData("RequestModelTypes")]
         public void RequestModelsHaveUrlPropertiesOfTypeUri(Type modelType)
         {
+            if (modelType == typeof(AuthorizationUpdate) ||
+                modelType == typeof(NewAuthorization) ||
+                modelType == typeof(NewCommitStatus) ||
+                modelType == typeof(NewDeploymentStatus))
+            {
+                // These request models types can have Url properties
+                // of type string as the API doesn't enforce a valid
+                // URI on the server side
+                // see thread from https://github.com/octokit/octokit.net/pull/1585#issuecomment-295163847
+                return;
+            }
+
             var propertiesWithInvalidType = modelType
                 .GetProperties()
                 .Where(x => x.Name.EndsWith("Url"))

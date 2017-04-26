@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -61,7 +60,7 @@ namespace Octokit
         /// <summary>
         /// An optional URL to remind you what app the OAuth token is for.
         /// </summary>
-        public Uri NoteUrl { get; set; }
+        public string NoteUrl { get; set; }
 
         internal string DebuggerDisplay
         {

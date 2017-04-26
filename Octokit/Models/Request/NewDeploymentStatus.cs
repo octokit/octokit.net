@@ -30,14 +30,14 @@ namespace Octokit
         /// historical information for what happened in the deployment
         /// </summary>
         [Obsolete("This property is obsolete. Use LogUrl instead.", false)]
-        public Uri TargetUrl { get; set; }
+        public string TargetUrl { get; set; }
 
         /// <summary>
         /// The target URL to associate with this status. This URL should contain
         /// output to keep the user updated while the task is running or serve as
         /// historical information for what happened in the deployment
         /// </summary>
-        public Uri LogUrl { get; set; }
+        public string LogUrl { get; set; }
 
         /// <summary>
         /// A short description of the status.
@@ -47,7 +47,7 @@ namespace Octokit
         /// <summary>
         /// The URL for accessing your environment.
         /// </summary>
-        public Uri EnvironmentUrl { get; set; }
+        public string EnvironmentUrl { get; set; }
 
         /// <summary>
         /// Indicates if a new inactive status should be added to all non-transient, 
