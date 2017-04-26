@@ -211,6 +211,11 @@ namespace Octokit
         /// </summary>
         public bool Locked { get; protected set; }
 
+        /// <summary>
+        /// Users requested for review
+        /// </summary>
+        public IReadOnlyList<User> RequestedReviewers { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Number: {0} State: {1}", Number, State); }

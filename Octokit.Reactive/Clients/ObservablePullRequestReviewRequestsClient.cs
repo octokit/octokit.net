@@ -26,7 +26,7 @@ namespace Octokit.Reactive
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
         }
 
-        public IObservable<PullRequestReviewRequestCreate> Create(string owner, string name, int number, PullRequestReviewRequest users)
+        public IObservable<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");

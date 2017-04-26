@@ -60,7 +60,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);
 
-                connection.Connection.Received().Post<PullRequestReviewRequestCreate>(
+                connection.Connection.Received().Post<PullRequest>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/requested_reviewers"),
                     pullRequestReviewRequest,
                     "application/vnd.github.black-cat-preview+json",

@@ -193,7 +193,6 @@
     <Compile Include="Models\Response\ActivityPayloads\StarredEventPayload.cs" />
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\CombinedCommitStatus.cs" />
-    <Compile Include="Models\Response\PullRequestReviewRequestCreate.cs" />
     <Compile Include="Models\Response\Reaction.cs" />
     <Compile Include="Models\Response\CommitContent.cs" />
     <Compile Include="Models\Response\Enterprise\AdminStats.cs" />

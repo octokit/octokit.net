@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        IObservable<PullRequestReviewRequestCreate> Create(string owner, string name, int number, PullRequestReviewRequest users);
+        IObservable<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users);
 
         /// <summary>
         /// Deletes review request for given users on a pull request.

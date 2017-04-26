@@ -41,14 +41,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        public async Task<PullRequestReviewRequestCreate> Create(string owner, string name, int number, PullRequestReviewRequest users)
+        public async Task<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(users, "users");
 
             var endpoint = ApiUrls.PullRequestReviewRequests(owner, name, number);
-            var response = await ApiConnection.Connection.Post<PullRequestReviewRequestCreate>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
+            var response = await ApiConnection.Connection.Post<PullRequest>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
 
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
