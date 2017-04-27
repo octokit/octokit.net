@@ -50,7 +50,7 @@ namespace Octokit
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; protected set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
