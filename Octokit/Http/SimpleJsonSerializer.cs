@@ -92,7 +92,9 @@ namespace Octokit.Internal
 
                 if (stringValue != null)
                 {
-                    if (ReflectionUtils.GetTypeInfo(type).IsEnum)
+                    var typeInfo = ReflectionUtils.GetTypeInfo(type);
+
+                    if (typeInfo.IsEnum)
                     {
                         if (!_cachedEnums.ContainsKey(type))
                         {
@@ -145,6 +147,16 @@ namespace Octokit.Internal
                         if (innerType.IsAssignableFrom(typeof(string)))
                         {
                             return stringValue.Split(',');
+                        }
+                    }
+
+                    if (typeInfo.IsGenericType)
+                    {
+                        var typeDefinition = typeInfo.GetGenericTypeDefinition();
+
+                        if (typeof(StringEnum<>).IsAssignableFrom(typeDefinition))
+                        {
+                            return Activator.CreateInstance(type, stringValue);
                         }
                     }
                 }
