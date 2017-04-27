@@ -3,7 +3,6 @@
   <Reference>&lt;RuntimeDirectory&gt;\System.Runtime.dll</Reference>
   <NuGetReference>Octokit</NuGetReference>
   <NuGetReference>Octokit.Reactive</NuGetReference>
-  <NuGetReference>Rx-Main</NuGetReference>
   <Namespace>System.Reactive.Linq</Namespace>
   <Namespace>System.Net.Http.Headers</Namespace>
   <Namespace>Octokit</Namespace>
