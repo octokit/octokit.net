@@ -108,6 +108,19 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
+        [MemberData("ResponseModelTypes")]
+        public void ResponseModelsUseStringEnumWrapper(Type modelType)
+        {
+            var enumProperties = modelType.GetProperties()
+                .Where(x => x.PropertyType.IsEnum);
+
+            if (enumProperties.Any())
+            {
+                throw new ModelNotUsingStringEnumException(modelType, enumProperties);
+            }
+        }
+
+        [Theory]
         [MemberData("ModelTypesWithUrlProperties")]
         public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
