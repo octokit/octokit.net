@@ -16,4 +16,4 @@ before_script:
 script:
   - git fetch --unshallow --tags
   - dotnet --info
-  - ./build.sh
+  - ./build.sh --linksources=true
