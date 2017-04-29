@@ -21,6 +21,11 @@ namespace Octokit.Internal
             return SimpleJson.DeserializeObject<T>(json, _serializationStrategy);
         }
 
+        public string SerializeEnum(Enum value)
+        {
+            return _serializationStrategy.SerializeEnumHelper(value).ToString();
+        }
+
         public object DeserializeEnum(string value, Type type)
         {
             return _serializationStrategy.DeserializeEnumHelper(value, type);
@@ -78,6 +83,11 @@ namespace Octokit.Internal
                 }
                 output = jsonObject;
                 return true;
+            }
+
+            internal object SerializeEnumHelper(Enum p)
+            {
+                return SerializeEnum(p);
             }
 
             [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",

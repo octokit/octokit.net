@@ -22,7 +22,8 @@ namespace Octokit
                 throw GetArgumentException(parsedValue.ToString());
             }
 
-            _value = parsedValue.ToString();
+            // Use the SimpleJsonSerializer to serialize the TEnum into the correct string according to the GitHub Api strategy
+            _value = new SimpleJsonSerializer().SerializeEnum(parsedValue as Enum);
             _parsedValue = parsedValue;
         }
 
