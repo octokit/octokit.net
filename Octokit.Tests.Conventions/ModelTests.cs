@@ -108,46 +108,18 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
-        public void ResponseModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        [MemberData("ModelTypesWithUrlProperties")]
+        public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
             var propertiesWithInvalidType = modelType
                 .GetProperties()
-                .Where(x => x.Name.EndsWith("Url"))
+                .Where(IsUrlProperty)
                 .Where(x => x.PropertyType != typeof(string))
                 .ToList();
 
             if (propertiesWithInvalidType.Count > 0)
             {
-                throw new InvalidUrlPropertyTypeException(modelType, typeof(string), propertiesWithInvalidType);
-            }
-        }
-
-        [Theory]
-        [MemberData("RequestModelTypes")]
-        public void RequestModelsHaveUrlPropertiesOfTypeUri(Type modelType)
-        {
-            if (modelType == typeof(AuthorizationUpdate) ||
-                modelType == typeof(NewAuthorization) ||
-                modelType == typeof(NewCommitStatus) ||
-                modelType == typeof(NewDeploymentStatus))
-            {
-                // These request models types can have Url properties
-                // of type string as the API doesn't enforce a valid
-                // URI on the server side
-                // see thread from https://github.com/octokit/octokit.net/pull/1585#issuecomment-295163847
-                return;
-            }
-
-            var propertiesWithInvalidType = modelType
-                .GetProperties()
-                .Where(x => x.Name.EndsWith("Url"))
-                .Where(x => x.PropertyType != typeof(Uri))
-                .ToList();
-
-            if (propertiesWithInvalidType.Count > 0)
-            {
-                throw new InvalidUrlPropertyTypeException(modelType, typeof(Uri), propertiesWithInvalidType);
+                throw new InvalidUrlPropertyTypeException(modelType, propertiesWithInvalidType);
             }
         }
 
@@ -166,17 +138,22 @@ namespace Octokit.Tests.Conventions
             get { return GetModelTypes(includeRequestModels: true).Select(type => new[] { type }); }
         }
 
+        public static IEnumerable<object[]> ModelTypesWithUrlProperties
+        {
+            get
+            {
+                return GetModelTypes(includeRequestModels: true)
+                    .Where(type => type.GetProperties().Any(IsUrlProperty))
+                    .Select(type => new[] { type });
+            }
+        }
+
         public static IEnumerable<object[]> ResponseModelTypes
         {
             get { return GetModelTypes(includeRequestModels: false).Select(type => new[] { type }); }
         }
 
-        public static IEnumerable<object[]> RequestModelTypes
-        {
-            get { return GetModelTypes(includeResponseModels: false, includeRequestModels: true).Select(type => new[] { type }); }
-        }
-
-        private static IEnumerable<Type> GetModelTypes(bool includeRequestModels, bool includeResponseModels = true)
+        private static IEnumerable<Type> GetModelTypes(bool includeRequestModels)
         {
             var allModelTypes = new HashSet<Type>();
 
@@ -186,12 +163,8 @@ namespace Octokit.Tests.Conventions
             foreach (var exportedType in clientInterfaces)
             {
                 var methods = exportedType.GetMethods();
-                var modelTypes = Enumerable.Empty<Type>();
 
-                if (includeResponseModels)
-                {
-                    modelTypes = methods.SelectMany(method => UnwrapGenericArguments(method.ReturnType));
-                }
+                var modelTypes = methods.SelectMany(method => UnwrapGenericArguments(method.ReturnType));
 
                 if (includeRequestModels)
                 {
@@ -268,6 +241,11 @@ namespace Octokit.Tests.Conventions
             {
                 yield return returnType;
             }
+        }
+
+        private static bool IsUrlProperty(PropertyInfo property)
+        {
+            return property.Name.EndsWith("Url");
         }
     }
 }
