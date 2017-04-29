@@ -58,7 +58,7 @@ namespace Octokit
         /// <summary>
         /// Build status of the pages site.
         /// </summary>
-        public PagesBuildStatus Status { get; protected set; }
+        public StringEnum<PagesBuildStatus> Status { get; protected set; }
 
         /// <summary>
         /// CName of the pages site. Will be null if no CName was provided by the user.

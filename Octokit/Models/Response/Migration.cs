@@ -55,7 +55,7 @@ namespace Octokit
         /// <summary>
         /// The state of migration. Can be one of pending, exporting, exported and failed.
         /// </summary>
-        public MigrationState State { get; private set; }
+        public StringEnum<MigrationState> State { get; private set; }
 
         /// <summary>
         /// Whether to lock repositories.

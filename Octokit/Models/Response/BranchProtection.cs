@@ -59,7 +59,7 @@ namespace Octokit
         /// <summary>
         /// Who required status checks apply to
         /// </summary>
-        public EnforcementLevel EnforcementLevel { get; protected set; }
+        public StringEnum<EnforcementLevel> EnforcementLevel { get; protected set; }
 
         /// <summary>
         /// The list of status checks to require in order to merge into this <see cref="Branch"/>

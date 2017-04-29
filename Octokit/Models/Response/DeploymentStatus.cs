@@ -36,7 +36,7 @@ namespace Octokit
         /// <summary>
         /// The state of this deployment status.
         /// </summary>
-        public DeploymentState State { get; protected set; }
+        public StringEnum<DeploymentState> State { get; protected set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created this deployment status.

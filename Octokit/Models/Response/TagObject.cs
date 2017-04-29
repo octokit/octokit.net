@@ -16,7 +16,7 @@ namespace Octokit
 
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods",
             Justification = "Name defined by web api and required for deserialization")]
-        public TaggedType Type { get; protected set; }
+        public StringEnum<TaggedType> Type { get; protected set; }
     }
 
     /// <summary>

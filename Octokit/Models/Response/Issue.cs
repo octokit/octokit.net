@@ -70,7 +70,7 @@ namespace Octokit
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState State { get; protected set; }
+        public StringEnum<ItemState> State { get; protected set; }
 
         /// <summary>
         /// Title of the issue

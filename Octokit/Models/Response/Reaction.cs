@@ -42,7 +42,7 @@ namespace Octokit
         /// The reaction type for this commit comment.
         /// </summary>
         [Parameter(Key = "content")]
-        public ReactionType Content { get; protected set; }
+        public StringEnum<ReactionType> Content { get; protected set; }
 
         internal string DebuggerDisplay
         {

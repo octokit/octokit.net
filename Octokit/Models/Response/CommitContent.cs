@@ -49,7 +49,7 @@ namespace Octokit
         /// The type of this content. It might be a File, Directory, Submodule, or Symlink
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
-        public ContentType Type { get; protected set; }
+        public StringEnum<ContentType> Type { get; protected set; }
 
         /// <summary>
         /// URL to the raw content

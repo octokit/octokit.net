@@ -36,7 +36,7 @@ namespace Octokit
 
         public User Inviter { get; protected set; }
 
-        public InvitationPermissionType Permissions { get; protected set; }
+        public StringEnum<InvitationPermissionType> Permissions { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 

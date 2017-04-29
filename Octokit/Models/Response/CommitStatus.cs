@@ -35,7 +35,7 @@ namespace Octokit
         /// <summary>
         /// The state of the commit
         /// </summary>
-        public CommitState State { get; protected set; }
+        public StringEnum<CommitState> State { get; protected set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the

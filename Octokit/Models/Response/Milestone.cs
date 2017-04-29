@@ -48,7 +48,7 @@ namespace Octokit
         /// <summary>
         /// Whether the milestone is open or closed.
         /// </summary>
-        public ItemState State { get; protected set; }
+        public StringEnum<ItemState> State { get; protected set; }
 
         /// <summary>
         /// Title of the milestone

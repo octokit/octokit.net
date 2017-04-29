@@ -24,7 +24,7 @@ namespace Octokit
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public EncodingType Encoding { get; protected set; }
+        public StringEnum<EncodingType> Encoding { get; protected set; }
 
         /// <summary>
         /// The SHA of the blob.

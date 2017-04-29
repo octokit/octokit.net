@@ -33,7 +33,7 @@ namespace Octokit
         /// The type of this Tree Item.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public TreeType Type { get; protected set; }
+        public StringEnum<TreeType> Type { get; protected set; }
 
         /// <summary>
         /// The size of this Tree Item.
