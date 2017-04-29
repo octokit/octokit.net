@@ -168,9 +168,8 @@ namespace Octokit.Tests.Conventions
 
                 if (includeRequestModels)
                 {
-                    var requestModels = methods
-                        .SelectMany(method => method.GetParameters(), (method, parameter) => parameter.ParameterType)
-                        .Where(t => t != typeof(Release)); // Release is a response model used as a parameter in IReleasesClient.UploadAsset
+                    var requestModels = methods.SelectMany(method => method.GetParameters(),
+                        (method, parameter) => parameter.ParameterType);
 
                     modelTypes = modelTypes.Union(requestModels);
                 }
