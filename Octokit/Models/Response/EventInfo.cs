@@ -163,6 +163,41 @@ namespace Octokit
         HeadRefRestored,
 
         /// <summary>
+        /// The actor dismissed a review from the pull request.
+        /// </summary>
+        ReviewDismissed,
+
+        /// <summary>
+        /// The actor requested review from the subject on this pull request.
+        /// </summary>
+        ReviewRequested,
+
+        /// <summary>
+        /// The actor removed the review request for the subject on this pull request.
+        /// </summary>
+        ReviewRequestRemoved,
+
+        /// <summary>
+        /// The issue was added to a project board.
+        /// </summary>
+        AddedToProject,
+
+        /// <summary>
+        /// The issue was moved between columns in a project board.
+        /// </summary>
+        MovedColumnsInProject,
+
+        /// <summary>
+        /// The issue was removed from a project board.
+        /// </summary>
+        RemovedFromProject,
+
+        /// <summary>
+        /// The issue was created by converting a note in a project board to an issue.
+        /// </summary>
+        ConvertedNoteToIssue,
+
+        /// <summary>
         /// The actor unsubscribed from notifications for an issue.
         /// </summary>
         Unsubscribed,
@@ -177,21 +212,6 @@ namespace Octokit
         /// Only provided for pull requests.
         /// </summary>
         Committed,
-
-        /// <summary>
-        /// The actor requested review from the subject on this pull request.
-        /// </summary>
-        ReviewRequested,
-
-        /// <summary>
-        /// The actor dismissed a review from the pull request.
-        /// </summary>
-        ReviewDismissed,
-
-        /// <summary>
-        /// The actor removed the review request for the subject on this pull request.
-        /// </summary>
-        ReviewRequestRemoved,
 
         /// <summary>
         /// Base branch of the pull request was changed.
