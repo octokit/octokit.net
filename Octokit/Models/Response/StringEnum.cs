@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -61,14 +62,20 @@ namespace Octokit
                 return false;
             }
 
-            if (Enum.TryParse(Value, ignoreCase: true, result: out value))
+            try
             {
+                // Use the SimpleJsonSerializer to parse the string to Enum according to the GitHub Api strategy
+                value = (TEnum)new SimpleJsonSerializer().DeserializeEnum(Value, typeof(TEnum));
+
                 // cache the parsed value for subsequent calls.
                 _parsedValue = value;
                 return true;
             }
-
-            return false;
+            catch (ArgumentException)
+            {
+                value = default(TEnum);
+                return false;
+            }
         }
 
         public bool Equals(StringEnum<TEnum> other)

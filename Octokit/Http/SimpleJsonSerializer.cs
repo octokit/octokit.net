@@ -21,6 +21,11 @@ namespace Octokit.Internal
             return SimpleJson.DeserializeObject<T>(json, _serializationStrategy);
         }
 
+        public object DeserializeEnum(string value, Type type)
+        {
+            return _serializationStrategy.DeserializeEnumHelper(value, type);
+        }
+
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
@@ -82,6 +87,41 @@ namespace Octokit.Internal
                 return p.ToParameter();
             }
 
+            public object DeserializeEnumHelper(string value, Type type)
+            {
+                if (!_cachedEnums.ContainsKey(type))
+                {
+                    //First add type to Dictionary
+                    _cachedEnums.Add(type, new Dictionary<object, object>());
+                    //then try to get all custom attributes, this happens only once per type
+                    var fields = type.GetRuntimeFields();
+                    foreach (var field in fields)
+                    {
+                        if (field.Name == "value__")
+                            continue;
+                        var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
+                        if (attribute != null)
+                        {
+                            if (attribute.Value.Equals(value))
+                                _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+                        }
+                    }
+                }
+                if (_cachedEnums[type].ContainsKey(value))
+                {
+                    return _cachedEnums[type][value];
+                }
+                else
+                {
+                    //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
+                    // remove '-' from values coming in to be able to enum utf-8
+                    value = RemoveHyphenAndUnderscore(value);
+                    var parsed = Enum.Parse(type, value, ignoreCase: true);
+                    _cachedEnums[type].Add(value, parsed);
+                    return parsed;
+                }
+            }
+
             private string _type;
 
             // Overridden to handle enums.
@@ -96,37 +136,7 @@ namespace Octokit.Internal
 
                     if (typeInfo.IsEnum)
                     {
-                        if (!_cachedEnums.ContainsKey(type))
-                        {
-                            //First add type to Dictionary
-                            _cachedEnums.Add(type, new Dictionary<object, object>());
-                            //then try to get all custom attributes, this happens only once per type
-                            var fields = type.GetRuntimeFields();
-                            foreach (var field in fields)
-                            {
-                                if (field.Name == "value__")
-                                    continue;
-                                var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
-                                if (attribute != null)
-                                {
-                                    if (attribute.Value.Equals(value))
-                                        _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
-                                }
-                            }
-                        }
-                        if (_cachedEnums[type].ContainsKey(value))
-                        {
-                            return _cachedEnums[type][value];
-                        }
-                        else
-                        {
-                            //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
-                            // remove '-' from values coming in to be able to enum utf-8
-                            stringValue = RemoveHyphenAndUnderscore(stringValue);
-                            var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
-                            _cachedEnums[type].Add(value, parsed);
-                            return parsed;
-                        }
+                        return DeserializeEnumHelper(stringValue, type);
                     }
 
                     if (ReflectionUtils.IsNullableType(type))
@@ -134,8 +144,7 @@ namespace Octokit.Internal
                         var underlyingType = Nullable.GetUnderlyingType(type);
                         if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
                         {
-                            stringValue = RemoveHyphenAndUnderscore(stringValue);
-                            return Enum.Parse(underlyingType, stringValue, ignoreCase: true);
+                            return DeserializeEnumHelper(stringValue, underlyingType);
                         }
                     }
 
