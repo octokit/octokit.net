@@ -24,7 +24,7 @@ easiest way to do this. You can then clone down your fork instead:
 
 `git clone https://github.com/MY-USERNAME-HERE/Octokit.net.git Octokit`
 
-After doing that, run the `.\build` script at the root of the repository
+After doing that, run the `.\build.ps1` or `.\build.sh` script at the root of the repository
 to ensure everything builds and the tests pass.
 
 ## How can I get involved?
@@ -56,19 +56,8 @@ potential conflicts that may occur in the future.
 If you make focused commits (instead of one monolithic commit) and have descriptive
 commit messages, this will help speed up the review process.
 
-### Adding New files
-
-To ensure new files are available in the various projects, we have a helper script
-to synchronize these changes across all the projects in the solution.
-
-If you need to create new files:
-
-  - add the file to the main `Octokit` project
-  - build the project (to ensure the `csproj` change is saved)
-  - run this command: `.\build FixProjects`
-
-At any time you can build the project with `.\build BuildApp` - this will also
-run FxCop analysis.
+At any time you can build the project with `build -Task Build` (or `.\build.sh --target=build`) - this will also
+run code analysis rules.
 
 ### Running Tests
 
@@ -81,13 +70,13 @@ The test suite is arranged into fast and slow tests.
 
 #### Fast Tests
 
-**Unit Tests:** `.\build UnitTests`
+**Unit Tests:** `.\build -Target UnitTests`
 
 These tests verify specific behaviour while being isolated from the rest of the
 library. If you are not familiar with unit testing, have a look at the existing
 examples - they should be easy to apply to your work.
 
-**Convention Tests:** `.\build ConventionTests`
+**Convention Tests:** `.\build -Target ConventionTests`
 
 These tests verify conventions and structure across the entire codebase -
 ensuring everything is consistent and predictable. When writing new features,
@@ -112,7 +101,7 @@ After running this, ensure any existing instances of Visual Studio are restarted
 so they pick up the new environment variables are detected.
 
 With these variables set, you can run the integration tests locally using
-`.\build IntegrationTests` or by running the `Octokit.Tests.Integration`
+`.\build -Target IntegrationTests` or by running the `Octokit.Tests.Integration`
 assembly in the Visual Studio test runner.
 
 **Note:** as the integration tests rely on using the actual GitHub API, you may
