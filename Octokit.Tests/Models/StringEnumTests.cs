@@ -10,9 +10,9 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ShouldSetValue()
             {
-                var stringEnum = new StringEnum<AccountType>("User");
+                var stringEnum = new StringEnum<AccountType>("user");
 
-                Assert.Equal("User", stringEnum.Value);
+                Assert.Equal("user", stringEnum.Value);
             }
 
             [Fact]
@@ -20,7 +20,7 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>(AccountType.Bot);
 
-                Assert.Equal("Bot", stringEnum.Value);
+                Assert.Equal("bot", stringEnum.Value);
                 Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
             }
 
@@ -78,9 +78,9 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ShouldSetValue()
             {
-                StringEnum<AccountType> stringEnum = "User";
+                StringEnum<AccountType> stringEnum = "user";
 
-                Assert.Equal("User", stringEnum.Value);
+                Assert.Equal("user", stringEnum.Value);
             }
 
             [Fact]
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Models
             {
                 StringEnum<AccountType> stringEnum = AccountType.Bot;
 
-                Assert.Equal("Bot", stringEnum.Value);
+                Assert.Equal("bot", stringEnum.Value);
                 Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
             }
 
