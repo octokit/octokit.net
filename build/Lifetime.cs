@@ -9,8 +9,8 @@ public class Lifetime : FrostingLifetime<Context>
 {
     public override void Setup(Context context)
     {
-        context.Target = context.Argument<string>("target", "Default");
-        context.Configuration = context.Argument<string>("configuration", "Release");
+        context.Target = context.Argument("target", "Default");
+        context.Configuration = context.Argument("configuration", "Release");
         context.LinkSources = context.Argument("linkSources", false);
 
         context.Artifacts = "./packaging/";
@@ -45,7 +45,7 @@ public class Lifetime : FrostingLifetime<Context>
             new Project { Name = "Octokit", Path = "./Octokit/Octokit.csproj", Publish = true },
             new Project { Name = "Octokit.Reactive", Path = "./Octokit.Reactive/Octokit.Reactive.csproj", Publish = true },
             new Project { Name = "Octokit.Tests", Path = "./Octokit.Tests/Octokit.Tests.csproj", UnitTests = true },
-            new Project { Name = "Octokit.Tests.Conventions", Path = "./Octokit.Tests.Conventions/Octokit.Tests.Conventions.csproj", UnitTests = true },
+            new Project { Name = "Octokit.Tests.Conventions", Path = "./Octokit.Tests.Conventions/Octokit.Tests.Conventions.csproj", ConventionTests = true },
             new Project { Name = "Octokit.Tests.Integration", Path = "./Octokit.Tests.Integration/Octokit.Tests.Integration.csproj", IntegrationTests = true }
         };
 
