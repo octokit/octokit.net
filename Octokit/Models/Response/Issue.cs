@@ -168,11 +168,12 @@ namespace Octokit
                 ? null
                 : Labels.Select(x => x.Name);
 
+            ItemState state;
             var issueUpdate = new IssueUpdate
             {
                 Body = Body,
                 Milestone = milestoneId,
-                State = State,
+                State = (State.TryParse(out state) ? (ItemState?)state : null),
                 Title = Title
             };
 
