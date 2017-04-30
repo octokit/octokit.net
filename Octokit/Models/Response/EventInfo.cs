@@ -10,7 +10,7 @@ namespace Octokit
     {
         public EventInfo() { }
 
-        public EventInfo(int id, Uri url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
+        public EventInfo(int id, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
         {
             Id = id;
             Url = url;
@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// The URL for this event.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// Always the User that generated the event.

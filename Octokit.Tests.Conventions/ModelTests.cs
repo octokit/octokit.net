@@ -107,6 +107,22 @@ namespace Octokit.Tests.Conventions
             }
         }
 
+        [Theory]
+        [MemberData("ModelTypesWithUrlProperties")]
+        public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        {
+            var propertiesWithInvalidType = modelType
+                .GetProperties()
+                .Where(IsUrlProperty)
+                .Where(x => x.PropertyType != typeof(string))
+                .ToList();
+
+            if (propertiesWithInvalidType.Count > 0)
+            {
+                throw new InvalidUrlPropertyTypeException(modelType, propertiesWithInvalidType);
+            }
+        }
+
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IGitHubClient)
@@ -120,6 +136,16 @@ namespace Octokit.Tests.Conventions
         public static IEnumerable<object[]> ModelTypes
         {
             get { return GetModelTypes(includeRequestModels: true).Select(type => new[] { type }); }
+        }
+
+        public static IEnumerable<object[]> ModelTypesWithUrlProperties
+        {
+            get
+            {
+                return GetModelTypes(includeRequestModels: true)
+                    .Where(type => type.GetProperties().Any(IsUrlProperty))
+                    .Select(type => new[] { type });
+            }
         }
 
         public static IEnumerable<object[]> ResponseModelTypes
@@ -214,6 +240,11 @@ namespace Octokit.Tests.Conventions
             {
                 yield return returnType;
             }
+        }
+
+        private static bool IsUrlProperty(PropertyInfo property)
+        {
+            return property.Name.EndsWith("Url");
         }
     }
 }

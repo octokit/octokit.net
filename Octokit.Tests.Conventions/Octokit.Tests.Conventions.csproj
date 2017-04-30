@@ -69,6 +69,7 @@
     <Compile Include="Exception\MissingDebuggerDisplayAttributeException.cs" />
     <Compile Include="Exception\MissingPublicParameterlessCtorException.cs" />
     <Compile Include="Exception\MissingDebuggerDisplayPropertyException.cs" />
+    <Compile Include="Exception\InvalidUrlPropertyTypeException.cs" />
     <Compile Include="Exception\MutableModelPropertiesException.cs" />
     <Compile Include="Exception\PaginationGetAllMethodNameMismatchException.cs" />
     <Compile Include="Exception\ApiOptionsMissingException.cs" />

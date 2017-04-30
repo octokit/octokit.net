@@ -9,7 +9,7 @@ namespace Octokit
     {
         public CommitComment() { }
 
-        public CommitComment(int id, Uri url, Uri htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public CommitComment(int id, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Id = id;
             Url = url;
@@ -32,12 +32,12 @@ namespace Octokit
         /// <summary>
         /// The URL for this repository comment.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The html URL for this repository comment.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// Details about the repository comment.

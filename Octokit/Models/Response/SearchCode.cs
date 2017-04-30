@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -9,7 +8,7 @@ namespace Octokit
     {
         public SearchCode() { }
 
-        public SearchCode(string name, string path, string sha, Uri url, Uri gitUrl, Uri htmlUrl, Repository repository)
+        public SearchCode(string name, string path, string sha, string url, string gitUrl, string htmlUrl, Repository repository)
         {
             Name = name;
             Path = path;
@@ -38,17 +37,17 @@ namespace Octokit
         /// <summary>
         /// api-url to file
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// git-url to file
         /// </summary>
-        public Uri GitUrl { get; protected set; }
+        public string GitUrl { get; protected set; }
 
         /// <summary>
         /// html-url to file
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// Repo where this file belongs to
