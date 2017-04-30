@@ -5,7 +5,7 @@ namespace Octokit.Tests.Models
 {
     public class StringEnumTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void ShouldSetValue()
@@ -22,6 +22,15 @@ namespace Octokit.Tests.Models
 
                 Assert.Equal("bot", stringEnum.Value);
                 Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
+            }
+
+            [Fact]
+            public void ShouldRespectCustomPropertyAttributes()
+            {
+                StringEnum<ReactionType> stringEnum = ReactionType.Plus1;
+
+                Assert.Equal("+1", stringEnum.Value);
+                Assert.Equal(ReactionType.Plus1, stringEnum.ParsedValue);
             }
 
             [Fact]
@@ -42,6 +51,33 @@ namespace Octokit.Tests.Models
                 var stringEnum = new StringEnum<AccountType>(value);
 
                 Assert.Throws<ArgumentException>(() => stringEnum.ParsedValue);
+            }
+
+            [Fact]
+            public void ShouldHandleUnderscores()
+            {
+                var stringEnum = new StringEnum<EventInfoState>("review_dismissed");
+
+                Assert.Equal("review_dismissed", stringEnum.Value);
+                Assert.Equal(EventInfoState.ReviewDismissed, stringEnum.ParsedValue);
+            }
+
+            [Fact]
+            public void ShouldHandleHyphens()
+            {
+                var stringEnum = new StringEnum<EncodingType>("utf-8");
+
+                Assert.Equal("utf-8", stringEnum.Value);
+                Assert.Equal(EncodingType.Utf8, stringEnum.ParsedValue);
+            }
+
+            [Fact]
+            public void ShouldHandleCustomPropertyAttribute()
+            {
+                var stringEnum = new StringEnum<ReactionType>("+1");
+
+                Assert.Equal("+1", stringEnum.Value);
+                Assert.Equal(ReactionType.Plus1, stringEnum.ParsedValue);
             }
         }
 
