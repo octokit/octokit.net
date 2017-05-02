@@ -499,6 +499,54 @@ namespace Octokit.Reactive
             return _client.DeleteRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable().SelectMany(x => x);
         }
 
+        public IObservable<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetAdminEnforcement(owner, name, branch).ToObservable();
+        }
+
+        public IObservable<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetAdminEnforcement(repositoryId, branch).ToObservable();
+        }
+
+        public IObservable<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.AddAdminEnforcement(owner, name, branch).ToObservable();
+        }
+
+        public IObservable<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.AddAdminEnforcement(repositoryId, branch).ToObservable();
+        }
+
+        public IObservable<bool> RemoveAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.RemoveAdminEnforcement(owner, name, branch).ToObservable();
+        }
+
+        public IObservable<bool> RemoveAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.RemoveAdminEnforcement(repositoryId, branch).ToObservable();
+        }
+
         /// <summary>
         /// Get the restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
