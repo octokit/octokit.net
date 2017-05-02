@@ -846,6 +846,141 @@ public class RepositoryBranchesClientTests
         }
     }
 
+    public class TheGetAdminEnforcementMethod : IDisposable
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly RepositoryContext _userRepoContext;
+
+        public TheGetAdminEnforcementMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task GetAdminEnforcement()
+        {
+            var repoOwner = _userRepoContext.RepositoryOwner;
+            var repoName = _userRepoContext.RepositoryName;
+            var enforceAdmins = await _client.GetAdminEnforcement(repoOwner, repoName, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        [IntegrationTest]
+        public async Task GetAdminEnforcementWithRepositoryId()
+        {
+            var repoId = _userRepoContext.RepositoryId;
+            var enforceAdmins = await _client.GetAdminEnforcement(repoId, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        public void Dispose()
+        {
+            if (_userRepoContext != null)
+            {
+                _userRepoContext.Dispose();
+            }
+        }
+    }
+
+    public class TheAddAdminEnforcementMethod : IDisposable
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly RepositoryContext _userRepoContext;
+
+        public TheAddAdminEnforcementMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task AddAdminEnforcement()
+        {
+            var repoOwner = _userRepoContext.RepositoryOwner;
+            var repoName = _userRepoContext.RepositoryName;
+
+            var enforceAdmins = await _client.AddAdminEnforcement(repoOwner, repoName, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        [IntegrationTest]
+        public async Task AddAdminEnforcementoWithRepositoryId()
+        {
+            var repoId = _userRepoContext.RepositoryId;
+
+            var enforceAdmins = await _client.AddAdminEnforcement(repoId, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        public void Dispose()
+        {
+            if (_userRepoContext != null)
+            {
+                _userRepoContext.Dispose();
+            }
+        }
+    }
+
+    public class TheRemoveAdminEnforcementMethod
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly IGitHubClient _github;
+
+        public TheRemoveAdminEnforcementMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+        }
+
+        [IntegrationTest]
+        public async Task RemoveAdminEnforcement()
+        {
+            using (var context = await _github.CreateRepositoryWithProtectedBranch())
+            {
+                var repoOwner = context.RepositoryOwner;
+                var repoName = context.RepositoryName;
+                var deleted = await _client.RemoveAdminEnforcement(repoOwner, repoName, "master");
+
+                Assert.True(deleted);
+
+                var enforceAdmins = await _client.GetAdminEnforcement(repoOwner, repoName, "master");
+
+                Assert.NotNull(enforceAdmins);
+                Assert.False(enforceAdmins.Enabled);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task RemoveAdminEnforcementWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryWithProtectedBranch())
+            {
+                var repoId = context.RepositoryId;
+                var deleted = await _client.RemoveAdminEnforcement(repoId, "master");
+
+                Assert.True(deleted);
+
+                var enforceAdmins = await _client.GetAdminEnforcement(repoId, "master");
+
+                Assert.NotNull(enforceAdmins);
+                Assert.False(enforceAdmins.Enabled);
+            }
+        }
+    }
+
     public class TheGetProtectedBranchRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
