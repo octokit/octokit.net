@@ -329,7 +329,7 @@ public class RepositoryBranchesClientTests
             var repoName = _userRepoContext.RepositoryName;
             var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -342,7 +342,7 @@ public class RepositoryBranchesClientTests
             var repoId = _userRepoContext.RepositoryId;
             var protection = await _client.GetBranchProtection(repoId, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -356,7 +356,7 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -370,7 +370,7 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var protection = await _client.GetBranchProtection(repoId, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -409,11 +409,11 @@ public class RepositoryBranchesClientTests
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -425,11 +425,11 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _userRepoContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -442,12 +442,13 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionPushRestrictionsUpdate(),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -460,12 +461,13 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionPushRestrictionsUpdate(),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -567,7 +569,6 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(2, requiredStatusChecks.Contexts.Count);
         }
@@ -580,7 +581,6 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(2, requiredStatusChecks.Contexts.Count);
         }
@@ -610,13 +610,12 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
+            var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "new" });
             var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoOwner, repoName, "master", update);
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
@@ -625,13 +624,12 @@ public class RepositoryBranchesClientTests
         public async Task UpdatesRequiredStatusChecksWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
+            var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "new" });
             var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoId, "master", update);
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }

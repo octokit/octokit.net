@@ -257,7 +257,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                    new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
@@ -272,7 +272,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                    new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateBranchProtection(1, "branch", update);
@@ -286,7 +286,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
                 var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                    new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateBranchProtection(null, "repo", "branch", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateBranchProtection("owner", null, "branch", update));
@@ -405,7 +405,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateRequiredStatusChecks("owner", "repo", "branch", update);
@@ -419,7 +419,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateRequiredStatusChecks(1, "branch", update);
@@ -432,7 +432,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateRequiredStatusChecks(null, "repo", "branch", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateRequiredStatusChecks("owner", null, "branch", update));

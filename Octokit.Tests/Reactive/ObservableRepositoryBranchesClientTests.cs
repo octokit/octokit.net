@@ -249,8 +249,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                var update = new BranchProtectionSettingsUpdate(new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
 
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
 
@@ -263,8 +262,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                var update = new BranchProtectionSettingsUpdate(new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
 
                 client.UpdateBranchProtection(1, "branch", update);
 
@@ -276,8 +274,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" }));
+                var update = new BranchProtectionSettingsUpdate(new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
 
                 Assert.Throws<ArgumentNullException>(() => client.UpdateBranchProtection(null, "repo", "branch", update));
                 Assert.Throws<ArgumentNullException>(() => client.UpdateBranchProtection("owner", null, "branch", update));
@@ -392,7 +389,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
 
                 client.UpdateRequiredStatusChecks("owner", "repo", "branch", update);
 
@@ -405,7 +402,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryBranchesClient(gitHubClient);
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
 
                 client.UpdateRequiredStatusChecks(1, "branch", update);
 
@@ -417,7 +414,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "test" });
+                var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
 
                 Assert.Throws<ArgumentNullException>(() => client.UpdateRequiredStatusChecks(null, "repo", "branch", update));
                 Assert.Throws<ArgumentNullException>(() => client.UpdateRequiredStatusChecks("owner", null, "branch", update));
