@@ -14,7 +14,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(Uri url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, Uri htmlUrl, Uri pullRequestUrl)
+        public PullRequestReviewComment(string url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl)
         {
             Url = url;
             Id = id;
@@ -35,7 +35,7 @@ namespace Octokit
         /// <summary>
         /// URL of the comment via the API.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The comment Id.
@@ -95,12 +95,12 @@ namespace Octokit
         /// <summary>
         /// The URL for this comment on Github.com
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request via the API.
         /// </summary>
-        public Uri PullRequestUrl { get; protected set; }
+        public string PullRequestUrl { get; protected set; }
 
         public ReactionSummary Reactions { get; protected set; }
 

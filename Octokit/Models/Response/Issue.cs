@@ -11,7 +11,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(Uri url, Uri htmlUrl, Uri commentsUrl, Uri eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
         {
             Id = id;
             Url = url;
@@ -45,22 +45,22 @@ namespace Octokit
         /// <summary>
         /// The URL for this issue.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The URL for the HTML view of this issue.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The Comments URL of this issue.
         /// </summary>
-        public Uri CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; protected set; }
 
         /// <summary>
         /// The Events URL of this issue.
         /// </summary>
-        public Uri EventsUrl { get; protected set; }
+        public string EventsUrl { get; protected set; }
 
         /// <summary>
         /// The issue number.

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using Octokit.Internal;
 
@@ -13,7 +12,7 @@ namespace Octokit
     {
         public RepositoryContent() { }
 
-        public RepositoryContent(string name, string path, string sha, int size, ContentType type, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl, string encoding, string encodedContent, string target, Uri submoduleGitUrl)
+        public RepositoryContent(string name, string path, string sha, int size, ContentType type, string downloadUrl, string url, string gitUrl, string htmlUrl, string encoding, string encodedContent, string target, string submoduleGitUrl)
             : base(name, path, sha, size, type, downloadUrl, url, gitUrl, htmlUrl)
         {
             Encoding = encoding;
@@ -54,6 +53,6 @@ namespace Octokit
         /// <summary>
         /// The location of the submodule repository if this is a submodule. Otherwise it's null.
         /// </summary>
-        public Uri SubmoduleGitUrl { get; protected set; }
+        public string SubmoduleGitUrl { get; protected set; }
     }
 }
