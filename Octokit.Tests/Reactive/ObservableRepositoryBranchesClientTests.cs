@@ -672,6 +672,135 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetAdminEnforcementMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.GetAdminEnforcement("owner", "repo", "branch");
+
+                gitHubClient.Repository.Branch.Received().GetAdminEnforcement("owner", "repo", "branch");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.GetAdminEnforcement(1, "branch");
+
+                gitHubClient.Repository.Branch.Received().GetAdminEnforcement(1, "branch");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAdminEnforcement(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAdminEnforcement("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAdminEnforcement("owner", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAdminEnforcement(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetAdminEnforcement("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetAdminEnforcement("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetAdminEnforcement("owner", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.GetAdminEnforcement(1, ""));
+            }
+        }
+
+        public class TheAddAdminEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.AddAdminEnforcement("owner", "repo", "branch");
+
+                gitHubClient.Repository.Branch.Received().AddAdminEnforcement("owner", "repo", "branch");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.AddAdminEnforcement(1, "branch");
+
+                gitHubClient.Repository.Branch.Received().AddAdminEnforcement(1, "branch");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.AddAdminEnforcement(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.AddAdminEnforcement("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.AddAdminEnforcement("owner", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.AddAdminEnforcement(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.AddAdminEnforcement("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.AddAdminEnforcement("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.AddAdminEnforcement("owner", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.AddAdminEnforcement(1, ""));
+            }
+        }
+
+        public class TheRemoveAdminEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.RemoveAdminEnforcement("owner", "repo", "branch");
+
+                gitHubClient.Repository.Branch.Received().RemoveAdminEnforcement("owner", "repo", "branch");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.RemoveAdminEnforcement(1, "branch");
+
+                gitHubClient.Repository.Branch.Received().RemoveAdminEnforcement(1, "branch");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAdminEnforcement(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAdminEnforcement("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAdminEnforcement("owner", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.RemoveAdminEnforcement(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.RemoveAdminEnforcement("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.RemoveAdminEnforcement("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.RemoveAdminEnforcement("owner", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.RemoveAdminEnforcement(1, ""));
+            }
+        }
+
         public class TheGetProtectedBranchRestrictionsMethod
         {
             [Fact]
