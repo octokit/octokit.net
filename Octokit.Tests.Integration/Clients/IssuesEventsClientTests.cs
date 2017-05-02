@@ -442,7 +442,7 @@ public class IssuesEventsClientTests : IDisposable
         Assert.NotNull(issueEvent);
         Assert.Equal(EventInfoState.Merged, issueEvent.Event);
         Assert.Equal("0bb8747a0ad1a9efff201ea017a0a6a4f69b797e", issueEvent.CommitId);
-        Assert.Equal(new Uri("https://api.github.com/repos/octokit/octokit.net/commits/0bb8747a0ad1a9efff201ea017a0a6a4f69b797e"), issueEvent.CommitUrl);
+        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/commits/0bb8747a0ad1a9efff201ea017a0a6a4f69b797e", issueEvent.CommitUrl);
     }
 
     public void Dispose()
