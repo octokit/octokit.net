@@ -76,7 +76,7 @@ To install dependencies and run the CAKE build script use the following wrapper 
 
 - Linux/OSX (bash)
 
-`.\build.sh --target=<target> --configuration==Release --linksources [Additional Parameters]`
+`.\build.sh --target=<target> --configuration==Release --linksources=true [Additional Parameters]`
 
 ### Running Tests
 
