@@ -123,7 +123,7 @@ namespace Octokit
                     "StatusChecks: {0} Restrictions: {1} PullRequestReviews: {2}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
-                    RequiredPullRequestReviews.DebuggerDisplay);
+                    RequiredPullRequestReviews == null ? "disabled" : RequiredPullRequestReviews.DebuggerDisplay);
             }
         }
     }
