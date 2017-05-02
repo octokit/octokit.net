@@ -860,7 +860,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetAdminEnforcement()
+        public async Task GetsAdminEnforcement()
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
@@ -871,7 +871,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task GetAdminEnforcementWithRepositoryId()
+        public async Task GetsAdminEnforcementWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
             var enforceAdmins = await _client.GetAdminEnforcement(repoId, "master");
@@ -903,7 +903,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddAdminEnforcement()
+        public async Task AddsAdminEnforcement()
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
@@ -916,7 +916,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task AddAdminEnforcementoWithRepositoryId()
+        public async Task AddsAdminEnforcementoWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
 
@@ -948,7 +948,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task RemoveAdminEnforcement()
+        public async Task RemovesAdminEnforcement()
         {
             using (var context = await _github.CreateRepositoryWithProtectedBranch())
             {
@@ -966,7 +966,7 @@ public class RepositoryBranchesClientTests
         }
 
         [IntegrationTest]
-        public async Task RemoveAdminEnforcementWithRepositoryId()
+        public async Task RemovesAdminEnforcementWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryWithProtectedBranch())
             {
