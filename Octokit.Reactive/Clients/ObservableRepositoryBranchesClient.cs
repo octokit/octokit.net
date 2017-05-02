@@ -499,6 +499,15 @@ namespace Octokit.Reactive
             return _client.DeleteRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable().SelectMany(x => x);
         }
 
+        /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -508,6 +517,14 @@ namespace Octokit.Reactive
             return _client.GetAdminEnforcement(owner, name, branch).ToObservable();
         }
 
+        /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
@@ -515,6 +532,15 @@ namespace Octokit.Reactive
             return _client.GetAdminEnforcement(repositoryId, branch).ToObservable();
         }
 
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -531,6 +557,15 @@ namespace Octokit.Reactive
             return _client.AddAdminEnforcement(repositoryId, branch).ToObservable();
         }
 
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -540,6 +575,14 @@ namespace Octokit.Reactive
             return _client.RemoveAdminEnforcement(owner, name, branch).ToObservable();
         }
 
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
