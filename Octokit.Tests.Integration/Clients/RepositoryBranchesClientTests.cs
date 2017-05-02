@@ -908,6 +908,7 @@ public class RepositoryBranchesClientTests
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
 
+            await _client.RemoveAdminEnforcement(repoOwner, repoName, "master");
             var enforceAdmins = await _client.AddAdminEnforcement(repoOwner, repoName, "master");
 
             Assert.NotNull(enforceAdmins);
@@ -919,6 +920,7 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _userRepoContext.RepositoryId;
 
+            await _client.RemoveAdminEnforcement(repoId, "master");
             var enforceAdmins = await _client.AddAdminEnforcement(repoId, "master");
 
             Assert.NotNull(enforceAdmins);
