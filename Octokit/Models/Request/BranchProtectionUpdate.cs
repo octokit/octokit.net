@@ -19,6 +19,17 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(bool enforceAdmins)
+        {
+            EnforceAdmins = enforceAdmins;
+            RequiredStatusChecks = null;
+            Restrictions = null;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
         {
