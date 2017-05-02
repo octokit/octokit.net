@@ -700,6 +700,147 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetAdminEnforcementMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.GetAdminEnforcement("owner", "repo", "branch");
+
+                connection.Received()
+                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), null, previewAcceptsHeader);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.GetAdminEnforcement(1, "branch");
+
+                connection.Received()
+                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), null, previewAcceptsHeader);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAdminEnforcement(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAdminEnforcement("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAdminEnforcement("owner", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAdminEnforcement(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAdminEnforcement("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAdminEnforcement("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAdminEnforcement("owner", "repo", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAdminEnforcement(1, ""));
+            }
+        }
+
+        public class TheAddAdminEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.AddAdminEnforcement("owner", "repo", "branch");
+
+                connection.Received()
+                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.AddAdminEnforcement(1, "branch");
+
+                connection.Received()
+                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAdminEnforcement(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAdminEnforcement("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAdminEnforcement("owner", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddAdminEnforcement(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAdminEnforcement("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAdminEnforcement("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAdminEnforcement("owner", "repo", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddAdminEnforcement(1, ""));
+            }
+        }
+
+        public class TheRemoveAdminEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.RemoveAdminEnforcement("owner", "repo", "branch");
+
+                connection.Connection.Received()
+                    .Delete<bool>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryBranchesClient(connection);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+
+                client.RemoveAdminEnforcement(1, "branch");
+
+                connection.Connection.Received()
+                    .Delete<bool>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAdminEnforcement(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAdminEnforcement("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAdminEnforcement("owner", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveAdminEnforcement(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAdminEnforcement("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAdminEnforcement("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAdminEnforcement("owner", "repo", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveAdminEnforcement(1, ""));
+            }
+        }
+
         public class TheGetProtectedBranchRestrictionsMethod
         {
             [Fact]

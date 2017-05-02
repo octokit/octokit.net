@@ -561,14 +561,14 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object(), AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         public Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object(), AcceptHeaders.ProtectedBranchesApiPreview);
         }
 
         public async Task<bool> RemoveAdminEnforcement(string owner, string name, string branch)
