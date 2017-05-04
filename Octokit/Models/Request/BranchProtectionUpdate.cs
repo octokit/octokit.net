@@ -108,12 +108,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Enforce required status checks for repository administrators
-        /// </summary>
-        [Obsolete("This property is obsolete. Use EnforceAdmins on the BranchProtectionUpdate class")]
-        public bool IncludeAdmins { get; protected set; }
-
-        /// <summary>
         /// Require branches to be up to date before merging
         /// </summary>
         public bool Strict { get; protected set; }
