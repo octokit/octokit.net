@@ -5,6 +5,7 @@ using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using System.Reflection;
+using Octokit.Internal;
 
 namespace Octokit.Tests.Conventions
 {
@@ -136,6 +137,20 @@ namespace Octokit.Tests.Conventions
             }
         }
 
+        [Theory]
+        [MemberData("EnumTypes")]
+        public void EnumMembersHaveParameterAttribute(Type enumType)
+        {
+            var membersWithoutProperty = enumType.GetRuntimeFields()
+                .Where(x => x.Name != "value__")
+                .Where(x => x.GetCustomAttribute(typeof(ParameterAttribute), false) == null);
+
+            if (membersWithoutProperty.Any())
+            {
+                throw new EnumMissingParameterAttributeException(enumType, membersWithoutProperty);
+            }
+        }
+
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IGitHubClient)
@@ -165,6 +180,16 @@ namespace Octokit.Tests.Conventions
         public static IEnumerable<object[]> ResponseModelTypes
         {
             get { return GetModelTypes(includeRequestModels: false).Select(type => new[] { type }); }
+        }
+
+        public static IEnumerable<object[]> EnumTypes
+        {
+            get
+            {
+                return typeof(IGitHubClient).Assembly.ExportedTypes
+                    .Where(type => type.IsEnum)
+                    .Select(type => new[] { type });
+            }
         }
 
         private static IEnumerable<Type> GetModelTypes(bool includeRequestModels)
