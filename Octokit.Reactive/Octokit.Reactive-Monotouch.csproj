@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F4ADA431-8344-4B36-9A0B-C4D96AF53908}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Octokit.Reactive</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
@@ -37,7 +37,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\ext\Monotouch\System.Reactive.Core.dll</HintPath>
@@ -51,6 +50,7 @@
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\ext\Monotouch\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Octokit\Helpers\Ensure.cs">
@@ -182,16 +182,8 @@
     <Compile Include="Clients\IObservableMigrationsClient.cs" />
     <Compile Include="Clients\ObservableMigrationClient.cs" />
     <Compile Include="Clients\ObservableMigrationsClient.cs" />
-    <Compile Include="Clients\IObservableCommitCommentReaction.cs" />
     <Compile Include="Clients\IObservableReactionsClient.cs" />
-    <Compile Include="Clients\ObservableCommitCommentReaction.cs" />
     <Compile Include="Clients\ObservableReactionsClient.cs" />
-    <Compile Include="Clients\IObservableCommitCommentReactionClient.cs" />
-    <Compile Include="Clients\ObservableCommitCommentReactionClient.cs" />
-    <Compile Include="Clients\IObservableCommitCommentsReactionsClient.cs" />
-    <Compile Include="Clients\IObservableIssuesReactionsClient.cs" />
-    <Compile Include="Clients\ObservableCommitCommentsReactionClient.cs" />
-    <Compile Include="Clients\ObservableIssuesReactionsClient.cs" />
     <Compile Include="Clients\IObservableCommitCommentReactionsClient.cs" />
     <Compile Include="Clients\IObservableIssueReactionsClient.cs" />
     <Compile Include="Clients\ObservableCommitCommentReactionsClient.cs" />
@@ -211,7 +203,7 @@
     <Compile Include="Clients\IObservableRepositoryTrafficClient.cs" />
     <Compile Include="Clients\ObservableRepositoryTrafficClient.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Octokit\Octokit-Monotouch.csproj">
       <Project>{E4AD1421-8844-4236-9A0B-C4D96AF53908}</Project>
