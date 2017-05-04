@@ -24,7 +24,7 @@ easiest way to do this. You can then clone down your fork instead:
 
 `git clone https://github.com/MY-USERNAME-HERE/Octokit.net.git Octokit`
 
-After doing that, run the `.\build.ps1` or `.\build.sh` script at the root of the repository
+After doing that, run the `.\build.ps1` or `./build.sh` script at the root of the repository
 to ensure everything builds and the tests pass.
 
 ## How can I get involved?
@@ -60,7 +60,7 @@ At any time you can build the project with
 
 `build -Task Build`
 or
-`.\build.sh --target=build`
+`./build.sh --target=build`
 
 this will also run code analysis rules.
 
@@ -76,7 +76,7 @@ To install dependencies and run the CAKE build script use the following wrapper 
 
 - Linux/OSX (bash)
 
-`.\build.sh --target=<target> --configuration==Release --linksources=true [Additional Parameters]`
+`./build.sh --target=<target> --configuration==Release --linksources=true [Additional Parameters]`
 
 ### Running Tests
 
@@ -91,7 +91,7 @@ The test suite is arranged into fast and slow tests.
 
 **Unit Tests:**
 
-`.\build.ps1 -Target UnitTests` or `.\build.sh --target=UnitTests`
+`.\build.ps1 -Target UnitTests` or `./build.sh --target=UnitTests`
 
 Alternatively, you can run the `Octokit.Tests` assembly in the Visual Studio test runner.
 
@@ -101,7 +101,7 @@ examples - they should be easy to apply to your work.
 
 **Convention Tests:**
 
-`.\build.ps1 -Target ConventionTests` or `.\build.sh --target=ConventionTests`
+`.\build.ps1 -Target ConventionTests` or `./build.sh --target=ConventionTests`
 
 Alternatively, you can run the `Octokit.Tests.Conventions` assembly in the Visual Studio test runner.
 
@@ -131,13 +131,13 @@ so they pick up the new environment variables are detected.
 
 With these variables set, you can run the integration tests locally using
 
-`.\build.ps1 -Target IntegrationTests` or `.\build.sh --target=IntegrationTests` 
+`.\build.ps1 -Target IntegrationTests` or `./build.sh --target=IntegrationTests`
 
 Alternatively, you can run the `Octokit.Tests.Integration` assembly in the Visual Studio test runner.
 
-**Note:** as the integration tests rely on using the actual GitHub API, you will encounter 
+**Note:** as the integration tests rely on using the actual GitHub API, you will encounter
 API rate limit/abuse detection issues if running the tests too frequently. Please use a test account
-so that your main account is not impacted in the event that the tests trigger the GitHub abuse 
+so that your main account is not impacted in the event that the tests trigger the GitHub abuse
 detection mechanism.
 
 ### Testing Documentation
