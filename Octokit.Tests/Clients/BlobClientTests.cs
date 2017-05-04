@@ -122,7 +122,7 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(response.Body);
             Assert.Equal(blobResponseJson, (string)response.HttpResponse.Body);
             Assert.Equal(100, response.Body.Size);
-            Assert.Equal(EncodingType.Utf8, response.Body.Encoding.ParsedValue);
+            Assert.Equal(EncodingType.Utf8, response.Body.Encoding);
         }
     }
 }
