@@ -806,7 +806,7 @@ namespace Octokit.Tests.Clients
                 client.RemoveAdminEnforcement("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete<bool>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
             }
 
             [Fact]
@@ -819,7 +819,7 @@ namespace Octokit.Tests.Clients
                 client.RemoveAdminEnforcement(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete<bool>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
             }
 
             [Fact]
