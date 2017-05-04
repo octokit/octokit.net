@@ -113,7 +113,7 @@ namespace Octokit.Tests.Conventions
         public void ResponseModelsUseStringEnumWrapper(Type modelType)
         {
             var enumProperties = modelType.GetProperties()
-                .Where(x => x.PropertyType.IsEnum);
+                .Where(x => x.PropertyType.GetTypeInfo().IsEnum);
 
             if (enumProperties.Any())
             {
@@ -186,8 +186,8 @@ namespace Octokit.Tests.Conventions
         {
             get
             {
-                return typeof(IGitHubClient).Assembly.ExportedTypes
-                    .Where(type => type.IsEnum)
+                return typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
+                    .Where(type => type.GetTypeInfo().IsEnum)
                     .Select(type => new[] { type });
             }
         }
