@@ -58,7 +58,7 @@ commit messages, this will help speed up the review process.
 
 At any time you can build the project with
 
-`build.ps1 -Target Build`
+`.\build.ps1 -Target Build`
 or
 `./build.sh --target=build`
 
