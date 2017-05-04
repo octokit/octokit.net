@@ -58,7 +58,7 @@ commit messages, this will help speed up the review process.
 
 At any time you can build the project with
 
-`build -Target Build`
+`build.ps1 -Target Build`
 or
 `./build.sh --target=build`
 
@@ -72,7 +72,7 @@ To install dependencies and run the CAKE build script use the following wrapper 
 
 - Windows (Powershell)
 
-`.\Build.ps1 -Target <target> -Configuration Release -LinkSources [Additional Parameters]`
+`.\build.ps1 -Target <target> -Configuration Release -LinkSources [Additional Parameters]`
 
 - Linux/OSX (bash)
 
