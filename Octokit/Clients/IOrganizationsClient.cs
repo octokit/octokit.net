@@ -111,5 +111,15 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest);
+
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Organization"/>.
+        /// </summary>
+        /// <param name="organizationName">The organization's name.</param>
+        /// <param name="login">The user to add to the organization.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns>A <see cref="OrganizationMembership"/> result indicating the membership status</returns>
+        Task<OrganizationMembership> AddMembership(string organizationName, string login);
     }
 }

@@ -242,6 +242,7 @@
     <Compile Include="Models\Response\BranchProtection.cs" />
     <Compile Include="Models\Response\Commit.cs" />
     <Compile Include="Models\Response\CommitStatus.cs" />
+    <Compile Include="Models\Response\OrganizationMembership.cs" />
     <Compile Include="Models\Response\Page.cs" />
     <Compile Include="Models\Response\PagesBuild.cs" />
     <Compile Include="Models\Response\RepositoryContributor.cs" />

@@ -170,5 +170,42 @@ namespace Octokit
 
             return ApiConnection.Patch<Organization>(updateUri, updateRequest);
         }
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Organization"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organizationName">The organization's name.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
+        /// <returns>A <see cref="OrganizationMembership"/> result indicating the membership status</returns>
+        public async Task<OrganizationMembership> AddMembership(string organizationName, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
+            var endpoint = ApiUrls.OrganizationMember(organizationName, login);
+
+            Dictionary<string, string> response;
+
+            try
+            {
+                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty).ConfigureAwait(false);
+            }
+            catch (NotFoundException)
+            {
+                return OrganizationMembership.NotFound;
+            }
+
+            if (response == null || !response.ContainsKey("state"))
+            {
+                return OrganizationMembership.NotFound;
+            }
+
+            return response["state"] == "active"
+                ? OrganizationMembership.Active
+                : OrganizationMembership.Pending;
+        }
     }
 }
