@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Reflection;
+using Xunit;
 
 namespace Octokit.Tests.Integration
 {
@@ -10,7 +11,7 @@ namespace Octokit.Tests.Integration
         [Fact]
         public void NoTestsUseAsyncVoid()
         {
-            var errors = typeof(SelfTests).Assembly.GetAsyncVoidMethodsList();
+            var errors = typeof(SelfTests).GetTypeInfo().Assembly.GetAsyncVoidMethodsList();
             Assert.Equal("", errors);
         }
     }

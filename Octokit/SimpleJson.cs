@@ -59,7 +59,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Text;
 using Octokit.Reflection;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
@@ -88,12 +90,12 @@ namespace Octokit
  class JsonArray : List<object>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonArray"/> class. 
+        /// Initializes a new instance of the <see cref="JsonArray"/> class.
         /// </summary>
         public JsonArray() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonArray"/> class. 
+        /// Initializes a new instance of the <see cref="JsonArray"/> class.
         /// </summary>
         /// <param name="capacity">The capacity of the json array.</param>
         public JsonArray(int capacity) : base(capacity) { }
@@ -490,7 +492,7 @@ namespace Octokit
     /// <summary>
     /// This class encodes and decodes JSON strings.
     /// Spec. details, see http://www.json.org/
-    /// 
+    ///
     /// JSON uses Arrays and Objects. These correspond here to the datatypes JsonArray(IList&lt;object>) and JsonObject(IDictionary&lt;string,object>).
     /// All numbers are parsed to doubles.
     /// </summary>
@@ -546,7 +548,12 @@ namespace Octokit
             object obj;
             if (TryDeserializeObject(json, out obj))
                 return obj;
+
+#if !NO_SERIALIZABLE
             throw new SerializationException("Invalid JSON string");
+#else
+            throw new Exception("Invalid JSON string");
+#endif
         }
 
         /// <summary>
@@ -1756,24 +1763,55 @@ namespace Octokit
                 return GetTypeInfo(type1).IsAssignableFrom(GetTypeInfo(type2));
             }
 
-            public static bool IsTypeDictionary(Type type)
+            public static IEnumerable<Type> GetInterfaces(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO
-                if (typeof(IDictionary<,>).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
-                    return true;
+                return type.GetTypeInfo().ImplementedInterfaces;
 #else
+                return type.GetInterfaces();
+#endif
+            }
+
+            public static bool IsTypeDictionary(Type type)
+            {
+#if !SIMPLE_JSON_TYPEINFO
                 if (typeof(System.Collections.IDictionary).IsAssignableFrom(type))
                     return true;
 #endif
-                if (!GetTypeInfo(type).IsGenericType)
+                if (!IsTypeGeneric(type))
                     return false;
 
-                Type genericDefinition = type.GetGenericTypeDefinition();
-                return genericDefinition == typeof(IDictionary<,>)
+                if (GetTypeInfo(type).IsInterface)
+                {
+                    var interfaceDefinition = GetTypeInfo(type).GetGenericTypeDefinition();
+                    if (interfaceDefinition == typeof(IDictionary<,>)
 #if SIMPLE_JSON_READONLY_COLLECTIONS
-                    || genericDefinition == typeof(IReadOnlyDictionary<,>)
+                        || interfaceDefinition == typeof(IReadOnlyDictionary<,>)
 #endif
-                ;
+                    )
+                    {
+                        return true;
+                    }
+                }
+
+                var interfaces = GetInterfaces(type);
+                foreach (var i in interfaces)
+                {
+                    if (IsTypeGeneric(i))
+                    {
+                        var interfaceDefinition = GetTypeInfo(i).GetGenericTypeDefinition();
+                        if (interfaceDefinition == typeof(IDictionary<,>)
+#if SIMPLE_JSON_READONLY_COLLECTIONS
+                            || interfaceDefinition == typeof(IReadOnlyDictionary<,>)
+#endif
+                        )
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
             }
 
             public static bool IsNullableType(Type type)

@@ -101,6 +101,7 @@ namespace Octokit
         static string GetParameterAttributeValueForEnumName(Type enumType, string name)
         {
             var member = enumType.GetMember(name).FirstOrDefault();
+
             if (member == null) return null;
             var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)
                 .Cast<ParameterAttribute>()
