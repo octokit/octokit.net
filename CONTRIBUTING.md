@@ -58,7 +58,7 @@ commit messages, this will help speed up the review process.
 
 At any time you can build the project with
 
-`build -Task Build`
+`build -Target Build`
 or
 `./build.sh --target=build`
 
