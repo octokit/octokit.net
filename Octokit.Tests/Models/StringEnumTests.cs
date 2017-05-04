@@ -22,6 +22,8 @@ namespace Octokit.Tests.Models
 
                 Assert.Equal("bot", stringEnum.Value);
                 Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
+                Assert.Equal("bot", stringEnum);
+                Assert.Equal(AccountType.Bot, stringEnum);
             }
 
             [Fact]
