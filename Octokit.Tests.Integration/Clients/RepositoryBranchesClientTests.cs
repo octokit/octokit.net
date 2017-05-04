@@ -329,7 +329,7 @@ public class RepositoryBranchesClientTests
             var repoName = _userRepoContext.RepositoryName;
             var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -342,7 +342,7 @@ public class RepositoryBranchesClientTests
             var repoId = _userRepoContext.RepositoryId;
             var protection = await _client.GetBranchProtection(repoId, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -356,7 +356,7 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -370,7 +370,7 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var protection = await _client.GetBranchProtection(repoId, "master");
 
-            Assert.True(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -409,11 +409,11 @@ public class RepositoryBranchesClientTests
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -425,11 +425,11 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _userRepoContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -442,12 +442,13 @@ public class RepositoryBranchesClientTests
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionPushRestrictionsUpdate(),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -460,12 +461,13 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, false, new[] { "new" }),
-                new BranchProtectionPushRestrictionsUpdate());
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionPushRestrictionsUpdate(),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.RequiredStatusChecks.IncludeAdmins);
+            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
@@ -567,7 +569,6 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(2, requiredStatusChecks.Contexts.Count);
         }
@@ -580,7 +581,6 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(2, requiredStatusChecks.Contexts.Count);
         }
@@ -610,13 +610,12 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
+            var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "new" });
             var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoOwner, repoName, "master", update);
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
@@ -625,13 +624,12 @@ public class RepositoryBranchesClientTests
         public async Task UpdatesRequiredStatusChecksWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var update = new BranchProtectionRequiredStatusChecksUpdate(true, true, new[] { "new" });
+            var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "new" });
             var requiredStatusChecks = await _client.UpdateRequiredStatusChecks(repoId, "master", update);
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Contexts.Contains("new"));
-            Assert.True(requiredStatusChecks.IncludeAdmins);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
@@ -844,6 +842,143 @@ public class RepositoryBranchesClientTests
 
                 Assert.NotNull(deleted);
                 Assert.True(deleted.Contains("test"));
+            }
+        }
+    }
+
+    public class TheGetAdminEnforcementMethod : IDisposable
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly RepositoryContext _userRepoContext;
+
+        public TheGetAdminEnforcementMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task GetsAdminEnforcement()
+        {
+            var repoOwner = _userRepoContext.RepositoryOwner;
+            var repoName = _userRepoContext.RepositoryName;
+            var enforceAdmins = await _client.GetAdminEnforcement(repoOwner, repoName, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        [IntegrationTest]
+        public async Task GetsAdminEnforcementWithRepositoryId()
+        {
+            var repoId = _userRepoContext.RepositoryId;
+            var enforceAdmins = await _client.GetAdminEnforcement(repoId, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        public void Dispose()
+        {
+            if (_userRepoContext != null)
+            {
+                _userRepoContext.Dispose();
+            }
+        }
+    }
+
+    public class TheAddAdminEnforcementMethod : IDisposable
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly RepositoryContext _userRepoContext;
+
+        public TheAddAdminEnforcementMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
+        }
+
+        [IntegrationTest]
+        public async Task AddsAdminEnforcement()
+        {
+            var repoOwner = _userRepoContext.RepositoryOwner;
+            var repoName = _userRepoContext.RepositoryName;
+
+            await _client.RemoveAdminEnforcement(repoOwner, repoName, "master");
+            var enforceAdmins = await _client.AddAdminEnforcement(repoOwner, repoName, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        [IntegrationTest]
+        public async Task AddsAdminEnforcementoWithRepositoryId()
+        {
+            var repoId = _userRepoContext.RepositoryId;
+
+            await _client.RemoveAdminEnforcement(repoId, "master");
+            var enforceAdmins = await _client.AddAdminEnforcement(repoId, "master");
+
+            Assert.NotNull(enforceAdmins);
+            Assert.True(enforceAdmins.Enabled);
+        }
+
+        public void Dispose()
+        {
+            if (_userRepoContext != null)
+            {
+                _userRepoContext.Dispose();
+            }
+        }
+    }
+
+    public class TheRemoveAdminEnforcementMethod
+    {
+        private readonly IRepositoryBranchesClient _client;
+        private readonly IGitHubClient _github;
+
+        public TheRemoveAdminEnforcementMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.Repository.Branch;
+        }
+
+        [IntegrationTest]
+        public async Task RemovesAdminEnforcement()
+        {
+            using (var context = await _github.CreateRepositoryWithProtectedBranch())
+            {
+                var repoOwner = context.RepositoryOwner;
+                var repoName = context.RepositoryName;
+                var deleted = await _client.RemoveAdminEnforcement(repoOwner, repoName, "master");
+
+                Assert.True(deleted);
+
+                var enforceAdmins = await _client.GetAdminEnforcement(repoOwner, repoName, "master");
+
+                Assert.NotNull(enforceAdmins);
+                Assert.False(enforceAdmins.Enabled);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task RemovesAdminEnforcementWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryWithProtectedBranch())
+            {
+                var repoId = context.RepositoryId;
+                var deleted = await _client.RemoveAdminEnforcement(repoId, "master");
+
+                Assert.True(deleted);
+
+                var enforceAdmins = await _client.GetAdminEnforcement(repoId, "master");
+
+                Assert.NotNull(enforceAdmins);
+                Assert.False(enforceAdmins.Enabled);
             }
         }
     }
