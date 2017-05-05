@@ -2,14 +2,16 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a HTTP 401 - Unauthorized response returned from the API.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -49,7 +51,7 @@ namespace Octokit
         {
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of AuthorizationException.
         /// </summary>

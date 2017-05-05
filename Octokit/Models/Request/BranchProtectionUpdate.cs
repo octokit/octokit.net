@@ -19,6 +19,17 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(bool enforceAdmins)
+        {
+            EnforceAdmins = enforceAdmins;
+            RequiredStatusChecks = null;
+            Restrictions = null;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
         {
@@ -29,13 +40,30 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
+        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionPushRestrictionsUpdate restrictions)
+        {
+            RequiredStatusChecks = null;
+            Restrictions = restrictions;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions)
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
+            EnforceAdmins = enforceAdmins;
         }
+
+        /// <summary>
+        /// Specifies whether the protections applied to this branch also apply to repository admins
+        /// </summary>
+        public bool EnforceAdmins { get; set; }
 
         /// <summary>
         /// Status check settings for the protected branch
@@ -54,9 +82,10 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "StatusChecks: {0} Restrictions: {1}",
+                    "StatusChecks: {0} Restrictions: {1} EnforceAdmins: {2}",
                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
-                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
+                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
+                    EnforceAdmins);
             }
         }
     }
@@ -70,20 +99,13 @@ namespace Octokit
         /// <summary>
         /// Status check settings for branch protection
         /// </summary>
-        /// <param name="includeAdmins">Enforce required status checks for repository administrators</param>
         /// <param name="strict">Require branches to be up to date before merging</param>
         /// <param name="contexts">Require status checks to pass before merging</param>
-        public BranchProtectionRequiredStatusChecksUpdate(bool includeAdmins, bool strict, IReadOnlyList<string> contexts)
+        public BranchProtectionRequiredStatusChecksUpdate(bool strict, IReadOnlyList<string> contexts)
         {
-            IncludeAdmins = includeAdmins;
             Strict = strict;
             Contexts = contexts;
         }
-
-        /// <summary>
-        /// Enforce required status checks for repository administrators
-        /// </summary>
-        public bool IncludeAdmins { get; protected set; }
 
         /// <summary>
         /// Require branches to be up to date before merging
@@ -99,7 +121,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0} Strict: {1} Contexts: {2}", IncludeAdmins, Strict, Contexts == null ? "" : String.Join(",", Contexts));
+                return string.Format(CultureInfo.InvariantCulture, "Strict: {0} Contexts: {1}", Strict, Contexts == null ? "" : string.Join(",", Contexts));
             }
         }
     }

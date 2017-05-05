@@ -9,7 +9,7 @@ namespace Octokit
     {
         public GistComment() { }
 
-        public GistComment(int id, Uri url, string body, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public GistComment(int id, string url, string body, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Id = id;
             Url = url;
@@ -27,7 +27,7 @@ namespace Octokit
         /// <summary>
         /// The URL for this gist comment.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The body of this gist comment.

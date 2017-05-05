@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -17,7 +16,7 @@ namespace Octokit
         public int Confused { get; protected set; }
         public int Heart { get; protected set; }
         public int Hooray { get; protected set; }
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         internal string DebuggerDisplay
         {

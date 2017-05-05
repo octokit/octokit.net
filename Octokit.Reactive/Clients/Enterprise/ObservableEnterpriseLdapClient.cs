@@ -3,7 +3,6 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit;
 
-
 namespace Octokit.Reactive
 {
     /// <summary>

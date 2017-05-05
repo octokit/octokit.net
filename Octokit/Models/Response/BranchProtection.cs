@@ -78,7 +78,7 @@ namespace Octokit
     /// <summary>
     /// The enforcement levels that are available
     /// </summary>
-    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionRequiredStatusChecks.IncludeAdmins instead.")]
+    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtection.EnforceAdmins instead.")]
     public enum EnforcementLevel
     {
         /// <summary>
@@ -134,6 +134,28 @@ namespace Octokit
                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay);
             }
         }
+
+        /// <summary>
+        /// Specifies whether the protections applied to this branch also apply to repository admins
+        /// </summary>
+        public EnforceAdmins EnforceAdmins { get; protected set; }
+    }
+
+    /// <summary>
+    /// Specifies whether the protections applied to this branch also apply to repository admins
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class EnforceAdmins
+    {
+        public bool Enabled { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+            }
+        }
     }
 
     /// <summary>
@@ -144,17 +166,11 @@ namespace Octokit
     {
         public BranchProtectionRequiredStatusChecks() { }
 
-        public BranchProtectionRequiredStatusChecks(bool includeAdmins, bool strict, IReadOnlyList<string> contexts)
+        public BranchProtectionRequiredStatusChecks(bool strict, IReadOnlyList<string> contexts)
         {
-            IncludeAdmins = includeAdmins;
             Strict = strict;
             Contexts = contexts;
         }
-
-        /// <summary>
-        /// Enforce required status checks for repository administrators
-        /// </summary>
-        public bool IncludeAdmins { get; protected set; }
 
         /// <summary>
         /// Require branches to be up to date before merging
@@ -171,10 +187,9 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
-                    IncludeAdmins,
+                    "Strict: {0} Contexts: {1}",
                     Strict,
-                    Contexts == null ? "" : String.Join(",", Contexts));
+                    Contexts == null ? "" : string.Join(",", Contexts));
             }
         }
     }

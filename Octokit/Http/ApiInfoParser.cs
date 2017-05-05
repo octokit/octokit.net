@@ -8,12 +8,11 @@ namespace Octokit.Internal
     internal static class ApiInfoParser
     {
         const RegexOptions regexOptions =
-#if NETFX_CORE
-            RegexOptions.IgnoreCase;
-#else
-            RegexOptions.Compiled | RegexOptions.IgnoreCase;
-
+#if HAS_REGEX_COMPILED_OPTIONS
+            RegexOptions.Compiled |
 #endif
+             RegexOptions.IgnoreCase;
+
         static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 

@@ -539,6 +539,126 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+
+        }
+
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object(), AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object(), AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public async Task<bool> RemoveAdminEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch);
+
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public async Task<bool> RemoveAdminEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch);
+
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Get restrictions for the specified branch (applies only to Organization owned repositories)
         /// </summary>
         /// <remarks>

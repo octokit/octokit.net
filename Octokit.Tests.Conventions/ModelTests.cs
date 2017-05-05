@@ -14,7 +14,7 @@ namespace Octokit.Tests.Conventions
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
-            var attribute = modelType.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+            var attribute = modelType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
             if (attribute == null)
             {
                 throw new MissingDebuggerDisplayAttributeException(modelType);
@@ -107,9 +107,26 @@ namespace Octokit.Tests.Conventions
             }
         }
 
+        [Theory]
+        [MemberData("ModelTypesWithUrlProperties")]
+        public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
+        {
+            var propertiesWithInvalidType = modelType
+                .GetProperties()
+                .Where(IsUrlProperty)
+                .Where(x => x.PropertyType != typeof(string))
+                .ToList();
+
+            if (propertiesWithInvalidType.Count > 0)
+            {
+                throw new InvalidUrlPropertyTypeException(modelType, propertiesWithInvalidType);
+            }
+        }
+
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IGitHubClient)
+                .GetTypeInfo()
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
@@ -122,6 +139,16 @@ namespace Octokit.Tests.Conventions
             get { return GetModelTypes(includeRequestModels: true).Select(type => new[] { type }); }
         }
 
+        public static IEnumerable<object[]> ModelTypesWithUrlProperties
+        {
+            get
+            {
+                return GetModelTypes(includeRequestModels: true)
+                    .Where(type => type.GetProperties().Any(IsUrlProperty))
+                    .Select(type => new[] { type });
+            }
+        }
+
         public static IEnumerable<object[]> ResponseModelTypes
         {
             get { return GetModelTypes(includeRequestModels: false).Select(type => new[] { type }); }
@@ -131,7 +158,7 @@ namespace Octokit.Tests.Conventions
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(IGitHubClient).Assembly.ExportedTypes
+            var clientInterfaces = typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)
@@ -191,7 +218,7 @@ namespace Octokit.Tests.Conventions
 
         private static IEnumerable<Type> UnwrapGenericArguments(Type returnType)
         {
-            if (returnType.IsGenericType)
+            if (returnType.GetTypeInfo().IsGenericType)
             {
                 var arguments = returnType.GetGenericArguments();
 
@@ -214,6 +241,11 @@ namespace Octokit.Tests.Conventions
             {
                 yield return returnType;
             }
+        }
+
+        private static bool IsUrlProperty(PropertyInfo property)
+        {
+            return property.Name.EndsWith("Url");
         }
     }
 }

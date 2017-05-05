@@ -15,6 +15,7 @@ namespace Octokit
 
             var propString = prop.ToString();
             var member = prop.GetType().GetMember(propString).FirstOrDefault();
+
             if (member == null) return null;
 
             var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)

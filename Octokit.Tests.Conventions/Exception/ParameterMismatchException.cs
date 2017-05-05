@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Octokit.Tests.Conventions
 {
@@ -12,10 +11,6 @@ namespace Octokit.Tests.Conventions
 
         public ParameterMismatchException(MethodInfo method, int position, ParameterInfo expected, ParameterInfo actual, Exception innerException)
             : base(CreateMessage(method, position, expected, actual), innerException)
-        { }
-
-        protected ParameterMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         static string CreateParameterSignature(ParameterInfo parameter)

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Octokit.Helpers;
-using Octokit.Internal;
 
 namespace Octokit
 {

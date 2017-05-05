@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.ObjectModel;
-#endif
 
 namespace Octokit
 {
@@ -40,7 +38,7 @@ namespace Octokit
             var endpoint = new Uri("emojis", UriKind.Relative);
             var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<Emoji>(
-                response.Body.Select(kvp => new Emoji(kvp.Key, new Uri(kvp.Value))).ToArray());
+                response.Body.Select(kvp => new Emoji(kvp.Key, kvp.Value)).ToArray());
         }
 
         /// <summary>

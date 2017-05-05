@@ -2,8 +2,10 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
 using System.Security;
+#endif
 
 namespace Octokit
 {
@@ -11,7 +13,7 @@ namespace Octokit
     /// Represents a subset of the HTTP 403 - Forbidden response returned from the API when the forbidden response is related to an abuse detection mechanism.
     /// Containts the amount of seconds after which it's safe to retry the request.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -59,7 +61,7 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Request Forbidden - Abuse Detection"; }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of AbuseException
         /// </summary>
