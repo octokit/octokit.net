@@ -11,6 +11,15 @@ namespace Octokit.Tests.Conventions
 {
     public class ModelTests
     {
+        private static readonly HashSet<Type> ExcludedEnumTypes = new HashSet<Type>
+        {
+            typeof(AuthenticationType),
+            typeof(EnterpriseProbeResult),
+            typeof(SearchQualifierOperator),
+            typeof(TeamMembership),
+            typeof(TwoFactorType)
+        };
+
         [Theory]
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
@@ -188,6 +197,7 @@ namespace Octokit.Tests.Conventions
             {
                 return typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
                     .Where(type => type.GetTypeInfo().IsEnum)
+                    .Where(type => !ExcludedEnumTypes.Contains(type))
                     .Select(type => new[] { type });
             }
         }
