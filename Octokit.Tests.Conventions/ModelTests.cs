@@ -17,7 +17,9 @@ namespace Octokit.Tests.Conventions
             typeof(EnterpriseProbeResult),
             typeof(SearchQualifierOperator),
             typeof(TeamMembership),
-            typeof(TwoFactorType)
+            typeof(TwoFactorType),
+
+            typeof(Language) // TODO: Add Parameter attributes and include this?
         };
 
         [Theory]
