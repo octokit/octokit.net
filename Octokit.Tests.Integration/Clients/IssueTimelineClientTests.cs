@@ -74,7 +74,7 @@ namespace Octokit.Tests.Integration.Clients
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
 
                 // Ensure we dont have any errors parsing the Event enums
-                var enumValues = timelineEventInfos.Select(x => x.Event.ParsedValue).ToList();
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
 
             // 20 most recent open PRs
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Integration.Clients
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
 
                 // Ensure we dont have any errors parsing the Event enums
-                var enumValues = timelineEventInfos.Select(x => x.Event.ParsedValue).ToList();
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
 
             // 20 most recent closed Issues
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Integration.Clients
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
 
                 // Ensure we dont have any errors parsing the Event enums
-                var enumValues = timelineEventInfos.Select(x => x.Event.ParsedValue).ToList();
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
 
             // 20 most recent open Issues
@@ -110,7 +110,7 @@ namespace Octokit.Tests.Integration.Clients
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
 
                 // Ensure we dont have any errors parsing the Event enums
-                var enumValues = timelineEventInfos.Select(x => x.Event.ParsedValue).ToList();
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
         }
 

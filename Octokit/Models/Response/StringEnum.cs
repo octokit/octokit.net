@@ -11,7 +11,7 @@ namespace Octokit
     public struct StringEnum<TEnum> : IEquatable<StringEnum<TEnum>>
         where TEnum : struct
     {
-        private readonly string _value;
+        private readonly string _stringValue;
 
         private TEnum? _parsedValue;
 
@@ -23,29 +23,29 @@ namespace Octokit
             }
 
             // Use the SimpleJsonSerializer to serialize the TEnum into the correct string according to the GitHub Api strategy
-            _value = new SimpleJsonSerializer().SerializeEnum(parsedValue as Enum);
+            _stringValue = new SimpleJsonSerializer().SerializeEnum(parsedValue as Enum);
             _parsedValue = parsedValue;
         }
 
-        public StringEnum(string value)
+        public StringEnum(string stringValue)
         {
-            _value = value;
+            _stringValue = stringValue;
             _parsedValue = null;
         }
 
-        public string Value
+        public string StringValue
         {
-            get { return _value; }
+            get { return _stringValue; }
         }
 
-        public TEnum ParsedValue
+        public TEnum Value
         {
             get { return _parsedValue ?? (_parsedValue = ParseValue()).Value; }
         }
 
         internal string DebuggerDisplay
         {
-            get { return Value; }
+            get { return StringValue; }
         }
 
         public bool TryParse(out TEnum value)
@@ -57,7 +57,7 @@ namespace Octokit
                 return true;
             }
 
-            if (string.IsNullOrEmpty(Value))
+            if (string.IsNullOrEmpty(StringValue))
             {
                 value = default(TEnum);
                 return false;
@@ -66,7 +66,7 @@ namespace Octokit
             try
             {
                 // Use the SimpleJsonSerializer to parse the string to Enum according to the GitHub Api strategy
-                value = (TEnum)new SimpleJsonSerializer().DeserializeEnum(Value, typeof(TEnum));
+                value = (TEnum)new SimpleJsonSerializer().DeserializeEnum(StringValue, typeof(TEnum));
 
                 // cache the parsed value for subsequent calls.
                 _parsedValue = value;
@@ -90,7 +90,7 @@ namespace Octokit
             }
 
             // otherwise, we fall back to a case-insensitive comparison of the string values.
-            return string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(StringValue, other.StringValue, StringComparison.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)
@@ -105,7 +105,7 @@ namespace Octokit
 
         public override int GetHashCode()
         {
-            return Value != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(Value) : 0;
+            return StringValue != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(StringValue) : 0;
         }
 
         public static bool operator ==(StringEnum<TEnum> left, StringEnum<TEnum> right)
@@ -130,7 +130,7 @@ namespace Octokit
 
         public override string ToString()
         {
-            return Value ?? "null";
+            return StringValue ?? "null";
         }
 
         private TEnum ParseValue()

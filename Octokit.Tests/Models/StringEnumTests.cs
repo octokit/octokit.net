@@ -12,7 +12,7 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>("user");
 
-                Assert.Equal("user", stringEnum.Value);
+                Assert.Equal("user", stringEnum.StringValue);
             }
 
             [Fact]
@@ -20,8 +20,8 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>(AccountType.Bot);
 
-                Assert.Equal("bot", stringEnum.Value);
-                Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
+                Assert.Equal("bot", stringEnum.StringValue);
+                Assert.Equal(AccountType.Bot, stringEnum.Value);
                 Assert.Equal("bot", stringEnum);
                 Assert.Equal(AccountType.Bot, stringEnum);
             }
@@ -31,8 +31,8 @@ namespace Octokit.Tests.Models
             {
                 StringEnum<ReactionType> stringEnum = ReactionType.Plus1;
 
-                Assert.Equal("+1", stringEnum.Value);
-                Assert.Equal(ReactionType.Plus1, stringEnum.ParsedValue);
+                Assert.Equal("+1", stringEnum.StringValue);
+                Assert.Equal(ReactionType.Plus1, stringEnum.Value);
             }
 
             [Fact]
@@ -52,7 +52,7 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>(value);
 
-                Assert.Throws<ArgumentException>(() => stringEnum.ParsedValue);
+                Assert.Throws<ArgumentException>(() => stringEnum.Value);
             }
 
             [Fact]
@@ -60,8 +60,8 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<EventInfoState>("review_dismissed");
 
-                Assert.Equal("review_dismissed", stringEnum.Value);
-                Assert.Equal(EventInfoState.ReviewDismissed, stringEnum.ParsedValue);
+                Assert.Equal("review_dismissed", stringEnum.StringValue);
+                Assert.Equal(EventInfoState.ReviewDismissed, stringEnum.Value);
             }
 
             [Fact]
@@ -69,8 +69,8 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<EncodingType>("utf-8");
 
-                Assert.Equal("utf-8", stringEnum.Value);
-                Assert.Equal(EncodingType.Utf8, stringEnum.ParsedValue);
+                Assert.Equal("utf-8", stringEnum.StringValue);
+                Assert.Equal(EncodingType.Utf8, stringEnum.Value);
             }
 
             [Fact]
@@ -78,8 +78,8 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<ReactionType>("+1");
 
-                Assert.Equal("+1", stringEnum.Value);
-                Assert.Equal(ReactionType.Plus1, stringEnum.ParsedValue);
+                Assert.Equal("+1", stringEnum.StringValue);
+                Assert.Equal(ReactionType.Plus1, stringEnum.Value);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Models
             {
                 StringEnum<AccountType> stringEnum = "user";
 
-                Assert.Equal("user", stringEnum.Value);
+                Assert.Equal("user", stringEnum.StringValue);
             }
 
             [Fact]
@@ -126,8 +126,8 @@ namespace Octokit.Tests.Models
             {
                 StringEnum<AccountType> stringEnum = AccountType.Bot;
 
-                Assert.Equal("bot", stringEnum.Value);
-                Assert.Equal(AccountType.Bot, stringEnum.ParsedValue);
+                Assert.Equal("bot", stringEnum.StringValue);
+                Assert.Equal(AccountType.Bot, stringEnum.Value);
             }
 
             [Fact]
