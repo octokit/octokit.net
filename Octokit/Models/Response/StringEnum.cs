@@ -29,7 +29,7 @@ namespace Octokit
 
         public StringEnum(string stringValue)
         {
-            _stringValue = stringValue;
+            _stringValue = stringValue ?? string.Empty;
             _parsedValue = null;
         }
 
@@ -105,7 +105,7 @@ namespace Octokit
 
         public override int GetHashCode()
         {
-            return StringValue != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(StringValue) : 0;
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(StringValue);
         }
 
         public static bool operator ==(StringEnum<TEnum> left, StringEnum<TEnum> right)
@@ -130,7 +130,7 @@ namespace Octokit
 
         public override string ToString()
         {
-            return StringValue ?? "null";
+            return StringValue;
         }
 
         private TEnum ParseValue()
@@ -141,7 +141,7 @@ namespace Octokit
                 return value;
             }
 
-            throw GetArgumentException(ToString());
+            throw GetArgumentException(StringValue);
         }
 
         private static ArgumentException GetArgumentException(string value)
