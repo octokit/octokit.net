@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -140,7 +141,10 @@ namespace Octokit
     /// </summary>
     public enum WebHookContentType
     {
+        [Parameter(Value = "form")]
         Form,
+
+        [Parameter(Value = "json")]
         Json
     }
 }

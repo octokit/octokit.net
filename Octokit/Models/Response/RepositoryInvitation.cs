@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     public enum InvitationPermissionType
     {
+        [Parameter(Value = "read")]
         Read,
+
+        [Parameter(Value = "write")]
         Write,
+
+        [Parameter(Value = "admin")]
         Admin
     }
 

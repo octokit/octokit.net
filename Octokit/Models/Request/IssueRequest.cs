@@ -97,26 +97,31 @@ namespace Octokit
         /// <summary>
         /// Issues assigned to the authenticated user. (Default)
         /// </summary>
+        [Parameter(Value = "assigned")]
         Assigned,
 
         /// <summary>
         /// Issues created by the authenticated user.
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Issues mentioning the authenticated user.
         /// </summary>
+        [Parameter(Value = "mentioned")]
         Mentioned,
 
         /// <summary>
         /// Issues the authenticated user is subscribed to for updates.
         /// </summary>
+        [Parameter(Value = "subscribed")]
         Subscribed,
 
         /// <summary>
         /// All issues the authenticated user can see, regardless of participation or creation.
         /// </summary>
+        [Parameter(Value = "all")]
         All
     }
 
@@ -128,16 +133,19 @@ namespace Octokit
         /// <summary>
         /// Items that are open.
         /// </summary>
+        [Parameter(Value = "open")]
         Open,
 
         /// <summary>
         /// Items that are closed.
         /// </summary>
+        [Parameter(Value = "closed")]
         Closed,
 
         /// <summary>
         /// All the items.
         /// </summary>
+        [Parameter(Value = "all")]
         All
     }
 
@@ -149,11 +157,13 @@ namespace Octokit
         /// <summary>
         /// Items that are open
         /// </summary>
+        [Parameter(Value = "open")]
         Open,
 
         /// <summary>
         /// Items that are closed
         /// </summary>
+        [Parameter(Value = "closed")]
         Closed
     }
 
@@ -165,16 +175,19 @@ namespace Octokit
         /// <summary>
         /// Sort by create date (default)
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated,
 
         /// <summary>
         /// Sort by the number of comments
         /// </summary>
+        [Parameter(Value = "comments")]
         Comments
     }
 

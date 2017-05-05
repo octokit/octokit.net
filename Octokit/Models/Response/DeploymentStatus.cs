@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -93,10 +94,19 @@ namespace Octokit
 
     public enum DeploymentState
     {
+        [Parameter(Value = "pending")]
         Pending,
+
+        [Parameter(Value = "success")]
         Success,
+
+        [Parameter(Value = "error")]
         Error,
+
+        [Parameter(Value = "failure")]
         Failure,
+
+        [Parameter(Value = "inactive")]
         Inactive
     }
 }

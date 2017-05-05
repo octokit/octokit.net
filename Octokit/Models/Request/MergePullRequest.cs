@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -56,16 +57,19 @@ namespace Octokit
         /// <summary>
         /// Create a merge commit
         /// </summary>
+        [Parameter(Value = "merge")]
         Merge,
 
         /// <summary>
         /// Squash and merge
         /// </summary>
+        [Parameter(Value = "squash")]
         Squash,
 
         /// <summary>
         /// Rebase and merge
         /// </summary>
+        [Parameter(Value = "rebase")]
         Rebase
     }
 }

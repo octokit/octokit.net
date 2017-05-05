@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -42,16 +43,19 @@ namespace Octokit
         /// <summary>
         /// Sort by date and show the newest first.
         /// </summary>
+        [Parameter(Value = "newest")]
         Newest,
 
         /// <summary>
         /// Sort by date and show the oldest first.
         /// </summary>
+        [Parameter(Value = "oldest")]
         Oldest,
 
         /// <summary>
         /// Sort by the number of stargazers.
         /// </summary>
+        [Parameter(Value = "stargazers")]
         Stargazers
     }
 }

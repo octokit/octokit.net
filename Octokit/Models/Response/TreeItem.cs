@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -58,8 +59,13 @@ namespace Octokit
 
     public enum TreeType
     {
+        [Parameter(Value = "blob")]
         Blob,
+
+        [Parameter(Value = "tree")]
         Tree,
+
+        [Parameter(Value = "commit")]
         Commit
     }
 

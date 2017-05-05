@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -84,16 +85,19 @@ namespace Octokit
         /// <summary>
         /// Turn off required status checks for this <see cref="Branch"/>.
         /// </summary>
+        [Parameter(Value = "off")]
         Off,
 
         /// <summary>
         /// Required status checks will be enforced for non-admins.
         /// </summary>
+        [Parameter(Value = "non_admins")]
         NonAdmins,
 
         /// <summary>
         /// Required status checks will be enforced for everyone (including admins).
         /// </summary>
+        [Parameter(Value = "everyone")]
         Everyone
     }
 

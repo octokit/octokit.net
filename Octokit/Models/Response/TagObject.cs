@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -24,9 +25,16 @@ namespace Octokit
     /// </summary>
     public enum TaggedType
     {
+        [Parameter(Value = "commit")]
         Commit,
+
+        [Parameter(Value = "blob")]
         Blob,
+
+        [Parameter(Value = "tree")]
         Tree,
+
+        [Parameter(Value = "tag")]
         Tag
     }
 }

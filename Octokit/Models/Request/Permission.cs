@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -11,16 +12,19 @@ namespace Octokit
         /// <summary>
         ///  team members can pull, push and administer these repositories.
         /// </summary>
+        [Parameter(Value = "admin")]
         Admin,
 
         /// <summary>
         /// team members can pull and push, but not administer these repositories
         /// </summary>
+        [Parameter(Value = "push")]
         Push,
 
         /// <summary>
         /// team members can pull, but not push to or administer these repositories
         /// </summary>
+        [Parameter(Value = "pull")]
         Pull
     }
 }

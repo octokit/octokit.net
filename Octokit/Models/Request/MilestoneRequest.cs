@@ -39,8 +39,10 @@ namespace Octokit
 
     public enum MilestoneSort
     {
-        [Parameter(Value = "due_date")]
+        [Parameter(Value = "due_on")]
         DueDate,
+
+        [Parameter(Value = "completeness")]
         Completeness
     }
 }

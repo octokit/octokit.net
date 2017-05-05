@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -47,7 +48,10 @@ namespace Octokit
 
     public enum EncodingType
     {
+        [Parameter(Value = "utf-8")]
         Utf8,
+
+        [Parameter(Value = "base64")]
         Base64
     }
 }
