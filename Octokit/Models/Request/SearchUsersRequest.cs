@@ -152,6 +152,7 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "user")]
         User,
+
         /// <summary>
         /// Organization account
         /// </summary>
@@ -170,11 +171,13 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
         [Parameter(Value = "login")]
         Username,
+
         /// <summary>
         /// Search by the user's email address
         /// </summary>
         [Parameter(Value = "email")]
         Email,
+
         /// <summary>
         /// Search by the user's full name
         /// </summary>
