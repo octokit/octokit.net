@@ -7,158 +7,190 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class PullRequestsReviewRequestClientTests : IDisposable
+public class PullRequestsReviewRequestClientTests
 {
-    private readonly IGitHubClient _github;
-    private readonly IPullRequestReviewRequestsClient _client;
-    private readonly RepositoryContext _context;
+    const string collaboratorLogin = "octocat";
 
-    const string branchName = "new-branch";
-    const string collaboratorLogin = "m-zuber-octokit-integration-tests";
-    const string path = "CONTRIBUTING.md";
-
-    public PullRequestsReviewRequestClientTests()
+    public class TheGetAllMethod : IDisposable
     {
-        _github = Helper.GetAuthenticatedClient();
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewRequestsClient _client;
+        private readonly RepositoryContext _context;
 
-        _client = _github.PullRequest.ReviewRequest;
+        public TheGetAllMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
 
-        _context = _github.CreateRepositoryContext("test-repo").Result;
-        _github.Repository.Collaborator.Add(Helper.UserName, _context.RepositoryName, collaboratorLogin);
+            _client = _github.PullRequest.ReviewRequest;
+
+            _context = _github.CreateRepositoryContext("test-repo").Result;
+            _github.Repository.Collaborator.Add(_context.RepositoryOwner, _context.RepositoryName, collaboratorLogin);
+        }
+
+        [IntegrationTest]
+        public async Task CanGetAllWhenNone()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+
+            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
+
+            Assert.NotNull(reviewRequests);
+            Assert.Empty(reviewRequests);
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateAndThenGetAll()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
+            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
+
+            Assert.Equal(reviewers, reviewRequests.Select(rr => rr.Login));
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 
-    [IntegrationTest]
-    public async Task CanGetAllWhenNone()
+    public class TheDeleteMethod : IDisposable
     {
-        var pullRequest = await CreatePullRequest(_context);
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewRequestsClient _client;
+        private readonly RepositoryContext _context;
 
-        var reviewRequests = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+        public TheDeleteMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
 
-        Assert.NotNull(reviewRequests);
-        Assert.Empty(reviewRequests);
+            _client = _github.PullRequest.ReviewRequest;
+
+            _context = _github.CreateRepositoryContext("test-repo").Result;
+            _github.Repository.Collaborator.Add(_context.RepositoryOwner, _context.RepositoryName, collaboratorLogin);
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateAndDelete()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
+            var reviewRequestsAfterCreate = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
+            await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
+            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
+
+            Assert.Equal(reviewers, reviewRequestsAfterCreate.Select(rr => rr.Login));
+            Assert.Empty(reviewRequestsAfterDelete);
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 
-    [IntegrationTest]
-    public async Task CanCreateAndThenGetAll()
+    public class TheCreateMethod : IDisposable
     {
-        var pullRequest = await CreatePullRequest(_context);
-        var reviewers = new List<string> { collaboratorLogin };
-        var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewRequestsClient _client;
+        private readonly RepositoryContext _context;
 
-        await _client.Create(Helper.UserName, _context.RepositoryName, pullRequest.Number, reviewRequestToCreate);
-        var reviewRequests = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+        public TheCreateMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
 
-        Assert.Equal(reviewers, reviewRequests.Select(rr => rr.Login));
+            _client = _github.PullRequest.ReviewRequest;
+
+            _context = _github.CreateRepositoryContext("test-repo").Result;
+            _github.Repository.Collaborator.Add(_context.RepositoryOwner, _context.RepositoryName, collaboratorLogin);
+        }
+
+        [IntegrationTest]
+        public async Task CanCreate()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            var pr = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
+
+            Assert.Equal(reviewers, pr.RequestedReviewers.Select(rr => rr.Login));
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 
-    [IntegrationTest]
-    public async Task CanCreate()
+    static async Task<int> CreateTheWorldAndPullRequest(IGitHubClient github, RepositoryContext context)
     {
-        var pullRequest = await CreatePullRequest(_context);
-        var reviewers = new List<string> { collaboratorLogin };
-        var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+        var master = await github.Git.Reference.Get(context.RepositoryOwner, context.RepositoryName, "heads/master");
 
-        var pr = await _client.Create(Helper.UserName, _context.RepositoryName, pullRequest.Number, reviewRequestToCreate);
+        // create new commit for master branch
+        var newMasterTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "Hello World!" } });
+        var newMaster = await CreateCommit(github, context, "baseline for pull request", newMasterTree.Sha, master.Object.Sha);
 
-        Assert.Equal(reviewers, pr.RequestedReviewers.Select(rr => rr.Login));
-    }
+        // update master
+        await github.Git.Reference.Update(context.RepositoryOwner, context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
-    [IntegrationTest]
-    public async Task CanCreateAndDelete()
-    {
-        var pullRequest = await CreatePullRequest(_context);
-        var reviewers = new List<string> { collaboratorLogin };
-        var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+        // create new commit for feature branch
+        var featureBranchTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
+        var featureBranchCommit = await CreateCommit(github, context, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
-        await _client.Create(Helper.UserName, _context.RepositoryName, pullRequest.Number, reviewRequestToCreate);
-        var reviewRequestsAfterCreate = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number);
-        await _client.Delete(Helper.UserName, _context.RepositoryName, pullRequest.Number, reviewRequestToCreate);
-        var reviewRequestsAfterDelete = await _client.GetAll(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+        var featureBranchTree2 = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new a 2nd time" } });
+        var featureBranchCommit2 = await CreateCommit(github, context, "this is a 2nd commit to merge into the pull request", featureBranchTree2.Sha, featureBranchCommit.Sha);
 
-        Assert.Equal(reviewers, reviewRequestsAfterCreate.Select(rr => rr.Login));
-        Assert.Empty(reviewRequestsAfterDelete);
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
-
-    /// <summary>
-    /// Creates the base state for testing (creates a repo, a commit in master, a branch, a commit in the branch and a pull request)
-    /// </summary>
-    /// <returns></returns>
-    async Task<PullRequestData> CreatePullRequest(RepositoryContext context, string branch = branchName)
-    {
-        string branchHead = "heads/" + branch;
-        string branchRef = "refs/" + branchHead;
-
-        var repoName = context.RepositoryName;
-
-        // Creating a commit in master
-
-        var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");
-
-        // Creating a branch
-
-        var newBranch = new NewReference(branchRef, createdCommitInMaster.Sha);
-        await _github.Git.Reference.Create(Helper.UserName, repoName, newBranch);
-
-        // Creating a commit in the branch
-
-        var createdCommitInBranch = await CreateCommit(repoName, "Hello from the fork!", path, branchHead, "A branch commit message");
+        // create branch
+        await github.Git.Reference.Create(context.RepositoryOwner, context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
 
         // Creating a pull request
+        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master");
+        var createdPullRequest = await github.PullRequest.Create(context.RepositoryOwner, context.RepositoryName, pullRequest);
 
-        var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
-        var createdPullRequest = await _github.PullRequest.Create(Helper.UserName, repoName, pullRequest);
-
-        var data = new PullRequestData
-        {
-            Sha = createdCommitInBranch.Sha,
-            Number = createdPullRequest.Number
-        };
-
-        return data;
+        return createdPullRequest.Number;
     }
 
-    async Task<Commit> CreateCommit(string repoName, string blobContent, string treePath, string reference, string commitMessage)
+    static async Task<TreeResponse> CreateTree(IGitHubClient github, RepositoryContext context, IEnumerable<KeyValuePair<string, string>> treeContents)
     {
-        // Creating a blob
-        var blob = new NewBlob
+        var collection = new List<NewTreeItem>();
+
+        foreach (var c in treeContents)
         {
-            Content = blobContent,
-            Encoding = EncodingType.Utf8
-        };
+            var baselineBlob = new NewBlob
+            {
+                Content = c.Value,
+                Encoding = EncodingType.Utf8
+            };
+            var baselineBlobResult = await github.Git.Blob.Create(context.RepositoryOwner, context.RepositoryName, baselineBlob);
 
-        var createdBlob = await _github.Git.Blob.Create(Helper.UserName, repoName, blob);
+            collection.Add(new NewTreeItem
+            {
+                Type = TreeType.Blob,
+                Mode = FileMode.File,
+                Path = c.Key,
+                Sha = baselineBlobResult.Sha
+            });
+        }
 
-        // Creating a tree
         var newTree = new NewTree();
-        newTree.Tree.Add(new NewTreeItem
+        foreach (var item in collection)
         {
-            Type = TreeType.Blob,
-            Mode = FileMode.File,
-            Path = treePath,
-            Sha = createdBlob.Sha
-        });
+            newTree.Tree.Add(item);
+        }
 
-        var createdTree = await _github.Git.Tree.Create(Helper.UserName, repoName, newTree);
-        var treeSha = createdTree.Sha;
-
-        // Creating a commit
-        var parent = await _github.Git.Reference.Get(Helper.UserName, repoName, reference);
-        var commit = new NewCommit(commitMessage, treeSha, parent.Object.Sha);
-
-        var createdCommit = await _github.Git.Commit.Create(Helper.UserName, repoName, commit);
-        await _github.Git.Reference.Update(Helper.UserName, repoName, reference, new ReferenceUpdate(createdCommit.Sha));
-
-        return createdCommit;
+        return await github.Git.Tree.Create(context.RepositoryOwner, context.RepositoryName, newTree);
     }
 
-    class PullRequestData
+    static async Task<Commit> CreateCommit(IGitHubClient github, RepositoryContext context, string message, string sha, string parent)
     {
-        public int Number { get; set; }
-        public string Sha { get; set; }
+        var newCommit = new NewCommit(message, sha, parent);
+        return await github.Git.Commit.Create(context.RepositoryOwner, context.RepositoryName, newCommit);
     }
 }
