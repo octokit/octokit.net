@@ -7,14 +7,12 @@ using Xunit;
 
 public class RepositoryInvitationsClientTests
 {
-    const string owner = "octocat";
-    const string name = "Hello-World";
-
     public class TheGetAllForRepositoryMethod
     {
         [IntegrationTest]
         public async Task CanGetAllInvitations()
         {
+            var collaborator = "octocat";
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
@@ -24,9 +22,9 @@ public class RepositoryInvitationsClientTests
                 var permission = new CollaboratorRequest(Permission.Push);
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, owner, permission);
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator, permission);
 
-                Assert.Equal(owner, response.Invitee.Login);
+                Assert.Equal(collaborator, response.Invitee.Login);
                 Assert.Equal(InvitationPermissionType.Write, response.Permissions);
 
                 var invitations = await github.Repository.Invitation.GetAllForRepository(context.Repository.Id);
