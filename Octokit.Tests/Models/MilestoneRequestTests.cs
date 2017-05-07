@@ -30,7 +30,7 @@ public class MilestoneRequestTests
             var parameters = request.ToParametersDictionary();
 
             Assert.Equal("open", parameters["state"]);
-            Assert.Equal("due_on", parameters["sort"]);
+            Assert.Equal("due_date", parameters["sort"]);
             Assert.Equal("asc", parameters["direction"]);
         }
     }

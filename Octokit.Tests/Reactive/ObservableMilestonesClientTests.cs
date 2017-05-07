@@ -304,17 +304,17 @@ namespace Octokit.Tests.Reactive
                         Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                             && d["direction"] == "desc"
                             && d["state"] == "open"
-                            && d["sort"] == "due_on"), null)
+                            && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), null)
+                        && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), null)
+                        && d["sort"] == "due_date"), null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Milestone>>>(() => lastPageResponse));
 
                 var client = new ObservableMilestonesClient(gitHubClient);

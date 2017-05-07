@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), Args.ApiOptions);
+                        && d["sort"] == "due_date"), Args.ApiOptions);
             }
 
             [Fact]
@@ -136,7 +136,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), Args.ApiOptions);
+                        && d["sort"] == "due_date"), Args.ApiOptions);
             }
 
             [Fact]
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), options);
+                        && d["sort"] == "due_date"), options);
             }
 
             [Fact]
@@ -180,7 +180,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_on"), options);
+                        && d["sort"] == "due_date"), options);
             }
 
             [Fact]
