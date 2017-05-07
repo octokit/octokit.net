@@ -83,7 +83,7 @@ namespace Octokit
         {
             TEnum value;
             TEnum otherValue;
-            if (TryParse(out value) && TryParse(out otherValue))
+            if (TryParse(out value) && other.TryParse(out otherValue))
             {
                 // if we're able to parse both values, compare the parsed enum
                 return value.Equals(otherValue);
