@@ -48,6 +48,50 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestReviewRequestsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAll("owner", "name", 7, options);
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/requested_reviewers"),
+                    null,
+                    "application/vnd.github.black-cat-preview+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestReviewRequestsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAll(42, 7, options);
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/42/pulls/7/requested_reviewers"),
+                    null,
+                    "application/vnd.github.black-cat-preview+json",
+                    options);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -56,8 +100,18 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
 
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
+
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(42, 1, null));
             }
         }
 

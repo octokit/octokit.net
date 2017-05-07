@@ -31,11 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("owner", "name", 7);
 
-                gitHubClient.Connection.Received().GetAndFlattenAllPages<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/requested_reviewers"),
-                    null,
-                    "application/vnd.github.black-cat-preview+json"
-                   );
+                gitHubClient.Received().PullRequest.ReviewRequest.GetAll("owner", "name", 7);
             }
 
             [Fact]
@@ -46,11 +42,43 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(42, 7);
 
-                gitHubClient.Connection.Received().GetAndFlattenAllPages<User>(
-                    Arg.Is<Uri>(u => u.ToString() == "repositories/42/pulls/7/requested_reviewers"),
-                    null,
-                    "application/vnd.github.black-cat-preview+json"
-                );
+                gitHubClient.Received().PullRequest.ReviewRequest.GetAll(42, 7);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll("owner", "name", 7, options);
+
+                gitHubClient.Received().PullRequest.ReviewRequest.GetAll("owner", "name", 7, options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll(42, 7, options);
+
+                gitHubClient.Received().PullRequest.ReviewRequest.GetAll(42, 7, options);
             }
 
             [Fact]
@@ -62,8 +90,17 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
 
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
+
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(42, 1, null));
             }
         }
 
