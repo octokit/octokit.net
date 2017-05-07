@@ -39,7 +39,22 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task EnsuresNotNullArguments()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
+
+                client.GetAll(42, 7);
+
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/42/pulls/7/requested_reviewers"),
+                    null,
+                    "application/vnd.github.black-cat-preview+json"
+                );
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
@@ -69,6 +84,20 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
+
+                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
+                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+
+                client.Create(42, 13, pullRequestReviewRequest);
+
+                gitHubClient.Received().PullRequest.ReviewRequest.Create(42, 13, pullRequestReviewRequest);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -80,6 +109,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "fakeRepoName", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Create(42, 1, null));
 
                 Assert.Throws<ArgumentException>(() => client.Create("", "fakeRepoName", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentException>(() => client.Create("fakeOwner", "", 1, pullRequestReviewRequest));
@@ -103,6 +133,20 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task PostsToCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
+
+                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
+                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+
+                await client.Delete(42, 13, pullRequestReviewRequest);
+
+                gitHubClient.Received().PullRequest.ReviewRequest.Delete(42, 13, pullRequestReviewRequest);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
@@ -114,6 +158,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Delete(42, 1, null));
 
                 Assert.Throws<ArgumentException>(() => client.Delete("", "name", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 1, pullRequestReviewRequest));

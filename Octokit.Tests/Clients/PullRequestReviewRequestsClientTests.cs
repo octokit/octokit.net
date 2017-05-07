@@ -34,7 +34,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsuresNotNullArguments()
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestReviewRequestsClient(connection);
+
+                await client.GetAll(42, 7);
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/42/pulls/7/requested_reviewers"),
+                    null,
+                    "application/vnd.github.black-cat-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestReviewRequestsClient(connection);
@@ -68,6 +82,23 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void PostsToCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestReviewRequestsClient(connection);
+                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
+                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+
+                client.Create(42, 13, pullRequestReviewRequest);
+
+                connection.Connection.Received().Post<PullRequest>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/42/pulls/13/requested_reviewers"),
+                    pullRequestReviewRequest,
+                    "application/vnd.github.black-cat-preview+json",
+                    null);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -79,6 +110,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "fakeRepoName", 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, 1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "fakeRepoName", 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "", 1, pullRequestReviewRequest));
@@ -105,6 +137,23 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task PostsToCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new PullRequestReviewRequestsClient(connection);
+
+                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
+                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+
+                await client.Delete(43, 13, pullRequestReviewRequest);
+
+                connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/43/pulls/13/requested_reviewers"),
+                    pullRequestReviewRequest,
+                    "application/vnd.github.black-cat-preview+json");
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -116,6 +165,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(1, 1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "name", 1, pullRequestReviewRequest));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", 1, pullRequestReviewRequest));

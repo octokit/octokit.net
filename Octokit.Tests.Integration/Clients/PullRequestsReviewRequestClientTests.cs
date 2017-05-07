@@ -30,7 +30,7 @@ public class PullRequestsReviewRequestClientTests
         [IntegrationTest]
         public async Task CanGetAllWhenNone()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
 
             var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
 
@@ -39,9 +39,9 @@ public class PullRequestsReviewRequestClientTests
         }
 
         [IntegrationTest]
-        public async Task CanGetAllWhenNoneById()
+        public async Task CanGetAllWhenNoneWithRepositoryId()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
 
             var reviewRequests = await _client.GetAll(_context.RepositoryId, pullRequestId);
 
@@ -52,7 +52,7 @@ public class PullRequestsReviewRequestClientTests
         [IntegrationTest]
         public async Task CanCreateAndThenGetAll()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -63,9 +63,9 @@ public class PullRequestsReviewRequestClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCreateAndThenGetAllById()
+        public async Task CanCreateAndThenGetAllWithRepositoryId()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -100,7 +100,7 @@ public class PullRequestsReviewRequestClientTests
         [IntegrationTest]
         public async Task CanCreateAndDelete()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -114,9 +114,9 @@ public class PullRequestsReviewRequestClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCreateAndDeleteById()
+        public async Task CanCreateAndDeleteWithRepositoryId()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -154,7 +154,7 @@ public class PullRequestsReviewRequestClientTests
         [IntegrationTest]
         public async Task CanCreate()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -164,9 +164,9 @@ public class PullRequestsReviewRequestClientTests
         }
 
         [IntegrationTest]
-        public async Task CanCreateById()
+        public async Task CanCreateWithRepositoryId()
         {
-            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var pullRequestId = await CreateTheWorld(_github, _context);
             var reviewers = new List<string> { collaboratorLogin };
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
@@ -181,7 +181,7 @@ public class PullRequestsReviewRequestClientTests
         }
     }
 
-    static async Task<int> CreateTheWorldAndPullRequest(IGitHubClient github, RepositoryContext context)
+    static async Task<int> CreateTheWorld(IGitHubClient github, RepositoryContext context)
     {
         var master = await github.Git.Reference.Get(context.RepositoryOwner, context.RepositoryName, "heads/master");
 
