@@ -39,6 +39,17 @@ public class PullRequestsReviewRequestClientTests
         }
 
         [IntegrationTest]
+        public async Task CanGetAllWhenNoneById()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+
+            var reviewRequests = await _client.GetAll(_context.RepositoryId, pullRequestId);
+
+            Assert.NotNull(reviewRequests);
+            Assert.Empty(reviewRequests);
+        }
+
+        [IntegrationTest]
         public async Task CanCreateAndThenGetAll()
         {
             var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
@@ -47,6 +58,19 @@ public class PullRequestsReviewRequestClientTests
 
             await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
             var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
+
+            Assert.Equal(reviewers, reviewRequests.Select(rr => rr.Login));
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateAndThenGetAllById()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            await _client.Create(_context.RepositoryId,  pullRequestId, reviewRequestToCreate);
+            var reviewRequests = await _client.GetAll(_context.RepositoryId, pullRequestId);
 
             Assert.Equal(reviewers, reviewRequests.Select(rr => rr.Login));
         }
@@ -89,6 +113,22 @@ public class PullRequestsReviewRequestClientTests
             Assert.Empty(reviewRequestsAfterDelete);
         }
 
+        [IntegrationTest]
+        public async Task CanCreateAndDeleteById()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            await _client.Create(_context.RepositoryId, pullRequestId, reviewRequestToCreate);
+            var reviewRequestsAfterCreate = await _client.GetAll(_context.RepositoryId,  pullRequestId);
+            await _client.Delete(_context.RepositoryId, pullRequestId, reviewRequestToCreate);
+            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId,  pullRequestId);
+
+            Assert.Equal(reviewers, reviewRequestsAfterCreate.Select(rr => rr.Login));
+            Assert.Empty(reviewRequestsAfterDelete);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
@@ -119,6 +159,18 @@ public class PullRequestsReviewRequestClientTests
             var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
 
             var pr = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
+
+            Assert.Equal(reviewers, pr.RequestedReviewers.Select(rr => rr.Login));
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateById()
+        {
+            var pullRequestId = await CreateTheWorldAndPullRequest(_github, _context);
+            var reviewers = new List<string> { collaboratorLogin };
+            var reviewRequestToCreate = new PullRequestReviewRequest(reviewers);
+
+            var pr = await _client.Create(_context.RepositoryId, pullRequestId, reviewRequestToCreate);
 
             Assert.Equal(reviewers, pr.RequestedReviewers.Select(rr => rr.Login));
         }

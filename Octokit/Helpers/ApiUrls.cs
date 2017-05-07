@@ -3379,7 +3379,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
         public static Uri PullRequestReviewRequests(long repositoryId, int number)
         {
-            return "repositories/{0}/pulls/{2}/requested_reviewers".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
         }
     }
 }
