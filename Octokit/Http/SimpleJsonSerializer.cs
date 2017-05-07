@@ -124,8 +124,6 @@ namespace Octokit.Internal
                 else
                 {
                     //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
-                    // remove '-' from values coming in to be able to enum utf-8
-                    value = RemoveHyphenAndUnderscore(value);
                     var parsed = Enum.Parse(type, value, ignoreCase: true);
                     _cachedEnums[type].Add(value, parsed);
                     return parsed;
@@ -194,15 +192,6 @@ namespace Octokit.Internal
                 }
 
                 return base.DeserializeObject(value, type);
-            }
-
-            static string RemoveHyphenAndUnderscore(string stringValue)
-            {
-                // remove '-' from values coming in to be able to enum utf-8
-                stringValue = stringValue.Replace("-", "");
-                // remove '-' from values coming in to be able to enum EventInfoState names with underscores in them. Like "head_ref_deleted" 
-                stringValue = stringValue.Replace("_", "");
-                return stringValue;
             }
 
             internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)

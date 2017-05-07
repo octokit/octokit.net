@@ -298,33 +298,25 @@ namespace Octokit.Tests
             }
 
             [Fact]
-            public void DeserializesEnum()
+            public void DeserializesEnumWithParameterAttribute()
             {
-                const string json = @"{""some_enum"":""unicode""}";
+                const string json1 = @"{""some_enum"":""+1""}";
+                const string json2 = @"{""some_enum"":""utf-8""}";
+                const string json3 = @"{""some_enum"":""something else""}";
+                const string json4 = @"{""some_enum"":""another_example""}";
+                const string json5 = @"{""some_enum"":""unicode""}";
 
-                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
+                var sample1 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json1);
+                var sample2 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json2);
+                var sample3 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json3);
+                var sample4 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json4);
+                var sample5 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json5);
 
-                Assert.Equal(SomeEnum.Unicode, sample.SomeEnum);
-            }
-
-            [Fact]
-            public void RemovesDashFromEnums()
-            {
-                const string json = @"{""some_enum"":""utf-8""}";
-
-                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
-
-                Assert.Equal(SomeEnum.Utf8, sample.SomeEnum);
-            }
-
-            [Fact]
-            public void UnderstandsParameterAttribute()
-            {
-                const string json = @"{""some_enum"":""+1""}";
-
-                var sample = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json);
-
-                Assert.Equal(SomeEnum.PlusOne, sample.SomeEnum);
+                Assert.Equal(SomeEnum.PlusOne, sample1.SomeEnum);
+                Assert.Equal(SomeEnum.Utf8, sample2.SomeEnum);
+                Assert.Equal(SomeEnum.SomethingElse, sample3.SomeEnum);
+                Assert.Equal(SomeEnum.AnotherExample, sample4.SomeEnum);
+                Assert.Equal(SomeEnum.Unicode, sample5.SomeEnum);
             }
         }
 
@@ -361,9 +353,17 @@ namespace Octokit.Tests
     {
         [Parameter(Value = "+1")]
         PlusOne,
+
+        [Parameter(Value = "utf-8")]
         Utf8,
+
         [Parameter(Value = "something else")]
         SomethingElse,
+
+        [Parameter(Value = "another_example")]
+        AnotherExample,
+
+        [Parameter(Value = "unicode")]
         Unicode
     }
 }
