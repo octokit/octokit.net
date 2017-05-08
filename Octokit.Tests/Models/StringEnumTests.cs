@@ -148,6 +148,15 @@ namespace Octokit.Tests.Models
 
                 Assert.True(first == second);
             }
+
+            [Fact]
+            public void FallsBackToStringComparison()
+            {
+                var first = new StringEnum<AccountType>("god");
+                var second = new StringEnum<AccountType>("GoD");
+
+                Assert.True(first == second);
+            }
         }
     }
 }
