@@ -11,17 +11,6 @@ namespace Octokit.Tests.Conventions
 {
     public class ModelTests
     {
-        private static readonly HashSet<Type> ExcludedEnumTypes = new HashSet<Type>
-        {
-            typeof(AuthenticationType),
-            typeof(EnterpriseProbeResult),
-            typeof(SearchQualifierOperator),
-            typeof(TeamMembership),
-            typeof(TwoFactorType),
-
-            typeof(Language) // TODO: Add Parameter attributes and include this?
-        };
-
         [Theory]
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
