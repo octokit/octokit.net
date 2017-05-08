@@ -167,17 +167,6 @@ namespace Octokit.Tests.Conventions
             }
         }
 
-        public static IEnumerable<object[]> GetClientInterfaces()
-        {
-            return typeof(IGitHubClient)
-                .GetTypeInfo()
-                .Assembly
-                .ExportedTypes
-                .Where(TypeExtensions.IsClientInterface)
-                .Where(t => t != typeof(IStatisticsClient)) // This convention doesn't apply to this one type.
-                .Select(type => new[] { type });
-        }
-
         public static IEnumerable<object[]> ModelTypes
         {
             get { return GetModelTypes(includeRequestModels: true).Select(type => new[] { type }); }
