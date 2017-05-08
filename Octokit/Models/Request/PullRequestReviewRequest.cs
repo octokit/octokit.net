@@ -21,6 +21,9 @@ namespace Octokit
 
         public IReadOnlyList<string> Reviewers { get; set; }
 
-        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Reviewers: {0}", Reviewers);
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Reviewers: {0}", Reviewers); }
+        }
     }
 }
