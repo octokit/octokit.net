@@ -141,10 +141,7 @@ namespace Octokit
     /// </summary>
     public enum WebHookContentType
     {
-        [Parameter(Value = "form")]
         Form,
-
-        [Parameter(Value = "json")]
         Json
     }
 }
