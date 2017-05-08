@@ -23,7 +23,7 @@ var issues = await client.Issue.GetAllForOwnedAndMemberRepositories();
 If you know the specific repository, just invoke that:
 
 ```
-var issuesForOctokit = await client.Issue.GetForRepository("octokit", "octokit.net");
+var issuesForOctokit = await client.Issue.GetAllForRepository("octokit", "octokit.net");
 ```
 
 ### Filtering
@@ -67,7 +67,7 @@ var shouldPrioritize = new RepositoryIssueRequest
     Milestone = "none",
     Filter = IssueFilter.All
 };
-var issues = await client.Issue.GetForRepository("octokit", "octokit.net", shouldPrioritize);
+var issues = await client.Issue.GetAllForRepository("octokit", "octokit.net", shouldPrioritize);
 ```
 
 ### Create
