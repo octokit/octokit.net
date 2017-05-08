@@ -197,9 +197,10 @@ namespace Octokit.Tests.Conventions
         {
             get
             {
-                return typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
-                    .Where(type => type.GetTypeInfo().IsEnum)
-                    .Where(type => !ExcludedEnumTypes.Contains(type))
+                return GetModelTypes(includeRequestModels: true)
+                    .SelectMany(type => type.GetProperties())
+                    .SelectMany(property => UnwrapGenericArguments(property.PropertyType))
+                    .Where(type => type.Namespace.StartsWith("Octokit") && type.GetTypeInfo().IsEnum)
                     .Select(type => new[] { type });
             }
         }
