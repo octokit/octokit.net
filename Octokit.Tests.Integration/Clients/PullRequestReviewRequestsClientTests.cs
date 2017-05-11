@@ -7,7 +7,7 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class PullRequestsReviewRequestsClientTests
+public class PullRequestReviewRequestsClientTests
 {
     private static readonly string[] _collaboratorLogins = {
         "octocat",
