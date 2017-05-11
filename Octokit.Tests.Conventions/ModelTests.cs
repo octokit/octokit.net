@@ -11,6 +11,8 @@ namespace Octokit.Tests.Conventions
 {
     public class ModelTests
     {
+        private static readonly Assembly Octokit = typeof(AuthorizationUpdate).GetTypeInfo().Assembly;
+
         [Theory]
         [MemberData("ModelTypes")]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
@@ -183,7 +185,7 @@ namespace Octokit.Tests.Conventions
                 return GetModelTypes(includeRequestModels: true)
                     .SelectMany(type => type.GetProperties())
                     .SelectMany(property => UnwrapGenericArguments(property.PropertyType))
-                    .Where(type => type.Namespace.StartsWith("Octokit") && type.GetTypeInfo().IsEnum)
+                    .Where(type => type.GetTypeInfo().Assembly.Equals(Octokit) && type.GetTypeInfo().IsEnum)
                     .Select(type => new[] { type });
             }
         }
