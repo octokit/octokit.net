@@ -7,12 +7,11 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class PullRequestsReviewRequestClientTests
+public class PullRequestsReviewRequestsClientTests
 {
     private static readonly string[] _collaboratorLogins = {
         "octocat",
-        "gdziadkiewicz-test",
-        "ryangribble-testorg"
+        "gdziadkiewicz-test"
     };
 
     public class PullRequestReviewRequestClientTestsBase
@@ -94,7 +93,7 @@ public class PullRequestsReviewRequestClientTests
 
             var options = new ApiOptions
             {
-                PageSize = 2,
+                PageSize = 1,
                 PageCount = 1,
                 StartPage = 2
             };
@@ -122,7 +121,7 @@ public class PullRequestsReviewRequestClientTests
             await Client.Create(Context.RepositoryId, pullRequestId, reviewRequestToCreate);
             var reviewRequests = await Client.GetAll(Context.RepositoryId, pullRequestId, options);
 
-            Assert.Equal(2, reviewRequests.Count);
+            Assert.Equal(1, reviewRequests.Count);
         }
 
         [IntegrationTest]
@@ -134,7 +133,7 @@ public class PullRequestsReviewRequestClientTests
 
             var startOptions = new ApiOptions
             {
-                PageSize = 2,
+                PageSize = 1,
                 PageCount = 1
             };
 
@@ -143,17 +142,16 @@ public class PullRequestsReviewRequestClientTests
 
             var skipStartOptions = new ApiOptions
             {
-                PageSize = 2,
+                PageSize = 1,
                 PageCount = 1,
                 StartPage = 2
             };
 
             var secondPage = await Client.GetAll(Context.RepositoryOwner, Context.RepositoryName, pullRequestId, skipStartOptions);
 
-            Assert.Equal(2, firstPage.Count);
+            Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
-            Assert.NotEqual(firstPage[1].Id, secondPage[0].Id);
         }
 
         [IntegrationTest]
@@ -165,7 +163,7 @@ public class PullRequestsReviewRequestClientTests
 
             var startOptions = new ApiOptions
             {
-                PageSize = 2,
+                PageSize = 1,
                 PageCount = 1
             };
 
@@ -174,17 +172,16 @@ public class PullRequestsReviewRequestClientTests
 
             var skipStartOptions = new ApiOptions
             {
-                PageSize = 2,
+                PageSize = 1,
                 PageCount = 1,
                 StartPage = 2
             };
 
             var secondPage = await Client.GetAll(Context.RepositoryId, pullRequestId, skipStartOptions);
 
-            Assert.Equal(2, firstPage.Count);
+            Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
-            Assert.NotEqual(firstPage[1].Id, secondPage[0].Id);
         }
 
         public void Dispose()
