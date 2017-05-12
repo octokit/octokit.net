@@ -174,8 +174,8 @@ public class PullRequestReviewRequestsClientTests
             var pullRequestId = await CreateTheWorld(_github, _context);
             
             var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
-            var reviewers = new PullRequestReviewRequest(_collaboratorLogins);
-            await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewers);
+            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
             var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, pullRequestId);
 
             Assert.NotEmpty(reviewRequestsBeforeDelete);
@@ -188,8 +188,8 @@ public class PullRequestReviewRequestsClientTests
             var pullRequestId = await CreateTheWorld(_github, _context);
             
             var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryId,  pullRequestId);
-            var reviewers = new PullRequestReviewRequest(_collaboratorLogins);
-            await _client.Delete(_context.RepositoryId, pullRequestId, reviewers);
+            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            await _client.Delete(_context.RepositoryId, pullRequestId, reviewRequestToCreate);
             var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId,  pullRequestId);
 
             Assert.NotEmpty(reviewRequestsBeforeDelete);
@@ -203,7 +203,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task CreatesRequests()
         {
             var pullRequestId = await CreateTheWorld(_github, _context, createReviewRequests: false);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins.ToList());
+            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
 
             var pr = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, pullRequestId, reviewRequestToCreate);
 
@@ -214,7 +214,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task CreatesRequestsWithRepositoryId()
         {
             var pullRequestId = await CreateTheWorld(_github, _context, createReviewRequests: false);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins.ToList());
+            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
 
             var pr = await _client.Create(_context.RepositoryId, pullRequestId, reviewRequestToCreate);
 
@@ -250,7 +250,7 @@ public class PullRequestReviewRequestsClientTests
         // Create review requests (optional)
         if (createReviewRequests)
         {
-            var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins.ToList());
+            var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins);
             await github.PullRequest.ReviewRequest.Create(context.RepositoryOwner, context.RepositoryName, createdPullRequest.Number, reviewRequest);
         }
 
