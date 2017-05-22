@@ -9,7 +9,7 @@ namespace Octokit.Internal
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {
-        readonly GitHubSerializerStrategy _serializationStrategy = new GitHubSerializerStrategy();
+        static readonly GitHubSerializerStrategy _serializationStrategy = new GitHubSerializerStrategy();
 
         public string Serialize(object item)
         {
@@ -21,12 +21,12 @@ namespace Octokit.Internal
             return SimpleJson.DeserializeObject<T>(json, _serializationStrategy);
         }
 
-        public string SerializeEnum(Enum value)
+        internal static string SerializeEnum(Enum value)
         {
             return _serializationStrategy.SerializeEnumHelper(value).ToString();
         }
 
-        public object DeserializeEnum(string value, Type type)
+        internal static object DeserializeEnum(string value, Type type)
         {
             return _serializationStrategy.DeserializeEnumHelper(value, type);
         }
@@ -97,7 +97,7 @@ namespace Octokit.Internal
                 return p.ToParameter();
             }
 
-            public object DeserializeEnumHelper(string value, Type type)
+            internal object DeserializeEnumHelper(string value, Type type)
             {
                 if (!_cachedEnums.ContainsKey(type))
                 {

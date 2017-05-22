@@ -330,10 +330,9 @@ namespace Octokit.Tests
                     "head_ref_restored"
                 };
 
-                var serializer = new SimpleJsonSerializer();
                 foreach (var value in strings)
                 {
-                    var enumValue = serializer.DeserializeEnum(value, typeof(EventInfoState));
+                    var enumValue = SimpleJsonSerializer.DeserializeEnum(value, typeof(EventInfoState));
 
                     // Test passes if no exception thrown
                 }
