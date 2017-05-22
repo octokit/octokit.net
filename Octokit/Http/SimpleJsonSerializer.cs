@@ -103,6 +103,7 @@ namespace Octokit.Internal
                 {
                     //First add type to Dictionary
                     _cachedEnums.Add(type, new Dictionary<object, object>());
+
                     //then try to get all custom attributes, this happens only once per type
                     var fields = type.GetRuntimeFields();
                     foreach (var field in fields)
@@ -112,8 +113,11 @@ namespace Octokit.Internal
                         var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
                         if (attribute != null)
                         {
-                            if (attribute.Value.Equals(value))
-                                _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+                            if (!_cachedEnums[type].ContainsKey(attribute.Value))
+                            {
+                                var fieldValue = field.GetValue(null);
+                                _cachedEnums[type].Add(attribute.Value, fieldValue);
+                            }
                         }
                     }
                 }
