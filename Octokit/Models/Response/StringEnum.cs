@@ -11,6 +11,7 @@ namespace Octokit
     public struct StringEnum<TEnum> : IEquatable<StringEnum<TEnum>>
         where TEnum : struct
     {
+        private readonly static SimpleJsonSerializer _jsonSerializer = new SimpleJsonSerializer();
         private readonly string _stringValue;
 
         private TEnum? _parsedValue;
@@ -23,7 +24,7 @@ namespace Octokit
             }
 
             // Use the SimpleJsonSerializer to serialize the TEnum into the correct string according to the GitHub Api strategy
-            _stringValue = new SimpleJsonSerializer().SerializeEnum(parsedValue as Enum);
+            _stringValue = _jsonSerializer.SerializeEnum(parsedValue as Enum);
             _parsedValue = parsedValue;
         }
 
@@ -66,7 +67,7 @@ namespace Octokit
             try
             {
                 // Use the SimpleJsonSerializer to parse the string to Enum according to the GitHub Api strategy
-                value = (TEnum)new SimpleJsonSerializer().DeserializeEnum(StringValue, typeof(TEnum));
+                value = (TEnum)_jsonSerializer.DeserializeEnum(StringValue, typeof(TEnum));
 
                 // cache the parsed value for subsequent calls.
                 _parsedValue = value;
