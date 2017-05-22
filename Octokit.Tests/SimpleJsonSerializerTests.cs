@@ -318,6 +318,26 @@ namespace Octokit.Tests
                 Assert.Equal(SomeEnum.AnotherExample, sample4.SomeEnum);
                 Assert.Equal(SomeEnum.Unicode, sample5.SomeEnum);
             }
+
+            [Fact]
+            public void ShouldDeserializeMultipleEnumValues()
+            {
+                var strings = new[]
+                {
+                    "locked",
+                    "unlocked",
+                    "head_ref_deleted",
+                    "head_ref_restored"
+                };
+
+                var serializer = new SimpleJsonSerializer();
+                foreach (var value in strings)
+                {
+                    var enumValue = serializer.DeserializeEnum(value, typeof(EventInfoState));
+
+                    // Test passes if no exception thrown
+                }
+            }
         }
 
         public class Sample
