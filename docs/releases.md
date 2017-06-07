@@ -18,7 +18,7 @@ Console.WriteLine(
 To create a new release you must have a corresponding tag in the repository. See the `git-database.md` docs for details.
 
 ```
-var newRelease = new ReleaseUpdate("v1.0.0");
+var newRelease = new NewRelease("v1.0.0");
 newRelease.Name = "Version One Point Oh";
 newRelease.Body = "**This** is some *Markdown*";
 newRelease.Draft = true;
