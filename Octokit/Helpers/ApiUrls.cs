@@ -3358,5 +3358,28 @@ namespace Octokit
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, repo, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(long repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
+        }
     }
 }
