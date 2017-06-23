@@ -149,54 +149,6 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheEditMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryBranchesClient(github);
-                var update = new BranchUpdate();
-
-                client.Edit("owner", "repo", "branch", update);
-
-                github.Repository.Branch.Received(1).Edit("owner", "repo", "branch", update);
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoryBranchesClient(github);
-                var update = new BranchUpdate();
-
-                client.Edit(1, "branch", update);
-
-                github.Repository.Branch.Received(1).Edit(1, "branch", update);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
-                var update = new BranchUpdate();
-
-                Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", "branch", update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, "branch", update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", "repo", null, update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit("owner", "repo", "branch", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.Edit(1, null, update));
-                Assert.Throws<ArgumentNullException>(() => client.Edit(1, "branch", null));
-
-                Assert.Throws<ArgumentException>(() => client.Edit("", "repo", "branch", update));
-                Assert.Throws<ArgumentException>(() => client.Edit("owner", "", "branch", update));
-                Assert.Throws<ArgumentException>(() => client.Edit("owner", "repo", "", update));
-
-                Assert.Throws<ArgumentException>(() => client.Edit(1, "", update));
-            }
-        }
-
         public class TheGetBranchProtectectionMethod
         {
             [Fact]
