@@ -265,13 +265,13 @@ namespace Octokit
         /// <summary>
         /// A line comment was made.
         /// </summary>
-        [Parameter(Value = "line_commented")]
+        [Parameter(Value = "line-commented")]
         LineCommented,
 
         /// <summary>
         /// A commit comment was made.
         /// </summary>
-        [Parameter(Value = "commit_commented")]
+        [Parameter(Value = "commit-commented")]
         CommitCommented
     }
 }
