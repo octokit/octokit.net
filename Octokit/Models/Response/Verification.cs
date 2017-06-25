@@ -19,7 +19,7 @@ namespace Octokit
         /// The reason for verified value.
         /// </summary>
         [Parameter(Key = "reason")]
-        public VerificationReason Reason { get; protected set; }
+        public StringEnum<VerificationReason> Reason { get; protected set; }
 
         /// <summary>
         /// The signature that was extracted from the commit.

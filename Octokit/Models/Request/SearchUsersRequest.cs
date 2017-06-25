@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -149,10 +150,13 @@ namespace Octokit
         /// <summary>
         ///  User account
         /// </summary>
+        [Parameter(Value = "user")]
         User,
+
         /// <summary>
         /// Organization account
         /// </summary>
+        [Parameter(Value = "org")]
         Org
     }
 
@@ -165,15 +169,20 @@ namespace Octokit
         /// Search by the username
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
+        [Parameter(Value = "login")]
         Username,
+
         /// <summary>
         /// Search by the user's email address
         /// </summary>
+        [Parameter(Value = "email")]
         Email,
+
         /// <summary>
         /// Search by the user's full name
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullname")]
+        [Parameter(Value = "fullname")]
         Fullname
     }
 
@@ -182,8 +191,13 @@ namespace Octokit
     /// </summary>
     public enum UsersSearchSort
     {
+        [Parameter(Value = "followers")]
         Followers,
+
+        [Parameter(Value = "repositories")]
         Repositories,
+
+        [Parameter(Value = "joined")]
         Joined
     }
 }

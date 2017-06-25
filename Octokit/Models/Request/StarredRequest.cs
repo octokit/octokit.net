@@ -54,11 +54,13 @@ namespace Octokit
         /// <summary>
         /// Sort y the date the star was created.
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date the star was last updated.
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated
     }
 }

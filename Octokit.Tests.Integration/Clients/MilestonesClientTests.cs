@@ -161,7 +161,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_context.RepositoryOwner, _context.RepositoryName, milestone3);
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
-            new MilestoneRequest { SortDirection = SortDirection.Descending });
+            new MilestoneRequest { SortProperty = MilestoneSort.DueDate, SortDirection = SortDirection.Descending });
 
         Assert.Equal(2, milestones.Count);
         Assert.Equal("milestone 2", milestones[0].Title);
@@ -179,7 +179,7 @@ public class MilestonesClientTests : IDisposable
         await _milestonesClient.Create(_context.Repository.Id, milestone3);
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.Repository.Id,
-            new MilestoneRequest { SortDirection = SortDirection.Descending });
+            new MilestoneRequest { SortProperty = MilestoneSort.DueDate, SortDirection = SortDirection.Descending });
 
         Assert.Equal(2, milestones.Count);
         Assert.Equal("milestone 2", milestones[0].Title);

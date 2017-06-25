@@ -29,7 +29,7 @@ namespace Octokit
             CommitCount = commitCount;
         }
 
-        public DayOfWeek DayOfWeek { get; private set; }
+        public StringEnum<DayOfWeek> DayOfWeek { get; private set; }
         public int HourOfTheDay { get; private set; }
         public int CommitCount { get; private set; }
 

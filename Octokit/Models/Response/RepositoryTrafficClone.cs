@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -60,7 +61,10 @@ namespace Octokit
 
     public enum TrafficDayOrWeek
     {
+        [Parameter(Value = "day")]
         Day,
+
+        [Parameter(Value = "week")]
         Week
     }
 }

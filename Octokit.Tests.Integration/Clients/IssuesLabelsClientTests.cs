@@ -538,7 +538,7 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task CanListLabelsForAnMilestoneWithRepositoryId()
+    public async Task CanListLabelsForAMilestoneWithRepositoryId()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
         var newLabel = new NewLabel("test label", "FFFFFF");

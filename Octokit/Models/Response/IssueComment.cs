@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -68,11 +69,13 @@ namespace Octokit
         /// <summary>
         /// Sort by create date (default)
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated
     }
 }
