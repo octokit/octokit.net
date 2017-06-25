@@ -2,7 +2,7 @@
 
 The easiest way to get started with Octokit is to use a plain `GitHubClient`:
 
-```
+```csharp
 var client = new GitHubClient(new ProductHeaderValue("my-cool-app"));
 ```
 
@@ -18,12 +18,12 @@ If you want to access private repositories or perform actions on behalf of a use
 
 There are two options supported by the API - basic and OAuth authentication.
 
-```
+```csharp
 var basicAuth = new Credentials("username", "password"); // NOTE: not real credentials
 client.Credentials = basicAuth;
 ```
 
-```
+```csharp
 var tokenAuth = new Credentials("token"); // NOTE: not real token
 client.Credentials = tokenAuth;
 ```
@@ -66,7 +66,7 @@ Console.WriteLine("{0} has {1} public repositories - go check out their profile 
 
 If you've authenticated as a given user, you can query their details directly:
 
-```
+```csharp
 var user = await client.User.Current();
 ```
 
