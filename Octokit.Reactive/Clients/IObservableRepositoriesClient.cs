@@ -517,27 +517,6 @@ namespace Octokit.Reactive
         IObservable<Repository> Edit(long repositoryId, RepositoryUpdate update);
 
         /// <summary>
-        /// Edit the specified branch with the values given in <paramref name="update"/>
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        /// <param name="update">New values to update the branch with</param>
-        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the ObservableRepositoryBranchesClient methods instead.")]
-        IObservable<Branch> EditBranch(string owner, string name, string branch, BranchUpdate update);
-
-        /// <summary>
-        /// Edit the specified branch with the values given in <paramref name="update"/>
-        /// </summary>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        /// <param name="update">New values to update the branch with</param>
-        /// <returns>The updated <see cref="T:Octokit.Branch"/></returns>
-        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use the ObservableRepositoryBranchesClient methods instead.")]
-        IObservable<Branch> EditBranch(long repositoryId, string branch, BranchUpdate update);
-
-        /// <summary>
         /// A client for GitHub's Repo Collaborators.
         /// </summary>
         /// <remarks>
