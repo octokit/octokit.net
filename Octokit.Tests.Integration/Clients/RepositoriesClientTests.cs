@@ -1465,7 +1465,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net");
+            var branches = await github.Repository.Branch.GetAll("octokit", "octokit.net");
 
             Assert.NotEmpty(branches);
         }
@@ -1475,7 +1475,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var branches = await github.Repository.GetAllBranches(7528679);
+            var branches = await github.Repository.Branch.GetAll(7528679);
 
             Assert.NotEmpty(branches);
         }
@@ -1491,7 +1491,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net", options);
+            var branches = await github.Repository.Branch.GetAll("octokit", "octokit.net", options);
 
             Assert.Equal(5, branches.Count);
         }
@@ -1507,7 +1507,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var branches = await github.Repository.GetAllBranches(7528679, options);
+            var branches = await github.Repository.Branch.GetAll(7528679, options);
 
             Assert.Equal(5, branches.Count);
         }
@@ -1524,7 +1524,7 @@ public class RepositoriesClientTests
                 StartPage = 2
             };
 
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net", options);
+            var branches = await github.Repository.Branch.GetAll("octokit", "octokit.net", options);
 
             Assert.Equal(5, branches.Count);
         }
@@ -1541,7 +1541,7 @@ public class RepositoriesClientTests
                 StartPage = 2
             };
 
-            var branches = await github.Repository.GetAllBranches(7528679, options);
+            var branches = await github.Repository.Branch.GetAll(7528679, options);
 
             Assert.Equal(5, branches.Count);
         }
@@ -1558,7 +1558,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var firstPage = await github.Repository.GetAllBranches("octokit", "octokit.net", firstPageOptions);
+            var firstPage = await github.Repository.Branch.GetAll("octokit", "octokit.net", firstPageOptions);
 
             var secondPageOptions = new ApiOptions
             {
@@ -1567,7 +1567,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var secondPage = await github.Repository.GetAllBranches("octokit", "octokit.net", secondPageOptions);
+            var secondPage = await github.Repository.Branch.GetAll("octokit", "octokit.net", secondPageOptions);
 
             Assert.Equal(5, firstPage.Count);
             Assert.Equal(5, secondPage.Count);
@@ -1591,7 +1591,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var firstPage = await github.Repository.GetAllBranches(7528679, firstPageOptions);
+            var firstPage = await github.Repository.Branch.GetAll(7528679, firstPageOptions);
 
             var secondPageOptions = new ApiOptions
             {
@@ -1600,7 +1600,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var secondPage = await github.Repository.GetAllBranches(7528679, secondPageOptions);
+            var secondPage = await github.Repository.Branch.GetAll(7528679, secondPageOptions);
 
             Assert.Equal(5, firstPage.Count);
             Assert.Equal(5, secondPage.Count);

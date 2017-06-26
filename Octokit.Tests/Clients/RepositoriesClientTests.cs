@@ -521,7 +521,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                await client.GetAllBranches("owner", "name");
+                await client.Branch.GetAll("owner", "name");
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
@@ -533,7 +533,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
 
-                await client.GetAllBranches(1);
+                await client.Branch.GetAll(1);
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
@@ -552,7 +552,7 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                await client.GetAllBranches("owner", "name", options);
+                await client.Branch.GetAll("owner", "name", options);
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", options);
@@ -571,7 +571,7 @@ namespace Octokit.Tests.Clients
                     PageSize = 1
                 };
 
-                await client.GetAllBranches(1, options);
+                await client.Branch.GetAll(1, options);
 
                 connection.Received()
                     .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", options);
@@ -582,19 +582,19 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll(null, "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(null, "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll(null, "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll("owner", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll("owner", "name", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Branch.GetAll(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("", "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("owner", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("", "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("owner", "", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("", "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Branch.GetAll("owner", "", ApiOptions.None));
             }
         }
 

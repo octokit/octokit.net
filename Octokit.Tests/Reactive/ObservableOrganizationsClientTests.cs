@@ -48,9 +48,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationsClient(gitHubClient);
 
-                client.GetAll("username");
+                client.GetAllForUser("username");
 
-                gitHubClient.Received().Organization.GetAll("username");
+                gitHubClient.Received().Organization.GetAllForUser("username");
             }
 
             [Fact]
@@ -66,9 +66,9 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAll("username", options);
+                client.GetAllForUser("username", options);
 
-                gitHubClient.Received().Organization.GetAll("username", options);
+                gitHubClient.Received().Organization.GetAllForUser("username", options);
             }
 
             [Fact]
@@ -77,12 +77,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll((string)null));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("username", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForUser((string)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForUser(null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForUser("username", null));
 
-                Assert.Throws<ArgumentException>(() => client.GetAll(""));
-                Assert.Throws<ArgumentException>(() => client.GetAll("", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForUser(""));
+                Assert.Throws<ArgumentException>(() => client.GetAllForUser("", ApiOptions.None));
             }
         }
 

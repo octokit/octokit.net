@@ -329,7 +329,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var expected = new Uri("repos/owner/repo/branches", UriKind.Relative);
 
-                client.GetAllBranches("owner", "repo");
+                client.Branch.GetAll("owner", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
             }
@@ -341,7 +341,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var expected = new Uri("repositories/1/branches", UriKind.Relative);
 
-                client.GetAllBranches(1);
+                client.Branch.GetAll(1);
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
             }
@@ -360,7 +360,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAllBranches("owner", "name", options);
+                client.Branch.GetAll("owner", "name", options);
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
             }
@@ -379,7 +379,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                client.GetAllBranches(1, options);
+                client.Branch.GetAll(1, options);
 
                 gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
             }
@@ -389,19 +389,19 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll("owner", null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "name", ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll(null, "name", ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll("owner", null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll("owner", "name", null));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(1, null));
+                Assert.Throws<ArgumentNullException>(() => client.Branch.GetAll(1, null));
 
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "name"));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", ""));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "name", ApiOptions.None));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", "", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.Branch.GetAll("", "name"));
+                Assert.Throws<ArgumentException>(() => client.Branch.GetAll("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.Branch.GetAll("", "name", ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.Branch.GetAll("owner", "", ApiOptions.None));
             }
         }
 
