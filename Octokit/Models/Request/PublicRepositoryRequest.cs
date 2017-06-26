@@ -13,18 +13,6 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicRepositoryRequest"/> class.
         /// </summary>
-        /// <param name="since">The integer Id of the last Repository that you’ve seen.</param>
-        [Obsolete("Please use the alternative constructor taking a long, rather than int, typed parameter.  This constructor will be removed in a future release.")]
-        public PublicRepositoryRequest(int since)
-        {
-            Ensure.ArgumentNotNull(since, "since");
-
-            Since = since;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PublicRepositoryRequest"/> class.
-        /// </summary>
         /// <param name="since">The Id of the last Repository that you’ve seen.</param>
         public PublicRepositoryRequest(long since)
         {

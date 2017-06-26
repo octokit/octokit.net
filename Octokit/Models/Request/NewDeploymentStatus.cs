@@ -29,14 +29,6 @@ namespace Octokit
         /// output to keep the user updated while the task is running or serve as
         /// historical information for what happened in the deployment
         /// </summary>
-        [Obsolete("This property is obsolete. Use LogUrl instead.", false)]
-        public string TargetUrl { get; set; }
-
-        /// <summary>
-        /// The target URL to associate with this status. This URL should contain
-        /// output to keep the user updated while the task is running or serve as
-        /// historical information for what happened in the deployment
-        /// </summary>
         public string LogUrl { get; set; }
 
         /// <summary>
