@@ -30,12 +30,6 @@ namespace Octokit
         public string CommitTitle { get; set; }
 
         /// <summary>
-        ///  Commit a single commit to the head branch (optional)
-        /// </summary>
-        [Obsolete("Please use MergeMethod property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
-        public bool Squash { get; set; }
-
-        /// <summary>
         /// Specify the Merge method to use (optional - default is Merge)
         /// </summary>
         public PullRequestMergeMethod? MergeMethod { get; set; }
