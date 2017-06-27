@@ -118,6 +118,29 @@ namespace Octokit.Tests.Models
             }
 
             [Fact]
+            public void EnsureCanCallToRequestMultipleTimes()
+            {
+                var config = new Dictionary<string, string>
+                {
+                    {"hostname", "http://hostname.url"},
+                    {"username", "username"},
+                    {"password", "password"}
+                };
+
+                var create = new NewRepositoryWebHook("web", config, "http://test.com/example")
+                {
+                    Events = new List<string> { "*" }
+                };
+
+                var request = create.ToRequest();
+                var requestRepeated = create.ToRequest();
+
+                Assert.Contains("*", request.Events);
+                Assert.Contains("*", requestRepeated.Events);
+
+            }
+
+            [Fact]
             public void ShouldThrowRepositoryWebHookConfigExceptionWhenDuplicateKeysExists()
             {
                 var config = new Dictionary<string, string>
