@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Octokit.Tests.Models
@@ -75,6 +76,46 @@ namespace Octokit.Tests.Models
                 Assert.Equal(request.Config["username"], config["username"]);
                 Assert.True(request.Config.ContainsKey("password"));
                 Assert.Equal(request.Config["password"], config["password"]);
+            }
+
+            [Fact]
+            public void CanSetHookAsActive()
+            {
+                var config = new Dictionary<string, string>
+                {
+                    {"hostname", "http://hostname.url"},
+                    {"username", "username"},
+                    {"password", "password"}
+                };
+
+                var create = new NewRepositoryWebHook("web", config, "http://test.com/example")
+                {
+                    Active = true
+                };
+
+                var request = create.ToRequest();
+
+                Assert.True(request.Active);
+            }
+
+            [Fact]
+            public void CanSetHookEvents()
+            {
+                var config = new Dictionary<string, string>
+                {
+                    {"hostname", "http://hostname.url"},
+                    {"username", "username"},
+                    {"password", "password"}
+                };
+
+                var create = new NewRepositoryWebHook("web", config, "http://test.com/example")
+                {
+                    Events = new List<string> { "*" }
+                };
+
+                var request = create.ToRequest();
+
+                Assert.Contains("*", request.Events);
             }
 
             [Fact]
