@@ -48,6 +48,7 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="NewRepositoryWebHook"/> class.
         /// Using default values for ContentType, Secret and InsecureSsl.
+        /// <str
         /// </summary>
         /// <param name="name">
         /// Use "web" for a webhook or use the name of a valid service. (See
@@ -110,14 +111,7 @@ namespace Octokit
 
         public override NewRepositoryHook ToRequest()
         {
-            var webHookConfig = GetWebHookConfig();
-            if (Config.Any(c => webHookConfig.ContainsKey(c.Key)))
-            {
-                var invalidConfigs = Config.Where(c => webHookConfig.ContainsKey(c.Key)).Select(c => c.Key);
-                throw new RepositoryWebHookConfigException(invalidConfigs);
-            }
-
-            Config = webHookConfig
+            Config = GetWebHookConfig()
                 .Union(Config, new WebHookConfigComparer())
                 .ToDictionary(k => k.Key, v => v.Value);
 

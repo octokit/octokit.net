@@ -7,9 +7,6 @@ namespace Octokit.Tests.Models
     {
         public class TheCtor
         {
-            string ExpectedRepositoryWebHookConfigExceptionMessage =
-                "Duplicate webhook config values found - these values: Url should not be passed in as part of the config values. Use the properties on the NewRepositoryWebHook class instead.";
-
             [Fact]
             public void UsesDefaultValuesForDefaultConfig()
             {
@@ -100,14 +97,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void CanSetHookEvents()
             {
-                var config = new Dictionary<string, string>
-                {
-                    {"hostname", "http://hostname.url"},
-                    {"username", "username"},
-                    {"password", "password"}
-                };
-
-                var create = new NewRepositoryWebHook("web", config, "http://test.com/example")
+                var create = new NewRepositoryWebHook("web", new Dictionary<string, string>(), "http://test.com/example")
                 {
                     Events = new List<string> { "*" }
                 };
@@ -120,14 +110,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void EnsureCanCallToRequestMultipleTimes()
             {
-                var config = new Dictionary<string, string>
-                {
-                    {"hostname", "http://hostname.url"},
-                    {"username", "username"},
-                    {"password", "password"}
-                };
-
-                var create = new NewRepositoryWebHook("web", config, "http://test.com/example")
+                var create = new NewRepositoryWebHook("web", new Dictionary<string, string>(), "http://test.com/example")
                 {
                     Events = new List<string> { "*" }
                 };
@@ -137,11 +120,22 @@ namespace Octokit.Tests.Models
 
                 Assert.Contains("*", request.Events);
                 Assert.Contains("*", requestRepeated.Events);
-
             }
 
             [Fact]
-            public void ShouldThrowRepositoryWebHookConfigExceptionWhenDuplicateKeysExists()
+            public void ShouldNotContainDuplicateConfigEntriesOnSubsequentRequests()
+            {
+                var create = new NewRepositoryWebHook("web", new Dictionary<string, string>(), "http://test.com/example");
+
+                var request = create.ToRequest();
+                var requestRepeated = create.ToRequest();
+
+                Assert.Equal(request.Config.Count, 4);
+                Assert.Equal(requestRepeated.Config.Count, 4);
+            }
+
+            [Fact]
+            public void ShouldNotContainDuplicateConfigEntriesOnSubsequentRequestsWithCustomisedConfig()
             {
                 var config = new Dictionary<string, string>
                 {
@@ -151,20 +145,32 @@ namespace Octokit.Tests.Models
                     {"password", "password"}
                 };
 
-                var create = new NewRepositoryWebHook("windowsazure", config, "http://test.com/example")
+                var create = new NewRepositoryWebHook("web", config, "http://test.com/example");
+
+                var request = create.ToRequest();
+                var requestRepeated = create.ToRequest();
+
+                //This is not 8, because `url` used in config, is already part of the base config
+                Assert.Equal(request.Config.Count, 7);
+                Assert.Equal(requestRepeated.Config.Count, 7);
+            }
+
+            [Fact]
+            public void PropertiesShouldTakePrecedenceOverConfigPassedIn()
+            {
+                var config = new Dictionary<string, string>
                 {
-                    ContentType = WebHookContentType.Json,
-                    Secret = string.Empty,
-                    InsecureSsl = true
+                    {"url", "http://originalurl.com/test"},
                 };
 
-                Assert.Equal(create.Url, "http://test.com/example");
-                Assert.Equal(create.ContentType, WebHookContentType.Json);
-                Assert.Empty(create.Secret);
-                Assert.True(create.InsecureSsl);
+                var create = new NewRepositoryWebHook("web", config, "http://test.com/example");
 
-                var ex = Assert.Throws<RepositoryWebHookConfigException>(() => create.ToRequest());
-                Assert.Equal(ExpectedRepositoryWebHookConfigExceptionMessage, ex.Message);
+                var request = create.ToRequest();
+
+                Assert.Equal(request.Config["url"], "http://test.com/example");
+
+                var subsequentRequest = create.ToRequest();
+                Assert.Equal(subsequentRequest.Config["url"], "http://test.com/example");
             }
         }
     }
