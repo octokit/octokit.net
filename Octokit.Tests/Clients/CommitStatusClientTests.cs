@@ -70,12 +70,12 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<CommitStatus>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/statuses"), options);
             }
-            
+
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new CommitStatusClient(Substitute.For<IApiConnection>());
-                
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", "sha"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, "sha"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null));
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new CommitStatusClient(Substitute.For<IApiConnection>());
-                
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCombined(null, "name", "sha"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCombined("owner", null, "sha"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCombined("owner", "name", null));

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -17,6 +18,7 @@ namespace Octokit
         public NewIssue(string title)
         {
             Title = title;
+            Assignees = new Collection<string>();
             Labels = new Collection<string>();
         }
 
@@ -36,7 +38,16 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
+        [Obsolete("Please use Assignees property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
         public string Assignee { get; set; }
+
+        /// <summary>
+        /// List of logins for the multiple users that this issue should be assigned to
+        /// </summary>
+        /// <remarks>
+        /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
+        /// </remarks>
+        public Collection<string> Assignees { get; private set; }
 
         /// <summary>
         /// Milestone to associate this issue with.

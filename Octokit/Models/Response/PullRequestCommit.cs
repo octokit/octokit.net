@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -12,7 +11,7 @@ namespace Octokit
     {
         public PullRequestCommit() { }
 
-        public PullRequestCommit(Committer author, Uri commentsUrl, Commit commit, Committer committer, Uri htmlUrl, IEnumerable<GitReference> parents, string sha, Uri url)
+        public PullRequestCommit(Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
         {
             Ensure.ArgumentNotNull(parents, "parents");
 
@@ -28,19 +27,19 @@ namespace Octokit
 
         public Committer Author { get; protected set; }
 
-        public Uri CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; protected set; }
 
         public Commit Commit { get; protected set; }
 
         public Committer Committer { get; protected set; }
 
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public string Sha { get; protected set; }
 
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         internal string DebuggerDisplay
         {

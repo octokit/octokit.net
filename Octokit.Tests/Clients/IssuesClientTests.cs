@@ -406,8 +406,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", newIssue);
 
-                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                    newIssue);
+                connection.Received().Post<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"), newIssue);
             }
 
             [Fact]
@@ -451,8 +450,7 @@ namespace Octokit.Tests.Clients
 
                 client.Update("fake", "repo", 42, issueUpdate);
 
-                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
-                    issueUpdate);
+                connection.Received().Patch<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"), issueUpdate);
             }
 
             [Fact]
@@ -609,10 +607,10 @@ namespace Octokit.Tests.Clients
 
             Assert.Equal(1, response.Body.Number);
 
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.Url);
-            Assert.Equal(new Uri("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1"), response.Body.HtmlUrl);
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1/comments"), response.Body.CommentsUrl);
-            Assert.Equal(new Uri("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1/events"), response.Body.EventsUrl);
+            Assert.Equal("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1", response.Body.Url);
+            Assert.Equal("https://github.com/octokit-net-test/public-repo-20131022050247078/issues/1", response.Body.HtmlUrl);
+            Assert.Equal("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1/comments", response.Body.CommentsUrl);
+            Assert.Equal("https://api.github.com/repos/octokit-net-test/public-repo-20131022050247078/issues/1/events", response.Body.EventsUrl);
         }
     }
 }

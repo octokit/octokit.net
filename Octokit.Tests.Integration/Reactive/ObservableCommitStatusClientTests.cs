@@ -12,7 +12,7 @@ namespace Octokit.Tests.Integration.Reactive
             readonly ObservableCommitStatusClient _commitStatusClient;
             const string owner = "octokit";
             const string name = "octokit.net";
-            const string reference = "1335f37";   
+            const string reference = "1335f37";
 
             public TheGetAllMethod()
             {
@@ -37,7 +37,7 @@ namespace Octokit.Tests.Integration.Reactive
                     PageCount = 1
                 };
 
-                var commitStatus = await _commitStatusClient.GetAll(owner, name ,reference , options).ToList();
+                var commitStatus = await _commitStatusClient.GetAll(owner, name, reference, options).ToList();
 
                 Assert.Equal(2, commitStatus.Count);
             }
@@ -75,10 +75,10 @@ namespace Octokit.Tests.Integration.Reactive
                     StartPage = 2
                 };
 
-                var secondPage = await _commitStatusClient.GetAll(owner, name, reference,skipStartOptions).ToList();             
+                var secondPage = await _commitStatusClient.GetAll(owner, name, reference, skipStartOptions).ToList();
 
                 Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
-                Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);                
+                Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
             }
         }
     }

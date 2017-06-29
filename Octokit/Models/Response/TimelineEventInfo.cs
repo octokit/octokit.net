@@ -28,7 +28,7 @@ namespace Octokit
         public string Url { get; protected set; }
         public User Actor { get; protected set; }
         public string CommitId { get; protected set; }
-        public EventInfoState Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; protected set; }
         public DateTimeOffset CreatedAt { get; protected set; }
         public Label Label { get; protected set; }
         public User Assignee { get; protected set; }

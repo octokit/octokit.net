@@ -1,9 +1,8 @@
-﻿using System;
-#if NET_45
 using System.Threading.Tasks;
 using System.Collections.Generic;
-#endif
+
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace Octokit
 {
@@ -102,7 +101,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request);
-        
+
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>

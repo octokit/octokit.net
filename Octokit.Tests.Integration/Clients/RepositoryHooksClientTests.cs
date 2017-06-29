@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsCorrectCountOfHooksWithoutStart()
             {
                 var github = Helper.GetAuthenticatedClient();
-                
+
                 var options = new ApiOptions
                 {
                     PageSize = 5,
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsCorrectCountOfHooksWithoutStartWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
-                
+
                 var options = new ApiOptions
                 {
                     PageSize = 5,

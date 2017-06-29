@@ -117,7 +117,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri AllOrganizations()
         {
-          return "organizations".FormatUri();
+            return "organizations".FormatUri();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri AllOrganizations(long since)
         {
-          return "organizations?since={0}".FormatUri(since);
+            return "organizations?since={0}".FormatUri(since);
         }
 
         /// <summary>
@@ -542,6 +542,18 @@ namespace Octokit
         public static Uri CheckAssignee(string owner, string name, string login)
         {
             return "repos/{0}/{1}/assignees/{2}".FormatUri(owner, name, login);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.        
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueAssignees(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/issues/{2}/assignees".FormatUri(owner, name, number);
         }
 
         /// <summary>
@@ -1722,6 +1734,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for admin enforcement for a protected branch
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        public static Uri RepoProtectedBranchAdminEnforcement(string owner, string name, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}/protection/enforce_admins".FormatUri(owner, name, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for admin enforcement for a protected branch
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        public static Uri RepoProtectedBranchAdminEnforcement(long repositoryId, string branchName)
+        {
+            return "repositories/{0}/branches/{1}/protection/enforce_admins".FormatUri(repositoryId, branchName);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for restrictions for a protected branch.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -2832,8 +2865,6 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for comparing two commits.</returns>
         public static Uri RepoCompare(long repositoryId, string @base, string head)
         {
-
-
             Ensure.ArgumentNotNullOrEmptyString(@base, "base");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
             var encodedBase = @base.UriEncode();
@@ -3326,6 +3357,29 @@ namespace Octokit
         public static Uri RepositoryTrafficClones(long repositoryId)
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, repo, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(long repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
         }
 
         /// <summary>

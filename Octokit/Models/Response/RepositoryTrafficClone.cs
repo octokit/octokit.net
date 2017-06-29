@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Octokit.Helpers;
 using Octokit.Internal;
 
 namespace Octokit
@@ -40,21 +39,14 @@ namespace Octokit
         public RepositoryTrafficClone() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public RepositoryTrafficClone(long timestamp, int count, int uniques)
+        public RepositoryTrafficClone(DateTimeOffset timestamp, int count, int uniques)
         {
-            TimestampAsUtcEpochSeconds = timestamp;
+            Timestamp = timestamp;
             Count = count;
             Uniques = uniques;
         }
 
-        [Parameter(Key = "ignoreThisField")]
-        public DateTimeOffset Timestamp
-        {
-            get { return TimestampAsUtcEpochSeconds.FromUnixTime(); }
-        }
-
-        [Parameter(Key = "timestamp")]
-        public long TimestampAsUtcEpochSeconds { get; protected set; }
+        public DateTimeOffset Timestamp { get; protected set; }
 
         public int Count { get; protected set; }
 
@@ -69,7 +61,10 @@ namespace Octokit
 
     public enum TrafficDayOrWeek
     {
+        [Parameter(Value = "day")]
         Day,
+
+        [Parameter(Value = "week")]
         Week
     }
 }

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     public enum InvitationPermissionType
     {
+        [Parameter(Value = "read")]
         Read,
+
+        [Parameter(Value = "write")]
         Write,
+
+        [Parameter(Value = "admin")]
         Admin
     }
 
@@ -36,7 +42,7 @@ namespace Octokit
 
         public User Inviter { get; protected set; }
 
-        public InvitationPermissionType Permissions { get; protected set; }
+        public StringEnum<InvitationPermissionType> Permissions { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 

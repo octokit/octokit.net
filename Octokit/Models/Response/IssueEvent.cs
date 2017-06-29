@@ -9,7 +9,7 @@ namespace Octokit
     {
         public IssueEvent() { }
 
-        public IssueEvent(int id, Uri url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, Uri commitUrl)
+        public IssueEvent(int id, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, string commitUrl)
         {
             Id = id;
             Url = url;
@@ -31,7 +31,7 @@ namespace Octokit
         /// <summary>
         /// The URL for this issue/pull request event.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// Always the User that generated the event.
@@ -51,7 +51,7 @@ namespace Octokit
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public EventInfoState Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; protected set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
@@ -61,7 +61,7 @@ namespace Octokit
         /// <summary>
         /// The commit URL of a commit that referenced this issue.
         /// </summary>
-        public Uri CommitUrl { get; protected set; }
+        public string CommitUrl { get; protected set; }
 
         /// <summary>
         /// Date the event occurred for the issue/pull request.

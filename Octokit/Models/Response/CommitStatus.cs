@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,7 +10,7 @@ namespace Octokit
     {
         public CommitStatus() { }
 
-        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, Uri targetUrl, string description, string context, int id, Uri url, User creator)
+        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, string targetUrl, string description, string context, int id, string url, User creator)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -35,13 +36,13 @@ namespace Octokit
         /// <summary>
         /// The state of the commit
         /// </summary>
-        public CommitState State { get; protected set; }
+        public StringEnum<CommitState> State { get; protected set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the
         /// ‘source’ of the Status.
         /// </summary>
-        public Uri TargetUrl { get; protected set; }
+        public string TargetUrl { get; protected set; }
 
         /// <summary>
         /// Short description of the status.
@@ -61,7 +62,7 @@ namespace Octokit
         /// <summary>
         /// The URL of the status.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The user that created the status.
@@ -85,21 +86,25 @@ namespace Octokit
         /// <summary>
         /// The commit state is still being determined. A build server might set this when it starts a build.
         /// </summary>
+        [Parameter(Value = "pending")]
         Pending,
 
         /// <summary>
         /// The build was successful for the commit.
         /// </summary>
+        [Parameter(Value = "success")]
         Success,
 
         /// <summary>
         /// There was some error with the build.
         /// </summary>
+        [Parameter(Value = "error")]
         Error,
 
         /// <summary>
         /// The build completed and reports a failure.
         /// </summary>
+        [Parameter(Value = "failure")]
         Failure
     }
 }

@@ -19,7 +19,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
-        
+
         /// <summary>
         /// Get all reactions for a specified Pull Request Review Comment.
         /// </summary>

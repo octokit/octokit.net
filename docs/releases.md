@@ -5,7 +5,7 @@
 To retrieve all releases for a repository:
 
 ```
-var releases = client.Release.GetAll("octokit", "octokit.net");
+var releases = client.Repository.Release.GetAll("octokit", "octokit.net");
 var latest = releases[0];
 Console.WriteLine(
     "The latest release is tagged at {0} and is named {1}", 
@@ -18,13 +18,13 @@ Console.WriteLine(
 To create a new release you must have a corresponding tag in the repository. See the `git-database.md` docs for details.
 
 ```
-var newRelease = new ReleaseUpdate("v1.0.0");
+var newRelease = new NewRelease("v1.0.0");
 newRelease.Name = "Version One Point Oh";
 newRelease.Body = "**This** is some *Markdown*";
 newRelease.Draft = true;
 newRelease.Prerelease = false;
 
-var result = await client.Release.Create("octokit", "octokit.net", newRelease);
+var result = await client.Repository.Release.Create("octokit", "octokit.net", newRelease);
 Console.WriteLine("Created release id {0}", release.Id);
 ```
 
@@ -35,12 +35,12 @@ Note that the `Draft` flag is used to indicate when a release should be publishe
 Once the release is ready for the public, you can apply an update to the release:
 
 ```
-var release = client.Release.Get("octokit", "octokit.net", 1);
+var release = client.Repository.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToUpdate();
 updateRelease.Draft = false;
 updateRelease.Name = "Version 1.0";
 updateRelease.TargetCommitish = "0edef870ecd885cc6506f1e3f08341e8b87370f2" // can also be a ref
-var result = await client.Release.Edit("octokit", "octokit.net", 1, updateRelease);
+var result = await client.Repository.Release.Edit("octokit", "octokit.net", 1, updateRelease);
 ```
 
 ### Upload Assets
@@ -55,8 +55,8 @@ var assetUpload = new ReleaseAssetUpload()
      ContentType = "application/zip",
      RawData = archiveContents
 };
-var release = client.Release.Get("octokit", "octokit.net", 1);
-var asset = await client.Release.UploadAsset(release, assetUpload);
+var release = client.Repository.Release.Get("octokit", "octokit.net", 1);
+var asset = await client.Repository.Release.UploadAsset(release, assetUpload);
 ```
 
 **TODO:** are there any known limits documented to upload assets?

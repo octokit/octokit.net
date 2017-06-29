@@ -103,6 +103,7 @@ namespace Octokit
         /// <summary>
         /// Deploy everything (default)
         /// </summary>
+        [Parameter(Value = "deploy")]
         Deploy,
 
         /// <summary>

@@ -320,91 +320,6 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetAllBranchesMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(gitHubClient);
-                var expected = new Uri("repos/owner/repo/branches", UriKind.Relative);
-
-                client.GetAllBranches("owner", "repo");
-
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(gitHubClient);
-                var expected = new Uri("repositories/1/branches", UriKind.Relative);
-
-                client.GetAllBranches(1);
-
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, null);
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithApiOptions()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(gitHubClient);
-                var expected = new Uri("repos/owner/name/branches", UriKind.Relative);
-
-                var options = new ApiOptions
-                {
-                    PageCount = 1,
-                    StartPage = 1,
-                    PageSize = 1
-                };
-
-                client.GetAllBranches("owner", "name", options);
-
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithRepositoryIdWithApiOptions()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(gitHubClient);
-                var expected = new Uri("repositories/1/branches", UriKind.Relative);
-
-                var options = new ApiOptions
-                {
-                    PageCount = 1,
-                    StartPage = 1,
-                    PageSize = 1
-                };
-
-                client.GetAllBranches(1, options);
-
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
-            }
-
-            [Fact]
-            public void EnsuresNonNullArguments()
-            {
-                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(null, "name", ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.GetAllBranches(1, null));
-
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "name"));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", ""));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("", "name", ApiOptions.None));
-                Assert.Throws<ArgumentException>(() => client.GetAllBranches("owner", "", ApiOptions.None));
-            }
-        }
-
         public class TheGetCommitMethod
         {
             [Fact]
@@ -656,7 +571,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages(null, "repo"));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllLanguages("owner", null));
-                
+
                 Assert.Throws<ArgumentException>(() => client.GetAllLanguages("", "repo"));
                 Assert.Throws<ArgumentException>(() => client.GetAllLanguages("owner", ""));
             }
@@ -838,49 +753,6 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetBranchMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(github);
-
-                client.GetBranch("owner", "repo", "branch");
-
-                github.Repository.Branch.Received(1).Get("owner", "repo", "branch");
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(github);
-
-                client.GetBranch(1, "branch");
-
-                github.Repository.Branch.Received(1).Get(1, "branch");
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch(null, "repo", "branch"));
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", null, "branch"));
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch("owner", "repo", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.GetBranch(1, null));
-
-                Assert.Throws<ArgumentException>(() => client.GetBranch("", "repo", "branch"));
-                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "", "branch"));
-                Assert.Throws<ArgumentException>(() => client.GetBranch("owner", "repo", ""));
-
-                Assert.Throws<ArgumentException>(() => client.GetBranch(1, ""));
-            }
-        }
-
         public class TheEditMethod
         {
             [Fact]
@@ -888,7 +760,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("anyreponame");
 
                 client.Edit("owner", "repo", update);
 
@@ -900,7 +772,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("anyreponame");
 
                 client.Edit(1, update);
 
@@ -911,7 +783,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("anyreponame");
 
                 Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, update));
@@ -921,54 +793,6 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.Edit("", "repo", update));
                 Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
-            }
-        }
-
-        public class TheEditBranchMethod
-        {
-            [Fact]
-            public void PatchsTheCorrectUrl()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(github);
-                var update = new BranchUpdate();
-
-                client.EditBranch("owner", "repo", "branch", update);
-
-                github.Repository.Branch.Received(1).Edit("owner", "repo", "branch", update);
-            }
-
-            [Fact]
-            public void PatchsTheCorrectUrlWithRepositoryId()
-            {
-                var github = Substitute.For<IGitHubClient>();
-                var client = new ObservableRepositoriesClient(github);
-                var update = new BranchUpdate();
-
-                client.EditBranch(1, "branch", update);
-
-                github.Repository.Branch.Received(1).Edit(1, "branch", update);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-                var update = new BranchUpdate();
-
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch(null, "repo", "branch", update));
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", null, "branch", update));
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", "repo", null, update));
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch("owner", "repo", "branch", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch(1, null, update));
-                Assert.Throws<ArgumentNullException>(() => client.EditBranch(1, "branch", null));
-
-                Assert.Throws<ArgumentException>(() => client.EditBranch("", "repo", "branch", update));
-                Assert.Throws<ArgumentException>(() => client.EditBranch("owner", "", "branch", update));
-                Assert.Throws<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
-
-                Assert.Throws<ArgumentException>(() => client.EditBranch(1, "", update));
             }
         }
 

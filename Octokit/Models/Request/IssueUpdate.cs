@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -27,8 +28,16 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
         /// </remarks>
-        [SerializeNull]
+        [Obsolete("Please use Assignees property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
         public string Assignee { get; set; }
+
+        /// <summary>
+        /// List of logins for the multiple users that this issue should be assigned to
+        /// </summary>
+        /// <remarks>
+        /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
+        /// </remarks>
+        public ICollection<string> Assignees { get; private set; }
 
         /// <summary>
         /// Milestone to associate this issue with.
@@ -62,6 +71,54 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Adds the specified assigness to the issue.
+        /// </summary>
+        /// <param name="name">The login of the assignee.</param>
+        public void AddAssignee(string name)
+        {
+            // lazily create the assignees array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }
+
+            Assignees.Add(name);
+        }
+
+        /// <summary>
+        /// Clears all the assignees.
+        /// </summary>
+        public void ClearAssignees()
+        {
+            // lazily create the assignees array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }
+            else
+            {
+                Assignees.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified assignee from the issue
+        /// </summary>
+        /// <param name="name">The login of the assignee to remove</param>
+        public void RemoveAssignee(string name)
+        {
+            // lazily create the assignees array
+            if (Assignees == null)
+            {
+                Assignees = new List<string>();
+            }
+            else
+            {
+                Assignees.Remove(name);
+            }
+        }
+
+        /// <summary>
         /// Adds the specified label to the issue.
         /// </summary>
         /// <param name="name">The name of the label.</param>
@@ -89,6 +146,23 @@ namespace Octokit
             else
             {
                 Labels.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified label from the issue
+        /// </summary>
+        /// <param name="name">The name of the label to remove</param>
+        public void RemoveLabel(string name)
+        {
+            // lazily create the label array
+            if (Labels == null)
+            {
+                Labels = new List<string>();
+            }
+            else
+            {
+                Labels.Remove(name);
             }
         }
     }

@@ -139,14 +139,14 @@ public class IssuesLabelsClientTests : IDisposable
 
         for (int i = 0; i < 2; i++)
         {
-            var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("test label " + (i + 1), "FFFFF" + (i+1)));
+            var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("test label " + (i + 1), "FFFFF" + (i + 1)));
             labels.Add(label);
             issueUpdate.AddLabel(label.Name);
         }
 
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.Empty(issueLabelsInfo);
-        
+
         var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
         Assert.NotNull(updated);
 
@@ -173,14 +173,14 @@ public class IssuesLabelsClientTests : IDisposable
 
         for (int i = 0; i < 2; i++)
         {
-            var label = await _issuesLabelsClient.Create(_context.Repository.Id, new NewLabel("test label " + (i + 1), "FFFFF" + (i+1)));
+            var label = await _issuesLabelsClient.Create(_context.Repository.Id, new NewLabel("test label " + (i + 1), "FFFFF" + (i + 1)));
             labels.Add(label);
             issueUpdate.AddLabel(label.Name);
         }
 
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
         Assert.Empty(issueLabelsInfo);
-        
+
         var updated = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
         Assert.NotNull(updated);
 
@@ -202,7 +202,7 @@ public class IssuesLabelsClientTests : IDisposable
     {
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewIssue("A test issue") { Body = "A new unassigned issue" });
         var issueUpdate = new IssueUpdate();
-        
+
         for (int i = 0; i < 2; i++)
         {
             var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewLabel("test label " + (i + 1), "FFFFF" + (i + 1)));
@@ -243,7 +243,7 @@ public class IssuesLabelsClientTests : IDisposable
     {
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, new NewIssue("A test issue") { Body = "A new unassigned issue" });
         var issueUpdate = new IssueUpdate();
-        
+
         for (int i = 0; i < 2; i++)
         {
             var label = await _issuesLabelsClient.Create(_context.Repository.Id, new NewLabel("test label " + (i + 1), "FFFFF" + (i + 1)));
@@ -521,7 +521,7 @@ public class IssuesLabelsClientTests : IDisposable
         var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
-        
+
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.RepositoryOwner, _context.RepositoryName, milestone.Number);
         Assert.Empty(issueLabelsInfo);
 
@@ -538,7 +538,7 @@ public class IssuesLabelsClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task CanListLabelsForAnMilestoneWithRepositoryId()
+    public async Task CanListLabelsForAMilestoneWithRepositoryId()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
         var newLabel = new NewLabel("test label", "FFFFFF");
@@ -547,7 +547,7 @@ public class IssuesLabelsClientTests : IDisposable
         var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         var milestone = await _issuesClient.Milestone.Create(_context.RepositoryOwner, _context.RepositoryName, newMilestone);
-        
+
         var issueLabelsInfo = await _issuesLabelsClient.GetAllForMilestone(_context.Repository.Id, milestone.Number);
         Assert.Empty(issueLabelsInfo);
 
@@ -853,7 +853,7 @@ public class IssuesLabelsClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.NotNull(issue);
 
-        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label.Name });
 
         var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
@@ -895,7 +895,7 @@ public class IssuesLabelsClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.NotNull(issue);
 
-        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label.Name });
         await _issuesLabelsClient.RemoveAllFromIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
@@ -935,7 +935,7 @@ public class IssuesLabelsClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.NotNull(issue);
 
-        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label.Name });
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label.Name });
         await _issuesLabelsClient.RemoveFromIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, label.Name);
 
         var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
@@ -978,7 +978,7 @@ public class IssuesLabelsClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
         Assert.NotNull(issue);
 
-        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new []{ label1.Name });
+        await _issuesLabelsClient.AddToIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label1.Name });
         await _issuesLabelsClient.ReplaceAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new[] { label2.Name });
 
         var labels = await _issuesLabelsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);

@@ -72,11 +72,6 @@ Generated_Code #added for RIA/Silverlight projects
 nunit-*.xml
 *.userprefs
 packaging/
-tools/FAKE.Core
-tools/SourceLink.Fake
-tools/xunit.runner.console
-tools/Octokit.CodeFormatter
-tools/FSharp.Data
 *.ncrunch*
 *.GhostDoc.xml
 
@@ -94,4 +89,16 @@ docs/_build
 Backup/
 
 # .NET Core
-project.lock.json
+*.lock.json
+
+# VSCode
+**/.vscode/*
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
+
+# CAKE
+.dotnet/*
+tools/*
+!tools/gitversion_wrapper.sh
+!tools/LINQPad

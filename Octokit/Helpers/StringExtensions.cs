@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -68,31 +67,24 @@ namespace Octokit
             return new Uri(template);
         }
 
-#if NETFX_CORE
-        public static PropertyInfo GetProperty(this Type t, string propertyName)
-        {
-            return t.GetTypeInfo().GetDeclaredProperty(propertyName);
-        }
-#endif
-
         // :trollface:
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
             Justification = "Ruby don't care. Ruby don't play that.")]
         public static string ToRubyCase(this string propertyName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(propertyName, "s");
+            Ensure.ArgumentNotNullOrEmptyString(propertyName, "propertyName");
             return string.Join("_", propertyName.SplitUpperCase()).ToLowerInvariant();
         }
 
         public static string FromRubyCase(this string propertyName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(propertyName, "s");
+            Ensure.ArgumentNotNullOrEmptyString(propertyName, "propertyName");
             return string.Join("", propertyName.Split('_')).ToCapitalizedInvariant();
         }
 
         public static string ToCapitalizedInvariant(this string value)
         {
-            Ensure.ArgumentNotNullOrEmptyString(value, "s");
+            Ensure.ArgumentNotNullOrEmptyString(value, "value");
             return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
         }
         static IEnumerable<string> SplitUpperCase(this string source)
@@ -123,7 +115,7 @@ namespace Octokit
         // Username may only contain alphanumeric characters or single hyphens
         // and cannot begin or end with a hyphen
         static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-_]{1,}",
-#if (!PORTABLE && !NETFX_CORE)
+#if HAS_REGEX_COMPILED_OPTIONS
             RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Security;
 
 namespace Octokit
@@ -16,7 +18,7 @@ namespace Octokit
     /// </para>
     /// <para>See http://developer.github.com/v3/#rate-limiting for more details.</para>
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -76,7 +78,7 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "API Rate Limit exceeded"; }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of RateLimitExceededException
         /// </summary>

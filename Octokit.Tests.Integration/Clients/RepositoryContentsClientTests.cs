@@ -73,7 +73,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -146,7 +146,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -190,7 +190,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -263,7 +263,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]

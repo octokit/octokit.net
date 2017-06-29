@@ -58,15 +58,21 @@ namespace Octokit
         /// <summary>
         /// Sort by created date (default)
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
+
         /// <summary>
         /// Sort by last updated date
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated,
+
         /// <summary>
         /// Sort by popularity (comment count)
         /// </summary>
+        [Parameter(Value = "popularity")]
         Popularity,
+
         /// <summary>
         /// Sort by age (filtering by pulls updated in the last month)
         /// </summary>

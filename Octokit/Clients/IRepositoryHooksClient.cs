@@ -19,7 +19,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string name);
-        
+
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>

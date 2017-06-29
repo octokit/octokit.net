@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Xunit;
@@ -9,7 +10,7 @@ namespace Octokit.Tests.Integration.Reactive
     {
         public class TheGetAllForCurrentMethod
         {
-            readonly ObservableFollowersClient _followersClient;            
+            readonly ObservableFollowersClient _followersClient;
 
             public TheGetAllForCurrentMethod()
             {
@@ -18,7 +19,7 @@ namespace Octokit.Tests.Integration.Reactive
                 _followersClient = new ObservableFollowersClient(github);
             }
 
-            [IntegrationTest]       
+            [IntegrationTest]
             public async Task ReturnsFollowers()
             {
                 var followers = await _followersClient.GetAllForCurrent().ToList();
@@ -30,7 +31,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfFollowersWithoutStart()
             {
                 var options = new ApiOptions
-                {   
+                {
                     PageSize = 1,
                     PageCount = 1
                 };
@@ -75,7 +76,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var secondFollowersPage = await _followersClient.GetAllForCurrent(skipStartOptions).ToList();
 
-                Assert.NotEqual(firstFollowersPage[0].Id, secondFollowersPage[0].Id);               
+                Assert.NotEqual(firstFollowersPage[0].Id, secondFollowersPage[0].Id);
             }
         }
 
@@ -153,15 +154,19 @@ namespace Octokit.Tests.Integration.Reactive
             }
         }
 
-        public class TheGetAllFollowingForCurrentMethod
+        public class TheGetAllFollowingForCurrentMethod : IDisposable
         {
-            readonly ObservableFollowersClient _followersClient;            
+            readonly ObservableFollowersClient _followersClient;
 
             public TheGetAllFollowingForCurrentMethod()
             {
                 var github = Helper.GetAuthenticatedClient();
 
                 _followersClient = new ObservableFollowersClient(github);
+
+                // Follow someone to set initial state
+                _followersClient.Follow("alfhenrik").Wait();
+                _followersClient.Follow("ryangribble").Wait();
             }
 
             [IntegrationTest]
@@ -221,7 +226,13 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var secondFollowingPage = await _followersClient.GetAllFollowingForCurrent(skipStartOptions).ToList();
 
-                Assert.NotEqual(firstFollowingPage[0].Id, secondFollowingPage[0].Id);                
+                Assert.NotEqual(firstFollowingPage[0].Id, secondFollowingPage[0].Id);
+            }
+
+            public void Dispose()
+            {
+                _followersClient.Unfollow("alfhenrik");
+                _followersClient.Unfollow("ryangribble");
             }
         }
 

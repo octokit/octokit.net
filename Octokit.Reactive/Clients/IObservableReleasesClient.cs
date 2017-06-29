@@ -231,7 +231,7 @@ namespace Octokit.Reactive
         /// <param name="data">Description of the asset with its data</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data);
-        
+
         /// <summary>
         /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
         /// </summary>

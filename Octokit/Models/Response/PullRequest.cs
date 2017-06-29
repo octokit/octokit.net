@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -14,8 +15,9 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(Uri url, Uri htmlUrl, Uri diffUrl, Uri patchUrl, Uri issueUrl, Uri statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, bool? mergeable, User mergedBy, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(long id, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, IReadOnlyList<User> requestedReviewers)
         {
+            Id = id;
             Url = url;
             HtmlUrl = htmlUrl;
             DiffUrl = diffUrl;
@@ -34,8 +36,10 @@ namespace Octokit
             Base = @base;
             User = user;
             Assignee = assignee;
+            Assignees = assignees;
             Mergeable = mergeable;
             MergedBy = mergedBy;
+            MergeCommitSha = mergeCommitSha;
             Comments = comments;
             Commits = commits;
             Additions = additions;
@@ -43,37 +47,43 @@ namespace Octokit
             ChangedFiles = changedFiles;
             Milestone = milestone;
             Locked = locked;
+            RequestedReviewers = requestedReviewers;
         }
+
+        /// <summary>
+        /// The internal Id for this pull request (not the pull request number)
+        /// </summary>
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The URL for this pull request.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request page.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request's diff (.diff) file.
         /// </summary>
-        public Uri DiffUrl { get; protected set; }
+        public string DiffUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request's patch (.patch) file.
         /// </summary>
-        public Uri PatchUrl { get; protected set; }
+        public string PatchUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the specific pull request issue.
         /// </summary>
-        public Uri IssueUrl { get; protected set; }
+        public string IssueUrl { get; protected set; }
 
         /// <summary>
         /// The URL for the pull request statuses.
         /// </summary>
-        public Uri StatusesUrl { get; protected set; }
+        public string StatusesUrl { get; protected set; }
 
         /// <summary>
         /// The pull request number.
@@ -83,7 +93,7 @@ namespace Octokit
         /// <summary>
         /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
-        public ItemState State { get; protected set; }
+        public StringEnum<ItemState> State { get; protected set; }
 
         /// <summary>
         /// Title of the pull request.
@@ -136,6 +146,11 @@ namespace Octokit
         public User Assignee { get; protected set; }
 
         /// <summary>
+        ///The multiple users this pull request is assigned to.
+        /// </summary>
+        public IReadOnlyList<User> Assignees { get; protected set; }
+
+        /// <summary>
         /// The milestone, if any, that this pull request is assigned to.
         /// </summary>
         public Milestone Milestone { get; protected set; }
@@ -157,6 +172,15 @@ namespace Octokit
         /// The user who merged the pull request.
         /// </summary>
         public User MergedBy { get; protected set; }
+
+        /// <summary>
+        /// The value of this field changes depending on the state of the pull request.
+        /// Not Merged - the hash of the test commit used to determine mergability.
+        /// Merged with merge commit - the hash of said merge commit.
+        /// Merged via squashing - the hash of the squashed commit added to the base branch.
+        /// Merged via rebase - the hash of the commit that the base branch was updated to.
+        /// </summary>
+        public string MergeCommitSha { get; protected set; }
 
         /// <summary>
         /// Total number of comments contained in the pull request.
@@ -187,6 +211,11 @@ namespace Octokit
         /// If the issue is locked or not
         /// </summary>
         public bool Locked { get; protected set; }
+
+        /// <summary>
+        /// Users requested for review
+        /// </summary>
+        public IReadOnlyList<User> RequestedReviewers { get; protected set; }
 
         internal string DebuggerDisplay
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,7 +10,7 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, Uri url, Uri htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
+        public IssueComment(int id, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
         {
             Id = id;
             Url = url;
@@ -28,12 +29,12 @@ namespace Octokit
         /// <summary>
         /// The URL for this issue comment.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The html URL for this issue comment.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// Details about the issue comment.
@@ -68,11 +69,13 @@ namespace Octokit
         /// <summary>
         /// Sort by create date (default)
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated
     }
 }

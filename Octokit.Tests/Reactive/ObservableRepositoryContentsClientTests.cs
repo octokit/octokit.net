@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Equal("<html>README</html>", htmlReadme);
                 apiConnection.Received().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme.md"), null);
             }
-            
+
             [Fact]
             public async Task ReturnsReadmeWithRepositoryId()
             {
@@ -781,7 +781,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 client.GetArchive("org", "repo");
-                
+
                 gitHubClient.Received().Repository.Content.GetArchive("org", "repo");
             }
 
@@ -836,7 +836,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableRepositoryContentsClient(gitHubClient);
 
                 client.GetArchive(1, ArchiveFormat.Zipball, "ref");
-                
+
                 gitHubClient.Received().Repository.Content.GetArchive(1, ArchiveFormat.Zipball, "ref");
             }
 

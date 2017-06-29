@@ -4,7 +4,6 @@ using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 using System.Reactive.Linq;
 
-
 namespace Octokit.Reactive
 {
     /// <summary>

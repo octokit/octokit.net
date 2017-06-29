@@ -513,91 +513,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllBranchesMethod
-        {
-            [Fact]
-            public async Task RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetAllBranches("owner", "name");
-
-                connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetAllBranches(1);
-
-                connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithApiOptions()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                var options = new ApiOptions
-                {
-                    PageCount = 1,
-                    StartPage = 1,
-                    PageSize = 1
-                };
-
-                await client.GetAllBranches("owner", "name", options);
-
-                connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", options);
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithRepositoryIdWithApiOptions()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                var options = new ApiOptions
-                {
-                    PageCount = 1,
-                    StartPage = 1,
-                    PageSize = 1
-                };
-
-                await client.GetAllBranches(1, options);
-
-                connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", options);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(null, "name"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(null, "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches("owner", "name", null));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllBranches(1, null));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("", "name"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("owner", ""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("", "name", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllBranches("owner", "", ApiOptions.None));
-            }
-        }
-
         public class TheGetAllContributorsMethod
         {
             [Fact]
@@ -965,49 +880,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetBranchMethod
-        {
-            [Fact]
-            public async Task RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetBranch("owner", "repo", "branch");
-
-                connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null, "application/vnd.github.loki-preview+json");
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetBranch(1, "branch");
-
-                connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), null, "application/vnd.github.loki-preview+json");
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch(null, "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch("owner", null, "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch("owner", "repo", null));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetBranch(1, null));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("", "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("owner", "", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetBranch("owner", "repo", ""));
-            }
-        }
-
         public class TheEditMethod
         {
             [Fact]
@@ -1040,7 +912,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-                var update = new RepositoryUpdate();
+                var update = new RepositoryUpdate("anyreponame");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", null, update));
@@ -1156,58 +1028,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .GetAll<GitHubCommit>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits"), Args.EmptyDictionary, Args.ApiOptions);
-            }
-        }
-
-        public class TheEditBranchMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var update = new BranchUpdate();
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-
-                client.EditBranch("owner", "repo", "branch", update);
-
-                connection.Received()
-                    .Patch<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), Arg.Any<BranchUpdate>(), previewAcceptsHeader);
-            }
-
-            [Fact]
-            public void RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var update = new BranchUpdate();
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-
-                client.EditBranch(1, "branch", update);
-
-                connection.Received()
-                    .Patch<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), Arg.Any<BranchUpdate>(), previewAcceptsHeader);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-                var update = new BranchUpdate();
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch(null, "repo", "branch", update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", null, "branch", update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", "repo", null, update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch("owner", "repo", "branch", null));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch(1, null, update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.EditBranch(1, "branch", null));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("", "repo", "branch", update));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "", "branch", update));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch("owner", "repo", "", update));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.EditBranch(1, "", update));
             }
         }
 

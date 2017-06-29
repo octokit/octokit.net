@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 
 namespace Octokit
 {
@@ -8,7 +10,7 @@ namespace Octokit
     /// Exception thrown when creating a private repository, but the user's private quota is or would be exceeded
     /// by creating it.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -35,7 +37,7 @@ namespace Octokit
             }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of PrivateRepositoryQuotaExceededException
         /// </summary>

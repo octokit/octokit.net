@@ -16,7 +16,7 @@ namespace Octokit
         public IssueCommentRequest()
         {
             // Default arguments
-            Sort = PullRequestReviewCommentSort.Created;
+            Sort = IssueCommentSort.Created;
             Direction = SortDirection.Ascending;
             Since = null;
         }
@@ -24,7 +24,7 @@ namespace Octokit
         /// <summary>
         /// Can be either created or updated. Default: created.
         /// </summary>
-        public PullRequestReviewCommentSort Sort { get; set; }
+        public IssueCommentSort Sort { get; set; }
 
         /// <summary>
         /// Can be either asc or desc. Default: asc.

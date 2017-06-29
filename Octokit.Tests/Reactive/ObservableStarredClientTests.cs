@@ -265,7 +265,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(request, options);
 
-                connection.Received().Get<List<Repository>>(endpoint, 
+                connection.Received().Get<List<Repository>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"), null);
             }
 
@@ -301,8 +301,8 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrentWithTimestamps(options);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, 
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), 
+                connection.Received().Get<List<RepositoryStar>>(endpoint,
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"),
                     "application/vnd.github.v3.star+json");
             }
 
@@ -343,7 +343,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrentWithTimestamps(request, options);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, 
+                connection.Received().Get<List<RepositoryStar>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"),
                     "application/vnd.github.v3.star+json");
             }
@@ -399,7 +399,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("banana", options);
 
-                connection.Received().Get<List<Repository>>(endpoint, 
+                connection.Received().Get<List<Repository>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), null);
             }
 
@@ -439,7 +439,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("banana", starredRequest, options);
 
-                connection.Received().Get<List<Repository>>(endpoint, 
+                connection.Received().Get<List<Repository>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"),
                     null);
             }
@@ -477,7 +477,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUserWithTimestamps("banana", options);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, 
+                connection.Received().Get<List<RepositoryStar>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"),
                     "application/vnd.github.v3.star+json");
             }

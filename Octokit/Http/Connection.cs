@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
+#if !HAS_ENVIRONMENT
+using System.Runtime.InteropServices;
+#endif
 
 namespace Octokit
 {
@@ -59,7 +62,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="baseAddress">
-        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
         /// instance</param>
         public Connection(ProductHeaderValue productInformation, Uri baseAddress)
             : this(productInformation, baseAddress, _anonymousCredentials)
@@ -87,7 +90,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="baseAddress">
-        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -104,7 +107,7 @@ namespace Octokit
         /// the user agent for analytics purposes.
         /// </param>
         /// <param name="baseAddress">
-        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise 
+        /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
         /// instance</param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         /// <param name="httpClient">A raw <see cref="IHttpClient"/> used to make requests</param>
@@ -500,6 +503,20 @@ namespace Octokit
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(data, "data");
+
+            return SendData<T>(uri, HttpMethod.Delete, data, null, null, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
@@ -533,9 +550,9 @@ namespace Octokit
         /// Gets or sets the credentials used by the connection.
         /// </summary>
         /// <remarks>
-        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
-        /// <see cref="ICredentialStore"/> to the constructor. 
-        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an
+        /// <see cref="ICredentialStore"/> to the constructor.
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         public Credentials Credentials
@@ -619,11 +636,23 @@ namespace Octokit
         static Exception GetExceptionForForbidden(IResponse response)
         {
             string body = response.Body as string ?? "";
-            return body.Contains("rate limit exceeded")
-                ? new RateLimitExceededException(response)
-                : body.Contains("number of login attempts exceeded")
-                    ? new LoginAttemptsExceededException(response)
-                    : new ForbiddenException(response);
+
+            if (body.Contains("rate limit exceeded"))
+            {
+                return new RateLimitExceededException(response);
+            }
+
+            if (body.Contains("number of login attempts exceeded"))
+            {
+                return new LoginAttemptsExceededException(response);
+            }
+
+            if (body.Contains("abuse-rate-limits") || body.Contains("abuse detection mechanism"))
+            {
+                return new AbuseException(response);
+            }
+
+            return new ForbiddenException(response);
         }
 
         internal static TwoFactorType ParseTwoFactorType(IResponse restResponse)
@@ -652,17 +681,19 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
+            var format =
+#if !HAS_ENVIRONMENT
+                "{0} ({1}; {2}; {3}; Octokit {4})";
+#else
+                "{0} ({1} {2}; {3}; {4}; Octokit {5})";
+#endif
+
             return string.Format(CultureInfo.InvariantCulture,
-                "{0} ({1} {2}; {3}; {4}; Octokit {5})",
+                format,
                 productInformation,
-#if NETFX_CORE
-                // Microsoft doesn't want you changing your Windows Store Application based on the processor or
-                // Windows version. If we really wanted this information, we could do a best guess based on
-                // this approach: http://attackpattern.com/2013/03/device-information-in-windows-8-store-apps/
-                // But I don't think we care all that much.
-                "WindowsRT",
-                "8+",
-                "unknown",
+#if !HAS_ENVIRONMENT
+                RuntimeInformation.OSDescription,
+                RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant(),
 #else
                 Environment.OSVersion.Platform,
                 Environment.OSVersion.Version.ToString(3),

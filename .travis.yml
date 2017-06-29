@@ -5,22 +5,15 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      mono: 4.2.3
-      dotnet: 1.0.0-preview2-003121
+      dotnet: 1.0.1
     - os: osx
       osx_image: xcode8
-      mono: 4.2.3
-      dotnet: 1.0.0-preview2-003121
+      dotnet: 1.0.1
 
-before_install:
-  - if test "$TRAVIS_OS_NAME" == "osx"; then ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/; ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/; fi
-
-install:
-  - nuget restore Octokit-Mono.sln
+before_script:
+  - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
 
 script:
-  - mono tools/nuget/NuGet.exe restore Octokit-Mono.sln
-  - ./build.sh BuildMono
-  - ./build.sh
+  - git fetch --unshallow --tags
   - dotnet --info
-  - ./build.sh UnitTestsDotNetCore
+  - ./build.sh --linksources=true

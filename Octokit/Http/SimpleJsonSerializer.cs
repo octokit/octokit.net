@@ -9,7 +9,7 @@ namespace Octokit.Internal
 {
     public class SimpleJsonSerializer : IJsonSerializer
     {
-        readonly GitHubSerializerStrategy _serializationStrategy = new GitHubSerializerStrategy();
+        static readonly GitHubSerializerStrategy _serializationStrategy = new GitHubSerializerStrategy();
 
         public string Serialize(object item)
         {
@@ -19,6 +19,16 @@ namespace Octokit.Internal
         public T Deserialize<T>(string json)
         {
             return SimpleJson.DeserializeObject<T>(json, _serializationStrategy);
+        }
+
+        internal static string SerializeEnum(Enum value)
+        {
+            return _serializationStrategy.SerializeEnumHelper(value).ToString();
+        }
+
+        internal static object DeserializeEnum(string value, Type type)
+        {
+            return _serializationStrategy.DeserializeEnumHelper(value, type);
         }
 
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
@@ -75,11 +85,53 @@ namespace Octokit.Internal
                 return true;
             }
 
+            internal object SerializeEnumHelper(Enum p)
+            {
+                return SerializeEnum(p);
+            }
+
             [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase",
                 Justification = "The API expects lowercase values")]
             protected override object SerializeEnum(Enum p)
             {
                 return p.ToParameter();
+            }
+
+            internal object DeserializeEnumHelper(string value, Type type)
+            {
+                if (!_cachedEnums.ContainsKey(type))
+                {
+                    //First add type to Dictionary
+                    _cachedEnums.Add(type, new Dictionary<object, object>());
+
+                    //then try to get all custom attributes, this happens only once per type
+                    var fields = type.GetRuntimeFields();
+                    foreach (var field in fields)
+                    {
+                        if (field.Name == "value__")
+                            continue;
+                        var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
+                        if (attribute != null)
+                        {
+                            if (!_cachedEnums[type].ContainsKey(attribute.Value))
+                            {
+                                var fieldValue = field.GetValue(null);
+                                _cachedEnums[type].Add(attribute.Value, fieldValue);
+                            }
+                        }
+                    }
+                }
+                if (_cachedEnums[type].ContainsKey(value))
+                {
+                    return _cachedEnums[type][value];
+                }
+                else
+                {
+                    //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
+                    var parsed = Enum.Parse(type, value, ignoreCase: true);
+                    _cachedEnums[type].Add(value, parsed);
+                    return parsed;
+                }
             }
 
             private string _type;
@@ -92,40 +144,11 @@ namespace Octokit.Internal
 
                 if (stringValue != null)
                 {
-                    if (ReflectionUtils.GetTypeInfo(type).IsEnum)
-                    {
-                        if (!_cachedEnums.ContainsKey(type))
-                        {
-                            //First add type to Dictionary
-                            _cachedEnums.Add(type, new Dictionary<object, object>());
-                            //then try to get all custom attributes, this happens only once per type
-                            var fields = type.GetRuntimeFields();
-                            foreach (var field in fields)
-                            {
-                                if (field.Name == "value__")
-                                    continue;
-                                var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
-                                if (attribute != null)
-                                {
-                                    if (attribute.Value.Equals(value))
-                                        _cachedEnums[type].Add(attribute.Value, field.GetValue(null));
+                    var typeInfo = ReflectionUtils.GetTypeInfo(type);
 
-                                }
-                            }
-                        }
-                        if (_cachedEnums[type].ContainsKey(value))
-                        {
-                            return _cachedEnums[type][value];
-                        }
-                        else
-                        {
-                            //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
-                            // remove '-' from values coming in to be able to enum utf-8
-                            stringValue = RemoveHyphenAndUnderscore(stringValue);
-                            var parsed = Enum.Parse(type, stringValue, ignoreCase: true);
-                            _cachedEnums[type].Add(value, parsed);
-                            return parsed;
-                        }
+                    if (typeInfo.IsEnum)
+                    {
+                        return DeserializeEnumHelper(stringValue, type);
                     }
 
                     if (ReflectionUtils.IsNullableType(type))
@@ -133,8 +156,7 @@ namespace Octokit.Internal
                         var underlyingType = Nullable.GetUnderlyingType(type);
                         if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
                         {
-                            stringValue = RemoveHyphenAndUnderscore(stringValue);
-                            return Enum.Parse(underlyingType, stringValue, ignoreCase: true);
+                            return DeserializeEnumHelper(stringValue, underlyingType);
                         }
                     }
 
@@ -146,6 +168,16 @@ namespace Octokit.Internal
                         if (innerType.IsAssignableFrom(typeof(string)))
                         {
                             return stringValue.Split(',');
+                        }
+                    }
+
+                    if (typeInfo.IsGenericType)
+                    {
+                        var typeDefinition = typeInfo.GetGenericTypeDefinition();
+
+                        if (typeof(StringEnum<>).IsAssignableFrom(typeDefinition))
+                        {
+                            return Activator.CreateInstance(type, stringValue);
                         }
                     }
                 }
@@ -164,15 +196,6 @@ namespace Octokit.Internal
                 }
 
                 return base.DeserializeObject(value, type);
-            }
-
-            static string RemoveHyphenAndUnderscore(string stringValue)
-            {
-                // remove '-' from values coming in to be able to enum utf-8
-                stringValue = stringValue.Replace("-", "");
-                // remove '-' from values coming in to be able to enum EventInfoState names with underscores in them. Like "head_ref_deleted" 
-                stringValue = stringValue.Replace("_", "");
-                return stringValue;
             }
 
             internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)

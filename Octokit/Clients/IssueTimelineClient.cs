@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-#endif
 
 namespace Octokit
 {
@@ -11,7 +9,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/issues/timeline/">Issue Timeline API documentation</a> for more information.
     /// </remarks>
-    public class IssueTimelineClient: ApiClient, IIssueTimelineClient
+    public class IssueTimelineClient : ApiClient, IIssueTimelineClient
     {
         public IssueTimelineClient(IApiConnection apiConnection) : base(apiConnection)
         {

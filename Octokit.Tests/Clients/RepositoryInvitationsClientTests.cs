@@ -107,6 +107,5 @@ public class RepositoryInvitationsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(1, 2, null));
         }
     }
-
 }
 

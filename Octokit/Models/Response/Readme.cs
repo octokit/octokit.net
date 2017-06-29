@@ -20,17 +20,17 @@ namespace Octokit
             Ensure.ArgumentNotNull(client, "client");
 
             Name = response.Name;
-            Url = new Uri(response.Url);
-            HtmlUrl = new Uri(response.HtmlUrl);
+            Url = response.Url;
+            HtmlUrl = response.HtmlUrl;
             if (response.Encoding.Equals("base64", StringComparison.OrdinalIgnoreCase))
             {
                 var contentAsBytes = Convert.FromBase64String(response.Content);
                 Content = Encoding.UTF8.GetString(contentAsBytes, 0, contentAsBytes.Length);
             }
-            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(Url).ConfigureAwait(false));
+            htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(new Uri(Url)).ConfigureAwait(false));
         }
 
-        public Readme(Lazy<Task<string>> htmlContent, string content, string name, Uri htmlUrl, Uri url)
+        public Readme(Lazy<Task<string>> htmlContent, string content, string name, string htmlUrl, string url)
         {
             this.htmlContent = htmlContent;
             Content = content;
@@ -41,8 +41,8 @@ namespace Octokit
 
         public string Content { get; private set; }
         public string Name { get; private set; }
-        public Uri HtmlUrl { get; private set; }
-        public Uri Url { get; private set; }
+        public string HtmlUrl { get; private set; }
+        public string Url { get; private set; }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]

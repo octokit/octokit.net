@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]  
+        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         IObservable<Organization> GetAll(string user, ApiOptions options);
 
         /// <summary>

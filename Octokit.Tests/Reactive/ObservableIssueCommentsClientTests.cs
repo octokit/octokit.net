@@ -58,7 +58,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
-                    Arg.Any<IDictionary<string, string>>(), 
+                    Arg.Any<IDictionary<string, string>>(),
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -170,7 +170,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Args.EmptyDictionary,
                     "application/vnd.github.squirrel-girl-preview");
             }

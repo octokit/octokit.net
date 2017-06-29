@@ -1,230 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01687D54-1D87-4562-A721-C57F1C94052C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Octokit.Tests.Integration</RootNamespace>
+    <Description>Integration tests for Octokit</Description>
+    <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
+    <Authors>GitHub</Authors>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <LangVersion>5</LangVersion>
+    <PackageId>Octokit.Tests.Integration</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>4014, 1998</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>4014, 1998</NoWarn>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Clients\AssigneesClientTests.cs" />
-    <Compile Include="Clients\AuthorizationClientTests.cs" />
-    <Compile Include="Clients\BlobClientTests.cs" />
-    <Compile Include="Clients\CommitCommentReactionsClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
-    <Compile Include="Clients\GitHubClientTests.cs" />
-    <Compile Include="Clients\IssueCommentReactionsClientTests.cs" />
-    <Compile Include="Clients\IssueReactionsClientTests.cs" />
-    <Compile Include="Clients\IssueCommentsClientTests.cs" />
-    <Compile Include="Clients\IssueTimelineClientTests.cs" />
-    <Compile Include="Clients\MergingClientTests.cs" />
-    <Compile Include="Clients\CommitsClientTests.cs" />
-    <Compile Include="Clients\CommitStatusClientTests.cs" />
-    <Compile Include="Clients\DeploymentsClientTests.cs" />
-    <Compile Include="Clients\DeploymentStatusClientTests.cs" />
-    <Compile Include="Clients\EventsClientTests.cs" />
-    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
-    <Compile Include="Clients\GistsClientTests.cs" />
-    <Compile Include="Clients\IssuesEventsClientTests.cs" />
-    <Compile Include="Clients\MigrationsClientTests.cs" />
-    <Compile Include="Clients\MilestonesClientTests.cs" />
-    <Compile Include="Clients\OrganizationClientTests.cs" />
-    <Compile Include="Clients\OrganizationMembersClientTests.cs" />
-    <Compile Include="Clients\PullRequestReviewCommentReactionsClientTests.cs" />
-    <Compile Include="Clients\PullRequestsClientTests.cs" />
-    <Compile Include="Clients\ReferencesClientTests.cs" />
-    <Compile Include="Clients\RepositoryBranchesClientTests.cs" />
-    <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
-    <Compile Include="Clients\RepositoryCommentsClientTests.cs" />
-    <Compile Include="Clients\RepositoryContentsClientTests.cs" />
-    <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
-    <Compile Include="Clients\RepositoryForksClientTests.cs" />
-    <Compile Include="Clients\RepositoryHooksClientTests.cs" />
-    <Compile Include="Clients\RepositoryInvitationsClientTests.cs" />
-    <Compile Include="Clients\RepositoryPagesClientTests.cs" />
-    <Compile Include="Clients\ProjectsClientTests.cs" />
-    <Compile Include="Clients\RepositoryTrafficClientTests.cs" />
-    <Compile Include="Clients\SearchClientTests.cs" />
-    <Compile Include="Clients\StarredClientTests.cs" />
-    <Compile Include="Clients\StatisticsClientTests.cs" />
-    <Compile Include="Clients\TagsClientTests.cs" />
-    <Compile Include="Clients\TreeClientTests.cs" />
-    <Compile Include="Clients\UserAdministrationClientTests.cs" />
-    <Compile Include="Clients\UserEmailsClientTests.cs" />
-    <Compile Include="Clients\FollowersClientTests.cs" />
-    <Compile Include="Clients\UserGpgKeysClientTests.cs" />
-    <Compile Include="Clients\UserKeysClientTests.cs" />
-    <Compile Include="Clients\WatchedClientTests.cs" />
-    <Compile Include="fixtures\RepositoriesHooksCollection.cs" />
-    <Compile Include="fixtures\RepositoriesHooksFixture.cs" />
-    <Compile Include="EnterpriseHelper.cs" />
-    <Compile Include="Helpers\ApplicationTestAttribute.cs" />
-    <Compile Include="Helpers\GpgKeyContext.cs" />
-    <Compile Include="Helpers\PublicKeyContext.cs" />
-    <Compile Include="Helpers\EnterpriseUserContext.cs" />
-    <Compile Include="Helpers\GithubClientExtensions.cs" />
-    <Compile Include="Helpers\ObservableGithubClientExtensions.cs" />
-    <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
-    <Compile Include="Helpers\GitHubEnterpriseTestAttribute.cs" />
-    <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
-    <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
-    <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
-    <Compile Include="Helpers\OrganizationRepositoryWithTeamContext.cs" />
-    <Compile Include="Helpers\TeamContext.cs" />
-    <Compile Include="Helpers\RepositoryContext.cs" />
-    <Compile Include="Helpers\RepositorySetupHelper.cs" />
-    <Compile Include="HttpClientAdapterTests.cs" />
-    <Compile Include="Clients\TeamsClientTests.cs" />
-    <Compile Include="Helpers\IntegrationTestAttribute.cs" />
-    <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
-    <Compile Include="Clients\IssuesClientTests.cs" />
-    <Compile Include="Clients\MiscellaneousClientTests.cs" />
-    <Compile Include="Helpers\OrganizationTestAttribute.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
-    <Compile Include="Reactive\ObservableFollowersClientTests.cs" />
-    <Compile Include="Reactive\ObservableGistClientTests.cs" />
-    <Compile Include="Reactive\ObservableIssueTimelineClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
-    <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
-    <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
-    <Compile Include="Reactive\ObservableEventsClientTests.cs" />
-    <Compile Include="Reactive\ObservableGistCommentsClientTests.cs" />
-    <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
-    <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
-    <Compile Include="Reactive\ObservableCommitStatusClientTests.cs" />
-    <Compile Include="Reactive\ObservableReleaseClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
-    <Compile Include="Clients\ReleasesClientTests.cs" />
-    <Compile Include="Clients\RepositoriesClientTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Clients\UsersClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoryPagesClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
-    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserGpgKeysClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoryCollaboratorClientTests.cs" />
-    <Compile Include="RedirectTests.cs" />
-    <Compile Include="Clients\RepositoryCollaboratorClientTests.cs" />
-    <Compile Include="SelfTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj">
-      <Project>{674b69b8-0780-4d54-ae2b-c15821fa51cb}</Project>
-      <Name>Octokit.Reactive</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Octokit.Tests\Octokit.Tests.csproj">
-      <Project>{149448d4-c2f2-4df9-86bd-03e3272f093b}</Project>
-      <Name>Octokit.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Octokit\Octokit.csproj">
-      <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
-      <Name>Octokit</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
+    <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
     <None Include="app.config" />
-    <EmbeddedResource Include="fixtures\hello-world.zip" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <ProjectReference Include="..\Octokit\Octokit.csproj" />
+    <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj" />
+    <ProjectReference Include="..\Octokit.Tests\Octokit.Tests.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="fixtures\hello-world.txt" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

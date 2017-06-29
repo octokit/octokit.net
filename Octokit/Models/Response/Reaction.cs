@@ -1,7 +1,6 @@
-﻿using Octokit.Internal;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,11 +8,20 @@ namespace Octokit
     {
         [Parameter(Value = "+1")]
         Plus1,
+
         [Parameter(Value = "-1")]
         Minus1,
+
+        [Parameter(Value = "laugh")]
         Laugh,
+
+        [Parameter(Value = "confused")]
         Confused,
+
+        [Parameter(Value = "heart")]
         Heart,
+
+        [Parameter(Value = "hooray")]
         Hooray
     }
 
@@ -43,7 +51,7 @@ namespace Octokit
         /// The reaction type for this commit comment.
         /// </summary>
         [Parameter(Key = "content")]
-        public ReactionType Content { get; protected set; }
+        public StringEnum<ReactionType> Content { get; protected set; }
 
         internal string DebuggerDisplay
         {
