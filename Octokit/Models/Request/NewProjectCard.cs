@@ -47,7 +47,6 @@ namespace Octokit
     public enum ProjectCardContentType
     {
         [Parameter(Value = "Issue")]
-        Issue,
-        PullRequest
+        Issue
     }
 }
