@@ -362,6 +362,72 @@ public class ProjectsClientTests
             Assert.True(result.FirstOrDefault(x => x.Id == column2.Id).Id == column2.Id);
         }
 
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfColumnsWithoutStart()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var columns = await _github.Repository.Project.Column.GetAll(project.Id, options);
+
+            Assert.Equal(1, columns.Count);
+            Assert.Equal(column1.Id, columns[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfColumnsWithStart()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var columns = await _github.Repository.Project.Column.GetAll(project.Id, options);
+
+            Assert.Equal(1, columns.Count);
+            Assert.Equal(column2.Id, columns[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctColumnsBasedOnStartPage()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column1 = await CreateColumnHelper(_github, project.Id);
+            var column2 = await CreateColumnHelper(_github, project.Id);
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _github.Repository.Project.Column.GetAll(project.Id, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.Repository.Project.Column.GetAll(project.Id, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
+
         public void Dispose()
         {
             if (_context != null)
