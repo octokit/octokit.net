@@ -201,6 +201,44 @@ public class ProjectsClientTests
             Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfProjectsForOrganization()
+        {
+            var options = new ApiOptions
+            {
+                PageSize = 5,
+                PageCount = 1,
+                StartPage = 1
+            };
+
+            var projects = await _github.Repository.Project.GetAllForOrganization(Helper.Organization, options);
+
+            Assert.Equal(5, projects.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctProjectsForOrganizationBasedOnStartPage()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _github.Repository.Project.GetAllForOrganization(Helper.Organization, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.Repository.Project.GetAllForOrganization(Helper.Organization, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
     }
 
     public class TheGetMethod : IDisposable
