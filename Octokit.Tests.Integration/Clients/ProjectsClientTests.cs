@@ -628,6 +628,77 @@ public class ProjectsClientTests
             Assert.True(result.FirstOrDefault(x => x.Id == card2.Id).Id == card2.Id);
         }
 
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfCardWithoutStart()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column.Id);
+            var card2 = await CreateCardHelper(_github, column.Id);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var cards = await _github.Repository.Project.Card.GetAll(column.Id, options);
+
+            // NOTE: cards are returned in reverse order
+            Assert.Equal(1, cards.Count);
+            Assert.Equal(card2.Id, cards[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfCardsWithStart()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column.Id);
+            var card2 = await CreateCardHelper(_github, column.Id);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var cards = await _github.Repository.Project.Card.GetAll(column.Id, options);
+
+            // NOTE: cards are returned in reverse order
+            Assert.Equal(1, cards.Count);
+            Assert.Equal(card1.Id, cards[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctCardsBasedOnStartPage()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card1 = await CreateCardHelper(_github, column.Id);
+            var card2 = await CreateCardHelper(_github, column.Id);
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _github.Repository.Project.Card.GetAll(column.Id, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.Repository.Project.Card.GetAll(column.Id, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
+
         public void Dispose()
         {
             if (_context != null)
