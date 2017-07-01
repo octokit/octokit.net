@@ -20,7 +20,18 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string repo);
+        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name);
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request);
 
         /// <summary>
         /// Get all projects for this repository.
@@ -37,10 +48,32 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request);
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string repo, ApiOptions options);
+        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options);
 
         /// <summary>
         /// Get all projects for this repository.
@@ -51,6 +84,17 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options);
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options);
 
         /// <summary>
         /// Get all projects for the specified organization.
@@ -68,8 +112,29 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organziation</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request);
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organziation</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options);
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organziation</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets a single project for this repository.

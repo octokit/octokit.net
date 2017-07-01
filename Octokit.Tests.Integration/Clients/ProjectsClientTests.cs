@@ -49,6 +49,36 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
+        public async Task GetsAllFilteredProjectsForRepository()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            
+            // Make 2nd project closed
+            var result = await _github.Repository.Project.Update(project2.Id, new ProjectUpdate { State = ItemState.Closed });
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, new ProjectRequest(ItemStateFilter.Closed));
+
+            Assert.Equal(1, projects.Count);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
+        }
+
+        [IntegrationTest]
+        public async Task GetsAllFilteredProjectsForRepositoryWithRepositoryId()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            // Make 2nd project closed
+            var result = await _github.Repository.Project.Update(project2.Id, new ProjectUpdate { State = ItemState.Closed });
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, new ProjectRequest(ItemStateFilter.Closed));
+
+            Assert.Equal(1, projects.Count);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsCorrectCountOfProjectsForRepositoryWithoutStart()
         {
             var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
@@ -203,6 +233,21 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
+        public async Task GetsAllFilteredProjectsForRepository()
+        {
+            var project1 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
+            var project2 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
+
+            // Make 2nd project closed
+            var result = await _github.Repository.Project.Update(project2.Id, new ProjectUpdate { State = ItemState.Closed });
+
+            var projects = await _github.Repository.Project.GetAllForOrganization(Helper.Organization);
+
+            Assert.Equal(1, projects.Count);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsCorrectCountOfProjectsForOrganization()
         {
             var options = new ApiOptions
@@ -290,8 +335,9 @@ public class ProjectsClientTests
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
-            var projectUpdate = new ProjectUpdate("newName")
+            var projectUpdate = new ProjectUpdate
             {
+                Name = "newName",
                 State = ItemState.Closed
             };
 

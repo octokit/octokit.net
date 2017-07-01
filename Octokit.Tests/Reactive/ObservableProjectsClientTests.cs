@@ -115,7 +115,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectsClient(gitHubClient);
-                var updateProject = new ProjectUpdate("someNewName");
+                var updateProject = new ProjectUpdate { Name = "someNewName" };
 
                 client.Update(1, updateProject);
 
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Reactive
             public void EnsureNonNullArguments()
             {
                 var client = new ObservableProjectsClient(Substitute.For<IGitHubClient>());
-                var updateProject = new ProjectUpdate("someNewName");
+                var updateProject = new ProjectUpdate { Name = "someNewName" };
 
                 Assert.Throws<ArgumentNullException>(() => client.Update(1, null));
             }

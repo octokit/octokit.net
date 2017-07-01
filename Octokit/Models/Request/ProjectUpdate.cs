@@ -6,23 +6,22 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProjectUpdate
     {
-        public ProjectUpdate(string name)
+        public ProjectUpdate()
         {
-            Name = name;
         }
 
         /// <summary>
-        /// Required. Gets or sets the new name of the project.
+        /// The new name of the project.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Optional. Gets or sets the new body of the project.
+        /// The new body of the project.
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Optional. Update the state of the project.
+        /// The new state of the project.
         /// </summary>
         public ItemState? State { get; set; }
 

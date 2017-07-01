@@ -32,6 +32,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestCorrectUrlWithRequestParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ProjectsClient(connection);
+
+                await client.GetAllForRepository("owner", "repo", new ProjectRequest(ItemStateFilter.All));
+
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
             public async Task RequestCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -43,14 +58,50 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestCorrectUrlWithRequestParameterWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ProjectsClient(connection);
+
+                await client.GetAllForRepository(1, new ProjectRequest(ItemStateFilter.All));
+
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
             public async Task EnsureNonNullOrEmptyArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "repo"));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ProjectRequest)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ApiOptions)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", new ProjectRequest(ItemStateFilter.All), null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", null, ApiOptions.None));
+
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("", "repo"));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", ""));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullOrEmptyArgumentsWithRepositoryId()
+            {
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ProjectRequest)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, new ProjectRequest(ItemStateFilter.All), null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
             }
         }
 
@@ -68,12 +119,34 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestCorrectUrlWithRequestParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ProjectsClient(connection);
+
+                await client.GetAllForOrganization("org", new ProjectRequest(ItemStateFilter.Closed));
+
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
             public async Task EnsureNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null));
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(""));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ApiOptions)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ProjectRequest)null));
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", new ProjectRequest(ItemStateFilter.All), null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", null, ApiOptions.None));
             }
         }
 
@@ -148,7 +221,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectsClient(connection);
-                var updateProject = new ProjectUpdate("someNewName");
+                var updateProject = new ProjectUpdate();
 
                 await client.Update(1, updateProject);
 
@@ -159,8 +232,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsureNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
-                var updateProject = new ProjectUpdate("someNewName");
-
+                
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
