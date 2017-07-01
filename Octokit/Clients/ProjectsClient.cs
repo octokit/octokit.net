@@ -26,10 +26,40 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string repo)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "name");
+
+            return GetAllForRepository(owner, repo, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string repo, ApiOptions options)
+        {
+            return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, repo), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>

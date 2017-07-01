@@ -3385,6 +3385,17 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified project projects.
         /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri RepositoryProjects(string owner, string repo)
+        {
+            return "repos/{0}/{1}/projects".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified project projects.
+        /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for projects.</returns>
         public static Uri RepositoryProjects(long repositoryId)

@@ -23,7 +23,20 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task GetsAllProjects()
+        public async Task GetsAllProjectsForRepository()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
+
+            Assert.Equal(2, projects.Count);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project1.Name).Id == project1.Id);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
+        }
+
+        [IntegrationTest]
+        public async Task GetsAllProjectsForRepositoryWithRepositoryId()
         {
             var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
@@ -36,24 +49,7 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsCorrectCountOfProjectsWithoutStartForRepositories()
-        {
-            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
-
-            var options = new ApiOptions
-            {
-                PageSize = 3,
-                PageCount = 1
-            };
-
-            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options);
-
-            Assert.Equal(1, projects.Count);
-            Assert.True(projects.FirstOrDefault(x => x.Name == project.Name).Id == project.Id);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfProjectsWithStartForRepositories()
+        public async Task ReturnsCorrectCountOfProjectsForRepositoryWithoutStart()
         {
             var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
@@ -61,8 +57,25 @@ public class ProjectsClientTests
             var options = new ApiOptions
             {
                 PageSize = 1,
-                PageCount = 1,
-                StartPage = 1
+                PageCount = 1
+            };
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+            Assert.Equal(1, projects.Count);
+            Assert.Equal(project1.Id, projects[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfProjectsForRepositoryWithRepositoryIdWithoutStart()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
             };
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options);
@@ -72,7 +85,71 @@ public class ProjectsClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsDistinctProjectsWithBasedOnStartPageForRepositories()
+        public async Task ReturnsCorrectCountOfProjectsForRepositoryWithStart()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
+
+            Assert.Equal(1, projects.Count);
+            Assert.Equal(project2.Id, projects[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfProjectsForRepositoryWithRepositoryIdWithStart()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options);
+
+            Assert.Equal(1, projects.Count);
+            Assert.Equal(project2.Id, projects[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctProjectsForRepositoryBasedOnStartPage()
+        {
+            var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctProjectsForRepositoryBasedOnStartPageWithRepositoryId()
         {
             var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);

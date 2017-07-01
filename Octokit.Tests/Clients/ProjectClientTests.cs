@@ -26,9 +26,31 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectsClient(connection);
 
+                await client.GetAllForRepository("owner", "repo");
+
+                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ProjectsClient(connection);
+
                 await client.GetAllForRepository(1);
 
                 connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullOrEmptyArguments()
+            {
+                var client = new ProjectsClient(Substitute.For<IApiConnection>());
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "repo"));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("", "repo"));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", ""));
             }
         }
 
