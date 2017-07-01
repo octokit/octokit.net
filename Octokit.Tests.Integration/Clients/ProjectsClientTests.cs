@@ -235,16 +235,14 @@ public class ProjectsClientTests
         [IntegrationTest]
         public async Task GetsAllFilteredProjectsForRepository()
         {
-            var project1 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
-            var project2 = await CreateOrganizationProjectHelper(_github, Helper.Organization);
+            var project = await CreateOrganizationProjectHelper(_github, Helper.Organization);
+            
+            // Make project closed
+            var result = await _github.Repository.Project.Update(project.Id, new ProjectUpdate { State = ItemState.Closed });
 
-            // Make 2nd project closed
-            var result = await _github.Repository.Project.Update(project2.Id, new ProjectUpdate { State = ItemState.Closed });
+            var projects = await _github.Repository.Project.GetAllForOrganization(Helper.Organization, new ProjectRequest(ItemStateFilter.Closed));
 
-            var projects = await _github.Repository.Project.GetAllForOrganization(Helper.Organization);
-
-            Assert.Equal(1, projects.Count);
-            Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
+            Assert.True(projects.FirstOrDefault(x => x.Name == project.Name).Id == project.Id);
         }
 
         [IntegrationTest]
