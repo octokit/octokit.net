@@ -290,11 +290,15 @@ public class ProjectsClientTests
         {
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
 
-            var projectUpdate = new ProjectUpdate("newName");
+            var projectUpdate = new ProjectUpdate("newName")
+            {
+                State = ItemState.Closed
+            };
 
             var result = await _github.Repository.Project.Update(project.Id, projectUpdate);
 
             Assert.Equal("newName", result.Name);
+            Assert.Equal(ItemState.Closed, result.State);
             Assert.Equal(project.Id, result.Id);
         }
 

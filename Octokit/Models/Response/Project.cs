@@ -9,7 +9,7 @@ namespace Octokit
     {
         public Project() { }
 
-        public Project(string ownerUrl, string url, int id, string name, string body, int number, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public Project(string ownerUrl, string url, int id, string name, string body, int number, ItemState state, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             OwnerUrl = ownerUrl;
             Url = url;
@@ -17,6 +17,7 @@ namespace Octokit
             Name = name;
             Body = body;
             Number = number;
+            State = state;
             Creator = creator;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -53,12 +54,23 @@ namespace Octokit
         public int Number { get; protected set; }
 
         /// <summary>
+        /// The current state of this project.
+        /// </summary>
+        public StringEnum<ItemState> State { get; protected set; }
+
+        /// <summary>
         /// The user associated with this project.
         /// </summary>
         public User Creator { get; protected set; }
 
+        /// <summary>
+        /// When this project was created.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
 
+        /// <summary>
+        /// When this project was last updated.
+        /// </summary>
         public DateTimeOffset UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay

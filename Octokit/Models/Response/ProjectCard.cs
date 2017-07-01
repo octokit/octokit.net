@@ -9,12 +9,13 @@ namespace Octokit
     {
         public ProjectCard() { }
 
-        public ProjectCard(string columnUrl, string contentUrl, int id, string note, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectCard(string columnUrl, string contentUrl, int id, string note, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             ColumnUrl = columnUrl;
             ContentUrl = contentUrl;
             Id = id;
             Note = note;
+            Creator = creator;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
         }
@@ -39,8 +40,19 @@ namespace Octokit
         /// </summary>
         public string Note { get; protected set; }
 
+        /// <summary>
+        /// The user associated with this card.
+        /// </summary>
+        public User Creator { get; protected set; }
+
+        /// <summary>
+        /// When this card was created.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
 
+        /// <summary>
+        /// When this card was last updated.
+        /// </summary>
         public DateTimeOffset UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay

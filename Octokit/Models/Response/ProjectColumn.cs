@@ -33,8 +33,14 @@ namespace Octokit
         /// </summary>
         public string ProjectUrl { get; protected set; }
 
+        /// <summary>
+        /// When this column was created.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
 
+        /// <summary>
+        /// When this column was last updated.
+        /// </summary>
         public DateTimeOffset UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay

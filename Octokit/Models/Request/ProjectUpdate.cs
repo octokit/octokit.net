@@ -21,6 +21,11 @@ namespace Octokit
         /// </summary>
         public string Body { get; set; }
 
+        /// <summary>
+        /// Optional. Update the state of the project.
+        /// </summary>
+        public ItemState? State { get; set; }
+
         internal string DebuggerDisplay
         {
             get
