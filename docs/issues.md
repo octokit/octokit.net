@@ -54,7 +54,7 @@ var issues = await client.Issue.GetAllForCurrent(recently);
 `RepositoryIssueRequest` extends `IssueRequest` and adds these options:
 
  - `Milestone` - use `*` for any issue in a milestone, "none" for issues not assigned to a milestone
- - `Assignee` - specify the GitHub username, or "none" for unassigned issues
+ - `Assignees` - specify the GitHub username(s), or "none" for unassigned issues
  - `Creator` - specify the GitHub username
  - `Mentioned` - specify the GitHub username
 
@@ -72,11 +72,12 @@ var issues = await client.Issue.GetAllForRepository("octokit", "octokit.net", sh
 
 ### Create
 
-At a minimum, you need to specify the title:
+At a minimum, you need to specify the title, everything else is optional:
 
 ```
 var client = new GitHubClient(....); // More on GitHubClient can be found in "Getting Started"
 var createIssue = new NewIssue("this thing doesn't work");
+createIssue.Assignees.Add("octokit");
 var issue = await client.Issue.Create("owner", "name", createIssue);
 ```
 
@@ -85,14 +86,14 @@ var issue = await client.Issue.Create("owner", "name", createIssue);
 There's also a number of additional fields:
 
  - `Body` - details about the issue (Markdown)
- - `Assignee` - the GitHub user to associate with the issue
+ - `Assignees` - the collection of GitHub usernames to associate with the issue
  - `Milestone` - the milestone id to assign the issue to
  - `Labels` - a collection of labels to assign to the issue
 
 Note that `Milestones` and `Labels` need to exist in the repository before
 creating the issue. Refer to the [Milestones](https://github.com/octokit/octokit.net/blob/master/docs/milestones.md)
 and [Labels](https://github.com/octokit/octokit.net/blob/master/docs/labels.md)
-sections for more details.
+sections for more details.  
 
 ### Update
 
