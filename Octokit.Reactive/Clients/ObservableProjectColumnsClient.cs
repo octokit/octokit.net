@@ -1,6 +1,7 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
 using System.Reactive.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -39,9 +40,11 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             var url = ApiUrls.ProjectColumns(projectId);
 
-            return _connection.GetAndFlattenAllPages<ProjectColumn>(url, options);
+            return _connection.GetAndFlattenAllPages<ProjectColumn>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace Octokit.Reactive
         /// <param name="newProjectColumn">The column to create</param>
         public IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
         {
-            Ensure.ArgumentNotNull(newProjectColumn, "newRepositoryProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, "newProjectColumn");
 
             return _client.Create(projectId, newProjectColumn).ToObservable();
         }
@@ -81,7 +84,7 @@ namespace Octokit.Reactive
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         public IObservable<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
         {
-            Ensure.ArgumentNotNull(projectColumnUpdate, "repositoryProjectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, "projectColumnUpdate");
 
             return _client.Update(id, projectColumnUpdate).ToObservable();
         }

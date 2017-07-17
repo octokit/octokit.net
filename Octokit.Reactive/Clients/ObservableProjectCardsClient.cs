@@ -1,6 +1,7 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
 using System.Reactive.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -47,7 +48,7 @@ namespace Octokit.Reactive
         {
             var url = ApiUrls.ProjectCards(columnId);
 
-            return _connection.GetAndFlattenAllPages<ProjectCard>(url, options);
+            return _connection.GetAndFlattenAllPages<ProjectCard>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
