@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
                 var updateProjectColumn = new ProjectColumnUpdate("someNewName");
 
                 Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, updateProjectColumn));
-                }
+            }
         }
 
         public class TheDeleteMethod

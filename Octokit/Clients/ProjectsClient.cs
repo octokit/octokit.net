@@ -41,35 +41,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="request">Used to filter the list of projects returned</param>
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request)
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
-        }
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(owner, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
-        /// <summary>
-        /// Get all projects for this repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
-        {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// Get all projects for this repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="request">Used to filter the list of projects returned</param>
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request)
-        {
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, name), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
@@ -80,14 +59,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
+        /// <param name="request">Used to filter the list of projects returned</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(owner, "name");
-            Ensure.ArgumentNotNull(options, "options");
-
-            return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, name), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
 
         /// <summary>
@@ -117,12 +92,37 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
+        {
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(repositoryId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+        }
+
+        /// <summary>
+        /// Get all projects for this repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request)
+        {
+            return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
 
         /// <summary>
@@ -161,13 +161,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organziation</param>
-        /// <param name="request">Used to filter the list of projects returned</param>
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request)
+        /// <param name="options">Options for changing the API response</param>
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return GetAllForOrganization(organization, request, ApiOptions.None);
+            return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organziation</param>
-        /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
+        /// <param name="request">Used to filter the list of projects returned</param>
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, "request");
 
-            return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return GetAllForOrganization(organization, request, ApiOptions.None);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Octokit
         /// <param name="newProject">The new project to create for this repository</param>
         public Task<Project> CreateForRepository(long repositoryId, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
+            Ensure.ArgumentNotNull(newProject, "newProject");
 
             return ApiConnection.Post<Project>(ApiUrls.RepositoryProjects(repositoryId), newProject, AcceptHeaders.ProjectsApiPreview);
         }
@@ -240,7 +240,8 @@ namespace Octokit
         /// <param name="newProject">The new project to create for this repository</param>
         public Task<Project> CreateForOrganization(string organization, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newProject, "newRepositoryProject");
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNull(newProject, "newProject");
 
             return ApiConnection.Post<Project>(ApiUrls.OrganizationProjects(organization), newProject, AcceptHeaders.ProjectsApiPreview);
         }
@@ -255,7 +256,7 @@ namespace Octokit
         /// <param name="projectUpdate">The modified project</param>
         public Task<Project> Update(int id, ProjectUpdate projectUpdate)
         {
-            Ensure.ArgumentNotNull(projectUpdate, "repositoryProjectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, "projectUpdate");
 
             return ApiConnection.Patch<Project>(ApiUrls.Project(id), projectUpdate, AcceptHeaders.ProjectsApiPreview);
         }

@@ -18,7 +18,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="projectId">The Id of the project</param>        
+        /// <param name="projectId">The Id of the project</param>
         Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId);
 
         /// <summary>
