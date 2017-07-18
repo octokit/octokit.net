@@ -261,7 +261,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
                     null,
-                    "application/vnd.github.polaris-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -275,7 +275,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
                     null,
-                    "application/vnd.github.polaris-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -793,6 +793,42 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("", "repo", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", "", ApiOptions.None));
+            }
+        }
+
+        public class TheGetLicenseContentsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetLicenseContents("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryContentLicense>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/license"), null, "application/vnd.github.drax-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetLicenseContents(1);
+
+                connection.Received()
+                    .Get<RepositoryContentLicense>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/license"), null, "application/vnd.github.drax-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLicenseContents(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLicenseContents("owner", null));
             }
         }
 

@@ -1612,4 +1612,31 @@ public class RepositoriesClientTests
             Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
         }
     }
+
+    public class TheGetLicenseContentsMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsLicenseContent()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var license = await github.Repository.GetLicenseContents("octokit", "octokit.net");
+            Assert.Equal("LICENSE.txt", license.Name);
+            Assert.NotNull(license.License);
+            Assert.Equal("mit", license.License.Key);
+            Assert.Equal("MIT License", license.License.Name);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsLicenseContentWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var license = await github.Repository.GetLicenseContents(7528679);
+            Assert.Equal("LICENSE.txt", license.Name);
+            Assert.NotNull(license.License);
+            Assert.Equal("mit", license.License.Key);
+            Assert.Equal("MIT License", license.License.Name);
+        }
+    }
 }
