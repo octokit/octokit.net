@@ -123,7 +123,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForOrganization("org");
 
-                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]

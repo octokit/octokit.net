@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -24,12 +25,16 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestCorrectURL()
             {
-                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableProjectCardsClient(gitHubClient);
 
                 client.GetAll(1);
 
-                gitHubClient.Received().Repository.Project.Card.GetAll(1);
+                connection.Received().Get<List<ProjectCard>>(
+                    Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]

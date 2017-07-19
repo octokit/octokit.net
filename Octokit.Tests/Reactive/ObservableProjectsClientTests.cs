@@ -123,25 +123,31 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestCorrectUrl()
             {
-                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllForOrganization("org");
 
-                gitHubClient.Received().Repository.Project.GetAllForOrganization("org");
+                connection.Received().Get<List<Project>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
-            public async Task RequestCorrectUrlWithRequestParameter()
+            public void RequestCorrectUrlWithRequestParameter()
             {
-                var gitHubClient = Substitute.For<IGitHubClient>();
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableProjectsClient(gitHubClient);
 
                 client.GetAllForOrganization("org", new ProjectRequest(ItemStateFilter.Closed));
 
-                gitHubClient.Received().Repository.Project.GetAllForOrganization(
-                    "org",
-                    Arg.Is<ProjectRequest>(r => r.State == ItemStateFilter.Closed));
+                connection.Received().Get<List<Project>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
+                    "application/vnd.github.inertia-preview+json");
             }
 
             [Fact]
