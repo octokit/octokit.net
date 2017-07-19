@@ -1,6 +1,6 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -29,6 +29,14 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<ProjectColumn>(Arg.Is<Uri>(u => u.ToString() == "projects/1/columns"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
             }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ProjectColumnsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
+            }
         }
 
         public class TheGetMethod
@@ -48,7 +56,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectColumnsClient(connection);
@@ -60,19 +68,19 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectColumnsClient(Substitute.For<IApiConnection>());
                 var newProjectColumn = new NewProjectColumn("someName");
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
             }
         }
 
         public class TheUpdateMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectColumnsClient(connection);
@@ -84,12 +92,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectColumnsClient(Substitute.For<IApiConnection>());
-                var updateProjectColumn = new ProjectColumnUpdate("someNewName");
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, updateProjectColumn));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 
@@ -110,7 +117,7 @@ namespace Octokit.Tests.Clients
         public class TheMoveMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectColumnsClient(connection);
@@ -122,12 +129,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectColumnsClient(Substitute.For<IApiConnection>());
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Move(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Move(1, null));
             }
         }
     }

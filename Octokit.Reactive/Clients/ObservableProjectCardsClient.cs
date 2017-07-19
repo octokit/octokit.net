@@ -46,6 +46,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<ProjectCard> GetAll(int columnId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
+
             var url = ApiUrls.ProjectCards(columnId);
 
             return _connection.GetAndFlattenAllPages<ProjectCard>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);

@@ -1,7 +1,7 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -28,7 +28,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("owner", "repo");
 
-                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -54,7 +58,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1);
 
-                connection.Received().GetAll<Project>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<Project>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -77,31 +85,31 @@ namespace Octokit.Tests.Clients
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "repo"));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ProjectRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ProjectRequest)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", (ApiOptions)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", new ProjectRequest(ItemStateFilter.All), null));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", new ProjectRequest(ItemStateFilter.All), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", "repo", null, ApiOptions.None));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("", "repo"));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository("owner", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForRepository("owner", ""));
             }
 
             [Fact]
-            public async Task EnsureNonNullOrEmptyArgumentsWithRepositoryId()
+            public async Task EnsureNonNullArgumentsWithRepositoryId()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ApiOptions)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ProjectRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, (ProjectRequest)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, new ProjectRequest(ItemStateFilter.All), null));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, new ProjectRequest(ItemStateFilter.All), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null, ApiOptions.None));
             }
         }
 
@@ -134,19 +142,25 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsureNonNullOrEmptyArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization(""));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization("", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ApiOptions)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ProjectRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null, new ProjectRequest(ItemStateFilter.All)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization("", new ProjectRequest(ItemStateFilter.All)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", (ProjectRequest)null));
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", new ProjectRequest(ItemStateFilter.All), null));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization(null, new ProjectRequest(ItemStateFilter.All), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForOrganization("", new ProjectRequest(ItemStateFilter.All), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", new ProjectRequest(ItemStateFilter.All), null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForOrganization("org", null, ApiOptions.None));
             }
         }
 
@@ -167,7 +181,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateForRepositoryMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectsClient(connection);
@@ -179,19 +193,18 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
-                var newProject = new NewProject("someName");
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForRepository(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForRepository(1, null));
             }
         }
 
         public class TheCreateForOrganizationMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectsClient(connection);
@@ -203,21 +216,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 var newProject = new NewProject("someName");
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.CreateForOrganization("", newProject));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForOrganization("org", null));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForOrganization(null, newProject));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateForOrganization("", newProject));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForOrganization("org", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateForOrganization(null, newProject));
             }
         }
 
         public class TheUpdateMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectsClient(connection);
@@ -229,11 +242,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
                 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 

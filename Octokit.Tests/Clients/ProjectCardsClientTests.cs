@@ -1,6 +1,6 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -12,8 +12,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(
-                () => new ProjectCardsClient(null));
+                Assert.Throws<ArgumentNullException>(() => new ProjectCardsClient(null));
             }
         }
 
@@ -28,6 +27,14 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(1);
 
                 connection.Received().GetAll<ProjectCard>(Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"), Args.EmptyDictionary, "application/vnd.github.inertia-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
             }
         }
 
@@ -48,7 +55,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateMethod
         {
             [Fact]
-            public async Task PostToCorrectURL()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectCardsClient(connection);
@@ -60,19 +67,19 @@ namespace Octokit.Tests.Clients
             }
                         
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
                 var newCard = new NewProjectCard("someNote");
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
             }
         }
 
         public class TheUpdateMethod
         {
             [Fact]
-            public async Task PostToCorrectURL()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectCardsClient(connection);
@@ -84,12 +91,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
                 var updateCard = new ProjectCardUpdate("someNewNote");
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 
@@ -110,7 +117,7 @@ namespace Octokit.Tests.Clients
         public class TheMoveMethod
         {
             [Fact]
-            public async Task PostToCorrectUrl()
+            public async Task PostsToCorrectURL()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectCardsClient(connection);
@@ -122,12 +129,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task EnsureNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
-                var position = new ProjectCardMove(ProjectCardPosition.Top, 1, null);
-
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Move(1, position));
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Move(1, null));
             }
         }
     }

@@ -1,6 +1,8 @@
-﻿using NSubstitute;
+﻿using System;
+using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
+using NSubstitute;
 using Octokit.Reactive;
-using System;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -29,6 +31,15 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Received().Repository.Project.Column.GetAll(1);
             }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableProjectColumnsClient(gitHubClient);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null).ToTask());
+            }
         }
 
         public class TheGetMethod
@@ -48,7 +59,7 @@ namespace Octokit.Tests.Reactive
         public class TheCreateMethod
         {
             [Fact]
-            public void PostToCorrectUrl()
+            public void PostsToCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectColumnsClient(gitHubClient);
@@ -60,7 +71,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ObservableProjectColumnsClient(Substitute.For<IGitHubClient>());
                 var newProjectColumn = new NewProjectColumn("someName");
@@ -72,7 +83,7 @@ namespace Octokit.Tests.Reactive
         public class TheUpdateMethod
         {
             [Fact]
-            public void PostToCorrectUrl()
+            public void PostsToCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectColumnsClient(gitHubClient);
@@ -84,7 +95,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ObservableProjectColumnsClient(Substitute.For<IGitHubClient>());
                 var updateProjectColumn = new ProjectColumnUpdate("someNewName");
@@ -110,7 +121,7 @@ namespace Octokit.Tests.Reactive
         public class TheMoveMethod
         {
             [Fact]
-            public void PostToCorrectUrl()
+            public void PostsToCorrectURL()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectColumnsClient(gitHubClient);
@@ -122,7 +133,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsureNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new ObservableProjectColumnsClient(Substitute.For<IGitHubClient>());
                 var position = new ProjectColumnMove(ProjectColumnPosition.First, null);

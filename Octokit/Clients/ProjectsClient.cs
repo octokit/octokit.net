@@ -45,7 +45,7 @@ namespace Octokit
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(owner, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, name), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
@@ -78,7 +78,7 @@ namespace Octokit
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(owner, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
@@ -197,6 +197,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
