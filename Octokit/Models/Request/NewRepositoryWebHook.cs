@@ -48,7 +48,6 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="NewRepositoryWebHook"/> class.
         /// Using default values for ContentType, Secret and InsecureSsl.
-        /// <str
         /// </summary>
         /// <param name="name">
         /// Use "web" for a webhook or use the name of a valid service. (See
