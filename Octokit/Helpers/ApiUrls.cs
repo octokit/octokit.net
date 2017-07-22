@@ -3381,5 +3381,106 @@ namespace Octokit
         {
             return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified project projects.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri RepositoryProjects(string owner, string repo)
+        {
+            return "repos/{0}/{1}/projects".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified project projects.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri RepositoryProjects(long repositoryId)
+        {
+            return "repositories/{0}/projects".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified organization projects.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri OrganizationProjects(string organization)
+        {
+            return "orgs/{0}/projects".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a project.
+        /// </summary>
+        /// <param name="id">The id of the project</param>
+        /// <returns>The <see cref="Uri"/> for repository projects.</returns>
+        public static Uri Project(int id)
+        {
+            return "projects/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project columns.
+        /// </summary>
+        /// <param name="id">The id of the columns</param>
+        /// <returns>The <see cref="Uri"/> for project columns.</returns>
+        public static Uri ProjectColumn(int id)
+        {
+            return "projects/columns/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project column.
+        /// </summary>
+        /// <param name="projectId">The id of the project</param>
+        /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
+        public static Uri ProjectColumns(int projectId)
+        {
+            return "projects/{0}/columns".FormatUri(projectId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project column.
+        /// </summary>
+        /// <param name="id">The id of the column to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project column.</returns>
+        public static Uri ProjectColumnMove(int id)
+        {
+            return "projects/columns/{0}/moves".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="id">The id of the card</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCard(int id)
+        {
+            return "projects/columns/cards/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="columnId">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCards(int columnId)
+        {
+            return "projects/columns/{0}/cards".FormatUri(columnId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project card.
+        /// </summary>
+        /// <param name="id">The id of the card to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project card.</returns>
+        public static Uri ProjectCardMove(int id)
+        {
+            return "projects/columns/cards/{0}/moves".FormatUri(id);
+        }
     }
 }

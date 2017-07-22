@@ -102,7 +102,7 @@ public class DeploymentsClientTests
         }
 
         [Fact]
-        public async Task RequestsCorrectUrlWithRepostoryIdWithApiOptions()
+        public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new DeploymentsClient(connection);
