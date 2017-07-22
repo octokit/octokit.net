@@ -129,6 +129,8 @@ namespace Octokit
         /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
         public async Task<TeamMembership> GetMembership(int id, string login)
         {
+            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+
             var endpoint = ApiUrls.TeamMember(id, login);
 
             Dictionary<string, string> response;

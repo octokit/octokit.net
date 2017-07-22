@@ -92,7 +92,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
             var key = await github.User.GpgKey.Create(new NewGpgKey(publicKey));
             Assert.NotNull(key);
 
-            Assert.ThrowsAsync<ApiValidationException>(async () => await github.User.GpgKey.Create(new NewGpgKey(publicKey)));
+            await Assert.ThrowsAsync<ApiValidationException>(async () => await github.User.GpgKey.Create(new NewGpgKey(publicKey)));
 
             await github.User.GpgKey.Delete(key.Id);
             var keys = await github.User.GpgKey.GetAllForCurrent();

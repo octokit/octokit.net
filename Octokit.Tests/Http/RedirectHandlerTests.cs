@@ -158,7 +158,7 @@ namespace Octokit.Tests.Http
 
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
 
-            Assert.ThrowsAsync<InvalidOperationException>(
+            await Assert.ThrowsAsync<InvalidOperationException>(
                 () => adapter.SendAsync(httpRequestMessage, new CancellationToken()));
         }
 

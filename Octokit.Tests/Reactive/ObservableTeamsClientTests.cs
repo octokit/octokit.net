@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -23,14 +24,14 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsuresNotNullAndNonEmptyArguments()
+            public async Task EnsuresNotNullAndNonEmptyArguments()
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableTeamsClient(github);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("shield", null).ToTask());
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, new NewTeam("avengers")).ToTask());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Create("", new NewTeam("avengers")).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("shield", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, new NewTeam("avengers")).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", new NewTeam("avengers")).ToTask());
             }
         }
 
