@@ -1034,13 +1034,13 @@ namespace Octokit.Tests.Clients
         public class TheGetSha1Method
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoryCommitsClient(Substitute.For<IApiConnection>());
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", ""));
             }
 
             [Fact]

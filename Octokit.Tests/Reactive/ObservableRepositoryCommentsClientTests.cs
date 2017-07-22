@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -252,23 +254,23 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoryCommentsClient(connection);
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommentsClient(githubClient);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", "sha", new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, "sha", new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null, new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", "sha", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", "sha", new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, "sha", new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null, new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", "sha", null).ToTask());
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null, new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, "sha", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null, new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, "sha", null).ToTask());
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")));
-                Assert.ThrowsAsync<ArgumentException>(() => client.Create(1, "", new NewCommitComment("body")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", "sha", new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", "sha", new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "name", "", new NewCommitComment("body")).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create(1, "", new NewCommitComment("body")).ToTask());
             }
         }
 

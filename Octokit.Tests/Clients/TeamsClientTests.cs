@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
-using System.Net;
 
 namespace Octokit.Tests.Clients
 {
@@ -203,32 +203,32 @@ namespace Octokit.Tests.Clients
         public class TheGetMembershipMethod
         {
             [Fact]
-            public void EnsuresNonNullLogin()
+            public async Task EnsuresNonNullLogin()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembership(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembership(1, null));
             }
 
             [Fact]
-            public void EnsuresNonEmptyLogin()
+            public async Task EnsuresNonEmptyLogin()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetMembership(1, ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetMembership(1, ""));
             }
         }
 
         public class TheRemoveMembershipMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.RemoveMembership(1, "user");
+                await client.RemoveMembership(1, "user");
 
                 connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
             }
@@ -247,12 +247,12 @@ namespace Octokit.Tests.Clients
         public class TheGetAllRepositoriesMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                client.GetAllRepositories(1);
+                await client.GetAllRepositories(1);
 
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"),
@@ -265,11 +265,11 @@ namespace Octokit.Tests.Clients
         public class TheRemoveRepositoryMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.RemoveRepository(1, "org", "repo");
+                await client.RemoveRepository(1, "org", "repo");
 
                 connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
             }
@@ -294,54 +294,54 @@ namespace Octokit.Tests.Clients
 
 
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.AddRepository(1, "org", "repo");
+                await client.AddRepository(1, "org", "repo");
 
                 connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
             }
 
             [Fact]
-            public void AddOrUpdatePermission()
+            public async Task AddOrUpdatePermission()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
                 var newPermission = new RepositoryPermissionRequest(Permission.Admin);
 
-                client.AddRepository(1, "org", "repo", newPermission);
+                await client.AddRepository(1, "org", "repo", newPermission);
 
                 connection.Connection.Received().Put<HttpStatusCode>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>(), "", "application/vnd.github.ironman-preview+json");
             }
 
             [Fact]
-            public void EnsureNonNullOrg()
+            public async Task EnsureNonNullOrg()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, null, "Repo Name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddRepository(1, null, "Repo Name"));
             }
         }
 
         public class TheIsRepositoryManagedByTeamMethod
         {
             [Fact]
-            public void EnsuresNonNullOrEmptyArguments()
+            public async Task EnsuresNonNullOrEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.AddRepository(1, "org name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddRepository(1, "org name", null));
 
                 // Check owner arguments.
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
-                Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, null, "repoName"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "", "repoName"));
 
                 // Check repo arguments.
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
-                Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
             }
         }
     }

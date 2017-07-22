@@ -148,7 +148,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await _client.Delete(Helper.UserName, _context.RepositoryName, createdComment.Id);
 
-        Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id));
+        await Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id));
     }
 
     [IntegrationTest]
@@ -163,7 +163,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         await _client.Delete(_context.Repository.Id, createdComment.Id);
 
-        Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(_context.Repository.Id, createdComment.Id));
+        await Assert.ThrowsAsync<NotFoundException>(() => _client.GetComment(_context.Repository.Id, createdComment.Id));
     }
 
     [IntegrationTest]
