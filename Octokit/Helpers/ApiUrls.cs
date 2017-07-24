@@ -1508,6 +1508,23 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to review the collaborators permission
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
+        /// <returns>The <see cref="Uri"/> to review the collaborators permission</returns>
+        public static Uri RepoCollaboratorPermission(string owner, string repo, string user)
+        {
+            return "repos/{0}/{1}/collaborators/{2}/permission".FormatUri(owner, repo, user);
+        }
+
+        public static Uri RepoCollaboratorPermission(long repositoryId, string user)
+        {
+            return "repos/{0}/collaborators/{1}".FormatUri(repositoryId, user);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> to check user is collaborator
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
