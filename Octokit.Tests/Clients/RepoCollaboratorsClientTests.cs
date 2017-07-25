@@ -190,6 +190,52 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class ThePreviewPermissionMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                client.ReviewPermission("owner", "test", "user1");
+                connection.Received().Get<CollaboratorPermission>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1/permission"),
+                    Arg.Any<Dictionary<string, string>>(), 
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                client.ReviewPermission(1L, "user1");
+                connection.Received().Get<CollaboratorPermission>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1/permission"),
+                    Arg.Any<Dictionary<string, string>>(), 
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission(null, "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("owner", "test", ""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission(1L, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission(1L, ""));
+            }
+
+        }
+
         public class TheAddMethod
         {
             [Fact]
