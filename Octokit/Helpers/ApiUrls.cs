@@ -1521,7 +1521,7 @@ namespace Octokit
 
         public static Uri RepoCollaboratorPermission(long repositoryId, string user)
         {
-            return "repos/{0}/collaborators/{1}".FormatUri(repositoryId, user);
+            return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
         }
 
         /// <summary>
