@@ -25,6 +25,11 @@ namespace Octokit
         ITeamsClient Team { get; }
 
         /// <summary>
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        IOrganizationOutsideCollaboratorsClient OutsideCollaborators { get; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>

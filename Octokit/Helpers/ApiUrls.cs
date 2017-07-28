@@ -662,6 +662,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri OutsideCollaborators(string org)
+        {
+            return "orgs/{0}/outside_collaborators".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The collaborator filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri OutsideCollaborators(string org, OrganizationMembersFilter filter)
+        {
+            return "orgs/{0}/outside_collaborators?filter={1}".FormatUri(org, filter.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
