@@ -662,6 +662,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri OutsideCollaborators(string org)
+        {
+            return "orgs/{0}/outside_collaborators".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The collaborator filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri OutsideCollaborators(string org, OrganizationMembersFilter filter)
+        {
+            return "orgs/{0}/outside_collaborators?filter={1}".FormatUri(org, filter.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1516,6 +1537,23 @@ namespace Octokit
         public static Uri RepoCollaborator(long repositoryId, string user)
         {
             return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to review the collaborators permission
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
+        /// <returns>The <see cref="Uri"/> to review the collaborators permission</returns>
+        public static Uri RepoCollaboratorPermission(string owner, string repo, string user)
+        {
+            return "repos/{0}/{1}/collaborators/{2}/permission".FormatUri(owner, repo, user);
+        }
+
+        public static Uri RepoCollaboratorPermission(long repositoryId, string user)
+        {
+            return "repositories/{0}/collaborators/{1}/permission".FormatUri(repositoryId, user);
         }
 
         /// <summary>
