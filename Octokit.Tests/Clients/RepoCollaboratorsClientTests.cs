@@ -190,7 +190,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class ThePreviewPermissionMethod
+        public class TheReviewPermissionMethod
         {
             [Fact]
             public void RequestsCorrectUrl()

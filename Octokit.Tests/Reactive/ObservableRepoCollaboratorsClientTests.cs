@@ -253,12 +253,12 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class ThePreviewPermissionMethod
+        public class TheReviewPermissionMethod
         {
             private readonly IGitHubClient _gitHubClient;
             private IObservableRepoCollaboratorsClient _client;
 
-            public ThePreviewPermissionMethod()
+            public TheReviewPermissionMethod()
             {
                 _gitHubClient = Substitute.For<IGitHubClient>();
             }
