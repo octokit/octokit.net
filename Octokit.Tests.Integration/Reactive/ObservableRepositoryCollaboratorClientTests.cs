@@ -154,7 +154,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.Read, permission.Permission);
+                Assert.Equal(PermissionLevel.Read, permission.Permission);
             }
         }
 
@@ -170,7 +170,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.Read, permission.Permission);
+                Assert.Equal(PermissionLevel.Read, permission.Permission);
             }
         }
 
@@ -189,7 +189,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.Write, permission.Permission);
+                Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
         }
 
@@ -208,7 +208,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.Write, permission.Permission);
+                Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
         }
 
@@ -224,7 +224,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
-                Assert.Equal(CollaboratorPermissions.Admin, permission.Permission);
+                Assert.Equal(PermissionLevel.Admin, permission.Permission);
             }
         }
 
@@ -240,7 +240,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, context.RepositoryOwner);
 
-                Assert.Equal(CollaboratorPermissions.Admin, permission.Permission);
+                Assert.Equal(PermissionLevel.Admin, permission.Permission);
             }
         }
 
@@ -261,7 +261,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.None, permission.Permission);
+                Assert.Equal(PermissionLevel.None, permission.Permission);
             }
         }
 
@@ -282,7 +282,7 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
 
-                Assert.Equal(CollaboratorPermissions.None, permission.Permission);
+                Assert.Equal(PermissionLevel.None, permission.Permission);
             }
         }
     }

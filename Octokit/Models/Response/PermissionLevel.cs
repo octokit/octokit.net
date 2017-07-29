@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public enum CollaboratorPermissions
+    public enum PermissionLevel
     {
         [Parameter(Value = "admin")]
         Admin,
