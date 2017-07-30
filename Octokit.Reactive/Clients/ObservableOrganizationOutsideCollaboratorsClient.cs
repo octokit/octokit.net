@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -92,6 +93,25 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, "options");
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview, options);
+        }
+
+        /// <summary>
+        /// Removes a user as an outside collaborator from the organization, this will remove them from all repositories
+        /// within the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login of the user</param>
+        /// <returns></returns>
+        public IObservable<bool> Delete(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.Delete(org, user).ToObservable();
         }
     }
 }

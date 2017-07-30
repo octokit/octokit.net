@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -92,6 +93,44 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview, options);
+        }
+
+        /// <summary>
+        /// Removes a user as an outside collaborator from the organization, this will remove them from all repositories
+        /// within the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login of the user</param>
+        /// <returns></returns>
+        public async Task<bool> Delete(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            try
+            {
+                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user), null, AcceptHeaders.OrganizationMembershipPreview).ConfigureAwait(false);
+
+                if (statusCode != HttpStatusCode.NoContent 
+                    && statusCode != (HttpStatusCode)422)
+                {
+                    throw new ApiException("Invalid Status Code returned. Expected a 204 or a 422", statusCode);
+                }
+                return statusCode == HttpStatusCode.NoContent;
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode == (HttpStatusCode)422)
+                {
+                    throw new UserIsOrganizationMemberException(ex.HttpResponse);
+                }
+
+                throw;
+            }
         }
     }
 }

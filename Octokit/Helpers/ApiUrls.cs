@@ -682,6 +682,11 @@ namespace Octokit
             return "orgs/{0}/outside_collaborators?filter={1}".FormatUri(org, filter.ToParameter());
         }
 
+        public static Uri OutsideCollaborator(string org, string user)
+        {
+            return "orgs/{0}/outside_collaborators/{1}".FormatUri(org, user);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
