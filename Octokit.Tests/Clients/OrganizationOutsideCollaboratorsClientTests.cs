@@ -128,5 +128,34 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), null, "application/vnd.github.korra-preview+json", options);
             }
         }
+
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationOutsideCollaboratorsClient(connection);
+
+                client.Delete("org", "user");
+
+                connection.Connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators/user"), 
+                    Arg.Any<object>(), 
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new OrganizationOutsideCollaboratorsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "user"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("org", null));
+                
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "user"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("org", ""));
+            }
+        }
     }
 }

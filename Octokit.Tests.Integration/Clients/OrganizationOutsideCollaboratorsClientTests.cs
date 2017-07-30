@@ -222,5 +222,54 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
         }
+
+        public class TheDeleteMethod
+        {
+            readonly IGitHubClient _gitHub;
+            readonly string _fixtureOrganization = "alfhenrik-test-org";
+            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+
+            public TheDeleteMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [IntegrationTest]
+            public async Task CanRemoveOutsideCollaborator()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+
+                    var result = await _gitHub
+                        .Organization
+                        .OutsideCollaborator
+                        .Delete(_fixtureOrganization, _fixtureCollaborator);
+
+                    Assert.True(result);
+
+                    var outsideCollaborators = await _gitHub
+                        .Organization
+                        .OutsideCollaborator
+                        .GetAll(_fixtureOrganization);
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Empty(outsideCollaborators);
+                }
+            }
+
+            [IntegrationTest]
+            public async Task CannotRemoveMemberOfOrganizationAsOutsideCollaborator()
+            {
+                var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(() 
+                    => _gitHub.Organization.OutsideCollaborator.Delete(_fixtureOrganization, "alfhenrik-test"));
+
+                Assert.True(string.Equals(
+                    "You cannot specify an organization member to remove as an outside collaborator.",
+                    ex.Message,
+                    StringComparison.OrdinalIgnoreCase));
+            }
+        }
     }
 }

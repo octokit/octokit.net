@@ -11,202 +11,237 @@ namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableOrganizationOutsideCollaboratorsClientTests
     {
-        readonly IGitHubClient _gitHub;
-        readonly ObservableOrganizationOutsideCollaboratorsClient _client;
-        readonly string _fixtureOrganization = "alfhenrik-test-org";
-        readonly string _fixtureCollaborator = "alfhenrik-test-2";
-
-        public ObservableOrganizationOutsideCollaboratorsClientTests()
+        public class TheGetAllMethod
         {
-            _gitHub = Helper.GetAuthenticatedClient();
-            _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
-        }
+            readonly IGitHubClient _gitHub;
+            readonly ObservableOrganizationOutsideCollaboratorsClient _client;
+            readonly string _fixtureOrganization = "alfhenrik-test-org";
+            readonly string _fixtureCollaborator = "alfhenrik-test-2";
 
-        [IntegrationTest]
-        public async Task ReturnsNoOutsideCollaborators()
-        {
-            var outsideCollaborators = await _client
-                .GetAll(_fixtureOrganization).ToList();
-
-            Assert.NotNull(outsideCollaborators);
-            Assert.Empty(outsideCollaborators);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsOutsideCollaborators()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            public TheGetAllMethod()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                _gitHub = Helper.GetAuthenticatedClient();
+                _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
+            }
 
+            [IntegrationTest]
+            public async Task ReturnsNoOutsideCollaborators()
+            {
                 var outsideCollaborators = await _client
                     .GetAll(_fixtureOrganization).ToList();
 
                 Assert.NotNull(outsideCollaborators);
-                Assert.Equal(1, outsideCollaborators.Count);
+                Assert.Empty(outsideCollaborators);
             }
-        }
 
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithoutStart()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            [IntegrationTest]
+            public async Task ReturnsOutsideCollaborators()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-
-                var options = new ApiOptions
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
                 {
-                    PageSize = 1,
-                    PageCount = 1
-                };
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, options).ToList();
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization).ToList();
 
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(1, outsideCollaborators.Count);
+                }
             }
-        }
 
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithStart()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithoutStart()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var options = new ApiOptions
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
                 {
-                    PageSize = 1,
-                    PageCount = 1,
-                    StartPage = 1
-                };
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, options).ToList();
+                    var options = new ApiOptions
+                    {
+                        PageSize = 1,
+                        PageCount = 1
+                    };
 
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(1, outsideCollaborators.Count);
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, options).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(1, outsideCollaborators.Count);
+                }
             }
-        }
 
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithStart()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.All).ToList();
-
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(2, outsideCollaborators.Count);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterAndApiOptions()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
-            {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var options = new ApiOptions
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
                 {
-                    PageCount = 1,
-                    PageSize = 2
-                };
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
 
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, options).ToList();
+                    var options = new ApiOptions
+                    {
+                        PageSize = 1,
+                        PageCount = 1,
+                        StartPage = 1
+                    };
 
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(2, outsideCollaborators.Count);
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, options).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(1, outsideCollaborators.Count);
+                }
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.All).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(2, outsideCollaborators.Count);
+                }
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterAndApiOptions()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+
+                    var options = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 2
+                    };
+
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, options).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(2, outsideCollaborators.Count);
+                }
+            }
+
+            [IntegrationTest(Skip = "It seems this API endpoint does not support pagination as page size/count are not adhered to")]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterWithStart()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+
+                    var firstPageOptions = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 1,
+                        StartPage = 1
+                    };
+
+                    var firstPageOfOutsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, firstPageOptions).ToList();
+
+                    var secondPageOptions = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 1,
+                        StartPage = 2
+                    };
+
+                    var secondPageOfOutsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, secondPageOptions).ToList();
+
+                    Assert.Equal(1, firstPageOfOutsideCollaborators.Count);
+                    Assert.Equal(1, secondPageOfOutsideCollaborators.Count);
+                }
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
+                }
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilterAndApiOptions()
+            {
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+                {
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+
+                    var options = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 2
+                    };
+
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options).ToList();
+
+                    Assert.NotNull(outsideCollaborators);
+                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
+                }
             }
         }
 
-        [IntegrationTest(Skip = "It seems this API endpoint does not support pagination as page size/count are not adhered to")]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterWithStart()
+        public class TheDeleteMethod
         {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            readonly IGitHubClient _gitHub;
+            readonly ObservableOrganizationOutsideCollaboratorsClient _client;
+            readonly string _fixtureOrganization = "alfhenrik-test-org";
+            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+
+            public TheDeleteMethod()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var firstPageOptions = new ApiOptions
-                {
-                    PageCount = 1,
-                    PageSize = 1,
-                    StartPage = 1
-                };
-
-                var firstPageOfOutsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, firstPageOptions).ToList();
-
-                var secondPageOptions = new ApiOptions
-                {
-                    PageCount = 1,
-                    PageSize = 1,
-                    StartPage = 2
-                };
-
-                var secondPageOfOutsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.All, secondPageOptions).ToList();
-
-                Assert.Equal(1, firstPageOfOutsideCollaborators.Count);
-                Assert.Equal(1, secondPageOfOutsideCollaborators.Count);
+                _gitHub = Helper.GetAuthenticatedClient();
+                _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
             }
-        }
 
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
+            [IntegrationTest]
+            public async Task CanRemoveOutsideCollaborator()
             {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled).ToList();
-
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(1, outsideCollaborators.Count);
-                Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilterAndApiOptions()
-        {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
-            {
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
-
-                var options = new ApiOptions
+                var repoName = Helper.MakeNameWithTimestamp("public-repo");
+                using (var context = await _gitHub.CreateRepositoryContext(_fixtureOrganization, new NewRepository(repoName)))
                 {
-                    PageCount = 1,
-                    PageSize = 2
-                };
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 
-                var outsideCollaborators = await _client
-                    .GetAll(_fixtureOrganization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options).ToList();
+                    var result = await _client.Delete(_fixtureOrganization, _fixtureCollaborator);
+                    Assert.True(result);
 
-                Assert.NotNull(outsideCollaborators);
-                Assert.Equal(1, outsideCollaborators.Count);
-                Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
+                    var outsideCollaborators = await _client
+                        .GetAll(_fixtureOrganization).ToList();
+
+                    Assert.Empty(outsideCollaborators);
+                }
             }
         }
     }

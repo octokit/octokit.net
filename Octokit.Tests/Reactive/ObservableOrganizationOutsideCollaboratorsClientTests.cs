@@ -149,5 +149,33 @@ namespace Octokit.Tests.Reactive
                     "application/vnd.github.korra-preview+json");
             }
         }
+
+        public class TheDeleteMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(gitHubClient);
+
+                client.Delete("org", "user");
+
+                gitHubClient.Organization.OutsideCollaborator.Received().Delete(
+                    Arg.Is("org"),
+                    Arg.Is("user"));
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.Delete(null, "user"));
+                Assert.Throws<ArgumentNullException>(() => client.Delete("org", null));
+
+                Assert.Throws<ArgumentException>(() => client.Delete("", "user"));
+                Assert.Throws<ArgumentException>(() => client.Delete("org", ""));
+            }
+        }
     }
 }
