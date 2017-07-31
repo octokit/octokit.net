@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
-using Octokit.Reactive.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Reactive

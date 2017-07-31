@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Text;
+﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Octokit.Tests.Integration.Helpers;
