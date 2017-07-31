@@ -113,5 +113,26 @@ namespace Octokit.Reactive
 
             return _client.Delete(org, user).ToObservable();
         }
+
+        /// <summary>
+        /// Converts an organization member to an outside collaborator, 
+        /// when an organization member is converted to an outside collaborator, 
+        /// they'll only have access to the repositories that their current team membership allows. 
+        /// The user will no longer be a member of the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#convert-member-to-outside-collaborator"> API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        public IObservable<bool> ConvertFromMember(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.ConvertFromMember(org, user).ToObservable();
+        }
     }
 }
