@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 #if !NO_SERIALIZABLE
@@ -43,7 +44,7 @@ namespace Octokit
 
 #if !NO_SERIALIZABLE
         /// <summary>
-        /// Constructs an instance of <see cref="UserIsNotMemberOfOrganizationException"/>.
+        /// Constructs an instance of ForbiddenException
         /// </summary>
         /// <param name="info">
         /// The <see cref="SerializationInfo"/> that holds the
