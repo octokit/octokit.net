@@ -17,7 +17,7 @@ namespace Octokit
         /// Initializes a new Organization Outside Collaborators API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public OrganizationOutsideCollaboratorsClient(IApiConnection apiConnection) 
+        public OrganizationOutsideCollaboratorsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
         }
@@ -116,7 +116,7 @@ namespace Octokit
             {
                 var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user), null, AcceptHeaders.OrganizationMembershipPreview).ConfigureAwait(false);
 
-                if (statusCode != HttpStatusCode.NoContent 
+                if (statusCode != HttpStatusCode.NoContent
                     && statusCode != (HttpStatusCode)422)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204 or a 422", statusCode);
@@ -151,7 +151,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
-             
+
             try
             {
                 var statusCode = await Connection.Put(ApiUrls.OutsideCollaborator(org, user), AcceptHeaders.OrganizationMembershipPreview);
@@ -164,22 +164,25 @@ namespace Octokit
 
                 return statusCode == HttpStatusCode.NoContent;
             }
-            catch (ForbiddenException ex)
+            catch (ForbiddenException fex)
             {
                 if (string.Equals(
                     "Cannot convert the last owner to an outside collaborator",
-                    ex.Message,
+                    fex.Message,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserIsLastOwnerOfOrganizationException(ex.HttpResponse);
+                    throw new UserIsLastOwnerOfOrganizationException(fex.HttpResponse);
                 }
-
+                throw;
+            }
+            catch (NotFoundException nfex)
+            {
                 if (string.Equals(
                     $"{user} is not a member of the {org} organization.",
-                    ex.Message,
+                    nfex.Message,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new UserIsNotMemberOfOrganizationException(ex.HttpResponse);
+                    throw new UserIsNotMemberOfOrganizationException(nfex.HttpResponse);
                 }
 
                 throw;
