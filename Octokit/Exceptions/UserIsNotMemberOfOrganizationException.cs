@@ -35,7 +35,7 @@ namespace Octokit
         public UserIsNotMemberOfOrganizationException(IResponse response, ApiException innerException) 
             : base(response, innerException)
         {
-            Debug.Assert(response != null && response.StatusCode == (HttpStatusCode)422,
+            Debug.Assert(response != null && response.StatusCode == HttpStatusCode.NotFound,
                 "UserIsNotMemberOfOrganizationException created with the wrong HTTP status code");
         }
 

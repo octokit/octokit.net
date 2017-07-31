@@ -35,7 +35,7 @@ namespace Octokit
         public UserIsLastOwnerOfOrganizationException(IResponse response, ApiException innerException) 
             : base(response, innerException)
         {
-            Debug.Assert(response != null && response.StatusCode == (HttpStatusCode)422,
+            Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Forbidden,
                 "UserIsLastOwnerOfOrganizationException created with the wrong HTTP status code");
         }
 
