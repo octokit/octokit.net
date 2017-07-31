@@ -157,5 +157,33 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("org", ""));
             }
         }
+
+        public class TheConvertFromMemberMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationOutsideCollaboratorsClient(connection);
+
+                client.ConvertFromMember("org", "user");
+
+                connection.Connection.Received().Put(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators/user"),
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArgument()
+            {
+                var client = new OrganizationOutsideCollaboratorsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ConvertFromMember(null, "user"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ConvertFromMember("org", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ConvertFromMember("", "user"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ConvertFromMember("org", ""));
+            }
+        }
     }
 }

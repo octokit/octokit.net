@@ -244,5 +244,32 @@ namespace Octokit.Tests.Integration.Reactive
                 }
             }
         }
+
+        public class TheConvertFromMemberMethod
+        {
+            readonly IGitHubClient _gitHub;
+            readonly ObservableOrganizationOutsideCollaboratorsClient _client;
+            readonly string _fixtureOrganization = "alfhenrik-test-org";
+            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+
+            public TheConvertFromMemberMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+                _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
+            }
+
+            [IntegrationTest(Skip = "This test relies on https://github.com/octokit/octokit.net/issues/1533 being implemented before being re-enabled as there's currently no way to invite a member to an org")]
+            public async Task CanConvertOrgMemberToOutsideCollaborator()
+            {
+                var result = await _client.ConvertFromMember(_fixtureOrganization, _fixtureCollaborator);
+                Assert.True(result);
+
+                var outsideCollaborators = await _client
+                    .GetAll(_fixtureOrganization).ToList();
+
+                Assert.Equal(1, outsideCollaborators.Count);
+                Assert.Equal(_fixtureCollaborator, outsideCollaborators[0].Login);
+            }
+        }
     }
 }

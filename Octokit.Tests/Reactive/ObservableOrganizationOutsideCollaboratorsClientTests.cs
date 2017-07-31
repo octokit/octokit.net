@@ -177,5 +177,33 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.Delete("org", ""));
             }
         }
+
+        public class TheConvertFromMemberMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(gitHubClient);
+
+                client.ConvertFromMember("org", "user");
+
+                gitHubClient.Organization.OutsideCollaborator.Received().ConvertFromMember(
+                    Arg.Is("org"),
+                    Arg.Is("user"));
+            }
+
+            [Fact]
+            public void EnsuresNonNullArgument()
+            {
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.ConvertFromMember(null, "user"));
+                Assert.Throws<ArgumentNullException>(() => client.ConvertFromMember("org", null));
+
+                Assert.Throws<ArgumentException>(() => client.ConvertFromMember("", "user"));
+                Assert.Throws<ArgumentException>(() => client.ConvertFromMember("org", ""));
+            }
+        }
     }
 }

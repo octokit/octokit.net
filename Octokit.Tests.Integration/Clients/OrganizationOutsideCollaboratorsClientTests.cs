@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Octokit.Tests.Integration.Helpers;
@@ -267,6 +268,55 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.True(string.Equals(
                     "You cannot specify an organization member to remove as an outside collaborator.",
+                    ex.Message,
+                    StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        public class TheConvertFromMemberMethod
+        {
+            readonly IGitHubClient _gitHub;
+            readonly string _fixtureOrganization = "alfhenrik-test-org";
+            readonly string _fixtureTeam = "the-solid-state-team";
+            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+
+            public TheConvertFromMemberMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [IntegrationTest(Skip = "This test relies on https://github.com/octokit/octokit.net/issues/1533 being implemented before being re-enabled as there's currently no way to invite a member to an org")]
+            public async Task CanConvertOrgMemberToOutsideCollaborator()
+            {
+                var result = await _gitHub.Organization.OutsideCollaborator.ConvertFromMember(_fixtureOrganization, _fixtureCollaborator);
+                Assert.True(result);
+
+                var outsideCollaborators = await _gitHub.Organization.OutsideCollaborator.GetAll(_fixtureOrganization);
+
+                Assert.Equal(1, outsideCollaborators.Count);
+                Assert.Equal(_fixtureCollaborator, outsideCollaborators[0].Login);
+            }
+
+            [IntegrationTest]
+            public async Task CannotConvertNonOrgMemberToOutsideCollaborator()
+            {
+                var ex = await Assert.ThrowsAsync<UserIsNotMemberOfOrganizationException>(()
+                    => _gitHub.Organization.OutsideCollaborator.ConvertFromMember(_fixtureOrganization, _fixtureCollaborator));
+
+                Assert.True(string.Equals(
+                    $"{_fixtureCollaborator} is not a member of the {_fixtureOrganization} organization.",
+                    ex.Message,
+                    StringComparison.OrdinalIgnoreCase));
+            }
+
+            [IntegrationTest]
+            public async Task CannotConvertLastOrgOwnerToOutsideCollaborator()
+            {
+                var ex = await Assert.ThrowsAsync<UserIsLastOwnerOfOrganizationException>(()
+                    => _gitHub.Organization.OutsideCollaborator.ConvertFromMember(_fixtureOrganization, "alfhenrik-test"));
+
+                Assert.True(string.Equals(
+                    "Cannot convert the last owner to an outside collaborator",
                     ex.Message,
                     StringComparison.OrdinalIgnoreCase));
             }
