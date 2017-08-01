@@ -37,6 +37,20 @@ namespace Octokit
         Member
     }
 
+    public enum OrganizationMembershipRole
+    {
+        [Parameter(Value = "direct_member")]
+        DirectMember,
+        [Parameter(Value = "admin")]
+        Admin,
+        [Parameter(Value = "billing_manager")]
+        BillingManager,
+        [Parameter(Value = "hiring_manager")]
+        HiringManager,
+        [Parameter(Value = "reinstate")]
+        Reinstate
+    }
+
     /// <summary>
     /// A client for GitHub's Organization Members API.
     /// </summary>
@@ -441,6 +455,22 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
+        }
+
+        /// <summary>
+        /// List all pending invites for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org"></param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<OrganizationMembershipInvite>> GetAllPendingInvites(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return ApiConnection.GetAll<OrganizationMembershipInvite>(ApiUrls.OrganizationPendingInvites(org), null, AcceptHeaders.OrganizationMembershipPreview);
         }
     }
 }

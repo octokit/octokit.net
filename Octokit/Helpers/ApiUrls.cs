@@ -661,6 +661,11 @@ namespace Octokit
             return "orgs/{0}/public_members/{1}".FormatUri(org, name);
         }
 
+        public static Uri OrganizationPendingInvites(string org)
+        {
+            return "orgs/{0}/invitations".FormatUri(org);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
         /// </summary>
