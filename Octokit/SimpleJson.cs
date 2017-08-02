@@ -1474,6 +1474,8 @@ namespace Octokit
                     {
                         if (type == typeof(object))
                             obj = value;
+                        else if (type == typeof(string))
+                            obj = value.ToString();
                         else
                         {
                             obj = ConstructorCache[type]();
