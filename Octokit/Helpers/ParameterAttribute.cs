@@ -18,5 +18,10 @@ namespace Octokit.Internal
         /// The name to use in place of the enum's value
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// Whether to allow more than one response parameter to map to this same API value
+        /// </summary>
+        public bool AllowDuplicates { get; set; }
     }
 }

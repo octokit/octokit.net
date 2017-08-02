@@ -1480,7 +1480,12 @@ namespace Octokit
                             foreach (KeyValuePair<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> setter in SetCache[type])
                             {
                                 object jsonValue;
-                                if (jsonObject.TryGetValue(setter.Key, out jsonValue))
+                                var key = setter.Key;
+                                if (key.Contains("_octokit_"))
+                                {
+                                    key = key.Substring(0, key.IndexOf("_octokit_"));
+                                }
+                                if (jsonObject.TryGetValue(key, out jsonValue))
                                 {
                                     jsonValue = DeserializeObject(jsonValue, setter.Value.Key);
                                     setter.Value.Value(obj, jsonValue);
