@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <DefineConstants>$(DefineConstants);HAS_ENVIRONMENT;HAS_REGEX_COMPILED_OPTIONS</DefineConstants>
+    <DefineConstants>$(DefineConstants);HAS_ENVIRONMENT;HAS_REGEX_COMPILED_OPTIONS;SIMPLE_JSON_INTERNAL,SIMPLE_JSON_OBJARRAYINTERNAL,SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
