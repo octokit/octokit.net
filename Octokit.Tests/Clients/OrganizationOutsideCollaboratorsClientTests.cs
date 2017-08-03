@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("org");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"), null, "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("org", OrganizationMembersFilter.All);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"), null, "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), null, "application/vnd.github.korra-preview+json");
             }
         }
 

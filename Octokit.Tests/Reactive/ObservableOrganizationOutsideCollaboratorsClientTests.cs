@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    Args.EmptyDictionary,
+                    null,
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"), 
-                    Args.EmptyDictionary, 
+                    null, 
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), 
-                    Args.EmptyDictionary, 
+                    null, 
                     "application/vnd.github.korra-preview+json");
             }
         }
