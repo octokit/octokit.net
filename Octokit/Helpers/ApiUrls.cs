@@ -1391,6 +1391,32 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/> that </returns>
+        public static Uri PullRequestReviewComments(long repositoryId, int number, int reviewId)
+        {
+            return "repositories/{0}/pulls/{1}/reviews/{2}/comments".FormatUri(repositoryId, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewComments(string owner, string name, int pullRequestId, int reviewId)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/comments".FormatUri(owner, name, pullRequestId, reviewId);
+        }
+
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a specified pull request review.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

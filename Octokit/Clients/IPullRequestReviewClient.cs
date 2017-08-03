@@ -149,5 +149,23 @@ namespace Octokit
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
         Task<PullRequestReview> Dismiss(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage);
 
+        /// <summary>
+        /// Lists comments for a single review
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestId, int reviewId);
+
+        /// <summary>
+        /// Dismisses a pull request review.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestId, int reviewId);
     }
 }

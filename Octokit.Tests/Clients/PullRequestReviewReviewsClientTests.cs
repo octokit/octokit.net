@@ -340,6 +340,43 @@ public class PullRequestReviewsClientTests
         }
     }
 
+    public class TheGetCommentsMethod
+    {
+        [Fact]
+        public async Task GetsCorrectUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewClient(connection);
+            
+            await client.GetAllComments("owner", "name", 13, 13);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"));
+        }
+
+        [Fact]
+        public async Task PostsToCorrectUrlWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewClient(connection);
+
+            await client.GetAllComments(1, 13, 13);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/comments"));
+        }
+
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewClient(connection);
+            
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1));
+
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllComments("", "name", 1, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllComments("owner", "", 1, 1));
+        }
+    }
 
     public class TheSubmitMethod
     {
@@ -380,17 +417,18 @@ public class PullRequestReviewsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewClient(connection);
 
-            var dismissMessage = new PullRequestReviewDismiss()
+            var submitMessage = new PullRequestReviewSubmit()
             {
-                Message = "test message"
+                Body = "string",
+                Event = PullRequestReviewSubmitEvents.APPROVE
             };
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Dismiss(null, "name", 1, 1, dismissMessage));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Dismiss("owner", null, 1, 1, dismissMessage));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Dismiss("owner", "name", 1, 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Submit(null, "name", 1, 1, submitMessage));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Submit("owner", null, 1, 1, submitMessage));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Submit("owner", "name", 1, 1, null));
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Dismiss("", "name", 1, 1, dismissMessage));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.Dismiss("owner", "", 1, 1, dismissMessage));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Submit("", "name", 1, 1, submitMessage));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Submit("owner", "", 1, 1, submitMessage));
         }
     }
 }
