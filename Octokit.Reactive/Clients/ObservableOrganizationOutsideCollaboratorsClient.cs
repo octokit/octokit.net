@@ -23,7 +23,7 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
-        /// are not a member of the organization.
+        /// is not a member of the organization.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators">API documentation</a>
@@ -40,7 +40,7 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
-        /// are not a member of the organization.
+        /// is not a member of the organization.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators">API documentation</a>
