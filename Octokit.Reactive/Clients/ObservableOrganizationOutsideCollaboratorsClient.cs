@@ -15,7 +15,7 @@ namespace Octokit.Reactive
         /// <param name="client"></param>
         public ObservableOrganizationOutsideCollaboratorsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Organization.OutsideCollaborator;
             _connection = client.Connection;
@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// <returns>The users</returns>
         public IObservable<User> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, AcceptHeaders.OrganizationMembershipPreview);
         }
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// <returns>The users</returns>
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview);
         }
