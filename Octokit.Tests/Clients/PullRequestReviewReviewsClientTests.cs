@@ -188,7 +188,7 @@ public class PullRequestReviewsClientTests
             review.Comments.Add(comment);
             client.Create("fakeOwner", "fakeRepoName", 13, review);
 
-            connection.Connection.Received().Post<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/reviews"),
+            connection.Connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/reviews"),
                 review, null, null);
         }
 
@@ -211,7 +211,7 @@ public class PullRequestReviewsClientTests
 
             client.Create(1, 13, review);
 
-            connection.Connection.Received().Post<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews"),
+            connection.Connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews"),
                 review, null, null);
         }
 
@@ -263,6 +263,7 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
+
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewClient(connection);
 
@@ -290,6 +291,7 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrl()
         {
+
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewClient(connection);
 
@@ -305,8 +307,10 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
+
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewClient(connection);
+
             var dismissMessage = new PullRequestReviewDismiss()
             {
                 Message = "test message"
@@ -352,7 +356,7 @@ public class PullRequestReviewsClientTests
             };
             await client.Submit("owner", "name", 13, 13, submitMessage);
 
-            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13"), submitMessage, null, null);
+            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/events"), submitMessage, null, null);
         }
 
         [Fact]
@@ -367,7 +371,7 @@ public class PullRequestReviewsClientTests
             };
             await client.Submit(1, 13, 13, submitMessage);
 
-            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/"), submitMessage, null, null);
+            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/events"), submitMessage, null, null);
         }
 
         [Fact]

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Reactive;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Pull Request Review API.
@@ -9,9 +9,8 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/pulls/reviews/">Review API documentation</a> for more information.
     /// </remarks>
-    public interface IPullRequestReviewClient
+    public interface IObservablePullRequestReviewClient
     {
-
         /// <summary>
         /// Gets reviews for a specified pull request.
         /// </summary>
@@ -19,7 +18,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestId">The pull request number</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestId);
+        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestId);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -27,7 +26,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestId">The pull request number</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestId);
+        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestId);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -37,7 +36,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestId">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestId, ApiOptions options);
+        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestId, ApiOptions options);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -46,7 +45,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestId">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestId, ApiOptions options);
+        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestId, ApiOptions options);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -56,7 +55,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> GetReview(string owner, string name, int pullRequestId, int reviewId);
+        IObservable<PullRequestReview> GetReview(string owner, string name, int pullRequestId, int reviewId);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -65,7 +64,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> GetReview(long repositoryId, int pullRequestId, int reviewId);
+        IObservable<PullRequestReview> GetReview(long repositoryId, int pullRequestId, int reviewId);
 
         /// <summary>
         /// Creates a comment on a pull review.
@@ -75,7 +74,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestId">The Pull Request number</param>
         /// <param name="review">The review</param>
-        Task<PullRequestReview> Create(string owner, string name, int pullRequestId, PullRequestReviewCreate review);
+        IObservable<PullRequestReview> Create(string owner, string name, int pullRequestId, PullRequestReviewCreate review);
 
         /// <summary>
         /// Creates a comment on a pull review.
@@ -84,7 +83,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestId">The Pull Request number</param>
         /// <param name="review">The review</param>
-        Task<PullRequestReview> Create(long repositoryId, int pullRequestId, PullRequestReviewCreate review);
+        IObservable<PullRequestReview> Create(long repositoryId, int pullRequestId, PullRequestReviewCreate review);
 
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task Delete(string owner, string name, int pullRequestId, int reviewId);
+        IObservable<Unit> Delete(string owner, string name, int pullRequestId, int reviewId);
 
         /// <summary>
         /// Deletes a pull request review.
@@ -104,7 +103,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task Delete(long repositoryId, int pullRequestId, int reviewId);
+        IObservable<Unit> Delete(long repositoryId, int pullRequestId, int reviewId);
 
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace Octokit
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        Task<PullRequestReview> Submit(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage);
+        IObservable<PullRequestReview> Submit(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage);
 
         /// <summary>
         /// Submits an event to a pull request review.
@@ -126,7 +125,7 @@ namespace Octokit
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        Task<PullRequestReview> Submit(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage);
+        IObservable<PullRequestReview> Submit(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -137,7 +136,7 @@ namespace Octokit
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        Task<PullRequestReview> Dismiss(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage);
+        IObservable<PullRequestReview> Dismiss(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -147,7 +146,6 @@ namespace Octokit
         /// <param name="pullRequestId">The pull request review comment number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        Task<PullRequestReview> Dismiss(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage);
-
+        IObservable<PullRequestReview> Dismiss(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage);
     }
 }

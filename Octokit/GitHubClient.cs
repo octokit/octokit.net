@@ -93,6 +93,7 @@ namespace Octokit
             Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
+            PullRequestReview = new PullRequestReviewClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Search = new SearchClient(apiConnection);
             User = new UsersClient(apiConnection);
@@ -205,6 +206,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/
         /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Pull Requests Review API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/reviews/
+        /// </remarks>
+        public IPullRequestReviewClient PullRequestReview { get; private set; }
 
         /// <summary>
         /// Access GitHub's Repositories API.
