@@ -91,7 +91,8 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlMulti()
             {
-                var firstPageUrl = new Uri("repos/owner/name/pulls/7/comments", UriKind.Relative);
+
+                var firstPageUrl = new Uri("repos/owner/name/pulls/7/reviews", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReview>>
@@ -138,15 +139,15 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll("owner", "name", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null);
             }
 
             [Fact]
             public async Task RequestsCorrectUrlMultiWithRepositoryId()
             {
-                var firstPageUrl = new Uri("repositories/1/pulls/7/comments", UriKind.Relative);
+                var firstPageUrl = new Uri("repositories/1/pulls/7/reviews", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
                 var firstPageResponse = new ApiResponse<List<PullRequestReview>>
@@ -193,9 +194,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll(1, 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null);
-                await gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null);
             }
 
             [Fact]
