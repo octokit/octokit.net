@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="reviewId">The pull request review number</param>
         public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestId, int reviewId)
         {
-            return GetAllComments(repositoryId, pullRequestId, reviewId);
+            return GetAllComments(repositoryId, pullRequestId, reviewId, ApiOptions.None);
         }
 
         /// <summary>
