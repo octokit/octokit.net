@@ -44,7 +44,7 @@ public class PullRequestReviewsClientTests
         }
     }
 
-    public class TheGetForPullRequestMethod
+    public class TheGetAllForPullRequestMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
