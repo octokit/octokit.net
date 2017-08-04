@@ -123,7 +123,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return GetAll(owner, name, pullRequestId);
+            return GetAll(owner, name, pullRequestId, ApiOptions.None);
         }
 
         /// <summary>
