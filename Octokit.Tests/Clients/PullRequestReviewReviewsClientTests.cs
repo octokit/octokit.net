@@ -350,7 +350,7 @@ public class PullRequestReviewsClientTests
             
             await client.GetAllComments("owner", "name", 13, 13);
 
-            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"));
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"), null, Args.ApiOptions);
         }
 
         [Fact]
@@ -361,7 +361,45 @@ public class PullRequestReviewsClientTests
 
             await client.GetAllComments(1, 13, 13);
 
-            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/comments"));
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/comments"), null, Args.ApiOptions);
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithApiOptions()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewClient(connection);
+
+            var options = new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            await client.GetAllComments("owner", "name", 13, 13, options);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"), null, options);
+
+        }
+
+        [Fact]
+        public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new PullRequestReviewClient(connection);
+
+            var options = new ApiOptions
+            {
+                StartPage = 1,
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            await client.GetAllComments(1, 13, 13, options);
+
+            connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/comments"), null, Args.ApiOptions);
+
         }
 
         [Fact]

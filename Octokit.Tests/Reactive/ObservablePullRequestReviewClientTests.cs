@@ -435,30 +435,176 @@ namespace Octokit.Tests.Reactive
         public class TheGetCommentsMethod
         {
             [Fact]
-            public void GetsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewClient(gitHubClient);
 
-                client.GetAllComments("owner", "name", 13, 13);
+                client.GetAllComments("fake", "repo", 1, 1);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments("owner", "name", 13, 13);
+                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments("fake", "repo", 1, 1);
             }
 
             [Fact]
-            public void GetsCorrectUrlWithRepositoryId()
+            public void RequestsCorrectUrlWithRepositoryId()
             {
-
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewClient(gitHubClient);
+
+                client.GetAllComments(1, 1, 1);
+
+                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments(1, 1, 1);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllComments("fake", "repo", 1, 1, options);
+
+                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments("fake", "repo", 1, 1, options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservablePullRequestReviewClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllComments(1, 1, 1, options);
+
+                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments(1, 1, 1, options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlMulti()
+            {
+
+                var firstPageUrl = new Uri("repos/owner/name/pulls/7/reviews/1/comments", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
+                    });
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    new Response(),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(7)
+                    }
+                );
+
+                var gitHubClient = Substitute.For<IGitHubClient>();
+
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
+
+                var client = new ObservablePullRequestReviewClient(gitHubClient);
+
+                var results = await client.GetAllComments("owner", "name", 7, 1).ToArray();
+
+                Assert.Equal(7, results.Length);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlMultiWithRepositoryId()
+            {
+                var firstPageUrl = new Uri("repositories/1/pulls/7/reviews/1/comments", UriKind.Relative);
+                var secondPageUrl = new Uri("https://example.com/page/2");
+                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+                var firstPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    CreateResponseWithApiInfo(firstPageLinks),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(1),
+                        new PullRequestReviewComment(2),
+                        new PullRequestReviewComment(3)
+                    });
+                var thirdPageUrl = new Uri("https://example.com/page/3");
+                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+                var secondPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    CreateResponseWithApiInfo(secondPageLinks),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(4),
+                        new PullRequestReviewComment(5),
+                        new PullRequestReviewComment(6)
+                    }
+                );
+                var lastPageResponse = new ApiResponse<List<PullRequestReviewComment>>
+                (
+                    new Response(),
+                    new List<PullRequestReviewComment>
+                    {
+                        new PullRequestReviewComment(7)
+                    }
+                );
+
+                var gitHubClient = Substitute.For<IGitHubClient>();
+
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
+                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
                 
-                client.GetAllComments(1, 13, 13);
+                var client = new ObservablePullRequestReviewClient(gitHubClient);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments(1, 13, 13);
+                var results = await client.GetAllComments(1, 7, 1).ToArray();
+
+                Assert.Equal(7, results.Length);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null);
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewClient(gitHubClient);
@@ -466,8 +612,18 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1));
 
+                Assert.Throws<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllComments("owner", "name", 1, 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllComments(1, 1, 1, null));
+
                 Assert.Throws<ArgumentException>(() => client.GetAllComments("", "name", 1, 1));
                 Assert.Throws<ArgumentException>(() => client.GetAllComments("owner", "", 1, 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllComments("", "name", 1, 1, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllComments("owner", "", 1, 1, ApiOptions.None));
+
             }
         }
 

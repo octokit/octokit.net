@@ -260,11 +260,7 @@ namespace Octokit
         /// <param name="reviewId">The pull request review number</param>
         public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestId, int reviewId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-
-            var endpoint = ApiUrls.PullRequestReviewComments(owner, name, pullRequestId, reviewId);
-            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint);
+            return await GetAllComments(owner, name, pullRequestId, reviewId, ApiOptions.None);
         }
 
         /// <summary>
@@ -276,9 +272,39 @@ namespace Octokit
         /// <param name="reviewId">The pull request review number</param>
         public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestId, int reviewId)
         {
-            var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, pullRequestId, reviewId);
-            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint);
+            return await GetAllComments(repositoryId, pullRequestId, reviewId, ApiOptions.None);
+        }
 
+        /// <summary>
+        /// Lists comments for a single review
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <param name="options">Options for changing the API response</param>
+        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestId, int reviewId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.PullRequestReviewComments(owner, name, pullRequestId, reviewId);
+            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
+        }
+
+        /// <summary>
+        /// Dismisses a pull request review.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <param name="options">Options for changing the API response</param>
+        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestId, int reviewId, ApiOptions options)
+        {
+            var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, pullRequestId, reviewId);
+            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
         }
     }
 }
