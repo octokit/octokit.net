@@ -9,7 +9,7 @@ namespace Octokit.Tests.Conventions
     public class ClientConstructorTests
     {
         [Theory]
-        [MemberData("GetTestConstructorClasses")]
+        [MemberData(nameof(GetTestConstructorClasses))]
         public void CheckTestConstructorNames(Type type)
         {
             const string constructorTestClassName = "TheCtor";

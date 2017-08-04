@@ -9,7 +9,7 @@ namespace Octokit.Tests.Conventions
     public class PaginationTests
     {
         [Theory(Skip = "Enable this to run it and find all the places where things break")]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckObservableClients(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckPaginationGetAllMethodNames(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
