@@ -4,7 +4,7 @@
     <Description>Convention-based tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Conventions</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFrameworks>netcoreapp1.0;net452</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Conventions</AssemblyName>
     <PackageId>Octokit.Tests.Conventions</PackageId>
@@ -24,9 +24,12 @@
   <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <None Include="app.config" />
+    <Content Include="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+  <ItemGroup>
     <ProjectReference Include="..\Octokit\Octokit.csproj" />
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj" />
     <ProjectReference Include="..\Octokit.Tests\Octokit.Tests.csproj" />
