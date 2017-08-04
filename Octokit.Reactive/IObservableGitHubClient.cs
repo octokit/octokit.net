@@ -13,7 +13,6 @@ namespace Octokit.Reactive
         IObservableOauthClient Oauth { get; }
         IObservableOrganizationsClient Organization { get; }
         IObservablePullRequestsClient PullRequest { get; }
-        IObservablePullRequestReviewClient PullRequestReview { get; }
         IObservableRepositoriesClient Repository { get; }
         IObservableGistsClient Gist { get; }
         IObservableUsersClient User { get; }

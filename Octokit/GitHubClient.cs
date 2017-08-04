@@ -93,7 +93,6 @@ namespace Octokit
             Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
-            PullRequestReview = new PullRequestReviewClient(apiConnection);
             Repository = new RepositoriesClient(apiConnection);
             Search = new SearchClient(apiConnection);
             User = new UsersClient(apiConnection);

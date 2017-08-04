@@ -30,6 +30,14 @@ namespace Octokit
         IPullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
+        /// Access GitHub's Pull Requests Review API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/reviews/
+        /// </remarks>
+        IPullRequestReviewClient PullRequestReview { get; }
+
+        /// <summary>
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>

@@ -17,6 +17,7 @@ namespace Octokit
         {
             ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
             ReviewRequest = new PullRequestReviewRequestsClient(apiConnection);
+            PullRequestReview = new PullRequestReviewClient(apiConnection);
         }
 
         /// <summary>
@@ -34,6 +35,14 @@ namespace Octokit
         /// Client for managing review requests.
         /// </summary>
         public IPullRequestReviewRequestsClient ReviewRequest { get; set; }
+
+        /// <summary>
+        /// Access GitHub's Pull Requests Review API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/reviews/
+        /// </remarks>
+        public IPullRequestReviewClient PullRequestReview { get; set; }
 
         /// <summary>
         /// Get a pull request by number.

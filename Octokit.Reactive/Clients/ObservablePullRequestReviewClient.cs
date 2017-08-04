@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.PullRequestReview;
+            _client = client.PullRequest.PullRequestReview;
             _connection = client.Connection;
         }
 
