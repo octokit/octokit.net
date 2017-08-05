@@ -1,3 +1,6 @@
+using Cake.Common;
+using Cake.Common.Diagnostics;
+using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
@@ -22,6 +25,26 @@ public class Context : FrostingContext
     public bool TravisCI { get; set; }
 
     public Project[] Projects { get; set; }
+
+    public DotNetCoreTestSettings GetTestSettings()
+    {
+        var settings = new DotNetCoreTestSettings
+        {
+            Configuration = Configuration,
+            NoBuild = true,
+            Verbose = false
+        };
+
+        if (!this.IsRunningOnWindows())
+        {
+            var testFramework = "netcoreapp1.0";
+
+            this.Information($"Running tests against {testFramework} only as we're not on Windows.");
+            settings.Framework = testFramework;
+        }
+
+        return settings;
+    }
 
     public Context(ICakeContext context)
         : base(context)
