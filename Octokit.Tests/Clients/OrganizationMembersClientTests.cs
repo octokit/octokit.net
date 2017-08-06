@@ -494,5 +494,28 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("org", ""));
             }
         }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.GetAllPendingInvites("org");
+
+                connection.Received().GetAll<OrganizationMembershipInvite>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvites(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvites(""));
+            }
+        }
     }
 }

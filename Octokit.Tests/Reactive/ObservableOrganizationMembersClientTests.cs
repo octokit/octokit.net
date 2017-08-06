@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using Octokit.Reactive.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -304,6 +305,32 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("", "username").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Conceal("org", null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("org", "").ToTask());
+            }
+        }
+
+        public class TheGetAllPendingInvitesMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.GetAllPendingInvites("org");
+
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvite>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
+                    null,
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvites(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvites("").ToTask());
             }
         }
     }

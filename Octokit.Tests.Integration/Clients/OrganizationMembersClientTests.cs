@@ -119,5 +119,23 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.True(membersWithNo2FA.Count <= memberCount);
             }
         }
+
+        public class TheGetAllPendingInvitesMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheGetAllPendingInvitesMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [IntegrationTest]
+            public async Task ReturnsNoPendingInvitations()
+            {
+                 var invitations = await _gitHub.Organization.Member.GetAllPendingInvites(Helper.Organization);
+                Assert.NotNull(invitations);
+                Assert.Empty(invitations);
+            }
+        }
     }
 }
