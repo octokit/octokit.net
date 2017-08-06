@@ -380,5 +380,21 @@ namespace Octokit
                 return false;
             }
         }
+
+        /// <summary>
+        /// List all pending invites for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<OrganizationMembershipInvite>> GetAllPendingInvitations(int id)
+        {
+            Ensure.ArgumentNotNull(id, nameof(id));
+
+            return await ApiConnection.GetAll<OrganizationMembershipInvite>(ApiUrls.TeamPendingInvites(id), null, AcceptHeaders.OrganizationMembershipPreview);
+        }
     }
 }

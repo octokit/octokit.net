@@ -661,6 +661,11 @@ namespace Octokit
             return "orgs/{0}/public_members/{1}".FormatUri(org, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organizations pending invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
         public static Uri OrganizationPendingInvites(string org)
         {
             return "orgs/{0}/invitations".FormatUri(org);
@@ -1513,6 +1518,17 @@ namespace Octokit
         {
             return "teams/{0}/repos/{1}/{2}".FormatUri(id, organization, repoName);
         }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for the teams pending invitations
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamPendingInvites(int id)
+        {
+            return "teams/{0}/invitations".FormatUri(id);
+        }
+
 
         /// <summary>
         /// returns the <see cref="Uri"/> for teams

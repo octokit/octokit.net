@@ -295,5 +295,21 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
             return _client.IsRepositoryManagedByTeam(id, owner, repo).ToObservable();
         }
+
+        /// <summary>
+        /// List all pending invites for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvite> GetAllPendingInvitations(int id)
+        {
+            Ensure.ArgumentNotNull(id, nameof(id));
+
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvite>(ApiUrls.TeamPendingInvites(id), null, AcceptHeaders.OrganizationMembershipPreview);  
+        }
     }
 }
