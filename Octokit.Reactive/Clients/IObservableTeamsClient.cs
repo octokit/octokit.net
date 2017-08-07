@@ -198,7 +198,7 @@ namespace Octokit.Reactive
         IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
 
         /// <summary>
-        /// List all pending invites for the given team.
+        /// List all pending invitations for the given team.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
@@ -206,6 +206,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvite> GetAllPendingInvitations(int id);
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id);
     }
 }

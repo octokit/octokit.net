@@ -6,13 +6,13 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class OrganizationMembershipInvite
+    public class OrganizationMembershipInvitation
     {
-        public OrganizationMembershipInvite()
+        public OrganizationMembershipInvitation()
         {
         }
 
-        public OrganizationMembershipInvite(int id, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter)
+        public OrganizationMembershipInvitation(int id, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter)
         {
             Id = id;
             Login = login;
@@ -31,6 +31,6 @@ namespace Octokit
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]
-        internal string DebuggerDisplay => $"{nameof(OrganizationMembershipInvite)}: Invitee: {Login ?? "Non-GitHub member"}; Email: {Email}; Inviter: {Inviter.Login}";
+        internal string DebuggerDisplay => $"{nameof(OrganizationMembershipInvitation)}: Invitee: {Login ?? "Non-GitHub member"}; Email: {Email}; Inviter: {Inviter.Login}";
     }
 }

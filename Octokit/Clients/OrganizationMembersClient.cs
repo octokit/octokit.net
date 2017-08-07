@@ -444,19 +444,19 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List all pending invites for the organization.
+        /// List all pending invitations for the organization.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<OrganizationMembershipInvite>> GetAllPendingInvites(string org)
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<OrganizationMembershipInvite>(ApiUrls.OrganizationPendingInvites(org), null, AcceptHeaders.OrganizationMembershipPreview);
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview);
         }
     }
 }

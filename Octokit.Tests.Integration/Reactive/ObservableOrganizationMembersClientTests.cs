@@ -10,21 +10,21 @@ namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableOrganizationMembersClientTests
     {
-        public class TheGetAllPendingInvitesMethod
+        public class TheGetAllPendingInvitationsMethod
         {
             readonly ObservableOrganizationMembersClient _client;
 
-            public TheGetAllPendingInvitesMethod()
+            public TheGetAllPendingInvitationsMethod()
             {
                 _client = new ObservableOrganizationMembersClient(Helper.GetAuthenticatedClient());
             }
 
             [IntegrationTest]
-            public async Task ReturnsNoPendingInvites()
+            public async Task ReturnsNoPendingInvitations()
             {
-                var pendingInvites = await _client.GetAllPendingInvites(Helper.Organization).ToList();
+                var pendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization).ToList();
 
-                Assert.Empty(pendingInvites);
+                Assert.Empty(pendingInvitations);
             }
         }
     }

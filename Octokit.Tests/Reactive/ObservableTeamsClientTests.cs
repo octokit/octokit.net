@@ -55,7 +55,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllPendingInvitations(1);
 
-                gitHub.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvite>(
+                gitHub.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/invitations"),
                     null,
                     "application/vnd.github.korra-preview+json");

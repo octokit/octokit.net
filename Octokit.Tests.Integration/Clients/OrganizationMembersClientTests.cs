@@ -120,11 +120,11 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        public class TheGetAllPendingInvitesMethod
+        public class TheGetAllPendingInvitationsMethod
         {
             readonly IGitHubClient _gitHub;
 
-            public TheGetAllPendingInvitesMethod()
+            public TheGetAllPendingInvitationsMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
             }
@@ -132,9 +132,9 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsNoPendingInvitations()
             {
-                 var invitations = await _gitHub.Organization.Member.GetAllPendingInvites(Helper.Organization);
-                Assert.NotNull(invitations);
-                Assert.Empty(invitations);
+                 var pendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization);
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
             }
         }
     }

@@ -274,16 +274,15 @@ namespace Octokit.Reactive
         /// <returns></returns>
         IObservable<Unit> Conceal(string org, string user);
 
-
         /// <summary>
-        /// List all pending invites for the organization.
+        /// List all pending invitations for the organization.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvite> GetAllPendingInvites(string org);
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org);
     }
 }

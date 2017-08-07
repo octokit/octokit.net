@@ -179,25 +179,25 @@ public class TeamsClientTests
         }
     }
 
-    public class TheGetAllPendingInvitesMethod
+    public class TheGetAllPendingInvitationsMethod
     {
         private readonly IGitHubClient _gitHub;
 
-        public TheGetAllPendingInvitesMethod()
+        public TheGetAllPendingInvitationsMethod()
         {
             _gitHub = Helper.GetAuthenticatedClient();
         }
 
         [OrganizationTest]
-        public async Task ReturnsNoPendingInvites()
+        public async Task ReturnsNoPendingInvitations()
         {
             using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
             {
                 var team = teamContext.Team;
 
-                var pendingInvites = await _gitHub.Organization.Team.GetAllPendingInvitations(team.Id);
-                Assert.NotNull(pendingInvites);
-                Assert.Empty(pendingInvites);
+                var pendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(team.Id);
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
             }
         }
     }

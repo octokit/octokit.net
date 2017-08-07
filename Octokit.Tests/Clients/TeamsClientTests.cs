@@ -345,7 +345,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllPendingInvitesMethod
+        public class TheGetAllPendingInvitationsMethod
         {
             [Fact]
             public async Task RequestsTheCorrectUrl()
@@ -355,7 +355,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllPendingInvitations(1);
 
-                connection.Received().GetAll<OrganizationMembershipInvite>(
+                connection.Received().GetAll<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/invitations"),
                     null,
                     "application/vnd.github.korra-preview+json");

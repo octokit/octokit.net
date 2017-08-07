@@ -503,9 +503,9 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationMembersClient(connection);
 
-                client.GetAllPendingInvites("org");
+                client.GetAllPendingInvitations("org");
 
-                connection.Received().GetAll<OrganizationMembershipInvite>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json");
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -513,8 +513,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvites(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvites(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations(""));
             }
         }
     }

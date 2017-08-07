@@ -308,7 +308,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetAllPendingInvitesMethod
+        public class TheGetAllPendingInvitationsMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -316,9 +316,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationMembersClient(gitHubClient);
 
-                client.GetAllPendingInvites("org");
+                client.GetAllPendingInvitations("org");
 
-                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvite>(
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
                     null,
                     "application/vnd.github.korra-preview+json");
@@ -329,8 +329,8 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvites(null).ToTask());
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvites("").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("").ToTask());
             }
         }
     }

@@ -76,7 +76,7 @@ public class ObservableTeamsClientTests
         }
 
         [OrganizationTest]
-        public async Task ReturnsNoPendingInvites()
+        public async Task ReturnsNoPendingInvitations()
         {
             var client = new ObservableTeamsClient(_gitHub);
             var observable = client.GetAllPendingInvitations(_team.Id);

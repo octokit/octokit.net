@@ -666,7 +666,7 @@ namespace Octokit
         /// </summary>
         /// <param name="org">The name of the organization</param>
         /// <returns></returns>
-        public static Uri OrganizationPendingInvites(string org)
+        public static Uri OrganizationPendingInvititations(string org)
         {
             return "orgs/{0}/invitations".FormatUri(org);
         }
@@ -1522,13 +1522,12 @@ namespace Octokit
         /// <summary>
         /// returns the <see cref="Uri"/> for the teams pending invitations
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The team id</param>
         /// <returns></returns>
-        public static Uri TeamPendingInvites(int id)
+        public static Uri TeamPendingInvitations(int id)
         {
             return "teams/{0}/invitations".FormatUri(id);
         }
-
 
         /// <summary>
         /// returns the <see cref="Uri"/> for teams

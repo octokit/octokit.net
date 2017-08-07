@@ -377,19 +377,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// List all pending invites for the organization.
+        /// List all pending invitations for the organization.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
-        /// <param name="org"></param>
+        /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        public IObservable<OrganizationMembershipInvite> GetAllPendingInvites(string org)
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvite>(ApiUrls.OrganizationPendingInvites(org), null, AcceptHeaders.OrganizationMembershipPreview);
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview);
         }
     }
 }
