@@ -59,7 +59,7 @@ public class PullRequestReviewsClientTests : IDisposable
         return createdReview;
     }
 
-    async Task<PullRequestReview> CreateReview(string commitId, string body, string evt, List<PullRequestReviewCommentCreate> comments, long repoId, int pullRequestNumber)
+    async Task<PullRequestReview> CreateReview(string commitId, string body, ullRequestReviewRequestEvents evt, List<PullRequestReviewCommentCreate> comments, long repoId, int pullRequestNumber)
     {
         var comment = new PullRequestReviewCreate()
         {
