@@ -29,7 +29,7 @@ namespace Octokit
         /// <summary>
         /// The review event (APPROVE, REQUEST CHANGES, or COMMENT). Default is PENDING
         /// </summary>
-        public PullRequestReviewRequestEvents Event { get; set; }
+        public StringEnum<PullRequestReviewRequestEvents> Event { get; set; }
 
         /// <summary>
         /// The comment drafts to send with this review

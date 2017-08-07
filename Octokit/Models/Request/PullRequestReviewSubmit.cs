@@ -23,7 +23,7 @@ namespace Octokit
         /// <summary>
         /// Filter pulls by base branch name.
         /// </summary>
-        public PullRequestReviewRequestEvents Event { get; set; }
+        public StringEnum<PullRequestReviewRequestEvents> Event { get; set; }
                 
         internal string DebuggerDisplay
         {
