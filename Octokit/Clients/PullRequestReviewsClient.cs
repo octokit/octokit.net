@@ -57,6 +57,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
+
             var endpoint = ApiUrls.PullRequestReviews(owner, name, number);
             return ApiConnection.GetAll<PullRequestReview>(endpoint, null, options);
         }
@@ -72,7 +73,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PullRequestReview>(ApiUrls.PullRequestReviews(repositoryId, number), options);
+            var endpoint = ApiUrls.PullRequestReviews(repositoryId, number);
+            return ApiConnection.GetAll<PullRequestReview>(endpoint, options);
         }
 
         /// <summary>
@@ -88,7 +90,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PullRequestReview>(ApiUrls.PullRequestReview(owner, name, number, reviewId));
+            var endpoint = ApiUrls.PullRequestReview(owner, name, number, reviewId);
+            return ApiConnection.Get<PullRequestReview>(endpoint);
         }
 
         /// <summary>
@@ -100,7 +103,8 @@ namespace Octokit
         /// <param name="reviewId">The pull request review number</param>
         public Task<PullRequestReview> GetReview(long repositoryId, int number, long reviewId)
         {
-            return ApiConnection.Get<PullRequestReview>(ApiUrls.PullRequestReview(repositoryId, number, reviewId));
+            var endpoint = ApiUrls.PullRequestReview(repositoryId, number, reviewId);
+            return ApiConnection.Get<PullRequestReview>(endpoint);
         }
 
         /// <summary>
