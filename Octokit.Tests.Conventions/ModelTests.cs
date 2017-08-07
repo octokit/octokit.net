@@ -14,7 +14,7 @@ namespace Octokit.Tests.Conventions
         private static readonly Assembly Octokit = typeof(AuthorizationUpdate).GetTypeInfo().Assembly;
 
         [Theory]
-        [MemberData("ModelTypes")]
+        [MemberData(nameof(ModelTypes))]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
             var attribute = modelType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void AllResponseModelsHavePublicParameterlessCtors(Type modelType)
         {
             var ctor = modelType.GetConstructor(Type.EmptyTypes);
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveReadOnlyCollections(Type modelType)
         {
             var mutableCollectionProperties = new List<PropertyInfo>();
@@ -111,7 +111,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsUseStringEnumWrapper(Type modelType)
         {
             var enumProperties = modelType.GetProperties()
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ModelTypesWithUrlProperties")]
+        [MemberData(nameof(ModelTypesWithUrlProperties))]
         public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
             var propertiesWithInvalidType = modelType
@@ -140,7 +140,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("EnumTypes")]
+        [MemberData(nameof(EnumTypes))]
         public void EnumMembersHaveParameterAttribute(Type enumType)
         {
             if (enumType == typeof(Language))
