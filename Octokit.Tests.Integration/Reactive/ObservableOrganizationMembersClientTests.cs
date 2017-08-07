@@ -10,7 +10,6 @@ namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableOrganizationMembersClientTests
     {
-
         public class TheGetAllPendingInvitesMethod
         {
             readonly ObservableOrganizationMembersClient _client;

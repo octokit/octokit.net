@@ -376,7 +376,6 @@ namespace Octokit.Reactive
             return _client.Conceal(org, user).ToObservable();
         }
 
-
         /// <summary>
         /// List all pending invites for the organization.
         /// </summary>

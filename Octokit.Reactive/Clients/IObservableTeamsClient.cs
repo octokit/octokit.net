@@ -207,6 +207,5 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
         IObservable<OrganizationMembershipInvite> GetAllPendingInvitations(int id);
-
     }
 }
