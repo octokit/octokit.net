@@ -126,7 +126,7 @@ namespace Octokit.Tests.Integration.Clients
                     var options = new ApiOptions
                     {
                         PageCount = 1,
-                        PageSize = 2
+                        PageSize = 1
                     };
 
                     var outsideCollaborators = await _gitHub.Organization
@@ -134,11 +134,11 @@ namespace Octokit.Tests.Integration.Clients
                         .GetAll(Helper.Organization, OrganizationMembersFilter.All, options);
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(2, outsideCollaborators.Count);
+                    Assert.Equal(1, outsideCollaborators.Count);
                 }
             }
 
-            [IntegrationTest(Skip = "It seems this API endpoint does not support pagination as page size/count are not adhered to")]
+            [IntegrationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterWithStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -171,6 +171,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     Assert.Equal(1, firstPageOfOutsideCollaborators.Count);
                     Assert.Equal(1, secondPageOfOutsideCollaborators.Count);
+                    Assert.NotEqual(firstPageOfOutsideCollaborators[0].Login, secondPageOfOutsideCollaborators[0].Login);
                 }
             }
 
@@ -205,7 +206,7 @@ namespace Octokit.Tests.Integration.Clients
                     var options = new ApiOptions
                     {
                         PageCount = 1,
-                        PageSize = 2
+                        PageSize = 1
                     };
 
                     var outsideCollaborators = await _gitHub.Organization
