@@ -344,5 +344,22 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.IsRepositoryManagedByTeam(1, "ownerName", ""));
             }
         }
+
+        public class TheGetAllPendingInvitesMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await client.GetAllPendingInvitations(1);
+
+                connection.Received().GetAll<OrganizationMembershipInvite>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/invitations"),
+                    null,
+                    "application/vnd.github.korra-preview+json");
+            }
+        }
     }
 }

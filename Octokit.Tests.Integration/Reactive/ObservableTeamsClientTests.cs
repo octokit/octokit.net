@@ -63,4 +63,27 @@ public class ObservableTeamsClientTests
             }
         }
     }
+
+    public class TheGetAllPendingInvitationsMethod
+    {
+        private readonly IGitHubClient _gitHub;
+        private readonly Team _team;
+
+        public TheGetAllPendingInvitationsMethod()
+        {
+            _gitHub = Helper.GetAuthenticatedClient();
+            _team = _gitHub.Organization.Team.GetAll(Helper.Organization).Result.First();
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsNoPendingInvites()
+        {
+            var client = new ObservableTeamsClient(_gitHub);
+            var observable = client.GetAllPendingInvitations(_team.Id);
+            var pendingInvitations = await observable.ToList();
+
+            Assert.NotNull(pendingInvitations);
+            Assert.Empty(pendingInvitations);
+        }
+    }
 }

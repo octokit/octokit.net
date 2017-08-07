@@ -3,6 +3,7 @@ using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
+using Octokit.Reactive.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -41,6 +42,23 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
+            }
+        }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(gitHub);
+
+                client.GetAllPendingInvitations(1);
+
+                gitHub.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvite>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/invitations"),
+                    null,
+                    "application/vnd.github.korra-preview+json");
             }
         }
     }

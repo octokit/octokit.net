@@ -178,4 +178,27 @@ public class TeamsClientTests
             }
         }
     }
+
+    public class TheGetAllPendingInvitesMethod
+    {
+        private readonly IGitHubClient _gitHub;
+
+        public TheGetAllPendingInvitesMethod()
+        {
+            _gitHub = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsNoPendingInvites()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                var team = teamContext.Team;
+
+                var pendingInvites = await _gitHub.Organization.Team.GetAllPendingInvitations(team.Id);
+                Assert.NotNull(pendingInvites);
+                Assert.Empty(pendingInvites);
+            }
+        }
+    }
 }
