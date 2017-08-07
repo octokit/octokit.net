@@ -10,12 +10,12 @@ namespace Octokit
     {
         public PullRequestReview() { }
 
-        public PullRequestReview(int id)
+        public PullRequestReview(long id)
         {
             Id = id;
         }
 
-        public PullRequestReview(int id, string commitId,  User user, string body, string htmlUrl, string pullRequestUrl, string state)
+        public PullRequestReview(long id, string commitId,  User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewResponseEvents state)
         {
             Id = id;
             CommitId = commitId;
@@ -27,32 +27,32 @@ namespace Octokit
         }
         
         /// <summary>
-        /// The comment Id.
+        /// The review Id.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The state of the review
         /// </summary>
-        public string State { get; protected set; }
+        public PullRequestReviewResponseEvents State { get; protected set; }
 
         /// <summary>
-        /// The commit Id the comment is associated with.
+        /// The commit Id the review is associated with.
         /// </summary>
         public string CommitId { get; protected set; }
         
         /// <summary>
-        /// The user that created the comment.
+        /// The user that created the review.
         /// </summary>
         public User User { get; protected set; }
 
         /// <summary>
-        /// The text of the comment.
+        /// The text of the review.
         /// </summary>
         public string Body { get; protected set; }
         
         /// <summary>
-        /// The URL for this comment on Github.com
+        /// The URL for this review on Github.com
         /// </summary>
         public string HtmlUrl { get; protected set; }
 
@@ -65,5 +65,17 @@ namespace Octokit
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Id: {0}, State: {1}, User: {2}, HtmlUrl: {3}", Id, State, User.DebuggerDisplay, HtmlUrl); }
         }
+    }
+
+    public enum PullRequestReviewResponseEvents
+    {
+        [Parameter(Value = "APPROVE")]
+        Approve,
+        
+        [Parameter(Value = "CHANGES_REQUESTED")]
+        ChangesRequested,
+
+        [Parameter(Value = "COMMENT")]
+        Comment
     }
 }

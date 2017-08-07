@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
-    /// Used to filter requests for lists of pull requests.
+    /// Used to dismiss pull request reviews
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewDismiss : RequestParameters
@@ -16,7 +16,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Which PullRequests to get. The default is <see cref="ItemStateFilter.Open"/>
+        /// The message explaining why this review is being dismissed
         /// </summary>
         public string Message { get; set; }
 

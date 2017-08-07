@@ -7,20 +7,20 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class PullRequestReviewClientTests : IDisposable
+public class PullRequestReviewsClientTests : IDisposable
 {
     private readonly IGitHubClient _github;
-    private readonly IPullRequestReviewClient _client;
+    private readonly IPullRequestReviewsClient _client;
     private readonly RepositoryContext _context;
 
     const string branchName = "new-branch";
     const string path = "CONTRIBUTING.md";
 
-    public PullRequestReviewClientTests()
+    public PullRequestReviewsClientTests()
     {
         _github = Helper.GetAuthenticatedClient();
 
-        _client = _github.PullRequest.PullRequestReview;
+        _client = _github.PullRequest.Review;
 
         // We'll create a pull request that can be used by most tests
         _context = _github.CreateRepositoryContext("test-repo").Result;
@@ -34,7 +34,7 @@ public class PullRequestReviewClientTests : IDisposable
 
         const string body = "A review comment message";
 
-        var createdReview = await CreateReview(pullRequest.Sha, body, "APPROVED", new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
+        var createdReview = await CreateReview(pullRequest.Sha, body, PullRequestReviewRequestEvents.Approve, new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
 
         var reviewFromGitHub = await _client.GetReview(Helper.UserName, _context.RepositoryName, pullRequest.Number, createdReview.Id);
 
@@ -42,7 +42,7 @@ public class PullRequestReviewClientTests : IDisposable
     }
 
 
-    async Task<PullRequestReview> CreateReview(string commitId, string body, string evt, List<PullRequestReviewCommentCreate> comments,  int pullRequestNumber)
+    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewRequestEvents evt, List<PullRequestReviewCommentCreate> comments,  int pullRequestNumber)
     {
         var comment = new PullRequestReviewCreate()
         {

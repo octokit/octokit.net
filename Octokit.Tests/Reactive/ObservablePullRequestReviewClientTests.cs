@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
-    public class ObservablePullRequestReviewClientTests
+    public class ObservablePullRequestReviewsClientTests
     {
         public class TheCtor
         {
@@ -17,7 +17,7 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(
-                    () => new ObservablePullRequestReviewClient(null));
+                    () => new ObservablePullRequestReviewsClient(null));
             }
         }
 
@@ -34,29 +34,29 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetAll("fake", "repo", 1);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAll("fake", "repo", 1);
+                gitHubClient.Received().PullRequest.Review.GetAll("fake", "repo", 1);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetAll(1, 1);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAll(1, 1);
+                gitHubClient.Received().PullRequest.Review.GetAll(1, 1);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var options = new ApiOptions
                 {
@@ -67,14 +67,14 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("fake", "repo", 1, options);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAll("fake", "repo", 1, options);
+                gitHubClient.Received().PullRequest.Review.GetAll("fake", "repo", 1, options);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var options = new ApiOptions
                 {
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1, 1, options);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAll(1, 1, options);
+                gitHubClient.Received().PullRequest.Review.GetAll(1, 1, options);
             }
 
             [Fact]
@@ -134,7 +134,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReview>>>(() => lastPageResponse));
 
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var results = await client.GetAll("owner", "name", 7).ToArray();
 
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReview>>>(() => lastPageResponse));
 
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var results = await client.GetAll(1, 7).ToArray();
 
@@ -203,7 +203,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
@@ -229,28 +229,28 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetReview("owner", "name", 53, 2);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetReview("owner", "name", 53, 2);
+                gitHubClient.Received().PullRequest.Review.GetReview("owner", "name", 53, 2);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetReview(1, 53, 2);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetReview(1, 53, 2);
+                gitHubClient.Received().PullRequest.Review.GetReview(1, 53, 2);
             }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var client = new ObservablePullRequestReviewClient(Substitute.For<IGitHubClient>());
+                var client = new ObservablePullRequestReviewsClient(Substitute.For<IGitHubClient>());
 
                 Assert.Throws<ArgumentNullException>(() => client.GetReview(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetReview("owner", null, 1, 1));
@@ -266,7 +266,7 @@ namespace Octokit.Tests.Reactive
             public void PostsToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
 
                 var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
@@ -274,28 +274,28 @@ namespace Octokit.Tests.Reactive
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = "event"
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 review.Comments.Add(comment);
 
                 client.Create("owner", "name", 53, review);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Create("owner", "name", 53, review);
+                gitHubClient.Received().PullRequest.Review.Create("owner", "name", 53, review);
             }
 
             [Fact]
             public void PostsToCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
                 var review = new PullRequestReviewCreate()
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = "event"
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 review.Comments.Add(comment);
@@ -303,13 +303,13 @@ namespace Octokit.Tests.Reactive
                 client.Create(1, 13, review);
 
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Create(1, 53, review);
+                gitHubClient.Received().PullRequest.Review.Create(1, 53, review);
             }
 
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                var client = new ObservablePullRequestReviewClient(Substitute.For<IGitHubClient>());
+                var client = new ObservablePullRequestReviewsClient(Substitute.For<IGitHubClient>());
 
 
                 string body = "Comment content";
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Reactive
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = "event"
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 review.Comments.Add(comment);
@@ -344,11 +344,11 @@ namespace Octokit.Tests.Reactive
             public void PostsToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.Delete("owner", "name", 13, 13);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Delete("owner", "name", 13, 13);
+                gitHubClient.Received().PullRequest.Review.Delete("owner", "name", 13, 13);
             }
 
             [Fact]
@@ -356,18 +356,18 @@ namespace Octokit.Tests.Reactive
             {
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.Delete(1, 13, 13);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Delete(1, 13, 13);
+                gitHubClient.Received().PullRequest.Review.Delete(1, 13, 13);
             }
 
             [Fact]
             public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1, 1));
@@ -383,7 +383,7 @@ namespace Octokit.Tests.Reactive
             public void PostsToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var dismissMessage = new PullRequestReviewDismiss()
                 {
@@ -392,7 +392,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Dismiss("owner", "name", 13, 13, dismissMessage);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Dismiss("owner", "name", 13, 13, dismissMessage);
+                gitHubClient.Received().PullRequest.Review.Dismiss("owner", "name", 13, 13, dismissMessage);
             }
 
             [Fact]
@@ -400,7 +400,7 @@ namespace Octokit.Tests.Reactive
             {
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var dismissMessage = new PullRequestReviewDismiss()
                 {
@@ -409,14 +409,14 @@ namespace Octokit.Tests.Reactive
 
                 client.Dismiss(1, 13, 13, dismissMessage);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Dismiss(1, 13, 13, dismissMessage);
+                gitHubClient.Received().PullRequest.Review.Dismiss(1, 13, 13, dismissMessage);
             }
 
             [Fact]
             public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var dismissMessage = new PullRequestReviewDismiss()
                 {
@@ -438,29 +438,29 @@ namespace Octokit.Tests.Reactive
             public void RequestsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetAllComments("fake", "repo", 1, 1);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments("fake", "repo", 1, 1);
+                gitHubClient.Received().PullRequest.Review.GetAllComments("fake", "repo", 1, 1);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 client.GetAllComments(1, 1, 1);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments(1, 1, 1);
+                gitHubClient.Received().PullRequest.Review.GetAllComments(1, 1, 1);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithApiOptions()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var options = new ApiOptions
                 {
@@ -471,14 +471,14 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllComments("fake", "repo", 1, 1, options);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments("fake", "repo", 1, 1, options);
+                gitHubClient.Received().PullRequest.Review.GetAllComments("fake", "repo", 1, 1, options);
             }
 
             [Fact]
             public void RequestsCorrectUrlWithApiOptionsWithRepositoryId()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var options = new ApiOptions
                 {
@@ -489,7 +489,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllComments(1, 1, 1, options);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.GetAllComments(1, 1, 1, options);
+                gitHubClient.Received().PullRequest.Review.GetAllComments(1, 1, 1, options);
             }
 
             [Fact]
@@ -538,7 +538,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
 
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var results = await client.GetAllComments("owner", "name", 7, 1).ToArray();
 
@@ -593,7 +593,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
                 
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var results = await client.GetAllComments(1, 7, 1).ToArray();
 
@@ -607,7 +607,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1));
@@ -633,17 +633,17 @@ namespace Octokit.Tests.Reactive
             public void PostsToCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewSubmitEvents.APPROVE
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 client.Submit("owner", "name", 13, 13, submitMessage);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Submit("owner", "name", 13, 13, submitMessage);
+                gitHubClient.Received().PullRequest.Review.Submit("owner", "name", 13, 13, submitMessage);
             }
 
             [Fact]
@@ -651,29 +651,29 @@ namespace Octokit.Tests.Reactive
             {
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewSubmitEvents.APPROVE
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 client.Submit(1, 13, 13, submitMessage);
 
-                gitHubClient.Received().PullRequest.PullRequestReview.Submit(1, 13, 13, submitMessage);
+                gitHubClient.Received().PullRequest.Review.Submit(1, 13, 13, submitMessage);
             }
 
             [Fact]
             public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewClient(gitHubClient);
+                var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewSubmitEvents.APPROVE
+                    Event = PullRequestReviewRequestEvents.Approve
                 };
 
                 Assert.Throws<ArgumentNullException>(() => client.Submit(null, "name", 1, 1, submitMessage));

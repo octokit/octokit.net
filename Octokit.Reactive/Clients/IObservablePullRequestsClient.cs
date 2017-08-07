@@ -18,6 +18,11 @@ namespace Octokit.Reactive
         IObservablePullRequestReviewCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for managing reviews.
+        /// </summary>
+        IObservablePullRequestReviewsClient Review { get; }
+       
+        /// <summary>
         /// Client for managing review comments.
         /// </summary>
         IObservablePullRequestReviewCommentsClient ReviewComment { get; }
@@ -27,8 +32,6 @@ namespace Octokit.Reactive
         /// </summary>
         IObservablePullRequestReviewRequestsClient ReviewRequest { get; }
 
-
-        IObservablePullRequestReviewClient PullRequestReview { get; }
         /// <summary>
         /// Gets a single Pull Request by number.
         /// </summary>

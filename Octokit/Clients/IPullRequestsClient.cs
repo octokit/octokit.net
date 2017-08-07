@@ -20,6 +20,11 @@ namespace Octokit
         IPullRequestReviewCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for managing reviews.
+        /// </summary>
+        IPullRequestReviewsClient Review { get; }
+
+        /// <summary>
         /// Client for managing review comments.
         /// </summary>
         IPullRequestReviewCommentsClient ReviewComment { get; }
@@ -28,14 +33,6 @@ namespace Octokit
         /// Client for managing review requests.
         /// </summary>
         IPullRequestReviewRequestsClient ReviewRequest { get; }
-
-        /// <summary>
-        /// Access GitHub's Pull Requests Review API.
-        /// </summary>
-        /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/reviews/
-        /// </remarks>
-        IPullRequestReviewClient PullRequestReview { get; }
 
         /// <summary>
         /// Get a pull request by number.

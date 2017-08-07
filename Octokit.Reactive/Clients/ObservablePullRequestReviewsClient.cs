@@ -11,46 +11,47 @@ namespace Octokit.Reactive
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/pulls/reviews/">Review API documentation</a> for more information.
     /// </remarks>
-    public class ObservablePullRequestReviewClient : IObservablePullRequestReviewClient
+    public class ObservablePullRequestReviewsClient : IObservablePullRequestReviewsClient
     {
-        readonly IPullRequestReviewClient _client;
+        readonly IPullRequestReviewsClient _client;
         readonly IConnection _connection;
 
-        public ObservablePullRequestReviewClient(IGitHubClient client)
+        public ObservablePullRequestReviewsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
-            _client = client.PullRequest.PullRequestReview;
+            _client = client.PullRequest.Review;
             _connection = client.Connection;
         }
 
         /// <summary>
-        /// Creates a comment on a pull review.
+        /// Creates a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The Pull Request number</param>
+        /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
-        public IObservable<PullRequestReview> Create(string owner, string name, int pullRequestId, PullRequestReviewCreate review)
+        public IObservable<PullRequestReview> Create(string owner, string name, int number, PullRequestReviewCreate review)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(review, "review");
-            return _client.Create(owner, name, pullRequestId, review).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNull(review, nameof(review));
+            return _client.Create(owner, name, number, review).ToObservable();
         }
 
         /// <summary>
-        /// Creates a comment on a pull review.
+        /// Creates a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The Pull Request number</param>
+        /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
-        public IObservable<PullRequestReview> Create(long repositoryId, int pullRequestId, PullRequestReviewCreate review)
+        public IObservable<PullRequestReview> Create(long repositoryId, int number, PullRequestReviewCreate review)
         {
-            Ensure.ArgumentNotNull(review, "review");
-            return _client.Create(repositoryId, pullRequestId, review).ToObservable();
+            Ensure.ArgumentNotNull(review, nameof(review));
+
+            return _client.Create(repositoryId, number, review).ToObservable();
         }
 
         /// <summary>
@@ -59,13 +60,14 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<Unit> Delete(string owner, string name, int pullRequestId, int reviewId)
+        public IObservable<Unit> Delete(string owner, string name, int number, long reviewId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            return _client.Delete(owner, name, pullRequestId, reviewId).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+
+            return _client.Delete(owner, name, number, reviewId).ToObservable();
         }
 
         /// <summary>
@@ -73,11 +75,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<Unit> Delete(long repositoryId, int pullRequestId, int reviewId)
+        public IObservable<Unit> Delete(long repositoryId, int number, long reviewId)
         {
-            return _client.Delete(repositoryId, pullRequestId, reviewId).ToObservable();
+            return _client.Delete(repositoryId, number, reviewId).ToObservable();
         }
 
         /// <summary>
@@ -86,15 +88,16 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        public IObservable<PullRequestReview> Dismiss(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage)
+        public IObservable<PullRequestReview> Dismiss(string owner, string name, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(dismissMessage, "dismissMessage");
-            return _client.Dismiss(owner, name, pullRequestId, reviewId, dismissMessage).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
+
+            return _client.Dismiss(owner, name, number, reviewId, dismissMessage).ToObservable();
         }
 
         /// <summary>
@@ -102,13 +105,14 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#dismiss-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        public IObservable<PullRequestReview> Dismiss(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewDismiss dismissMessage)
+        public IObservable<PullRequestReview> Dismiss(long repositoryId, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
-            Ensure.ArgumentNotNull(dismissMessage, "dismissMessage");
-            return GetAll(repositoryId, pullRequestId);
+            Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
+
+            return GetAll(repositoryId, number);
         }
 
         /// <summary>
@@ -117,13 +121,13 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request number</param>
-        public IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestId)
+        /// <param name="number">The pull request number</param>
+        public IObservable<PullRequestReview> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
 
-            return GetAll(owner, name, pullRequestId, ApiOptions.None);
+            return GetAll(owner, name, number, ApiOptions.None);
         }
 
         /// <summary>
@@ -131,10 +135,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request number</param>
-        public IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestId)
+        /// <param name="number">The pull request number</param>
+        public IObservable<PullRequestReview> GetAll(long repositoryId, int number)
         {
-            return GetAll(repositoryId, pullRequestId, ApiOptions.None);
+            return GetAll(repositoryId, number, ApiOptions.None);
         }
 
         /// <summary>
@@ -143,14 +147,15 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestId, ApiOptions options)
+        public IObservable<PullRequestReview> GetAll(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
-            return _connection.GetAndFlattenAllPages<PullRequestReview>(ApiUrls.PullRequestReviews(owner, name, pullRequestId), null, null, options);
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<PullRequestReview>(ApiUrls.PullRequestReviews(owner, name, number), null, null, options);
         }
 
         /// <summary>
@@ -158,12 +163,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestId, ApiOptions options)
+        public IObservable<PullRequestReview> GetAll(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
-            return _connection.GetAndFlattenAllPages<PullRequestReview>(ApiUrls.PullRequestReviews(repositoryId, pullRequestId), null, null, options);
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<PullRequestReview>(ApiUrls.PullRequestReviews(repositoryId, number), null, null, options);
         }
 
         /// <summary>
@@ -172,13 +178,14 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-a-single-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReview> GetReview(string owner, string name, int pullRequestId, int reviewId)
+        public IObservable<PullRequestReview> GetReview(string owner, string name, int number, long reviewId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            return _client.GetReview(owner, name, pullRequestId, reviewId).ToObservable();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+
+            return _client.GetReview(owner, name, number, reviewId).ToObservable();
         }
 
         /// <summary>
@@ -186,11 +193,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReview> GetReview(long repositoryId, int pullRequestId, int reviewId)
+        public IObservable<PullRequestReview> GetReview(long repositoryId, int number, long reviewId)
         {
-            return _client.GetReview(repositoryId, pullRequestId, reviewId).ToObservable();
+            return _client.GetReview(repositoryId, number, reviewId).ToObservable();
         }
 
         /// <summary>
@@ -199,16 +206,16 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        public IObservable<PullRequestReview> Submit(string owner, string name, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage)
+        public IObservable<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(submitMessage, "submitMessage");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
 
-            return _client.Submit(owner, name, pullRequestId, reviewId, submitMessage).ToObservable();
+            return _client.Submit(owner, name, number, reviewId, submitMessage).ToObservable();
         }
 
         /// <summary>
@@ -216,13 +223,14 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        public IObservable<PullRequestReview> Submit(long repositoryId, int pullRequestId, int reviewId, PullRequestReviewSubmit submitMessage)
+        public IObservable<PullRequestReview> Submit(long repositoryId, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
-            Ensure.ArgumentNotNull(submitMessage, "submitMessage");
-            return _client.Submit(repositoryId, pullRequestId, reviewId, submitMessage).ToObservable();
+            Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
+
+            return _client.Submit(repositoryId, number, reviewId, submitMessage).ToObservable();
         }
 
         /// <summary>
@@ -231,11 +239,11 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestId, int reviewId)
+        public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int number, long reviewId)
         {
-            return GetAllComments(owner, name, pullRequestId, reviewId, ApiOptions.None);
+            return GetAllComments(owner, name, number, reviewId, ApiOptions.None);
         }
 
         /// <summary>
@@ -243,11 +251,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestId, int reviewId)
+        public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int number, long reviewId)
         {
-            return GetAllComments(repositoryId, pullRequestId, reviewId, ApiOptions.None);
+            return GetAllComments(repositoryId, number, reviewId, ApiOptions.None);
         }
 
         /// <summary>
@@ -256,15 +264,15 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestId, int reviewId, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, pullRequestId, reviewId), options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number, reviewId), options);
         }
 
         /// <summary>
@@ -272,12 +280,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="pullRequestId">The pull request review comment number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestId, int reviewId, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, pullRequestId, reviewId),options);
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId),options);
 
         }
     }

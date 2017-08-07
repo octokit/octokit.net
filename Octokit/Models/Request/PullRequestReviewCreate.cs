@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
-    /// Used to filter requests for lists of pull requests.
+    /// Used to create pull request reviews
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCreate : RequestParameters
@@ -17,22 +17,22 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Which PullRequests to get. The default is <see cref="ItemStateFilter.Open"/>
+        /// The Commit ID which the review is being created for. Default is the latest.
         /// </summary>
         public string CommitId { get; set; }
 
         /// <summary>
-        /// Filter pulls by head user and branch name in the format of "user:ref-name".
+        /// The body of the review message
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Filter pulls by base branch name.
+        /// The review event (APPROVE, REQUEST CHANGES, or COMMENT). Default is PENDING
         /// </summary>
-        public string Event { get; set; }
+        public PullRequestReviewRequestEvents Event { get; set; }
 
         /// <summary>
-        /// What property to sort pull requests by.
+        /// The comment drafts to send with this review
         /// </summary>
         public List<PullRequestReviewCommentCreate> Comments { get; set; }
         
@@ -40,7 +40,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "CommitId: {0} ", CommitId);
+                return string.Format(CultureInfo.InvariantCulture, "CommitId: {0}, Body: {1} ", CommitId, Body);
             }
         }
     }

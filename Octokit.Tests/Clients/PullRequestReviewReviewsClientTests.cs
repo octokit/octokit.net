@@ -22,7 +22,7 @@ public class PullRequestReviewsClientTests
             string body = "body";
             string commitId = "sha";
             string path = "path";
-            string evt = "event";
+            PullRequestReviewRequestEvents evt = PullRequestReviewRequestEvents.Approve;
             int position = 1;
 
             var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
@@ -50,7 +50,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await client.GetAll("owner", "name", 7);
 
@@ -61,7 +61,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await client.GetAll(1, 7);
 
@@ -73,7 +73,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrlWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var options = new ApiOptions
             {
@@ -92,7 +92,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var options = new ApiOptions
             {
@@ -111,7 +111,7 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNotNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
@@ -136,7 +136,7 @@ public class PullRequestReviewsClientTests
         public void RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             client.GetReview("owner", "name", 53, 2);
 
@@ -148,7 +148,7 @@ public class PullRequestReviewsClientTests
         public void RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             client.GetReview(1, 53, 2);
 
@@ -158,7 +158,7 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task EnsuresNonNullArguments()
         {
-            var client = new PullRequestReviewClient(Substitute.For<IApiConnection>());
+            var client = new PullRequestReviewsClient(Substitute.For<IApiConnection>());
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReview(null, "name", 1, 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReview("owner", null, 1, 1));
@@ -174,7 +174,7 @@ public class PullRequestReviewsClientTests
         public void PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
             
             var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
 
@@ -182,7 +182,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = "event"
+                Event = PullRequestReviewRequestEvents.Approve
             };
 
             review.Comments.Add(comment);
@@ -196,7 +196,7 @@ public class PullRequestReviewsClientTests
         public void PostsToCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
 
@@ -204,7 +204,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = "event"
+                Event = PullRequestReviewRequestEvents.Approve
             };
 
             review.Comments.Add(comment);
@@ -219,7 +219,7 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             string body = "Comment content";
             string commitId = "qe3dsdsf6";
@@ -233,7 +233,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = "event"
+                Event = PullRequestReviewRequestEvents.Approve
             };
 
             review.Comments.Add(comment);
@@ -253,7 +253,7 @@ public class PullRequestReviewsClientTests
         public async Task PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await client.Delete("owner", "name", 13, 13);
 
@@ -265,7 +265,7 @@ public class PullRequestReviewsClientTests
         {
 
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await client.Delete(1, 13, 13);
 
@@ -276,7 +276,7 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "name", 1, 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null, 1, 1));
@@ -293,7 +293,7 @@ public class PullRequestReviewsClientTests
         {
 
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var dismissMessage = new PullRequestReviewDismiss()
             {
@@ -309,7 +309,7 @@ public class PullRequestReviewsClientTests
         {
 
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var dismissMessage = new PullRequestReviewDismiss()
             {
@@ -324,7 +324,7 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var dismissMessage = new PullRequestReviewDismiss()
             {
@@ -346,7 +346,7 @@ public class PullRequestReviewsClientTests
         public async Task GetsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
             
             await client.GetAllComments("owner", "name", 13, 13);
 
@@ -357,7 +357,7 @@ public class PullRequestReviewsClientTests
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             await client.GetAllComments(1, 13, 13);
 
@@ -368,7 +368,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrlWithApiOptions()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var options = new ApiOptions
             {
@@ -387,7 +387,7 @@ public class PullRequestReviewsClientTests
         public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var options = new ApiOptions
             {
@@ -406,7 +406,7 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
             
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1));
@@ -422,12 +422,12 @@ public class PullRequestReviewsClientTests
         public async Task PostsToCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string", 
-                Event = PullRequestReviewSubmitEvents.APPROVE
+                Event = PullRequestReviewRequestEvents.Approve
             };
             await client.Submit("owner", "name", 13, 13, submitMessage);
 
@@ -438,11 +438,11 @@ public class PullRequestReviewsClientTests
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string",
-                Event = PullRequestReviewSubmitEvents.APPROVE
+                Event = PullRequestReviewRequestEvents.Approve
             };
             await client.Submit(1, 13, 13, submitMessage);
 
@@ -453,12 +453,12 @@ public class PullRequestReviewsClientTests
         public async Task EnsuresNonNullArguments()
         {
             var connection = Substitute.For<IApiConnection>();
-            var client = new PullRequestReviewClient(connection);
+            var client = new PullRequestReviewsClient(connection);
 
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string",
-                Event = PullRequestReviewSubmitEvents.APPROVE
+                Event = PullRequestReviewRequestEvents.Approve
             };
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Submit(null, "name", 1, 1, submitMessage));
