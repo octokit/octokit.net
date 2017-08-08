@@ -77,7 +77,7 @@ namespace Octokit
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, new PullRequestRequest(), ApiOptions.None);
         }
@@ -107,7 +107,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(owner, name, new PullRequestRequest(), options);
         }

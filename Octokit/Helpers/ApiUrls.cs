@@ -1358,6 +1358,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
         public static Uri PullRequestReviewDismissal(string owner, string name, int number, long reviewId)
         {

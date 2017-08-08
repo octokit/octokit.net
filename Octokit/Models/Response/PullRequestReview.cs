@@ -34,7 +34,7 @@ namespace Octokit
         /// <summary>
         /// The state of the review
         /// </summary>
-        public PullRequestReviewState State { get; protected set; }
+        public StringEnum<PullRequestReviewState> State { get; protected set; }
 
         /// <summary>
         /// The commit Id the review is associated with.
