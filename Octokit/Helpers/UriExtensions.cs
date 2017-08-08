@@ -25,6 +25,12 @@ namespace Octokit
             // use a temporary dictionary which combines new and existing parameters
             IDictionary<string, string> p = new Dictionary<string, string>(parameters);
 
+            var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.Ordinal);
+
+            string uriWithoutQuery = hasQueryString == -1
+                    ? uri.ToString()
+                    : uri.OriginalString.Substring(0, hasQueryString);
+
             string queryString;
             if (uri.IsAbsoluteUri)
             {
@@ -32,7 +38,6 @@ namespace Octokit
             }
             else
             {
-                var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.Ordinal);
                 queryString = hasQueryString == -1
                     ? ""
                     : uri.OriginalString.Substring(hasQueryString);
@@ -65,7 +70,7 @@ namespace Octokit
                 return uriBuilder.Uri;
             }
 
-            return new Uri(uri + "?" + query, UriKind.Relative);
+            return new Uri(uriWithoutQuery + "?" + query, UriKind.Relative);
         }
     }
 }
