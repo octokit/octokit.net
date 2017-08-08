@@ -23,7 +23,7 @@ namespace Octokit
         /// <summary>
         /// Filter pulls by base branch name.
         /// </summary>
-        public PullRequestReviewRequestEvents Event { get; set; }
+        public PullRequestReviewEvent Event { get; set; }
                 
         internal string DebuggerDisplay
         {
@@ -34,7 +34,7 @@ namespace Octokit
         }
     }
 
-    public enum PullRequestReviewRequestEvents
+    public enum PullRequestReviewEvent
     {
         [Parameter(Value = "APPROVE")]
         Approve,

@@ -274,7 +274,7 @@ namespace Octokit.Tests.Reactive
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 review.Comments.Add(comment);
@@ -295,7 +295,7 @@ namespace Octokit.Tests.Reactive
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 review.Comments.Add(comment);
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Reactive
                 {
                     CommitId = "commit",
                     Body = "body",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 review.Comments.Add(comment);
@@ -638,7 +638,7 @@ namespace Octokit.Tests.Reactive
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 client.Submit("owner", "name", 13, 13, submitMessage);
@@ -656,7 +656,7 @@ namespace Octokit.Tests.Reactive
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 client.Submit(1, 13, 13, submitMessage);
@@ -673,7 +673,7 @@ namespace Octokit.Tests.Reactive
                 var submitMessage = new PullRequestReviewSubmit()
                 {
                     Body = "string",
-                    Event = PullRequestReviewRequestEvents.Approve
+                    Event = PullRequestReviewEvent.Approve
                 };
 
                 Assert.Throws<ArgumentNullException>(() => client.Submit(null, "name", 1, 1, submitMessage));

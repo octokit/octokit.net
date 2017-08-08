@@ -105,7 +105,7 @@ namespace Octokit.Reactive
         IObservable<Unit> Delete(long repositoryId, int number, long reviewId);
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
         IObservable<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage);
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -180,9 +180,8 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">TThe pull request number</param>
+        /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options);
-
     }
 }

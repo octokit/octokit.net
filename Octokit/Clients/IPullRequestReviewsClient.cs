@@ -11,7 +11,6 @@ namespace Octokit
     /// </remarks>
     public interface IPullRequestReviewsClient
     {
-
         /// <summary>
         /// Gets reviews for a specified pull request.
         /// </summary>
@@ -106,7 +105,7 @@ namespace Octokit
         Task Delete(long repositoryId, int number, long reviewId);
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -117,7 +116,7 @@ namespace Octokit
         Task<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage);
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -158,7 +157,7 @@ namespace Octokit
         Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId);
 
         /// <summary>
-        /// Dismisses a pull request review.
+        /// Lists comments for a single review
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -178,7 +177,7 @@ namespace Octokit
         Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options);
 
         /// <summary>
-        /// Dismisses a pull request review.
+        /// Lists comments for a single review
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#get-comments-for-a-single-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>

@@ -1315,7 +1315,6 @@ namespace Octokit
             return "repos/{0}/{1}/pulls/{2}/reviews".FormatUri(owner, name, number);
         }
 
-
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified pull request review comment.
         /// </summary>
@@ -1415,7 +1414,6 @@ namespace Octokit
             return "repos/{0}/{1}/pulls/{2}/reviews/{3}/comments".FormatUri(owner, name, number, reviewId);
         }
 
-
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specified pull request review.
         /// </summary>
@@ -1427,8 +1425,6 @@ namespace Octokit
         {
             return "repositories/{0}/pulls/{1}/reviews/{2}".FormatUri(repositoryId, number, reviewId);
         }
-
-
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
@@ -2894,7 +2890,6 @@ namespace Octokit
         {
             return "repositories/{0}/pulls/{1}/reviews".FormatUri(repositoryId, number);
         }
-
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.

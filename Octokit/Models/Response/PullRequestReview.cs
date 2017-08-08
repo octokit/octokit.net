@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string commitId,  User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewResponseEvents state)
+        public PullRequestReview(long id, string commitId,  User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
         {
             Id = id;
             CommitId = commitId;
@@ -34,7 +34,7 @@ namespace Octokit
         /// <summary>
         /// The state of the review
         /// </summary>
-        public PullRequestReviewResponseEvents State { get; protected set; }
+        public PullRequestReviewState State { get; protected set; }
 
         /// <summary>
         /// The commit Id the review is associated with.
@@ -67,7 +67,7 @@ namespace Octokit
         }
     }
 
-    public enum PullRequestReviewResponseEvents
+    public enum PullRequestReviewState
     {
         [Parameter(Value = "APPROVE")]
         Approve,

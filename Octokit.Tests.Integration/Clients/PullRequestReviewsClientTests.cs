@@ -34,7 +34,7 @@ public class PullRequestReviewsClientTests : IDisposable
 
         const string body = "A review comment message";
 
-        var createdReview = await CreateReview(pullRequest.Sha, body, PullRequestReviewRequestEvents.Approve, new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
+        var createdReview = await CreateReview(pullRequest.Sha, body, PullRequestReviewEvent.Approve, new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
 
         var reviewFromGitHub = await _client.GetReview(Helper.UserName, _context.RepositoryName, pullRequest.Number, createdReview.Id);
 
@@ -42,7 +42,7 @@ public class PullRequestReviewsClientTests : IDisposable
     }
 
 
-    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewRequestEvents evt, List<PullRequestReviewCommentCreate> comments,  int pullRequestNumber)
+    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewEvent evt, List<PullRequestReviewCommentCreate> comments,  int pullRequestNumber)
     {
         var comment = new PullRequestReviewCreate()
         {
@@ -59,7 +59,7 @@ public class PullRequestReviewsClientTests : IDisposable
         return createdReview;
     }
 
-    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewRequestEvents evt, List<PullRequestReviewCommentCreate> comments, long repoId, int pullRequestNumber)
+    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewEvent evt, List<PullRequestReviewCommentCreate> comments, long repoId, int pullRequestNumber)
     {
         var comment = new PullRequestReviewCreate()
         {

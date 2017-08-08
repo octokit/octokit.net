@@ -201,7 +201,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -219,7 +219,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Submits an event to a pull request review.
+        /// Submits a pull request review.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -287,7 +287,6 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId),options);
-
         }
     }
 }

@@ -22,7 +22,7 @@ public class PullRequestReviewsClientTests
             string body = "body";
             string commitId = "sha";
             string path = "path";
-            PullRequestReviewRequestEvents evt = PullRequestReviewRequestEvents.Approve;
+            PullRequestReviewEvent evt = PullRequestReviewEvent.Approve;
             int position = 1;
 
             var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
@@ -182,7 +182,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
 
             review.Comments.Add(comment);
@@ -204,7 +204,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
 
             review.Comments.Add(comment);
@@ -233,7 +233,7 @@ public class PullRequestReviewsClientTests
             {
                 CommitId = "commit",
                 Body = "body",
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
 
             review.Comments.Add(comment);
@@ -427,7 +427,7 @@ public class PullRequestReviewsClientTests
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string", 
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
             await client.Submit("owner", "name", 13, 13, submitMessage);
 
@@ -442,7 +442,7 @@ public class PullRequestReviewsClientTests
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string",
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
             await client.Submit(1, 13, 13, submitMessage);
 
@@ -458,7 +458,7 @@ public class PullRequestReviewsClientTests
             var submitMessage = new PullRequestReviewSubmit()
             {
                 Body = "string",
-                Event = PullRequestReviewRequestEvents.Approve
+                Event = PullRequestReviewEvent.Approve
             };
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Submit(null, "name", 1, 1, submitMessage));
