@@ -309,7 +309,25 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(id, nameof(id));
 
-            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, AcceptHeaders.OrganizationMembershipPreview);  
+            return GetAllPendingInvitations(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all pending invitations for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(id, nameof(id));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
     }
 }

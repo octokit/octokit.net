@@ -197,5 +197,17 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
         Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id);
+
+        /// <summary>
+        /// List all pending invitations for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options);
     }
 }
