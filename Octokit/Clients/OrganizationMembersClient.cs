@@ -474,7 +474,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview);
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
     }
 }
