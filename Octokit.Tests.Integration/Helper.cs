@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration
 {
@@ -227,6 +229,31 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
+        }
+
+        public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                foreach (var invitee in invitees)
+                {
+                    client.Organization.Team.RemoveMembership(teamId, invitee).Wait(TimeSpan.FromSeconds(15));
+                }
+            }
+            catch { }
+        }
+
+        public static async Task<string> InviteMemberToTeam(IConnection connection, int teamId, string login)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                await client.Organization.Team.AddMembership(teamId, login);
+            }
+            catch { }
+
+            return login;
         }
     }
 }
