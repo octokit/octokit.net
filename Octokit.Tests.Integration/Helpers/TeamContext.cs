@@ -24,9 +24,9 @@ namespace Octokit.Tests.Integration.Helpers
         internal Team Team { get; private set; }
         internal List<string> Invitations { get; private set; }
 
-        public async Task InviteMember(string login)
+        public void InviteMember(string login)
         {
-            Invitations.Add(await Helper.InviteMemberToTeam(_connection, TeamId, login));
+            Invitations.Add(Helper.InviteMemberToTeam(_connection, TeamId, login));
         }
 
         public void Dispose()
