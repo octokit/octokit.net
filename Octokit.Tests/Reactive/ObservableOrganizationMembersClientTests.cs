@@ -320,7 +320,27 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
-                    null,
+                    Args.EmptyDictionary,
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithStart()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllPendingInvitations("org", options);
+
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 2),
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -331,6 +351,10 @@ namespace Octokit.Tests.Reactive
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("").ToTask());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null).ToTask());
             }
         }
     }

@@ -85,5 +85,59 @@ public class ObservableTeamsClientTests
             Assert.NotNull(pendingInvitations);
             Assert.Empty(pendingInvitations);
         }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfPendingInvitationsWithoutStart()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam("team")))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var client = new ObservableTeamsClient(_gitHub);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 2
+                };
+                var observable = client.GetAllPendingInvitations(teamContext.TeamId, options);
+                var pendingInvitations = await observable.ToList();
+                Assert.NotEmpty(pendingInvitations);
+                Assert.Equal(2, pendingInvitations.Count);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfPendingInvitationsWithStart()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam("team")))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var client = new ObservableTeamsClient(_gitHub);
+                var firstPageOptions = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                var firstObservable = client.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
+                var firstPagePendingInvitations = await firstObservable.ToList();
+                Assert.NotEmpty(firstPagePendingInvitations);
+                Assert.Equal(1, firstPagePendingInvitations.Count);
+
+                var secondPageOptions = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 2
+                };
+                var secondObservable = client.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
+                var secondPagePendingInvitations = await secondObservable.ToList();
+                Assert.NotEmpty(secondPagePendingInvitations);
+                Assert.Equal(1, secondPagePendingInvitations.Count);
+            }
+        }
     }
 }
