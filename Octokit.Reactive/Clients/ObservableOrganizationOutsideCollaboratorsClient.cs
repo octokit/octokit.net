@@ -35,7 +35,26 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, AcceptHeaders.OrganizationMembershipPreview);
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
+        /// is not a member of the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The users</returns>
+        public IObservable<User> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
 
         /// <summary>
@@ -53,7 +72,27 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview);
+            return GetAll(org, filter, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
+        /// is not a member of the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The users</returns>
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
 
         /// <summary>

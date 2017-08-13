@@ -31,7 +31,28 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    null,
+                    Args.EmptyDictionary,
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("org", options);
+
+                gitHubClient.Connection.Received(1).Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"), 
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), 
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -43,10 +64,17 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null));
 
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("org", null));
+
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("org", OrganizationMembersFilter.All, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAll(""));
+                Assert.Throws<ArgumentException>(() => client.GetAll("", ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.GetAll("", OrganizationMembersFilter.All));
+                Assert.Throws<ArgumentException>(() => client.GetAll("", OrganizationMembersFilter.All, ApiOptions.None));
             }
 
             [Fact]
@@ -59,7 +87,28 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"), 
-                    null, 
+                    Args.EmptyDictionary, 
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void AllFilterRequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("org", OrganizationMembersFilter.All, options);
+
+                gitHubClient.Connection.Received(1).Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"), 
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), 
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -73,7 +122,28 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), 
-                    null, 
+                    Args.EmptyDictionary, 
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void TwoFactorFilterRequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationOutsideCollaboratorsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options);
+
+                gitHubClient.Connection.Received(1).Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"), 
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), 
                     "application/vnd.github.korra-preview+json");
             }
         }
