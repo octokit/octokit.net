@@ -264,6 +264,8 @@ public class TeamsClientTests
                 var secondPagePendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
                 Assert.NotEmpty(secondPagePendingInvitations);
                 Assert.Equal(1, secondPagePendingInvitations.Count);
+
+                Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
             }
         }
     }

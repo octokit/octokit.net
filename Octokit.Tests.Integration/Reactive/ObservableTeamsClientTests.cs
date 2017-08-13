@@ -67,23 +67,41 @@ public class ObservableTeamsClientTests
     public class TheGetAllPendingInvitationsMethod
     {
         private readonly IGitHubClient _gitHub;
-        private readonly Team _team;
+        private readonly IObservableTeamsClient _client;
 
         public TheGetAllPendingInvitationsMethod()
         {
             _gitHub = Helper.GetAuthenticatedClient();
-            _team = _gitHub.Organization.Team.GetAll(Helper.Organization).Result.First();
+            _client = new ObservableTeamsClient(_gitHub);
         }
 
         [OrganizationTest]
         public async Task ReturnsNoPendingInvitations()
         {
-            var client = new ObservableTeamsClient(_gitHub);
-            var observable = client.GetAllPendingInvitations(_team.Id);
-            var pendingInvitations = await observable.ToList();
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                var team = teamContext.Team;
 
-            Assert.NotNull(pendingInvitations);
-            Assert.Empty(pendingInvitations);
+                var observable = _client.GetAllPendingInvitations(team.Id);
+                var pendingInvitations = await observable.ToList();
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsPendingInvitations()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var observable = _client.GetAllPendingInvitations(teamContext.TeamId);
+                var pendingInvitations = await observable.ToList();
+                Assert.NotEmpty(pendingInvitations);
+                Assert.Equal(2, pendingInvitations.Count);
+            }
         }
 
         [OrganizationTest]
@@ -94,16 +112,15 @@ public class ObservableTeamsClientTests
                 teamContext.InviteMember("octokitnet-test1");
                 teamContext.InviteMember("octokitnet-test2");
 
-                var client = new ObservableTeamsClient(_gitHub);
                 var options = new ApiOptions
                 {
                     PageCount = 1,
-                    PageSize = 2
+                    PageSize = 1
                 };
-                var observable = client.GetAllPendingInvitations(teamContext.TeamId, options);
+                var observable = _client.GetAllPendingInvitations(teamContext.TeamId, options);
                 var pendingInvitations = await observable.ToList();
                 Assert.NotEmpty(pendingInvitations);
-                Assert.Equal(2, pendingInvitations.Count);
+                Assert.Equal(1, pendingInvitations.Count);
             }
         }
 
@@ -115,14 +132,13 @@ public class ObservableTeamsClientTests
                 teamContext.InviteMember("octokitnet-test1");
                 teamContext.InviteMember("octokitnet-test2");
 
-                var client = new ObservableTeamsClient(_gitHub);
                 var firstPageOptions = new ApiOptions
                 {
                     PageCount = 1,
                     PageSize = 1,
                     StartPage = 1
                 };
-                var firstObservable = client.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
+                var firstObservable = _client.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
                 var firstPagePendingInvitations = await firstObservable.ToList();
                 Assert.NotEmpty(firstPagePendingInvitations);
                 Assert.Equal(1, firstPagePendingInvitations.Count);
@@ -133,10 +149,12 @@ public class ObservableTeamsClientTests
                     PageSize = 1,
                     StartPage = 2
                 };
-                var secondObservable = client.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
+                var secondObservable = _client.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
                 var secondPagePendingInvitations = await secondObservable.ToList();
                 Assert.NotEmpty(secondPagePendingInvitations);
                 Assert.Equal(1, secondPagePendingInvitations.Count);
+
+                Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
             }
         }
     }

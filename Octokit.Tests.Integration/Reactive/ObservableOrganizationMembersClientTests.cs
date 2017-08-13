@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Text;
+﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Octokit.Tests.Integration.Helpers;
@@ -22,7 +19,7 @@ namespace Octokit.Tests.Integration.Reactive
                 _client = new ObservableOrganizationMembersClient(_gitHub);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsNoPendingInvitations()
             {
                 var pendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization).ToList();
@@ -30,7 +27,21 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.Empty(pendingInvitations);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
+            public async Task ReturnsPendingInvitations()
+            {
+                using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+                {
+                    teamContext.InviteMember("octokitnet-test1");
+                    teamContext.InviteMember("octokitnet-test2");
+
+                    var pendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization).ToList();
+                    Assert.NotEmpty(pendingInvitations);
+                    Assert.Equal(2, pendingInvitations.Count);
+                }
+            }
+
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfPendingInvitationsWithoutStart()
             {
                 using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
@@ -41,16 +52,16 @@ namespace Octokit.Tests.Integration.Reactive
                     var options = new ApiOptions
                     {
                         PageSize = 1,
-                        PageCount = 2
+                        PageCount = 1
                     };
 
                     var pendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization, options).ToList();
                     Assert.NotEmpty(pendingInvitations);
-                    Assert.Equal(2, pendingInvitations.Count);
+                    Assert.Equal(1, pendingInvitations.Count);
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfPendingInvitationsWithStart()
             {
                 using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
@@ -80,6 +91,8 @@ namespace Octokit.Tests.Integration.Reactive
                     var secondPagePendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization, secondPageOptions).ToList();
                     Assert.NotEmpty(secondPagePendingInvitations);
                     Assert.Equal(1, secondPagePendingInvitations.Count);
+
+                    Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
                 }
             }
         }
