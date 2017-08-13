@@ -20,7 +20,7 @@ namespace Octokit.Tests.Integration.Reactive
                 _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsNoOutsideCollaborators()
             {
                 var outsideCollaborators = await _client
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.Empty(outsideCollaborators);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration.Reactive
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Integration.Reactive
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Integration.Reactive
                 _client = new ObservableOrganizationOutsideCollaboratorsClient(_gitHub);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CanRemoveOutsideCollaborator()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");

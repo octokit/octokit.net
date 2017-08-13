@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration.Clients
                 _gitHub = Helper.GetAuthenticatedClient();
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsNoOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Integration.Clients
                 _gitHub = Helper.GetAuthenticatedClient();
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CanRemoveOutsideCollaborator()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotRemoveMemberOfOrganizationAsOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(() 
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(_fixtureCollaborator, outsideCollaborators[0].Login);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotConvertNonOrgMemberToOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsNotMemberOfOrganizationException>(()
@@ -168,7 +168,7 @@ namespace Octokit.Tests.Integration.Clients
                     StringComparison.OrdinalIgnoreCase));
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotConvertLastOrgOwnerToOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsLastOwnerOfOrganizationException>(()
