@@ -12,7 +12,7 @@ namespace Octokit.Tests.Integration.Reactive
         {
             readonly IGitHubClient _gitHub;
             readonly ObservableOrganizationOutsideCollaboratorsClient _client;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheGetAllMethod()
             {
@@ -75,7 +75,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var outsideCollaborators = await _client
                         .GetAll(Helper.Organization, OrganizationMembersFilter.All).ToList();
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var firstPageOptions = new ApiOptions
                     {
@@ -174,14 +174,14 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
 
                     var outsideCollaborators = await _client
                         .GetAll(Helper.Organization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled).ToList();
 
                     Assert.NotNull(outsideCollaborators);
                     Assert.Equal(1, outsideCollaborators.Count);
-                    Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
+                    Assert.Equal("octokitnet-test1", outsideCollaborators[0].Login);
                 }
             }
 
@@ -192,7 +192,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                     Assert.NotNull(outsideCollaborators);
                     Assert.Equal(1, outsideCollaborators.Count);
-                    Assert.Equal("alfhenrik-test-2", outsideCollaborators[0].Login);
+                    Assert.Equal("octokitnet-test1", outsideCollaborators[0].Login);
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace Octokit.Tests.Integration.Reactive
         {
             readonly IGitHubClient _gitHub;
             readonly ObservableOrganizationOutsideCollaboratorsClient _client;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheDeleteMethod()
             {
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Integration.Reactive
         {
             readonly IGitHubClient _gitHub;
             readonly ObservableOrganizationOutsideCollaboratorsClient _client;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheConvertFromMemberMethod()
             {

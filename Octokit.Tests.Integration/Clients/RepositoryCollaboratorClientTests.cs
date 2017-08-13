@@ -273,7 +273,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Read, permission.Permission);
             }
@@ -289,7 +289,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Read, permission.Permission);
             }
@@ -306,9 +306,9 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
@@ -325,9 +325,9 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
@@ -380,7 +380,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
  
                 Assert.Equal(PermissionLevel.None, permission.Permission);
             }
@@ -401,7 +401,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "alfhenrik-test-2");
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.None, permission.Permission);
             }

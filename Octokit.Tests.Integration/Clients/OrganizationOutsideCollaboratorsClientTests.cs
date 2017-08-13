@@ -10,7 +10,7 @@ namespace Octokit.Tests.Integration.Clients
         public class TheGetAllMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
             public TheGetAllMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var outsideCollaborators = await _gitHub.Organization
                         .OutsideCollaborator
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -145,7 +145,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var firstPageOptions = new ApiOptions
                     {
@@ -182,7 +182,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
 
                     var outsideCollaborators = await _gitHub.Organization
                         .OutsideCollaborator
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -223,7 +223,7 @@ namespace Octokit.Tests.Integration.Clients
         public class TheDeleteMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheDeleteMethod()
             {
@@ -271,7 +271,7 @@ namespace Octokit.Tests.Integration.Clients
         public class TheConvertFromMemberMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheConvertFromMemberMethod()
             {
