@@ -9,15 +9,15 @@ namespace Octokit
     /// A client for GitHub's Pull Requests API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/activity/notifications/">Pull Requests API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more information.
     /// </remarks>
     public class PullRequestsClient : ApiClient, IPullRequestsClient
     {
         public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Review = new PullRequestReviewsClient(apiConnection);
             ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
             ReviewRequest = new PullRequestReviewRequestsClient(apiConnection);
-            Review = new PullRequestReviewsClient(apiConnection);
         }
 
         /// <summary>
