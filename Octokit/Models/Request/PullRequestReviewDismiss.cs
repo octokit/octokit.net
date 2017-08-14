@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
-    /// Used to dismiss pull request reviews
+    /// Used to dismiss a pull request review
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewDismiss : RequestParameters

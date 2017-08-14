@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
-    /// Used to create pull request reviews
+    /// Used to create a pull request review
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewCreate : RequestParameters
@@ -27,12 +27,12 @@ namespace Octokit
         public string Body { get; set; }
 
         /// <summary>
-        /// The review event (APPROVE, REQUEST CHANGES, or COMMENT). Default is PENDING
+        /// The review event - Approve, Request Changes, Comment or leave blank (null) for Pending.
         /// </summary>
-        public StringEnum<PullRequestReviewEvent> Event { get; set; }
+        public PullRequestReviewEvent? Event { get; set; }
 
         /// <summary>
-        /// The comment drafts to send with this review
+        /// List of comments to include with this review
         /// </summary>
         public List<PullRequestReviewCommentCreate> Comments { get; set; }
         

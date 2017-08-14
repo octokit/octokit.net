@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Octokit
 {
     /// <summary>
-    /// Used to filter requests for lists of pull requests.
+    /// Used to submit a pending pull request review
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewSubmit : RequestParameters
@@ -16,14 +16,14 @@ namespace Octokit
         }
         
         /// <summary>
-        /// Filter pulls by head user and branch name in the format of "user:ref-name".
+        /// The body of the review message
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Filter pulls by base branch name.
+        /// The review event - Approve, Request Changes, Comment
         /// </summary>
-        public StringEnum<PullRequestReviewEvent> Event { get; set; }
+        public PullRequestReviewEvent Event { get; set; }
                 
         internal string DebuggerDisplay
         {
@@ -36,12 +36,21 @@ namespace Octokit
 
     public enum PullRequestReviewEvent
     {
+        /// <summary>
+        /// The review is approved
+        /// </summary>
         [Parameter(Value = "APPROVE")]
         Approve,
-        
+
+        /// <summary>
+        /// The review requests changes that must be addressed before merging
+        /// </summary>
         [Parameter(Value = "REQUEST_CHANGES")]
         RequestChanges,
 
+        /// <summary>
+        /// The review provides comment without explicit approval
+        /// </summary>
         [Parameter(Value = "COMMENT")]
         Comment
     }
