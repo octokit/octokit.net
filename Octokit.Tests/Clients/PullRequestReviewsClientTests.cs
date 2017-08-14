@@ -44,7 +44,7 @@ public class PullRequestReviewsClientTests
         }
     }
 
-    public class TheGetAllForPullRequestMethod
+    public class TheGetAllMethod
     {
         [Fact]
         public async Task RequestsCorrectUrl()
@@ -340,10 +340,10 @@ public class PullRequestReviewsClientTests
         }
     }
 
-    public class TheGetCommentsMethod
+    public class TheGetAllCommentsMethod
     {
         [Fact]
-        public async Task GetsCorrectUrl()
+        public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
@@ -354,7 +354,7 @@ public class PullRequestReviewsClientTests
         }
 
         [Fact]
-        public async Task PostsToCorrectUrlWithRepositoryId()
+        public async Task RequestsCorrectUrlWithRepositoryId()
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
@@ -380,7 +380,6 @@ public class PullRequestReviewsClientTests
             await client.GetAllComments("owner", "name", 13, 13, options);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"), null, options);
-
         }
 
         [Fact]
@@ -399,7 +398,6 @@ public class PullRequestReviewsClientTests
             await client.GetAllComments(1, 13, 13, options);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews/13/comments"), null, Args.ApiOptions);
-
         }
 
         [Fact]

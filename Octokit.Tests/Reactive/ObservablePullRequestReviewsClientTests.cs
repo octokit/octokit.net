@@ -28,7 +28,7 @@ namespace Octokit.Tests.Reactive
             return response;
         }
 
-        public class TheGetAllForPullRequestMethod
+        public class TheGetAllMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -260,7 +260,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheCreateReviewMethod
+        public class TheCreateMethod
         {
             [Fact]
             public void PostsToCorrectUrl()
@@ -302,7 +302,6 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(1, 13, review);
 
-
                 gitHubClient.Received().PullRequest.Review.Create(1, 53, review);
             }
 
@@ -310,7 +309,6 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 var client = new ObservablePullRequestReviewsClient(Substitute.For<IGitHubClient>());
-
 
                 string body = "Comment content";
                 string commitId = "qe3dsdsf6";
@@ -432,7 +430,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetCommentsMethod
+        public class TheGetAllCommentsMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
