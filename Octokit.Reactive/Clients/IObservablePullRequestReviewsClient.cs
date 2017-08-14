@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReview> GetReview(string owner, string name, int number, long reviewId);
+        IObservable<PullRequestReview> Get(string owner, string name, int number, long reviewId);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReview> GetReview(long repositoryId, int number, long reviewId);
+        IObservable<PullRequestReview> Get(long repositoryId, int number, long reviewId);
 
         /// <summary>
         /// Creates a pull request review.

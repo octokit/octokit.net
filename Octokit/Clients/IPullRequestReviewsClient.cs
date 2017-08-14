@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> GetReview(string owner, string name, int number, long reviewId);
+        Task<PullRequestReview> Get(string owner, string name, int number, long reviewId);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -64,7 +64,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> GetReview(long repositoryId, int number, long reviewId);
+        Task<PullRequestReview> Get(long repositoryId, int number, long reviewId);
 
         /// <summary>
         /// Creates a pull request review.

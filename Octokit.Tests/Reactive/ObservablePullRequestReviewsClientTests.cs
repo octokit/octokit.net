@@ -223,7 +223,7 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetReviewMethod
+        public class TheGetMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -231,9 +231,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
-                client.GetReview("owner", "name", 53, 2);
+                client.Get("owner", "name", 53, 2);
 
-                gitHubClient.Received().PullRequest.Review.GetReview("owner", "name", 53, 2);
+                gitHubClient.Received().PullRequest.Review.Get("owner", "name", 53, 2);
             }
 
             [Fact]
@@ -242,9 +242,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
-                client.GetReview(1, 53, 2);
+                client.Get(1, 53, 2);
 
-                gitHubClient.Received().PullRequest.Review.GetReview(1, 53, 2);
+                gitHubClient.Received().PullRequest.Review.Get(1, 53, 2);
             }
 
             [Fact]
@@ -252,11 +252,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservablePullRequestReviewsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetReview(null, "name", 1, 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetReview("owner", null, 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1, 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1, 1));
                 
-                Assert.Throws<ArgumentException>(() => client.GetReview("", "name", 1, 1));
-                Assert.Throws<ArgumentException>(() => client.GetReview("owner", "", 1, 1));
+                Assert.Throws<ArgumentException>(() => client.Get("", "name", 1, 1));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1, 1));
             }
         }
 

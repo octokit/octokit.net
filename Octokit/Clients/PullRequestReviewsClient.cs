@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public Task<PullRequestReview> GetReview(string owner, string name, int number, long reviewId)
+        public Task<PullRequestReview> Get(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -101,7 +101,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public Task<PullRequestReview> GetReview(long repositoryId, int number, long reviewId)
+        public Task<PullRequestReview> Get(long repositoryId, int number, long reviewId)
         {
             var endpoint = ApiUrls.PullRequestReview(repositoryId, number, reviewId);
             return ApiConnection.Get<PullRequestReview>(endpoint);

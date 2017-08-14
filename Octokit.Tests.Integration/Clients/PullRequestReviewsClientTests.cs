@@ -36,7 +36,7 @@ public class PullRequestReviewsClientTests : IDisposable
 
         var createdReview = await CreateReview(pullRequest.Sha, body, PullRequestReviewEvent.Approve, new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
 
-        var reviewFromGitHub = await _client.GetReview(Helper.UserName, _context.RepositoryName, pullRequest.Number, createdReview.Id);
+        var reviewFromGitHub = await _client.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number, createdReview.Id);
 
         AssertReviewCreate(reviewFromGitHub, body, pullRequest.Sha);
     }

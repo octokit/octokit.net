@@ -180,12 +180,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReview> GetReview(string owner, string name, int number, long reviewId)
+        public IObservable<PullRequestReview> Get(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
 
-            return _client.GetReview(owner, name, number, reviewId).ToObservable();
+            return _client.Get(owner, name, number, reviewId).ToObservable();
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public IObservable<PullRequestReview> GetReview(long repositoryId, int number, long reviewId)
+        public IObservable<PullRequestReview> Get(long repositoryId, int number, long reviewId)
         {
-            return _client.GetReview(repositoryId, number, reviewId).ToObservable();
+            return _client.Get(repositoryId, number, reviewId).ToObservable();
         }
 
         /// <summary>

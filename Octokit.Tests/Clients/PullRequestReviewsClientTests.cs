@@ -130,7 +130,7 @@ public class PullRequestReviewsClientTests
         }
     }
 
-    public class TheGetReviewMethod
+    public class TheGetMethod
     {
         [Fact]
         public void RequestsCorrectUrl()
@@ -138,7 +138,7 @@ public class PullRequestReviewsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
-            client.GetReview("owner", "name", 53, 2);
+            client.Get("owner", "name", 53, 2);
 
             connection.Received().Get<PullRequestReview>(
                 Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/53/reviews/2"));
@@ -150,7 +150,7 @@ public class PullRequestReviewsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
-            client.GetReview(1, 53, 2);
+            client.Get(1, 53, 2);
 
             connection.Received().Get<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/53/reviews/2"));
         }
@@ -160,11 +160,11 @@ public class PullRequestReviewsClientTests
         {
             var client = new PullRequestReviewsClient(Substitute.For<IApiConnection>());
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReview(null, "name", 1, 1));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReview("owner", null, 1, 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "name", 1, 1));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("owner", null, 1, 1));
 
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetReview("", "name", 1, 1));
-            await Assert.ThrowsAsync<ArgumentException>(() => client.GetReview("owner", "", 1, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "name", 1, 1));
+            await Assert.ThrowsAsync<ArgumentException>(() => client.Get("owner", "", 1, 1));
         }
     }
 
