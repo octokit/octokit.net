@@ -174,7 +174,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik-test-2");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var outsideCollaborators = await _client
                         .GetAll(Helper.Organization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled).ToList();
