@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -227,6 +228,30 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
+        }
+
+        public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
+        {
+            try
+            {
+                foreach (var invitee in invitees)
+                {
+                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative), null, AcceptHeaders.OrganizationMembershipPreview).Wait(TimeSpan.FromSeconds(15));
+                }
+            }
+            catch { }
+        }
+
+        public static string InviteMemberToTeam(IConnection connection, int teamId, string login)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.Organization.Team.AddMembership(teamId, login).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+
+            return login;
         }
     }
 }

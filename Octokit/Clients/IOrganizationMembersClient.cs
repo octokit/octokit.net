@@ -279,5 +279,28 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         Task Conceal(string org, string user);
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org);
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options);
     }
 }

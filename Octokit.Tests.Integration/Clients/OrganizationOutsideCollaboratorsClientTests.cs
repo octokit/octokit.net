@@ -10,13 +10,13 @@ namespace Octokit.Tests.Integration.Clients
         public class TheGetAllMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
             public TheGetAllMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsNoOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithoutStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -71,14 +71,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -96,14 +96,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var outsideCollaborators = await _gitHub.Organization
                         .OutsideCollaborator
@@ -114,14 +114,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterAndApiOptions()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -138,14 +138,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterWithStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var firstPageOptions = new ApiOptions
                     {
@@ -175,14 +175,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var outsideCollaborators = await _gitHub.Organization
                         .OutsideCollaborator
@@ -194,14 +194,14 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilterAndApiOptions()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
                 using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
-                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "alfhenrik");
+                    await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
 
                     var options = new ApiOptions
                     {
@@ -223,14 +223,14 @@ namespace Octokit.Tests.Integration.Clients
         public class TheDeleteMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheDeleteMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CanRemoveOutsideCollaborator()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -255,7 +255,7 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotRemoveMemberOfOrganizationAsOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(() 
@@ -271,14 +271,14 @@ namespace Octokit.Tests.Integration.Clients
         public class TheConvertFromMemberMethod
         {
             readonly IGitHubClient _gitHub;
-            readonly string _fixtureCollaborator = "alfhenrik-test-2";
+            readonly string _fixtureCollaborator = "octokitnet-test1";
 
             public TheConvertFromMemberMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
             }
 
-            [IntegrationTest(Skip = "This test relies on https://github.com/octokit/octokit.net/issues/1533 being implemented before being re-enabled as there's currently no way to invite a member to an org")]
+            [OrganizationTest(Skip = "This test relies on https://github.com/octokit/octokit.net/issues/1533 being implemented before being re-enabled as there's currently no way to invite a member to an org")]
             public async Task CanConvertOrgMemberToOutsideCollaborator()
             {
                 var result = await _gitHub.Organization.OutsideCollaborator.ConvertFromMember(Helper.Organization, _fixtureCollaborator);
@@ -290,7 +290,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(_fixtureCollaborator, outsideCollaborators[0].Login);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotConvertNonOrgMemberToOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsNotMemberOfOrganizationException>(()
@@ -302,7 +302,7 @@ namespace Octokit.Tests.Integration.Clients
                     StringComparison.OrdinalIgnoreCase));
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task CannotConvertLastOrgOwnerToOutsideCollaborator()
             {
                 var ex = await Assert.ThrowsAsync<UserIsLastOwnerOfOrganizationException>(()
