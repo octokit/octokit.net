@@ -63,7 +63,7 @@ namespace Octokit
         
         internal string DebuggerDisplay
         {
-            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0}, State: {1}, User: {2}, HtmlUrl: {3}", Id, State, User.DebuggerDisplay, HtmlUrl); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0}, State: {1}, User: {2}", Id, State.DebuggerDisplay, User.DebuggerDisplay); }
         }
     }
 
