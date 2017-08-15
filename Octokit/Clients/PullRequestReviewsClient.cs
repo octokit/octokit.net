@@ -115,21 +115,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
-        public async Task<PullRequestReview> Create(string owner, string name, int number, PullRequestReviewCreate review)
+        public Task<PullRequestReview> Create(string owner, string name, int number, PullRequestReviewCreate review)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(review, nameof(review));
 
             var endpoint = ApiUrls.PullRequestReviews(owner, name, number);
-            var response = await ApiConnection.Connection.Post<PullRequestReview>(endpoint, review, null, null).ConfigureAwait(false);
-
-            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
-            }
-
-            return response.Body;
+            return ApiConnection.Post<PullRequestReview>(endpoint, review, null, null);
         }
 
         /// <summary>
@@ -139,19 +132,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
-        public async Task<PullRequestReview> Create(long repositoryId, int number, PullRequestReviewCreate review)
+        public Task<PullRequestReview> Create(long repositoryId, int number, PullRequestReviewCreate review)
         {
             Ensure.ArgumentNotNull(review, nameof(review));
 
             var endpoint = ApiUrls.PullRequestReviews(repositoryId, number);
-            var response = await ApiConnection.Connection.Post<PullRequestReview>(endpoint, review, null, null).ConfigureAwait(false);
-
-            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
-            }
-
-            return response.Body;
+            return ApiConnection.Post<PullRequestReview>(endpoint, review, null, null);
         }
 
         /// <summary>
@@ -193,14 +179,14 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        public async Task<PullRequestReview> Dismiss(string owner, string name, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
+        public Task<PullRequestReview> Dismiss(string owner, string name, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
 
             var endpoint = ApiUrls.PullRequestReviewDismissal(owner, name, number, reviewId);
-            return await ApiConnection.Put<PullRequestReview>(endpoint, dismissMessage);
+            return ApiConnection.Put<PullRequestReview>(endpoint, dismissMessage);
         }
 
         /// <summary>
@@ -211,12 +197,12 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        public async Task<PullRequestReview> Dismiss(long repositoryId, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
+        public Task<PullRequestReview> Dismiss(long repositoryId, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
             Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
 
             var endpoint = ApiUrls.PullRequestReviewDismissal(repositoryId, number, reviewId);
-            return await ApiConnection.Put<PullRequestReview>(endpoint, dismissMessage);
+            return ApiConnection.Put<PullRequestReview>(endpoint, dismissMessage);
         }
 
         /// <summary>
@@ -228,14 +214,14 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        public async Task<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage)
+        public Task<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
 
             var endpoint = ApiUrls.PullRequestReviewSubmit(owner, name, number, reviewId);
-            return await ApiConnection.Post<PullRequestReview>(endpoint, submitMessage, null, null);
+            return ApiConnection.Post<PullRequestReview>(endpoint, submitMessage, null, null);
         }
 
         /// <summary>
@@ -246,12 +232,12 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        public async Task<PullRequestReview> Submit(long repositoryId, int number, long reviewId, PullRequestReviewSubmit submitMessage)
+        public Task<PullRequestReview> Submit(long repositoryId, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
             Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
 
             var endpoint = ApiUrls.PullRequestReviewSubmit(repositoryId, number, reviewId);
-            return await ApiConnection.Post<PullRequestReview>(endpoint, submitMessage, null, null);
+            return ApiConnection.Post<PullRequestReview>(endpoint, submitMessage, null, null);
         }
 
         /// <summary>
@@ -262,9 +248,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId)
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId)
         {
-            return await GetAllComments(owner, name, number, reviewId, ApiOptions.None);
+            return GetAllComments(owner, name, number, reviewId, ApiOptions.None);
         }
 
         /// <summary>
@@ -274,9 +260,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId)
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId)
         {
-            return await GetAllComments(repositoryId, number, reviewId, ApiOptions.None);
+            return GetAllComments(repositoryId, number, reviewId, ApiOptions.None);
         }
 
         /// <summary>
@@ -288,13 +274,13 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number, reviewId);
-            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
+            return ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
         }
 
         /// <summary>
@@ -305,11 +291,11 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        public async Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options)
+        public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options)
         {
             var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId);
 
-            return await ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
+            return ApiConnection.GetAll<PullRequestReviewComment>(endpoint, null, options);
         }
     }
 }

@@ -90,7 +90,7 @@ public class PullRequestReviewsClientTests
     public class TheGetMethod
     {
         private readonly IGitHubClient _github;
-        
+
         public TheGetMethod()
         {
             _github = Helper.GetAuthenticatedClient();
@@ -338,6 +338,102 @@ public class PullRequestReviewsClientTests
         }
     }
 
+    public class TheDeleteMethod
+    {
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewsClient _client;
+
+        private readonly IGitHubClient _github2;
+
+        public TheDeleteMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.PullRequest.Review;
+
+            _github2 = Helper.GetAuthenticatedClient(true);
+        }
+
+        [DualAccountTest]
+        public async Task CanDeleteReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                await _client.Delete(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, createdReview.Id);
+
+                var retrievedReviews = await _client.GetAll(context.RepositoryOwner, context.RepositoryName, pullRequest.Number);
+
+                Assert.False(retrievedReviews.Any(x => x.Id == createdReview.Id));
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanDeleteReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                await _client.Delete(context.RepositoryId, pullRequest.Number, createdReview.Id);
+
+                var retrievedReviews = await _client.GetAll(context.RepositoryId, pullRequest.Number);
+
+                Assert.False(retrievedReviews.Any(x => x.Id == createdReview.Id));
+            }
+        }
+    }
+
+    public class TheDismissMethod
+    {
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewsClient _client;
+
+        private readonly IGitHubClient _github2;
+
+        public TheDismissMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.PullRequest.Review;
+
+            _github2 = Helper.GetAuthenticatedClient(true);
+        }
+
+        [DualAccountTest]
+        public async Task CanDismissReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review", PullRequestReviewEvent.RequestChanges);
+
+                var dismissedReview = await _client.Dismiss(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, createdReview.Id, new PullRequestReviewDismiss { Message = "No soup for you!" });
+
+                Assert.Equal(PullRequestReviewState.Dismissed, dismissedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanDismissReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review", PullRequestReviewEvent.RequestChanges);
+
+                var dismissedReview = await _client.Dismiss(context.RepositoryId, pullRequest.Number, createdReview.Id, new PullRequestReviewDismiss { Message = "No soup for you!" });
+
+                Assert.Equal(PullRequestReviewState.Dismissed, dismissedReview.State);
+            }
+        }
+    }
+
     public class TheGetAllCommentsMethod
     {
         private readonly IGitHubClient _github;
@@ -416,6 +512,64 @@ public class PullRequestReviewsClientTests
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
+        }
+    }
+
+    public class TheSubmitMethod
+    {
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewsClient _client;
+
+        private readonly IGitHubClient _github2;
+
+        public TheSubmitMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.PullRequest.Review;
+
+            _github2 = Helper.GetAuthenticatedClient(true);
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.Comment
+                };
+                var submittedReview = await _client.Submit(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.Commented, submittedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.Comment
+                };
+                var submittedReview = await _client.Submit(context.RepositoryId, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.Commented, submittedReview.State);
+            }
         }
     }
 }
