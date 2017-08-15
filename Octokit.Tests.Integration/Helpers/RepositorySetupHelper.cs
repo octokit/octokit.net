@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Helpers
             return createdPullRequest;
         }
 
-        public static async Task<PullRequestReview> CreatePullRequestReview(this IGitHubClient client, Repository repository, int number, string body, PullRequestReviewEvent? @event = null, string commitId = null, List<PullRequestReviewCommentCreate> comments = null)
+        public static async Task<PullRequestReview> CreatePullRequestReview(this IGitHubClient client, Repository repository, int number, string body, PullRequestReviewEvent? @event = null, string commitId = null, List<DraftPullRequestReviewComment> comments = null)
         {
             var review = new PullRequestReviewCreate()
             {

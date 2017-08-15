@@ -13,7 +13,7 @@ namespace Octokit
     {
         public PullRequestReviewCreate()
         {
-            Comments = new List<PullRequestReviewCommentCreate>();
+            Comments = new List<DraftPullRequestReviewComment>();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Octokit
         /// <summary>
         /// List of comments to include with this review
         /// </summary>
-        public List<PullRequestReviewCommentCreate> Comments { get; set; }
+        public List<DraftPullRequestReviewComment> Comments { get; set; }
         
         internal string DebuggerDisplay
         {

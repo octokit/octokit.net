@@ -268,8 +268,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
-
-                var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
+                var comment = new DraftPullRequestReviewComment("Comment content", "file.css", 7);
                 var review = new PullRequestReviewCreate()
                 {
                     CommitId = "commit",
@@ -290,7 +289,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
-                var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
+                var comment = new DraftPullRequestReviewComment("Comment content", "file.css", 7);
                 var review = new PullRequestReviewCreate()
                 {
                     CommitId = "commit",
@@ -311,12 +310,10 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewsClient(Substitute.For<IGitHubClient>());
 
                 string body = "Comment content";
-                string commitId = "qe3dsdsf6";
                 string path = "file.css";
                 int position = 7;
 
-                var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
-
+                var comment = new DraftPullRequestReviewComment(body, path, position);
 
                 var review = new PullRequestReviewCreate()
                 {
@@ -352,7 +349,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void PostsToCorrectUrlWithRepositoryId()
             {
-
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
@@ -396,7 +392,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void PostsToCorrectUrlWithRepositoryId()
             {
-
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
@@ -493,7 +488,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlMulti()
             {
-
                 var firstPageUrl = new Uri("repos/owner/name/pulls/7/reviews/1/comments", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
@@ -647,7 +641,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void PostsToCorrectUrlWithRepositoryId()
             {
-
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 

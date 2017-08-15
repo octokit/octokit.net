@@ -20,16 +20,14 @@ public class PullRequestReviewsClientTests
         public void PullRequestReviewCreateEnsuresArgumentsValue()
         {
             string body = "body";
-            string commitId = "sha";
             string path = "path";
             PullRequestReviewEvent evt = PullRequestReviewEvent.Approve;
             int position = 1;
 
-            var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
+            var comment = new DraftPullRequestReviewComment(body, path, position);
 
             var review = new PullRequestReviewCreate()
             {
-                CommitId = commitId,
                 Body = body,
                 Event = evt
             };
@@ -38,8 +36,7 @@ public class PullRequestReviewsClientTests
 
 
             Assert.Equal(body, review.Body);
-            Assert.Equal(commitId, review.CommitId);
-            ReleaseAsset.Equals(evt, review.Event);
+            Assert.Equal(evt, review.Event);
             Assert.NotEmpty(review.Comments);
         }
     }
@@ -176,7 +173,7 @@ public class PullRequestReviewsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
             
-            var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
+            var comment = new DraftPullRequestReviewComment("Comment content", "file.css", 7);
 
             var review = new PullRequestReviewCreate()
             {
@@ -184,11 +181,11 @@ public class PullRequestReviewsClientTests
                 Body = "body",
                 Event = PullRequestReviewEvent.Approve
             };
-
             review.Comments.Add(comment);
+
             client.Create("fakeOwner", "fakeRepoName", 13, review);
 
-            connection.Connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/reviews"),
+            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repos/fakeOwner/fakeRepoName/pulls/13/reviews"),
                 review, null, null);
         }
 
@@ -198,7 +195,7 @@ public class PullRequestReviewsClientTests
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
-            var comment = new PullRequestReviewCommentCreate("Comment content", "qe3dsdsf6", "file.css", 7);
+            var comment = new DraftPullRequestReviewComment("Comment content", "file.css", 7);
 
             var review = new PullRequestReviewCreate()
             {
@@ -206,12 +203,11 @@ public class PullRequestReviewsClientTests
                 Body = "body",
                 Event = PullRequestReviewEvent.Approve
             };
-
             review.Comments.Add(comment);
 
             client.Create(1, 13, review);
 
-            connection.Connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews"),
+            connection.Received().Post<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/13/reviews"),
                 review, null, null);
         }
 
@@ -222,12 +218,10 @@ public class PullRequestReviewsClientTests
             var client = new PullRequestReviewsClient(connection);
 
             string body = "Comment content";
-            string commitId = "qe3dsdsf6";
             string path = "file.css";
             int position = 7;
 
-            var comment = new PullRequestReviewCommentCreate(body, commitId, path, position);
-
+            var comment = new DraftPullRequestReviewComment(body, path, position);
 
             var review = new PullRequestReviewCreate()
             {

@@ -137,7 +137,11 @@ public class PullRequestReviewsClientTests
                 {
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
@@ -163,7 +167,11 @@ public class PullRequestReviewsClientTests
                 {
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
@@ -190,7 +198,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.Comment,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
@@ -217,7 +229,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.Comment,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
@@ -244,7 +260,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.RequestChanges,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
@@ -271,7 +291,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.RequestChanges,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
@@ -298,7 +322,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.Approve,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
@@ -325,7 +353,11 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Event = PullRequestReviewEvent.Approve,
-                    Comments = new List<PullRequestReviewCommentCreate>()
+                    Comments = new List<DraftPullRequestReviewComment>
+                    {
+                        new DraftPullRequestReviewComment("comment 1", "README.md", 1),
+                        new DraftPullRequestReviewComment("comment 2", "README.md", 2)
+                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
@@ -531,7 +563,7 @@ public class PullRequestReviewsClientTests
         }
 
         [DualAccountTest]
-        public async Task CanSubmitReview()
+        public async Task CanSubmitCommentedReview()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
@@ -552,7 +584,7 @@ public class PullRequestReviewsClientTests
         }
 
         [DualAccountTest]
-        public async Task CanSubmitReviewWithRepositoryId()
+        public async Task CanSubmitCommentedReviewWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
@@ -569,6 +601,90 @@ public class PullRequestReviewsClientTests
 
                 Assert.Equal("Roger roger!", submittedReview.Body);
                 Assert.Equal(PullRequestReviewState.Commented, submittedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitChangesRequestedReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.RequestChanges
+                };
+                var submittedReview = await _client.Submit(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.ChangesRequested, submittedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitChangesRequestedReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.RequestChanges
+                };
+                var submittedReview = await _client.Submit(context.RepositoryId, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.ChangesRequested, submittedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitApprovedReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.Approve
+                };
+                var submittedReview = await _client.Submit(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.Approved, submittedReview.State);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task CanSubmitApprovedReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
+                var createdReview = await _github.CreatePullRequestReview(context.Repository, pullRequest.Number, "A pending review");
+
+                var submitMessage = new PullRequestReviewSubmit
+                {
+                    Body = "Roger roger!",
+                    Event = PullRequestReviewEvent.Approve
+                };
+                var submittedReview = await _client.Submit(context.RepositoryId, pullRequest.Number, createdReview.Id, submitMessage);
+
+                Assert.Equal("Roger roger!", submittedReview.Body);
+                Assert.Equal(PullRequestReviewState.Approved, submittedReview.State);
             }
         }
     }
