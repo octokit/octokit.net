@@ -7,160 +7,185 @@ using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-public class PullRequestReviewsClientTests : IDisposable
+public class PullRequestReviewsClientTests
 {
-    private readonly IGitHubClient _github;
-    private readonly IPullRequestReviewsClient _client;
-    private readonly RepositoryContext _context;
-
-    const string branchName = "new-branch";
-    const string path = "CONTRIBUTING.md";
-
-    public PullRequestReviewsClientTests()
+    public class TheGetAllMethod
     {
-        _github = Helper.GetAuthenticatedClient();
+        private readonly IGitHubClient _github;
 
-        _client = _github.PullRequest.Review;
-
-        // We'll create a pull request that can be used by most tests
-        _context = _github.CreateRepositoryContext("test-repo").Result;
-    }
-
-
-    [IntegrationTest]
-    public async Task CanCreateAndRetrieveReview()
-    {
-        var pullRequest = await CreatePullRequest(_context);
-
-        const string body = "A review comment message";
-
-        var createdReview = await CreateReview(pullRequest.Sha, body, PullRequestReviewEvent.Approve, new List<PullRequestReviewCommentCreate>(), pullRequest.Number);
-
-        var reviewFromGitHub = await _client.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number, createdReview.Id);
-
-        AssertReviewCreate(reviewFromGitHub, body, pullRequest.Sha);
-    }
-
-
-    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewEvent evt, List<PullRequestReviewCommentCreate> comments,  int pullRequestNumber)
-    {
-        var comment = new PullRequestReviewCreate()
+        public TheGetAllMethod()
         {
-            CommitId = commitId,
-            Body = body,
-            Event = evt,
-            Comments = comments
-        };
+            _github = Helper.GetAuthenticatedClient();
+        }
 
-        var createdReview = await _client.Create(Helper.UserName, _context.RepositoryName, pullRequestNumber, comment);
-
-        AssertReviewCreate(createdReview, commitId, body);
-
-        return createdReview;
-    }
-
-    async Task<PullRequestReview> CreateReview(string commitId, string body, PullRequestReviewEvent evt, List<PullRequestReviewCommentCreate> comments, long repoId, int pullRequestNumber)
-    {
-        var comment = new PullRequestReviewCreate()
+        [IntegrationTest]
+        public async Task GetsAllReviews()
         {
-            CommitId = commitId,
-            Body = body,
-            Event = evt,
-            Comments = comments
-        };
+            var reviews = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648);
 
-        var createdReview = await _client.Create(repoId, pullRequestNumber, comment);
+            Assert.NotNull(reviews);
+            Assert.NotEmpty(reviews);
+            Assert.True(reviews.Count > 1);
+            Assert.False(string.IsNullOrEmpty(reviews[0].Body));
+            Assert.False(string.IsNullOrEmpty(reviews[0].CommitId));
+            Assert.False(string.IsNullOrEmpty(reviews[0].User.Login));
+        }
 
-        AssertReviewCreate(createdReview, commitId, body);
-
-        return createdReview;
-    }
-
-    static void AssertReviewCreate(PullRequestReview review, string commitId, string body)
-    {
-        Assert.NotNull(review);
-        Assert.Equal(body, review.Body);
-        Assert.Equal(commitId, review.CommitId);
-    }
-
-    class PullRequestData
-    {
-        public int Number { get; set; }
-        public string Sha { get; set; }
-    }
-
-    async Task<PullRequestData> CreatePullRequest(RepositoryContext context, string branch = branchName)
-    {
-        string branchHead = "heads/" + branch;
-        string branchRef = "refs/" + branchHead;
-
-
-        var repoName = context.RepositoryName;
-
-        // Creating a commit in master
-
-        var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");
-
-        // Creating a branch
-
-        var newBranch = new NewReference(branchRef, createdCommitInMaster.Sha);
-        await _github.Git.Reference.Create(Helper.UserName, repoName, newBranch);
-
-        // Creating a commit in the branch
-
-        var createdCommitInBranch = await CreateCommit(repoName, "Hello from the fork!", path, branchHead, "A branch commit message");
-
-        // Creating a pull request
-
-        var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
-        var createdPullRequest = await _github.PullRequest.Create(Helper.UserName, repoName, pullRequest);
-
-        var data = new PullRequestData
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReviewsWithoutStart()
         {
-            Sha = createdCommitInBranch.Sha,
-            Number = createdPullRequest.Number
-        };
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1
+            };
 
-        return data;
+            var reviews = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, options);
+
+            Assert.Equal(1, reviews.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReviewsWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var reviews = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, options);
+
+            Assert.Equal(1, reviews.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctReviewsBasedOnStartPage()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var firstPage = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
+        }
     }
 
-    async Task<Commit> CreateCommit(string repoName, string blobContent, string treePath, string reference, string commitMessage)
+    public class TheGetMethod
     {
-        // Creating a blob
-        var blob = new NewBlob
+        private readonly IGitHubClient _github;
+        
+        public TheGetMethod()
         {
-            Content = blobContent,
-            Encoding = EncodingType.Utf8
-        };
+            _github = Helper.GetAuthenticatedClient();
+        }
 
-        var createdBlob = await _github.Git.Blob.Create(Helper.UserName, repoName, blob);
-
-        // Creating a tree
-        var newTree = new NewTree();
-        newTree.Tree.Add(new NewTreeItem
+        [IntegrationTest]
+        public async Task GetsReview()
         {
-            Type = TreeType.Blob,
-            Mode = FileMode.File,
-            Path = treePath,
-            Sha = createdBlob.Sha
-        });
+            var review = await _github.PullRequest.Review.Get("octokit", "octokit.net", 1648, 54646850);
 
-        var createdTree = await _github.Git.Tree.Create(Helper.UserName, repoName, newTree);
-        var treeSha = createdTree.Sha;
-
-        // Creating a commit
-        var parent = await _github.Git.Reference.Get(Helper.UserName, repoName, reference);
-        var commit = new NewCommit(commitMessage, treeSha, parent.Object.Sha);
-
-        var createdCommit = await _github.Git.Commit.Create(Helper.UserName, repoName, commit);
-        await _github.Git.Reference.Update(Helper.UserName, repoName, reference, new ReferenceUpdate(createdCommit.Sha));
-
-        return createdCommit;
+            Assert.NotNull(review);
+            Assert.False(string.IsNullOrEmpty(review.Body));
+            Assert.False(string.IsNullOrEmpty(review.CommitId));
+            Assert.False(string.IsNullOrEmpty(review.User.Login));
+        }
     }
 
-
-    public void Dispose()
+    public class TheGetAllCommentsMethod
     {
-        _context.Dispose();
+        private readonly IGitHubClient _github;
+
+        public TheGetAllCommentsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [IntegrationTest]
+        public async Task GetsAllComments()
+        {
+            var comments = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850);
+
+            Assert.NotNull(comments);
+            Assert.NotEmpty(comments);
+            Assert.True(comments.Count > 1);
+            foreach (var comment in comments)
+            {
+                Assert.False(string.IsNullOrEmpty(comment.Body));
+                Assert.False(string.IsNullOrEmpty(comment.CommitId));
+                Assert.False(string.IsNullOrEmpty(comment.User.Login));
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfCommentsWithoutStart()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1
+            };
+
+            var comments = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, options);
+
+            Assert.Equal(1, comments.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfCommentsWithStart()
+        {
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var comments = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, options);
+
+            Assert.Equal(1, comments.Count);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctCommentsBasedOnStartPage()
+        {
+            var startOptions = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 1,
+                StartPage = 1
+            };
+
+            var firstPage = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
+        }
     }
 }
