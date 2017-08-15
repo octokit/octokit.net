@@ -113,19 +113,23 @@ public class PullRequestReviewsClientTests
         private readonly IGitHubClient _github;
         private readonly IPullRequestReviewsClient _client;
 
+        private readonly IGitHubClient _github2;
+
         public TheCreateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
             _client = _github.PullRequest.Review;
+
+            _github2 = Helper.GetAuthenticatedClient(true);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreatePendingReview()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 var body = "A review comment message";
 
@@ -134,10 +138,6 @@ public class PullRequestReviewsClientTests
                     CommitId = pullRequest.Head.Sha,
                     Body = body,
                     Comments = new List<PullRequestReviewCommentCreate>()
-                    {
-                        new PullRequestReviewCommentCreate("comment 1", pullRequest.Head.Sha, "README.md", 1),
-                        new PullRequestReviewCommentCreate("comment 2", pullRequest.Head.Sha, "README.md", 2)
-                    }
                 };
 
                 var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
@@ -149,13 +149,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreatePendingReviewWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 const string body = "A review comment message";
 
@@ -175,13 +175,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateCommentedReview()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 var body = "A review comment message";
 
@@ -202,13 +202,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateCommentedReviewWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 const string body = "A review comment message";
 
@@ -229,13 +229,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateChangesRequestedReview()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 var body = "A review comment message";
 
@@ -256,13 +256,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateChangesRequestedReviewWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 const string body = "A review comment message";
 
@@ -283,13 +283,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateApprovedReview()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 var body = "A review comment message";
 
@@ -310,13 +310,13 @@ public class PullRequestReviewsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CanCreateApprovedReviewWithRepositoryId()
         {
             using (var context = await _github.CreateRepositoryContext("test-repo"))
             {
                 await _github.CreateTheWorld(context.Repository);
-                var pullRequest = await _github.CreatePullRequest(context.Repository);
+                var pullRequest = await _github2.CreatePullRequest(context.Repository);
 
                 const string body = "A review comment message";
 

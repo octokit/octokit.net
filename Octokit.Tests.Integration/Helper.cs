@@ -26,6 +26,18 @@ namespace Octokit.Tests.Integration
             return new Credentials(githubUsername, githubPassword);
         });
 
+        static readonly Lazy<Credentials> _credentialsSecondUserThunk = new Lazy<Credentials>(() =>
+        {
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME_2");
+
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD_2");
+
+            if (githubUsername == null || githubPassword == null)
+                return null;
+
+            return new Credentials(githubUsername, githubPassword);
+        });
+
         static readonly Lazy<Credentials> _oauthApplicationCredentials = new Lazy<Credentials>(() =>
         {
             var applicationClientId = ClientId;
@@ -76,6 +88,8 @@ namespace Octokit.Tests.Integration
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
         public static Credentials Credentials { get { return _credentialsThunk.Value; } }
+
+        public static Credentials CredentialsSecondUser { get { return _credentialsSecondUserThunk.Value; } }
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 
@@ -192,11 +206,11 @@ namespace Octokit.Tests.Integration
             return stream;
         }
 
-        public static IGitHubClient GetAuthenticatedClient()
+        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
             {
-                Credentials = Credentials
+                Credentials = useSecondUser ? CredentialsSecondUser : Credentials
             };
         }
 
