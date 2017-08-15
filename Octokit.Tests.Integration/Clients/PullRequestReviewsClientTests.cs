@@ -108,6 +108,236 @@ public class PullRequestReviewsClientTests
         }
     }
 
+    public class TheCreateMethod
+    {
+        private readonly IGitHubClient _github;
+        private readonly IPullRequestReviewsClient _client;
+
+        public TheCreateMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = _github.PullRequest.Review;
+        }
+
+        [IntegrationTest]
+        public async Task CanCreatePendingReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                var body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                    {
+                        new PullRequestReviewCommentCreate("comment 1", pullRequest.Head.Sha, "README.md", 1),
+                        new PullRequestReviewCommentCreate("comment 2", pullRequest.Head.Sha, "README.md", 2)
+                    }
+                };
+
+                var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Pending, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreatePendingReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                const string body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Pending, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateCommentedReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                var body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.Comment,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Commented, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateCommentedReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                const string body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.Comment,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Commented, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateChangesRequestedReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                var body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.RequestChanges,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.ChangesRequested, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateChangesRequestedReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                const string body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.RequestChanges,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.ChangesRequested, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateApprovedReview()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                var body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.Approve,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryOwner, context.RepositoryName, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Approved, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanCreateApprovedReviewWithRepositoryId()
+        {
+            using (var context = await _github.CreateRepositoryContext("test-repo"))
+            {
+                await _github.CreateTheWorld(context.Repository);
+                var pullRequest = await _github.CreatePullRequest(context.Repository);
+
+                const string body = "A review comment message";
+
+                var review = new PullRequestReviewCreate()
+                {
+                    CommitId = pullRequest.Head.Sha,
+                    Body = body,
+                    Event = PullRequestReviewEvent.Approve,
+                    Comments = new List<PullRequestReviewCommentCreate>()
+                };
+
+                var createdReview = await _client.Create(context.RepositoryId, pullRequest.Number, review);
+
+                Assert.NotNull(createdReview);
+                Assert.Equal(body, createdReview.Body);
+                Assert.Equal(PullRequestReviewState.Approved, createdReview.State);
+                Assert.Equal(pullRequest.Head.Sha, createdReview.CommitId);
+            }
+        }
+    }
+
     public class TheGetAllCommentsMethod
     {
         private readonly IGitHubClient _github;

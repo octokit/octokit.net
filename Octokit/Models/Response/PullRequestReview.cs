@@ -69,13 +69,19 @@ namespace Octokit
 
     public enum PullRequestReviewState
     {
-        [Parameter(Value = "APPROVE")]
-        Approve,
+        [Parameter(Value = "APPROVED")]
+        Approved,
         
         [Parameter(Value = "CHANGES_REQUESTED")]
         ChangesRequested,
 
-        [Parameter(Value = "COMMENT")]
-        Comment
+        [Parameter(Value = "COMMENTED")]
+        Commented,
+
+        [Parameter(Value = "DISMISSED")]
+        Dismissed,
+
+        [Parameter(Value = "PENDING")]
+        Pending
     }
 }
