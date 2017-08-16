@@ -79,9 +79,15 @@ Write-Host "You should use a test account when running the Octokit integration t
 Write-Host
 Write-Host
 
-VerifyEnvironmentVariable "account name" "OCTOKIT_GITHUBUSERNAME"
-VerifyEnvironmentVariable "account password" "OCTOKIT_GITHUBPASSWORD" $true
-VerifyEnvironmentVariable "OAuth token" "OCTOKIT_OAUTHTOKEN"
+VerifyEnvironmentVariable "test account name" "OCTOKIT_GITHUBUSERNAME"
+VerifyEnvironmentVariable "test account password" "OCTOKIT_GITHUBPASSWORD" $true
+VerifyEnvironmentVariable "test account OAuth token" "OCTOKIT_OAUTHTOKEN"
+
+if (AskYesNoQuestion "Some tests require a second test account, do you want to set one up?" "OCTOKIT_PRIVATEREPOSITORIES")
+{
+	VerifyEnvironmentVariable "Second test account name" "OCTOKIT_GITHUBUSERNAME_2"
+	VerifyEnvironmentVariable "Second account password" "OCTOKIT_GITHUBPASSWORD_2"
+}
 
 AskYesNoQuestion "Do you have private repositories associated with your test account?" "OCTOKIT_PRIVATEREPOSITORIES" | Out-Null
 
