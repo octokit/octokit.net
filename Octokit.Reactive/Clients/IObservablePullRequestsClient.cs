@@ -18,6 +18,11 @@ namespace Octokit.Reactive
         IObservablePullRequestReviewCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for managing reviews.
+        /// </summary>
+        IObservablePullRequestReviewsClient Review { get; }
+       
+        /// <summary>
         /// Client for managing review comments.
         /// </summary>
         IObservablePullRequestReviewCommentsClient ReviewComment { get; }

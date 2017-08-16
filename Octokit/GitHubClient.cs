@@ -205,7 +205,7 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/
         /// </remarks>
         public IPullRequestsClient PullRequest { get; private set; }
-
+        
         /// <summary>
         /// Access GitHub's Repositories API.
         /// </summary>

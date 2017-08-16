@@ -45,7 +45,16 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return StringValue; }
+            get
+            {
+                TEnum value;
+                if (TryParse(out value))
+                {
+                    return value.ToString();
+                }
+
+                return StringValue;
+            }
         }
 
         public bool TryParse(out TEnum value)

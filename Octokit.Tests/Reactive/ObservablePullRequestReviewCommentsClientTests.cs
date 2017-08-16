@@ -179,8 +179,6 @@ namespace Octokit.Tests.Reactive
                     }
                 );
 
-                var acceptHeader = "application/vnd.github.squirrel-girl-preview";
-
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => firstPageResponse));

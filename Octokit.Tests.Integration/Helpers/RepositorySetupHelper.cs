@@ -54,11 +54,34 @@ namespace Octokit.Tests.Integration.Helpers
             await client.Git.Reference.Update(repository.Owner.Login, repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
 
             // create new commit for feature branch
-            var featureBranchTree = await client.CreateTree(repository, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
+            var featureBranchTree = await client.CreateTree(repository, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new\nand a second line too" } });
             var featureBranchCommit = await client.CreateCommit(repository, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
 
             // create branch
             return await client.Git.Reference.Create(repository.Owner.Login, repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
+        }
+
+        public static async Task<PullRequest> CreatePullRequest(this IGitHubClient client, Repository repository, string branch = "my-branch")
+        {
+            var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
+            var createdPullRequest = await client.PullRequest.Create(repository.Owner.Login, repository.Name, pullRequest);
+
+            return createdPullRequest;
+        }
+
+        public static async Task<PullRequestReview> CreatePullRequestReview(this IGitHubClient client, Repository repository, int number, string body, PullRequestReviewEvent? @event = null, string commitId = null, List<DraftPullRequestReviewComment> comments = null)
+        {
+            var review = new PullRequestReviewCreate()
+            {
+                CommitId = commitId,
+                Body = body,
+                Event = @event,
+                Comments = comments
+            };
+
+            var createdReview = await client.PullRequest.Review.Create(repository.Owner.Login, repository.Name, number, review);
+
+            return createdReview;
         }
     }
 }
