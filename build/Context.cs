@@ -31,8 +31,7 @@ public class Context : FrostingContext
         var settings = new DotNetCoreTestSettings
         {
             Configuration = Configuration,
-            NoBuild = true,
-            Verbose = false
+            NoBuild = true
         };
 
         if (!this.IsRunningOnWindows())

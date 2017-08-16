@@ -20,7 +20,6 @@ public sealed class Package : FrostingTask<Context>
                 {
                     Configuration = context.Configuration,
                     NoBuild = true,
-                    Verbose = false,
                     OutputDirectory = context.Artifacts,
                     ArgumentCustomization = args => args.Append("/p:Version={0}", context.Version.GetSemanticVersion())
                 });

@@ -7,9 +7,6 @@ public sealed class Restore : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        context.DotNetCoreRestore(".", new DotNetCoreRestoreSettings
-        {
-            Verbose = false
-        });
+        context.DotNetCoreRestore(".");
     }
 }
