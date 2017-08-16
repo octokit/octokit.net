@@ -91,7 +91,6 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrlMulti()
             {
-
                 var firstPageUrl = new Uri("repos/owner/name/pulls/7/reviews", UriKind.Relative);
                 var secondPageUrl = new Uri("https://example.com/page/2");
                 var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
@@ -219,7 +218,6 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
-                
             }
         }
 
@@ -254,7 +252,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1, 1));
-                
+
                 Assert.Throws<ArgumentException>(() => client.Get("", "name", 1, 1));
                 Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1, 1));
             }
@@ -365,7 +363,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1, 1));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1, 1));
-                             
+
                 Assert.Throws<ArgumentException>(() => client.Delete("", "name", 1, 1));
                 Assert.Throws<ArgumentException>(() => client.Delete("owner", "", 1, 1));
             }
@@ -584,7 +582,7 @@ namespace Octokit.Tests.Reactive
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequestReviewComment>>>(() => lastPageResponse));
-                
+
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
 
                 var results = await client.GetAllComments(1, 7, 1).ToArray();
@@ -615,7 +613,6 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.GetAllComments("", "name", 1, 1, ApiOptions.None));
                 Assert.Throws<ArgumentException>(() => client.GetAllComments("owner", "", 1, 1, ApiOptions.None));
-
             }
         }
 

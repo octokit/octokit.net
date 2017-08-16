@@ -40,7 +40,7 @@ namespace Octokit
         public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
-            
+
             return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(projectId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
@@ -105,7 +105,7 @@ namespace Octokit
             {
                 return false;
             }
-        }        
+        }
 
         /// <summary>
         /// Moves a column.

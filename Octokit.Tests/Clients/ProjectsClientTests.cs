@@ -249,7 +249,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectsClient(Substitute.For<IApiConnection>());
-                
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }

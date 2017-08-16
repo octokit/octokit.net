@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> Create(string owner, string name, int number, PullRequestReviewCreate review)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(review, nameof(review));
             return _client.Create(owner, name, number, review).ToObservable();
         }
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         public IObservable<Unit> Delete(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, number, reviewId).ToObservable();
         }
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> Dismiss(string owner, string name, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
 
             return _client.Dismiss(owner, name, number, reviewId, dismissMessage).ToObservable();
@@ -125,7 +125,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, number, ApiOptions.None);
         }
@@ -152,7 +152,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequestReview>(ApiUrls.PullRequestReviews(owner, name, number), null, null, options);
@@ -183,7 +183,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> Get(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name, number, reviewId).ToObservable();
         }
@@ -212,7 +212,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
 
             return _client.Submit(owner, name, number, reviewId, submitMessage).ToObservable();
@@ -269,7 +269,7 @@ namespace Octokit.Reactive
         public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name,nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number, reviewId), options);
@@ -286,7 +286,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId),options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId), options);
         }
     }
 }

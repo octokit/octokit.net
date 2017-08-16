@@ -32,7 +32,7 @@ namespace Octokit
         /// </summary>
         /// <param name="response">The HTTP payload from the server</param>
         /// <param name="innerException">The inner exception</param>
-        public UserIsLastOwnerOfOrganizationException(IResponse response, ApiException innerException) 
+        public UserIsLastOwnerOfOrganizationException(IResponse response, ApiException innerException)
             : base(response, innerException)
         {
             Debug.Assert(response != null && response.StatusCode == HttpStatusCode.Forbidden,

@@ -258,7 +258,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task CannotRemoveMemberOfOrganizationAsOutsideCollaborator()
             {
-                var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(() 
+                var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(()
                     => _gitHub.Organization.OutsideCollaborator.Delete(Helper.Organization, Helper.UserName));
 
                 Assert.True(string.Equals(

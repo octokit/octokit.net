@@ -201,7 +201,7 @@ namespace Octokit.Tests.Clients
                 client.ReviewPermission("owner", "test", "user1");
                 connection.Received().Get<CollaboratorPermission>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1/permission"),
-                    Arg.Any<Dictionary<string, string>>(), 
+                    Arg.Any<Dictionary<string, string>>(),
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -214,7 +214,7 @@ namespace Octokit.Tests.Clients
                 client.ReviewPermission(1L, "user1");
                 connection.Received().Get<CollaboratorPermission>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1/permission"),
-                    Arg.Any<Dictionary<string, string>>(), 
+                    Arg.Any<Dictionary<string, string>>(),
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -233,7 +233,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission(1L, null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission(1L, ""));
             }
-
         }
 
         public class TheAddMethod

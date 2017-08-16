@@ -75,7 +75,7 @@ namespace Octokit.Tests.Clients
                     newCard,
                     "application/vnd.github.inertia-preview+json");
             }
-                        
+
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
-                
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Move(1, null));
             }
         }

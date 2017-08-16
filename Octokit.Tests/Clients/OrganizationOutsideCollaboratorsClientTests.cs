@@ -138,8 +138,8 @@ namespace Octokit.Tests.Clients
                 client.Delete("org", "user");
 
                 connection.Connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators/user"), 
-                    Arg.Any<object>(), 
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators/user"),
+                    Arg.Any<object>(),
                     "application/vnd.github.korra-preview+json");
             }
 
@@ -150,7 +150,7 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "user"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("org", null));
-                
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "user"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("org", ""));
             }

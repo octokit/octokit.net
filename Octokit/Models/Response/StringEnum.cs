@@ -109,7 +109,7 @@ namespace Octokit
                 return false;
             }
 
-            return obj is StringEnum<TEnum> && Equals((StringEnum<TEnum>) obj);
+            return obj is StringEnum<TEnum> && Equals((StringEnum<TEnum>)obj);
         }
 
         public override int GetHashCode()

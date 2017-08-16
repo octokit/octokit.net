@@ -38,7 +38,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ShouldThrowForInvalidEnumValue()
             {
-                Assert.Throws<ArgumentException>(() => new StringEnum<AccountType>((AccountType) 1337));
+                Assert.Throws<ArgumentException>(() => new StringEnum<AccountType>((AccountType)1337));
             }
         }
 
@@ -134,7 +134,7 @@ namespace Octokit.Tests.Models
             public void ShouldThrowForInvalidEnumValue()
             {
                 StringEnum<AccountType> stringEnum;
-                Assert.Throws<ArgumentException>(() => stringEnum = (AccountType) 1337);
+                Assert.Throws<ArgumentException>(() => stringEnum = (AccountType)1337);
             }
         }
 

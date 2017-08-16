@@ -35,7 +35,7 @@ namespace Octokit
         /// List of comments to include with this review
         /// </summary>
         public List<DraftPullRequestReviewComment> Comments { get; set; }
-        
+
         internal string DebuggerDisplay
         {
             get

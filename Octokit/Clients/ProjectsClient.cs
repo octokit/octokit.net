@@ -246,7 +246,7 @@ namespace Octokit
 
             return ApiConnection.Post<Project>(ApiUrls.OrganizationProjects(organization), newProject, AcceptHeaders.ProjectsApiPreview);
         }
-        
+
         /// <summary>
         /// Updates a project for this repository.
         /// </summary>
@@ -261,7 +261,7 @@ namespace Octokit
 
             return ApiConnection.Patch<Project>(ApiUrls.Project(id), projectUpdate, AcceptHeaders.ProjectsApiPreview);
         }
-        
+
         /// <summary>
         /// Deletes a project.
         /// </summary>

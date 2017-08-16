@@ -55,7 +55,7 @@ public class ObservableProjectsClientTests
         {
             var project1 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var project2 = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
-            
+
             // Make 2nd project closed
             var result = await _github.Repository.Project.Update(project2.Id, new ProjectUpdate { State = ItemState.Closed });
 
@@ -238,7 +238,7 @@ public class ObservableProjectsClientTests
         public async Task GetsAllFilteredProjectsForRepository()
         {
             var project = await CreateOrganizationProjectHelper(_github, Helper.Organization);
-            
+
             // Make project closed
             var result = await _github.Repository.Project.Update(project.Id, new ProjectUpdate { State = ItemState.Closed });
 
