@@ -2,8 +2,7 @@
 
 ## Pre-requisites
 
- - Visual Studio 2017 Update 4
- - Debugging Tools for Windows (install via [Chocolatey](http://chocolatey.org) - `cinst windbg`)
+ - Visual Studio 2017 Update 3
 
 ### Running Tests
 
