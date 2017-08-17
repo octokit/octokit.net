@@ -1062,7 +1062,7 @@ namespace Octokit.Tests.Clients
                 client.GetSha1("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, AcceptHeaders.CommitReferenceSha1Preview);
+                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, "application/vnd.github.v3.sha");
             }
         }
     }
