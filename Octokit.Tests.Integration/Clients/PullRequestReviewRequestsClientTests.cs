@@ -107,7 +107,7 @@ public class PullRequestReviewRequestsClientTests
             var options = new ApiOptions
             {
                 PageSize = 1,
-                PageCount = 2,
+                PageCount = 1,
                 StartPage = 2
             };
             var reviewRequests = await _client.GetAll(_context.RepositoryId, number, options);
