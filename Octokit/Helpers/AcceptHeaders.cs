@@ -10,6 +10,8 @@ namespace Octokit
 
         public const string RedirectsPreviewThenStableVersionJson = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
 
+        public const string CommitReferenceSha1MediaType = "application/vnd.github.v3.sha";
+
         public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
 
         public const string LicensesApiPreview = "application/vnd.github.drax-preview+json";
@@ -19,9 +21,7 @@ namespace Octokit
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
 
         public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
-
-        public const string CommitReferenceSha1Preview = "application/vnd.github.chitauri-preview+sha";
-
+        
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
