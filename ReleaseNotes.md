@@ -32,7 +32,7 @@
 - Enhance `RepositoryBranchesClient` to support Admin Enforcement changes - [#1598](https://github.com/octokit/octokit.net/pull/1598) via @M-Zuber
 - Implement [Pull Request Review Requests API (Preview)](https://developer.github.com/v3/pulls/review_requests/) - [#1588](https://github.com/octokit/octokit.net/pull/1588) via @gdziadkiewicz, @ryangribble
 - Provide a robust way to handle unknown enum values returned by GitHub API, to prevent deserialization errors until the enum values can be added to octokit - [#1595](https://github.com/octokit/octokit.net/pull/1595) via @khellang, @ryangribble
-- Implement support for [Projects API (Preview)](https://developer.github.com/v3/projects/) - [#1480](https://github.com/octokit/octokit.net/pull/1480) via @maddin2016, @ryangribble
+- Implement [Projects API (Preview)](https://developer.github.com/v3/projects/) - [#1480](https://github.com/octokit/octokit.net/pull/1480) via @maddin2016, @ryangribble
 - Implement `ReviewPermission()` functionality for `OrganizationMembersClient` (Preview API) - [#1633](https://github.com/octokit/octokit.net/pull/1633) via @alfhenrik
 - Implement [Organization OutsideCollaborators API (Preview)](https://developer.github.com/v3/orgs/outside_collaborators/) - [#1639](https://github.com/octokit/octokit.net/pull/1639) via @alfhenrik, @ryangribble
 - Implement pagination support for `OrganizationOutsideCollaboratorsClient.GetAll()` method - [#1650](https://github.com/octokit/octokit.net/pull/1650) via @ryangribble
