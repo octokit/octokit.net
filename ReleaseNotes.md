@@ -48,6 +48,7 @@
 - Fix even more `IssueTimelineClient` deserialization exceptions by adding even more new `EventInfoState` values (this is getting old!) - [#1591](https://github.com/octokit/octokit.net/pull/1591) via @lynnfaraday, @ryangribble
 - `NewRepositoryWebHook.ToRequest()` no longer discards existing fields if they are set - [#1623](https://github.com/octokit/octokit.net/pull/1623) via @ctolkien
 - Fix pagination on API calls that use `Uri` parameters (typically for requests that include some form of filtering) - [#1649](https://github.com/octokit/octokit.net/pull/1649) via @ryangribble
+- Fixed `RepositoryCommitsClient.GetSha1()` to correctly obtain the sha1 of the specified commit, after the API went from preview to official - [#1654](https://github.com/octokit/octokit.net/pull/1654) via @ryangribble
 
 **Housekeeping**
 
