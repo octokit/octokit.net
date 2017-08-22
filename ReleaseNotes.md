@@ -1,10 +1,12 @@
 ### New in 0.25.0 (released 23/8/2017)
 
-## Breaking Changes and Advisories
+## Advisories and Breaking Changes
 
-- `IncludeAdmins` field is no longer present in `BranchProtectionRequiredStatusChecks` and `BranchProtectionRequiredStatusChecksUpdate` classes, instead use the new `EnforceAdmins` field on `BranchProtectionSettingsUpdate` or the new explicit APIs for configuring Admin Enforcement on protected branches.  This was an [upstream API breaking change](https://developer.github.com/changes/2017-05-02-adoption-of-admin-enforced/) so couldn't follow our normal deprecation schedule
+- Octokit.net has been ported to dotnetcore :tada: providing libraries targetting `netstandard1.1` and `net45` frameworks
 
-- `Enum` fields in Octokit response classes are now wrapped in an `EnumHelper<TEnum>` class to provide more robustness in dealing with new/unknown API values for these fields.  Whilst the changes are backwards compatible, please consult the guidance on [working with `StringEnum` members](https://github.com/octokit/octokit.net/blob/master/docs/working-with-enums.md) for more information
+- `Enum` fields in Octokit response classes are now wrapped in an `StringEnum<TEnum>` helper class, to provide more robustness in dealing with unknown API values for these fields.  Whilst the changes are backwards compatible, please consult the guidance on [working with Enums](https://github.com/octokit/octokit.net/blob/master/docs/working-with-enums.md) for more information
+
+- `IncludeAdmins` field is no longer present in `BranchProtectionRequiredStatusChecks` and `BranchProtectionRequiredStatusChecksUpdate` classes, instead use the new `EnforceAdmins` field on `BranchProtectionSettingsUpdate` or the [new explicit methods](https://github.com/octokit/octokit.net/blob/master/Octokit/Clients/IRepositoryBranchesClient.cs#L304-L365) for configuring Admin Enforcement on protected branches.  This was an [upstream API breaking change](https://developer.github.com/changes/2017-05-02-adoption-of-admin-enforced/) so couldn't follow our normal deprecation schedule
 
 ## Release Notes
 
