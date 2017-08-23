@@ -700,9 +700,9 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var repository = await github.Repository.Get("haacked", "libgit2sharp");
+            var repository = await github.Repository.Get("octokitnet-test1", "octokit.net");
 
-            Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/octokitnet-test1/octokit.net.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
 
@@ -711,9 +711,9 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var repository = await github.Repository.Get(4550038);
+            var repository = await github.Repository.Get(100559458);
 
-            Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/octokitnet-test1/octokit.net.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
 

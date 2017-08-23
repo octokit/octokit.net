@@ -14,7 +14,7 @@ namespace Octokit
         public PullRequestReviewSubmit()
         {
         }
-        
+
         /// <summary>
         /// The body of the review message
         /// </summary>
@@ -24,7 +24,7 @@ namespace Octokit
         /// The review event - Approve, Request Changes, Comment
         /// </summary>
         public PullRequestReviewEvent Event { get; set; }
-                
+
         internal string DebuggerDisplay
         {
             get

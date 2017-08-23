@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string commitId,  User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
+        public PullRequestReview(long id, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
         {
             Id = id;
             CommitId = commitId;
@@ -25,7 +25,7 @@ namespace Octokit
             PullRequestUrl = pullRequestUrl;
             State = state;
         }
-        
+
         /// <summary>
         /// The review Id.
         /// </summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// The commit Id the review is associated with.
         /// </summary>
         public string CommitId { get; protected set; }
-        
+
         /// <summary>
         /// The user that created the review.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Octokit
         /// The text of the review.
         /// </summary>
         public string Body { get; protected set; }
-        
+
         /// <summary>
         /// The URL for this review on Github.com
         /// </summary>
@@ -60,7 +60,7 @@ namespace Octokit
         /// The URL for the pull request via the API.
         /// </summary>
         public string PullRequestUrl { get; protected set; }
-        
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Id: {0}, State: {1}, User: {2}", Id, State.DebuggerDisplay, User.DebuggerDisplay); }
@@ -71,7 +71,7 @@ namespace Octokit
     {
         [Parameter(Value = "APPROVED")]
         Approved,
-        
+
         [Parameter(Value = "CHANGES_REQUESTED")]
         ChangesRequested,
 

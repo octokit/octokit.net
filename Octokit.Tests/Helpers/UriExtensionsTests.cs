@@ -92,7 +92,7 @@ namespace Octokit.Tests.Helpers
                 var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
 
                 var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" }, { "per_page", "5" } };
-                
+
                 var actual = uri.ApplyParameters(parameters);
 
                 Assert.Equal(
@@ -106,7 +106,7 @@ namespace Octokit.Tests.Helpers
                 var uri = new Uri("repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2", UriKind.Relative);
 
                 var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" }, { "per_page", "5" } };
-                
+
                 var actual = uri.ApplyParameters(parameters);
 
                 Assert.Equal(

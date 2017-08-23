@@ -381,7 +381,7 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
- 
+
                 Assert.Equal(PermissionLevel.None, permission.Permission);
             }
         }

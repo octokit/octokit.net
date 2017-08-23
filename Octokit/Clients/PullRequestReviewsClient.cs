@@ -30,7 +30,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, number,  ApiOptions.None);
+            return GetAll(owner, name, number, ApiOptions.None);
         }
 
         /// <summary>

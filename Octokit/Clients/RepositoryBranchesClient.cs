@@ -536,7 +536,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
 
             return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
-
         }
 
         /// <summary>

@@ -172,7 +172,7 @@ public class PullRequestReviewsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
-            
+
             var comment = new DraftPullRequestReviewComment("Comment content", "file.css", 7);
 
             var review = new PullRequestReviewCreate()
@@ -240,7 +240,7 @@ public class PullRequestReviewsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "", 1, review));
         }
     }
-    
+
     public class TheDeleteMethod
     {
         [Fact]
@@ -257,7 +257,6 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
-
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
@@ -285,7 +284,6 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrl()
         {
-
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
@@ -301,7 +299,6 @@ public class PullRequestReviewsClientTests
         [Fact]
         public async Task PostsToCorrectUrlWithRepositoryId()
         {
-
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
 
@@ -341,7 +338,7 @@ public class PullRequestReviewsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
-            
+
             await client.GetAllComments("owner", "name", 13, 13);
 
             connection.Received().GetAll<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/13/reviews/13/comments"), null, Args.ApiOptions);
@@ -399,7 +396,7 @@ public class PullRequestReviewsClientTests
         {
             var connection = Substitute.For<IApiConnection>();
             var client = new PullRequestReviewsClient(connection);
-            
+
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments(null, "name", 1, 1));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllComments("owner", null, 1, 1));
 
@@ -418,7 +415,7 @@ public class PullRequestReviewsClientTests
 
             var submitMessage = new PullRequestReviewSubmit()
             {
-                Body = "string", 
+                Body = "string",
                 Event = PullRequestReviewEvent.Approve
             };
             await client.Submit("owner", "name", 13, 13, submitMessage);

@@ -185,7 +185,7 @@ namespace Octokit.Tests.Reactive
                 client.Get(1);
 
                 gitHubClient.Repository.Project.Received().Get(1);
-            }                     
+            }
         }
 
         public class TheCreateForRepositoryMethod
@@ -200,7 +200,7 @@ namespace Octokit.Tests.Reactive
                 client.CreateForRepository(1, newProject);
 
                 gitHubClient.Repository.Project.Received().CreateForRepository(1, newProject);
-            }          
+            }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
@@ -250,7 +250,7 @@ namespace Octokit.Tests.Reactive
                 client.Update(1, updateProject);
 
                 gitHubClient.Repository.Project.Received().Update(1, updateProject);
-            }            
+            }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
@@ -273,7 +273,7 @@ namespace Octokit.Tests.Reactive
                 client.Delete(1);
 
                 gitHubClient.Repository.Project.Received().Delete(1);
-            }            
+            }
         }
     }
 }

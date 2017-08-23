@@ -123,7 +123,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestReviewRequestsClient(connection);
 
-                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd"};
+                IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
                 var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
 
                 client.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);

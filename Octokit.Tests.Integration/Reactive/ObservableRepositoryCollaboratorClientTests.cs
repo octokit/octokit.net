@@ -141,7 +141,6 @@ public class ObservableRepositoryCollaboratorClientTests
     }
     public class TheReviewPermissionMethod
     {
-
         [IntegrationTest]
         public async Task ReturnsReadPermissionForNonCollaborator()
         {

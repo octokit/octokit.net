@@ -12,7 +12,6 @@ namespace Octokit
     /// </remarks>
     public interface IProjectCardsClient
     {
-
         /// <summary>
         /// Gets all cards.
         /// </summary>

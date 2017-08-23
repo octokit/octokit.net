@@ -172,7 +172,7 @@ namespace Octokit
             return ApiConnection
                 .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null, AcceptHeaders.OrganizationMembershipPreview);
         }
-        
+
         /// <summary>
         /// Adds a new collaborator to the repository.
         /// </summary>
@@ -210,7 +210,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, "user");
 
             try
-            { 
+            {
                 var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }

@@ -87,7 +87,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task ReturnsCorrectCountOfReviewRequestsWithStart()
         {
             var number = await CreateTheWorld(_github, _context);
-            
+
             var options = new ApiOptions
             {
                 PageSize = 1,
@@ -107,7 +107,7 @@ public class PullRequestReviewRequestsClientTests
             var options = new ApiOptions
             {
                 PageSize = 1,
-                PageCount = 2,
+                PageCount = 1,
                 StartPage = 2
             };
             var reviewRequests = await _client.GetAll(_context.RepositoryId, number, options);
@@ -119,7 +119,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
             var number = await CreateTheWorld(_github, _context);
-            
+
             var startOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -144,7 +144,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
         {
             var number = await CreateTheWorld(_github, _context);
-            
+
             var startOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -172,7 +172,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task DeletesRequests()
         {
             var number = await CreateTheWorld(_github, _context);
-            
+
             var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
             await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, number, reviewRequestToCreate);
@@ -186,11 +186,11 @@ public class PullRequestReviewRequestsClientTests
         public async Task DeletesRequestsWithRepositoryId()
         {
             var number = await CreateTheWorld(_github, _context);
-            
-            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryId,  number);
+
+            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryId, number);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
             await _client.Delete(_context.RepositoryId, number, reviewRequestToCreate);
-            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId,  number);
+            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId, number);
 
             Assert.NotEmpty(reviewRequestsBeforeDelete);
             Assert.Empty(reviewRequestsAfterDelete);

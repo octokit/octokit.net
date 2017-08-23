@@ -12,7 +12,7 @@ public class ObservableNotificationsClientTests
         public async Task MarksNotificationsRead()
         {
             var client = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
-            
+
             await client.Activity.Notifications.MarkAsRead();
         }
     }

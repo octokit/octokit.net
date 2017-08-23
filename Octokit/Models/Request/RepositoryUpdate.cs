@@ -12,7 +12,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryUpdate
     {
-
         /// <summary>
         /// Creates an object that describes an update to a repository on GitHub.
         /// </summary>
