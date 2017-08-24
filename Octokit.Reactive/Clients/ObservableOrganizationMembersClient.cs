@@ -375,5 +375,39 @@ namespace Octokit.Reactive
 
             return _client.Conceal(org, user).ToObservable();
         }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllPendingInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+        }
     }
 }

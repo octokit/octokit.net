@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a HTTP 403 - Forbidden response returned from the API.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -36,7 +38,7 @@ namespace Octokit
             }
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of InvalidGitignoreTemplateException
         /// </summary>

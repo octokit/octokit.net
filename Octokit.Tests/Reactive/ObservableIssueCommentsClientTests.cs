@@ -86,7 +86,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {

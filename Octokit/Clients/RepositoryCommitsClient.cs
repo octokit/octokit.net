@@ -190,7 +190,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1Preview);
+            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1MediaType);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
-            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(repositoryId, reference), null, AcceptHeaders.CommitReferenceSha1Preview);
+            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(repositoryId, reference), null, AcceptHeaders.CommitReferenceSha1MediaType);
         }
     }
 }

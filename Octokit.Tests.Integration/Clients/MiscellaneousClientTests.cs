@@ -26,7 +26,7 @@ public class MiscellaneousClientTests
 
             var result = await github.Miscellaneous.RenderRawMarkdown("This is\r\n a **test**");
 
-            Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);
+            Assert.Equal("<p>This is\na <strong>test</strong></p>\n", result);
         }
     }
 

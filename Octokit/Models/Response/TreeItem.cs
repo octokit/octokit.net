@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -33,7 +34,7 @@ namespace Octokit
         /// The type of this Tree Item.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public TreeType Type { get; protected set; }
+        public StringEnum<TreeType> Type { get; protected set; }
 
         /// <summary>
         /// The size of this Tree Item.
@@ -58,8 +59,13 @@ namespace Octokit
 
     public enum TreeType
     {
+        [Parameter(Value = "blob")]
         Blob,
+
+        [Parameter(Value = "tree")]
         Tree,
+
+        [Parameter(Value = "commit")]
         Commit
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
@@ -62,7 +63,7 @@ namespace Octokit.Tests.Integration.Clients
                 PerPage = 20,
                 Page = 1
             };
-            search.Repos.Add("microsoft", "vscode");
+            search.Repos.Add("dotnet", "roslyn");
 
             // 20 most recent closed PRs
             search.Type = IssueTypeQualifier.PullRequest;
@@ -71,18 +72,45 @@ namespace Octokit.Tests.Integration.Clients
             foreach (var pullRequest in pullRequestResults.Items)
             {
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
-                Assert.NotEmpty(timelineEventInfos);
+
+                // Ensure we dont have any errors parsing the Event enums
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
 
-            // 20 most recent open Issues
-            search.Type = IssueTypeQualifier.Issue;
+            // 20 most recent open PRs
+            search.Type = IssueTypeQualifier.PullRequest;
             search.State = ItemState.Open;
+            var openPullRequestResults = await github.Search.SearchIssues(search);
+            foreach (var pullRequest in openPullRequestResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", pullRequest.Number);
+
+                // Ensure we dont have any errors parsing the Event enums
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
+            }
+
+            // 20 most recent closed Issues
+            search.Type = IssueTypeQualifier.Issue;
+            search.State = ItemState.Closed;
             var issueResults = await github.Search.SearchIssues(search);
             foreach (var issue in issueResults.Items)
             {
                 var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
 
-                Assert.NotEmpty(timelineEventInfos);
+                // Ensure we dont have any errors parsing the Event enums
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
+            }
+
+            // 20 most recent open Issues
+            search.Type = IssueTypeQualifier.Issue;
+            search.State = ItemState.Open;
+            var openIssueResults = await github.Search.SearchIssues(search);
+            foreach (var issue in issueResults.Items)
+            {
+                var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("microsoft", "vscode", issue.Number);
+
+                // Ensure we dont have any errors parsing the Event enums
+                var enumValues = timelineEventInfos.Select(x => x.Event.Value).ToList();
             }
         }
 

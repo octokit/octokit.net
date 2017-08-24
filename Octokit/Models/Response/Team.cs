@@ -42,7 +42,7 @@ namespace Octokit
         /// <summary>
         /// permission attached to this team
         /// </summary>
-        public Permission Permission { get; protected set; }
+        public StringEnum<Permission> Permission { get; protected set; }
 
         /// <summary>
         /// how many members in this team

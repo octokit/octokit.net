@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Octokit.Reactive;
+using System.Reflection;
 
 namespace Octokit.Tests.Integration
 {
@@ -19,6 +20,18 @@ namespace Octokit.Tests.Integration
                 return new Credentials(githubToken);
 
             var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
+
+            if (githubUsername == null || githubPassword == null)
+                return null;
+
+            return new Credentials(githubUsername, githubPassword);
+        });
+
+        static readonly Lazy<Credentials> _credentialsSecondUserThunk = new Lazy<Credentials>(() =>
+        {
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME_2");
+
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD_2");
 
             if (githubUsername == null || githubPassword == null)
                 return null;
@@ -76,6 +89,8 @@ namespace Octokit.Tests.Integration
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
         /// </summary>
         public static Credentials Credentials { get { return _credentialsThunk.Value; } }
+
+        public static Credentials CredentialsSecondUser { get { return _credentialsSecondUserThunk.Value; } }
 
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 
@@ -183,7 +198,7 @@ namespace Octokit.Tests.Integration
         public static Stream LoadFixture(string fileName)
         {
             var key = "Octokit.Tests.Integration.fixtures." + fileName;
-            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
+            var stream = typeof(Helper).GetTypeInfo().Assembly.GetManifestResourceStream(key);
             if (stream == null)
             {
                 throw new InvalidOperationException(
@@ -192,11 +207,11 @@ namespace Octokit.Tests.Integration
             return stream;
         }
 
-        public static IGitHubClient GetAuthenticatedClient()
+        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
             {
-                Credentials = Credentials
+                Credentials = useSecondUser ? CredentialsSecondUser : Credentials
             };
         }
 
@@ -227,6 +242,30 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
+        }
+
+        public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
+        {
+            try
+            {
+                foreach (var invitee in invitees)
+                {
+                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative), null, AcceptHeaders.OrganizationMembershipPreview).Wait(TimeSpan.FromSeconds(15));
+                }
+            }
+            catch { }
+        }
+
+        public static string InviteMemberToTeam(IConnection connection, int teamId, string login)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.Organization.Team.AddMembership(teamId, login).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+
+            return login;
         }
     }
 }

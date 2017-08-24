@@ -8,7 +8,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Pull Requests API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/activity/notifications/">Pull Requests API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more information.
     /// </remarks>
     public class ObservablePullRequestsClient : IObservablePullRequestsClient
     {
@@ -22,9 +22,19 @@ namespace Octokit.Reactive
         public IObservablePullRequestReviewCommentsClient Comment { get { return this.ReviewComment; } }
 
         /// <summary>
+        /// Client for managing reviews.
+        /// </summary>
+        public IObservablePullRequestReviewsClient Review { get; private set; }
+
+        /// <summary>
         /// Client for managing review comments.
         /// </summary>
         public IObservablePullRequestReviewCommentsClient ReviewComment { get; private set; }
+
+        /// <summary>
+        /// Client for managing review requests.
+        /// </summary>
+        public IObservablePullRequestReviewRequestsClient ReviewRequest { get; private set; }
 
         public ObservablePullRequestsClient(IGitHubClient client)
         {
@@ -32,7 +42,9 @@ namespace Octokit.Reactive
 
             _client = client.Repository.PullRequest;
             _connection = client.Connection;
+            Review = new ObservablePullRequestReviewsClient(client);
             ReviewComment = new ObservablePullRequestReviewCommentsClient(client);
+            ReviewRequest = new ObservablePullRequestReviewRequestsClient(client);
         }
 
         /// <summary>

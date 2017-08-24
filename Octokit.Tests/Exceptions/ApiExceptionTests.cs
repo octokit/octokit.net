@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization.Formatters.Binary;
+#endif
 using System.Text;
 using NSubstitute;
 using Octokit.Internal;
@@ -96,7 +98,7 @@ namespace Octokit.Tests.Exceptions
                 Assert.Equal("message2", thirdException.ApiError.Message);
             }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {

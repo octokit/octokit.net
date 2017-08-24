@@ -9,7 +9,7 @@ namespace Octokit.Tests.Conventions
     public class PaginationTests
     {
         [Theory(Skip = "Enable this to run it and find all the places where things break")]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckObservableClients(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
@@ -28,13 +28,13 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckPaginationGetAllMethodNames(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
             var methodsThatCanPaginate = methodsOrdered
-                .Where(x => x.ReturnType.GetTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.ReturnType.GetCustomTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
                 .Where(x => x.Name.StartsWith("Get") && !x.HasAttribute<ExcludeFromPaginationConventionTestAttribute>());
 
             var invalidMethods = methodsThatCanPaginate
@@ -89,7 +89,10 @@ namespace Octokit.Tests.Conventions
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IGitHubClient).Assembly.ExportedTypes
+            return typeof(IGitHubClient)
+                .GetTypeInfo()
+                .Assembly
+                .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
                 .Where(type => type != typeof(IStatisticsClient))
                 .Select(type => new[] { type });

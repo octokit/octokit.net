@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using Octokit.Reactive.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -304,6 +305,56 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("", "username").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Conceal("org", null).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Conceal("org", "").ToTask());
+            }
+        }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.GetAllPendingInvitations("org");
+
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithStart()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllPendingInvitations("org", options);
+
+                gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 2),
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("").ToTask());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null).ToTask());
             }
         }
     }

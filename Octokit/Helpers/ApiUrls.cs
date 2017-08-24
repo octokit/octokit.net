@@ -662,6 +662,42 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the organizations pending invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationPendingInvititations(string org)
+        {
+            return "orgs/{0}/invitations".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <returns></returns>
+        public static Uri OutsideCollaborators(string org)
+        {
+            return "orgs/{0}/outside_collaborators".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
+        /// </summary>
+        /// <param name="org">The organization</param>
+        /// <param name="filter">The collaborator filter, <see cref="OrganizationMembersFilter"/></param>
+        /// <returns>The correct uri</returns>
+        public static Uri OutsideCollaborators(string org, OrganizationMembersFilter filter)
+        {
+            return "orgs/{0}/outside_collaborators?filter={1}".FormatUri(org, filter.ToParameter());
+        }
+
+        public static Uri OutsideCollaborator(string org, string user)
+        {
+            return "orgs/{0}/outside_collaborators/{1}".FormatUri(org, user);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1304,6 +1340,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reviews opf a specified pull request
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviews(string owner, string name, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the specified pull request review comment.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1313,6 +1361,106 @@ namespace Octokit
         public static Uri PullRequestReviewComment(string owner, string name, int number)
         {
             return "repos/{0}/{1}/pulls/comments/{2}".FormatUri(owner, name, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified pull request review.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReview(string owner, string name, int number, long reviewId)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}".FormatUri(owner, name, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for dismissing a specified pull request review
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewDismissal(long repositoryId, int number, long reviewId)
+        {
+            return "repositories/{0}/pulls/{1}/reviews/{2}/dismissals".FormatUri(repositoryId, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for dismissing a specified pull request review
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewDismissal(string owner, string name, int number, long reviewId)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/dismissals".FormatUri(owner, name, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/> that </returns>
+        public static Uri PullRequestReviewSubmit(long repositoryId, int number, long reviewId)
+        {
+            return "repositories/{0}/pulls/{1}/reviews/{2}/events".FormatUri(repositoryId, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewSubmit(string owner, string name, int number, long reviewId)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/events".FormatUri(owner, name, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/> that </returns>
+        public static Uri PullRequestReviewComments(long repositoryId, int number, long reviewId)
+        {
+            return "repositories/{0}/pulls/{1}/reviews/{2}/comments".FormatUri(repositoryId, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a pull request review
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReviewComments(string owner, string name, int number, long reviewId)
+        {
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/comments".FormatUri(owner, name, number, reviewId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specified pull request review.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="reviewId">The pull request review number</param>
+        /// <returns>The <see cref="Uri"/></returns>
+        public static Uri PullRequestReview(long repositoryId, int number, long reviewId)
+        {
+            return "repositories/{0}/pulls/{1}/reviews/{2}".FormatUri(repositoryId, number, reviewId);
         }
 
         /// <summary>
@@ -1484,6 +1632,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// returns the <see cref="Uri"/> for the teams pending invitations
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <returns></returns>
+        public static Uri TeamPendingInvitations(int id)
+        {
+            return "teams/{0}/invitations".FormatUri(id);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for teams
         /// use for update or deleting a team
         /// </summary>
@@ -1516,6 +1674,23 @@ namespace Octokit
         public static Uri RepoCollaborator(long repositoryId, string user)
         {
             return "repositories/{0}/collaborators/{1}".FormatUri(repositoryId, user);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to review the collaborators permission
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
+        /// <returns>The <see cref="Uri"/> to review the collaborators permission</returns>
+        public static Uri RepoCollaboratorPermission(string owner, string repo, string user)
+        {
+            return "repos/{0}/{1}/collaborators/{2}/permission".FormatUri(owner, repo, user);
+        }
+
+        public static Uri RepoCollaboratorPermission(long repositoryId, string user)
+        {
+            return "repositories/{0}/collaborators/{1}/permission".FormatUri(repositoryId, user);
         }
 
         /// <summary>
@@ -1731,6 +1906,27 @@ namespace Octokit
         public static Uri RepoRequiredStatusChecksContexts(long repositoryId, string branchName)
         {
             return "repositories/{0}/branches/{1}/protection/required_status_checks/contexts".FormatUri(repositoryId, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for admin enforcement for a protected branch
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        public static Uri RepoProtectedBranchAdminEnforcement(string owner, string name, string branchName)
+        {
+            return "repos/{0}/{1}/branches/{2}/protection/enforce_admins".FormatUri(owner, name, branchName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for admin enforcement for a protected branch
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branchName">The name of the branch</param>
+        public static Uri RepoProtectedBranchAdminEnforcement(long repositoryId, string branchName)
+        {
+            return "repositories/{0}/branches/{1}/protection/enforce_admins".FormatUri(repositoryId, branchName);
         }
 
         /// <summary>
@@ -2732,6 +2928,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the reviews of a specified pull request
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> that </returns>
+        public static Uri PullRequestReviews(long repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/{1}/reviews".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the pull request review comments on a specified repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -3336,6 +3543,130 @@ namespace Octokit
         public static Uri RepositoryTrafficClones(long repositoryId)
         {
             return "repositories/{0}/traffic/clones".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(string owner, string repo, int number)
+        {
+            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, repo, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for pull request review requests.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
+        public static Uri PullRequestReviewRequests(long repositoryId, int number)
+        {
+            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified project projects.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri RepositoryProjects(string owner, string repo)
+        {
+            return "repos/{0}/{1}/projects".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified project projects.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri RepositoryProjects(long repositoryId)
+        {
+            return "repositories/{0}/projects".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified organization projects.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns>The <see cref="Uri"/> for projects.</returns>
+        public static Uri OrganizationProjects(string organization)
+        {
+            return "orgs/{0}/projects".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a project.
+        /// </summary>
+        /// <param name="id">The id of the project</param>
+        /// <returns>The <see cref="Uri"/> for repository projects.</returns>
+        public static Uri Project(int id)
+        {
+            return "projects/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project columns.
+        /// </summary>
+        /// <param name="id">The id of the columns</param>
+        /// <returns>The <see cref="Uri"/> for project columns.</returns>
+        public static Uri ProjectColumn(int id)
+        {
+            return "projects/columns/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a specific project column.
+        /// </summary>
+        /// <param name="projectId">The id of the project</param>
+        /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
+        public static Uri ProjectColumns(int projectId)
+        {
+            return "projects/{0}/columns".FormatUri(projectId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project column.
+        /// </summary>
+        /// <param name="id">The id of the column to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project column.</returns>
+        public static Uri ProjectColumnMove(int id)
+        {
+            return "projects/columns/{0}/moves".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="id">The id of the card</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCard(int id)
+        {
+            return "projects/columns/cards/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for project cards.
+        /// </summary>
+        /// <param name="columnId">The id of the column</param>
+        /// <returns>The <see cref="Uri"/> for project cards.</returns>
+        public static Uri ProjectCards(int columnId)
+        {
+            return "projects/columns/{0}/cards".FormatUri(columnId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to move a project card.
+        /// </summary>
+        /// <param name="id">The id of the card to move</param>
+        /// <returns>The <see cref="Uri"/> to move a project card.</returns>
+        public static Uri ProjectCardMove(int id)
+        {
+            return "projects/columns/cards/{0}/moves".FormatUri(id);
         }
     }
 }

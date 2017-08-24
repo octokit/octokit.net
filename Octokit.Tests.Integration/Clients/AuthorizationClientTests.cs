@@ -184,7 +184,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(created.Token, applicationAuthorization.Token);
 
             await github.Authorization.Delete(created.Id);
-            Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
+            await Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
         [BasicAuthenticationTest]
@@ -210,7 +210,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotEqual(created.Token, applicationAuthorization.Token);
 
             await github.Authorization.Delete(created.Id);
-            Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
+            await Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
 
         [BasicAuthenticationTest]
@@ -232,8 +232,8 @@ namespace Octokit.Tests.Integration.Clients
             var applicationClient = Helper.GetAuthenticatedApplicationClient();
             await applicationClient.Authorization.RevokeApplicationAuthentication(Helper.ClientId, created.Token);
 
-            Assert.ThrowsAsync<NotFoundException>(() => applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token));
-            Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
+            await Assert.ThrowsAsync<NotFoundException>(() => applicationClient.Authorization.CheckApplicationAuthentication(Helper.ClientId, created.Token));
+            await Assert.ThrowsAsync<NotFoundException>(() => github.Authorization.Get(created.Id));
         }
     }
 }

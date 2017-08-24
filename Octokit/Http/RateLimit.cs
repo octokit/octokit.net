@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Security;
 using Octokit.Helpers;
 using Octokit.Internal;
 
 namespace Octokit
 {
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RateLimit
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         : ISerializable
 #endif
     {
@@ -73,7 +75,7 @@ namespace Octokit
                 : result;
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         protected RateLimit(SerializationInfo info, StreamingContext context)
         {
             Ensure.ArgumentNotNull(info, "info");

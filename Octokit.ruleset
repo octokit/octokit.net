@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="GitHub" Description="This ruleset only includes the rules we care about. I'll be adding new ones as we fix our codebase." ToolsVersion="11.0">
+<RuleSet Name="GitHub" Description="This ruleset enables all of the Microsoft CodeAnalysis rules, with a few deliberate exceptions" ToolsVersion="14.0">
   <IncludeAll Action="Error" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1006" Action="None" />
     <Rule Id="CA1014" Action="None" />
     <Rule Id="CA1020" Action="None" />
+    <Rule Id="CA1054" Action="None" />
     <Rule Id="CA1056" Action="None" />
     <Rule Id="CA1726" Action="None" />
     <Rule Id="CA2210" Action="None" />
-    <Rule Id="CA1054" Action="None" />
   </Rules>
 </RuleSet>

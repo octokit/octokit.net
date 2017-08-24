@@ -38,6 +38,7 @@ namespace Octokit.Reactive
             Oauth = new ObservableOauthClient(gitHubClient);
             Organization = new ObservableOrganizationsClient(gitHubClient);
             PullRequest = new ObservablePullRequestsClient(gitHubClient);
+            PullRequestReview = new ObservablePullRequestReviewsClient(gitHubClient);
             Repository = new ObservableRepositoriesClient(gitHubClient);
             User = new ObservableUsersClient(gitHubClient);
             Git = new ObservableGitDatabaseClient(gitHubClient);
@@ -60,6 +61,7 @@ namespace Octokit.Reactive
         public IObservableOauthClient Oauth { get; private set; }
         public IObservableOrganizationsClient Organization { get; private set; }
         public IObservablePullRequestsClient PullRequest { get; private set; }
+        public IObservablePullRequestReviewsClient PullRequestReview { get; private set; }
         public IObservableRepositoriesClient Repository { get; private set; }
         public IObservableGistsClient Gist { get; private set; }
         public IObservableUsersClient User { get; private set; }

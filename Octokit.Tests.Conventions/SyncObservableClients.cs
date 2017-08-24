@@ -11,14 +11,14 @@ namespace Octokit.Tests.Conventions
     public class SyncObservableClients
     {
         [Theory]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckObservableClients(Type clientInterface)
         {
             var observableClient = clientInterface.GetObservableClientInterface();
             var mainMethods = clientInterface.GetMethodsOrdered();
             var observableMethods = observableClient.GetMethodsOrdered();
-            var mainNames = Array.ConvertAll(mainMethods, m => m.Name);
-            var observableNames = Array.ConvertAll(observableMethods, m => m.Name);
+            var mainNames = mainMethods.Select(x => x.Name).ToArray();
+            var observableNames = observableMethods.Select(x => x.Name).ToArray();
 
             var methodsMissingOnReactiveClient = mainNames.Except(observableNames).ToList();
             if (methodsMissingOnReactiveClient.Any())
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Conventions
 
         private static Type GetObservableExpectedType(Type mainType)
         {
-            var typeInfo = mainType.GetTypeInfo();
+            var typeInfo = mainType.GetCustomTypeInfo();
             switch (typeInfo.TypeCategory)
             {
                 case TypeCategory.ClientInterface:
@@ -121,6 +121,7 @@ namespace Octokit.Tests.Conventions
         public static IEnumerable<object[]> GetClientInterfaces()
         {
             return typeof(IGitHubClient)
+                .GetTypeInfo()
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)

@@ -70,7 +70,7 @@ namespace Octokit
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public ItemState State { get; protected set; }
+        public StringEnum<ItemState> State { get; protected set; }
 
         /// <summary>
         /// Title of the issue
@@ -168,11 +168,12 @@ namespace Octokit
                 ? null
                 : Labels.Select(x => x.Name);
 
+            ItemState state;
             var issueUpdate = new IssueUpdate
             {
                 Body = Body,
                 Milestone = milestoneId,
-                State = State,
+                State = (State.TryParse(out state) ? (ItemState?)state : null),
                 Title = Title
             };
 

@@ -26,16 +26,19 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 
 ## Getting Started
 
-Octokit is available on NuGet.
+Octokit is a GitHub API client library for .NET and is available on NuGet:
 
 ```
 Install-Package Octokit
 ```
-or an IObservable based GitHub API client library for .NET using Reactive Extensions
+
+There is also an IObservable based GitHub API client library for .NET using Reactive Extensions:
 
 ```
 Install-Package Octokit.Reactive
 ```
+
+
 ### Beta packages ###
 Unstable NuGet packages that track the master branch of this repository are available at
 [https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
@@ -48,20 +51,21 @@ Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
 
 ## Build
 
-Octokit is a single assembly designed to be easy to deploy anywhere. If you
-prefer to compile it yourself, you’ll need:
+Octokit is a single assembly designed to be easy to deploy anywhere.
 
-* Visual Studio 2015 or Xamarin Studio
-* Windows 8.1 or higher to build and test the WinRT projects
-
-To clone it locally click the "Clone in Desktop" button above or run the 
+To clone and build it locally click the "Clone in Desktop" button above or run the 
 following git commands.
 
 ```
 git clone git@github.com:octokit/Octokit.net.git Octokit
 cd Octokit
-.\build.cmd
 ```
+
+To build the libraries, run the following command:
+
+Windows: `.\build.ps1`
+
+Linux/OSX: `./build.sh`
 
 ## Contribute
 
@@ -95,6 +99,6 @@ problem.
 
 ## Copyright and License
 
-Copyright 2013 GitHub, Inc.
+Copyright 2017 GitHub, Inc.
 
 Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/master/LICENSE.txt)

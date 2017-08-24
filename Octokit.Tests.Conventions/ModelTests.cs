@@ -5,16 +5,19 @@ using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using System.Reflection;
+using Octokit.Internal;
 
 namespace Octokit.Tests.Conventions
 {
     public class ModelTests
     {
+        private static readonly Assembly Octokit = typeof(AuthorizationUpdate).GetTypeInfo().Assembly;
+
         [Theory]
-        [MemberData("ModelTypes")]
+        [MemberData(nameof(ModelTypes))]
         public void AllModelsHaveDebuggerDisplayAttribute(Type modelType)
         {
-            var attribute = modelType.GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
+            var attribute = modelType.GetTypeInfo().GetCustomAttribute<DebuggerDisplayAttribute>(inherit: false);
             if (attribute == null)
             {
                 throw new MissingDebuggerDisplayAttributeException(modelType);
@@ -38,7 +41,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void AllResponseModelsHavePublicParameterlessCtors(Type modelType)
         {
             var ctor = modelType.GetConstructor(Type.EmptyTypes);
@@ -50,7 +53,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
@@ -74,7 +77,7 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ResponseModelTypes")]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveReadOnlyCollections(Type modelType)
         {
             var mutableCollectionProperties = new List<PropertyInfo>();
@@ -108,7 +111,20 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("ModelTypesWithUrlProperties")]
+        [MemberData(nameof(ResponseModelTypes))]
+        public void ResponseModelsUseStringEnumWrapper(Type modelType)
+        {
+            var enumProperties = modelType.GetProperties()
+                .Where(x => x.PropertyType.GetTypeInfo().IsEnum);
+
+            if (enumProperties.Any())
+            {
+                throw new ModelNotUsingStringEnumException(modelType, enumProperties);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ModelTypesWithUrlProperties))]
         public void ModelsHaveUrlPropertiesOfTypeString(Type modelType)
         {
             var propertiesWithInvalidType = modelType
@@ -123,14 +139,23 @@ namespace Octokit.Tests.Conventions
             }
         }
 
-        public static IEnumerable<object[]> GetClientInterfaces()
+        [Theory]
+        [MemberData(nameof(EnumTypes))]
+        public void EnumMembersHaveParameterAttribute(Type enumType)
         {
-            return typeof(IGitHubClient)
-                .Assembly
-                .ExportedTypes
-                .Where(TypeExtensions.IsClientInterface)
-                .Where(t => t != typeof(IStatisticsClient)) // This convention doesn't apply to this one type.
-                .Select(type => new[] { type });
+            if (enumType == typeof(Language))
+            {
+                return; // TODO: Annotate all Language entries with a ParameterAttribute.
+            }
+
+            var membersWithoutProperty = enumType.GetRuntimeFields()
+                .Where(x => x.Name != "value__")
+                .Where(x => x.GetCustomAttribute(typeof(ParameterAttribute), false) == null);
+
+            if (membersWithoutProperty.Any())
+            {
+                throw new EnumMissingParameterAttributeException(enumType, membersWithoutProperty);
+            }
         }
 
         public static IEnumerable<object[]> ModelTypes
@@ -153,11 +178,23 @@ namespace Octokit.Tests.Conventions
             get { return GetModelTypes(includeRequestModels: false).Select(type => new[] { type }); }
         }
 
+        public static IEnumerable<object[]> EnumTypes
+        {
+            get
+            {
+                return GetModelTypes(includeRequestModels: true)
+                    .SelectMany(type => type.GetProperties())
+                    .SelectMany(property => UnwrapGenericArguments(property.PropertyType))
+                    .Where(type => type.GetTypeInfo().Assembly.Equals(Octokit) && type.GetTypeInfo().IsEnum)
+                    .Select(type => new[] { type });
+            }
+        }
+
         private static IEnumerable<Type> GetModelTypes(bool includeRequestModels)
         {
             var allModelTypes = new HashSet<Type>();
 
-            var clientInterfaces = typeof(IGitHubClient).Assembly.ExportedTypes
+            var clientInterfaces = typeof(IGitHubClient).GetTypeInfo().Assembly.ExportedTypes
                 .Where(type => type.IsClientInterface());
 
             foreach (var exportedType in clientInterfaces)
@@ -217,7 +254,7 @@ namespace Octokit.Tests.Conventions
 
         private static IEnumerable<Type> UnwrapGenericArguments(Type returnType)
         {
-            if (returnType.IsGenericType)
+            if (returnType.GetTypeInfo().IsGenericType)
             {
                 var arguments = returnType.GetGenericArguments();
 

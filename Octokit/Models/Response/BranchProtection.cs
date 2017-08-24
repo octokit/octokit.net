@@ -4,99 +4,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
-    /// <summary>
-    /// Protection details for a <see cref="Branch"/>.
-    /// </summary>
-    /// <remarks>
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
-    /// </remarks>
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionSettings instead.")]
-    public class BranchProtection
-    {
-        public BranchProtection() { }
-
-        public BranchProtection(bool enabled, RequiredStatusChecks requiredStatusChecks)
-        {
-            Enabled = enabled;
-            RequiredStatusChecks = requiredStatusChecks;
-        }
-
-        /// <summary>
-        /// Should this branch be protected or not
-        /// </summary>
-        public bool Enabled { get; protected set; }
-
-        /// <summary>
-        /// The <see cref="RequiredStatusChecks"/> information for this <see cref="Branch"/>.
-        /// </summary>
-        public RequiredStatusChecks RequiredStatusChecks { get; private set; }
-
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
-            }
-        }
-    }
-
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionRequiredStatusChecks instead.")]
-    public class RequiredStatusChecks
-    {
-        public RequiredStatusChecks() { }
-
-        public RequiredStatusChecks(EnforcementLevel enforcementLevel, IEnumerable<string> contexts)
-        {
-            EnforcementLevel = enforcementLevel;
-            Contexts = new ReadOnlyCollection<string>(contexts.ToList());
-        }
-
-        /// <summary>
-        /// Who required status checks apply to
-        /// </summary>
-        public EnforcementLevel EnforcementLevel { get; protected set; }
-
-        /// <summary>
-        /// The list of status checks to require in order to merge into this <see cref="Branch"/>
-        /// </summary>
-        public IReadOnlyList<string> Contexts { get; private set; }
-
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
-            }
-        }
-    }
-
-    /// <summary>
-    /// The enforcement levels that are available
-    /// </summary>
-    [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please see BranchProtectionRequiredStatusChecks.IncludeAdmins instead.")]
-    public enum EnforcementLevel
-    {
-        /// <summary>
-        /// Turn off required status checks for this <see cref="Branch"/>.
-        /// </summary>
-        Off,
-
-        /// <summary>
-        /// Required status checks will be enforced for non-admins.
-        /// </summary>
-        NonAdmins,
-
-        /// <summary>
-        /// Required status checks will be enforced for everyone (including admins).
-        /// </summary>
-        Everyone
-    }
-
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
     /// </summary>
@@ -141,6 +52,28 @@ namespace Octokit
                     RequiredPullRequestReviews == null ? "disabled" : RequiredPullRequestReviews.DebuggerDisplay);
             }
         }
+
+        /// <summary>
+        /// Specifies whether the protections applied to this branch also apply to repository admins
+        /// </summary>
+        public EnforceAdmins EnforceAdmins { get; protected set; }
+    }
+
+    /// <summary>
+    /// Specifies whether the protections applied to this branch also apply to repository admins
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class EnforceAdmins
+    {
+        public bool Enabled { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+            }
+        }
     }
 
     /// <summary>
@@ -151,17 +84,11 @@ namespace Octokit
     {
         public BranchProtectionRequiredStatusChecks() { }
 
-        public BranchProtectionRequiredStatusChecks(bool includeAdmins, bool strict, IReadOnlyList<string> contexts)
+        public BranchProtectionRequiredStatusChecks(bool strict, IReadOnlyList<string> contexts)
         {
-            IncludeAdmins = includeAdmins;
             Strict = strict;
             Contexts = contexts;
         }
-
-        /// <summary>
-        /// Enforce required status checks for repository administrators
-        /// </summary>
-        public bool IncludeAdmins { get; protected set; }
 
         /// <summary>
         /// Require branches to be up to date before merging
@@ -178,10 +105,9 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "IncludeAdmins: {0} Strict: {1} Contexts: {2}",
-                    IncludeAdmins,
+                    "Strict: {0} Contexts: {1}",
                     Strict,
-                    Contexts == null ? "" : String.Join(",", Contexts));
+                    Contexts == null ? "" : string.Join(",", Contexts));
             }
         }
     }

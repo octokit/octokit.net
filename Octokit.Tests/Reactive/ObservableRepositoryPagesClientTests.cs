@@ -152,7 +152,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetLatest(1);
 
-                gitHubClient.Received().Repository.Page.GetLatest(1);
+                gitHubClient.Repository.Page.Received().GetLatest(1);
             }
 
             [Fact]

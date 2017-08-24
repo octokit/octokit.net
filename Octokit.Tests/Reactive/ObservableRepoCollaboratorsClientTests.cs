@@ -253,6 +253,92 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheReviewPermissionMethod
+        {
+            private readonly IGitHubClient _gitHubClient;
+            private IObservableRepoCollaboratorsClient _client;
+
+            public TheReviewPermissionMethod()
+            {
+                _gitHubClient = Substitute.For<IGitHubClient>();
+            }
+
+            private void SetupWithoutNonReactiveClient()
+            {
+                _client = new ObservableRepoCollaboratorsClient(_gitHubClient);
+            }
+
+            private void SetupWithNonReactiveClient()
+            {
+                var collaboratorsClient = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+                _gitHubClient.Repository.Collaborator.Returns(collaboratorsClient);
+                _client = new ObservableRepoCollaboratorsClient(_gitHubClient);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                Assert.Throws<ArgumentNullException>(() => _client.ReviewPermission(null, "test", "user1"));
+                Assert.Throws<ArgumentNullException>(() => _client.ReviewPermission("owner", null, "user1"));
+                Assert.Throws<ArgumentNullException>(() => _client.ReviewPermission("owner", "test", null));
+                Assert.Throws<ArgumentNullException>(() => _client.ReviewPermission(1L, null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                Assert.Throws<ArgumentException>(() => _client.ReviewPermission("", "test", "user1"));
+                Assert.Throws<ArgumentException>(() => _client.ReviewPermission("owner", "", "user1"));
+                Assert.Throws<ArgumentException>(() => _client.ReviewPermission("owner", "test", ""));
+                Assert.Throws<ArgumentException>(() => _client.ReviewPermission(1L, ""));
+            }
+
+            [Fact]
+            public async Task EnsuresNonWhitespaceArguments()
+            {
+                SetupWithNonReactiveClient();
+
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.ReviewPermission(whitespace, "repo", "user"));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.ReviewPermission("owner", whitespace, "user"));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.ReviewPermission("owner", "repo", whitespace));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.ReviewPermission(1L, whitespace));
+            }
+
+            [Fact]
+            public void CallsReviewPermissionOnRegularRepoCollaboratorsClient()
+            {
+                SetupWithoutNonReactiveClient();
+
+                _client.ReviewPermission("owner", "repo", "user");
+
+                _gitHubClient.Repository.Collaborator.Received(1).ReviewPermission(
+                    Arg.Is("owner"),
+                    Arg.Is("repo"),
+                    Arg.Is("user"));
+            }
+
+            [Fact]
+            public void CallsReviewPermissionOnRegularRepoCollaboratorsClientWithRepositoryId()
+            {
+                SetupWithoutNonReactiveClient();
+
+                var id = 1L;
+                _client.ReviewPermission(id, "user");
+
+                _gitHubClient.Repository.Collaborator.Received(1).ReviewPermission(
+                    Arg.Is(id),
+                    Arg.Is("user"));
+            }
+        }
+
         public class TheAddMethod
         {
             private readonly IGitHubClient _githubClient;

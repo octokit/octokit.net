@@ -2,9 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-#if NET_45
 using System.Collections.Generic;
-#endif
 
 namespace Octokit
 {
@@ -78,25 +76,6 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Branch> Get(long repositoryId, string branch);
-
-        /// <summary>
-        /// Edit the specified branch with the values given in <paramref name="update"/>
-        /// </summary>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        /// <param name="update">New values to update the branch with</param>
-        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other RepositoryBranchesClient methods instead.")]
-        Task<Branch> Edit(string owner, string name, string branch, BranchUpdate update);
-
-        /// <summary>
-        /// Edit the specified branch with the values given in <paramref name="update"/>
-        /// </summary>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        /// <param name="update">New values to update the branch with</param>
-        [Obsolete("This existing implementation will cease to work when the Branch Protection API preview period ends.  Please use other RepositoryBranchesClient methods instead.")]
-        Task<Branch> Edit(long repositoryId, string branch, BranchUpdate update);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch
@@ -321,6 +300,69 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+
+        /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get admin enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch);
+
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch);
+
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch);
+
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<bool> RemoveAdminEnforcement(string owner, string name, string branch);
+
+        /// <summary>
+        /// Remove admin enforcement on protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        Task<bool> RemoveAdminEnforcement(long repositoryId, string branch);
 
         /// <summary>
         /// Get restrictions for the specified branch (applies only to Organization owned repositories)

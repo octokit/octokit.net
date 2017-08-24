@@ -9,13 +9,15 @@ namespace Octokit
     /// A client for GitHub's Pull Requests API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/activity/notifications/">Pull Requests API documentation</a> for more information.
+    /// See the <a href="https://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more information.
     /// </remarks>
     public class PullRequestsClient : ApiClient, IPullRequestsClient
     {
         public PullRequestsClient(IApiConnection apiConnection) : base(apiConnection)
         {
+            Review = new PullRequestReviewsClient(apiConnection);
             ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
+            ReviewRequest = new PullRequestReviewRequestsClient(apiConnection);
         }
 
         /// <summary>
@@ -25,9 +27,19 @@ namespace Octokit
         public IPullRequestReviewCommentsClient Comment { get { return this.ReviewComment; } }
 
         /// <summary>
+        /// Client for managing reviews.
+        /// </summary>
+        public IPullRequestReviewsClient Review { get; set; }
+
+        /// <summary>
         /// Client for managing review comments.
         /// </summary>
         public IPullRequestReviewCommentsClient ReviewComment { get; set; }
+
+        /// <summary>
+        /// Client for managing review requests.
+        /// </summary>
+        public IPullRequestReviewRequestsClient ReviewRequest { get; set; }
 
         /// <summary>
         /// Get a pull request by number.
@@ -37,8 +49,8 @@ namespace Octokit
         /// </remarks>
         public Task<PullRequest> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(owner, name, number));
         }
@@ -64,8 +76,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, new PullRequestRequest(), ApiOptions.None);
         }
@@ -93,9 +105,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(owner, name, new PullRequestRequest(), options);
         }
@@ -110,7 +122,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(repositoryId, new PullRequestRequest(), options);
         }
@@ -126,9 +138,9 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -143,7 +155,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -160,10 +172,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(owner, name),
                 request.ToParametersDictionary(), options);
@@ -180,8 +192,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(repositoryId),
                 request.ToParametersDictionary(), options);
@@ -196,9 +208,9 @@ namespace Octokit
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         public Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newPullRequest, "newPullRequest");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newPullRequest, nameof(newPullRequest));
 
             return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(owner, name), newPullRequest);
         }
@@ -211,7 +223,7 @@ namespace Octokit
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         public Task<PullRequest> Create(long repositoryId, NewPullRequest newPullRequest)
         {
-            Ensure.ArgumentNotNull(newPullRequest, "newPullRequest");
+            Ensure.ArgumentNotNull(newPullRequest, nameof(newPullRequest));
 
             return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(repositoryId), newPullRequest);
         }
@@ -227,9 +239,9 @@ namespace Octokit
         /// </param>
         public Task<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(pullRequestUpdate, "pullRequestUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(pullRequestUpdate, nameof(pullRequestUpdate));
 
             return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(owner, name, number), pullRequestUpdate);
         }
@@ -244,7 +256,7 @@ namespace Octokit
         /// </param>
         public Task<PullRequest> Update(long repositoryId, int number, PullRequestUpdate pullRequestUpdate)
         {
-            Ensure.ArgumentNotNull(pullRequestUpdate, "pullRequestUpdate");
+            Ensure.ArgumentNotNull(pullRequestUpdate, nameof(pullRequestUpdate));
 
             return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(repositoryId, number), pullRequestUpdate);
         }
@@ -259,9 +271,9 @@ namespace Octokit
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         public async Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(mergePullRequest, nameof(mergePullRequest));
 
             try
             {
@@ -293,7 +305,7 @@ namespace Octokit
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         public async Task<PullRequestMerge> Merge(long repositoryId, int number, MergePullRequest mergePullRequest)
         {
-            Ensure.ArgumentNotNull(mergePullRequest, "mergePullRequest");
+            Ensure.ArgumentNotNull(mergePullRequest, nameof(mergePullRequest));
 
             try
             {
@@ -325,8 +337,8 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         public async Task<bool> Merged(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             try
             {
@@ -369,8 +381,8 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         public Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, number));
         }
@@ -395,8 +407,8 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number));
         }

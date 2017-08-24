@@ -1,9 +1,8 @@
-﻿using System;
-#if NET_45
 using System.Threading.Tasks;
 using System.Collections.Generic;
-#endif
+
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace Octokit
 {
@@ -24,6 +23,11 @@ namespace Octokit
         /// Returns a client to manage teams of an organization.
         /// </summary>
         ITeamsClient Team { get; }
+
+        /// <summary>
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        IOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
 
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.

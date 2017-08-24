@@ -442,5 +442,39 @@ namespace Octokit
 
             return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
         }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllPendingInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+        }
     }
 }

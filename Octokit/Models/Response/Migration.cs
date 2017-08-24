@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -55,7 +56,7 @@ namespace Octokit
         /// <summary>
         /// The state of migration. Can be one of pending, exporting, exported and failed.
         /// </summary>
-        public MigrationState State { get; private set; }
+        public StringEnum<MigrationState> State { get; private set; }
 
         /// <summary>
         /// Whether to lock repositories.
@@ -106,21 +107,25 @@ namespace Octokit
             /// <summary>
             /// The migration hasn't started yet.
             /// </summary>
+            [Parameter(Value = "pending")]
             Pending,
 
             /// <summary>
             /// The migration is in progress.
             /// </summary>
+            [Parameter(Value = "exporting")]
             Exporting,
 
             /// <summary>
             /// The migration finished successfully.
             /// </summary>
+            [Parameter(Value = "exported")]
             Exported,
 
             /// <summary>
             /// The migration failed.
             /// </summary>
+            [Parameter(Value = "failed")]
             Failed
         }
     }

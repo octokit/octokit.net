@@ -1,3 +1,78 @@
+### New in 0.25.0 (released 23/8/2017)
+
+## Advisories and Breaking Changes
+
+- Octokit.net has been ported to dotnetcore :tada: providing libraries targetting `netstandard1.1` and `net45` frameworks
+
+- `Enum` fields in Octokit response classes are now wrapped in an `StringEnum<TEnum>` helper class, to provide more robustness in dealing with unknown API values for these fields.  Whilst the changes are backwards compatible, please consult the guidance on [working with Enums](https://github.com/octokit/octokit.net/blob/master/docs/working-with-enums.md) for more information
+
+- `IncludeAdmins` field is no longer present in `BranchProtectionRequiredStatusChecks` and `BranchProtectionRequiredStatusChecksUpdate` classes, instead use the new `EnforceAdmins` field on `BranchProtectionSettingsUpdate` or the [new explicit methods](https://github.com/octokit/octokit.net/blob/master/Octokit/Clients/IRepositoryBranchesClient.cs#L304-L365) for configuring Admin Enforcement on protected branches.  This was an [upstream API breaking change](https://developer.github.com/changes/2017-05-02-adoption-of-admin-enforced/) so we couldn't follow our normal deprecation schedule
+
+## Release Notes
+
+### Milestone: CAKE Builds
+
+**Features/Enhancements**
+
+- Add a build task to validate LINQPad samples - [#1551](https://github.com/octokit/octokit.net/pull/1551) via [@mderriey](https://github.com/mderriey)
+- Add a code formatting task to CAKE - [#1550](https://github.com/octokit/octokit.net/pull/1550) via [@mderriey](https://github.com/mderriey)
+- Add GitVersion configuration file - [#1555](https://github.com/octokit/octokit.net/pull/1555) via [@mderriey](https://github.com/mderriey)
+
+
+### Milestone: dotnetcore Support
+
+**Features/Enhancements**
+
+- Port to .NET Core - [#1503](https://github.com/octokit/octokit.net/pull/1503) via [@mderriey](https://github.com/mderriey), [@ryangribble](https://github.com/ryangribble)
+- Remove unneeded files for .NET Core - [#1549](https://github.com/octokit/octokit.net/pull/1549) via [@mderriey](https://github.com/mderriey)
+- Migrate dotnetcore to vs2017 tooling - [#1567](https://github.com/octokit/octokit.net/pull/1567) via [@ryangribble](https://github.com/ryangribble), [@mderriey](https://github.com/mderriey)
+- Provide [SourceLink](https://github.com/ctaggart/SourceLink) capability for Octokit and Octokit.Reactive assemblies - [#1574](https://github.com/octokit/octokit.net/pull/1574) via [@ryangribble](https://github.com/ryangribble), [@mderriey](https://github.com/mderriey)
+- Deliver the dotnetcore port and CAKE build framework changes - [#1581](https://github.com/octokit/octokit.net/pull/1581) via [@ryangribble](https://github.com/ryangribble), [@mderriey](https://github.com/mderriey)
+
+**Fixes**
+
+- Fix broken JSON deserialization in .NET 4.5 after VS2017 project update - [#1647](https://github.com/octokit/octokit.net/pull/1647) via [@mderriey](https://github.com/mderriey)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Add support for the newly resurrected `PullRequest.MergeCommitSha` property - [#1562](https://github.com/octokit/octokit.net/pull/1562) via [@alexperovich](https://github.com/alexperovich)
+- Enhance `RepositoryBranchesClient` to support Admin Enforcement changes - [#1598](https://github.com/octokit/octokit.net/pull/1598) via [@M-Zuber](https://github.com/M-Zuber)
+- Implement [Pull Request Review Requests API (Preview)](https://developer.github.com/v3/pulls/review_requests/) - [#1588](https://github.com/octokit/octokit.net/pull/1588) via [@gdziadkiewicz](https://github.com/gdziadkiewicz), [@ryangribble](https://github.com/ryangribble)
+- Provide a robust way to handle unknown enum values returned by GitHub API, to prevent deserialization errors until the enum values can be added to octokit - [#1595](https://github.com/octokit/octokit.net/pull/1595) via [@khellang](https://github.com/khellang), [@ryangribble](https://github.com/ryangribble)
+- Implement [Projects API (Preview)](https://developer.github.com/v3/projects/) - [#1480](https://github.com/octokit/octokit.net/pull/1480) via [@maddin2016](https://github.com/maddin2016), [@ryangribble](https://github.com/ryangribble)
+- Implement `ReviewPermission()` functionality for `OrganizationMembersClient` (Preview API) - [#1633](https://github.com/octokit/octokit.net/pull/1633) via [@alfhenrik](https://github.com/alfhenrik)
+- Implement [Organization OutsideCollaborators API (Preview)](https://developer.github.com/v3/orgs/outside_collaborators/) - [#1639](https://github.com/octokit/octokit.net/pull/1639) via [@alfhenrik](https://github.com/alfhenrik), [@ryangribble](https://github.com/ryangribble)
+- Implement pagination support for `OrganizationOutsideCollaboratorsClient.GetAll()` method - [#1650](https://github.com/octokit/octokit.net/pull/1650) via [@ryangribble](https://github.com/ryangribble)
+- Implement `GetAllPendingInvitations()` functionality for `OrganizationMembersClient` and `TeamsClient` (Preview API) - [#1640](https://github.com/octokit/octokit.net/pull/1640) via [@alfhenrik](https://github.com/alfhenrik), [@ryangribble](https://github.com/ryangribble)
+- Implement [Pull Request Reviews API](https://developer.github.com/v3/pulls/reviews/) - [#1648](https://github.com/octokit/octokit.net/pull/1648) via [@hartra344](https://github.com/hartra344), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Fix `RepositoryTrafficClient` to handle upstream API change in timestamps from Unix epoch time to ISO8601 - [#1560](https://github.com/octokit/octokit.net/pull/1560) via [@mderriey](https://github.com/mderriey), [@ryangribble](https://github.com/ryangribble)
+- Fix more `IssueTimelineClient` deserialization exceptions by adding more new `EventInfoState` values - [#1563](https://github.com/octokit/octokit.net/pull/1563) via [@ryangribble](https://github.com/ryangribble)
+- Fix `NotificationsClient.MarkAsRead()` exception by specifying a payload body in the `PUT` request - [#1579](https://github.com/octokit/octokit.net/pull/1579) via [@shiftkey](https://github.com/shiftkey), [@ryangribble](https://github.com/ryangribble)
+- Fix `connection.GetLastApiInfo()` was returning `null` in some situations - [#1580](https://github.com/octokit/octokit.net/pull/1580) via [@ryangribble](https://github.com/ryangribble)
+- Fix even more `IssueTimelineClient` deserialization exceptions by adding even more new `EventInfoState` values (this is getting old!) - [#1591](https://github.com/octokit/octokit.net/pull/1591) via [@lynnfaraday](https://github.com/lynnfaraday), [@ryangribble](https://github.com/ryangribble)
+- `NewRepositoryWebHook.ToRequest()` no longer discards existing fields if they are set - [#1623](https://github.com/octokit/octokit.net/pull/1623) via [@ctolkien](https://github.com/ctolkien)
+- Fix pagination on API calls that use `Uri` parameters (typically for requests that include some form of filtering) - [#1649](https://github.com/octokit/octokit.net/pull/1649) via [@ryangribble](https://github.com/ryangribble)
+- Fixed `RepositoryCommitsClient.GetSha1()` to correctly obtain the sha1 of the specified commit, after the API went from preview to official - [#1654](https://github.com/octokit/octokit.net/pull/1654) via [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Remove obsolete constructor of `RepositoryUpdate` request class - [#1569](https://github.com/octokit/octokit.net/pull/1569) via [@eriawan](https://github.com/eriawan)
+- Remove unused Rx-Main dependency from LINQPad samples - [#1593](https://github.com/octokit/octokit.net/pull/1593) via [@NickCraver](https://github.com/NickCraver)
+- Change response models 'Url' properties from `Uri` to `string` - [#1585](https://github.com/octokit/octokit.net/pull/1585) via [@mderriey](https://github.com/mderriey)
+- Remove obsolete branch protection methods/classes - [#1620](https://github.com/octokit/octokit.net/pull/1620) via [@ryangribble](https://github.com/ryangribble)
+- Remove methods and members that were marked `[Obsolete]` in 0.23 or earlier - [#1622](https://github.com/octokit/octokit.net/pull/1622) via [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Fix `Issue` documentation samples (`GetForRepository()` should be `GetForRepository()`) - [#1602](https://github.com/octokit/octokit.net/pull/1602) via [@tnaoto](https://github.com/tnaoto)
+- Fix `Release` documentation samples (`ReleaseUpdate` should be `NewRelease`) - [#1611](https://github.com/octokit/octokit.net/pull/1611) via [@watsonlu](https://github.com/watsonlu)
+
 ### New in 0.24.0 (released 17/1/2017)
 
 **Features/Enhancements**

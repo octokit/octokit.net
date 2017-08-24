@@ -179,8 +179,13 @@ namespace Octokit
     /// </summary>
     public enum InQualifier
     {
+        [Parameter(Value = "name")]
         Name,
+
+        [Parameter(Value = "description")]
         Description,
+
+        [Parameter(Value = "readme")]
         Readme
     }
 

@@ -15,7 +15,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked)
+        public PullRequest(long id, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, IReadOnlyList<User> requestedReviewers)
         {
             Id = id;
             Url = url;
@@ -47,6 +47,7 @@ namespace Octokit
             ChangedFiles = changedFiles;
             Milestone = milestone;
             Locked = locked;
+            RequestedReviewers = requestedReviewers;
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Octokit
         /// <summary>
         /// Whether the pull request is open or closed. The default is <see cref="ItemState.Open"/>.
         /// </summary>
-        public ItemState State { get; protected set; }
+        public StringEnum<ItemState> State { get; protected set; }
 
         /// <summary>
         /// Title of the pull request.
@@ -210,6 +211,11 @@ namespace Octokit
         /// If the issue is locked or not
         /// </summary>
         public bool Locked { get; protected set; }
+
+        /// <summary>
+        /// Users requested for review
+        /// </summary>
+        public IReadOnlyList<User> RequestedReviewers { get; protected set; }
 
         internal string DebuggerDisplay
         {

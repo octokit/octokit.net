@@ -165,8 +165,8 @@ namespace Octokit.Tests.Integration.Reactive
                 _followersClient = new ObservableFollowersClient(github);
 
                 // Follow someone to set initial state
-                _followersClient.Follow("alfhenrik").ToList();
-                _followersClient.Follow("ryangribble").ToList();
+                _followersClient.Follow("alfhenrik").Wait();
+                _followersClient.Follow("ryangribble").Wait();
             }
 
             [IntegrationTest]

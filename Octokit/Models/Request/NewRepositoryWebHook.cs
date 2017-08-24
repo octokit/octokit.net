@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -31,8 +32,8 @@ namespace Octokit
     /// <item>
     ///   <term>insecure_ssl:</term>
     ///   <description>
-    ///     An optional string that determines whether the SSL certificate of the host for url will be verified when 
-    ///     delivering payloads. Supported values include "0" (verification is performed) and "1" (verification is not 
+    ///     An optional string that determines whether the SSL certificate of the host for url will be verified when
+    ///     delivering payloads. Supported values include "0" (verification is performed) and "1" (verification is not
     ///     performed). The default is "0".
     ///   </description>
     /// </item>
@@ -40,16 +41,16 @@ namespace Octokit
     /// <para>
     /// API: https://developer.github.com/v3/repos/hooks/#create-a-hook
     /// </para>
-    /// </remarks>   
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRepositoryWebHook : NewRepositoryHook
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewRepositoryWebHook"/> class.   
-        /// Using default values for ContentType, Secret and InsecureSsl.     
+        /// Initializes a new instance of the <see cref="NewRepositoryWebHook"/> class.
+        /// Using default values for ContentType, Secret and InsecureSsl.
         /// </summary>
         /// <param name="name">
-        /// Use "web" for a webhook or use the name of a valid service. (See 
+        /// Use "web" for a webhook or use the name of a valid service. (See
         /// <see href="https://api.github.com/hooks">https://api.github.com/hooks</see> for the list of valid service
         /// names.)
         /// </param>
@@ -98,29 +99,22 @@ namespace Octokit
         public string Secret { get; set; }
 
         /// <summary>
-        /// Gets whether the SSL certificate of the host will be verified when 
+        /// Gets whether the SSL certificate of the host will be verified when
         /// delivering payloads. The default is `false`.
         /// </summary>
         /// <value>
-        ///  <c>true</c> if SSL certificate verification is not performed; 
+        ///  <c>true</c> if SSL certificate verification is not performed;
         /// otherwise, <c>false</c>.
         /// </value>
         public bool InsecureSsl { get; set; }
 
         public override NewRepositoryHook ToRequest()
         {
-            var webHookConfig = GetWebHookConfig();
-            if (Config.Any(c => webHookConfig.ContainsKey(c.Key)))
-            {
-                var invalidConfigs = Config.Where(c => webHookConfig.ContainsKey(c.Key)).Select(c => c.Key);
-                throw new RepositoryWebHookConfigException(invalidConfigs);
-            }
-
-            var config = webHookConfig
+            Config = GetWebHookConfig()
                 .Union(Config, new WebHookConfigComparer())
                 .ToDictionary(k => k.Key, v => v.Value);
 
-            return new NewRepositoryHook(Name, config);
+            return this;
         }
 
         Dictionary<string, string> GetWebHookConfig()

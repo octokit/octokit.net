@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -35,7 +36,7 @@ namespace Octokit
         /// <summary>
         /// The state of the commit
         /// </summary>
-        public CommitState State { get; protected set; }
+        public StringEnum<CommitState> State { get; protected set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the
@@ -85,21 +86,25 @@ namespace Octokit
         /// <summary>
         /// The commit state is still being determined. A build server might set this when it starts a build.
         /// </summary>
+        [Parameter(Value = "pending")]
         Pending,
 
         /// <summary>
         /// The build was successful for the commit.
         /// </summary>
+        [Parameter(Value = "success")]
         Success,
 
         /// <summary>
         /// There was some error with the build.
         /// </summary>
+        [Parameter(Value = "error")]
         Error,
 
         /// <summary>
         /// The build completed and reports a failure.
         /// </summary>
+        [Parameter(Value = "failure")]
         Failure
     }
 }
