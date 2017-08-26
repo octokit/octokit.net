@@ -19,34 +19,13 @@ namespace Octokit
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
-        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        public BranchProtectionSettingsUpdate(bool enforceAdmins)
-        {
-            EnforceAdmins = enforceAdmins;
-            RequiredStatusChecks = null;
-            Restrictions = null;
-        }
-
-        /// <summary>
-        /// Create a BranchProtection update request
-        /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks)
         {
             RequiredStatusChecks = requiredStatusChecks;
+            RequiredPullRequestReviews = null;
             Restrictions = null;
-            RequiredPullRequestReviews = null;
-        }
-
-        /// <summary>
-        /// Create a BranchProtection update request
-        /// </summary>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionPushRestrictionsUpdate restrictions)
-        {
-            RequiredStatusChecks = null;
-            Restrictions = restrictions;
-            RequiredPullRequestReviews = null;
+            EnforceAdmins = false;
         }
 
         /// <summary>
@@ -56,8 +35,9 @@ namespace Octokit
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews)
         {
             RequiredStatusChecks = null;
-            Restrictions = null;
             RequiredPullRequestReviews = requiredPullRequestReviews;
+            Restrictions = null;
+            EnforceAdmins = false;
         }
 
         /// <summary>
@@ -67,7 +47,21 @@ namespace Octokit
         public BranchProtectionSettingsUpdate(BranchProtectionPushRestrictionsUpdate restrictions)
         {
             RequiredStatusChecks = null;
+            RequiredPullRequestReviews = null;
             Restrictions = restrictions;
+            EnforceAdmins = false;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(bool enforceAdmins)
+        {
+            RequiredStatusChecks = null;
+            RequiredPullRequestReviews = null;
+            Restrictions = null;
+            EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
@@ -76,53 +70,42 @@ namespace Octokit
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        [Obsolete("This constructor will be removed for housekeeping purposes, please use another ctor")]
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
+            RequiredPullRequestReviews = null;
             Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
-        /// Specifies whether the protections applied to this branch also apply to repository admins
-        /// </summary>
-        public bool EnforceAdmins { get; set; }
-
-        /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
-        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews)
+        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, bool enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = null;
-        }
-
-        /// <summary>
-        /// Create a BranchProtection update request
-        /// </summary>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionPushRestrictionsUpdate restrictions, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews)
-        {
-            RequiredStatusChecks = null;
-            RequiredPullRequestReviews = requiredPullRequestReviews;
-            Restrictions = restrictions;
+            EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
+        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable restrictions</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews)
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
-            Restrictions = restrictions;
             RequiredPullRequestReviews = requiredPullRequestReviews;
+            Restrictions = restrictions;
+            EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
@@ -132,8 +115,9 @@ namespace Octokit
         public BranchProtectionRequiredStatusChecksUpdate RequiredStatusChecks { get; protected set; }
 
         /// <summary>
-        /// Pull Request review settings for the protected branch
+        /// Required Pull Request review settings for the protected branch
         /// </summary>
+        [SerializeNull]
         public BranchProtectionRequiredReviewsUpdate RequiredPullRequestReviews { get; protected set; }
 
         /// <summary>
@@ -142,15 +126,20 @@ namespace Octokit
         [SerializeNull]
         public BranchProtectionPushRestrictionsUpdate Restrictions { get; protected set; }
 
+        /// <summary>
+        /// Specifies whether the protections applied to this branch also apply to repository admins
+        /// </summary>
+        public bool EnforceAdmins { get; set; }
+
         internal string DebuggerDisplay
         {
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "StatusChecks: {0} Restrictions: {1} PullRequestReviews: {2} EnforceAdmins: {3}",
-                    RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
-                    Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
-                    RequiredPullRequestReviews == null ? "disabled" : RequiredPullRequestReviews.DebuggerDisplay);
+                    "RequiredStatusChecks: {0} RequiredPullRequestReviews: {1} Restrictions: {2} EnforceAdmins: {3}",
+                    RequiredStatusChecks?.DebuggerDisplay ?? "disabled",
+                    RequiredPullRequestReviews?.DebuggerDisplay ?? "disabled",
+                    Restrictions?.DebuggerDisplay ?? "disabled",
                     EnforceAdmins);
             }
         }
@@ -304,28 +293,146 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Specifies if pull request reviews are required before merging a pull request. Can optionally enforce the policy on repository administrators also.
+    /// Specifies settings for requiring pull request reviews before merging a pull request.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionRequiredReviewsUpdate
     {
-        public BranchProtectionRequiredReviewsUpdate(bool includeAdmins)
+        /// <summary>
+        /// Settings for requiring reviews before a pull request can be merged.
+        /// </summary>
+        /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
+        /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
+        public BranchProtectionRequiredReviewsUpdate(bool dismissStaleReviews, bool requireCodeOwnerReviews)
         {
-            IncludeAdmins = includeAdmins;
+            DismissStaleReviews = dismissStaleReviews;
+            RequireCodeOwnerReviews = requireCodeOwnerReviews;
         }
 
         /// <summary>
-        /// Enforce pull request reviews for repository administrators
+        /// Settings for requiring reviews before a pull request can be merged.
         /// </summary>
-        public bool IncludeAdmins { get; protected set; }
+        /// <param name="dismissalRestrictions">Specify which users and teams can dismiss pull request reviews (applies only to Organization owned repositories).</param>
+        /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
+        /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
+        public BranchProtectionRequiredReviewsUpdate(BranchProtectionRequiredReviewsDismissalRestrictionsUpdate dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        {
+            Ensure.ArgumentNotNull(dismissalRestrictions, nameof(dismissalRestrictions));
+
+            DismissalRestrictions = dismissalRestrictions;
+            DismissStaleReviews = dismissStaleReviews;
+            RequireCodeOwnerReviews = requireCodeOwnerReviews;
+        }
+
+        /// <summary>
+        /// Specify which users and teams can dismiss pull request reviews.
+        /// </summary>
+        public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate DismissalRestrictions { get; protected set; }
+
+        /// <summary>
+        /// Dismiss approved reviews automatically when a new commit is pushed.
+        /// </summary>
+        public bool DismissStaleReviews { get; protected set; }
+
+        /// <summary>
+        /// Blocks merge until code owners have reviewed.
+        /// </summary>
+        public bool RequireCodeOwnerReviews { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0}", IncludeAdmins);
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2}",
+                    DismissalRestrictions?.DebuggerDisplay ?? "disabled",
+                    DismissStaleReviews,
+                    RequireCodeOwnerReviews);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies whether review dismissal for the protected branch will be restricted to Admins, specified Teams/Users or unrestricted
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredReviewsDismissalRestrictionsUpdate
+    {
+        /// <summary>
+        /// EnableSpecify only administrators are allowed to dismiss reviews
+        /// </summary>
+        /// <param name="enabled">True to restrict review dismissal to Admins, false to disable restriction</param>
+        public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(bool enabled)
+        {
+            if (enabled)
+            {
+                Teams = new BranchProtectionTeamCollection();
+                Users = new BranchProtectionUserCollection();
+            }
+            else
+            {
+                // API requires an empty array to be passed, to disable these checks
+                Teams = null;
+                Users = null;
             }
         }
 
+        /// <summary>
+        /// Specify teams (in addition to Administrators) allowed to dismiss reviews.
+        /// </summary>
+        /// <param name="teams">Teams allowed to dismiss reviews</param>
+        public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams)
+        {
+            Ensure.ArgumentNotNull(teams, "teams");
+
+            Teams = teams;
+            Users = new BranchProtectionUserCollection();
+        }
+
+        /// <summary>
+        /// Specify people (in addition to Administrators) allowed to dismiss reviews.
+        /// </summary>
+        /// <param name="users">Users allowed to dismiss reviews</param>
+        public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionUserCollection users)
+        {
+            Ensure.ArgumentNotNull(users, "users");
+
+            Teams = new BranchProtectionTeamCollection();
+            Users = users;
+        }
+
+        /// <summary>
+        /// Specify teams and/or people (in addition to Administrators) allowed to dismiss reviews.
+        /// </summary>
+        /// <param name="teams">Teams allowed to dismiss reviews</param>
+        /// <param name="users">Users allowed to dismiss reviews</param>
+        public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
+        {
+            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(users, "users");
+
+            Teams = teams;
+            Users = users;
+        }
+
+        /// <summary>
+        /// Teams allowed to dismiss reviews
+        /// </summary>
+        public BranchProtectionTeamCollection Teams { get; private set; }
+
+        /// <summary>
+        /// Users allowed to dismiss reviews
+        /// </summary>
+        public BranchProtectionUserCollection Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : Teams.DebuggerDisplay,
+                    Users == null ? "" : Users.DebuggerDisplay);
+            }
+        }
     }
 }
