@@ -19,11 +19,12 @@ namespace Octokit
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredReviews requiredPullRequestReviews)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredReviews requiredPullRequestReviews, EnforceAdmins enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
             Restrictions = restrictions;
             RequiredPullRequestReviews = requiredPullRequestReviews;
+            EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
@@ -32,31 +33,32 @@ namespace Octokit
         public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
 
         /// <summary>
+        /// Required review settings for the protected branch
+        /// </summary>
+        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; protected set; }
+
+        /// <summary>
         /// Push access restrictions for the protected branch
         /// </summary>
         public BranchProtectionPushRestrictions Restrictions { get; protected set; }
 
         /// <summary>
-        /// Pull Request Review required settings for the protected branch
+        /// Specifies whether the protections applied to this branch also apply to repository admins
         /// </summary>
-        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; protected set; }
+        public EnforceAdmins EnforceAdmins { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                     "StatusChecks: {0} Restrictions: {1} PullRequestReviews: {2}",
-                     RequiredStatusChecks == null ? "disabled" : RequiredStatusChecks.DebuggerDisplay,
-                     Restrictions == null ? "disabled" : Restrictions.DebuggerDisplay,
-                    RequiredPullRequestReviews == null ? "disabled" : RequiredPullRequestReviews.DebuggerDisplay);
+                    "RequiredStatusChecks: {0} RequiredPullRequestReviews {1} Restrictions: {2} EnforceAdmins: {3}",
+                    RequiredStatusChecks?.DebuggerDisplay ?? "disabled",
+                    RequiredPullRequestReviews?.DebuggerDisplay ?? "disabled",
+                    Restrictions?.DebuggerDisplay ?? "disabled",
+                    EnforceAdmins?.DebuggerDisplay ?? "disabled");
             }
         }
-
-        /// <summary>
-        /// Specifies whether the protections applied to this branch also apply to repository admins
-        /// </summary>
-        public EnforceAdmins EnforceAdmins { get; protected set; }
     }
 
     /// <summary>
@@ -142,8 +144,8 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture,
                     "Teams: {0} Users: {1}",
-                    Teams == null ? "" : String.Join(",", Teams),
-                    Users == null ? "" : String.Join(",", Users));
+                    Teams == null ? "" : String.Join(",", Teams.Select(x => x.Name)),
+                    Users == null ? "" : String.Join(",", Users.Select(x => x.Login)));
             }
         }
     }
@@ -156,21 +158,65 @@ namespace Octokit
     {
         public BranchProtectionRequiredReviews() { }
 
-        public BranchProtectionRequiredReviews(bool includeAdmins)
-        {
-            IncludeAdmins = includeAdmins;
-        }
+        /// <summary>
+        /// Specify which users and teams can dismiss pull request reviews.
+        /// </summary>
+        public BranchProtectionRequiredReviewsDismissalRestrictions DismissalRestrictions { get; protected set; }
 
         /// <summary>
-        /// Enforce pull request reviews for repository administrators
+        /// Dismiss approved reviews automatically when a new commit is pushed.
         /// </summary>
-        public bool IncludeAdmins { get; protected set; }
+        public bool DismissStaleReviews { get; protected set; }
+
+        /// <summary>
+        /// Blocks merge until code owners have reviewed.
+        /// </summary>
+        public bool RequireCodeOwnerReviews { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "IncludeAdmins: {0}", IncludeAdmins);
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2}",
+                    DismissalRestrictions?.DebuggerDisplay ?? "disabled",
+                    DismissStaleReviews,
+                    RequireCodeOwnerReviews);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredReviewsDismissalRestrictions
+    {
+        public BranchProtectionRequiredReviewsDismissalRestrictions() { }
+
+        public BranchProtectionRequiredReviewsDismissalRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        {
+            Teams = teams;
+            Users = users;
+        }
+
+        /// <summary>
+        /// The specified Teams that can dismiss reviews
+        /// </summary>
+        public IReadOnlyList<Team> Teams { get; private set; }
+
+        /// <summary>
+        /// The specified Users who can dismiss reviews
+        /// </summary>
+        public IReadOnlyList<User> Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : String.Join(",", Teams.Select(x => x.Name)),
+                    Users == null ? "" : String.Join(",", Users.Select(x => x.Login)));
             }
         }
     }
