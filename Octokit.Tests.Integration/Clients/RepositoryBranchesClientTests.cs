@@ -809,7 +809,6 @@ public class RepositoryBranchesClientTests
             Assert.Null(requiredReviews.DismissalRestrictions);
             Assert.True(requiredReviews.DismissStaleReviews);
             Assert.True(requiredReviews.RequireCodeOwnerReviews);
-
         }
 
         [IntegrationTest]
