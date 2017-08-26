@@ -221,6 +221,8 @@ public class RepositoryBranchesClientTests
 
             Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
+            Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
             Assert.Null(protection.Restrictions);
@@ -236,6 +238,9 @@ public class RepositoryBranchesClientTests
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+
             Assert.Null(protection.Restrictions);
         }
 
@@ -250,6 +255,11 @@ public class RepositoryBranchesClientTests
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
+            Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+            Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+            
             Assert.Equal(1, protection.Restrictions.Teams.Count);
             Assert.Equal(0, protection.Restrictions.Users.Count);
         }
@@ -263,6 +273,11 @@ public class RepositoryBranchesClientTests
             Assert.True(protection.EnforceAdmins.Enabled);
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
+
+            Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
+            Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+            Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
 
             Assert.Equal(1, protection.Restrictions.Teams.Count);
             Assert.Equal(0, protection.Restrictions.Users.Count);
@@ -299,15 +314,22 @@ public class RepositoryBranchesClientTests
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionRequiredReviewsUpdate(false, true),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+            Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+
             Assert.Null(protection.Restrictions);
+
+            Assert.False(protection.EnforceAdmins.Enabled);
         }
 
         [IntegrationTest]
@@ -315,15 +337,22 @@ public class RepositoryBranchesClientTests
         {
             var repoId = _userRepoContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
-                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }));
+                new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionRequiredReviewsUpdate(false, true),
+                false);
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+            Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+
             Assert.Null(protection.Restrictions);
+
+            Assert.False(protection.EnforceAdmins.Enabled);
         }
 
         [IntegrationTest]
@@ -333,17 +362,23 @@ public class RepositoryBranchesClientTests
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false),
                 new BranchProtectionPushRestrictionsUpdate(),
                 false);
 
             var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
 
-            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+            Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+
             Assert.Empty(protection.Restrictions.Teams);
             Assert.Empty(protection.Restrictions.Users);
+
+            Assert.False(protection.EnforceAdmins.Enabled);
         }
 
         [IntegrationTest]
@@ -352,17 +387,23 @@ public class RepositoryBranchesClientTests
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false),
                 new BranchProtectionPushRestrictionsUpdate(),
                 false);
 
             var protection = await _client.UpdateBranchProtection(repoId, "master", update);
 
-            Assert.False(protection.EnforceAdmins.Enabled);
             Assert.False(protection.RequiredStatusChecks.Strict);
             Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
+            Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+            Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+            Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+
             Assert.Empty(protection.Restrictions.Teams);
             Assert.Empty(protection.Restrictions.Users);
+
+            Assert.False(protection.EnforceAdmins.Enabled);
         }
 
         public void Dispose()
