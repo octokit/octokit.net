@@ -704,7 +704,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredReviewsUpdate(false, false);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
-                
+
                 client.UpdateReviewEnforcement("owner", "repo", "branch", update);
 
                 connection.Received()

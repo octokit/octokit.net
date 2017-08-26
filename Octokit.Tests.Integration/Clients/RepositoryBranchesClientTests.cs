@@ -263,7 +263,7 @@ public class RepositoryBranchesClientTests
             Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
             Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
             Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-            
+
             Assert.Equal(1, protection.Restrictions.Teams.Count);
             Assert.Equal(0, protection.Restrictions.Users.Count);
 
