@@ -358,7 +358,7 @@ namespace Octokit
     public class BranchProtectionRequiredReviewsDismissalRestrictionsUpdate
     {
         /// <summary>
-        /// EnableSpecify only administrators are allowed to dismiss reviews
+        /// Specify whether dismissing reviews is restricted or not
         /// </summary>
         /// <param name="enabled">True to restrict review dismissal to Admins, false to disable restriction</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(bool enabled)
@@ -377,7 +377,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Specify teams (in addition to Administrators) allowed to dismiss reviews.
+        /// Restrict dismissing reviews to the specified teams (in addition to Administrators).
         /// </summary>
         /// <param name="teams">Teams allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams)
@@ -389,7 +389,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Specify people (in addition to Administrators) allowed to dismiss reviews.
+        /// Restrict dismissing reviews to the specified people (in addition to Administrators).
         /// </summary>
         /// <param name="users">Users allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionUserCollection users)
@@ -401,7 +401,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Specify teams and/or people (in addition to Administrators) allowed to dismiss reviews.
+        /// Restrict dismissing reviews to the specified teams and people (in addition to Administrators).
         /// </summary>
         /// <param name="teams">Teams allowed to dismiss reviews</param>
         /// <param name="users">Users allowed to dismiss reviews</param>
