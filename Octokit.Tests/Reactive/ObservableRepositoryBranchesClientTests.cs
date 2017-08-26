@@ -624,6 +624,140 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetReviewEnforcementMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.GetReviewEnforcement("owner", "repo", "branch");
+
+                gitHubClient.Repository.Branch.Received().GetReviewEnforcement("owner", "repo", "branch");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.GetReviewEnforcement(1, "branch");
+
+                gitHubClient.Repository.Branch.Received().GetReviewEnforcement(1, "branch");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewEnforcement(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewEnforcement("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewEnforcement("owner", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewEnforcement(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetReviewEnforcement("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetReviewEnforcement("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.GetReviewEnforcement("owner", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.GetReviewEnforcement(1, ""));
+            }
+        }
+
+        public class TheUpdateReviewEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
+
+                client.UpdateReviewEnforcement("owner", "repo", "branch", update);
+
+                gitHubClient.Repository.Branch.Received().UpdateReviewEnforcement("owner", "repo", "branch", update);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
+
+                client.UpdateReviewEnforcement(1, "branch", update);
+
+                gitHubClient.Repository.Branch.Received().UpdateReviewEnforcement(1, "branch", update);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
+
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement(null, "repo", "branch", update));
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement("owner", null, "branch", update));
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement("owner", "repo", null, update));
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement("owner", "repo", "branch", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement(1, null, update));
+                Assert.Throws<ArgumentNullException>(() => client.UpdateReviewEnforcement(1, "branch", null));
+
+                Assert.Throws<ArgumentException>(() => client.UpdateReviewEnforcement("", "repo", "branch", update));
+                Assert.Throws<ArgumentException>(() => client.UpdateReviewEnforcement("owner", "", "branch", update));
+                Assert.Throws<ArgumentException>(() => client.UpdateReviewEnforcement("owner", "repo", "", update));
+
+                Assert.Throws<ArgumentException>(() => client.UpdateReviewEnforcement(1, "", update));
+            }
+        }
+
+        public class TheRemoveReviewEnforcement
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.RemoveReviewEnforcement("owner", "repo", "branch");
+
+                gitHubClient.Repository.Branch.Received().RemoveReviewEnforcement("owner", "repo", "branch");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryBranchesClient(gitHubClient);
+
+                client.RemoveReviewEnforcement(1, "branch");
+
+                gitHubClient.Repository.Branch.Received().RemoveReviewEnforcement(1, "branch");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryBranchesClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.RemoveReviewEnforcement(null, "repo", "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveReviewEnforcement("owner", null, "branch"));
+                Assert.Throws<ArgumentNullException>(() => client.RemoveReviewEnforcement("owner", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.RemoveReviewEnforcement(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.RemoveReviewEnforcement("", "repo", "branch"));
+                Assert.Throws<ArgumentException>(() => client.RemoveReviewEnforcement("owner", "", "branch"));
+                Assert.Throws<ArgumentException>(() => client.RemoveReviewEnforcement("owner", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.RemoveReviewEnforcement(1, ""));
+            }
+        }
+
         public class TheGetAdminEnforcementMethod
         {
             [Fact]
