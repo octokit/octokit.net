@@ -360,17 +360,18 @@ namespace Octokit
         /// <summary>
         /// Specify whether dismissing reviews is restricted or not
         /// </summary>
-        /// <param name="enabled">True to restrict review dismissal to Admins, false to disable restriction</param>
+        /// <param name="enabled">True to restrict review dismissal to Administrators, false to disable restrictions</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(bool enabled)
         {
             if (enabled)
             {
+                // Empty Teams/Users list means restrictions are enabled with only Admins being able to dismiss reviews
                 Teams = new BranchProtectionTeamCollection();
                 Users = new BranchProtectionUserCollection();
             }
             else
             {
-                // API requires an empty array to be passed, to disable these checks
+                // To disable the review dismissal restriction, the API requires an object with empty members to be passed
                 Teams = null;
                 Users = null;
             }
