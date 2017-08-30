@@ -1,3 +1,13 @@
+### New in 0.26.0 (released 31/8/2017)
+
+## Advisories and Breaking Changes
+
+- This release contains the necessary Octokit changes to ensure that we send the `required-pull-request-reviews` field which becomes mandatory  when the Protected Branches API [graduates from preview mode](https://developer.github.com/changes/2017-06-16-loki-preview-ending-soon/) on the 1st September
+
+**Features/Enhancements**
+
+- Implement `RequiredPullRequestReviews` support in `IRepositoryBranchesClient.UpdateBranchProtection` and additional granular methods to `GetReviewEnforcement`, `UpdateReviewEnforcement` and `RemoveReviewEnforcement` via [@M-Zuber](https://github.com/M-Zuber), [@ryangribble](https://github.com/ryangribble)
+
 ### New in 0.25.0 (released 23/8/2017)
 
 ## Advisories and Breaking Changes
