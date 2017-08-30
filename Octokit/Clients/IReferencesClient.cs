@@ -48,6 +48,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reference>> GetAll(string owner, string name);
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reference>> GetAll(long repositoryId);
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace);
 
         /// <summary>
@@ -81,6 +84,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace);
 
         /// <summary>

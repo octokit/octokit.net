@@ -57,6 +57,7 @@ namespace Octokit
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses();
 
         /// <summary>
