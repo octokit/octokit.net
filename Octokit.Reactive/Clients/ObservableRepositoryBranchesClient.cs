@@ -467,6 +467,107 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetReviewEnforcement(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Get required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.GetReviewEnforcement(repositoryId, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Update required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, nameof(update));
+
+            return _client.UpdateReviewEnforcement(owner, name, branch, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Update required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, nameof(update));
+
+            return _client.UpdateReviewEnforcement(repositoryId, branch, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<bool> RemoveReviewEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.RemoveReviewEnforcement(owner, name, branch).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public IObservable<bool> RemoveReviewEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return _client.RemoveReviewEnforcement(repositoryId, branch).ToObservable();
+        }
+
+        /// <summary>
         /// Get admin enforcement of protected branch
         /// </summary>
         /// <remarks>
@@ -517,6 +618,14 @@ namespace Octokit.Reactive
             return _client.AddAdminEnforcement(owner, name, branch).ToObservable();
         }
 
+        /// <summary>
+        /// Add admin enforcement to protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#add-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");

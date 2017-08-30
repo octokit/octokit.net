@@ -21,7 +21,7 @@ namespace Octokit
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
 
         public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
-        
+
         public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";

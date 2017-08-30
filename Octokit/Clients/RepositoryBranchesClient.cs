@@ -506,6 +506,127 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Get required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#get-admin-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Update required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, nameof(update));
+
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Update required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#update-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNull(update, nameof(update));
+
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesApiPreview);
+        }
+
+        /// <summary>
+        /// Remove required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public async Task<bool> RemoveReviewEnforcement(string owner, string name, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch);
+
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Remove required pull request review enforcement of protected branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-pull-request-review-enforcement-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        public async Task<bool> RemoveReviewEnforcement(long repositoryId, string branch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+
+            var endpoint = ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch);
+
+            try
+            {
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesApiPreview).ConfigureAwait(false);
+                return httpStatusCode == HttpStatusCode.NoContent;
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Get admin enforcement of protected branch
         /// </summary>
         /// <remarks>
