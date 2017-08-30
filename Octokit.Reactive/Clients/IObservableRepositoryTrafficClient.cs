@@ -16,6 +16,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [Obsolete("Please use GetAllReferrers instead")]
         IObservable<RepositoryTrafficReferrer> GetReferrers(string owner, string name);
 
         /// <summary>
@@ -23,7 +24,23 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [Obsolete("Please use GetAllReferrers instead")]
         IObservable<RepositoryTrafficReferrer> GetReferrers(long repositoryId);
+
+        /// <summary>
+        /// List the top 10 referrers over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name);
+
+        /// <summary>
+        /// List the top 10 referrers over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        IObservable<RepositoryTrafficReferrer> GetAllReferrers(long repositoryId);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days
@@ -31,6 +48,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [Obsolete("Please use GetAllPaths instead")]
         IObservable<RepositoryTrafficPath> GetPaths(string owner, string name);
 
         /// <summary>
@@ -38,7 +56,23 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [Obsolete("Please use GetAllPaths instead")]
         IObservable<RepositoryTrafficPath> GetPaths(long repositoryId);
+
+        /// <summary>
+        /// List the top 10 popular contents over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name);
+
+        /// <summary>
+        /// List the top 10 popular contents over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        IObservable<RepositoryTrafficPath> GetAllPaths(long repositoryId);
 
         /// <summary>
         /// Get the total number of views and breakdown per day or week for the last 14 days

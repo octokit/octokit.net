@@ -21,12 +21,12 @@ public class RepositoryTrafficClientTests
         _repoId = _github.Repository.Get(_owner, _repo).Result.Id;
     }
 
-    public class TheGetReferrersMethod : RepositoryTrafficClientTests
+    public class TheGetAllReferrersMethod : RepositoryTrafficClientTests
     {
         [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsReferrers()
         {
-            var referrers = await _fixture.GetReferrers(_owner, _repo);
+            var referrers = await _fixture.GetAllReferrers(_owner, _repo);
 
             Assert.True(referrers.Count > 0);
         }
@@ -34,18 +34,18 @@ public class RepositoryTrafficClientTests
         [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsReferrersWithRepositoryId()
         {
-            var referrers = await _fixture.GetReferrers(_repoId);
+            var referrers = await _fixture.GetAllReferrers(_repoId);
 
             Assert.True(referrers.Count > 0);
         }
     }
 
-    public class TheGetPathsMethod : RepositoryTrafficClientTests
+    public class TheGetAllPathsMethod : RepositoryTrafficClientTests
     {
         [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsPaths()
         {
-            var paths = await _fixture.GetPaths(_owner, _repo);
+            var paths = await _fixture.GetAllPaths(_owner, _repo);
 
             Assert.True(paths.Count > 0);
         }
@@ -53,7 +53,7 @@ public class RepositoryTrafficClientTests
         [IntegrationTest(Skip = "This test needs to be an administrator of the Octokit.net repository")]
         public async Task GetsPathsWithRepositoryId()
         {
-            var paths = await _fixture.GetPaths(_repoId);
+            var paths = await _fixture.GetAllPaths(_repoId);
 
             Assert.True(paths.Count > 0);
         }
