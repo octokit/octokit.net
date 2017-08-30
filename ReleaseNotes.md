@@ -2,7 +2,7 @@
 
 ## Advisories and Breaking Changes
 
-- This release contains the necessary Octokit changes to ensure that we send the `required-pull-request-reviews` field which becomes mandatory  when the Protected Branches API [graduates from preview mode](https://developer.github.com/changes/2017-06-16-loki-preview-ending-soon/) on the 1st September
+- This release contains the necessary Octokit changes to ensure we specify the `required_pull_request_reviews` field on Branch Protection updates, which becomes mandatory when the Protected Branches API [graduates from preview mode](https://developer.github.com/changes/2017-06-16-loki-preview-ending-soon/) on the 1st September
 
 **Features/Enhancements**
 
