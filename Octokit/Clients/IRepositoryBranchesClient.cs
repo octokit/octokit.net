@@ -151,7 +151,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch);
 
         /// <summary>
@@ -162,7 +161,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch);
 
         /// <summary>
@@ -219,6 +217,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch);
 
         /// <summary>
@@ -230,6 +229,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(long repositoryId, string branch);
 
         /// <summary>
@@ -479,6 +479,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -490,6 +491,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(long repositoryId, string branch);
 
         /// <summary>
@@ -571,6 +573,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -582,6 +585,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ExcludeFromPaginationConventionTest]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(long repositoryId, string branch);
 
         /// <summary>

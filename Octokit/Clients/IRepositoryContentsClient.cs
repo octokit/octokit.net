@@ -22,6 +22,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path);
 
         /// <summary>
@@ -32,6 +33,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId, string path);
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name);
 
         /// <summary>
@@ -51,6 +54,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId);
 
         /// <summary>
@@ -63,6 +67,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference);
 
         /// <summary>
@@ -74,6 +79,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string path, string reference);
 
         /// <summary>
@@ -86,6 +92,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference);
 
         /// <summary>
@@ -97,6 +104,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string reference);
 
         /// <summary>
