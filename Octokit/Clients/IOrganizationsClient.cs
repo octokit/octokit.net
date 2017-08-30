@@ -97,6 +97,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
         Task<IReadOnlyList<Organization>> GetAll();
 
         /// <summary>
@@ -105,6 +106,7 @@ namespace Octokit
         /// <param name="request">Search parameters of the last organization seen</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
         Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request);
 
         /// <summary>
