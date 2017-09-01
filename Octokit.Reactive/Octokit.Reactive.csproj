@@ -4,6 +4,7 @@
     <Description>An IObservable based GitHub API client library for .NET using Reactive Extensions</Description>
     <AssemblyTitle>Octokit.Reactive</AssemblyTitle>
     <Authors>GitHub</Authors>
+    <Version>0.0.0-dev</Version>
     <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
