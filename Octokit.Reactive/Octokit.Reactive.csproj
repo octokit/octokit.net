@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs;..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
+    <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
     <None Include="app.config" />
   </ItemGroup>
 

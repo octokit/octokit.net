@@ -16,10 +16,6 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs" />
-  </ItemGroup>
-
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
     <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO;NO_SERIALIZABLE</DefineConstants>
   </PropertyGroup>
