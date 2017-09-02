@@ -697,36 +697,60 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
-            var format =
-#if !HAS_ENVIRONMENT
-                "{0} ({1}; {2}; {3}; Octokit {4})";
-#else
-                "{0} ({1} {2}; {3}; {4}; Octokit {5})";
-#endif
-
-            return string.Format(CultureInfo.InvariantCulture,
-                format,
+            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit {3})",
                 productInformation,
-#if !HAS_ENVIRONMENT
-                RuntimeInformation.OSDescription,
-                RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant(),
-#else
-                Environment.OSVersion.Platform,
-                Environment.OSVersion.Version.ToString(3),
-                Environment.Is64BitOperatingSystem ? "amd64" : "x86",
-#endif
-                CultureInfo.CurrentCulture.Name,
-                GetAssemblyVersion());
+                GetPlatformInformation(),
+                GetCultureInformation(),
+                GetVersionInformation());
         }
 
-        static string GetAssemblyVersion()
+        private static string _platformInformation;
+        static string GetPlatformInformation()
         {
-            return typeof(Connection)
-                .GetTypeInfo()
-                .Assembly
-                .GetName()
-                .Version
-                .ToString(3);
+            if (string.IsNullOrEmpty(_platformInformation))
+            {
+                try
+                {
+                    _platformInformation = string.Format(CultureInfo.InvariantCulture,
+#if !HAS_ENVIRONMENT
+                        "{0}; {1}",
+                        RuntimeInformation.OSDescription.Trim(),
+                        RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant().Trim()
+#else
+                        "{0} {1}; {2}",
+                        Environment.OSVersion.Platform,
+                        Environment.OSVersion.Version.ToString(3),
+                        Environment.Is64BitOperatingSystem ? "amd64" : "x86"
+#endif
+                        );
+                }
+                catch
+                {
+                    _platformInformation = "Unknown Platform";
+                }
+            }
+
+            return _platformInformation;
+        }
+
+        static string GetCultureInformation()
+        {
+            return CultureInfo.CurrentCulture.Name;
+        }
+
+        private static string _versionInformation;
+        static string GetVersionInformation()
+        {
+            if (string.IsNullOrEmpty(_versionInformation))
+            {
+                _versionInformation = typeof(IGitHubClient)
+                    .GetTypeInfo()
+                    .Assembly
+                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                    .InformationalVersion;
+            }
+
+            return _versionInformation;
         }
     }
 }
