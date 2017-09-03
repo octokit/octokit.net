@@ -35,6 +35,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<List<Migration>> GetAll(
             string org);
 

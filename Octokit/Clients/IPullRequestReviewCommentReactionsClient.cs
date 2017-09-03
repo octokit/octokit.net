@@ -18,6 +18,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
 
         /// <summary>
@@ -26,6 +27,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number);
 
         /// <summary>

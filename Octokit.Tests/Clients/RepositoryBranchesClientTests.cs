@@ -445,7 +445,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetRequiredStatusChecksContextsMethod
+        public class TheGetAllRequiredStatusChecksContextsMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -454,7 +454,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetRequiredStatusChecksContexts("owner", "repo", "branch");
+                client.GetAllRequiredStatusChecksContexts("owner", "repo", "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), null, previewAcceptsHeader);
@@ -467,7 +467,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetRequiredStatusChecksContexts(1, "branch");
+                client.GetAllRequiredStatusChecksContexts(1, "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), null, previewAcceptsHeader);
@@ -478,17 +478,17 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRequiredStatusChecksContexts(null, "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRequiredStatusChecksContexts("owner", null, "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRequiredStatusChecksContexts("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllRequiredStatusChecksContexts(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllRequiredStatusChecksContexts("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllRequiredStatusChecksContexts("owner", "repo", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRequiredStatusChecksContexts(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllRequiredStatusChecksContexts(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRequiredStatusChecksContexts("", "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRequiredStatusChecksContexts("owner", "", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRequiredStatusChecksContexts("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllRequiredStatusChecksContexts("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllRequiredStatusChecksContexts("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllRequiredStatusChecksContexts("owner", "repo", ""));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRequiredStatusChecksContexts(1, ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllRequiredStatusChecksContexts(1, ""));
             }
         }
 
@@ -1030,7 +1030,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetProtectedBranchTeamRestrictionsMethod
+        public class TheGetAllProtectedBranchTeamRestrictionsMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -1039,7 +1039,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetProtectedBranchTeamRestrictions("owner", "repo", "branch");
+                client.GetAllProtectedBranchTeamRestrictions("owner", "repo", "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), null, previewAcceptsHeader);
@@ -1052,7 +1052,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetProtectedBranchTeamRestrictions(1, "branch");
+                client.GetAllProtectedBranchTeamRestrictions(1, "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), null, previewAcceptsHeader);
@@ -1063,17 +1063,17 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchTeamRestrictions(null, "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchTeamRestrictions("owner", null, "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchTeamRestrictions("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchTeamRestrictions(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchTeamRestrictions("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchTeamRestrictions("owner", "repo", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchTeamRestrictions(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchTeamRestrictions(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchTeamRestrictions("", "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchTeamRestrictions("owner", "", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchTeamRestrictions("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchTeamRestrictions("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchTeamRestrictions("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchTeamRestrictions("owner", "repo", ""));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchTeamRestrictions(1, ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchTeamRestrictions(1, ""));
             }
         }
 
@@ -1233,7 +1233,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetProtectedBranchUserRestrictionsMethod
+        public class TheGetAllProtectedBranchUserRestrictionsMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -1242,7 +1242,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetProtectedBranchUserRestrictions("owner", "repo", "branch");
+                client.GetAllProtectedBranchUserRestrictions("owner", "repo", "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), null, previewAcceptsHeader);
@@ -1255,7 +1255,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
-                client.GetProtectedBranchUserRestrictions(1, "branch");
+                client.GetAllProtectedBranchUserRestrictions(1, "branch");
 
                 connection.Received()
                     .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), null, previewAcceptsHeader);
@@ -1266,17 +1266,17 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchUserRestrictions(null, "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchUserRestrictions("owner", null, "branch"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchUserRestrictions("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchUserRestrictions(null, "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchUserRestrictions("owner", null, "branch"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchUserRestrictions("owner", "repo", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetProtectedBranchUserRestrictions(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllProtectedBranchUserRestrictions(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchUserRestrictions("", "repo", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchUserRestrictions("owner", "", "branch"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchUserRestrictions("owner", "repo", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchUserRestrictions("", "repo", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchUserRestrictions("owner", "", "branch"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchUserRestrictions("owner", "repo", ""));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetProtectedBranchUserRestrictions(1, ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllProtectedBranchUserRestrictions(1, ""));
             }
         }
 

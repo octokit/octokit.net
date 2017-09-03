@@ -151,7 +151,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch);
 
         /// <summary>
@@ -162,7 +161,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
         Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch);
 
         /// <summary>
@@ -218,7 +216,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllRequiredStatusCheckContexts instead")]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch);
 
         /// <summary>
@@ -229,8 +227,31 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllRequiredStatusCheckContexts instead")]
         Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(long repositoryId, string branch);
+
+        /// <summary>
+        /// Get the required status checks contexts for the specified branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get the required status checks contexts for the specified branch
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch
@@ -478,7 +499,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -489,8 +510,31 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
         Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(long repositoryId, string branch);
+
+        /// <summary>
+        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch);
 
         /// <summary>
         /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -570,7 +614,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch);
 
         /// <summary>
@@ -581,8 +625,31 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [ExcludeFromPaginationConventionTest]
+        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
         Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(long repositoryId, string branch);
+
+        /// <summary>
+        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch);
+
+        /// <summary>
+        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="branch">The name of the branch</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch);
 
         /// <summary>
         /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)

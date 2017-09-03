@@ -20,9 +20,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [Obsolete("Please use GetAllPaths instead")]
         public IObservable<RepositoryTrafficPath> GetPaths(long repositoryId)
         {
-            return _client.GetPaths(repositoryId).ToObservable().SelectMany(x => x);
+            return GetAllPaths(repositoryId);
         }
 
         /// <summary>
@@ -31,12 +32,34 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [Obsolete("Please use GetAllPaths instead")]
         public IObservable<RepositoryTrafficPath> GetPaths(string owner, string name)
+        {
+            return GetAllPaths(owner, name);
+        }
+
+        /// <summary>
+        /// List the top 10 popular contents over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        public IObservable<RepositoryTrafficPath> GetAllPaths(long repositoryId)
+        {
+            return _client.GetAllPaths(repositoryId).ToObservable().SelectMany(x => x);
+        }
+
+        /// <summary>
+        /// List the top 10 popular contents over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.GetPaths(owner, name).ToObservable().SelectMany(x => x);
+            return _client.GetAllPaths(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -44,9 +67,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [Obsolete("Please use GetAllReferrers instead")]
         public IObservable<RepositoryTrafficReferrer> GetReferrers(long repositoryId)
         {
-            return _client.GetReferrers(repositoryId).ToObservable().SelectMany(x => x);
+            return GetAllReferrers(repositoryId);
         }
 
         /// <summary>
@@ -55,12 +79,34 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [Obsolete("Please use GetAllReferrers instead")]
         public IObservable<RepositoryTrafficReferrer> GetReferrers(string owner, string name)
+        {
+            return GetAllReferrers(owner, name);
+        }
+
+        /// <summary>
+        /// List the top 10 referrers over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(long repositoryId)
+        {
+            return _client.GetAllReferrers(repositoryId).ToObservable().SelectMany(x => x);
+        }
+
+        /// <summary>
+        /// List the top 10 referrers over the last 14 days
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return _client.GetReferrers(owner, name).ToObservable().SelectMany(x => x);
+            return _client.GetAllReferrers(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>

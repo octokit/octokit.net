@@ -137,6 +137,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
              Justification = "Makes a network request")]
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the PublicRepositoryRequest.Since parameter for pagination")]
         Task<IReadOnlyList<Repository>> GetAllPublic();
 
         /// <summary>
@@ -150,6 +151,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the PublicRepositoryRequest.Since parameter for pagination")]
         Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request);
 
         /// <summary>
@@ -423,6 +425,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name);
 
         /// <summary>
@@ -433,6 +436,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId);
 
         /// <summary>

@@ -1254,12 +1254,12 @@ public class RepositoryBranchesClientTests
         }
     }
 
-    public class TheGetProtectedBranchTeamRestrictionsMethod : IDisposable
+    public class TheGetAllProtectedBranchTeamRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
 
-        public TheGetProtectedBranchTeamRestrictionsMethod()
+        public TheGetAllProtectedBranchTeamRestrictionsMethod()
         {
             var github = Helper.GetAuthenticatedClient();
             _client = github.Repository.Branch;
@@ -1272,7 +1272,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var restrictions = await _client.GetProtectedBranchTeamRestrictions(repoOwner, repoName, "master");
+            var restrictions = await _client.GetAllProtectedBranchTeamRestrictions(repoOwner, repoName, "master");
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1282,7 +1282,7 @@ public class RepositoryBranchesClientTests
         public async Task GetsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var restrictions = await _client.GetProtectedBranchTeamRestrictions(repoId, "master");
+            var restrictions = await _client.GetAllProtectedBranchTeamRestrictions(repoId, "master");
 
             Assert.NotNull(restrictions);
             Assert.Equal(1, restrictions.Count);
@@ -1470,12 +1470,12 @@ public class RepositoryBranchesClientTests
         }
     }
 
-    public class TheGetProtectedBranchUserRestrictionsMethod : IDisposable
+    public class TheGetAllProtectedBranchUserRestrictionsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
         OrganizationRepositoryWithTeamContext _orgRepoContext;
 
-        public TheGetProtectedBranchUserRestrictionsMethod()
+        public TheGetAllProtectedBranchUserRestrictionsMethod()
         {
             var github = Helper.GetAuthenticatedClient();
             _client = github.Repository.Branch;
@@ -1488,7 +1488,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var restrictions = await _client.GetProtectedBranchUserRestrictions(repoOwner, repoName, "master");
+            var restrictions = await _client.GetAllProtectedBranchUserRestrictions(repoOwner, repoName, "master");
 
             Assert.NotNull(restrictions);
             Assert.Equal(0, restrictions.Count);
@@ -1498,7 +1498,7 @@ public class RepositoryBranchesClientTests
         public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var restrictions = await _client.GetProtectedBranchUserRestrictions(repoId, "master");
+            var restrictions = await _client.GetAllProtectedBranchUserRestrictions(repoId, "master");
 
             Assert.NotNull(restrictions);
             Assert.Equal(0, restrictions.Count);
