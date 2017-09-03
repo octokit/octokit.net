@@ -34,7 +34,7 @@ namespace Octokit
         {
             var endpoint = ApiUrls.Teams(id);
 
-            return ApiConnection.Get<Team>(endpoint);
+            return ApiConnection.Get<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, "options");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<Team>(endpoint, options);
+            return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.UserTeams();
 
-            return ApiConnection.GetAll<Team>(endpoint, options);
+            return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint, options);
+            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Octokit
 
             try
             {
-                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint).ConfigureAwait(false);
+                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
             }
             catch (NotFoundException)
             {
@@ -270,7 +270,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -304,7 +304,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.OrganizationPermissionsPreview, options);
+            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -348,7 +348,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.OrganizationPermissionsPreview).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
                 return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -400,7 +400,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.GetResponse<string>(endpoint).ConfigureAwait(false);
+                var response = await ApiConnection.Connection.Get<string>(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
