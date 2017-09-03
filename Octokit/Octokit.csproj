@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>An async-based GitHub API client library for .NET and dotnetcore</Description>
+    <Description>An async-based GitHub API client library for .NET and .NET Core</Description>
     <AssemblyTitle>Octokit</AssemblyTitle>
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
