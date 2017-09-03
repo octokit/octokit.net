@@ -57,6 +57,26 @@ public class TeamsClientTests
         }
     }
 
+    public class TheGetAllChildTeamsMethod
+    {
+        [IntegrationTest]
+        public async Task GetsAllChildTeams()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            using (var parentTeamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+
+                var teams = await github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId);
+
+                Assert.Equal(2, teams.Count);
+                Assert.True(teams.Any(x => x.Id == team1.Id));
+                Assert.True(teams.Any(x => x.Id == team2.Id));
+            }
+        }
+    }
+
     public class TheGetMembershipMethod
     {
         readonly Team team;

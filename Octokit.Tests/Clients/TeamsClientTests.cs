@@ -61,6 +61,33 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetAllChildTeamsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetAllChildTeams(1);
+
+                connection.Received().GetAll<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllChildTeams(1, null));
+            }
+        }
+
         public class TheGetAllMembersMethod
         {
             [Fact]
