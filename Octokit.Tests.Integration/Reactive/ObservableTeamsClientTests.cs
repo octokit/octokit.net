@@ -11,13 +11,11 @@ public class ObservableTeamsClientTests
 {
     public class TheGetAllChildTeamsMethod
     {
-        private readonly IGitHubClient _github;
-        private readonly IObservableTeamsClient _client;
+        private readonly IObservableGitHubClient _github;
 
         public TheGetAllChildTeamsMethod()
         {
-            _github = Helper.GetAuthenticatedClient();
-            _client = new ObservableTeamsClient(_github);
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
         }
 
         [OrganizationTest]
@@ -25,14 +23,86 @@ public class ObservableTeamsClientTests
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
             {
-                var team1 = await _client.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
-                var team2 = await _client.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
 
-                var teams = await _client.GetAllChildTeams(parentTeamContext.TeamId).ToList();
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId).ToList();
 
                 Assert.Equal(2, teams.Count);
                 Assert.True(teams.Any(x => x.Id == team1.Id));
                 Assert.True(teams.Any(x => x.Id == team2.Id));
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfChildTeamsWithoutStart()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options).ToList();
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team1.Id, teams[0].Id);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfChildTeamsWithStart()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options).ToList();
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team2.Id, teams[0].Id);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctChildTeamsBasedOnStartPage()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, startOptions).ToList();
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, skipStartOptions).ToList();
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             }
         }
     }
