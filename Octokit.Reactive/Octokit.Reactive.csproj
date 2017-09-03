@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>An IObservable based GitHub API client library for .NET using Reactive Extensions</Description>
+    <Description>An IObservable based GitHub API client library for .NET and .NET Core using Reactive Extensions</Description>
     <AssemblyTitle>Octokit.Reactive</AssemblyTitle>
     <Authors>GitHub</Authors>
+    <Version>0.0.0-dev</Version>
     <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
+    <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+    <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
+    <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs;..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
+    <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
     <None Include="app.config" />
   </ItemGroup>
 
