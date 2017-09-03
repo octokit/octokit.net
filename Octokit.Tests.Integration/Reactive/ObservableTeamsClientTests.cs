@@ -9,6 +9,34 @@ using Xunit;
 
 public class ObservableTeamsClientTests
 {
+    public class TheGetAllChildTeamsMethod
+    {
+        private readonly IGitHubClient _github;
+        private readonly IObservableTeamsClient _client;
+
+        public TheGetAllChildTeamsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _client = new ObservableTeamsClient(_github);
+        }
+
+        [OrganizationTest]
+        public async Task GetsChildTeams()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _client.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _client.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { ParentTeamId = parentTeamContext.TeamId });
+
+                var teams = await _client.GetAllChildTeams(parentTeamContext.TeamId).ToList();
+
+                Assert.Equal(2, teams.Count);
+                Assert.True(teams.Any(x => x.Id == team1.Id));
+                Assert.True(teams.Any(x => x.Id == team2.Id));
+            }
+        }
+    }
+
     public class TheGetAllMembersMethod
     {
         readonly Team _team;
