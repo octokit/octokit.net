@@ -91,6 +91,32 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        public IObservable<Team> GetAllChildTeams(int id)
+        {
+            return GetAllChildTeams(id, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        public IObservable<Team> GetAllChildTeams(int id, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.TeamChildTeams(id), null, AcceptHeaders.NestedTeamsPreview, options);
+        }
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <param name="id">The team identifier</param>

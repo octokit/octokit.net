@@ -46,6 +46,50 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetAllChildTeamsMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new ObservableTeamsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllChildTeams(1, null));
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(gitHub);
+
+                client.GetAllChildTeams(1);
+
+                gitHub.Connection.Received().Get<List<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.hellcat-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(gitHub);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                client.GetAllChildTeams(1, options);
+
+                gitHub.Connection.Received().Get<List<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                    "application/vnd.github.hellcat-preview+json");
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             [Fact]
