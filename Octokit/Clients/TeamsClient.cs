@@ -160,7 +160,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(team, "team");
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.Post<Team>(endpoint, team);
+            return ApiConnection.Post<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(team, "team");
 
             var endpoint = ApiUrls.Teams(id);
-            return ApiConnection.Patch<Team>(endpoint, team);
+            return ApiConnection.Patch<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Octokit
         {
             var endpoint = ApiUrls.Teams(id);
 
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>

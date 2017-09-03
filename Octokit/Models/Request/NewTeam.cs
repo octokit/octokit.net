@@ -35,9 +35,6 @@ namespace Octokit
         /// <summary>
         /// Gets or sets the description of the team
         /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
         public string Description { get; set; }
 
         /// <summary>
@@ -49,6 +46,11 @@ namespace Octokit
         /// array of repo_names this team has permissions to
         /// </summary>
         public Collection<string> RepoNames { get; private set; }
+
+        /// <summary>
+        /// Id of a team to set as the parent team
+        /// </summary>
+        public int? ParentTeamId { get; set; }
 
         internal string DebuggerDisplay
         {

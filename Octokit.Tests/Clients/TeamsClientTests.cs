@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetMembersMethod
+        public class TheGetAllMembersMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -88,7 +88,10 @@ namespace Octokit.Tests.Clients
 
                 client.Create("orgName", team);
 
-                connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"), team);
+                connection.Received().Post<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"),
+                    team,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -115,7 +118,10 @@ namespace Octokit.Tests.Clients
 
                 client.Update(1, team);
 
-                connection.Received().Patch<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
+                connection.Received().Patch<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    team,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -137,7 +143,9 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.Delete(1);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
+                connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    "application/vnd.github.hellcat-preview+json");
             }
         }
 
