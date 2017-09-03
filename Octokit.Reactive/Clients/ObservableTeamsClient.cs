@@ -64,7 +64,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, "org");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams(), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams(), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.OrganizationPermissionsPreview, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
