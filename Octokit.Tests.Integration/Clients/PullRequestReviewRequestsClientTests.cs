@@ -111,31 +111,6 @@ public class PullRequestReviewRequestsClientTests
         }
     }
 
-    public class PullRequestReviewRequestClientTestsBase : IDisposable
-    {
-        internal readonly IGitHubClient _github;
-        internal readonly IPullRequestReviewRequestsClient _client;
-        internal readonly RepositoryContext _context;
-
-        public PullRequestReviewRequestClientTestsBase()
-        {
-            _github = Helper.GetAuthenticatedClient();
-
-            _client = _github.PullRequest.ReviewRequest;
-
-            _context = _github.CreateRepositoryContext("test-repo").Result;
-
-            Task.WaitAll(_collaboratorLogins.Select(AddCollaborator).ToArray());
-        }
-
-        private Task AddCollaborator(string collaborator) => _github.Repository.Collaborator.Add(_context.RepositoryOwner, _context.RepositoryName, collaborator);
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
-    }
-
     public class WhenNoRequestsExistFixture : PullRequestReviewRequestClientFixtureBase
     {
         protected override Task<int> CreatePullRequest() =>
