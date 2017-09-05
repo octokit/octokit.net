@@ -14,6 +14,103 @@ public class PullRequestReviewRequestsClientTests
         "octokitnet-test2"
     };
 
+    public abstract class PullRequestReviewRequestClientFixtureBase : IAsyncLifetime, IDisposable
+    {
+        public IGitHubClient GitHub { get; private set; }
+        public IPullRequestReviewRequestsClient Client { get; private set; }
+        public RepositoryContext Context { get; private set; }
+        public int Number { get; private set; }
+
+        public virtual async Task InitializeAsync()
+        {
+            GitHub = Helper.GetAuthenticatedClient();
+            Client = GitHub.PullRequest.ReviewRequest;
+            Context = await GitHub.CreateRepositoryContext("test-repo");
+            await Task.WhenAll(_collaboratorLogins.Select(AddCollaborator).ToArray());
+            Number = await CreatePullRequest();
+        }
+
+        public Task DisposeAsync() => Task.CompletedTask;
+
+        public void Dispose() => Context.Dispose();
+
+        protected abstract Task<int> CreatePullRequest();
+
+        private Task AddCollaborator(string collaborator) => GitHub.Repository.Collaborator.Add(Context.RepositoryOwner, Context.RepositoryName, collaborator);
+
+        protected async Task<int> CreateTheWorld(bool createReviewRequests = true)
+        {
+            var master = await GitHub.Git.Reference.Get(Context.RepositoryOwner, Context.RepositoryName, "heads/master");
+
+            // create new commit for master branch
+            var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
+            var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+
+            // update master
+            await GitHub.Git.Reference.Update(Context.RepositoryOwner, Context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+
+            // create new commit for feature branch
+            var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
+            var featureBranchCommit = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
+
+            var featureBranchTree2 = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new a 2nd time" } });
+            var featureBranchCommit2 = await CreateCommit("this is a 2nd commit to merge into the pull request", featureBranchTree2.Sha, featureBranchCommit.Sha);
+
+            // create branch
+            await GitHub.Git.Reference.Create(Context.RepositoryOwner, Context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
+
+            // create a pull request
+            var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master");
+            var createdPullRequest = await GitHub.PullRequest.Create(Context.RepositoryOwner, Context.RepositoryName, pullRequest);
+
+            // Create review requests (optional)
+            if (createReviewRequests)
+            {
+                var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins);
+                await GitHub.PullRequest.ReviewRequest.Create(Context.RepositoryOwner, Context.RepositoryName, createdPullRequest.Number, reviewRequest);
+            }
+
+            return createdPullRequest.Number;
+        }
+
+        protected async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
+        {
+            var collection = new List<NewTreeItem>();
+
+            foreach (var c in treeContents)
+            {
+                var baselineBlob = new NewBlob
+                {
+                    Content = c.Value,
+                    Encoding = EncodingType.Utf8
+                };
+                var baselineBlobResult = await GitHub.Git.Blob.Create(Context.RepositoryOwner, Context.RepositoryName, baselineBlob);
+
+                collection.Add(new NewTreeItem
+                {
+                    Type = TreeType.Blob,
+                    Mode = FileMode.File,
+                    Path = c.Key,
+                    Sha = baselineBlobResult.Sha
+                });
+            }
+
+            var newTree = new NewTree();
+            foreach (var item in collection)
+            {
+                newTree.Tree.Add(item);
+            }
+
+            return await GitHub.Git.Tree.Create(Context.RepositoryOwner, Context.RepositoryName, newTree);
+        }
+
+        protected Task<Commit> CreateCommit(string message, string sha, string parent)
+        {
+            var newCommit = new NewCommit(message, sha, parent);
+            return GitHub.Git.Commit.Create(Context.RepositoryOwner, Context.RepositoryName, newCommit);
+        }
+    }
+
     public class PullRequestReviewRequestClientTestsBase : IDisposable
     {
         internal readonly IGitHubClient _github;
@@ -39,14 +136,28 @@ public class PullRequestReviewRequestsClientTests
         }
     }
 
-    public class TheGetAllMethod : PullRequestReviewRequestClientTestsBase
+    public class WhenNoRequestsExistFixture : PullRequestReviewRequestClientFixtureBase
     {
+        protected override Task<int> CreatePullRequest() =>
+            CreateTheWorld(createReviewRequests: false);
+    }
+
+    public class WhenNoRequestsExistTheGetAllMethod : IClassFixture<WhenNoRequestsExistFixture>
+    {
+        private readonly WhenNoRequestsExistFixture _fixture;
+
+        public WhenNoRequestsExistTheGetAllMethod(WhenNoRequestsExistFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
         [IntegrationTest]
         public async Task GetsNoRequestsWhenNoneExist()
         {
-            var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
-
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequests = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryOwner,
+                _fixture.Context.RepositoryName,
+                _fixture.Number);
 
             Assert.NotNull(reviewRequests);
             Assert.Empty(reviewRequests);
@@ -55,20 +166,37 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task GetsNoRequestsWhenNoneExistWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
-
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequests = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryId,
+                _fixture.Number);
 
             Assert.NotNull(reviewRequests);
             Assert.Empty(reviewRequests);
+        }
+    }
+
+    public class WhenRequestsExistFixture : PullRequestReviewRequestClientFixtureBase
+    {
+        protected override Task<int> CreatePullRequest() =>
+            CreateTheWorld();
+    }
+
+    public class WhenRequestsExistTheGetAllMethod : IClassFixture<WhenRequestsExistFixture>
+    {
+        private readonly WhenRequestsExistFixture _fixture;
+
+        public WhenRequestsExistTheGetAllMethod(WhenRequestsExistFixture fixture)
+        {
+            _fixture = fixture;
         }
 
         [IntegrationTest]
         public async Task GetsRequests()
         {
-            var number = await CreateTheWorld(_github, _context);
-
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequests = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryOwner,
+                _fixture.Context.RepositoryName,
+                _fixture.Number);
 
             Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
         }
@@ -76,9 +204,7 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task GetsRequestsWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context);
-
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryId, _fixture.Number);
 
             Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
         }
@@ -86,15 +212,14 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStart()
         {
-            var number = await CreateTheWorld(_github, _context);
-
             var options = new ApiOptions
             {
                 PageSize = 1,
                 PageCount = 1,
                 StartPage = 2
             };
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, options);
+
+            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryOwner, _fixture.Context.RepositoryName, _fixture.Number, options);
 
             Assert.Equal(1, reviewRequests.Count);
         }
@@ -102,15 +227,14 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStartWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context);
-
             var options = new ApiOptions
             {
                 PageSize = 1,
                 PageCount = 1,
                 StartPage = 2
             };
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number, options);
+
+            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryId, _fixture.Number, options);
 
             Assert.Equal(1, reviewRequests.Count);
         }
@@ -118,14 +242,17 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
-            var number = await CreateTheWorld(_github, _context);
-
             var startOptions = new ApiOptions
             {
                 PageSize = 1,
                 PageCount = 1
             };
-            var firstPage = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, startOptions);
+
+            var firstPage = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryOwner,
+                _fixture.Context.RepositoryName,
+                _fixture.Number,
+                startOptions);
 
             var skipStartOptions = new ApiOptions
             {
@@ -133,7 +260,12 @@ public class PullRequestReviewRequestsClientTests
                 PageCount = 1,
                 StartPage = 2
             };
-            var secondPage = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, skipStartOptions);
+
+            var secondPage = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryOwner,
+                _fixture.Context.RepositoryName,
+                _fixture.Number,
+                skipStartOptions);
 
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
@@ -143,14 +275,16 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context);
-
             var startOptions = new ApiOptions
             {
                 PageSize = 1,
                 PageCount = 1
             };
-            var firstPage = await _client.GetAll(_context.RepositoryId, number, startOptions);
+
+            var firstPage = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryId,
+                _fixture.Number,
+                startOptions);
 
             var skipStartOptions = new ApiOptions
             {
@@ -158,7 +292,11 @@ public class PullRequestReviewRequestsClientTests
                 PageCount = 1,
                 StartPage = 2
             };
-            var secondPage = await _client.GetAll(_context.RepositoryId, number, skipStartOptions);
+
+            var secondPage = await _fixture.Client.GetAll(
+                _fixture.Context.RepositoryId,
+                _fixture.Number,
+                skipStartOptions);
 
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
@@ -166,17 +304,15 @@ public class PullRequestReviewRequestsClientTests
         }
     }
 
-    public class TheDeleteMethod : PullRequestReviewRequestClientTestsBase
+    public class TheDeleteMethod : WhenRequestsExistFixture
     {
         [IntegrationTest]
         public async Task DeletesRequests()
         {
-            var number = await CreateTheWorld(_github, _context);
-
-            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequestsBeforeDelete = await Client.GetAll(Context.RepositoryOwner, Context.RepositoryName, Number);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
-            await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, number, reviewRequestToCreate);
-            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            await Client.Delete(Context.RepositoryOwner, Context.RepositoryName, Number, reviewRequestToCreate);
+            var reviewRequestsAfterDelete = await Client.GetAll(Context.RepositoryOwner, Context.RepositoryName, Number);
 
             Assert.NotEmpty(reviewRequestsBeforeDelete);
             Assert.Empty(reviewRequestsAfterDelete);
@@ -185,27 +321,24 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task DeletesRequestsWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context);
-
-            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequestsBeforeDelete = await Client.GetAll(Context.RepositoryId, Number);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
-            await _client.Delete(_context.RepositoryId, number, reviewRequestToCreate);
-            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId, number);
+            await Client.Delete(Context.RepositoryId, Number, reviewRequestToCreate);
+            var reviewRequestsAfterDelete = await Client.GetAll(Context.RepositoryId, Number);
 
             Assert.NotEmpty(reviewRequestsBeforeDelete);
             Assert.Empty(reviewRequestsAfterDelete);
         }
     }
 
-    public class TheCreateMethod : PullRequestReviewRequestClientTestsBase, IDisposable
+    public class TheCreateMethod : WhenRequestsExistFixture
     {
         [IntegrationTest]
         public async Task CreatesRequests()
         {
-            var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
 
-            var pr = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, number, reviewRequestToCreate);
+            var pr = await Client.Create(Context.RepositoryOwner, Context.RepositoryName, Number, reviewRequestToCreate);
 
             Assert.Equal(_collaboratorLogins.ToList(), pr.RequestedReviewers.Select(rr => rr.Login));
         }
@@ -213,84 +346,11 @@ public class PullRequestReviewRequestsClientTests
         [IntegrationTest]
         public async Task CreatesRequestsWithRepositoryId()
         {
-            var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
             var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
 
-            var pr = await _client.Create(_context.RepositoryId, number, reviewRequestToCreate);
+            var pr = await Client.Create(Context.RepositoryId, Number, reviewRequestToCreate);
 
             Assert.Equal(_collaboratorLogins.ToList(), pr.RequestedReviewers.Select(rr => rr.Login));
         }
-    }
-
-    static async Task<int> CreateTheWorld(IGitHubClient github, RepositoryContext context, bool createReviewRequests = true)
-    {
-        var master = await github.Git.Reference.Get(context.RepositoryOwner, context.RepositoryName, "heads/master");
-
-        // create new commit for master branch
-        var newMasterTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit(github, context, "baseline for pull request", newMasterTree.Sha, master.Object.Sha);
-
-        // update master
-        await github.Git.Reference.Update(context.RepositoryOwner, context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
-
-        // create new commit for feature branch
-        var featureBranchTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var featureBranchCommit = await CreateCommit(github, context, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
-
-        var featureBranchTree2 = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new a 2nd time" } });
-        var featureBranchCommit2 = await CreateCommit(github, context, "this is a 2nd commit to merge into the pull request", featureBranchTree2.Sha, featureBranchCommit.Sha);
-
-        // create branch
-        await github.Git.Reference.Create(context.RepositoryOwner, context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
-
-        // create a pull request
-        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master");
-        var createdPullRequest = await github.PullRequest.Create(context.RepositoryOwner, context.RepositoryName, pullRequest);
-
-        // Create review requests (optional)
-        if (createReviewRequests)
-        {
-            var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins);
-            await github.PullRequest.ReviewRequest.Create(context.RepositoryOwner, context.RepositoryName, createdPullRequest.Number, reviewRequest);
-        }
-
-        return createdPullRequest.Number;
-    }
-
-    static async Task<TreeResponse> CreateTree(IGitHubClient github, RepositoryContext context, IEnumerable<KeyValuePair<string, string>> treeContents)
-    {
-        var collection = new List<NewTreeItem>();
-
-        foreach (var c in treeContents)
-        {
-            var baselineBlob = new NewBlob
-            {
-                Content = c.Value,
-                Encoding = EncodingType.Utf8
-            };
-            var baselineBlobResult = await github.Git.Blob.Create(context.RepositoryOwner, context.RepositoryName, baselineBlob);
-
-            collection.Add(new NewTreeItem
-            {
-                Type = TreeType.Blob,
-                Mode = FileMode.File,
-                Path = c.Key,
-                Sha = baselineBlobResult.Sha
-            });
-        }
-
-        var newTree = new NewTree();
-        foreach (var item in collection)
-        {
-            newTree.Tree.Add(item);
-        }
-
-        return await github.Git.Tree.Create(context.RepositoryOwner, context.RepositoryName, newTree);
-    }
-
-    static async Task<Commit> CreateCommit(IGitHubClient github, RepositoryContext context, string message, string sha, string parent)
-    {
-        var newCommit = new NewCommit(message, sha, parent);
-        return await github.Git.Commit.Create(context.RepositoryOwner, context.RepositoryName, newCommit);
     }
 }
