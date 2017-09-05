@@ -73,7 +73,7 @@ public class PullRequestReviewRequestsClientTests
             return createdPullRequest.Number;
         }
 
-        protected async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
+        private async Task<TreeResponse> CreateTree(IEnumerable<KeyValuePair<string, string>> treeContents)
         {
             var collection = new List<NewTreeItem>();
 
@@ -104,7 +104,7 @@ public class PullRequestReviewRequestsClientTests
             return await GitHub.Git.Tree.Create(Context.RepositoryOwner, Context.RepositoryName, newTree);
         }
 
-        protected Task<Commit> CreateCommit(string message, string sha, string parent)
+        private Task<Commit> CreateCommit(string message, string sha, string parent)
         {
             var newCommit = new NewCommit(message, sha, parent);
             return GitHub.Git.Commit.Create(Context.RepositoryOwner, Context.RepositoryName, newCommit);
