@@ -46,6 +46,51 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetAllMembersMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetAllMembers(1);
+
+                github.Connection.Received().Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Args.EmptyDictionary,
+                    null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRequest()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.Maintainer));
+
+                github.Connection.Received().Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, (TeamMembersRequest)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, (ApiOptions)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.All), null));
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             [Fact]

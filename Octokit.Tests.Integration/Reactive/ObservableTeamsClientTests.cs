@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -9,28 +10,43 @@ using Xunit;
 
 public class ObservableTeamsClientTests
 {
-    public class TheGetAllMembersMethod
+    public class TheGetAllMembersMethod : IDisposable
     {
-        readonly Team _team;
+        private readonly IObservableGitHubClient _github;
+        private readonly TeamContext _teamContext;
 
         public TheGetAllMembersMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
 
-            _team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
         }
 
         [OrganizationTest]
-        public async Task GetsAllMembersWhenAuthenticated()
+        public async Task GetsAllMembers()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var client = new ObservableTeamsClient(github);
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId).ToList();
 
-            var observable = client.GetAllMembers(_team.Id, ApiOptions.None);
-            var members = await observable.ToList();
+            Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
 
-            Assert.True(members.Count > 0);
-            Assert.True(members.Any(x => x.Login == Helper.UserName));
+        [OrganizationTest]
+        public async Task GetsAllMembersWithRequest()
+        {
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId, new TeamMembersRequest(TeamRoleFilter.Member)).ToList();
+
+            Assert.Empty(members);
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
         }
     }
 
