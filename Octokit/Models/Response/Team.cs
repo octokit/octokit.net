@@ -12,11 +12,13 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(string url, int id, string name, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
+        public Team(string url, int id, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
             Name = name;
+            Description = description;
+            Privacy = privacy;
             Permission = permission;
             MembersCount = membersCount;
             ReposCount = reposCount;
@@ -38,6 +40,16 @@ namespace Octokit
         /// team name
         /// </summary>
         public string Name { get; protected set; }
+
+        /// <summary>
+        /// team description
+        /// </summary>
+        public string Description { get; protected set; }
+
+        /// <summary>
+        /// team privacy
+        /// </summary>
+        public StringEnum<TeamPrivacy> Privacy { get; protected set; }
 
         /// <summary>
         /// permission attached to this team
@@ -69,5 +81,23 @@ namespace Octokit
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Name: {0} ", Name); }
         }
+    }
+
+    /// <summary>
+    /// Used to describe a team's privacy level.
+    /// </summary>
+    public enum TeamPrivacy
+    {
+        /// <summary>
+        /// Only visible to organization owners and members of the team.
+        /// </summary>
+        [Parameter(Value = "secret")]
+        Secret,
+
+        /// <summary>
+        /// Visible to all members of the organization.
+        /// </summary>
+        [Parameter(Value = "closed")]
+        Closed
     }
 }
