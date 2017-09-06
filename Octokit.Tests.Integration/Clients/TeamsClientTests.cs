@@ -99,25 +99,43 @@ public class TeamsClientTests
         }
     }
 
-    public class TheGetAllMembersMethod
+    public class TheGetAllMembersMethod : IDisposable
     {
-        readonly Team team;
+        private readonly IGitHubClient _github;
+        private readonly TeamContext _teamContext;
 
         public TheGetAllMembersMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
+            _github = Helper.GetAuthenticatedClient();
 
-            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
         }
 
         [OrganizationTest]
-        public async Task GetsAllMembersWhenAuthenticated()
+        public async Task GetsAllMembers()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            var members = await github.Organization.Team.GetAllMembers(team.Id);
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId);
 
             Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllMembersWithRoleFilter()
+        {
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId, new TeamMembersRequest(TeamRoleFilter.Member));
+
+            Assert.Empty(members);
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
         }
     }
 

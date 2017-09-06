@@ -61,7 +61,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetMembersMethod
+        public class TheGetAllMembersMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
@@ -74,6 +74,34 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.Maintainer));
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, (TeamMembersRequest)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, (ApiOptions)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.All), null));
             }
         }
 
