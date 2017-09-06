@@ -23,6 +23,7 @@ namespace Octokit
         public NewTeam(string name)
         {
             Name = name;
+            Maintainers = new Collection<string>();
             RepoNames = new Collection<string>();
         }
 

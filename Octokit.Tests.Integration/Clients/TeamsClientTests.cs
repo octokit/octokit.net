@@ -12,29 +12,7 @@ public class TeamsClientTests
     public class TheCreateMethod
     {
         [OrganizationTest]
-        public async Task FailsWhenNotAuthenticated()
-        {
-            var github = Helper.GetAnonymousClient();
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest]
-        public async Task FailsWhenAuthenticatedWithBadCredentials()
-        {
-            var github = Helper.GetBadCredentialsClient();
-
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest]
-        public async Task SucceedsWhenAuthenticated()
+        public async Task CreatesTeam()
         {
             var github = Helper.GetAuthenticatedClient();
 
@@ -47,6 +25,7 @@ public class TeamsClientTests
                     Description = teamDescription,
                     Privacy = TeamPrivacy.Closed
                 };
+                newTeam.Maintainers.Add(Helper.UserName);
                 newTeam.RepoNames.Add(context.Repository.FullName);
 
                 var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
@@ -54,6 +33,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(1, team.MembersCount);
                 Assert.Equal(1, team.ReposCount);
 
                 await github.Organization.Team.Delete(team.Id);
@@ -287,7 +267,7 @@ public class TeamsClientTests
 
     public class TheUpdateMethod
     {
-        private IGitHubClient _github;
+        private readonly IGitHubClient _github;
 
         public TheUpdateMethod()
         {
