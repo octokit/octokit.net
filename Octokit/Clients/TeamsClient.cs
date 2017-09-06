@@ -92,11 +92,10 @@ namespace Octokit
         /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        /// <param name="id">The team identifier</param>
         public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
             return GetAllMembers(id, ApiOptions.None);
@@ -110,7 +109,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -118,6 +116,40 @@ namespace Octokit
             var endpoint = ApiUrls.TeamMembers(id);
 
             return ApiConnection.GetAll<User>(endpoint, options);
+        }
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return GetAllMembers(id, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.TeamMembers(id);
+
+            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), options);
         }
 
         /// <summary>
