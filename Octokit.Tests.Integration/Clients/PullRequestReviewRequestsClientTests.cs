@@ -9,24 +9,29 @@ using Xunit;
 
 public class PullRequestReviewRequestsClientTests
 {
-    private static readonly string[] _collaboratorLogins = {
-        "octokitnet-test1",
-        "octokitnet-test2"
-    };
-
     public abstract class PullRequestReviewRequestClientFixtureBase : IAsyncLifetime, IDisposable
     {
+        private IGitHubClient _githubTwo;
+
         public IGitHubClient GitHub { get; private set; }
         public IPullRequestReviewRequestsClient Client { get; private set; }
         public RepositoryContext Context { get; private set; }
         public int Number { get; private set; }
+        public string CollaboratorLogin { get; private set; }
+
+        public IReadOnlyList<string> CollaboratorLoginAsList =>
+            new[] { CollaboratorLogin }.ToList().AsReadOnly();
 
         public virtual async Task InitializeAsync()
         {
+            _githubTwo = Helper.GetAuthenticatedClient(useSecondUser: true);
             GitHub = Helper.GetAuthenticatedClient();
             Client = GitHub.PullRequest.ReviewRequest;
             Context = await GitHub.CreateRepositoryContext("test-repo");
-            await Task.WhenAll(_collaboratorLogins.Select(AddCollaborator).ToArray());
+
+            CollaboratorLogin = Helper.CredentialsSecondUser.Login;
+            await AddCollaborator(CollaboratorLogin);
+
             Number = await CreatePullRequest();
         }
 
@@ -36,7 +41,15 @@ public class PullRequestReviewRequestsClientTests
 
         protected abstract Task<int> CreatePullRequest();
 
-        private Task AddCollaborator(string collaborator) => GitHub.Repository.Collaborator.Add(Context.RepositoryOwner, Context.RepositoryName, collaborator);
+        private async Task AddCollaborator(string collaborator)
+        {
+            await GitHub.Repository.Collaborator.Add(Context.RepositoryOwner, Context.RepositoryName, collaborator);
+
+            var invitations = await _githubTwo.Repository.Invitation.GetAllForCurrent();
+            Assert.Single(invitations);
+
+            await _githubTwo.Repository.Invitation.Accept(invitations[0].Id);
+        }
 
         protected async Task<int> CreateTheWorld(bool createReviewRequests = true)
         {
@@ -66,7 +79,7 @@ public class PullRequestReviewRequestsClientTests
             // Create review requests (optional)
             if (createReviewRequests)
             {
-                var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins);
+                var reviewRequest = new PullRequestReviewRequest(CollaboratorLoginAsList);
                 await GitHub.PullRequest.ReviewRequest.Create(Context.RepositoryOwner, Context.RepositoryName, createdPullRequest.Number, reviewRequest);
             }
 
@@ -126,7 +139,7 @@ public class PullRequestReviewRequestsClientTests
             _fixture = fixture;
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task GetsNoRequestsWhenNoneExist()
         {
             var reviewRequests = await _fixture.Client.GetAll(
@@ -138,7 +151,7 @@ public class PullRequestReviewRequestsClientTests
             Assert.Empty(reviewRequests);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task GetsNoRequestsWhenNoneExistWithRepositoryId()
         {
             var reviewRequests = await _fixture.Client.GetAll(
@@ -165,7 +178,7 @@ public class PullRequestReviewRequestsClientTests
             _fixture = fixture;
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task GetsRequests()
         {
             var reviewRequests = await _fixture.Client.GetAll(
@@ -173,18 +186,18 @@ public class PullRequestReviewRequestsClientTests
                 _fixture.Context.RepositoryName,
                 _fixture.Number);
 
-            Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
+            Assert.Equal(_fixture.CollaboratorLoginAsList, reviewRequests.Select(rr => rr.Login));
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task GetsRequestsWithRepositoryId()
         {
             var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryId, _fixture.Number);
 
-            Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
+            Assert.Equal(_fixture.CollaboratorLoginAsList, reviewRequests.Select(rr => rr.Login));
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStart()
         {
             var options = new ApiOptions
@@ -199,7 +212,7 @@ public class PullRequestReviewRequestsClientTests
             Assert.Equal(1, reviewRequests.Count);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStartWithRepositoryId()
         {
             var options = new ApiOptions
@@ -214,7 +227,7 @@ public class PullRequestReviewRequestsClientTests
             Assert.Equal(1, reviewRequests.Count);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
             var startOptions = new ApiOptions
@@ -247,7 +260,7 @@ public class PullRequestReviewRequestsClientTests
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
         {
             var startOptions = new ApiOptions
@@ -281,11 +294,11 @@ public class PullRequestReviewRequestsClientTests
 
     public class TheDeleteMethod : WhenRequestsExistFixture
     {
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task DeletesRequests()
         {
             var reviewRequestsBeforeDelete = await Client.GetAll(Context.RepositoryOwner, Context.RepositoryName, Number);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = new PullRequestReviewRequest(CollaboratorLoginAsList);
             await Client.Delete(Context.RepositoryOwner, Context.RepositoryName, Number, reviewRequestToCreate);
             var reviewRequestsAfterDelete = await Client.GetAll(Context.RepositoryOwner, Context.RepositoryName, Number);
 
@@ -293,11 +306,11 @@ public class PullRequestReviewRequestsClientTests
             Assert.Empty(reviewRequestsAfterDelete);
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task DeletesRequestsWithRepositoryId()
         {
             var reviewRequestsBeforeDelete = await Client.GetAll(Context.RepositoryId, Number);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = new PullRequestReviewRequest(CollaboratorLoginAsList);
             await Client.Delete(Context.RepositoryId, Number, reviewRequestToCreate);
             var reviewRequestsAfterDelete = await Client.GetAll(Context.RepositoryId, Number);
 
@@ -308,24 +321,24 @@ public class PullRequestReviewRequestsClientTests
 
     public class TheCreateMethod : WhenRequestsExistFixture
     {
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CreatesRequests()
         {
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = new PullRequestReviewRequest(CollaboratorLoginAsList);
 
             var pr = await Client.Create(Context.RepositoryOwner, Context.RepositoryName, Number, reviewRequestToCreate);
 
-            Assert.Equal(_collaboratorLogins.ToList(), pr.RequestedReviewers.Select(rr => rr.Login));
+            Assert.Equal(CollaboratorLoginAsList, pr.RequestedReviewers.Select(rr => rr.Login));
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task CreatesRequestsWithRepositoryId()
         {
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = new PullRequestReviewRequest(CollaboratorLoginAsList);
 
             var pr = await Client.Create(Context.RepositoryId, Number, reviewRequestToCreate);
 
-            Assert.Equal(_collaboratorLogins.ToList(), pr.RequestedReviewers.Select(rr => rr.Login));
+            Assert.Equal(CollaboratorLoginAsList, pr.RequestedReviewers.Select(rr => rr.Login));
         }
     }
 }
