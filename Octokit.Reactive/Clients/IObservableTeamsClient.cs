@@ -123,13 +123,23 @@ namespace Octokit.Reactive
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use AddOrEditMembership instead")]
         IObservable<TeamMembership> AddMembership(int id, string login);
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <param name="request">Additional parameters for the request</param>
+        IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.

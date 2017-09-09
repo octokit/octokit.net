@@ -192,17 +192,33 @@ namespace Octokit.Reactive
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use AddOrEditMembership instead")]
         public IObservable<TeamMembership> AddMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
 
             return _client.AddMembership(id, login).ToObservable();
+        }
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <param name="request">Additional parameters for the request</param>
+        public IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return _client.AddOrEditMembership(id, login, request).ToObservable();
         }
 
         /// <summary>

@@ -91,6 +91,34 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheAddOrEditMembershipMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                client.AddOrEditMembership(1, "user", request);
+
+                github.Organization.Team.Received().AddOrEditMembership(1, "user", request);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                Assert.Throws<ArgumentNullException>(() => client.AddOrEditMembership(1, null, request));
+                Assert.Throws<ArgumentNullException>(() => client.AddOrEditMembership(1, "user", null));
+
+                Assert.Throws<ArgumentException>(() => client.AddOrEditMembership(1, "", request));
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             [Fact]

@@ -212,6 +212,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheAddOrEditMembershipMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                await client.AddOrEditMembership(1, "user", request);
+
+                connection.Received().Put<TeamMembershipDetails>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    Arg.Is<UpdateTeamMembership>(x => x.Role == TeamRole.Maintainer));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrEditMembership(1, null, request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrEditMembership(1, "user", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrEditMembership(1, "", request));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
