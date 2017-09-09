@@ -279,6 +279,30 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMembershipDetailsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                await client.GetMembershipDetails(1, "user");
+
+                connection.Received().Get<TeamMembershipDetails>(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembershipDetails(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetMembershipDetails(1, ""));
+            }
+        }
+
         public class TheRemoveMembershipMethod
         {
             [Fact]

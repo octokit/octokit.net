@@ -158,8 +158,19 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use GetMembershipDetails instead")]
         IObservable<TeamMembership> GetMembership(int id, string login);
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        IObservable<TeamMembershipDetails> GetMembershipDetails(int id, string login);
 
         /// <summary>
         /// Returns all team's repositories.

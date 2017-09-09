@@ -11,6 +11,15 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableTeamsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]
@@ -37,12 +46,28 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheCtor
+        public class TheGetMembershipDetailsMethod
         {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetMembershipDetails(1, "user");
+
+                github.Organization.Team.Received().GetMembershipDetails(1, "user");
+            }
+
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetMembershipDetails(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetMembershipDetails(1, ""));
             }
         }
 
