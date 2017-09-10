@@ -169,35 +169,41 @@ public class PullRequestReviewRequestsClientTests
             CreateTheWorld();
     }
 
-    public class WhenRequestsExistTheGetAllMethod : IClassFixture<WhenRequestsExistFixture>
+    public class WhenRequestsExistTheGetAllMethod
     {
-        private readonly WhenRequestsExistFixture _fixture;
+        private const string _repositoryName = "pr-review-request";
+        private const string _repositoryOwner = "octokitnet-test";
+        private const long _repositoryId = 102994692;
+        private const int _pullRequestNumber = 1;
 
-        public WhenRequestsExistTheGetAllMethod(WhenRequestsExistFixture fixture)
+        private static readonly IEnumerable<string> _expectedCollaborators = new[] { "ryangribble-test2", "octokitnet-test2" };
+        private readonly IPullRequestReviewRequestsClient _client;
+
+        public WhenRequestsExistTheGetAllMethod()
         {
-            _fixture = fixture;
+            _client = Helper.GetAuthenticatedClient().PullRequest.ReviewRequest;
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task GetsRequests()
         {
-            var reviewRequests = await _fixture.Client.GetAll(
-                _fixture.Context.RepositoryOwner,
-                _fixture.Context.RepositoryName,
-                _fixture.Number);
+            var reviewRequests = await _client.GetAll(
+                _repositoryOwner,
+                _repositoryName,
+                _pullRequestNumber);
 
-            Assert.Equal(_fixture.CollaboratorLoginAsList, reviewRequests.Select(rr => rr.Login));
+            Assert.Equal(_expectedCollaborators, reviewRequests.Select(rr => rr.Login));
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task GetsRequestsWithRepositoryId()
         {
-            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryId, _fixture.Number);
+            var reviewRequests = await _client.GetAll(_repositoryId, _pullRequestNumber);
 
-            Assert.Equal(_fixture.CollaboratorLoginAsList, reviewRequests.Select(rr => rr.Login));
+            Assert.Equal(_expectedCollaborators, reviewRequests.Select(rr => rr.Login));
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStart()
         {
             var options = new ApiOptions
@@ -207,12 +213,12 @@ public class PullRequestReviewRequestsClientTests
                 StartPage = 2
             };
 
-            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryOwner, _fixture.Context.RepositoryName, _fixture.Number, options);
+            var reviewRequests = await _client.GetAll(_repositoryOwner, _repositoryName, _pullRequestNumber, options);
 
             Assert.Equal(1, reviewRequests.Count);
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task ReturnsCorrectCountOfReviewRequestsWithStartWithRepositoryId()
         {
             var options = new ApiOptions
@@ -222,12 +228,12 @@ public class PullRequestReviewRequestsClientTests
                 StartPage = 2
             };
 
-            var reviewRequests = await _fixture.Client.GetAll(_fixture.Context.RepositoryId, _fixture.Number, options);
+            var reviewRequests = await _client.GetAll(_repositoryId, _pullRequestNumber, options);
 
             Assert.Equal(1, reviewRequests.Count);
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
             var startOptions = new ApiOptions
@@ -236,10 +242,10 @@ public class PullRequestReviewRequestsClientTests
                 PageCount = 1
             };
 
-            var firstPage = await _fixture.Client.GetAll(
-                _fixture.Context.RepositoryOwner,
-                _fixture.Context.RepositoryName,
-                _fixture.Number,
+            var firstPage = await _client.GetAll(
+                _repositoryOwner,
+                _repositoryName,
+                _pullRequestNumber,
                 startOptions);
 
             var skipStartOptions = new ApiOptions
@@ -249,10 +255,10 @@ public class PullRequestReviewRequestsClientTests
                 StartPage = 2
             };
 
-            var secondPage = await _fixture.Client.GetAll(
-                _fixture.Context.RepositoryOwner,
-                _fixture.Context.RepositoryName,
-                _fixture.Number,
+            var secondPage = await _client.GetAll(
+                _repositoryOwner,
+                _repositoryName,
+                _pullRequestNumber,
                 skipStartOptions);
 
             Assert.Equal(1, firstPage.Count);
@@ -260,7 +266,7 @@ public class PullRequestReviewRequestsClientTests
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
         }
 
-        [DualAccountTest]
+        [Fact]
         public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
         {
             var startOptions = new ApiOptions
@@ -269,9 +275,9 @@ public class PullRequestReviewRequestsClientTests
                 PageCount = 1
             };
 
-            var firstPage = await _fixture.Client.GetAll(
-                _fixture.Context.RepositoryId,
-                _fixture.Number,
+            var firstPage = await _client.GetAll(
+                _repositoryId,
+                _pullRequestNumber,
                 startOptions);
 
             var skipStartOptions = new ApiOptions
@@ -281,9 +287,9 @@ public class PullRequestReviewRequestsClientTests
                 StartPage = 2
             };
 
-            var secondPage = await _fixture.Client.GetAll(
-                _fixture.Context.RepositoryId,
-                _fixture.Number,
+            var secondPage = await _client.GetAll(
+                _repositoryId,
+                _pullRequestNumber,
                 skipStartOptions);
 
             Assert.Equal(1, firstPage.Count);
