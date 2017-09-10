@@ -124,17 +124,17 @@ public class PullRequestReviewRequestsClientTests
         }
     }
 
-    public class WhenNoRequestsExistFixture : PullRequestReviewRequestClientFixtureBase
+    public class WhenNoRequestExists : PullRequestReviewRequestClientFixtureBase
     {
         protected override Task<int> CreatePullRequest() =>
             CreateTheWorld(createReviewRequests: false);
     }
 
-    public class WhenNoRequestsExistTheGetAllMethod : IClassFixture<WhenNoRequestsExistFixture>
+    public class WhenNoRequestExistsTheGetAllMethod : IClassFixture<WhenNoRequestExists>
     {
-        private readonly WhenNoRequestsExistFixture _fixture;
+        private readonly WhenNoRequestExists _fixture;
 
-        public WhenNoRequestsExistTheGetAllMethod(WhenNoRequestsExistFixture fixture)
+        public WhenNoRequestExistsTheGetAllMethod(WhenNoRequestExists fixture)
         {
             _fixture = fixture;
         }
