@@ -10,6 +10,95 @@ using Xunit;
 
 public class ObservableTeamsClientTests
 {
+    public class TheAddOrEditMembershipMethod : IDisposable
+    {
+        private readonly IObservableGitHubClient _github;
+        private readonly TeamContext _teamContext;
+
+        public TheAddOrEditMembershipMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
+        }
+
+        [OrganizationTest]
+        public async Task AddsMembership()
+        {
+            var login = "octokitnet-test1";
+
+            var membership = await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Member));
+
+            Assert.Equal(TeamRole.Member, membership.Role);
+            Assert.Equal(MembershipState.Pending, membership.State);
+        }
+
+        [OrganizationTest]
+        public async Task EditsMembership()
+        {
+            var login = "octokitnet-test1";
+
+            // Add as member
+            await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Member));
+
+            // Update to maintainer
+            var membership = await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Maintainer));
+
+            Assert.Equal(TeamRole.Maintainer, membership.Role);
+            Assert.Equal(MembershipState.Pending, membership.State);
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
+        }
+    }
+
+    public class TheGetMembershipDetailsMethod : IDisposable
+    {
+        private readonly IObservableGitHubClient _github;
+        private readonly TeamContext _teamContext;
+
+        public TheGetMembershipDetailsMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
+        }
+
+        [OrganizationTest]
+        public async Task GetsMembershipDetails()
+        {
+            var membership = await _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, Helper.UserName);
+
+            Assert.Equal(TeamRole.Maintainer, membership.Role);
+            Assert.Equal(MembershipState.Active, membership.State);
+        }
+
+        [OrganizationTest]
+        public void ThrowsWhenNotAMember()
+        {
+            Assert.Throws<NotFoundException>(() => _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, "foo"));
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
+        }
+    }
+
     public class TheGetAllMembersMethod : IDisposable
     {
         private readonly IObservableGitHubClient _github;
