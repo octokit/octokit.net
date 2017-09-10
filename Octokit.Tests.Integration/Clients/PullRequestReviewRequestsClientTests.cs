@@ -325,7 +325,7 @@ public class PullRequestReviewRequestsClientTests
         }
     }
 
-    public class TheCreateMethod : WhenRequestsExistFixture
+    public class TheCreateMethod : WhenNoRequestExists
     {
         [DualAccountTest]
         public async Task CreatesRequests()
