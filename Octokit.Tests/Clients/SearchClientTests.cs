@@ -1614,6 +1614,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheOrgQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Organization = "octokit";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit"));
+            }
+
+            [Fact]
             public void TestingTheRepoAndPathAndExtensionQualifiers()
             {
                 var connection = Substitute.For<IApiConnection>();

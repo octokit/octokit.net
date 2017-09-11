@@ -43,6 +43,23 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForFilesInOrganization()
+    {
+        var request = new SearchCodeRequest()
+        {
+            Organization = "octokit",
+            FileName = "readme.md"
+        };
+
+        var searchResults = await _gitHubClient.Search.SearchCode(request);
+
+        foreach (var searchResult in searchResults.Items)
+        {
+            Assert.Equal("octokit", searchResult.Repository.Owner.Login);
+        }
+    }
+
+    [IntegrationTest]
     public async Task SearchForFileNameInCode()
     {
         var request = new SearchCodeRequest("GitHub")
