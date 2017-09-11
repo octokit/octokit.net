@@ -45,7 +45,7 @@ public class SearchClientTests
     [IntegrationTest]
     public async Task SearchForFilesInOrganization()
     {
-        var request = new SearchCodeRequest("")
+        var request = new SearchCodeRequest()
         {
             Organization = "octokit",
             FileName = "readme.md"
@@ -55,7 +55,7 @@ public class SearchClientTests
 
         foreach (var searchResult in searchResults.Items)
         {
-            Assert.Equal("https://api.github.com/users/octokit/orgs", searchResult.Repository.Owner.Url);
+            Assert.Equal("octokit", searchResult.Repository.Owner.Login);
         }
     }
 
