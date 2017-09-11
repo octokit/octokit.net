@@ -12,37 +12,32 @@ public class TeamsClientTests
     public class TheCreateMethod
     {
         [OrganizationTest]
-        public async Task FailsWhenNotAuthenticated()
-        {
-            var github = Helper.GetAnonymousClient();
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
-        public async Task FailsWhenAuthenticatedWithBadCredentials()
-        {
-            var github = Helper.GetBadCredentialsClient();
-
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest]
-        public async Task SucceedsWhenAuthenticated()
+        public async Task CreatesTeam()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var newTeam = new NewTeam(Guid.NewGuid().ToString());
+            var teamName = Helper.MakeNameWithTimestamp("new-team");
+            var teamDescription = Helper.MakeNameWithTimestamp("team description");
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("org-repo"))))
+            {
+                var newTeam = new NewTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed
+                };
+                newTeam.Maintainers.Add(Helper.UserName);
+                newTeam.RepoNames.Add(context.Repository.FullName);
 
-            var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
+                var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
 
-            Assert.Equal(newTeam.Name, team.Name);
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(1, team.MembersCount);
+                Assert.Equal(1, team.ReposCount);
+
+                await github.Organization.Team.Delete(team.Id);
+            }
         }
     }
 
@@ -373,6 +368,37 @@ public class TeamsClientTests
                 Assert.Equal(1, secondPagePendingInvitations.Count);
 
                 Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
+            }
+        }
+    }
+
+    public class TheUpdateMethod
+    {
+        private readonly IGitHubClient _github;
+
+        public TheUpdateMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeam()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
+            {
+                var teamName = Helper.MakeNameWithTimestamp("updated-team");
+                var teamDescription = Helper.MakeNameWithTimestamp("updated description");
+                var update = new UpdateTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed
+                };
+
+                var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
+
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
             }
         }
     }
