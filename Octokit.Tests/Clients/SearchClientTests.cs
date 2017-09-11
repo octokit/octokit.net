@@ -428,7 +428,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheForkQualifier()
+            public void TestingTheIncludeForkQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -437,7 +437,20 @@ namespace Octokit.Tests.Clients
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:true"));
+            }
+
+            [Fact]
+            public void TestingTheOnlyForkQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //search repos that contains rails and forks are included in the search
+                var request = new SearchRepositoriesRequest("github");
+                request.Fork = ForkQualifier.OnlyForks;
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:only"));
             }
 
             [Fact]
