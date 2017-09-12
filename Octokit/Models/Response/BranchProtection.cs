@@ -67,6 +67,13 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnforceAdmins
     {
+        public EnforceAdmins() { }
+
+        public EnforceAdmins(bool enabled)
+        {
+            Enabled = enabled;
+        }
+
         public bool Enabled { get; protected set; }
 
         internal string DebuggerDisplay
