@@ -24,6 +24,30 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForForkedRepositories()
+    {
+        var request = new SearchRepositoriesRequest("octokit")
+        {
+            Fork = ForkQualifier.IncludeForks
+        };
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.True(repos.Items.Any(x => x.Fork));
+    }
+
+    [IntegrationTest]
+    public async Task SearchForOnlyForkedRepositories()
+    {
+        var request = new SearchRepositoriesRequest("octokit")
+        {
+            Fork = ForkQualifier.OnlyForks
+        };
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.True(repos.Items.All(x => x.Fork));
+    }
+
+    [IntegrationTest]
     public async Task SearchForGitHub()
     {
         var request = new SearchUsersRequest("github");
@@ -40,6 +64,23 @@ public class SearchClientTests
         var repos = await _gitHubClient.Search.SearchCode(request);
 
         Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForFilesInOrganization()
+    {
+        var request = new SearchCodeRequest()
+        {
+            Organization = "octokit",
+            FileName = "readme.md"
+        };
+
+        var searchResults = await _gitHubClient.Search.SearchCode(request);
+
+        foreach (var searchResult in searchResults.Items)
+        {
+            Assert.Equal("octokit", searchResult.Repository.Owner.Login);
+        }
     }
 
     [IntegrationTest]

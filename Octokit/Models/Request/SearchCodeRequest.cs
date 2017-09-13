@@ -140,6 +140,14 @@ namespace Octokit
         public string User { get; set; }
 
         /// <summary>
+        /// Limits searches to a specific organization.
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-code/#search-within-a-users-or-organizations-repositories
+        /// </remarks>
+        public string Organization { get; set; }
+
+        /// <summary>
         /// Limits searches to a specific repository.
         /// </summary>
         /// <remarks>
@@ -206,6 +214,11 @@ namespace Octokit
 
                 parameters.Add(
                     string.Join("+", Repos.Select(x => "repo:" + x)));
+            }
+
+            if (Organization.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "org:{0}", Organization));
             }
 
             return new ReadOnlyCollection<string>(parameters);

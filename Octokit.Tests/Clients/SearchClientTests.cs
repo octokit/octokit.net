@@ -428,7 +428,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheForkQualifier()
+            public void TestingTheIncludeForkQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -437,7 +437,20 @@ namespace Octokit.Tests.Clients
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:true"));
+            }
+
+            [Fact]
+            public void TestingTheOnlyForkQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //search repos that contains rails and forks are included in the search
+                var request = new SearchRepositoriesRequest("github");
+                request.Fork = ForkQualifier.OnlyForks;
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:only"));
             }
 
             [Fact]
@@ -1611,6 +1624,21 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit/octokit.net"));
+            }
+
+            [Fact]
+            public void TestingTheOrgQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Organization = "octokit";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit"));
             }
 
             [Fact]
