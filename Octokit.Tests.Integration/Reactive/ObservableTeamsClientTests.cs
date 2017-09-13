@@ -256,4 +256,38 @@ public class ObservableTeamsClientTests
             }
         }
     }
+
+    public class TheUpdateMethod
+    {
+        private readonly IObservableGitHubClient _github;
+
+        public TheUpdateMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeam()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
+            {
+                var teamName = Helper.MakeNameWithTimestamp("updated-team");
+                var teamDescription = Helper.MakeNameWithTimestamp("updated description");
+                var update = new UpdateTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed,
+                    ParentTeamId = parentTeamContext.TeamId
+                };
+
+                var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
+
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
+            }
+        }
+    }
 }
