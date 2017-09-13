@@ -179,6 +179,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    Args.Object,
                     "application/vnd.github.hellcat-preview+json");
             }
         }

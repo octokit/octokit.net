@@ -213,7 +213,7 @@ namespace Octokit
         {
             var endpoint = ApiUrls.Teams(id);
 
-            return ApiConnection.Delete(endpoint, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>
