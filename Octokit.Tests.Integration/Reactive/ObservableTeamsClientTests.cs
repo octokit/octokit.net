@@ -34,7 +34,7 @@ public class ObservableTeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsCorrectCountOfChildTeamsWithoutStart()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
@@ -55,7 +55,7 @@ public class ObservableTeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsCorrectCountOfChildTeamsWithStart()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
@@ -77,7 +77,7 @@ public class ObservableTeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsDistinctChildTeamsBasedOnStartPage()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))

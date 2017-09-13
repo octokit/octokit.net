@@ -43,7 +43,7 @@ public class TeamsClientTests
 
     public class TheGetAllForCurrentMethod
     {
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task GetsAllForCurrentWhenAuthenticated()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -61,7 +61,7 @@ public class TeamsClientTests
             _github = Helper.GetAuthenticatedClient();
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task GetsAllChildTeams()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
@@ -77,7 +77,7 @@ public class TeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsCorrectCountOfChildTeamsWithoutStart()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
@@ -98,7 +98,7 @@ public class TeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsCorrectCountOfChildTeamsWithStart()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
@@ -120,7 +120,7 @@ public class TeamsClientTests
             }
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task ReturnsDistinctChildTeamsBasedOnStartPage()
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
