@@ -28,7 +28,7 @@ namespace Octokit.Tests.Integration.Helpers
             return new RepositoryContext(client.Connection, repo);
         }
 
-        internal static async Task<TeamContext> CreateEnterpriseTeamContext(this IObservableGitHubClient client, string organization, NewTeam newTeam)
+        internal static async Task<TeamContext> CreateTeamContext(this IObservableGitHubClient client, string organization, NewTeam newTeam)
         {
             var team = await client.Organization.Team.Create(organization, newTeam);
 

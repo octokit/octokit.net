@@ -1,5 +1,8 @@
-﻿namespace Octokit
+﻿using System;
+
+namespace Octokit
 {
+    [Obsolete("Please use TeamMembershipDetails response class instead")]
     public enum TeamMembership
     {
         NotFound = 0,

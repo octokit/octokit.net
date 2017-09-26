@@ -62,23 +62,42 @@ namespace Octokit
         /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        /// <param name="id">The team identifier</param>
         Task<IReadOnlyList<User>> GetAllMembers(int id);
 
         /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <param name="options">Options to change API behaviour.</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
         Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options);
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request);
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -105,13 +124,23 @@ namespace Octokit
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use AddOrEditMembership instead")]
         Task<TeamMembership> AddMembership(int id, string login);
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <param name="request">Additional parameters for the request</param>
+        Task<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.
@@ -130,8 +159,20 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use GetMembershipDetails instead")]
         Task<TeamMembership> GetMembership(int id, string login);
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        Task<TeamMembershipDetails> GetMembershipDetails(int id, string login);
 
         /// <summary>
         /// Returns all team's repositories.

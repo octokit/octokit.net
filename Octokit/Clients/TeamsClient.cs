@@ -92,11 +92,10 @@ namespace Octokit
         /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
+        /// <param name="id">The team identifier</param>
         public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
             return GetAllMembers(id, ApiOptions.None);
@@ -110,7 +109,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -121,12 +119,46 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return GetAllMembers(id, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.TeamMembers(id);
+
+            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), options);
+        }
+
+        /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use GetMembershipDetails instead")]
         public async Task<TeamMembership> GetMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -147,6 +179,25 @@ namespace Octokit
             return response["state"] == "active"
                 ? TeamMembership.Active
                 : TeamMembership.Pending;
+        }
+
+        /// <summary>
+        /// Gets whether the user with the given <paramref name="login"/> 
+        /// is a member of the team with the given <paramref name="id"/>.
+        /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team to check.</param>
+        /// <param name="login">The user to check.</param>
+        public Task<TeamMembershipDetails> GetMembershipDetails(int id, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            return ApiConnection.Get<TeamMembershipDetails>(endpoint);
         }
 
         /// <summary>
@@ -192,12 +243,11 @@ namespace Octokit
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
+        [Obsolete("Please use AddOrEditMembership instead")]
         public async Task<TeamMembership> AddMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
@@ -223,6 +273,25 @@ namespace Octokit
             return response["state"] == "active"
                 ? TeamMembership.Active
                 : TeamMembership.Pending;
+        }
+
+        /// <summary>
+        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier.</param>
+        /// <param name="login">The user to add to the team.</param>
+        /// <param name="request">Additional parameters for the request</param>
+        public Task<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            var endpoint = ApiUrls.TeamMember(id, login);
+
+            return ApiConnection.Put<TeamMembershipDetails>(endpoint, request);
         }
 
         /// <summary>
