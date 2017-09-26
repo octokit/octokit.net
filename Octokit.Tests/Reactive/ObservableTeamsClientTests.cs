@@ -11,6 +11,15 @@ namespace Octokit.Tests.Reactive
 {
     public class ObservableTeamsClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]
@@ -37,12 +46,101 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheCtor
+        public class TheGetMembershipDetailsMethod
         {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetMembershipDetails(1, "user");
+
+                github.Organization.Team.Received().GetMembershipDetails(1, "user");
+            }
+
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new ObservableTeamsClient(null));
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetMembershipDetails(1, null));
+
+                Assert.Throws<ArgumentException>(() => client.GetMembershipDetails(1, ""));
+            }
+        }
+
+        public class TheGetAllMembersMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetAllMembers(1);
+
+                github.Connection.Received().Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Args.EmptyDictionary,
+                    null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRequest()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.Maintainer));
+
+                github.Connection.Received().Get<List<User>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    null);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, (TeamMembersRequest)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, (ApiOptions)null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.All), null));
+            }
+        }
+
+        public class TheAddOrEditMembershipMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                client.AddOrEditMembership(1, "user", request);
+
+                github.Organization.Team.Received().AddOrEditMembership(1, "user", request);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var github = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(github);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                Assert.Throws<ArgumentNullException>(() => client.AddOrEditMembership(1, null, request));
+                Assert.Throws<ArgumentNullException>(() => client.AddOrEditMembership(1, "user", null));
+
+                Assert.Throws<ArgumentException>(() => client.AddOrEditMembership(1, "", request));
             }
         }
 

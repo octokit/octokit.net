@@ -109,6 +109,34 @@ namespace Octokit.Tests.Clients
                     "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.Maintainer));
+
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, (TeamMembersRequest)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, (ApiOptions)null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllMembers(1, new TeamMembersRequest(TeamRoleFilter.All), null));
+            }
         }
 
         public class TheCreateMethod
@@ -227,6 +255,36 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheAddOrEditMembershipMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                await client.AddOrEditMembership(1, "user", request);
+
+                connection.Received().Put<TeamMembershipDetails>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    Arg.Is<UpdateTeamMembership>(x => x.Role == TeamRole.Maintainer));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var request = new UpdateTeamMembership(TeamRole.Maintainer);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrEditMembership(1, null, request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrEditMembership(1, "user", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrEditMembership(1, "", request));
+            }
+        }
+
         public class TheGetAllForCurrentMethod
         {
             [Fact]
@@ -263,6 +321,30 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetMembership(1, ""));
+            }
+        }
+
+        public class TheGetMembershipDetailsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                await client.GetMembershipDetails(1, "user");
+
+                connection.Received().Get<TeamMembershipDetails>(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullOrEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembershipDetails(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetMembershipDetails(1, ""));
             }
         }
 
