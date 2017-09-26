@@ -176,7 +176,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>

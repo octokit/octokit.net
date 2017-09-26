@@ -177,7 +177,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMember(id, login);
 
-            return ApiConnection.Get<TeamMembershipDetails>(endpoint);
+            return ApiConnection.Get<TeamMembershipDetails>(endpoint, null, AcceptHeaders.NestedTeamsPreview);
         }
 
         /// <summary>

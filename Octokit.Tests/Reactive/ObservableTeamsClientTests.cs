@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Args.EmptyDictionary,
-                    null);
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Reactive
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
-                    null);
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]

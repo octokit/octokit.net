@@ -121,6 +121,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
 
@@ -333,7 +334,10 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 await client.GetMembershipDetails(1, "user");
 
-                connection.Received().Get<TeamMembershipDetails>(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Received().Get<TeamMembershipDetails>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
