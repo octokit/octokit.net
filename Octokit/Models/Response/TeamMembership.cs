@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    [Obsolete("This enum will be replaced with a response class TeamMembershipDetails")]
+    [Obsolete("Please use TeamMembershipDetails response class instead")]
     public enum TeamMembership
     {
         NotFound = 0,
