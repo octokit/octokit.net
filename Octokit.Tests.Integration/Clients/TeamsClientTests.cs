@@ -43,12 +43,110 @@ public class TeamsClientTests
 
     public class TheGetAllForCurrentMethod
     {
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task GetsAllForCurrentWhenAuthenticated()
         {
             var github = Helper.GetAuthenticatedClient();
             var teams = await github.Organization.Team.GetAllForCurrent();
             Assert.NotEmpty(teams);
+        }
+    }
+
+    public class TheGetAllChildTeamsMethod
+    {
+        private readonly IGitHubClient _github;
+
+        public TheGetAllChildTeamsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllChildTeams()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId);
+
+                Assert.Equal(2, teams.Count);
+                Assert.True(teams.Any(x => x.Id == team1.Id));
+                Assert.True(teams.Any(x => x.Id == team2.Id));
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfChildTeamsWithoutStart()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team1.Id, teams[0].Id);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfChildTeamsWithStart()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team2.Id, teams[0].Id);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsDistinctChildTeamsBasedOnStartPage()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            }
         }
     }
 
@@ -384,6 +482,7 @@ public class TeamsClientTests
         [OrganizationTest]
         public async Task UpdatesTeam()
         {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
             using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
             {
                 var teamName = Helper.MakeNameWithTimestamp("updated-team");
@@ -391,7 +490,8 @@ public class TeamsClientTests
                 var update = new UpdateTeam(teamName)
                 {
                     Description = teamDescription,
-                    Privacy = TeamPrivacy.Closed
+                    Privacy = TeamPrivacy.Closed,
+                    ParentTeamId = parentTeamContext.TeamId
                 };
 
                 var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
@@ -399,6 +499,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
     }

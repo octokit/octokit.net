@@ -28,6 +28,7 @@ namespace Octokit.Tests.Integration.Helpers
 
         internal static async Task<TeamContext> CreateTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
         {
+            newTeam.Privacy = TeamPrivacy.Closed;
             var team = await client.Organization.Team.Create(organization, newTeam);
 
             return new TeamContext(client.Connection, team);

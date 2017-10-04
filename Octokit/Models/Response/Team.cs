@@ -72,6 +72,11 @@ namespace Octokit
         public Organization Organization { get; protected set; }
 
         /// <summary>
+        /// The parent team
+        /// </summary>
+        public Team Parent { get; protected set; }
+
+        /// <summary>
         /// LDAP Binding (GitHub Enterprise only)
         /// </summary>
         [Parameter(Key = "ldap_dn")]

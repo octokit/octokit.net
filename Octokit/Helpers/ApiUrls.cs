@@ -1582,6 +1582,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for child teams
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Uri TeamChildTeams(int id)
+        {
+            return "teams/{0}/teams".FormatUri(id);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for teams
         /// use for getting, updating, or deleting a <see cref="Team"/>.
         /// </summary>

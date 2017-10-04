@@ -59,6 +59,24 @@ namespace Octokit.Reactive
         IObservable<Team> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        IObservable<Team> GetAllChildTeams(int id);
+
+        /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <param name="id">The team identifier</param>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        IObservable<Team> GetAllChildTeams(int id, ApiOptions options);
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <remarks>

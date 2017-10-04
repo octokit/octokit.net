@@ -84,7 +84,7 @@ namespace Octokit.Tests.Reactive
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Args.EmptyDictionary,
-                    null);
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Reactive
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
-                    null);
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -141,6 +141,50 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.AddOrEditMembership(1, "user", null));
 
                 Assert.Throws<ArgumentException>(() => client.AddOrEditMembership(1, "", request));
+            }
+        }
+
+        public class TheGetAllChildTeamsMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new ObservableTeamsClient(Substitute.For<IGitHubClient>());
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllChildTeams(1, null));
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(gitHub);
+
+                client.GetAllChildTeams(1);
+
+                gitHub.Connection.Received().Get<List<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.hellcat-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableTeamsClient(gitHub);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+                client.GetAllChildTeams(1, options);
+
+                gitHub.Connection.Received().Get<List<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                    "application/vnd.github.hellcat-preview+json");
             }
         }
 

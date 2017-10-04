@@ -51,6 +51,11 @@ namespace Octokit
         /// </summary>
         public Permission? Permission { get; set; }
 
+        /// <summary>
+        /// Id of a team to set as the parent team
+        /// </summary>
+        public long? ParentTeamId { get; set; }
+
         internal string DebuggerDisplay
         {
             get

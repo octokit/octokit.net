@@ -32,7 +32,10 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1);
 
-                connection.Received().Get<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
+                connection.Received().Get<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json");
             }
         }
 
@@ -48,6 +51,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Team>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
 
@@ -58,6 +63,33 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll(null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll("orgName", null));
+            }
+        }
+
+        public class TheGetAllChildTeamsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetAllChildTeams(1);
+
+                connection.Received().GetAll<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllChildTeams(1, null));
             }
         }
 
@@ -73,6 +105,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
 
@@ -87,6 +121,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
 
@@ -116,7 +151,10 @@ namespace Octokit.Tests.Clients
 
                 client.Create("orgName", team);
 
-                connection.Received().Post<Team>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"), team);
+                connection.Received().Post<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams"),
+                    team,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -143,7 +181,10 @@ namespace Octokit.Tests.Clients
 
                 client.Update(1, team);
 
-                connection.Received().Patch<Team>(Arg.Is<Uri>(u => u.ToString() == "teams/1"), team);
+                connection.Received().Patch<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    team,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -165,7 +206,10 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 client.Delete(1);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1"));
+                connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1"),
+                    Args.Object,
+                    "application/vnd.github.hellcat-preview+json");
             }
         }
 
@@ -254,6 +298,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Team>(
                     Arg.Is<Uri>(u => u.ToString() == "user/teams"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -288,7 +334,10 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 await client.GetMembershipDetails(1, "user");
 
-                connection.Received().Get<TeamMembershipDetails>(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Received().Get<TeamMembershipDetails>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    null,
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -312,7 +361,10 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 await client.RemoveMembership(1, "user");
 
-                connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"));
+                connection.Connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
+                    Arg.Any<object>(),
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -339,7 +391,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/repos"),
                     null,
-                    "application/vnd.github.ironman-preview+json",
+                    "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -382,7 +434,9 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 await client.AddRepository(1, "org", "repo");
 
-                connection.Connection.Received().Put(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"));
+                connection.Connection.Received().Put(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"),
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -394,7 +448,11 @@ namespace Octokit.Tests.Clients
 
                 await client.AddRepository(1, "org", "repo", newPermission);
 
-                connection.Connection.Received().Put<HttpStatusCode>(Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"), Arg.Any<object>(), "", "application/vnd.github.ironman-preview+json");
+                connection.Connection.Received().Put<HttpStatusCode>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/repos/org/repo"),
+                    Arg.Any<object>(),
+                    "",
+                    "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
