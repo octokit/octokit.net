@@ -19,8 +19,6 @@ public class RepositoryBranchesClientTests
             var branches = await github.Repository.Branch.GetAll("octokit", "octokit.net");
 
             Assert.NotEmpty(branches);
-
-            Assert.True(branches.First(x => x.Name == "master").Protected);
         }
 
         [IntegrationTest]
@@ -31,8 +29,6 @@ public class RepositoryBranchesClientTests
             var branches = await github.Repository.Branch.GetAll(7528679);
 
             Assert.NotEmpty(branches);
-
-            Assert.True(branches.First(x => x.Name == "master").Protected);
         }
 
         [IntegrationTest]
