@@ -462,7 +462,7 @@ public class SearchClientTests
     public async Task SearchForExcludedLabels()
     {
         var label1 = "up-for-grabs";
-        var label2 = "feature";
+        var label2 = "\"category: feature\"";
 
         // Search for issues by include filter
         var request = new SearchIssuesRequest();
