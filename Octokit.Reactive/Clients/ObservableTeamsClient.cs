@@ -158,7 +158,7 @@ namespace Octokit.Reactive
         public IObservable<User> GetAllMembers(int id, TeamMembersRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
-            
+
             return GetAllMembers(id, request, ApiOptions.None);
         }
 

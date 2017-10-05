@@ -66,7 +66,7 @@ namespace Octokit
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Name: {0} Privacy: {1} Permission: {2}", Name, Privacy?.ToString() ?? "Default", Permission?.ToString() ?? "Default" );
+                return string.Format(CultureInfo.InvariantCulture, "Name: {0} Privacy: {1} Permission: {2}", Name, Privacy?.ToString() ?? "Default", Permission?.ToString() ?? "Default");
             }
         }
     }

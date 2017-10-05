@@ -886,7 +886,7 @@ namespace Octokit
         [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
         public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(long repositoryId, string branch)
         {
-            return GetAllProtectedBranchTeamRestrictions(repositoryId, branch);   
+            return GetAllProtectedBranchTeamRestrictions(repositoryId, branch);
         }
 
         /// <summary>
