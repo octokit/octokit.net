@@ -1,8 +1,38 @@
+### New in 0.27.0 (released 7/10/2017)
+
+## Advisories and Breaking Changes
+
+- `NewTeam.Permission` has been changed to a nullable type `Permission?` and will no longer be sent unless explicitly set
+
+## Release Notes
+
+**Features/Enhancements**
+
+- Implement additional fields in `Team` response and `NewTeam` and `UpdateTeam` requests, for `Privacy`, `Maintainers` and `Description` where they were missing - [#1669](https://github.com/octokit/octokit.net/pull/1669) via [@ryangribble](https://github.com/ryangribble)
+- Implement `Organization` filter in `ISearchClient.SearchCode()` - [#1672](https://github.com/octokit/octokit.net/pull/1672) via [@sepharg](https://github.com/sepharg), [@ryangribble](https://github.com/ryangribble)
+- Implement team membership enhancements for role (Maintainer or Member) and state (Active or Pending) including new methods `TeamsClient.AddOrEditMembership()` and `TeamsClient.GetMembershipDetails()` and updating `TeamsClient.GetAllMembers()` to allow filtering by role. - [#1670](https://github.com/octokit/octokit.net/pull/1670) via [@ryangribble](https://github.com/ryangribble)
+- Implement [Nested Teams API (Preview)](https://developer.github.com/changes/2017-08-30-preview-nested-teams/) - [#1682](https://github.com/octokit/octokit.net/pull/1682) via [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Assembly versioning, NuGet package metadata and inter-package version dependencies should now be correct, after automating them via the build process - [#1660](https://github.com/octokit/octokit.net/pull/1660) via [@ryangribble](https://github.com/ryangribble), [@mderriey](https://github.com/mderriey)
+- Octokit can now run in environments where `PlatformNotSupported` exception was encountered when initializing the API connection (eg AWS Lambda) - [#1660](https://github.com/octokit/octokit.net/pull/1660) via [@ryangribble](https://github.com/ryangribble), [@mderriey](https://github.com/mderriey)
+- Intellisense should once again be available for Octokit libraries - sorry about that! - [#1674](https://github.com/octokit/octokit.net/pull/1674) via [@mderriey](https://github.com/mderriey)
+- `ISearchClient.SearchRepo()` now uses the correct values for the `Forks` search qualifiers (`Include` or `Only`) - [#1680](https://github.com/octokit/octokit.net/pull/1680) via [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Add convention tests to enforce API Pagination support and naming conventions - [#1659](https://github.com/octokit/octokit.net/pull/1659) via [@ryangribble](https://github.com/ryangribble)
+- BranchProtection response class `EnforceAdmins` now provides a standard `ctor` allowing it to be mocked if required - [#1679](https://github.com/octokit/octokit.net/pull/1679) via [@ryangribble](https://github.com/ryangribble)
+
+
 ### New in 0.26.0 (released 31/8/2017)
 
 ## Advisories and Breaking Changes
 
 - This release contains the necessary Octokit changes to specify the `required_pull_request_reviews` field on Branch Protection updates, which becomes mandatory when the Protected Branches API [graduates from preview mode](https://developer.github.com/changes/2017-06-16-loki-preview-ending-soon/) on the 1st September
+
+## Release Notes
 
 **Features/Enhancements**
 
