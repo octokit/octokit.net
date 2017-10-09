@@ -33,7 +33,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(path, "path");
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="path">The content path</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId, string path)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(path, "path");
 
             var url = ApiUrls.RepositoryContent(repositoryId, path);
 
@@ -104,7 +104,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             var url = ApiUrls.RepositoryContent(owner, name, path, reference);
@@ -123,7 +123,7 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string path, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNull(path, "path");
             Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
 
             var url = ApiUrls.RepositoryContent(repositoryId, path, reference);
