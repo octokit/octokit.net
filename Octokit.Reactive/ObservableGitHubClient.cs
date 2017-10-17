@@ -54,6 +54,12 @@ namespace Octokit.Reactive
             get { return _gitHubClient.Connection; }
         }
 
+        public void SetRequestsTimeout(TimeSpan timeout)
+        {
+            
+            _gitHubClient.SetRequestsTimeout(timeout);
+        }
+
         public IObservableAuthorizationsClient Authorization { get; private set; }
         public IObservableActivitiesClient Activity { get; private set; }
         public IObservableIssuesClient Issue { get; private set; }

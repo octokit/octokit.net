@@ -752,5 +752,14 @@ namespace Octokit
 
             return _versionInformation;
         }
+
+        /// <summary>
+        /// Set the timespan to wait before the requests to GitHub api times out.
+        /// </summary>
+        /// <param name="timeout">the timespan to wait before a request to GitHub api times out</param>
+        public void SetRequestsTimeout(TimeSpan timeout)
+        {
+            _httpClient.SetRequestsTimeout(timeout);
+        }
     }
 }

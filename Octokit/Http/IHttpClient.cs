@@ -19,5 +19,12 @@ namespace Octokit.Internal
         /// <param name="cancellationToken">Used to cancel the request</param>
         /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
         Task<IResponse> Send(IRequest request, CancellationToken cancellationToken);
+
+
+        /// <summary>
+        /// Set the timespan to wait before the requests to GitHub api times out.
+        /// </summary>
+        /// <param name="timeout">the timespan to wait before a request to GitHub api times out</param>
+        void SetRequestsTimeout(TimeSpan timeout);
     }
 }

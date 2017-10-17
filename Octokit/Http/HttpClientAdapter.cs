@@ -264,6 +264,11 @@ namespace Octokit.Internal
 
             return newRequest;
         }
+
+        public void SetRequestsTimeout(TimeSpan timeout)
+        {
+            _http.Timeout = timeout;
+        }
     }
 
     internal class RedirectHandler : DelegatingHandler

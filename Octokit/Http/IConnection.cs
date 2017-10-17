@@ -292,5 +292,11 @@ namespace Octokit
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         Credentials Credentials { get; set; }
+
+        /// <summary>
+        /// Set the timespan to wait before the requests to GitHub api times out.
+        /// </summary>
+        /// <param name="timeout">the timespan to wait before a request to GitHub api times out</param>
+        void SetRequestsTimeout(TimeSpan timeout);
     }
 }

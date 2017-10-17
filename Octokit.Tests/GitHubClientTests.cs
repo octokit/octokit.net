@@ -132,6 +132,21 @@ namespace Octokit.Tests
             }
         }
 
+        public class SettingRequestsTimeout
+        {
+            [Fact]
+            public void WhenSettingTimeoutThatSetTheRequestsTimeoutOnTheUnderlyingHttpClient()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var client = new GitHubClient(new Connection(new ProductHeaderValue("OctokitTests"), httpClient));
+
+                client.SetRequestsTimeout(TimeSpan.FromSeconds(15));
+
+
+                httpClient.Received(1).SetRequestsTimeout(TimeSpan.FromSeconds(15));
+            }
+        }
+
         public class TheLastApiInfoProperty
         {
             [Fact]
