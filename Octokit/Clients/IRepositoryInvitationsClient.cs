@@ -51,7 +51,6 @@ namespace Octokit
         /// </remarks>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent();
 
         /// <summary>
@@ -73,7 +72,6 @@ namespace Octokit
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId);
 
         /// <summary>
