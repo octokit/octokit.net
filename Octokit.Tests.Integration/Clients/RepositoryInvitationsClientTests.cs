@@ -1,5 +1,4 @@
-﻿using System;
-using Octokit;
+﻿using Octokit;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using System.Linq;
