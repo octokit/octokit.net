@@ -104,6 +104,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
             return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
@@ -131,6 +132,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
             return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 

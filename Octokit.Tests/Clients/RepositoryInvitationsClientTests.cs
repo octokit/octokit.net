@@ -19,6 +19,15 @@ public class RepositoryInvitationsClientTests
     public class TheGetAllForRepositoryMethod
     {
         [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryInvitationsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+        }
+
+        [Fact]
         public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
@@ -32,6 +41,15 @@ public class RepositoryInvitationsClientTests
 
     public class TheGetAllForCurrentMethod
     {
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryInvitationsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));
+        }
+
         [Fact]
         public async Task RequestsCorrectUrl()
         {

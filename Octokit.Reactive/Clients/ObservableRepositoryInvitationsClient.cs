@@ -92,6 +92,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>        
         public IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
             return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
@@ -117,6 +118,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, "options");
             return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
         }
     }

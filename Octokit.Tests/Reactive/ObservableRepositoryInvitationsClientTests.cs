@@ -19,6 +19,15 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllForRepositoryMethod
         {
             [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryInvitationsClient(gitHub);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForRepository(42, null));
+            }
+
+            [Fact]
             public void RequestsCorrectUrl()
             {
                 var gitHub = Substitute.For<IGitHubClient>();
@@ -32,6 +41,15 @@ namespace Octokit.Tests.Reactive
 
         public class TheGetAllForCurrentMethod
         {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHub = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryInvitationsClient(gitHub);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCurrent(null));
+            }
+
             [Fact]
             public void RequestsCorrectUrl()
             {
