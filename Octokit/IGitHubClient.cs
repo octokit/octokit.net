@@ -15,7 +15,7 @@ namespace Octokit
         /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
         /// </remarks>
         /// <param name="timeout">The Timeout value</param>
-        void SetRequestsTimeout(TimeSpan timeout);
+        void SetRequestTimeout(TimeSpan timeout);
         
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.

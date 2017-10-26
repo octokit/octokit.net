@@ -14,7 +14,7 @@ namespace Octokit.Reactive
         /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
         /// </remarks>
         /// <param name="timeout">The Timeout value</param>
-        void SetRequestsTimeout(TimeSpan timeout);
+        void SetRequestTimeout(TimeSpan timeout);
         
         IObservableAuthorizationsClient Authorization { get; }
         IObservableActivitiesClient Activity { get; }

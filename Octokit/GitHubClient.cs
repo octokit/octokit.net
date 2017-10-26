@@ -107,9 +107,9 @@ namespace Octokit
         /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
         /// </remarks>
         /// <param name="timeout">The Timeout value</param>
-        public void SetRequestsTimeout(TimeSpan timeout)
+        public void SetRequestTimeout(TimeSpan timeout)
         {
-            Connection.SetRequestsTimeout(timeout);
+            Connection.SetRequestTimeout(timeout);
         }
 
         /// <summary>
