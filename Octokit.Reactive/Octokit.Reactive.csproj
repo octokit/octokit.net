@@ -17,6 +17,10 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
     <None Include="app.config" />
