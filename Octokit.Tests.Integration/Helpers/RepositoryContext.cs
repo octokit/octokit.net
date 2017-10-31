@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Octokit.Reactive;
 
 namespace Octokit.Tests.Integration.Helpers
 {
-    internal sealed class RepositoryContext : IDisposable
+    public sealed class RepositoryContext : IDisposable
     {
         internal RepositoryContext(IConnection connection, Repository repo)
         {
