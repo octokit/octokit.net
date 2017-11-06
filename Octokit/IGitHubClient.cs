@@ -16,7 +16,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);
-        
+
         /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
         /// </summary>

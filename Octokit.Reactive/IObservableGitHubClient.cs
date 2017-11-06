@@ -15,7 +15,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);
-        
+
         IObservableAuthorizationsClient Authorization { get; }
         IObservableActivitiesClient Activity { get; }
         IObservableIssuesClient Issue { get; }
