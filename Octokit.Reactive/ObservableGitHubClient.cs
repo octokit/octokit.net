@@ -64,7 +64,6 @@ namespace Octokit.Reactive
         /// <param name="timeout">The Timeout value</param>
         public void SetRequestTimeout(TimeSpan timeout)
         {
-            
             _gitHubClient.SetRequestTimeout(timeout);
         }
 
