@@ -10,7 +10,7 @@ namespace Octokit
     {
         public CommitStatus() { }
 
-        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, string targetUrl, string description, string context, int id, string url, User creator)
+        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, string targetUrl, string description, string context, long id, string url, User creator)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -57,7 +57,7 @@ namespace Octokit
         /// <summary>
         /// The unique identifier of the status.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The URL of the status.
