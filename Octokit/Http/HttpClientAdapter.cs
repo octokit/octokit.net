@@ -264,6 +264,15 @@ namespace Octokit.Internal
 
             return newRequest;
         }
+
+        /// <summary>
+        /// Set the GitHub Api request timeout.
+        /// </summary>
+        /// <param name="timeout">The Timeout value</param>
+        public void SetRequestTimeout(TimeSpan timeout)
+        {
+            _http.Timeout = timeout;
+        }
     }
 
     internal class RedirectHandler : DelegatingHandler

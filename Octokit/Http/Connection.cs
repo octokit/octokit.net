@@ -752,5 +752,14 @@ namespace Octokit
 
             return _versionInformation;
         }
+
+        /// <summary>
+        /// Set the GitHub Api request timeout.
+        /// </summary>
+        /// <param name="timeout">The Timeout value</param>
+        public void SetRequestTimeout(TimeSpan timeout)
+        {
+            _httpClient.SetRequestTimeout(timeout);
+        }
     }
 }

@@ -1,3 +1,23 @@
+### New in 0.28.0 (released 6/11/2017)
+
+## Advisories and Breaking Changes
+
+- This release has been pushed out in response to `CommitStatus.Id` on GitHub exceeding `Int32.MaxValue`.  We've made this field a `long` now... sorry about that!
+
+## Release Notes
+
+**Features/Enhancements**
+
+- You can now use `IGitHubClient.SetRequestTimeout(TimeSpan timeout)` to set a custom timeout, particularly useful for lengthy operations such as uploading release assets. - [#1693](https://github.com/octokit/octokit.net/pull/1693) via [@pmiossec](https://github.com/pmiossec), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Update `CommitStatus.Id` field from `int` to `long` to prevent overflow exceptions - [#1703](https://github.com/octokit/octokit.net/pull/1703) via [@kzu](https://github.com/kzu)
+
+**Housekeeping**
+
+- Correct rendering of `HttpClient` documentation page - [#1699](https://github.com/octokit/octokit.net/pull/1699) via [@scovetta](https://github.com/scovetta)
+
 ### New in 0.27.0 (released 7/10/2017)
 
 ## Advisories and Breaking Changes
