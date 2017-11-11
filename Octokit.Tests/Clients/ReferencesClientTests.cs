@@ -68,6 +68,9 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
@@ -75,6 +78,9 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", ApiOptions.None));
             }
 
             [Fact]
@@ -110,16 +116,27 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(null, "name", "heads"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", null, "heads"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(null, "name", "heads", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", null, "heads", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", "name", null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace("owner", "name", "heads", null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(1, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(1, null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForSubNamespace(1, "subnamespace", null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("", "name", "heads"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("owner", "", "heads"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("owner", "name", ""));
 
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("", "name", "heads", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("owner", "", "heads", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace("owner", "name", "", ApiOptions.None));
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace(1, ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForSubNamespace(1, "", ApiOptions.None));
             }
 
             [Fact]
