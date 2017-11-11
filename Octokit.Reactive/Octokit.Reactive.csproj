@@ -7,6 +7,7 @@
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
     <DebugType>embedded</DebugType>
@@ -15,10 +16,6 @@
     <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
     <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
     <Copyright>Copyright GitHub 2017</Copyright>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

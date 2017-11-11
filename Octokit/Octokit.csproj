@@ -7,6 +7,7 @@
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit</AssemblyName>
     <PackageId>Octokit</PackageId>
     <DebugType>embedded</DebugType>
@@ -18,7 +19,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO;NO_SERIALIZABLE</DefineConstants>
   </PropertyGroup>
 
