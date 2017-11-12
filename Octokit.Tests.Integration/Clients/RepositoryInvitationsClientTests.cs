@@ -39,10 +39,10 @@ public class RepositoryInvitationsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfInvitationsWithStart()
         {
-            var collaborator1 = "octocat";
+            var collaborator1 = Helper.CredentialsSecondUser.Login;
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
@@ -75,10 +75,10 @@ public class RepositoryInvitationsClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfInvitationsWithoutStart()
         {
-            var collaborator = "octocat";
+            var collaborator = Helper.CredentialsSecondUser.Login;
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
@@ -108,7 +108,7 @@ public class RepositoryInvitationsClientTests
         [IntegrationTest]
         public async Task ReturnsDistinctInvitationsBasedOnStart()
         {
-            var collaborator1 = "octocat";
+            var collaborator1 = Helper.CredentialsSecondUser.Login;
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
