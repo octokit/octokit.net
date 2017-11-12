@@ -100,6 +100,19 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Set the GitHub Api request timeout.
+        /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
+        /// </summary>
+        /// <remarks>
+        /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
+        /// </remarks>
+        /// <param name="timeout">The Timeout value</param>
+        public void SetRequestTimeout(TimeSpan timeout)
+        {
+            Connection.SetRequestTimeout(timeout);
+        }
+
+        /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made
         /// </summary>
         /// <returns><seealso cref="ApiInfo"/> representing the information returned as part of an Api call</returns>

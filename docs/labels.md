@@ -3,6 +3,7 @@
 Labels are appended using the method `NewIssue.Labels.Add(x)`.
 
 Example:
+
     var myNewIssue = new NewIssue("Issue with dropdown menu");
     myNewIssue.Labels.Add("bug");
     

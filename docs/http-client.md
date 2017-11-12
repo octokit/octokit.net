@@ -22,7 +22,7 @@ The rules we currently follow:
  - MUST use the original request's authentication credentials when following a redirect where the original host matches the redirect host.
  - MUST NOT use the original request's authentication credentials when following a redirect where the original host does not match the redirect host.
  - SHOULD only follow 3 redirects.
- ```
+```
 
 ### Proxy Support
 
