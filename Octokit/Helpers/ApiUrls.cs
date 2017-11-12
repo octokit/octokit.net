@@ -4156,5 +4156,97 @@ namespace Octokit
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all emojis in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for emojis.</returns>
+        public static Uri Emojis()
+        {
+            return "emojis".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rendered markdown in
+        /// response to a POST request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to render markdown.</returns>
+        public static Uri RawMarkdown()
+        {
+            return "markdown/raw".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rendered markdown in
+        /// response to a POST request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to render markdown.</returns>
+        public static Uri Markdown()
+        {
+            return "markdown".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all git ignore templates in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to git ignore templates.</returns>
+        public static Uri GitIgnoreTemplates()
+        {
+            return "gitignore/templates".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns specified git ignore templates in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="templateName">The name of the template to retrieve</param>
+        /// <returns>The <see cref="Uri"/> to git ignore template.</returns>
+        public static Uri GitIgnoreTemplates(string templateName)
+        {
+            return "gitignore/templates/{0}".FormatUri(templateName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all licenses in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to licenses.</returns>
+        public static Uri Licenses()
+        {
+            return "licenses".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns specified license in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="key">The key of the license to retrieve</param>
+        /// <returns>The <see cref="Uri"/> to license.</returns>
+        public static Uri Licenses(string key)
+        {
+            return "licenses/{0}".FormatUri(key);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rate limit in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to rate limit.</returns>
+        public static Uri RateLimit()
+        {
+            return "rate_limit".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns meta in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
+        public static Uri Meta()
+        {
+            return "meta".FormatUri();
+        }
     }
 }
