@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -13,24 +14,25 @@ namespace Octokit.Tests.Clients
         public class TheRenderRawMarkdownMethod
         {
             [Fact]
-            public async Task RequestsTheEmojiEndpoint()
+            public async Task RequestsTheRawMarkdownEndpoint()
             {
+                var markdown = "**Test**";
                 var response = "<strong>Test</strong>";
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Post<string>(
                         Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
-                        Arg.Is<string>(s => s == "**Test**"),
+                        markdown,
                         "text/html",
                         "text/plain")
                     .Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(apiConnection);
 
-                var html = await client.RenderRawMarkdown("**Test**");
+                var html = await client.RenderRawMarkdown(markdown);
 
                 Assert.Equal("<strong>Test</strong>", html);
                 apiConnection.Received()
                     .Post<string>(Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
-                    "**Test**",
+                    markdown,
                     "text/html",
                     "text/plain");
             }
