@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
 using System.Globalization;
 
@@ -179,6 +178,43 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new MiscellaneousClient(null));
+            }
+        }
+
+        public class TheGetAllLicensesMethod
+        {
+            [Fact]
+            public async void EnsuresNonNullArguments()
+            {
+                var client = new MiscellaneousClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
+            }
+
+            [Fact]
+            public async Task RequestsTheLicensesEndpoint()
+            {
+                IReadOnlyList<LicenseMetadata> response = new ReadOnlyCollection<LicenseMetadata>(new List<LicenseMetadata>()
+                {
+                    new LicenseMetadata("foo1", "foo2", "http://example.com/foo1" ),
+                    new LicenseMetadata("bar1", "bar2", "http://example.com/bar1" )
+                });
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetAll<LicenseMetadata>(Args.Uri, null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions)
+                    .Returns(Task.FromResult(response));
+                var client = new MiscellaneousClient(connection);
+
+                var licenses = await client.GetAllLicenses();
+
+                Assert.Equal(2, licenses.Count);
+                Assert.Equal("foo1", licenses[0].Key);
+                Assert.Equal("foo2", licenses[0].Name);
+                Assert.Equal("http://example.com/foo1", licenses[0].Url);
+                Assert.Equal("bar1", licenses[1].Key);
+                Assert.Equal("bar2", licenses[1].Name);
+                Assert.Equal("http://example.com/bar1", licenses[1].Url);
+                connection.Received()
+                    .GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions);
             }
         }
     }
