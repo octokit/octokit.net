@@ -12,7 +12,6 @@ public class RepositoryInvitationsClientTests
         [IntegrationTest]
         public async Task CanGetAllInvitations()
         {
-            var collaborator = "octocat";
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
@@ -22,9 +21,9 @@ public class RepositoryInvitationsClientTests
                 var permission = new CollaboratorRequest(Permission.Push);
 
                 // invite a collaborator
-                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator, permission);
+                var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
 
-                Assert.Equal(collaborator, response.Invitee.Login);
+                Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
                 Assert.Equal(InvitationPermissionType.Write, response.Permissions);
 
                 var invitations = await github.Repository.Invitation.GetAllForRepository(context.Repository.Id);
@@ -189,7 +188,7 @@ public class RepositoryInvitationsClientTests
             RepositoryContext[] contexts = null;
             try
             {
-                contexts = await Task.WhenAll(repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x))));
+                contexts = repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
@@ -229,14 +228,12 @@ public class RepositoryInvitationsClientTests
         public async Task ReturnsCorrectCountOfInvitationsWithoutStart()
         {
             var github = Helper.GetAuthenticatedClient();
-            var repoNames = Enumerable.Range(0, 10)
-                .Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}"))
-                .ToList();
+            var repoNames = Enumerable.Range(0, 6).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
 
             RepositoryContext[] contexts = null;
             try
             {
-                contexts = await Task.WhenAll(repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x))));
+                contexts = repoNames.Select( x =>  github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
@@ -280,7 +277,7 @@ public class RepositoryInvitationsClientTests
             RepositoryContext[] contexts = null;
             try
             {
-                contexts = await Task.WhenAll(repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x))));
+                contexts = repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
