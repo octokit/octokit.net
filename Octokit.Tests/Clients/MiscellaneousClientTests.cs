@@ -184,11 +184,11 @@ namespace Octokit.Tests.Clients
         public class TheGetAllLicensesMethod
         {
             [Fact]
-            public async void EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var client = new MiscellaneousClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
             }
 
             [Fact]
@@ -196,8 +196,8 @@ namespace Octokit.Tests.Clients
             {
                 IReadOnlyList<LicenseMetadata> response = new ReadOnlyCollection<LicenseMetadata>(new List<LicenseMetadata>()
                 {
-                    new LicenseMetadata("foo1", "foo2", "http://example.com/foo1" ),
-                    new LicenseMetadata("bar1", "bar2", "http://example.com/bar1" )
+                    new LicenseMetadata("foo1", "node-id-1", "foo2", "http://example.com/foo1", "something", true),
+                    new LicenseMetadata("bar1", "node-id-1", "bar2", "http://example.com/bar1", "something else", false )
                 });
                 var connection = Substitute.For<IApiConnection>();
                 connection.GetAll<LicenseMetadata>(Args.Uri, null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions)
