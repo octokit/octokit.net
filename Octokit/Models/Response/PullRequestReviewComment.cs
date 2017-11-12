@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(string url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl)
+        public PullRequestReviewComment(string url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, int? inReplyToId)
         {
             Url = url;
             Id = id;
@@ -31,6 +31,7 @@ namespace Octokit
             UpdatedAt = updatedAt;
             HtmlUrl = htmlUrl;
             PullRequestUrl = pullRequestUrl;
+            InReplyToId = inReplyToId;
         }
 
         /// <summary>
@@ -104,6 +105,11 @@ namespace Octokit
         public string PullRequestUrl { get; protected set; }
 
         public ReactionSummary Reactions { get; protected set; }
+
+        /// <summary>
+        /// The Id of the comment this comment replys to.
+        /// </summary>
+        public int? InReplyToId { get; protected set; }
 
         internal string DebuggerDisplay
         {
