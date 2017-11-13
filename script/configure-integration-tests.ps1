@@ -74,8 +74,8 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
 }
 
 Write-Host
-Write-Host "BIG FREAKING WARNING!!!!!" 
-Write-Host "You should use a test account when running the Octokit integration tests!"
+Write-Warning "BIG FREAKING WARNING!!!!!" 
+Write-Warning "You should use a test account when running the Octokit integration tests!"
 Write-Host
 Write-Host
 
