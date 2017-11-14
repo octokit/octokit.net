@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using Octokit.Models.Response;
 
 namespace Octokit
 {
@@ -15,6 +16,8 @@ namespace Octokit
     /// </remarks>
     public class RepositoriesClient : ApiClient, IRepositoriesClient
     {
+        private static readonly string AcceptHeaders_GetRepository_PreviewApis = AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview, AcceptHeaders.RepositoryTopicsPreview);
+
         /// <summary>
         /// Initializes a new GitHub Repos API client.
         /// </summary>
@@ -212,7 +215,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, nameof(update));
             Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders_GetRepository_PreviewApis);
         }
 
         /// <summary>
@@ -225,7 +228,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders_GetRepository_PreviewApis);
         }
 
         /// <summary>
@@ -243,7 +246,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders_GetRepository_PreviewApis);
         }
 
         /// <summary>
@@ -257,7 +260,7 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Get(long repositoryId)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders_GetRepository_PreviewApis);
         }
 
         /// <summary>
@@ -873,6 +876,36 @@ namespace Octokit
         public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId)
         {
             return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), null, AcceptHeaders.LicensesApiPreview);
+        }
+
+        /// <summary>
+        /// Get the list of all topics for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns list of topics defined for a repository.</returns>
+        public Task<RepositoryTopics> GetTopics(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            return ApiConnection.Get<RepositoryTopics>(ApiUrls.RepositoryTopics(owner, name), null, AcceptHeaders.RepositoryTopicsPreview);
+        }
+
+        /// <summary>
+        /// Get the list of all topics for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns list of topics defined for a repository.</returns>
+        public Task<RepositoryTopics> GetTopics(long repositoryId)
+        {
+            return ApiConnection.Get<RepositoryTopics>(ApiUrls.RepositoryTopics(repositoryId), null, AcceptHeaders.RepositoryTopicsPreview);
         }
 
         /// <summary>

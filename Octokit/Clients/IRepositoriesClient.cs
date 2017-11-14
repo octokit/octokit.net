@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Octokit.Models.Response;
 
 namespace Octokit
 {
@@ -570,6 +571,26 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
         Task<RepositoryContentLicense> GetLicenseContents(long repositoryId);
+        
+        /// Get the list of all topics for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns list of topics defined for a repository.</returns>
+        Task<RepositoryTopics> GetTopics(string owner, string name);
+
+        /// <summary>
+        /// Get the list of all topics for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns list of topics defined for a repository.</returns>
+        Task<RepositoryTopics> GetTopics(long repositoryId);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>

@@ -4133,5 +4133,26 @@ namespace Octokit
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for listing all topics in a repository.
+        /// </summary>
+        /// <param name="owner">owner of repo</param>
+        /// <param name="name">name of repo</param>
+        /// <returns></returns>
+        public static Uri RepositoryTopics(string owner, string name)
+        {
+            return "repos/{0}/{1}/topics".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for listing all topics in a repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTopics(long repositoryId)
+        {
+            return "repositories/{0}/topics".FormatUri(repositoryId);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Models.Response;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -413,7 +414,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
                     null,
-                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json,application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -427,7 +428,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
                     null,
-                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json,application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -1077,6 +1078,33 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetTopicsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetTopics("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), null, AcceptHeaders.RepositoryTopicsPreview);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetTopics(1);
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/topics"), null, AcceptHeaders.RepositoryTopicsPreview);
+            }
+        }
+
         public class TheEditMethod
         {
             [Fact]
@@ -1089,7 +1117,7 @@ namespace Octokit.Tests.Clients
                 client.Edit("owner", "repo", update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json,application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -1102,7 +1130,7 @@ namespace Octokit.Tests.Clients
                 client.Edit(1, update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json,application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
