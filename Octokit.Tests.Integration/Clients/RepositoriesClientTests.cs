@@ -35,6 +35,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
                 Assert.NotNull(repository.DefaultBranch);
+                Assert.Null(repository.License);
             }
         }
 
@@ -186,6 +187,35 @@ public class RepositoriesClientTests
                 Assert.Equal(repoName, createdRepository.Name);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.Equal(repoName, repository.Name);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithALicenseTemplate()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-with-license");
+
+            var newRepository = new NewRepository(repoName)
+            {
+                AutoInit = true,
+                LicenseTemplate = "mit"
+            };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // NOTE: the License attribute is empty for newly created repositories
+                Assert.Null(createdRepository.License);
+
+                // license information is not immediatelly available after the repository is created
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
+                // check for actual license by reloading repository info
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.NotNull(repository.License);
+                Assert.Equal("mit", repository.License.Key);
             }
         }
 
@@ -745,6 +775,18 @@ public class RepositoriesClientTests
                 Assert.NotNull(repository.AllowSquashMerge);
                 Assert.NotNull(repository.AllowMergeCommit);
             }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsSpecifiedRepositoryWithLicenseInformation()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("github", "choosealicense.com");
+
+            Assert.NotNull(repository.License);
+            Assert.Equal("mit", repository.License.Key);
+            Assert.Equal("MIT License", repository.License.Name);
         }
     }
 

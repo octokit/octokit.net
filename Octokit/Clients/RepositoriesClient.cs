@@ -177,7 +177,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, "update");
             Ensure.ArgumentNotNull(update.Name, "update.Name");
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.SquashCommitPreview);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(update, "update");
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.SquashCommitPreview);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories());
+            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return ApiConnection.GetAll<Repository>(url);
+            return ApiConnection.GetAll<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
