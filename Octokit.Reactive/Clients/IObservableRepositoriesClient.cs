@@ -335,6 +335,50 @@ namespace Octokit.Reactive
         IObservable<RepositoryLanguage> GetAllLanguages(long repositoryId);
 
         /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        IObservable<RepositoryTopics> GetAllTopics(long repositoryId);
+
+        /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        IObservable<RepositoryTopics> GetAllTopics(string owner, string name);
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="topics">The topics list to be set</param>
+        /// <returns>All topics for the repository.</returns>
+        IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics);
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The topics list to be set.</param>
+        /// <returns>All topics for the repository</returns>
+        IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics);
+
+        /// <summary>
         /// Gets all teams for the specified repository.
         /// </summary>
         /// <remarks>

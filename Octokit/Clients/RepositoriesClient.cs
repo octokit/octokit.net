@@ -208,7 +208,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.SquashCommitPreview);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Get(long repositoryId)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.SquashCommitPreview);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories());
+            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return ApiConnection.GetAll<Repository>(url);
+            return ApiConnection.GetAll<Repository>(url, null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview, options);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview, options);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview, options);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.SquashCommitPreview + ", " + AcceptHeaders.RepositoryTopicsPreview, options);
         }
 
         /// <summary>
@@ -659,6 +659,72 @@ namespace Octokit
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        public async Task<RepositoryTopics> GetAllTopics(long repositoryId)
+        {
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            return await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        public async Task<RepositoryTopics> GetAllTopics(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            return await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="topics">The topics list to be set</param>
+        /// <returns>All topics for the repository.</returns>
+        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        {
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            return await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The topics list to be set.</param>
+        /// <returns>All topics for the repository</returns>
+        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            return await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
         }
 
         /// <summary>

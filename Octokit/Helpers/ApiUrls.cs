@@ -1773,6 +1773,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository topics.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTopics(string owner, string name)
+        {
+            return "repos/{0}/{1}/topics".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository teams.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -3257,6 +3268,16 @@ namespace Octokit
         public static Uri RepositoryLanguages(long repositoryId)
         {
             return "repositories/{0}/languages".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository topics.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryTopics(long repositoryId)
+        {
+            return "repositories/{0}/topics".FormatUri(repositoryId);
         }
 
         /// <summary>

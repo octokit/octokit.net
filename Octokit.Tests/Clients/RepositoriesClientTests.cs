@@ -261,7 +261,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
                     null,
-                    "application/vnd.github.polaris-preview+json");
+                    "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -275,7 +275,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
                     null,
-                    "application/vnd.github.polaris-preview+json");
+                    "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -302,7 +302,10 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories"));
+                    .GetAll<Repository>(Arg.Is<Uri>(
+                        u => u.ToString() == "repositories"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
             }
         }
 
@@ -317,7 +320,10 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic(new PublicRepositoryRequest(364L));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -329,7 +335,10 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic(new PublicRepositoryRequest(364L));
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"));
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
             }
         }
 
@@ -344,7 +353,11 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Args.ApiOptions);
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -364,6 +377,7 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"),
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
                         Args.ApiOptions);
             }
 
@@ -386,6 +400,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "private" && d["sort"] == "full_name"),
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
                         Args.ApiOptions);
             }
 
@@ -409,6 +424,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"),
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
                         Args.ApiOptions);
             }
 
@@ -430,6 +446,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["visibility"] == "private"),
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
                         Args.ApiOptions);
             }
 
@@ -452,6 +469,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["affiliation"] == "owner" && d["sort"] == "full_name"),
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
                         Args.ApiOptions);
             }
         }
@@ -467,7 +485,11 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForUser("username");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"), Args.ApiOptions);
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -496,7 +518,11 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), Args.ApiOptions);
+                    .GetAll<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"),
+                        null,
+                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -701,6 +727,51 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllLanguages("", "repo"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllLanguages("owner", ""));
+            }
+        }
+
+        public class TheGetAllTopicsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryTopics>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"),
+                        null,
+                        "application/vnd.github.mercy-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics(1);
+
+                connection.Received()
+                    .Get<RepositoryTopics>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/topics"),
+                        null,
+                        "application/vnd.github.mercy-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTopics(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllTopics("owner", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTopics("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTopics("owner", ""));
             }
         }
 

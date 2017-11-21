@@ -504,6 +504,68 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId)
+        {
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            return _connection
+                .GetAndFlattenAllPages<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/#list-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics for the repository.</returns>
+        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            return _connection
+                .GetAndFlattenAllPages<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview);
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="topics">The topics list to be set</param>
+        /// <returns>All topics for the repository.</returns>
+        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        {
+            return _client.ReplaceAllTopics(repositoryId, topics).ToObservable();
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The topics list to be set.</param>
+        /// <returns>All topics for the repository</returns>
+        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        {
+            return _client.ReplaceAllTopics(owner, name, topics).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all teams for the specified repository.
         /// </summary>
         /// <remarks>
