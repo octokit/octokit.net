@@ -5,10 +5,10 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      dotnet: 1.0.1
+      dotnet: 1.0.4
     - os: osx
       osx_image: xcode8
-      dotnet: 1.0.1
+      dotnet: 1.0.4
 
 before_script:
   - if test "$TRAVIS_OS_NAME" == "osx"; then export FrameworkPathOverride=/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.5/; else export FrameworkPathOverride=/usr/lib/mono/4.5/; fi
