@@ -1,4 +1,5 @@
-﻿using Octokit;
+﻿using System.Collections.Generic;
+using Octokit;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using System.Linq;
@@ -185,10 +186,13 @@ public class RepositoryInvitationsClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoNames = Enumerable.Range(0, 6).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
 
-            RepositoryContext[] contexts = null;
+            var contexts = new List<RepositoryContext>();
             try
             {
-                contexts = repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
+                foreach (var repoName in repoNames)
+                {
+                    contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
+                }
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
