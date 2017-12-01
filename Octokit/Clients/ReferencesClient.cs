@@ -66,10 +66,26 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
         {
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name), options);
         }
 
         /// <summary>
@@ -82,7 +98,23 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(long repositoryId)
         {
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId));
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId), options);
         }
 
         /// <summary>
@@ -97,13 +129,30 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace)
         {
+            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
             Ensure.ArgumentNotNullOrEmptyString(name, "name");
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
+            Ensure.ArgumentNotNull(options, "options");
 
             // TODO: Handle 404 when subNamespace cannot be found
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace), options);
         }
 
         /// <summary>
@@ -117,11 +166,27 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace)
         {
+            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
+            Ensure.ArgumentNotNull(options, "options");
 
             // TODO: Handle 404 when subNamespace cannot be found
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId, subNamespace));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options);
         }
 
         /// <summary>

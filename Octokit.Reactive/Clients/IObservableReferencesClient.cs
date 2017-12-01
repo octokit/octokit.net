@@ -56,9 +56,32 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#get-all-references
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Reference> GetAll(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         IObservable<Reference> GetAll(long repositoryId);
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Reference> GetAll(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -78,10 +101,35 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/git/refs/#get-all-references
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options);
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
         IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace);
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options);
 
         /// <summary>
         /// Creates a reference for a given repository
