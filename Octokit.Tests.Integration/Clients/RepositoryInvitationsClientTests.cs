@@ -184,7 +184,7 @@ public class RepositoryInvitationsClientTests
         public async Task ReturnsCorrectCountOfInvitationsWithStart()
         {
             var github = Helper.GetAuthenticatedClient();
-            var repoNames = Enumerable.Range(0, 6).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
+            var repoNames = Enumerable.Range(0, 2).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
 
             var contexts = new List<RepositoryContext>();
             try
@@ -207,7 +207,7 @@ public class RepositoryInvitationsClientTests
 
                 var startOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 1,
                     PageCount = 1,
                     StartPage = 2
                 };
@@ -232,12 +232,15 @@ public class RepositoryInvitationsClientTests
         public async Task ReturnsCorrectCountOfInvitationsWithoutStart()
         {
             var github = Helper.GetAuthenticatedClient();
-            var repoNames = Enumerable.Range(0, 6).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
+            var repoNames = Enumerable.Range(0, 2).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
 
-            RepositoryContext[] contexts = null;
+            var contexts = new List<RepositoryContext>();
             try
             {
-                contexts = repoNames.Select( x =>  github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
+                foreach (var repoName in repoNames)
+                {
+                    contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
+                }
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
@@ -252,13 +255,13 @@ public class RepositoryInvitationsClientTests
 
                 var startOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 1,
                     PageCount = 1
                 };
 
 
                 var invitations = await github.Repository.Invitation.GetAllForCurrent(startOptions);
-                Assert.Equal(5, invitations.Count);
+                Assert.Equal(1, invitations.Count);
             }
             finally
             {
@@ -276,12 +279,15 @@ public class RepositoryInvitationsClientTests
         public async Task ReturnsDistinctInvitationsBasedOnStart()
         {
             var github = Helper.GetAuthenticatedClient();
-            var repoNames = Enumerable.Range(0, 10).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
+            var repoNames = Enumerable.Range(0, 2).Select(i => Helper.MakeNameWithTimestamp($"public-repo{i}")).ToList();
 
-            RepositoryContext[] contexts = null;
+            var contexts = new List<RepositoryContext>();
             try
             {
-                contexts = repoNames.Select(x => github.CreateRepositoryContext(new NewRepository(x)).Result).ToArray();
+                foreach (var repoName in repoNames)
+                {
+                    contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
+                }
                 var fixture = github.Repository.Collaborator;
                 var permission = new CollaboratorRequest(Permission.Push);
 
@@ -296,13 +302,13 @@ public class RepositoryInvitationsClientTests
                
                 var startOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 1,
                     PageCount = 1
                 };
 
                 var skipStartOptions = new ApiOptions
                 {
-                    PageSize = 5,
+                    PageSize = 1,
                     PageCount = 1,
                     StartPage = 2
                 };
