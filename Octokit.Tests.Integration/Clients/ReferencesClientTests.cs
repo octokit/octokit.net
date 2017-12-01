@@ -63,11 +63,113 @@ public class ReferencesClientTests : IDisposable
         Assert.NotEmpty(list);
     }
 
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesWithStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var references = await _fixture.GetAll("octokit", "octokit.net", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesWithoutStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var references = await _fixture.GetAll("octokit", "octokit.net", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReferencesBasedOnStartPage()
+    {
+        var startOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var firstRefsPage = await _fixture.GetAll("octokit", "octokit.net", startOptions);
+        var secondRefsPage = await _fixture.GetAll("octokit", "octokit.net", skipStartOptions);
+
+        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+    }
+
     [IntegrationTest(Skip = "This is paging for a long long time")]
     public async Task CanGetListOfReferencesWithRepositoryId()
     {
         var list = await _fixture.GetAll(7528679);
         Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesWithRepositoryIdWithStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var references = await _fixture.GetAll(7528679, options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesWithRepositoryIdWithoutStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var references = await _fixture.GetAll(7528679, options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReferencesWithRepositoryIdBasedOnStartPage()
+    {
+        var startOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var firstRefsPage = await _fixture.GetAll(7528679, startOptions);
+        var secondRefsPage = await _fixture.GetAll(7528679, skipStartOptions);
+
+        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
     }
 
     [IntegrationTest]
@@ -78,10 +180,112 @@ public class ReferencesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesInNamespaceWithStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var references = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesInNamespaceWithoutStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var references = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReferencesInNamespaceBasedOnStartPage()
+    {
+        var startOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var firstRefsPage = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", startOptions);
+        var secondRefsPage = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", skipStartOptions);
+
+        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+    }
+
+    [IntegrationTest]
     public async Task CanGetListOfReferencesInNamespaceWithRepositoryId()
     {
         var list = await _fixture.GetAllForSubNamespace(7528679, "heads");
         Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesInNamespaceWithRepositoryIdWithStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var references = await _fixture.GetAllForSubNamespace(7528679, "heads", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReferencesInNamespaceWithRepositoryIdWithoutStart()
+    {
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var references = await _fixture.GetAllForSubNamespace(7528679, "heads", options);
+
+        Assert.Equal(5, references.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReferencesInNamespaceWithRepositoryIdBasedOnStartPage()
+    {
+        var startOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var firstRefsPage = await _fixture.GetAllForSubNamespace(7528679, "heads", startOptions);
+        var secondRefsPage = await _fixture.GetAllForSubNamespace(7528679, "heads", skipStartOptions);
+
+        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
     }
 
     [IntegrationTest]
