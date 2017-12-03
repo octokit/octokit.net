@@ -2,6 +2,7 @@
 using Octokit;
 using System;
 using System.Threading.Tasks;
+using Octokit.Tests;
 using Xunit;
 
 public class RepositoryInvitationsClientTests
@@ -18,6 +19,15 @@ public class RepositoryInvitationsClientTests
     public class TheGetAllForRepositoryMethod
     {
         [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryInvitationsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForRepository(1, null));
+        }
+
+        [Fact]
         public async Task RequestsCorrectUrl()
         {
             var connection = Substitute.For<IApiConnection>();
@@ -25,12 +35,21 @@ public class RepositoryInvitationsClientTests
 
             await client.GetAllForRepository(1);
 
-            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations"), "application/vnd.github.swamp-thing-preview+json");
+            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations"), null, "application/vnd.github.swamp-thing-preview+json", Args.ApiOptions);
         }
     }
 
     public class TheGetAllForCurrentMethod
     {
+        [Fact]
+        public async Task EnsuresNonNullArguments()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new RepositoryInvitationsClient(connection);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForCurrent(null));
+        }
+
         [Fact]
         public async Task RequestsCorrectUrl()
         {
@@ -39,7 +58,7 @@ public class RepositoryInvitationsClientTests
 
             await client.GetAllForCurrent();
 
-            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations"), "application/vnd.github.swamp-thing-preview+json");
+            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations"), null, "application/vnd.github.swamp-thing-preview+json", Args.ApiOptions);
         }
     }
 
