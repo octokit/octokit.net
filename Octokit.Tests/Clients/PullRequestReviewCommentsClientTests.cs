@@ -493,7 +493,7 @@ public class PullRequestReviewCommentsClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "fakeRepoName", 1, comment));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, comment));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fakeOwner", "fakeRepoName", 1, (PullRequestReviewCommentCreate)null));
 
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "fakeRepoName", 1, comment));
             await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fakeOwner", "", 1, comment));
