@@ -263,6 +263,31 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates a comment on a pull request review.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The Pull Request number</param>
+        /// <param name="comment">The comment</param>
+        public async Task<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentReply comment)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a comment on a pull request review.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The Pull Request number</param>
+        /// <param name="comment">The comment</param>
+        public async Task<PullRequestReviewComment> Create(long repositoryId, int number, PullRequestReviewCommentReply comment)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Creates a comment on a pull request review as a reply to another comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
