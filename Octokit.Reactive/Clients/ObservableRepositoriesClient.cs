@@ -129,7 +129,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllPublic()
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return _connection.GetAndFlattenAllPages<Repository>(url);
+            return _connection.GetAndFlattenAllPages<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a>
         /// that announced this feature.
         /// </remarks>
         public IObservableCommitStatusClient Status { get; private set; }
@@ -303,7 +303,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// A client for GitHub's Repository Forks API.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>
         public IObservableRepositoryForksClient Forks { get; private set; }
 
         /// <summary>
