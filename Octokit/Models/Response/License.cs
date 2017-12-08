@@ -12,6 +12,7 @@ namespace Octokit
         public License(
             string key,
             string name,
+            string spdxId,
             string url,
             string htmlUrl,
             bool featured,
@@ -21,7 +22,7 @@ namespace Octokit
             string body,
             IEnumerable<string> required,
             IEnumerable<string> permitted,
-            IEnumerable<string> forbidden) : base(key, name, url)
+            IEnumerable<string> forbidden) : base(key, name, spdxId, url, featured)
         {
             Ensure.ArgumentNotNull(htmlUrl, "htmlUrl");
             Ensure.ArgumentNotNull(description, "description");
@@ -33,7 +34,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(forbidden, "forbidden");
 
             HtmlUrl = htmlUrl;
-            Featured = featured;
             Description = description;
             Category = category;
             Implementation = implementation;
@@ -51,11 +51,6 @@ namespace Octokit
         /// Url to the license on https://choosealicense.com
         /// </summary>
         public string HtmlUrl { get; protected set; }
-
-        /// <summary>
-        /// Whether the license is one of the licenses featured on https://choosealicense.com
-        /// </summary>
-        public bool Featured { get; protected set; }
 
         /// <summary>
         /// A description of the license.

@@ -650,6 +650,36 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        public IObservable<RepositoryContentLicense> GetLicenseContents(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.GetLicenseContents(owner, name).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        public IObservable<RepositoryContentLicense> GetLicenseContents(long repositoryId)
+        {
+            return _client.GetLicenseContents(repositoryId).ToObservable();
+        }
+
+        /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

@@ -91,18 +91,18 @@ namespace Octokit.Tests.Reactive
                 var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
                     new ApiResponse<Repository>(new Response(), repository));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json").Returns(response);
+                connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get("stark", "ned");
 
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 var result = await observable;
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
                 var result2 = await observable;
                 // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 Assert.Same(repository, result);
                 Assert.Same(repository, result2);
@@ -117,18 +117,18 @@ namespace Octokit.Tests.Reactive
                 var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
                     new ApiResponse<Repository>(new Response(), repository));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json").Returns(response);
+                connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get(1);
 
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 var result = await observable;
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
                 var result2 = await observable;
                 // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 Assert.Same(repository, result);
                 Assert.Same(repository, result2);
