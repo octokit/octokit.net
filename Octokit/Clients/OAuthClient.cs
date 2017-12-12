@@ -38,7 +38,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, "request");
 
-            return new Uri(hostAddress, ApiUrls.OauthAuthorize())
+            return hostAddress.ReplaceRelativeUri(ApiUrls.OauthAuthorize())
                 .ApplyParameters(request.ToParametersDictionary());
         }
 

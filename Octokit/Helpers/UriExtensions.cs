@@ -10,6 +10,19 @@ namespace Octokit
     public static class UriExtensions
     {
         /// <summary>
+        /// Returns a Uri where any existing relative Uri component is replaced with the respective value
+        /// eg https://example.com/some/path becomes https://example.com/replacement/path
+        /// </summary>
+        /// <param name="uri">Base Uri</param>
+        /// <param name="relativeUri">Relative Uri to add to the base Uri, replacing any existing relative Uri component</param>
+        /// <returns></returns>
+        public static Uri ReplaceRelativeUri(this Uri uri, Uri relativeUri)
+        {
+            // Prepending a forward slash to the relative Uri causes it to replace any that is existing
+            return new Uri(uri, "/" + relativeUri.ToString().TrimStart('/'));
+        }
+
+        /// <summary>
         /// Merge a dictionary of values with an existing <see cref="Uri"/>
         /// </summary>
         /// <param name="uri">Original request Uri</param>
