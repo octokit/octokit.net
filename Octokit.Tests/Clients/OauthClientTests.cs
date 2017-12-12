@@ -24,12 +24,13 @@ public class OauthClientTests
         [Theory]
         [InlineData("https://api.github.com", "https://github.com/login/oauth/authorize?client_id=secret")]
         [InlineData("https://github.com", "https://github.com/login/oauth/authorize?client_id=secret")]
-        [InlineData("https://example.com", "https://example.com/login/oauth/authorize?client_id=secret")]
-        [InlineData("https://api.example.com", "https://api.example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData("https://example.com/api/v3", "https://example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData("https://api.example.com/any/path/really", "https://api.example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData(null, "https://github.com/login/oauth/authorize?client_id=secret")]
         public void ReturnsProperAuthorizeUrl(string baseAddress, string expectedUrl)
         {
             var connection = Substitute.For<IConnection>();
-            connection.BaseAddress.Returns(new Uri(baseAddress));
+            connection.BaseAddress.Returns(baseAddress == null ? null : new Uri(baseAddress));
             var client = new OauthClient(connection);
 
             var result = client.GetGitHubLoginUrl(new OauthLoginRequest("secret"));
