@@ -293,6 +293,11 @@ namespace Octokit
             return "notifications/threads/{0}/subscription".FormatUri(id);
         }
 
+        public static Uri AccessTokens(int installationId)
+        {
+            return "installations/{0}/access_tokens".FormatUri(installationId);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the issues  across all the authenticated user’s visible
         /// repositories including owned repositories, member repositories, and organization repositories:
