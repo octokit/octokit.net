@@ -38,6 +38,8 @@ namespace Octokit
         /// </remarks>
         IActivitiesClient Activity { get; }
 
+        IInstallationsClient Installations { get; }
+
         /// <summary>
         /// Access GitHub's Issue API.
         /// </summary>
