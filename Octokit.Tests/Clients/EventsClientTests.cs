@@ -560,6 +560,7 @@ namespace Octokit.Tests.Clients
             {"PullRequestEvent", typeof(PullRequestEventPayload)},
             {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
             {"PushEvent", typeof(PushEventPayload)},
+            {"StatusEvent", typeof(StatusEventPayload)},
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
         };
@@ -808,6 +809,55 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(payload.Commits);
             Assert.Equal(1, payload.Commits.Count);
             Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
+        }
+
+        [Fact]
+        public async Task DeserializesStatusEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "StatusEvent" },
+                {
+                    "payload", new
+                    {
+                        id = 214015194,
+                        sha = "9049f1265b7d61be4a8904a9a27120d2064dab3b",
+                        name = "baxterthehacker/public-repo",
+                        target_url = "https://www.some_target_url.com",
+                        context = "default",
+                        description = "some human readable text",
+                        state = "success",
+                        branches = new []
+                        {
+                            new
+                            {
+                                name = "master",
+                                commit = new
+                                {
+                                    sha = "9049f1265b7d61be4a8904a9a27120d2064dab3b",
+                                    url = "https://api.github.com/repos/baxterthehacker/public-repo/commits/9049f1265b7d61be4a8904a9a27120d2064dab3b"
+                                }
+                            }
+                        },
+                        created_at = "2015-05-05T23:40:39Z"
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as StatusEventPayload;
+            Assert.Equal(214015194, payload.Id);
+            Assert.Equal("9049f1265b7d61be4a8904a9a27120d2064dab3b", payload.Sha);
+            Assert.Equal("baxterthehacker/public-repo", payload.Name);
+            Assert.Equal("https://www.some_target_url.com", payload.TargetUrl);
+            Assert.Equal("default", payload.Context);
+            Assert.Equal("some human readable text", payload.Description);
+            Assert.Equal(CommitState.Success, payload.State.Value);
+            Assert.Equal(1, payload.Branches.Count);
+            Assert.Equal(new DateTimeOffset(2015, 05, 05, 23, 40, 39, TimeSpan.Zero), payload.CreatedAt);
         }
 
         [Fact]
