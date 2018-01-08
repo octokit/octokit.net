@@ -87,6 +87,7 @@ namespace Octokit
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
+            Application = new ApplicationClient(apiConnection);
             Installations = new InstallationsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Migration = new MigrationClient(apiConnection);
@@ -254,6 +255,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
         public IGitDatabaseClient Git { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Apps API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
+        /// </remarks>
+        public IApplicationClient Application { get; private set; }
 
         /// <summary>
         /// Access GitHub's Search API.
