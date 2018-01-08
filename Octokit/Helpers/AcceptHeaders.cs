@@ -50,5 +50,7 @@ namespace Octokit
         public const string OrganizationMembershipPreview = "application/vnd.github.korra-preview+json";
 
         public const string NestedTeamsPreview = "application/vnd.github.hellcat-preview+json";
+
+        public const string MachineManPreview = "application/vnd.github.machine-man-preview+json";
     }
 }
