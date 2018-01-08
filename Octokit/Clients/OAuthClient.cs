@@ -23,10 +23,12 @@ namespace Octokit
             this.connection = connection;
             var baseAddress = connection.BaseAddress ?? GitHubClient.GitHubDotComUrl;
 
-            // The Oauth login stuff uses https://github.com and not the https://api.github.com URLs.
+            // The Oauth login stuff uses the main website and not the API URLs
+            // For https://api.github.com we use https://github.com 
+            // For any other address (presumably a GitHub Enterprise address) we need to strip any relative Uri such as /api/v3
             hostAddress = baseAddress.Host.Equals("api.github.com")
                 ? new Uri("https://github.com")
-                : baseAddress;
+                : baseAddress.StripRelativeUri();
         }
 
         /// <summary>
