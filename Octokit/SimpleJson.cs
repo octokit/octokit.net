@@ -66,6 +66,7 @@ using System.Text;
 using Octokit.Reflection;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
+using Octokit.Helpers;
 #endif
 #if SIMPLE_JSON_DYNAMIC
 using System.Dynamic;
@@ -1431,11 +1432,11 @@ namespace Octokit
             {
                 if (valueIsLong && (type == typeof(DateTimeOffset) || type == typeof(DateTimeOffset?)))
                 {
-                    return DateTimeOffset.FromFileTime((long)value);
+                    return ((long)value).FromUnixTime();
                 }
                 else if (valueIsLong && (type == typeof(DateTime) || type == typeof(DateTime?)))
                 {
-                    return DateTime.FromFileTime((long)value);
+                    return ((long)value).FromUnixTime().DateTime;
                 }
                 obj = type == typeof(int) || type == typeof(long) || type == typeof(double) || type == typeof(float) || type == typeof(bool) || type == typeof(decimal) || type == typeof(byte) || type == typeof(short)
                             ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture)
