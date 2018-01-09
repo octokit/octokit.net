@@ -253,7 +253,7 @@ namespace Octokit.Tests
                   "\"followers\": 0," +
                   "\"following\": 0," +
                   "\"created_at\": \"2009-02-10T17:53:17Z\"," +
-                  "\"updated_at\": \"2014-07-07T00:12:56Z\"" +
+                  "\"updated_at\": 1404691976" +
                 "}";
 
                 var result = new SimpleJsonSerializer().Deserialize<User>(json);
