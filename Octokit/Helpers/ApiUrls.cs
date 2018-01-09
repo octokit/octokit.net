@@ -291,6 +291,37 @@ namespace Octokit
             return "notifications/threads/{0}/subscription".FormatUri(id);
         }
 
+        public static Uri AccessTokens(int installationId)
+        {
+            return "installations/{0}/access_tokens".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App()
+        {
+            return "app".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installations()
+        {
+            return "app/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installation(int installationId)
+        {
+            return "app/installations/{0}".FormatUri(installationId);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the issues  across all the authenticated user’s visible
         /// repositories including owned repositories, member repositories, and organization repositories:
