@@ -38,6 +38,8 @@ namespace Octokit
         /// </remarks>
         IActivitiesClient Activity { get; }
 
+        IApplicationClient Application { get; }
+
         IInstallationsClient Installations { get; }
 
         /// <summary>
