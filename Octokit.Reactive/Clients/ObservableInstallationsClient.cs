@@ -1,4 +1,7 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+using Octokit.Reactive.Internal;
+
+namespace Octokit.Reactive
 {
     class ObservableInstallationsClient : IObservableInstallationsClient
     {
@@ -13,7 +16,19 @@
             _connection = client.Connection;
             AccessTokens = new ObservableAccessTokensClient(client);
         }
-        
+
         public IObservableAccessTokensClient AccessTokens { get; }
+
+        public IObservable<Installation> GetAll()
+        {
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview);
+        }
+
+        public IObservable<Installation> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview, options);
+        }
     }
 }

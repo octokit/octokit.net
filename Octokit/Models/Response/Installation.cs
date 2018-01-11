@@ -39,7 +39,7 @@ namespace Octokit
 
         public int AppId { get; protected set; }
         public int TargetId { get; protected set; }
-        public AccountType TargetType { get; protected set; }
+        public StringEnum<AccountType> TargetType { get; protected set; }
         // TODO - add permissions
         // TODO - add events
         public string SingleFileName { get; protected set; }

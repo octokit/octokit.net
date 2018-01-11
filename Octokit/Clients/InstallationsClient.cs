@@ -12,9 +12,16 @@ namespace Octokit
 
         public IAccessTokensClient AccessTokens { get; private set; }
 
-        public Task<IReadOnlyList<Installation>> GetInstallations()
+        public Task<IReadOnlyList<Installation>> GetAll()
         {
             return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview);
+        }
+
+        public Task<IReadOnlyList<Installation>> GetAll(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview, options);
         }
     }
 }

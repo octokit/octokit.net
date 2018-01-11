@@ -5,7 +5,9 @@ namespace Octokit
 {
     public interface IInstallationsClient
     {
-        Task<IReadOnlyList<Installation>> GetInstallations();
         IAccessTokensClient AccessTokens { get; }
+
+        Task<IReadOnlyList<Installation>> GetAll();
+        Task<IReadOnlyList<Installation>> GetAll(ApiOptions options);
     }
 }
