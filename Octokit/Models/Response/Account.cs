@@ -68,6 +68,11 @@ namespace Octokit
         public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
+        /// Date the account was updated.
+        /// </summary>
+        public DateTimeOffset UpdatedAt { get; protected set; }
+
+        /// <summary>
         /// Amount of disk space the account is using.
         /// </summary>
         public int? DiskUsage { get; protected set; }
