@@ -268,7 +268,7 @@ namespace Octokit
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType)
         {
             Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            //Ensure.ArgumentNotNull(data, "data");
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
             return response.Body;
