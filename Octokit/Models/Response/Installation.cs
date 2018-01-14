@@ -14,13 +14,13 @@ namespace Octokit
     {
         public Installation() { }
 
-        public Installation(int id, // Account account,
+        public Installation(int id, User account,
             string accessTokenUrl, string repositoriesUrl, string htmlUrl,
             int appId, int targetId, AccountType targetType,
             string singleFileName, string repositorySelection)
         {
             Id = id;
-            // Account = account;
+            Account = account;
             AccessTokensUrl = accessTokenUrl;
             RepositoriesUrl = repositoriesUrl;
             HtmlUrl = htmlUrl;
@@ -32,7 +32,7 @@ namespace Octokit
         }
 
         public int Id { get; protected set; }
-        // public Account Account { get; protected set; }
+        public User Account { get; protected set; }
         public string AccessTokensUrl { get; protected set; }
         public string RepositoriesUrl { get; protected set; }
         public string HtmlUrl { get; protected set; }

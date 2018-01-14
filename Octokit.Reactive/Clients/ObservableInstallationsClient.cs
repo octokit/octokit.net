@@ -26,7 +26,7 @@ namespace Octokit.Reactive
 
         public IObservable<Installation> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview, options);
         }
