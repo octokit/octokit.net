@@ -12,7 +12,7 @@ namespace Octokit
 
         public Task<AccessToken> Create(int installationId)
         {
-            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), null, AcceptHeader);
+            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeader);
         }
     }
 }
