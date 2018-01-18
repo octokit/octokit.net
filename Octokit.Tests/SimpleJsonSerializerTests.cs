@@ -1,5 +1,6 @@
 ﻿using Octokit.Helpers;
 using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -253,13 +254,15 @@ namespace Octokit.Tests
                   "\"followers\": 0," +
                   "\"following\": 0," +
                   "\"created_at\": \"2009-02-10T17:53:17Z\"," +
-                  "\"updated_at\": \"2014-07-07T00:12:56Z\"" +
+                  "\"updated_at\": 1404691976" +
                 "}";
 
                 var result = new SimpleJsonSerializer().Deserialize<User>(json);
 
                 Assert.Equal("Mono Project", result.Name);
                 Assert.Null(result.Hireable);
+                Assert.Equal(new DateTimeOffset(2009, 02, 10, 17, 53, 17, TimeSpan.Zero), result.CreatedAt);
+                Assert.Equal(new DateTimeOffset(2014, 07, 07, 00, 12, 56, TimeSpan.Zero), result.UpdatedAt);
             }
 
             [Fact]
