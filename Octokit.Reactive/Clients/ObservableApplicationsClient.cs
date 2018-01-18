@@ -3,11 +3,11 @@ using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    public class ObservableApplicationClient : IObservableApplicationClient
+    public class ObservableApplicationsClient : IObservableApplicationsClient
     {
         private IApplicationsClient _client;
 
-        public ObservableApplicationClient(IGitHubClient client)
+        public ObservableApplicationsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, "client");
 

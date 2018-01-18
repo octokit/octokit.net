@@ -2,7 +2,7 @@
 
 namespace Octokit.Reactive
 {
-    public interface IObservableApplicationClient
+    public interface IObservableApplicationsClient
     {
         IObservable<Application> Create();
     }
