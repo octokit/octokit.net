@@ -5,7 +5,7 @@ namespace Octokit.Reactive
 {
     public class ObservableApplicationClient : IObservableApplicationClient
     {
-        private IApplicationClient _client;
+        private IApplicationsClient _client;
 
         public ObservableApplicationClient(IGitHubClient client)
         {

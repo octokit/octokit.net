@@ -87,8 +87,8 @@ namespace Octokit
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
-            Application = new ApplicationClient(apiConnection);
-            Installations = new InstallationsClient(apiConnection);
+            Application = new ApplicationsClient(apiConnection);
+            Installation = new InstallationsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Migration = new MigrationClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
@@ -173,8 +173,13 @@ namespace Octokit
         /// </remarks>
         public IActivitiesClient Activity { get; private set; }
 
-        public IInstallationsClient Installations { get; private set; }
-
+        /// <summary>
+        /// Access GitHub's App Installation API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
+        /// </remarks>
+        public IInstallationsClient Installation { get; private set; }
 
         /// <summary>
         /// Access GitHub's Issue API.
@@ -262,7 +267,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
         /// </remarks>
-        public IApplicationClient Application { get; private set; }
+        public IApplicationsClient Application { get; private set; }
 
         /// <summary>
         /// Access GitHub's Search API.

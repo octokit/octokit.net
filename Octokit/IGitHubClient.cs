@@ -38,9 +38,9 @@ namespace Octokit
         /// </remarks>
         IActivitiesClient Activity { get; }
 
-        IApplicationClient Application { get; }
+        IApplicationsClient Application { get; }
 
-        IInstallationsClient Installations { get; }
+        IInstallationsClient Installation { get; }
 
         /// <summary>
         /// Access GitHub's Issue API.

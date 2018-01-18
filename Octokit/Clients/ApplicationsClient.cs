@@ -2,9 +2,9 @@
 
 namespace Octokit
 {
-    public class ApplicationClient : ApiClient, IApplicationClient
+    public class ApplicationsClient : ApiClient, IApplicationsClient
     {
-        public ApplicationClient(IApiConnection apiConnection) : base(apiConnection)
+        public ApplicationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 

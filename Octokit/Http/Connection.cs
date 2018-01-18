@@ -120,17 +120,17 @@ namespace Octokit
             IHttpClient httpClient,
             IJsonSerializer serializer)
         {
-            Ensure.ArgumentNotNull(productInformation, "productInformation");
-            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
-            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
-            Ensure.ArgumentNotNull(httpClient, "httpClient");
-            Ensure.ArgumentNotNull(serializer, "serializer");
+            Ensure.ArgumentNotNull(productInformation, nameof(productInformation));
+            Ensure.ArgumentNotNull(baseAddress, nameof(baseAddress));
+            Ensure.ArgumentNotNull(credentialStore, nameof(credentialStore));
+            Ensure.ArgumentNotNull(httpClient, nameof(httpClient));
+            Ensure.ArgumentNotNull(serializer, nameof(serializer));
 
             if (!baseAddress.IsAbsoluteUri)
             {
                 throw new ArgumentException(
                     string.Format(CultureInfo.InvariantCulture, "The base address '{0}' must be an absolute URI",
-                        baseAddress), "baseAddress");
+                        baseAddress), nameof(baseAddress));
             }
 
             UserAgent = FormatUserAgent(productInformation);
@@ -156,21 +156,21 @@ namespace Octokit
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, CancellationToken.None);
         }
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
         }
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, TimeSpan timeout)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return SendData<T>(uri, HttpMethod.Get, null, null, null, timeout, CancellationToken.None);
         }
@@ -183,7 +183,7 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return GetHtml(new Request
             {
@@ -195,17 +195,17 @@ namespace Octokit
 
         public Task<IApiResponse<T>> Patch<T>(Uri uri, object body)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
 
             return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
         }
 
         public Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
         }
@@ -217,7 +217,7 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public async Task<HttpStatusCode> Post(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -225,7 +225,7 @@ namespace Octokit
 
         public async Task<HttpStatusCode> Post(Uri uri, object body, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await SendData<object>(uri, HttpMethod.Post, body, accepts, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -233,15 +233,23 @@ namespace Octokit
 
         public Task<IApiResponse<T>> Post<T>(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return SendData<T>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters = null)
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
+
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
+        }
+
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
 
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
@@ -259,25 +267,25 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, twoFactorAuthenticationCode);
         }
 
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
 
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, timeout, CancellationToken.None);
         }
 
         public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
 
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, baseAddress: baseAddress);
         }
@@ -320,8 +328,8 @@ namespace Octokit
             string twoFactorAuthenticationCode = null,
             Uri baseAddress = null)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.GreaterThanZero(timeout, "timeout");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.GreaterThanZero(timeout, nameof(timeout));
 
             var request = new Request
             {
@@ -344,7 +352,7 @@ namespace Octokit
             string twoFactorAuthenticationCode = null,
             Uri baseAddress = null)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var request = new Request
             {
@@ -385,7 +393,7 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public async Task<HttpStatusCode> Patch(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var request = new Request
             {
@@ -405,8 +413,8 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         public async Task<HttpStatusCode> Patch(Uri uri, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             var response = await SendData<object>(uri, new HttpMethod("PATCH"), null, accepts, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -419,7 +427,7 @@ namespace Octokit
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         public async Task<HttpStatusCode> Put(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var request = new Request
             {

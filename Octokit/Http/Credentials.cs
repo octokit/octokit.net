@@ -13,19 +13,23 @@ namespace Octokit
             AuthenticationType = AuthenticationType.Anonymous;
         }
 
-        public Credentials(string login, string password, AuthenticationType authenticationType = AuthenticationType.Basic)
+        public Credentials(string login, string password) : this(login, password, AuthenticationType.Basic) { }
+
+        public Credentials(string login, string password, AuthenticationType authenticationType)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(password, "password");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(password, nameof(password));
 
             Login = login;
             Password = password;
             AuthenticationType = authenticationType;
         }
 
-        public Credentials(string token, AuthenticationType authenticationType = AuthenticationType.Oauth)
+        public Credentials(string token) : this(token, AuthenticationType.Oauth) { }
+
+        public Credentials(string token, AuthenticationType authenticationType)
         {
-            Ensure.ArgumentNotNullOrEmptyString(token, "token");
+            Ensure.ArgumentNotNullOrEmptyString(token, nameof(token));
 
             Login = null;
             Password = token;

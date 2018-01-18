@@ -12,7 +12,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            _client = client.Installations.AccessTokens;
+            _client = client.Installation.AccessTokens;
             _connection = client.Connection;
         }
 

@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public interface IApplicationClient
+    public interface IApplicationsClient
     {
         Task<Application> Create();
     }
