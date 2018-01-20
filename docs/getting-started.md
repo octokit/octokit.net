@@ -75,9 +75,7 @@ Like any popular API, Github needs to throttle some requests. The OctoKit.NET cl
 
 In fact, there are two ways to get the Rate Limits via OctoKit.NET. Calling `GitHubClient.GetLastApiInfo()` returns the Rate Limit status which has been returned with the last api call. So, calling `GitHubClient.GetLastApiInfo()` will not send any extra HTTP requests to GitHub's servers.
 
-However, if in some cases you need to get the Rate Limit directly from Github, you should call `GitHubClient.Miscellaneous.GetRateLimits()`.
-
-`GitHubClient.GetLastApiInfo()` Example usage:
+Example usage:
 
 ```csharp
 GithubClient client; 
@@ -94,7 +92,9 @@ var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
 var whenDoesTheLimitReset = rateLimit?.Reset;
 ```
 
-`GitHubClient.Miscellaneous.GetRateLimits())` Example usage:
+However, if in some cases you need to get the Rate Limit directly from Github, you should call `GitHubClient.Miscellaneous.GetRateLimits()`.
+
+Example usage:
 
 ```csharp
 GithubClient client; 
