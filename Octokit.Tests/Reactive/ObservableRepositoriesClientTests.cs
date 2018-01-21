@@ -91,18 +91,18 @@ namespace Octokit.Tests.Reactive
                 var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
                     new ApiResponse<Repository>(new Response(), repository));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json").Returns(response);
+                connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get("stark", "ned");
 
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 var result = await observable;
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
                 var result2 = await observable;
                 // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 Assert.Same(repository, result);
                 Assert.Same(repository, result2);
@@ -117,18 +117,18 @@ namespace Octokit.Tests.Reactive
                 var response = Task.Factory.StartNew<IApiResponse<Repository>>(() =>
                     new ApiResponse<Repository>(new Response(), repository));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json").Returns(response);
+                connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableRepositoriesClient(gitHubClient);
                 var observable = client.Get(1);
 
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 var result = await observable;
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
                 var result2 = await observable;
                 // TODO: If we change this to a warm observable, we'll need to change this to Received(2)
-                connection.Received(1).Get<Repository>(Args.Uri, null, "application/vnd.github.polaris-preview+json");
+                connection.Received(1).Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders);
 
                 Assert.Same(repository, result);
                 Assert.Same(repository, result2);
@@ -182,20 +182,20 @@ namespace Octokit.Tests.Reactive
                     });
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), null)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => firstPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), null)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => secondPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), null)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
                     .Returns(Task.Factory.StartNew<IApiResponse<List<Repository>>>(() => lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
             }
 
             [Fact(Skip = "See https://github.com/octokit/octokit.net/issues/1011 for issue to investigate this further")]
@@ -302,11 +302,11 @@ namespace Octokit.Tests.Reactive
                     });
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, null, Args.AnyAcceptHeaders)
                     .Returns(Task.FromResult(firstPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, null, Args.AnyAcceptHeaders)
                     .Returns(Task.FromResult(secondPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, null, null)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, null, Args.AnyAcceptHeaders)
                     .Returns(Task.FromResult(lastPageResponse));
 
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
@@ -314,9 +314,9 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364L)).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, "application/vnd.github.drax-preview+json");
             }
         }
 
