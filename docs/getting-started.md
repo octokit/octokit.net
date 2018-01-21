@@ -78,7 +78,7 @@ In fact, there are two ways to get the Rate Limits via OctoKit.NET. Calling `Git
 Example usage:
 
 ```csharp
-GithubClient client; 
+GitHubClient client; 
 //Create & initialize the client here
 
 // Prior to first API call, this will be null, because it only deals with the last call.
@@ -97,16 +97,24 @@ However, if in some cases you need to get the Rate Limit directly from Github, y
 Example usage:
 
 ```csharp
-GithubClient client; 
+GitHubClient client; 
 //Create & initialize the client here
 
-var miscellaneousRateLimit = client.Miscellaneous.GetRateLimits();
+var miscellaneousRateLimit = await client.Miscellaneous.GetRateLimits();
 
-var rate = miscellaneousRateLimit.Result.Rate;
+//  The "core" object provides your rate limit status except for the Search API.
+var coreRateLimit = miscellaneousRateLimit.Resources.Core;
 
-var howManyRequestsCanIMakePerHour = rate.Limit;
-var howManyRequestsDoIHaveLeft = rate.Remaining;
-var whenDoesTheLimitReset = rate.Reset;
+var howManyCoreRequestsCanIMakePerHour = coreRateLimit.Limit;
+var howManyCoreRequestsDoIHaveLeft = coreRateLimit.Remaining;
+var whenDoesTheCoreLimitReset = coreRateLimit.Reset;
+
+// the "search" object provides your rate limit status for the Search API.
+var searchRateLimit = miscellaneousRateLimit.Resources.Search;
+
+var howManySearchRequestsCanIMakePerMinute = searchRateLimit.Limit;
+var howManySearchRequestsDoIHaveLeft = searchRateLimit.Remaining;
+var whenDoesTheSearchLimitReset = searchRateLimit.Reset;
 ```
 
 An authenticated client will have a significantly higher limit than an anonymous client. 
