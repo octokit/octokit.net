@@ -20,10 +20,7 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 ## Supported Platforms
 
 * .NET 4.5 (Desktop / Server)
-* .NET Core 2.0
-* Xamarin.iOS / Xamarin.Android / Xamarin.Mac
-* Mono 3.x
-* Windows 8 / 8.1 Store Apps
+* [.NET Standard 1.1](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
 
 ## Getting Started
 
