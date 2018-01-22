@@ -38,8 +38,20 @@ namespace Octokit
         /// </remarks>
         IActivitiesClient Activity { get; }
 
+        /// <summary>
+        /// Access GitHub's Application API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/
+        /// </remarks>
         IApplicationsClient Application { get; }
 
+        /// <summary>
+        /// Access GitHub's Application Installation API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
+        /// </remarks>
         IInstallationsClient Installation { get; }
 
         /// <summary>
