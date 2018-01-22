@@ -3728,5 +3728,26 @@ namespace Octokit
         {
             return "projects/columns/cards/{0}/moves".FormatUri(id);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository's license requests.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository's license requests.</returns>
+        public static Uri RepositoryLicense(string owner, string repo)
+        {
+            return "repos/{0}/{1}/license".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository's license requests.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository's license requests.</returns>
+        public static Uri RepositoryLicense(long repositoryId)
+        {
+            return "repositories/{0}/license".FormatUri(repositoryId);
+        }
     }
 }

@@ -129,7 +129,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllPublic()
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return _connection.GetAndFlattenAllPages<Repository>(url);
+            return _connection.GetAndFlattenAllPages<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, "request");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(login, "login");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
             Ensure.ArgumentNotNull(options, "options");
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/statuses/">Commit Status API documentation</a> for more
-        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a> 
+        /// details. Also check out the <a href="https://github.com/blog/1227-commit-status-api">blog post</a>
         /// that announced this feature.
         /// </remarks>
         public IObservableCommitStatusClient Status { get; private set; }
@@ -303,7 +303,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// A client for GitHub's Repository Forks API.
         /// </summary>
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>        
+        /// <remarks>See <a href="http://developer.github.com/v3/repos/forks/">Forks API documentation</a> for more information.</remarks>
         public IObservableRepositoryForksClient Forks { get; private set; }
 
         /// <summary>
@@ -647,6 +647,36 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(update, "update");
 
             return _client.Edit(owner, name, update).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        public IObservable<RepositoryContentLicense> GetLicenseContents(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.GetLicenseContents(owner, name).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        public IObservable<RepositoryContentLicense> GetLicenseContents(long repositoryId)
+        {
+            return _client.GetLicenseContents(repositoryId).ToObservable();
         }
 
         /// <summary>
