@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -40,8 +41,10 @@ namespace Octokit
         public long AppId { get; protected set; }
         public long TargetId { get; protected set; }
         public StringEnum<AccountType> TargetType { get; protected set; }
-        // TODO - add permissions
-        // TODO - add events
+        
+        public Permissions Permissions { get; private set; }
+        public IReadOnlyList<string> Events { get; private set; }
+
         public string SingleFileName { get; protected set; }
         public string RepositorySelection { get; protected set; }
 
