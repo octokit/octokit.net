@@ -4,6 +4,6 @@ namespace Octokit.Reactive
 {
     public interface IObservableAccessTokensClient
     {
-        IObservable<AccessToken> Create(int installationId);
+        IObservable<AccessToken> Create(long installationId);
     }
 }

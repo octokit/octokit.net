@@ -16,7 +16,7 @@ namespace Octokit.Reactive
             _connection = client.Connection;
         }
 
-        public IObservable<AccessToken> Create(int installationId)
+        public IObservable<AccessToken> Create(long installationId)
         {
             return _client.Create(installationId).ToObservable();
         }

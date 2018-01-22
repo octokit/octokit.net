@@ -291,7 +291,7 @@ namespace Octokit
             return "notifications/threads/{0}/subscription".FormatUri(id);
         }
 
-        public static Uri AccessTokens(int installationId)
+        public static Uri AccessTokens(long installationId)
         {
             return "installations/{0}/access_tokens".FormatUri(installationId);
         }

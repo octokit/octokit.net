@@ -4,6 +4,6 @@ namespace Octokit
 {
     public interface IAccessTokensClient
     {
-        Task<AccessToken> Create(int installationId);
+        Task<AccessToken> Create(long installationId);
     }
 }

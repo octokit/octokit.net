@@ -10,7 +10,7 @@ namespace Octokit
         {
         }
 
-        public Task<AccessToken> Create(int installationId)
+        public Task<AccessToken> Create(long installationId)
         {
             return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), "", AcceptHeader);
         }

@@ -14,9 +14,9 @@ namespace Octokit
     {
         public Installation() { }
 
-        public Installation(int id, User account,
+        public Installation(long id, User account,
             string accessTokenUrl, string repositoriesUrl, string htmlUrl,
-            int appId, int targetId, AccountType targetType,
+            long appId, long targetId, AccountType targetType,
             string singleFileName, string repositorySelection)
         {
             Id = id;
@@ -31,14 +31,14 @@ namespace Octokit
             RepositorySelection = repositorySelection;
         }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
         public User Account { get; protected set; }
         public string AccessTokensUrl { get; protected set; }
         public string RepositoriesUrl { get; protected set; }
         public string HtmlUrl { get; protected set; }
 
-        public int AppId { get; protected set; }
-        public int TargetId { get; protected set; }
+        public long AppId { get; protected set; }
+        public long TargetId { get; protected set; }
         public StringEnum<AccountType> TargetType { get; protected set; }
         // TODO - add permissions
         // TODO - add events
