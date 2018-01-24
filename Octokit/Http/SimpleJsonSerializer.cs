@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +35,7 @@ namespace Octokit.Internal
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
-            Dictionary<Type, Dictionary<object, object>> _cachedEnums = new Dictionary<Type, Dictionary<object, object>>();
+            ConcurrentDictionary<Type, ConcurrentDictionary<object, object>> _cachedEnums = new ConcurrentDictionary<Type, ConcurrentDictionary<object, object>>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -99,12 +100,11 @@ namespace Octokit.Internal
 
             internal object DeserializeEnumHelper(string value, Type type)
             {
-                if (!_cachedEnums.ContainsKey(type))
+                var cachedEnumsForType = _cachedEnums.GetOrAdd(type, t => 
                 {
-                    //First add type to Dictionary
-                    _cachedEnums.Add(type, new Dictionary<object, object>());
-
-                    //then try to get all custom attributes, this happens only once per type
+                    var enumsForType = new ConcurrentDictionary<object, object>();
+                    
+                    // Try to get all custom attributes, this happens only once per type
                     var fields = type.GetRuntimeFields();
                     foreach (var field in fields)
                     {
@@ -113,25 +113,15 @@ namespace Octokit.Internal
                         var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
                         if (attribute != null)
                         {
-                            if (!_cachedEnums[type].ContainsKey(attribute.Value))
-                            {
-                                var fieldValue = field.GetValue(null);
-                                _cachedEnums[type].Add(attribute.Value, fieldValue);
-                            }
+                            enumsForType.GetOrAdd(attribute.Value, _ => field.GetValue(null));
                         }
                     }
-                }
-                if (_cachedEnums[type].ContainsKey(value))
-                {
-                    return _cachedEnums[type][value];
-                }
-                else
-                {
-                    //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
-                    var parsed = Enum.Parse(type, value, ignoreCase: true);
-                    _cachedEnums[type].Add(value, parsed);
-                    return parsed;
-                }
+
+                    return enumsForType;
+                });
+
+                // If type cache does not contain enum value and has no custom attribute, add it for future loops
+                return cachedEnumsForType.GetOrAdd(value, v => Enum.Parse(type, value, ignoreCase: true));
             }
 
             private string _type;
