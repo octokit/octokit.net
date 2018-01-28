@@ -11,7 +11,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new ApplicationClient(null));
+                Assert.Throws<ArgumentNullException>(() => new ApplicationsClient(null));
             }
         }
 
@@ -21,7 +21,7 @@ namespace Octokit.Tests.Clients
             public void GetFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new ApplicationClient(connection);
+                var client = new ApplicationsClient(connection);
 
                 client.Create();
 
