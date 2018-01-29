@@ -27,7 +27,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(fakeInstallationId);
 
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"));
+                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, AcceptHeaders.MachineManPreview);
             }
         }
     }

@@ -25,7 +25,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create();
 
-                connection.Received().Get<Application>(Arg.Is<Uri>(u => u.ToString() == "app"));
+                connection.Received().Get<Application>(Arg.Is<Uri>(u => u.ToString() == "app"), null, AcceptHeaders.MachineManPreview);
             }
         }
 
