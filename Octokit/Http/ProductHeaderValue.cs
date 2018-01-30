@@ -5,18 +5,18 @@
     /// name used should represent the product, the GitHub Organization, or the GitHub username that's using Octokit.net (in that order of preference).
     /// </summary>
     /// <remarks>
-    /// This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/> 
+    /// This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/>
     /// so that consumers of Octokit.net would not have to add a reference to the System.Net.Http.Headers namespace.
-	/// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
     /// </remarks>
-	public class ProductHeaderValue
+  public class ProductHeaderValue
     {
         readonly System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
         /// </summary>
-		/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
         /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
@@ -28,7 +28,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
         /// </summary>
-		/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
         /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
@@ -46,7 +46,7 @@
         /// <summary>
         /// The name of the product, the GitHub Organization, or the GitHub Username that's using Octokit (in that order of preference)
         /// </summary>
-		/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
         public string Name
