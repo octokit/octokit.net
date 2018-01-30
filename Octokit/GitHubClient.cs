@@ -18,9 +18,12 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information here regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, or the name of your GitHub organization, or your GitHub username (in that order). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         public GitHubClient(ProductHeaderValue productInformation)
             : this(new Connection(productInformation, GitHubApiUrl))
@@ -31,9 +34,12 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to 
         /// https://api.github.com/
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information here regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, or the name of your GitHub organization, or your GitHub username (in that order). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
@@ -44,9 +50,12 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information here regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, or the name of your GitHub organization, or your GitHub username (in that order). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to. Typically used for GitHub Enterprise 
@@ -59,9 +68,12 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information here regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, or the name of your GitHub organization, or your GitHub username (in that order). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         /// <param name="baseAddress">
