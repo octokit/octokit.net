@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace Octokit
 {
     // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
-    //       ensure it goes through there. :)
+    // ensure it goes through there. :)
     /// <summary>
     /// A connection for making HTTP requests against URI endpoints.
     /// </summary>
