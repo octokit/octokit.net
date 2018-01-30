@@ -19,9 +19,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public EnterpriseProbe(ProductHeaderValue productInformation)
@@ -32,9 +35,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
         /// </summary>
-        /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+		/// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+		/// <param name="productInformation">
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="httpClient">
         /// The client to use for executing requests
