@@ -18,10 +18,10 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to
         /// https://api.github.com/
         /// </summary>
-	/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
-	/// <param name="productInformation">
+        /// <param name="productInformation">
         /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
         /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
@@ -34,10 +34,10 @@ namespace Octokit
         /// Create a new instance of the GitHub API v3 client pointing to
         /// https://api.github.com/
         /// </summary>
-	/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
-	/// <param name="productInformation">
+        /// <param name="productInformation">
         /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
         /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
@@ -50,10 +50,10 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
-	/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
-	/// <param name="productInformation">
+        /// <param name="productInformation">
         /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
         /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
@@ -68,10 +68,10 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
-	/// <remarks>
+        /// <remarks>
         /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
         /// </remarks>
-	/// <param name="productInformation">
+        /// <param name="productInformation">
         /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
         /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
