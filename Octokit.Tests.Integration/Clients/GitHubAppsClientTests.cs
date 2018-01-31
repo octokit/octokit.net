@@ -1,18 +1,17 @@
 ﻿using Octokit.Tests.Integration.Helpers;
 using System;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class InstallationsClientTests
+    public class GitHubAppsClientTests
     {
-        public class TheGetAllMethod : IDisposable
+        public class TheGetAllInstallationsForCurrentMethod : IDisposable
         {
             IGitHubClient _github;
             RepositoryContext _context;
 
-            public TheGetAllMethod()
+            public TheGetAllInstallationsForCurrentMethod()
             {
                 _github = Helper.GetAuthenticatedClient();
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -23,7 +22,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsAllInstallations()
             {
-                var result = await _github.Installation.GetAll();
+                var result = await _github.GitHubApps.GetAllInstallationsForCurrent();
 
                 // TODO - find a way to run this test, and see the results.
 
