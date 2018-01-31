@@ -19,9 +19,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public EnterpriseProbe(ProductHeaderValue productInformation)
@@ -32,9 +35,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="httpClient">
         /// The client to use for executing requests
@@ -60,7 +66,7 @@ namespace Octokit
         /// <see cref="EnterpriseProbeResult.NotFound"/>, or <see cref="EnterpriseProbeResult.Failed"/> in the case the request failed</returns>
         public async Task<EnterpriseProbeResult> Probe(Uri enterpriseBaseUrl)
         {
-            // This method should return NotFound if you happen to point it 
+            // This method should return NotFound if you happen to point it
             if (enterpriseBaseUrl.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase)
                 || enterpriseBaseUrl.Host.Equals("api.github.com", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException("This method should not be passed a github.com or api.github.com URL", "enterpriseBaseUrl");
@@ -114,7 +120,7 @@ namespace Octokit
         NotFound,
 
         /// <summary>
-        /// Request timed out or DNS failed. So it's probably the case it's not an enterprise server but 
+        /// Request timed out or DNS failed. So it's probably the case it's not an enterprise server but
         /// we can't know for sure.
         /// </summary>
         Failed

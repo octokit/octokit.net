@@ -15,12 +15,15 @@ namespace Octokit
         internal static readonly Uri GitHubDotComUrl = new Uri("https://github.com/");
 
         /// <summary>
-        /// Create a new instance of the GitHub API v3 client pointing to 
+        /// Create a new instance of the GitHub API v3 client pointing to
         /// https://api.github.com/
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         public GitHubClient(ProductHeaderValue productInformation)
             : this(new Connection(productInformation, GitHubApiUrl))
@@ -28,12 +31,15 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Create a new instance of the GitHub API v3 client pointing to 
+        /// Create a new instance of the GitHub API v3 client pointing to
         /// https://api.github.com/
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore)
@@ -44,12 +50,15 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="baseAddress">
-        /// The address to point this client to. Typically used for GitHub Enterprise 
+        /// The address to point this client to. Typically used for GitHub Enterprise
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, Uri baseAddress)
             : this(new Connection(productInformation, FixUpBaseUri(baseAddress)))
@@ -59,13 +68,16 @@ namespace Octokit
         /// <summary>
         /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         /// <param name="baseAddress">
-        /// The address to point this client to. Typically used for GitHub Enterprise 
+        /// The address to point this client to. Typically used for GitHub Enterprise
         /// instances</param>
         public GitHubClient(ProductHeaderValue productInformation, ICredentialStore credentialStore, Uri baseAddress)
             : this(new Connection(productInformation, FixUpBaseUri(baseAddress), credentialStore))
@@ -125,9 +137,9 @@ namespace Octokit
         /// Convenience property for getting and setting credentials.
         /// </summary>
         /// <remarks>
-        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
-        /// <see cref="ICredentialStore"/> to the constructor. 
-        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an
+        /// <see cref="ICredentialStore"/> to the constructor.
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         public Credentials Credentials

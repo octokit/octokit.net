@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace Octokit
 {
     // NOTE: Every request method must go through the `RunRequest` code path. So if you need to add a new method
-    //       ensure it goes through there. :)
+    // ensure it goes through there. :)
     /// <summary>
     /// A connection for making HTTP requests against URI endpoints.
     /// </summary>
@@ -31,9 +31,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         public Connection(ProductHeaderValue productInformation)
             : this(productInformation, _defaultGitHubApiUrl, _anonymousCredentials)
@@ -43,9 +46,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="httpClient">
         /// The client to use for executing requests
@@ -58,9 +64,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
@@ -73,9 +82,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="credentialStore">Provides credentials to the client when making requests</param>
         public Connection(ProductHeaderValue productInformation, ICredentialStore credentialStore)
@@ -86,9 +98,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
@@ -103,9 +118,12 @@ namespace Octokit
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         /// <param name="productInformation">
-        /// The name (and optionally version) of the product using this library. This is sent to the server as part of
-        /// the user agent for analytics purposes.
+        /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+        /// the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
         /// </param>
         /// <param name="baseAddress">
         /// The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise
