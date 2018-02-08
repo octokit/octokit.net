@@ -36,7 +36,7 @@ namespace Octokit
         public bool Primary { get; protected set; }
 
         /// <summary>
-        /// private if the email is private; otherwise null
+        /// "private" if the email is private; otherwise null
         /// <summary>
         public string Visibility { get; protected set; }
 
