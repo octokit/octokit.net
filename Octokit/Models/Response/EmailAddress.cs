@@ -12,11 +12,12 @@ namespace Octokit
     {
         public EmailAddress() { }
 
-        public EmailAddress(string email, bool verified, bool primary)
+        public EmailAddress(string email, bool verified, bool primary, string visibility)
         {
             Email = email;
             Verified = verified;
             Primary = primary;
+            Visibility = visibility;
         }
 
         /// <summary>
@@ -34,6 +35,11 @@ namespace Octokit
         /// </summary>
         public bool Primary { get; protected set; }
 
+        /// <summary>
+        /// private if the email is private; otherwise null
+        /// <summary>
+        public string Visibility { get; protected set; }
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]
         internal string DebuggerDisplay
@@ -41,7 +47,7 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "EmailAddress: Email: {0}; Primary: {1}, Verified: {2}", Email, Primary, Verified);
+                    "EmailAddress: Email: {0}; Primary: {1}, Verified: {2}, Visibility: {3}", Email, Primary, Verified, Visibility);
             }
         }
     }
