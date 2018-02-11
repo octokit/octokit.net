@@ -144,20 +144,17 @@ namespace Octokit.Internal
 
                 if (stringValue != null)
                 {
+                    // If it's a nullable type, use the underlying type
+                    if (ReflectionUtils.IsNullableType(type))
+                    {
+                        type = Nullable.GetUnderlyingType(type);
+                    }
+
                     var typeInfo = ReflectionUtils.GetTypeInfo(type);
 
                     if (typeInfo.IsEnum)
                     {
                         return DeserializeEnumHelper(stringValue, type);
-                    }
-
-                    if (ReflectionUtils.IsNullableType(type))
-                    {
-                        var underlyingType = Nullable.GetUnderlyingType(type);
-                        if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
-                        {
-                            return DeserializeEnumHelper(stringValue, underlyingType);
-                        }
                     }
 
                     if (ReflectionUtils.IsTypeGenericeCollectionInterface(type))
