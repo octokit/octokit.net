@@ -301,7 +301,7 @@ namespace Octokit.Tests
             }
 
             [Fact]
-            public void DeserializesEnumWithParameterAttribute()
+            public void DeserializesEnums()
             {
                 const string json1 = @"{""some_enum"":""+1""}";
                 const string json2 = @"{""some_enum"":""utf-8""}";
@@ -320,6 +320,78 @@ namespace Octokit.Tests
                 Assert.Equal(SomeEnum.SomethingElse, sample3.SomeEnum);
                 Assert.Equal(SomeEnum.AnotherExample, sample4.SomeEnum);
                 Assert.Equal(SomeEnum.Unicode, sample5.SomeEnum);
+            }
+
+            [Fact]
+            public void DeserializesNullableEnums()
+            {
+                const string json1 = @"{""some_enum_nullable"":""+1""}";
+                const string json2 = @"{""some_enum_nullable"":""utf-8""}";
+                const string json3 = @"{""some_enum_nullable"":""something else""}";
+                const string json4 = @"{""some_enum_nullable"":""another_example""}";
+                const string json5 = @"{""some_enum_nullable"":""unicode""}";
+                const string json6 = @"{""some_enum_nullable"":null}";
+
+                var sample1 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json1);
+                var sample2 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json2);
+                var sample3 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json3);
+                var sample4 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json4);
+                var sample5 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json5);
+                var sample6 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json6);
+
+                Assert.Equal(SomeEnum.PlusOne, sample1.SomeEnumNullable);
+                Assert.Equal(SomeEnum.Utf8, sample2.SomeEnumNullable);
+                Assert.Equal(SomeEnum.SomethingElse, sample3.SomeEnumNullable);
+                Assert.Equal(SomeEnum.AnotherExample, sample4.SomeEnumNullable);
+                Assert.Equal(SomeEnum.Unicode, sample5.SomeEnumNullable);
+                Assert.False(sample6.SomeEnumNullable.HasValue);
+            }
+
+            [Fact]
+            public void DeserializesStringEnums()
+            {
+                const string json1 = @"{""string_enum"":""+1""}";
+                const string json2 = @"{""string_enum"":""utf-8""}";
+                const string json3 = @"{""string_enum"":""something else""}";
+                const string json4 = @"{""string_enum"":""another_example""}";
+                const string json5 = @"{""string_enum"":""unicode""}";
+
+                var sample1 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json1);
+                var sample2 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json2);
+                var sample3 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json3);
+                var sample4 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json4);
+                var sample5 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json5);
+
+                Assert.Equal(SomeEnum.PlusOne, sample1.StringEnum);
+                Assert.Equal(SomeEnum.Utf8, sample2.StringEnum);
+                Assert.Equal(SomeEnum.SomethingElse, sample3.StringEnum);
+                Assert.Equal(SomeEnum.AnotherExample, sample4.StringEnum);
+                Assert.Equal(SomeEnum.Unicode, sample5.StringEnum);
+            }
+
+            [Fact]
+            public void DeserializesNullableStringEnums()
+            {
+                const string json1 = @"{""string_enum_nullable"":""+1""}";
+                const string json2 = @"{""string_enum_nullable"":""utf-8""}";
+                const string json3 = @"{""string_enum_nullable"":""something else""}";
+                const string json4 = @"{""string_enum_nullable"":""another_example""}";
+                const string json5 = @"{""string_enum_nullable"":""unicode""}";
+                const string json6 = @"{""string_enum_nullable"":null}";
+
+                var sample1 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json1);
+                var sample2 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json2);
+                var sample3 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json3);
+                var sample4 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json4);
+                var sample5 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json5);
+                var sample6 = new SimpleJsonSerializer().Deserialize<ObjectWithEnumProperty>(json6);
+
+                Assert.Equal(SomeEnum.PlusOne, sample1.StringEnumNullable);
+                Assert.Equal(SomeEnum.Utf8, sample2.StringEnumNullable);
+                Assert.Equal(SomeEnum.SomethingElse, sample3.StringEnumNullable);
+                Assert.Equal(SomeEnum.AnotherExample, sample4.StringEnumNullable);
+                Assert.Equal(SomeEnum.Unicode, sample5.StringEnumNullable);
+                Assert.False(sample6.StringEnumNullable.HasValue);
             }
 
             [Fact]
@@ -369,6 +441,12 @@ namespace Octokit.Tests
         public string Name { get; set; }
 
         public SomeEnum SomeEnum { get; set; }
+
+        public SomeEnum? SomeEnumNullable { get; set; }
+
+        public StringEnum<SomeEnum> StringEnum { get; set; }
+
+        public StringEnum<SomeEnum>? StringEnumNullable { get; set; }
     }
 
     public enum SomeEnum
