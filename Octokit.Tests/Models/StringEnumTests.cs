@@ -55,6 +55,18 @@ namespace Octokit.Tests.Models
                 Assert.Throws<ArgumentException>(() => stringEnum.Value);
             }
 
+            public class SomeObject
+            {
+                public StringEnum<AccountType> SomeEnumProperty { get; set; }
+            }
+
+            [Fact]
+            public void ShouldReturnDefaultWhenUninitialized()
+            {
+                var test = new SomeObject();
+                Assert.Equal(AccountType.User, test.SomeEnumProperty.Value);
+            }
+
             [Fact]
             public void ShouldHandleUnderscores()
             {

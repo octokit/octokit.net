@@ -144,6 +144,11 @@ namespace Octokit
 
         private TEnum ParseValue()
         {
+            if (string.IsNullOrEmpty(_stringValue))
+            {
+                return default(TEnum);
+            }
+
             TEnum value;
             if (TryParse(out value))
             {

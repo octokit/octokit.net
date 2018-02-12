@@ -116,12 +116,26 @@ namespace Octokit.Tests
                 var item = new ObjectWithEnumProperty
                 {
                     Name = "Ferris Bueller",
-                    SomeEnum = SomeEnum.PlusOne
+                    SomeEnum = SomeEnum.Unicode,
+                    StringEnum = SomeEnum.SomethingElse
                 };
 
                 var json = new SimpleJsonSerializer().Serialize(item);
 
-                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"+1\"}", json);
+                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"utf-8\",\"string_enum\":\"something_else\"}", json);
+            }
+
+            [Fact]
+            public void HandlesEnumDefaults()
+            {
+                var item = new ObjectWithEnumProperty
+                {
+                    Name = "Ferris Bueller"
+                };
+
+                var json = new SimpleJsonSerializer().Serialize(item);
+
+                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"+1\",\"string_enum\":\"+1\"}", json);
             }
         }
 
