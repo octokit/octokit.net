@@ -46,12 +46,10 @@ namespace Octokit.Tests.Models
         {
             [Theory]
             [InlineData("")]
-            [InlineData(null)]
             [InlineData("Cow")]
             public void ShouldThrowForInvalidValue(string value)
             {
                 var stringEnum = new StringEnum<AccountType>(value);
-
                 Assert.Throws<ArgumentException>(() => stringEnum.Value);
             }
 
@@ -110,7 +108,6 @@ namespace Octokit.Tests.Models
 
             [Theory]
             [InlineData("")]
-            [InlineData(null)]
             [InlineData("Cow")]
             public void ShouldReturnFalseForInvalidValue(string value)
             {

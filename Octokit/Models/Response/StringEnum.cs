@@ -29,7 +29,9 @@ namespace Octokit
 
         public StringEnum(string stringValue)
         {
-            _stringValue = stringValue ?? string.Empty;
+            Ensure.ArgumentNotNull(stringValue, nameof(stringValue));
+
+            _stringValue = stringValue;
             _parsedValue = null;
         }
 
@@ -66,7 +68,7 @@ namespace Octokit
                 return true;
             }
 
-            if (string.IsNullOrEmpty(StringValue))
+            if (StringValue == null)
             {
                 value = default(TEnum);
                 return false;
@@ -144,7 +146,7 @@ namespace Octokit
 
         private TEnum ParseValue()
         {
-            if (string.IsNullOrEmpty(_stringValue))
+            if (_stringValue == null)
             {
                 return default(TEnum);
             }
