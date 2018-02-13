@@ -40,7 +40,7 @@ namespace Octokit
         /// "private" or "public" if the email address is the primary;
         /// otherwise null
         /// <summary>
-        public StringEnum<EmailVisibility> Visibility { get; protected set; }
+        public StringEnum<EmailVisibility>? Visibility { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]
@@ -69,12 +69,6 @@ namespace Octokit
         /// Primary email address and is private
         /// </summary> 
         [Parameter(Value = "private")]
-        Private,
-
-        /// <summary>
-        /// Email is not the primary address
-        /// </summary>
-        [Parameter(Value = "null")]
-        All
+        Private
     }
 }
