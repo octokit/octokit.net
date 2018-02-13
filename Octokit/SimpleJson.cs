@@ -1772,6 +1772,18 @@ namespace Octokit
                 return GetTypeInfo(type1).IsAssignableFrom(GetTypeInfo(type2));
             }
 
+            public static bool IsStringEnumWrapper(Type type)
+            {
+                var typeInfo = ReflectionUtils.GetTypeInfo(type);
+                if (typeInfo.IsGenericType)
+                {
+                    var typeDefinition = typeInfo.GetGenericTypeDefinition();
+
+                    return typeof(StringEnum<>).IsAssignableFrom(typeDefinition);
+                }
+                return false;
+            }
+
             public static IEnumerable<Type> GetInterfaces(Type type)
             {
 #if SIMPLE_JSON_TYPEINFO

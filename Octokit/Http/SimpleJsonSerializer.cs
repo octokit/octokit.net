@@ -168,14 +168,9 @@ namespace Octokit.Internal
                         }
                     }
 
-                    if (typeInfo.IsGenericType)
+                    if (ReflectionUtils.IsStringEnumWrapper(type))
                     {
-                        var typeDefinition = typeInfo.GetGenericTypeDefinition();
-
-                        if (typeof(StringEnum<>).IsAssignableFrom(typeDefinition))
-                        {
-                            return Activator.CreateInstance(type, stringValue);
-                        }
+                        return Activator.CreateInstance(type, stringValue);
                     }
                 }
                 else if (jsonValue != null)
