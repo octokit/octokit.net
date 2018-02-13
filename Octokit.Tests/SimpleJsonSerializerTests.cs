@@ -117,12 +117,14 @@ namespace Octokit.Tests
                 {
                     Name = "Ferris Bueller",
                     SomeEnum = SomeEnum.Unicode,
-                    StringEnum = SomeEnum.SomethingElse
+                    SomeEnumNullable = SomeEnum.Unicode,
+                    StringEnum = SomeEnum.SomethingElse,
+                    StringEnumNullable = SomeEnum.SomethingElse
                 };
 
                 var json = new SimpleJsonSerializer().Serialize(item);
 
-                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"utf-8\",\"string_enum\":\"something_else\"}", json);
+                Assert.Equal("{\"name\":\"Ferris Bueller\",\"some_enum\":\"unicode\",\"some_enum_nullable\":\"unicode\",\"string_enum\":\"something else\",\"string_enum_nullable\":\"something else\"}", json);
             }
 
             [Fact]
