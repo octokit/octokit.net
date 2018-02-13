@@ -20,9 +20,9 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>(AccountType.Bot);
 
-                Assert.Equal("bot", stringEnum.StringValue);
+                Assert.Equal("Bot", stringEnum.StringValue);
                 Assert.Equal(AccountType.Bot, stringEnum.Value);
-                Assert.Equal("bot", stringEnum);
+                Assert.Equal("Bot", stringEnum);
                 Assert.Equal(AccountType.Bot, stringEnum);
             }
 
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Models
             {
                 StringEnum<AccountType> stringEnum = AccountType.Bot;
 
-                Assert.Equal("bot", stringEnum.StringValue);
+                Assert.Equal("Bot", stringEnum.StringValue);
                 Assert.Equal(AccountType.Bot, stringEnum.Value);
             }
 
