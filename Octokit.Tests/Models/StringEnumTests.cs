@@ -48,7 +48,7 @@ namespace Octokit.Tests.Models
             }
         }
 
-        public class TheParsedValueProperty
+        public class TheValueProperty
         {
             [Theory]
             [InlineData("")]
@@ -57,18 +57,6 @@ namespace Octokit.Tests.Models
             {
                 var stringEnum = new StringEnum<AccountType>(value);
                 Assert.Throws<ArgumentException>(() => stringEnum.Value);
-            }
-
-            public class SomeObject
-            {
-                public StringEnum<AccountType> SomeEnumProperty { get; set; }
-            }
-
-            [Fact]
-            public void ShouldReturnDefaultWhenUninitialized()
-            {
-                var test = new SomeObject();
-                Assert.Equal(AccountType.User, test.SomeEnumProperty.Value);
             }
 
             [Fact]
