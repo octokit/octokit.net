@@ -28,7 +28,7 @@ namespace Octokit.Internal
             Ensure.ArgumentNotNull(getHandler, "getHandler");
 
 #if HAS_SERVICEPOINTMANAGER
-            ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 #endif
 
             _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
