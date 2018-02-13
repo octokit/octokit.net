@@ -8,6 +8,12 @@ namespace Octokit.Tests.Models
         public class TheCtor
         {
             [Fact]
+            public void ShouldThrowForNullStringValue()
+            {
+                Assert.Throws<ArgumentNullException>(() => new StringEnum<AccountType>(null));
+            }
+
+            [Fact]
             public void ShouldSetValue()
             {
                 var stringEnum = new StringEnum<AccountType>("user");
