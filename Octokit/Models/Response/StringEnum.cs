@@ -68,12 +68,6 @@ namespace Octokit
                 return true;
             }
 
-            if (StringValue == null)
-            {
-                value = default(TEnum);
-                return false;
-            }
-
             try
             {
                 // Use the SimpleJsonSerializer to parse the string to Enum according to the GitHub Api strategy
@@ -146,11 +140,6 @@ namespace Octokit
 
         private TEnum ParseValue()
         {
-            if (_stringValue == null)
-            {
-                return default(TEnum);
-            }
-
             TEnum value;
             if (TryParse(out value))
             {
