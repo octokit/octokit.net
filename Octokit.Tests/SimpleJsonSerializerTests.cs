@@ -132,7 +132,9 @@ namespace Octokit.Tests
             {
                 var item = new ObjectWithEnumProperty
                 {
-                    Name = "Ferris Bueller"
+                    Name = "Ferris Bueller",
+                    SomeEnum = SomeEnum.PlusOne,
+                    StringEnum = SomeEnum.PlusOne
                 };
 
                 var json = new SimpleJsonSerializer().Serialize(item);
