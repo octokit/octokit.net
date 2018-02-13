@@ -39,7 +39,7 @@ namespace Octokit
         /// <summary>
         /// "private" or "public" if the email address is the primary;
         /// otherwise null
-        /// <summary>
+        /// </summary>
         public StringEnum<EmailVisibility>? Visibility { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
