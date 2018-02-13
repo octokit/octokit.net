@@ -65,8 +65,21 @@ namespace Octokit.Internal
                 Ensure.ArgumentNotNull(input, "input");
 
                 var type = input.GetType();
-                var jsonObject = new JsonObject();
                 var getters = GetCache[type];
+
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    // Handle StringEnum<T> by getting the underlying enum value, then using the enum serializer
+                    // Note this will throw if the StringEnum<T> was initialised using a string that is not a valid enum member
+                    var inputEnum = (getters["value"](input) as Enum);
+                    if (inputEnum != null)
+                    {
+                        output = SerializeEnum(inputEnum);
+                        return true;
+                    }
+                }
+
+                var jsonObject = new JsonObject();
                 foreach (var getter in getters)
                 {
                     if (getter.Value != null)
