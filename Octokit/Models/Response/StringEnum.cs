@@ -29,7 +29,7 @@ namespace Octokit
 
         public StringEnum(string stringValue)
         {
-            Ensure.ArgumentNotNull(stringValue, nameof(stringValue));
+            Ensure.ArgumentNotNullOrEmptyString(stringValue, nameof(stringValue));
 
             _stringValue = stringValue;
             _parsedValue = null;
