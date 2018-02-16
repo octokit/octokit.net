@@ -731,7 +731,7 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest(Skip = "this PR is actually mergeable - rewrite the test")]
+    [IntegrationTest]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
@@ -749,6 +749,7 @@ public class PullRequestsClientTests : IDisposable
         var updatedPullRequest = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.False(updatedPullRequest.Mergeable);
+        Assert.Equal(updatedPullRequest.MergeableState, MergeableState.Dirty);
 
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
