@@ -8,6 +8,14 @@ namespace Octokit.Tests.Models
         public class TheCtor
         {
             [Fact]
+            public void ShouldThrowForNullOrEmptyStringValues()
+            {
+                Assert.Throws<ArgumentNullException>(() => new StringEnum<AccountType>(null));
+
+                Assert.Throws<ArgumentException>(() => new StringEnum<AccountType>(""));
+            }
+
+            [Fact]
             public void ShouldSetValue()
             {
                 var stringEnum = new StringEnum<AccountType>("user");
@@ -42,16 +50,12 @@ namespace Octokit.Tests.Models
             }
         }
 
-        public class TheParsedValueProperty
+        public class TheValueProperty
         {
-            [Theory]
-            [InlineData("")]
-            [InlineData(null)]
-            [InlineData("Cow")]
-            public void ShouldThrowForInvalidValue(string value)
+            [Fact]
+            public void ShouldThrowForInvalidValue()
             {
-                var stringEnum = new StringEnum<AccountType>(value);
-
+                var stringEnum = new StringEnum<AccountType>("Cow");
                 Assert.Throws<ArgumentException>(() => stringEnum.Value);
             }
 
@@ -96,13 +100,10 @@ namespace Octokit.Tests.Models
                 Assert.True(result);
             }
 
-            [Theory]
-            [InlineData("")]
-            [InlineData(null)]
-            [InlineData("Cow")]
-            public void ShouldReturnFalseForInvalidValue(string value)
+            [Fact]
+            public void ShouldReturnFalseForInvalidValue()
             {
-                var stringEnum = new StringEnum<AccountType>(value);
+                var stringEnum = new StringEnum<AccountType>("Cow");
 
                 AccountType type;
                 var result = stringEnum.TryParse(out type);

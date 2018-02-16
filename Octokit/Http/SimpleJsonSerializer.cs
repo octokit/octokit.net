@@ -66,8 +66,21 @@ namespace Octokit.Internal
                 Ensure.ArgumentNotNull(input, "input");
 
                 var type = input.GetType();
-                var jsonObject = new JsonObject();
                 var getters = GetCache[type];
+
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    // Handle StringEnum<T> by getting the underlying enum value, then using the enum serializer
+                    // Note this will throw if the StringEnum<T> was initialised using a string that is not a valid enum member
+                    var inputEnum = (getters["value"](input) as Enum);
+                    if (inputEnum != null)
+                    {
+                        output = SerializeEnum(inputEnum);
+                        return true;
+                    }
+                }
+
+                var jsonObject = new JsonObject();
                 foreach (var getter in getters)
                 {
                     if (getter.Value != null)
@@ -134,20 +147,17 @@ namespace Octokit.Internal
 
                 if (stringValue != null)
                 {
+                    // If it's a nullable type, use the underlying type
+                    if (ReflectionUtils.IsNullableType(type))
+                    {
+                        type = Nullable.GetUnderlyingType(type);
+                    }
+
                     var typeInfo = ReflectionUtils.GetTypeInfo(type);
 
                     if (typeInfo.IsEnum)
                     {
                         return DeserializeEnumHelper(stringValue, type);
-                    }
-
-                    if (ReflectionUtils.IsNullableType(type))
-                    {
-                        var underlyingType = Nullable.GetUnderlyingType(type);
-                        if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
-                        {
-                            return DeserializeEnumHelper(stringValue, underlyingType);
-                        }
                     }
 
                     if (ReflectionUtils.IsTypeGenericeCollectionInterface(type))
@@ -161,14 +171,9 @@ namespace Octokit.Internal
                         }
                     }
 
-                    if (typeInfo.IsGenericType)
+                    if (ReflectionUtils.IsStringEnumWrapper(type))
                     {
-                        var typeDefinition = typeInfo.GetGenericTypeDefinition();
-
-                        if (typeof(StringEnum<>).IsAssignableFrom(typeDefinition))
-                        {
-                            return Activator.CreateInstance(type, stringValue);
-                        }
+                        return Activator.CreateInstance(type, stringValue);
                     }
                 }
                 else if (jsonValue != null)
