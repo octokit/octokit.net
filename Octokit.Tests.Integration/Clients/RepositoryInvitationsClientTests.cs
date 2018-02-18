@@ -300,7 +300,7 @@ public class RepositoryInvitationsClientTests
                     Assert.Equal(context.RepositoryOwner, response.Invitee.Login);
                     Assert.Equal(InvitationPermissionType.Write, response.Permissions);
                 }
-               
+
                 var startOptions = new ApiOptions
                 {
                     PageSize = 1,
@@ -321,7 +321,7 @@ public class RepositoryInvitationsClientTests
                 var invitationsLength = invitations.Length;
                 for (int i = 0; i < invitationsLength; i++)
                 {
-                    for (int j = i+1; j < invitationsLength; j++)
+                    for (int j = i + 1; j < invitationsLength; j++)
                     {
                         Assert.NotEqual(invitations[i].Repository.FullName, invitations[j].Repository.FullName);
                     }
@@ -329,7 +329,7 @@ public class RepositoryInvitationsClientTests
             }
             finally
             {
-                if(contexts != null)
+                if (contexts != null)
                 {
                     foreach (var context in contexts)
                     {

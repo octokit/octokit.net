@@ -9,7 +9,7 @@
     /// so that consumers of Octokit.net would not have to add a reference to the System.Net.Http.Headers namespace.
     /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
     /// </remarks>
-  public class ProductHeaderValue
+    public class ProductHeaderValue
     {
         readonly System.Net.Http.Headers.ProductHeaderValue _productHeaderValue;
 

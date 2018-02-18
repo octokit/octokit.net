@@ -113,10 +113,10 @@ namespace Octokit.Internal
 
             internal object DeserializeEnumHelper(string value, Type type)
             {
-                var cachedEnumsForType = _cachedEnums.GetOrAdd(type, t => 
+                var cachedEnumsForType = _cachedEnums.GetOrAdd(type, t =>
                 {
                     var enumsForType = new ConcurrentDictionary<object, object>();
-                    
+
                     // Try to get all custom attributes, this happens only once per type
                     var fields = type.GetRuntimeFields();
                     foreach (var field in fields)

@@ -67,6 +67,5 @@ namespace Octokit
         /// The branches involved.
         /// </summary>
         public IReadOnlyList<Branch> Branches { get; protected set; }
-
     }
 }
