@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -12,11 +13,12 @@ namespace Octokit
     {
         public EmailAddress() { }
 
-        public EmailAddress(string email, bool verified, bool primary)
+        public EmailAddress(string email, bool verified, bool primary, EmailVisibility visibility)
         {
             Email = email;
             Verified = verified;
             Primary = primary;
+            Visibility = visibility;
         }
 
         /// <summary>
@@ -25,14 +27,20 @@ namespace Octokit
         public string Email { get; protected set; }
 
         /// <summary>
-        /// true if the email is verified; otherwise false
+        /// True if the email is verified; otherwise false
         /// </summary>
         public bool Verified { get; protected set; }
 
         /// <summary>
-        /// true if this is the users primary email; otherwise false
+        /// True if this is the users primary email; otherwise false
         /// </summary>
         public bool Primary { get; protected set; }
+
+        /// <summary>
+        /// "private" or "public" if the email address is the primary;
+        /// otherwise null
+        /// </summary>
+        public StringEnum<EmailVisibility>? Visibility { get; protected set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]
@@ -41,8 +49,26 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "EmailAddress: Email: {0}; Primary: {1}, Verified: {2}", Email, Primary, Verified);
+                    "EmailAddress: Email: {0}; Primary: {1}, Verified: {2}, Visibility: {3}", Email, Primary, Verified, Visibility);
             }
         }
+    }
+
+    /// <summary>
+    /// Represents the visibility of an email address.
+    /// </summary>
+    public enum EmailVisibility
+    {
+        /// <summary>
+        /// Primary email address and is public
+        /// </summary>     
+        [Parameter(Value = "public")]
+        Public,
+
+        /// <summary>
+        /// Primary email address and is private
+        /// </summary> 
+        [Parameter(Value = "private")]
+        Private
     }
 }
