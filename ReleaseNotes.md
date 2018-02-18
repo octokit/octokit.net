@@ -1,3 +1,48 @@
+### New in 0.29.0 (released 19/02/2018)
+
+## Advisories and Breaking Changes
+
+- On February 22, 2018 19:00 UTC, GitHub will [disable permanently the use of weak cryptogrpahic standards](https://developer.github.com/changes/2018-02-01-weak-crypto-removal-notice/).  Applications targeting .NET Framework 4.5.x will be affected, as that framework does not enable the now required protocol (TLS1.2) by default.  This octokit.net release will automatically enable this protocol, when the `GitHubClient` is constructed.  Note that applications targeting .NET Framework 4.6+ or .NET Core should already have TLS1.2 enabled by default, and this release does nothing with enabled protocols on those platforms.
+- Affected clients that are unable to update octokit.net, can include their own [code change](https://github.com/octokit/octokit.net/blob/41b4059c110a60aee86a912dda2987fecc5a3fcb/Octokit/Http/HttpClientAdapter.cs#L31) to enable TLS1.2 as an alternative to updating to this release.
+
+## Release Notes
+
+### Milestone: Missing Pagination Support
+
+**Features/Enhancements**
+
+- Add pagination support to `ReferencesClient` - [#1694](https://github.com/octokit/octokit.net/pull/1694) via [@gdziadkiewicz](https://github.com/gdziadkiewicz)
+- Add pagination support to `RepositoryInvitationsClient` - [#1692](https://github.com/octokit/octokit.net/pull/1692) via [@gdziadkiewicz](https://github.com/gdziadkiewicz)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Add `InReplyToId` property to `PullRequestReviewComment` response model, to indicate when a comment is in reply to another comment - [#1715](https://github.com/octokit/octokit.net/pull/1715) via [@thedillonb](https://github.com/thedillonb)
+- Ensure the `netstandard1.1` targeted package is compatible with AWS Lambda `netcoreapp1.0` environment, by explicitly specifying the `NetStandard.Library` meta-package version - [#1713](https://github.com/octokit/octokit.net/pull/1713) via [@ryangribble](https://github.com/ryangribble)
+- Add `UpdatedAt` property to `Milestone` response model, to indicate when it was last updated - [#1722](https://github.com/octokit/octokit.net/pull/1722) via [@shaggygi](https://github.com/shaggygi), [@ryangribble](https://github.com/ryangribble)
+- Support `StatusEvent` payloads, using new response model `StatusEventPayload` - [#1732](https://github.com/octokit/octokit.net/pull/1732) via [@itaibh](https://github.com/itaibh)
+- Octokit now handles `DateTime` and `DateTimeOffset` response fields whose API response is in an unexpected Unix epoch time format - [#1735](https://github.com/octokit/octokit.net/pull/1735) via [@itaibh](https://github.com/itaibh)
+- Add `PullRequestReviewId ` property to `PullRequestReviewComment` response model, to indicate which `PullRequestReview` the comment is related to - [#1739](https://github.com/octokit/octokit.net/pull/1739) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Implement support for Repository Licenses, including adding `License` property to `Repository` response model, adding `SpxId` field to `LicenseMetadata` response model and a new `IRepositoriesClient.GetLicenseContents()` call - [#1630](https://github.com/octokit/octokit.net/pull/1630) via [@jozefizso](https://github.com/jozefizso), [@M-Zuber](https://github.com/M-Zuber), [@ryangribble](https://github.com/ryangribble)
+- Add `MergeableState` property to `PullRequest` response model, to indicate additional information about why a pull request can't be merged - [#1764](https://github.com/octokit/octokit.net/pull/1764) via [@ryangribble](https://github.com/ryangribble)
+- Add `Visibility` property to `EmailAddress` response model, to indicate whether a primary email address is `Public` or `Private` - [#1757](https://github.com/octokit/octokit.net/pull/1757) via [@asapferg](https://github.com/asapferg), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- `OAuthClient` now handles GitHub Enterprise instances correctly in `CreateAccessToken()` and `GetGitHubLoginUrl()` methods - [#1726](https://github.com/octokit/octokit.net/pull/1726) via [@ryangribble](https://github.com/ryangribble)
+- Using the same `GitHubClient` instance from multiple threads in parallel will no longer throw occasional exceptions, after making the `GitHubSerializerStrategy` internals thread-safe - [#1748](https://github.com/octokit/octokit.net/pull/1748) via [@daveaglick](https://github.com/daveaglick)
+- Remove deserializer enum cache miss by correcting the case of `AccountType` parameter values - [#1759](https://github.com/octokit/octokit.net/pull/1759) via [@ryangribble](https://github.com/ryangribble)
+- Add TLS1.2 to enabled security protocols (.NET Framework 4.5 only) to avoid SSL connectivity errors when [GitHub deprecates weak algorithms](https://developer.github.com/changes/2018-02-01-weak-crypto-removal-notice/) on February 22 - [#1758](https://github.com/octokit/octokit.net/pull/1758) via [@ryangribble](https://github.com/ryangribble)
+- Deserializer now handles nullable `StringEnum<T>` members - [#1760](https://github.com/octokit/octokit.net/pull/1760) via [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Updated Rate Limits documentation and samples - [#1742](https://github.com/octokit/octokit.net/pull/1742) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Update supported platforms in README.md to include `.NET Standard 1.1` - [#1744](https://github.com/octokit/octokit.net/pull/1744) via [@ShalokShalom](https://github.com/ShalokShalom), [@ryangribble](https://github.com/ryangribble)
+- Clarified `ProductHeaderValue` usage to align with GitHub API Docs - [#1751](https://github.com/octokit/octokit.net/pull/1751) via [@IAmHughes](https://github.com/IAmHughes), [@ryangribble](https://github.com/ryangribble)
+
 ### New in 0.28.0 (released 6/11/2017)
 
 ## Advisories and Breaking Changes

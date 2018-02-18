@@ -823,7 +823,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), null, AcceptHeaders.LicensesApiPreview);
-
         }
 
         /// <summary>
