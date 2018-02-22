@@ -22,7 +22,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <None Include="app.config" />
     <Content Include="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
