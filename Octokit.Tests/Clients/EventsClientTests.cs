@@ -778,7 +778,6 @@ namespace Octokit.Tests.Clients
             Assert.Equal("Looks great!", payload.Review.Body);
             Assert.Equal(PullRequestReviewState.Approved, payload.Review.State.Value);
             Assert.Equal("https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884", payload.Review.HtmlUrl);
-            A
             Assert.Equal("PR Title", payload.PullRequest.Title);
         }
 
