@@ -38,7 +38,7 @@ namespace Octokit
         [Parameter(Key = "previous_filename")]
         public string PreviousFileName { get; protected set; }
 
-    internal string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Sha: {0} FileName: {1} Additions: {2} Deletions: {3} Changes: {4}", Sha, FileName, Additions, Deletions, Changes); }
         }
