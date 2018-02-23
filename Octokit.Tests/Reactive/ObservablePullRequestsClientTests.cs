@@ -693,7 +693,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllFilesForPullRequest()
             {
-                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
+                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null, null);
                 var expectedUrl = "repos/fake/repo/pulls/42/files";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
@@ -717,7 +717,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllFilesForPullRequestWithRepositoryId()
             {
-                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null);
+                var file = new PullRequestFile(null, null, null, 0, 0, 0, null, null, null, null, null);
                 var expectedUrl = "repositories/1/pulls/42/files";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
