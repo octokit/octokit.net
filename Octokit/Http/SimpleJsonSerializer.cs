@@ -216,6 +216,8 @@ namespace Octokit.Internal
                         return typeof(IssueEventPayload);
                     case "PullRequestEvent":
                         return typeof(PullRequestEventPayload);
+                    case "PullRequestReviewEvent":
+                        return typeof(PullRequestReviewEventPayload);
                     case "PullRequestReviewCommentEvent":
                         return typeof(PullRequestCommentPayload);
                     case "PushEvent":
