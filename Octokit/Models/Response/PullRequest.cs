@@ -221,7 +221,7 @@ namespace Octokit
         public bool Locked { get; protected set; }
 
         /// <summary>
-        /// If users with write access to the base repository can push to the HEAD branch
+        /// Whether maintainers of the base repository can push to the HEAD branch
         /// </summary>
         public bool? MaintainerCanModify { get; protected set; }
         
