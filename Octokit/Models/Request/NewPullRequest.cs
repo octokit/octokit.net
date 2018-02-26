@@ -9,13 +9,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewPullRequest
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NewPullRequest"/> class.
-        /// </summary>
-        /// <param name="title">The title of the pull request.</param>
-        /// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
-        /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
-        public NewPullRequest(string title, string head, string baseRef)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NewPullRequest"/> class.
+		/// </summary>
+		/// <param name="title">The title of the pull request.</param>
+		/// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
+		/// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
+		/// <param name="maintainerCanModify">Whether maintainers of the base repository can push to <paramref name="baseRef"/> if it is a branch</param>
+		public NewPullRequest(string title, string head, string baseRef, bool maintainerCanModify)
         {
             Ensure.ArgumentNotNullOrEmptyString(title, "title");
             Ensure.ArgumentNotNullOrEmptyString(head, "head");
@@ -24,6 +25,7 @@ namespace Octokit
             Title = title;
             Head = head;
             Base = baseRef;
+			MaintainerCanModify = maintainerCanModify;
         }
 
         /// <summary>
@@ -40,6 +42,11 @@ namespace Octokit
         /// The branch (or git ref) where your changes are implemented (required).
         /// </summary>
         public string Head { get; private set; }
+
+		/// <summary>
+		/// Whether maintainers of the base repository can push to <see cref="Base"/> if it is a branch
+		/// </summary>
+		public bool MaintainerCanModify { get; private set; }
 
         /// <summary>
         /// Body of the pull request (optional)
