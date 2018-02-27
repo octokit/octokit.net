@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="title">The title of the pull request.</param>
         /// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
         /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
-        /// <param name="maintainerCanModify">Whether maintainers of the base repository can push to <paramref name="baseRef"/> if it is a branch</param>
+        /// <param name="maintainerCanModify">Whether maintainers of the base repository can push to <paramref name="head"/> if it is a branch</param>
         public NewPullRequest(string title, string head, string baseRef, bool maintainerCanModify)
         {
             Ensure.ArgumentNotNullOrEmptyString(title, "title");
@@ -44,7 +44,7 @@ namespace Octokit
         public string Head { get; private set; }
 
         /// <summary>
-        /// Whether maintainers of the base repository can push to <see cref="Base"/> if it is a branch
+        /// Whether maintainers of the base repository can push to <see cref="Head"/> if it is a branch
         /// </summary>
         public bool MaintainerCanModify { get; private set; }
 
