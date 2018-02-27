@@ -29,12 +29,12 @@ namespace Octokit
         /// </summary>
         public string Base { get; set; }
 
-		/// <summary>
-		/// Whether maintainers of the base repository can push to <see cref="Base"/> if it is a branch
-		/// </summary>
-		public bool MaintainerCanModify { get; set; }
+        /// <summary>
+        /// Whether maintainers of the base repository can push to <see cref="Base"/> if it is a branch
+        /// </summary>
+        public bool MaintainerCanModify { get; set; }
 
-		internal string DebuggerDisplay
+        internal string DebuggerDisplay
         {
             get
             {
