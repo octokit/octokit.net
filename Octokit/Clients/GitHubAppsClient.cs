@@ -9,14 +9,14 @@ namespace Octokit
         {
         }
 
-        public Task<Application> Get(string slug)
+        public Task<GitHubApp> Get(string slug)
         {
-            return ApiConnection.Get<Application>(ApiUrls.App(slug), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Get<GitHubApp>(ApiUrls.App(slug), null, AcceptHeaders.MachineManPreview);
         }
 
-        public Task<Application> GetCurrent()
+        public Task<GitHubApp> GetCurrent()
         {
-            return ApiConnection.Get<Application>(ApiUrls.App(), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Get<GitHubApp>(ApiUrls.App(), null, AcceptHeaders.MachineManPreview);
         }
 
         public Task<AccessToken> CreateInstallationToken(long installationId)

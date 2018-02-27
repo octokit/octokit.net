@@ -5,8 +5,8 @@ namespace Octokit
 {
     public interface IGitHubAppsClient
     {
-        Task<Application> Get(string slug);
-        Task<Application> GetCurrent();
+        Task<GitHubApp> Get(string slug);
+        Task<GitHubApp> GetCurrent();
         Task<AccessToken> CreateInstallationToken(long installationId);
         Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent();
         Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options);
