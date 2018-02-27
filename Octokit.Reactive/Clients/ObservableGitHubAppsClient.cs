@@ -17,6 +17,11 @@ namespace Octokit.Reactive
             _connection = client.Connection;
         }
 
+        public IObservable<GitHubApp> Get(string slug)
+        {
+            return _client.Get(slug).ToObservable();
+        }
+
         public IObservable<GitHubApp> GetCurrent()
         {
             return _client.GetCurrent().ToObservable();
