@@ -1,11 +1,30 @@
 ﻿using Octokit.Tests.Integration.Helpers;
 using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
     public class GitHubAppsClientTests
     {
+        public class TheGetMethod
+        {
+            IGitHubClient _github;
+
+            public TheGetMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+            }
+
+            [IntegrationTest]
+            public async Task GetsApp()
+            {
+                var result = await _github.GitHubApps.Get("MyGitHub");
+
+                Assert.Equal("MyGitHub", result.Name);
+            }
+        }
+
         public class TheGetAllInstallationsForCurrentMethod : IDisposable
         {
             IGitHubClient _github;

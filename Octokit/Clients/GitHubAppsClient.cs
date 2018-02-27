@@ -9,6 +9,11 @@ namespace Octokit
         {
         }
 
+        public Task<Application> Get(string slug)
+        {
+            return ApiConnection.Get<Application>(ApiUrls.App(slug), null, AcceptHeaders.MachineManPreview);
+        }
+
         public Task<Application> GetCurrent()
         {
             return ApiConnection.Get<Application>(ApiUrls.App(), null, AcceptHeaders.MachineManPreview);

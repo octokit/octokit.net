@@ -305,6 +305,14 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App(string slug)
+        {
+            return "apps/{0}".FormatUri(slug);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
         /// </summary>
         /// <returns></returns>
