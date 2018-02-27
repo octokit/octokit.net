@@ -244,7 +244,7 @@ public class PullRequestReviewRequestsClientTests
         await github.Git.Reference.Create(context.RepositoryOwner, context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
 
         // create a pull request
-        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master");
+        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master", false);
         var createdPullRequest = await github.PullRequest.Create(context.RepositoryOwner, context.RepositoryName, pullRequest);
 
         // Create review requests (optional)

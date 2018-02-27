@@ -63,7 +63,7 @@ namespace Octokit.Tests.Integration.Helpers
 
         public static async Task<PullRequest> CreatePullRequest(this IGitHubClient client, Repository repository, string branch = "my-branch")
         {
-            var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
+            var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master", false);
             var createdPullRequest = await client.PullRequest.Create(repository.Owner.Login, repository.Name, pullRequest);
 
             return createdPullRequest;

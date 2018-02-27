@@ -236,7 +236,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task PostsToCorrectUrl()
             {
-                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name", false);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
@@ -249,7 +249,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task PostsToCorrectUrlWithRepositoryId()
             {
-                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name", false);
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
@@ -265,14 +265,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2", false)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2", false)));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2", false)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2", false)));
             }
         }
 
@@ -310,14 +310,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new PullRequestsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2", false)));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2", false)));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("owner", "name", null));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2", false)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2", false)));
             }
         }
 

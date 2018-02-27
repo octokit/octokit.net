@@ -462,7 +462,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void CreatesFromClientRepositoryPullRequest()
             {
-                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name", false);
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -474,7 +474,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void CreatesFromClientRepositoryPullRequestWithRepositoryId()
             {
-                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name");
+                var newPullRequest = new NewPullRequest("some title", "branch:name", "branch:name", false);
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -489,14 +489,14 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2")));
-                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2")));
+                Assert.Throws<ArgumentNullException>(() => client.Create(null, "name", new NewPullRequest("title", "ref", "ref2", false)));
+                Assert.Throws<ArgumentNullException>(() => client.Create("owner", null, new NewPullRequest("title", "ref", "ref2", false)));
                 Assert.Throws<ArgumentNullException>(() => client.Create("owner", "name", null));
 
                 Assert.Throws<ArgumentNullException>(() => client.Create(1, null));
 
-                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2")));
-                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2")));
+                Assert.Throws<ArgumentException>(() => client.Create("", "name", new NewPullRequest("title", "ref", "ref2", false)));
+                Assert.Throws<ArgumentException>(() => client.Create("owner", "", new NewPullRequest("title", "ref", "ref2", false)));
             }
         }
 
