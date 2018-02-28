@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetCurrent();
 
-                connection.Received().Get<Application>(Arg.Is<Uri>(u => u.ToString() == "app"), null, AcceptHeaders.MachineManPreview);
+                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "app"), null, AcceptHeaders.MachineManPreview);
             }
         }
 
