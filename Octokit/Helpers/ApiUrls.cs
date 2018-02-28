@@ -18,7 +18,7 @@ namespace Octokit
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.

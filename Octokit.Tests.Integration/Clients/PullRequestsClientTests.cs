@@ -731,7 +731,7 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest(Skip = "this PR is actually mergeable - rewrite the test")]
+    [IntegrationTest]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
@@ -749,6 +749,7 @@ public class PullRequestsClientTests : IDisposable
         var updatedPullRequest = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.False(updatedPullRequest.Mergeable);
+        Assert.Equal(updatedPullRequest.MergeableState, MergeableState.Dirty);
 
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
@@ -869,10 +870,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files("octokit", "octokit.net", 288);
@@ -893,10 +894,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files(7528679, 288);

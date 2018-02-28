@@ -558,6 +558,7 @@ namespace Octokit.Tests.Clients
             {"IssueCommentEvent", typeof(IssueCommentPayload)},
             {"IssuesEvent", typeof(IssueEventPayload)},
             {"PullRequestEvent", typeof(PullRequestEventPayload)},
+            {"PullRequestReviewEvent", typeof(PullRequestReviewEventPayload)},
             {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
             {"PushEvent", typeof(PushEventPayload)},
             {"StatusEvent", typeof(StatusEventPayload)},
@@ -740,6 +741,43 @@ namespace Octokit.Tests.Clients
             var payload = activities.FirstOrDefault().Payload as PullRequestEventPayload;
             Assert.Equal("assigned", payload.Action);
             Assert.Equal(1337, payload.Number);
+            Assert.Equal("PR Title", payload.PullRequest.Title);
+        }
+
+        [Fact]
+        public async Task DeserializesPullRequestReviewEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "PullRequestReviewEvent" },
+                {
+                    "payload", new
+                    {
+                        action = "submitted",
+                        review = new {
+                            id = 2626884,
+                            body = "Looks great!",
+                            state = "approved",
+                            html_url = "https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884",
+                        },
+                        pull_request = new
+                        {
+                            title = "PR Title"
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PullRequestReviewEventPayload;
+            Assert.Equal("submitted", payload.Action);
+            Assert.Equal(2626884, payload.Review.Id);
+            Assert.Equal("Looks great!", payload.Review.Body);
+            Assert.Equal(PullRequestReviewState.Approved, payload.Review.State.Value);
+            Assert.Equal("https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884", payload.Review.HtmlUrl);
             Assert.Equal("PR Title", payload.PullRequest.Title);
         }
 

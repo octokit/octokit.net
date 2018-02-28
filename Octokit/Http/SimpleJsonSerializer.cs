@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +35,7 @@ namespace Octokit.Internal
         class GitHubSerializerStrategy : PocoJsonSerializerStrategy
         {
             readonly List<string> _membersWhichShouldPublishNull = new List<string>();
-            Dictionary<Type, Dictionary<object, object>> _cachedEnums = new Dictionary<Type, Dictionary<object, object>>();
+            ConcurrentDictionary<Type, ConcurrentDictionary<object, object>> _cachedEnums = new ConcurrentDictionary<Type, ConcurrentDictionary<object, object>>();
 
             protected override string MapClrMemberToJsonFieldName(MemberInfo member)
             {
@@ -65,8 +66,21 @@ namespace Octokit.Internal
                 Ensure.ArgumentNotNull(input, "input");
 
                 var type = input.GetType();
-                var jsonObject = new JsonObject();
                 var getters = GetCache[type];
+
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    // Handle StringEnum<T> by getting the underlying enum value, then using the enum serializer
+                    // Note this will throw if the StringEnum<T> was initialised using a string that is not a valid enum member
+                    var inputEnum = (getters["value"](input) as Enum);
+                    if (inputEnum != null)
+                    {
+                        output = SerializeEnum(inputEnum);
+                        return true;
+                    }
+                }
+
+                var jsonObject = new JsonObject();
                 foreach (var getter in getters)
                 {
                     if (getter.Value != null)
@@ -99,12 +113,11 @@ namespace Octokit.Internal
 
             internal object DeserializeEnumHelper(string value, Type type)
             {
-                if (!_cachedEnums.ContainsKey(type))
+                var cachedEnumsForType = _cachedEnums.GetOrAdd(type, t =>
                 {
-                    //First add type to Dictionary
-                    _cachedEnums.Add(type, new Dictionary<object, object>());
+                    var enumsForType = new ConcurrentDictionary<object, object>();
 
-                    //then try to get all custom attributes, this happens only once per type
+                    // Try to get all custom attributes, this happens only once per type
                     var fields = type.GetRuntimeFields();
                     foreach (var field in fields)
                     {
@@ -113,25 +126,15 @@ namespace Octokit.Internal
                         var attribute = (ParameterAttribute)field.GetCustomAttribute(typeof(ParameterAttribute));
                         if (attribute != null)
                         {
-                            if (!_cachedEnums[type].ContainsKey(attribute.Value))
-                            {
-                                var fieldValue = field.GetValue(null);
-                                _cachedEnums[type].Add(attribute.Value, fieldValue);
-                            }
+                            enumsForType.GetOrAdd(attribute.Value, _ => field.GetValue(null));
                         }
                     }
-                }
-                if (_cachedEnums[type].ContainsKey(value))
-                {
-                    return _cachedEnums[type][value];
-                }
-                else
-                {
-                    //dictionary does not contain enum value and has no custom attribute. So add it for future loops and return value
-                    var parsed = Enum.Parse(type, value, ignoreCase: true);
-                    _cachedEnums[type].Add(value, parsed);
-                    return parsed;
-                }
+
+                    return enumsForType;
+                });
+
+                // If type cache does not contain enum value and has no custom attribute, add it for future loops
+                return cachedEnumsForType.GetOrAdd(value, v => Enum.Parse(type, value, ignoreCase: true));
             }
 
             private string _type;
@@ -144,20 +147,17 @@ namespace Octokit.Internal
 
                 if (stringValue != null)
                 {
+                    // If it's a nullable type, use the underlying type
+                    if (ReflectionUtils.IsNullableType(type))
+                    {
+                        type = Nullable.GetUnderlyingType(type);
+                    }
+
                     var typeInfo = ReflectionUtils.GetTypeInfo(type);
 
                     if (typeInfo.IsEnum)
                     {
                         return DeserializeEnumHelper(stringValue, type);
-                    }
-
-                    if (ReflectionUtils.IsNullableType(type))
-                    {
-                        var underlyingType = Nullable.GetUnderlyingType(type);
-                        if (ReflectionUtils.GetTypeInfo(underlyingType).IsEnum)
-                        {
-                            return DeserializeEnumHelper(stringValue, underlyingType);
-                        }
                     }
 
                     if (ReflectionUtils.IsTypeGenericeCollectionInterface(type))
@@ -171,14 +171,9 @@ namespace Octokit.Internal
                         }
                     }
 
-                    if (typeInfo.IsGenericType)
+                    if (ReflectionUtils.IsStringEnumWrapper(type))
                     {
-                        var typeDefinition = typeInfo.GetGenericTypeDefinition();
-
-                        if (typeof(StringEnum<>).IsAssignableFrom(typeDefinition))
-                        {
-                            return Activator.CreateInstance(type, stringValue);
-                        }
+                        return Activator.CreateInstance(type, stringValue);
                     }
                 }
                 else if (jsonValue != null)
@@ -221,6 +216,8 @@ namespace Octokit.Internal
                         return typeof(IssueEventPayload);
                     case "PullRequestEvent":
                         return typeof(PullRequestEventPayload);
+                    case "PullRequestReviewEvent":
+                        return typeof(PullRequestReviewEventPayload);
                     case "PullRequestReviewCommentEvent":
                         return typeof(PullRequestCommentPayload);
                     case "PushEvent":

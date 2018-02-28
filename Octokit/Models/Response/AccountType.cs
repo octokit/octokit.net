@@ -7,19 +7,19 @@ namespace Octokit
         /// <summary>
         ///  User account
         /// </summary>
-        [Parameter(Value = "user")]
+        [Parameter(Value = "User")]
         User,
 
         /// <summary>
         /// Organization account
         /// </summary>
-        [Parameter(Value = "organization")]
+        [Parameter(Value = "Organization")]
         Organization,
 
         /// <summary>
         /// Bot account
         /// </summary>
-        [Parameter(Value = "bot")]
+        [Parameter(Value = "Bot")]
         Bot
     }
 }
