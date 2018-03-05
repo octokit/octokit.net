@@ -187,7 +187,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         Task Delete(string owner, string name, string reference);
 
@@ -198,7 +198,7 @@ namespace Octokit
         /// http://developer.github.com/v3/git/refs/#delete-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         Task Delete(long repositoryId, string reference);
     }
