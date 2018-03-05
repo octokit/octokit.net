@@ -285,12 +285,15 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        /// <returns></returns>
         public static Uri NotificationSubscription(int id)
         {
             return "notifications/threads/{0}/subscription".FormatUri(id);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a new installation token.
+        /// </summary>
+        /// <param name="installationId">The Id of the GitHub App installation.</param>
         public static Uri AccessTokens(long installationId)
         {
             return "installations/{0}/access_tokens".FormatUri(installationId);

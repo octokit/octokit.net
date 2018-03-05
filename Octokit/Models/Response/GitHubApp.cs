@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Represents an oauth application.
+    /// Represents a GitHub application.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubApp
