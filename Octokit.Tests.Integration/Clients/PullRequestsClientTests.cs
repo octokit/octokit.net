@@ -32,7 +32,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
         Assert.Equal("a pull request", result.Title);
     }
@@ -42,7 +42,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
         Assert.Equal("a pull request", result.Title);
     }
@@ -52,7 +52,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
@@ -67,7 +67,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
@@ -81,7 +81,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         // Add an assignee
@@ -104,7 +104,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
 
         // Add an assignee
@@ -127,7 +127,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var options = new ApiOptions
@@ -147,7 +147,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var options = new ApiOptions
@@ -167,8 +167,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -190,8 +190,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -213,8 +213,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -243,8 +243,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -273,7 +273,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", true);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
@@ -281,7 +281,6 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
-		Assert.Equal(true, pullRequests[0].MaintainerCanModify);
     }
 
     [IntegrationTest]
@@ -289,7 +288,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
@@ -297,7 +296,6 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
-		Assert.Equal(false, pullRequests[0].MaintainerCanModify);
     }
 
     [IntegrationTest]
@@ -305,7 +303,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var options = new ApiOptions
@@ -326,7 +324,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var options = new ApiOptions
@@ -347,8 +345,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -371,8 +369,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -395,8 +393,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -427,8 +425,8 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master", false);
-        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master", false);
+        var newPullRequest1 = new NewPullRequest("a pull request 1", branchName, "master");
+        var newPullRequest2 = new NewPullRequest("a pull request 2", otherBranchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest1);
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
@@ -459,7 +457,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Closed };
@@ -473,7 +471,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Closed };
@@ -487,7 +485,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body", Base = "my-other-branch" };
@@ -503,7 +501,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { Title = "updated title", Body = "Hello New Body", Base = "my-other-branch" };
@@ -519,7 +517,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
@@ -535,7 +533,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var updatePullRequest = new PullRequestUpdate { State = ItemState.Closed };
@@ -552,10 +550,10 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master", false);
+        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
         var anotherPullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
         var updatePullRequest = new PullRequestUpdate { Body = "This is the body" };
@@ -575,10 +573,10 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
-        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master", false);
+        var newPullRequest2 = new NewPullRequest("another pull request", otherBranchName, "master");
         var anotherPullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest2);
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Ascending });
@@ -593,7 +591,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var result = await _fixture.Merged(Helper.UserName, _context.RepositoryName, pullRequest.Number);
@@ -606,7 +604,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var result = await _fixture.Merged(_context.Repository.Id, pullRequest.Number);
@@ -619,7 +617,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "thing the thing" };
@@ -633,7 +631,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "thing the thing" };
@@ -647,7 +645,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest();
@@ -661,7 +659,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "thing the thing", Sha = pullRequest.Head.Sha };
@@ -675,7 +673,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Merge };
@@ -691,7 +689,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Squash };
@@ -707,7 +705,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", MergeMethod = PullRequestMergeMethod.Rebase };
@@ -724,7 +722,7 @@ public class PullRequestsClientTests : IDisposable
         await CreateTheWorld();
         var fakeSha = new string('f', 40);
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { Sha = fakeSha };
@@ -743,7 +741,7 @@ public class PullRequestsClientTests : IDisposable
         var masterCommit = await CreateCommit("Commit in master", newMasterTree.Sha, master.Object.Sha);
         await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(masterCommit.Sha));
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         await Task.Delay(TimeSpan.FromSeconds(5));
@@ -764,7 +762,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var merge = new MergePullRequest { CommitMessage = "thing the thing" };
@@ -780,7 +778,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var result = await _fixture.Commits(Helper.UserName, _context.RepositoryName, pullRequest.Number);
@@ -794,7 +792,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         var result = await _fixture.Commits(_context.Repository.Id, pullRequest.Number);
@@ -808,7 +806,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         // create new commit for branch
@@ -840,7 +838,7 @@ public class PullRequestsClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newPullRequest = new NewPullRequest("a pull request", branchName, "master", false);
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
 
         // create new commit for branch

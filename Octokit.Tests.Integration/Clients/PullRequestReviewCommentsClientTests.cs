@@ -870,7 +870,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
 
         // Creating a pull request
 
-        var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master", false);
+        var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
         var createdPullRequest = await _github.PullRequest.Create(Helper.UserName, repoName, pullRequest);
 
         var data = new PullRequestData
