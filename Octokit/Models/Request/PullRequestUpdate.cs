@@ -32,7 +32,7 @@ namespace Octokit
         /// <summary>
         /// Whether maintainers of the base repository can push to the pull request's HEAD if it is a branch
         /// </summary>
-        public bool MaintainerCanModify { get; set; }
+        public bool? MaintainerCanModify { get; set; }
 
         internal string DebuggerDisplay
         {
