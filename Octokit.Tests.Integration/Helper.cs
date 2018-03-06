@@ -321,7 +321,7 @@ namespace Octokit.Tests.Integration
             try
             {
                 var client = new GitHubClient(connection);
-                client.Organization.Team.AddMembership(teamId, login).Wait(TimeSpan.FromSeconds(15));
+                client.Organization.Team.AddOrEditMembership(teamId, login, new UpdateTeamMembership(TeamRole.Member)).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
 

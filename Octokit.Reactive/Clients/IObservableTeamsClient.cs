@@ -146,17 +146,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        [Obsolete("Please use AddOrEditMembership instead")]
-        IObservable<TeamMembership> AddMembership(int id, string login);
-
-        /// <summary>
-        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="id">The team identifier.</param>
-        /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
         IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
 
@@ -170,15 +159,6 @@ namespace Octokit.Reactive
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         IObservable<bool> RemoveMembership(int id, string login);
-
-        /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
-        /// is a member of the team with the given <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The team to check.</param>
-        /// <param name="login">The user to check.</param>
-        [Obsolete("Please use GetMembershipDetails instead")]
-        IObservable<TeamMembership> GetMembership(int id, string login);
 
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
