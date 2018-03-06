@@ -10,8 +10,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubApp
     {
+        /// <summary>
+        /// Initialize a new empty GitHubApp object ready for deserialization.
+        /// </summary>
         public GitHubApp() { }
 
+        /// <summary>
+        /// The GitHubApp Id. Should be the same as in the GitHubApp -> Settings -> About page.
+        /// </summary>
         public long Id { get; protected set; }
 
         public string Name { get; protected set; }

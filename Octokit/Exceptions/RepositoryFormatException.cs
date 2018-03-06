@@ -27,6 +27,9 @@ namespace Octokit
                 parameterList);
         }
 
+        /// <summary>
+        /// The error message
+        /// </summary>
         public override string Message
         {
             get

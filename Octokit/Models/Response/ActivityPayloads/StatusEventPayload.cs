@@ -69,7 +69,7 @@ namespace Octokit
         /// </summary>
         public IReadOnlyList<Branch> Branches { get; protected set; }
 
-        internal string DebuggerDisplay
+        internal new string DebuggerDisplay
         {
             get
             {

@@ -26,6 +26,9 @@ namespace Octokit
         {
         }
 
+        /// <summary>
+        /// The error message
+        /// </summary>
         public override string Message
         {
             get

@@ -20,6 +20,9 @@ namespace Octokit
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class LegalRestrictionException : ApiException
     {
+        /// <summary>
+        /// The error message
+        /// </summary>
         public override string Message
         {
             get { return ApiErrorMessageSafe ?? "Resource taken down due to a DMCA notice."; }
