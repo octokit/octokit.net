@@ -11,10 +11,6 @@ namespace Octokit
     /// </remarks>
     public class GitHubAppsClient : ApiClient, IGitHubAppsClient
     {
-        /// <summary>
-        /// Instantiates a new GitHub Apps API client.
-        /// </summary>
-        /// <param name="apiConnection">An API connection</param>
         public GitHubAppsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }

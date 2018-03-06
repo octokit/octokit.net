@@ -72,7 +72,6 @@ namespace Octokit
         /// Returns all child teams of the given team.
         /// </summary>
         /// <param name="id">The team identifier</param>
-        /// <param name="options">Options to change API behaviour.</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>

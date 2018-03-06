@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace Octokit
 {
@@ -68,13 +67,5 @@ namespace Octokit
         /// The branches involved.
         /// </summary>
         public IReadOnlyList<Branch> Branches { get; protected set; }
-
-        internal new string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Context: {0}, State: {1}, Description: {2}", Context, State, Description);
-            }
-        }
     }
 }
