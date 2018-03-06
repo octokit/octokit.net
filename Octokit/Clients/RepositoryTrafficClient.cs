@@ -15,29 +15,6 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        [Obsolete("Please use GetAllPaths instead")]
-        public Task<IReadOnlyList<RepositoryTrafficPath>> GetPaths(long repositoryId)
-        {
-            return GetAllPaths(repositoryId);
-        }
-
-        /// <summary>
-        /// List the top 10 popular contents over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        [Obsolete("Please use GetAllPaths instead")]
-        public Task<IReadOnlyList<RepositoryTrafficPath>> GetPaths(string owner, string name)
-        {
-            return GetAllPaths(owner, name);
-        }
-
-        /// <summary>
-        /// List the top 10 popular contents over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
-        /// <param name="repositoryId">The owner of the repository</param>
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(long repositoryId)
         {
             return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
@@ -55,29 +32,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
-        }
-
-        /// <summary>
-        /// List the top 10 referrers over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
-        /// <param name="repositoryId">The owner of the repository</param>
-        [Obsolete("Please use GetAllReferrers instead")]
-        public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetReferrers(long repositoryId)
-        {
-            return GetAllReferrers(repositoryId);
-        }
-
-        /// <summary>
-        /// List the top 10 referrers over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        [Obsolete("Please use GetAllReferrers instead")]
-        public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetReferrers(string owner, string name)
-        {
-            return GetAllReferrers(owner, name);
         }
 
         /// <summary>
