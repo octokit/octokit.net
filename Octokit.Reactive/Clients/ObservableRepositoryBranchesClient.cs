@@ -537,6 +537,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="update">The required pull request review settings</param>
         public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
@@ -555,6 +556,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="update">The required pull request review settings</param>
         public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, "branch");

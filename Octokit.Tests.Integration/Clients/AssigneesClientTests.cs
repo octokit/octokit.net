@@ -10,7 +10,6 @@ public class AssigneesClientTests
 {
     readonly IGitHubClient _github;
     readonly RepositoryContext _context;
-    readonly IIssuesClient _issuesClient;
 
     public AssigneesClientTests()
     {
