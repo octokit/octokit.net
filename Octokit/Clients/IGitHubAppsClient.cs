@@ -38,6 +38,13 @@ namespace Octokit
         Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options);
 
         /// <summary>
+        /// Get a single GitHub App Installation (requires GitHubApp JWT token auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        Task<Installation> GetInstallation(long installationId);
+
+        /// <summary>
         /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
         /// </summary>
         /// <remarks>

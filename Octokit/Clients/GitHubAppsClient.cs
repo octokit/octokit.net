@@ -60,6 +60,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get a single GitHub App Installation (requires GitHubApp JWT token auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        public Task<Installation> GetInstallation(long installationId)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.MachineManPreview);
+        }
+
+        /// <summary>
         /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
         /// </summary>
         /// <remarks>
