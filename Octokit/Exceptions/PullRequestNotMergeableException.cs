@@ -39,9 +39,6 @@ namespace Octokit
             "PullRequestNotMergeableException created with the wrong HTTP status code");
         }
 
-        /// <summary>
-        /// The error message
-        /// </summary>
         public override string Message
         {
             //https://developer.github.com/v3/pulls/#response-if-merge-cannot-be-performed

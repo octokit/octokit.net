@@ -13,7 +13,7 @@ namespace Octokit
         public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount)
             : base(url, label, @ref, sha, user, repository)
         {
-            Ensure.ArgumentNotNull(parents, nameof(parents));
+            Ensure.ArgumentNotNull(parents, "parents");
 
             Message = message;
             Author = author;
