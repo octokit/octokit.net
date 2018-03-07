@@ -51,9 +51,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.RepositoryProjects(owner, name);
 
@@ -86,10 +86,10 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.RepositoryProjects(owner, name);
 
@@ -118,7 +118,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.RepositoryProjects(repositoryId);
 
@@ -149,8 +149,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.RepositoryProjects(repositoryId);
 
@@ -179,8 +179,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForOrganization(string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.OrganizationProjects(organization);
 
@@ -211,9 +211,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Project> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.OrganizationProjects(organization);
 
@@ -243,7 +243,7 @@ namespace Octokit.Reactive
         /// <param name="newProject">The new project to create for the specified repository</param>
         public IObservable<Project> CreateForRepository(long repositoryId, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newProject, "newProject");
+            Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
             return _client.CreateForRepository(repositoryId, newProject).ToObservable();
         }
@@ -258,8 +258,8 @@ namespace Octokit.Reactive
         /// <param name="newProject">The new project to create for the specified repository</param>
         public IObservable<Project> CreateForOrganization(string organization, NewProject newProject)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(newProject, "newProject");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
             return _client.CreateForOrganization(organization, newProject).ToObservable();
         }
@@ -274,7 +274,7 @@ namespace Octokit.Reactive
         /// <param name="projectUpdate">The modified project</param>
         public IObservable<Project> Update(int id, ProjectUpdate projectUpdate)
         {
-            Ensure.ArgumentNotNull(projectUpdate, "projectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
             return _client.Update(id, projectUpdate).ToObservable();
         }

@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservablePullRequestReviewCommentReactionsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Reaction.PullRequestReviewComment;
             _connection = client.Connection;
@@ -32,8 +32,8 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>        
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(owner, name, number), null, AcceptHeaders.ReactionsPreview);
         }
