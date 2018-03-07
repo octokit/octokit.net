@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         public IObservable<Installation> GetAllInstallationsForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview);
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview, options);
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview, options);
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Octokit
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
         public Task<GitHubApp> Get(string slug)
         {
-            return ApiConnection.Get<GitHubApp>(ApiUrls.App(slug), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Get<GitHubApp>(ApiUrls.App(slug), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-the-authenticated-github-app</remarks>
         public Task<GitHubApp> GetCurrent()
         {
-            return ApiConnection.Get<GitHubApp>(ApiUrls.App(), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Get<GitHubApp>(ApiUrls.App(), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent()
         {
-            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.MachineManPreview, options);
+            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview, options);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Octokit
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         public Task<Installation> GetInstallation(long installationId)
         {
-            return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Octokit
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         public Task<AccessToken> CreateInstallationToken(long installationId)
         {
-            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.MachineManPreview);
+            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.GitHubAppsPreview);
         }
     }
 }
