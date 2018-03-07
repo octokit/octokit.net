@@ -19,14 +19,30 @@ namespace Octokit.Tests.Clients
         public class TheGetCurrentMethod
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public void GetFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
 
                 client.GetCurrent();
 
-                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "app"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "app"), null, AcceptHeaders.MachineManPreview);
+            }
+        }
+
+        public class TheCreateInstallationTokenMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                int fakeInstallationId = 3141;
+
+                client.CreateInstallationToken(fakeInstallationId);
+
+                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, AcceptHeaders.MachineManPreview);
             }
         }
 
@@ -49,7 +65,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllInstallationsForCurrent();
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, AcceptHeaders.MachineManPreview);
             }
 
 
@@ -68,38 +84,10 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllInstallationsForCurrent(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, AcceptHeaders.MachineManPreview, options);
             }
+
         }
 
-        public class TheGetInstallationMethod
-        {
-            [Fact]
-            public void GetsFromCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsClient(connection);
-
-                client.GetInstallation(123);
-
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations/123"), null, "application/vnd.github.machine-man-preview+json");
-            }
-        }
-
-        public class TheCreateInstallationTokenMethod
-        {
-            [Fact]
-            public void PostsToCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsClient(connection);
-
-                int fakeInstallationId = 3141;
-
-                client.CreateInstallationToken(fakeInstallationId);
-
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
-            }
-        }
     }
 }

@@ -328,7 +328,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
         /// </summary>
         /// <returns></returns>
-        public static Uri Installation(long installationId)
+        public static Uri Installation(int installationId)
         {
             return "app/installations/{0}".FormatUri(installationId);
         }

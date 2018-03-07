@@ -3,6 +3,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Organization Outside Collaborators API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/orgs/outside_collaborators/">Outside Collaborators API documentation</a> for more information.
+    /// </remarks>
     public interface IOrganizationOutsideCollaboratorsClient
     {
         /// <summary>

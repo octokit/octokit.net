@@ -37,6 +37,9 @@ namespace Octokit
             AuthorizationCode = authorizationCode;
         }
 
+        /// <summary>
+        /// The error message
+        /// </summary>
         public override string Message
         {
             get { return "The two-factor authentication code supplied is not correct"; }
