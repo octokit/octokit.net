@@ -62,20 +62,20 @@ namespace Octokit
         /// <summary>
         /// Returns all child teams of the given team.
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
+        /// <param name="id">The team identifier</param>
         Task<IReadOnlyList<Team>> GetAllChildTeams(int id);
 
         /// <summary>
         /// Returns all child teams of the given team.
         /// </summary>
-        /// <param name="id">The team identifier</param>
-        /// <param name="options">Options to change API behaviour.</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
         Task<IReadOnlyList<Team>> GetAllChildTeams(int id, ApiOptions options);
 
         /// <summary>

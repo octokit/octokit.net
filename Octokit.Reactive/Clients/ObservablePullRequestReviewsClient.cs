@@ -266,6 +266,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        /// <param name="options">Options for changing the API response</param>
         public IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -282,6 +283,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        /// <param name="options">Options for changing the API response</param>
         public IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));

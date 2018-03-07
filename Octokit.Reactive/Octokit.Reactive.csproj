@@ -18,6 +18,10 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>1591;1701;1702;1705</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
     <None Include="app.config" />
