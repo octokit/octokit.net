@@ -13,7 +13,7 @@ namespace Octokit
 
         public PullRequestCommit(Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
         {
-            Ensure.ArgumentNotNull(parents, "parents");
+            Ensure.ArgumentNotNull(parents, nameof(parents));
 
             Author = author;
             CommentsUrl = commentsUrl;

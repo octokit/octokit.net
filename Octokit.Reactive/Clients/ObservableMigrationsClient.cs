@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient"/> for making requests.</param>
         public ObservableMigrationsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Migration.Migrations;
         }

@@ -63,7 +63,7 @@ namespace Octokit.Internal
             [SuppressMessage("Microsoft.Design", "CA1007:UseGenericsWhereAppropriate", Justification = "Need to support .NET 2")]
             protected override bool TrySerializeUnknownTypes(object input, out object output)
             {
-                Ensure.ArgumentNotNull(input, "input");
+                Ensure.ArgumentNotNull(input, nameof(input));
 
                 var type = input.GetType();
                 var getters = GetCache[type];

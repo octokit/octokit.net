@@ -17,9 +17,9 @@ namespace Octokit
         /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
         public NewPullRequest(string title, string head, string baseRef)
         {
-            Ensure.ArgumentNotNullOrEmptyString(title, "title");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
-            Ensure.ArgumentNotNullOrEmptyString(baseRef, "baseRef");
+            Ensure.ArgumentNotNullOrEmptyString(title, nameof(title));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
+            Ensure.ArgumentNotNullOrEmptyString(baseRef, nameof(baseRef));
 
             Title = title;
             Head = head;

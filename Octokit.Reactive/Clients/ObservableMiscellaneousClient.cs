@@ -11,7 +11,7 @@ namespace Octokit.Reactive
 
         public ObservableMiscellaneousClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Miscellaneous;
         }

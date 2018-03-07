@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<ProjectCard>(ApiUrls.ProjectCards(columnId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -66,7 +66,7 @@ namespace Octokit
         /// <param name="newProjectCard">The card to create</param>
         public Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard)
         {
-            Ensure.ArgumentNotNull(newProjectCard, "newProjectCard");
+            Ensure.ArgumentNotNull(newProjectCard, nameof(newProjectCard));
 
             return ApiConnection.Post<ProjectCard>(ApiUrls.ProjectCards(columnId), newProjectCard, AcceptHeaders.ProjectsApiPreview);
         }
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="projectCardUpdate">New values to update the card with</param>
         public Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
         {
-            Ensure.ArgumentNotNull(projectCardUpdate, "projectCardUpdate");
+            Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
             return ApiConnection.Patch<ProjectCard>(ApiUrls.ProjectCard(id), projectCardUpdate, AcceptHeaders.ProjectsApiPreview);
         }
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="position">The position to move the card</param>
         public async Task<bool> Move(int id, ProjectCardMove position)
         {
-            Ensure.ArgumentNotNull(position, "position");
+            Ensure.ArgumentNotNull(position, nameof(position));
 
             var endpoint = ApiUrls.ProjectCardMove(id);
             try

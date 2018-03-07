@@ -31,9 +31,9 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return GetAll(owner, name, reference, ApiOptions.None);
         }
@@ -49,7 +49,7 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return GetAll(repositoryId, reference, ApiOptions.None);
         }
@@ -67,10 +67,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(owner, name, reference), options);
         }
@@ -87,8 +87,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options);
         }
@@ -105,9 +105,9 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<CombinedCommitStatus> GetCombined(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<CombinedCommitStatus>(ApiUrls.CombinedCommitStatus(owner, name, reference));
         }
@@ -123,7 +123,7 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         public Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<CombinedCommitStatus>(ApiUrls.CombinedCommitStatus(repositoryId, reference));
         }
@@ -140,10 +140,10 @@ namespace Octokit
         /// <param name="newCommitStatus">The commit status to create</param>
         public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(newCommitStatus, "newCommitStatus");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(newCommitStatus, nameof(newCommitStatus));
 
             return ApiConnection.Post<CommitStatus>(ApiUrls.CreateCommitStatus(owner, name, reference), newCommitStatus);
         }
@@ -159,8 +159,8 @@ namespace Octokit
         /// <param name="newCommitStatus">The commit status to create</param>
         public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(newCommitStatus, "newCommitStatus");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(newCommitStatus, nameof(newCommitStatus));
 
             return ApiConnection.Post<CommitStatus>(ApiUrls.CreateCommitStatus(repositoryId, reference), newCommitStatus);
         }

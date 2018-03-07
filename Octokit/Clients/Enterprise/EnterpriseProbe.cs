@@ -47,8 +47,8 @@ namespace Octokit
         /// </param>
         public EnterpriseProbe(ProductHeaderValue productInformation, IHttpClient httpClient)
         {
-            Ensure.ArgumentNotNull(productInformation, "productHeader");
-            Ensure.ArgumentNotNull(httpClient, "httpClient");
+            Ensure.ArgumentNotNull(productInformation, nameof(productInformation));
+            Ensure.ArgumentNotNull(httpClient, nameof(httpClient));
 
             productHeader = productInformation;
             this.httpClient = httpClient;

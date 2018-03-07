@@ -15,7 +15,7 @@ namespace Octokit
 
         public Credentials(string token)
         {
-            Ensure.ArgumentNotNullOrEmptyString(token, "token");
+            Ensure.ArgumentNotNullOrEmptyString(token, nameof(token));
 
             Login = null;
             Password = token;
@@ -24,8 +24,8 @@ namespace Octokit
 
         public Credentials(string login, string password)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(password, "password");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(password, nameof(password));
 
             Login = login;
             Password = password;

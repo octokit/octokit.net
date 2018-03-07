@@ -16,7 +16,7 @@ namespace Octokit.Reactive
 
         public ObservableEnterpriseOrganizationClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Enterprise.Organization;
         }

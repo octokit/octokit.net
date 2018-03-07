@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableCommitsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Git.Commit;
         }
@@ -31,9 +31,9 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the commit</param>
         public IObservable<Commit> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(owner, name, reference).ToObservable();
         }
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the commit</param>
         public IObservable<Commit> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(repositoryId, reference).ToObservable();
         }
@@ -64,9 +64,9 @@ namespace Octokit.Reactive
         /// <param name="commit">The commit to create</param>
         public IObservable<Commit> Create(string owner, string name, NewCommit commit)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commit, "commit");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(commit, nameof(commit));
 
             return _client.Create(owner, name, commit).ToObservable();
         }
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="commit">The commit to create</param>
         public IObservable<Commit> Create(long repositoryId, NewCommit commit)
         {
-            Ensure.ArgumentNotNull(commit, "commit");
+            Ensure.ArgumentNotNull(commit, nameof(commit));
 
             return _client.Create(repositoryId, commit).ToObservable();
         }

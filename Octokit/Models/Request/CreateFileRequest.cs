@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="message">The message.</param>
         protected ContentRequest(string message)
         {
-            Ensure.ArgumentNotNullOrEmptyString(message, "message");
+            Ensure.ArgumentNotNullOrEmptyString(message, nameof(message));
 
             Message = message;
         }
@@ -27,7 +27,7 @@ namespace Octokit
         /// <param name="branch">The branch the request is for.</param>
         protected ContentRequest(string message, string branch) : this(message)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             Branch = branch;
         }
@@ -66,7 +66,7 @@ namespace Octokit
         /// <param name="sha">The sha.</param>
         public DeleteFileRequest(string message, string sha) : base(message)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             Sha = sha;
         }
@@ -79,7 +79,7 @@ namespace Octokit
         /// <param name="branch">The branch the request is for.</param>
         public DeleteFileRequest(string message, string sha, string branch) : base(message, branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             Sha = sha;
         }
@@ -127,7 +127,7 @@ namespace Octokit
         /// <param name="convertContentToBase64">True to convert content to base64.</param>
         public CreateFileRequest(string message, string content, bool convertContentToBase64) : base(message)
         {
-            Ensure.ArgumentNotNull(content, "content");
+            Ensure.ArgumentNotNull(content, nameof(content));
 
             if (convertContentToBase64)
             {
@@ -145,7 +145,7 @@ namespace Octokit
         /// <param name="convertContentToBase64">True to convert content to base64.</param>
         public CreateFileRequest(string message, string content, string branch, bool convertContentToBase64) : base(message, branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(content, "content");
+            Ensure.ArgumentNotNullOrEmptyString(content, nameof(content));
 
             if (convertContentToBase64)
             {
@@ -205,7 +205,7 @@ namespace Octokit
         public UpdateFileRequest(string message, string content, string sha, bool convertContentToBase64)
             : base(message, content, convertContentToBase64)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             Sha = sha;
         }
@@ -221,7 +221,7 @@ namespace Octokit
         public UpdateFileRequest(string message, string content, string sha, string branch, bool convertContentToBase64)
            : base(message, content, branch, convertContentToBase64)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             Sha = sha;
         }

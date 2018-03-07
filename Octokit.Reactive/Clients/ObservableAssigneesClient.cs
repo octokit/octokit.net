@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableAssigneesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Issue.Assignee;
             _connection = client.Connection;
@@ -30,8 +30,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<User> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -53,9 +53,9 @@ namespace Octokit.Reactive
         /// <param name="options">The options to change API's behaviour.</param>
         public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(owner, name), options);
         }
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="options">The options to change API's behaviour.</param>
         public IObservable<User> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(repositoryId), options);
         }
@@ -80,9 +80,9 @@ namespace Octokit.Reactive
         /// <param name="assignee">Username of the prospective assignee</param>
         public IObservable<bool> CheckAssignee(string owner, string name, string assignee)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
             return _client.CheckAssignee(owner, name, assignee).ToObservable();
         }
@@ -96,9 +96,9 @@ namespace Octokit.Reactive
         /// <param name="assignees">List of names of assignees to add</param>
         public IObservable<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(assignees, "assignees");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
             return _client.AddAssignees(owner, name, number, assignees).ToObservable();
         }
@@ -113,9 +113,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(assignees, "assignees");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
             return _client.RemoveAssignees(owner, name, number, assignees).ToObservable();
         }
@@ -127,7 +127,7 @@ namespace Octokit.Reactive
         /// <param name="assignee">Username of the prospective assignee</param>
         public IObservable<bool> CheckAssignee(long repositoryId, string assignee)
         {
-            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+            Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
             return _client.CheckAssignee(repositoryId, assignee).ToObservable();
         }

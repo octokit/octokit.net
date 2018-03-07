@@ -66,7 +66,7 @@ namespace Octokit
         public ApiException(IResponse response, Exception innerException)
             : base(null, innerException)
         {
-            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(response, nameof(response));
 
             StatusCode = response.StatusCode;
             ApiError = GetApiErrorFromExceptionMessage(response);
@@ -79,7 +79,7 @@ namespace Octokit
         /// <param name="innerException">The inner exception</param>
         protected ApiException(ApiException innerException)
         {
-            Ensure.ArgumentNotNull(innerException, "innerException");
+            Ensure.ArgumentNotNull(innerException, nameof(innerException));
 
             StatusCode = innerException.StatusCode;
             ApiError = innerException.ApiError;
@@ -95,7 +95,7 @@ namespace Octokit
         protected ApiException(ApiError apiError, HttpStatusCode statusCode, Exception innerException)
             : base(null, innerException)
         {
-            Ensure.ArgumentNotNull(apiError, "apiError");
+            Ensure.ArgumentNotNull(apiError, nameof(apiError));
 
             ApiError = apiError;
             StatusCode = statusCode;

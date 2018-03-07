@@ -19,7 +19,7 @@ namespace Octokit.Reactive
 
         public ObservableUserEmailsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User.Email;
             _connection = client.Connection;
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public IObservable<EmailAddress> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails(), options);
         }

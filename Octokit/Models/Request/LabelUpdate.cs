@@ -20,8 +20,8 @@ namespace Octokit
         /// <param name="color">The color of the label.</param>
         public LabelUpdate(string name, string color)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(color, "color");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(color, nameof(color));
 
             Name = name;
             Color = color;

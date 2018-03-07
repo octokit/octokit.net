@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="innerException">The inner exception</param>
         public RateLimitExceededException(IResponse response, Exception innerException) : base(response, innerException)
         {
-            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(response, nameof(response));
 
             _rateLimit = response.ApiInfo.RateLimit;
         }

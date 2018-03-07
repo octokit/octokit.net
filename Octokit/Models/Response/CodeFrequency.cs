@@ -16,7 +16,7 @@ namespace Octokit
 
         public CodeFrequency(IEnumerable<AdditionsAndDeletions> additionsAndDeletionsByWeek)
         {
-            Ensure.ArgumentNotNull(additionsAndDeletionsByWeek, "additionsAndDeletionsByWeek");
+            Ensure.ArgumentNotNull(additionsAndDeletionsByWeek, nameof(additionsAndDeletionsByWeek));
 
             AdditionsAndDeletionsByWeek = new ReadOnlyCollection<AdditionsAndDeletions>(additionsAndDeletionsByWeek.ToList());
         }
@@ -27,7 +27,7 @@ namespace Octokit
         /// <param name="rawFrequencies">Raw data </param>
         public CodeFrequency(IEnumerable<IList<long>> rawFrequencies)
         {
-            Ensure.ArgumentNotNull(rawFrequencies, "rawFrequencies");
+            Ensure.ArgumentNotNull(rawFrequencies, nameof(rawFrequencies));
             AdditionsAndDeletionsByWeek = rawFrequencies.Select(point => new AdditionsAndDeletions(point)).ToList();
         }
 

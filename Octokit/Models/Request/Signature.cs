@@ -16,8 +16,8 @@ namespace Octokit
         /// <param name="email"></param>
         public Signature(string name, string email)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(email, "email");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(email, nameof(email));
 
             Name = name;
             Email = email;

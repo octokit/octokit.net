@@ -19,10 +19,10 @@ namespace Octokit.Helpers
         /// <param name="baseReference">The <see cref="Reference" /> to base the branch from</param>
         public static async Task<Reference> CreateBranch(this IReferencesClient referencesClient, string owner, string name, string branchName, Reference baseReference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
-            Ensure.ArgumentNotNull(baseReference, "baseReference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branchName, nameof(branchName));
+            Ensure.ArgumentNotNull(baseReference, nameof(baseReference));
 
             if (branchName.StartsWith("refs/heads"))
             {
@@ -42,9 +42,9 @@ namespace Octokit.Helpers
         /// <param name="branchName">The new branch name</param>
         public static async Task<Reference> CreateBranch(this IReferencesClient referencesClient, string owner, string name, string branchName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branchName, nameof(branchName));
 
             if (branchName.StartsWith("refs/heads"))
             {

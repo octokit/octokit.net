@@ -21,7 +21,7 @@ namespace Octokit
         public TwoFactorChallengeResult(string authenticationCode)
             : this(authenticationCode, false)
         {
-            Ensure.ArgumentNotNull(authenticationCode, "authenticationCode");
+            Ensure.ArgumentNotNull(authenticationCode, nameof(authenticationCode));
         }
 
         TwoFactorChallengeResult(string authenticationCode, bool resendCodeRequested)
