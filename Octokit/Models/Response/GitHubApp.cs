@@ -10,28 +10,58 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GitHubApp
     {
-        /// <summary>
-        /// Initialize a new empty GitHubApp object ready for deserialization.
-        /// </summary>
         public GitHubApp() { }
 
+        public GitHubApp(long id, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        {
+            Id = id;
+            Name = name;
+            Owner = owner;
+            Description = description;
+            ExternalUrl = externalUrl;
+            HtmlUrl = htmlUrl;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         /// <summary>
-        /// The GitHubApp Id. Should be the same as in the GitHubApp -> Settings -> About page.
+        /// The Id of the GitHub App.
         /// </summary>
         public long Id { get; protected set; }
 
+        /// <summary>
+        /// The Name of the GitHub App.
+        /// </summary>
         public string Name { get; protected set; }
 
+        /// <summary>
+        /// The Owner of the GitHub App.
+        /// </summary>
         public User Owner { get; protected set; }
 
+        /// <summary>
+        /// The Description of the GitHub App.
+        /// </summary>
         public string Description { get; protected set; }
 
+        /// <summary>
+        /// The URL to the GitHub App's external website.
+        /// </summary>
         public string ExternalUrl { get; protected set; }
 
+        /// <summary>
+        /// The URL to view the GitHub App on GitHub
+        /// </summary>
         public string HtmlUrl { get; protected set; }
 
+        /// <summary>
+        /// Date the GitHub App was created.
+        /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
 
+        /// <summary>
+        /// Date the GitHub App was last updated.
+        /// </summary>
         public DateTimeOffset UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay

@@ -9,14 +9,21 @@ namespace Octokit
     {
         public AccessToken() { }
 
-        public AccessToken(string token, DateTime expiresAt)
+        public AccessToken(string token, DateTimeOffset expiresAt)
         {
             Token = token;
             ExpiresAt = expiresAt;
         }
 
+        /// <summary>
+        /// The access token
+        /// </summary>
         public string Token { get; protected set; }
-        public DateTime ExpiresAt { get; protected set; }
+
+        /// <summary>
+        /// The expiration date
+        /// </summary>
+        public DateTimeOffset ExpiresAt { get; protected set; }
 
         internal string DebuggerDisplay
         {

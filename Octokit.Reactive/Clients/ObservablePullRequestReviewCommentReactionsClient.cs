@@ -15,10 +15,6 @@ namespace Octokit.Reactive
         readonly IPullRequestReviewCommentReactionsClient _client;
         readonly IConnection _connection;
 
-        /// <summary>
-        /// Initializes a new GitHub Reactions API client.
-        /// </summary>
-        /// <param name="client">A GitHubClient.</param>
         public ObservablePullRequestReviewCommentReactionsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
