@@ -36,7 +36,7 @@ namespace Octokit
         public long Id { get; protected set; }
 
         /// <summary>
-        /// The Account associated with the Installation.
+        /// The user who owns the Installation.
         /// </summary>
         public User Account { get; protected set; }
 
@@ -51,7 +51,7 @@ namespace Octokit
         public long AppId { get; protected set; }
 
         /// <summary>
-        /// The Id of the target user/organization
+        /// The Id of the User/Organization the Installation is installed in
         /// </summary>
         public long TargetId { get; protected set; }
 
