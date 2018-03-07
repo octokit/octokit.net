@@ -33,8 +33,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -64,9 +64,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name),
                                                     null,
@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(repositoryId), options);
         }
@@ -102,9 +102,9 @@ namespace Octokit
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         public Task<Deployment> Create(string owner, string name, NewDeployment newDeployment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
                                                   newDeployment,
@@ -122,7 +122,7 @@ namespace Octokit
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         public Task<Deployment> Create(long repositoryId, NewDeployment newDeployment)
         {
-            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+            Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
             return ApiConnection.Post<Deployment>(ApiUrls.Deployments(repositoryId),
                                                      newDeployment);

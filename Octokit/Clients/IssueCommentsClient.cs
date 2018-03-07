@@ -28,8 +28,8 @@ namespace Octokit
         /// <param name="id">The issue comment id</param>
         public Task<IssueComment> Get(string owner, string name, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id), null, AcceptHeaders.ReactionsPreview);
         }
@@ -53,8 +53,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, new IssueCommentRequest(), ApiOptions.None);
         }
@@ -78,9 +78,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(owner, name, new IssueCommentRequest(), options);
         }
@@ -93,7 +93,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(repositoryId, new IssueCommentRequest(), options);
         }
@@ -107,9 +107,9 @@ namespace Octokit
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name, IssueCommentRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -122,7 +122,7 @@ namespace Octokit
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId, IssueCommentRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -137,10 +137,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name, IssueCommentRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
@@ -154,8 +154,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId, IssueCommentRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
@@ -169,8 +169,8 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForIssue(owner, name, number, ApiOptions.None);
         }
@@ -196,9 +196,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -212,7 +212,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -227,9 +227,9 @@ namespace Octokit
         /// <param name="newComment">The new comment to add to the issue</param>
         public Task<IssueComment> Create(string owner, string name, int number, string newComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newComment, "newComment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newComment, nameof(newComment));
 
             return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(owner, name, number), new BodyWrapper(newComment));
         }
@@ -243,7 +243,7 @@ namespace Octokit
         /// <param name="newComment">The new comment to add to the issue</param>
         public Task<IssueComment> Create(long repositoryId, int number, string newComment)
         {
-            Ensure.ArgumentNotNull(newComment, "newComment");
+            Ensure.ArgumentNotNull(newComment, nameof(newComment));
 
             return ApiConnection.Post<IssueComment>(ApiUrls.IssueComments(repositoryId, number), new BodyWrapper(newComment));
         }
@@ -258,9 +258,9 @@ namespace Octokit
         /// <param name="commentUpdate">The modified comment</param>
         public Task<IssueComment> Update(string owner, string name, int id, string commentUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(owner, name, id), new BodyWrapper(commentUpdate));
         }
@@ -274,7 +274,7 @@ namespace Octokit
         /// <param name="commentUpdate">The modified comment</param>
         public Task<IssueComment> Update(long repositoryId, int id, string commentUpdate)
         {
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return ApiConnection.Patch<IssueComment>(ApiUrls.IssueComment(repositoryId, id), new BodyWrapper(commentUpdate));
         }
@@ -288,8 +288,8 @@ namespace Octokit
         /// <param name="id">The comment id</param>
         public Task Delete(string owner, string name, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.IssueComment(owner, name, id));
         }

@@ -23,7 +23,7 @@ namespace Octokit
         /// <param name="connection">An API connection</param>
         public MiscellaneousClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             _connection = connection;
         }
@@ -86,7 +86,7 @@ namespace Octokit
         /// <returns>A template and its source</returns>
         public async Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(templateName, "templateName");
+            Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
             var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
 

@@ -25,7 +25,7 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> Queue(string owner)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}", owner));
@@ -44,8 +44,8 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> Queue(string owner, string repository)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repository, "repository");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repository, nameof(repository));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, repository));
@@ -63,7 +63,7 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> QueueAll(string owner)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*", owner));
@@ -82,8 +82,8 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> QueueAllIssues(string owner, string repository)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repository, "repository");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repository, nameof(repository));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/issues", owner, repository));
@@ -101,7 +101,7 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> QueueAllIssues(string owner)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*/issues", owner));
@@ -120,8 +120,8 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> QueueAllCode(string owner, string repository)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
-            Ensure.ArgumentNotNull(repository, "repository");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repository, nameof(repository));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/code", owner, repository));
@@ -139,7 +139,7 @@ namespace Octokit
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
         public Task<SearchIndexingResponse> QueueAllCode(string owner)
         {
-            Ensure.ArgumentNotNull(owner, "owner");
+            Ensure.ArgumentNotNull(owner, nameof(owner));
 
             var endpoint = ApiUrls.EnterpriseSearchIndexing();
             var target = new SearchIndexTarget(string.Format(CultureInfo.InvariantCulture, "{0}/*/code", owner));

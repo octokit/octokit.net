@@ -19,7 +19,7 @@ namespace Octokit.Reactive
 
         public ObservableProjectsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Project;
             _connection = client.Connection;

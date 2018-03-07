@@ -44,9 +44,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, name), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -77,10 +77,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(owner, name), request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -107,7 +107,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(repositoryId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -136,8 +136,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Project>(ApiUrls.RepositoryProjects(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -164,8 +164,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
 
             return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -180,8 +181,8 @@ namespace Octokit
         /// <param name="request">Used to filter the list of projects returned</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForOrganization(organization, request, ApiOptions.None);
         }
@@ -197,9 +198,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Project>(ApiUrls.OrganizationProjects(organization), request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -226,7 +227,7 @@ namespace Octokit
         /// <param name="newProject">The new project to create for this repository</param>
         public Task<Project> CreateForRepository(long repositoryId, NewProject newProject)
         {
-            Ensure.ArgumentNotNull(newProject, "newProject");
+            Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
             return ApiConnection.Post<Project>(ApiUrls.RepositoryProjects(repositoryId), newProject, AcceptHeaders.ProjectsApiPreview);
         }
@@ -241,8 +242,8 @@ namespace Octokit
         /// <param name="newProject">The new project to create for this repository</param>
         public Task<Project> CreateForOrganization(string organization, NewProject newProject)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(newProject, "newProject");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
             return ApiConnection.Post<Project>(ApiUrls.OrganizationProjects(organization), newProject, AcceptHeaders.ProjectsApiPreview);
         }
@@ -257,7 +258,7 @@ namespace Octokit
         /// <param name="projectUpdate">The modified project</param>
         public Task<Project> Update(int id, ProjectUpdate projectUpdate)
         {
-            Ensure.ArgumentNotNull(projectUpdate, "projectUpdate");
+            Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
             return ApiConnection.Patch<Project>(ApiUrls.Project(id), projectUpdate, AcceptHeaders.ProjectsApiPreview);
         }

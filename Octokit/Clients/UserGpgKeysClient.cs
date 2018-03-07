@@ -43,7 +43,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
         public Task<IReadOnlyList<GpgKey>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), null, AcceptHeaders.GpgKeysPreview, options);
         }
@@ -71,7 +71,7 @@ namespace Octokit
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
         public Task<GpgKey> Create(NewGpgKey newGpgKey)
         {
-            Ensure.ArgumentNotNull(newGpgKey, "newGpgKey");
+            Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
             return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey, AcceptHeaders.GpgKeysPreview);
         }

@@ -19,14 +19,14 @@ namespace Octokit.Internal
 
         public JsonHttpPipeline(IJsonSerializer serializer)
         {
-            Ensure.ArgumentNotNull(serializer, "serializer");
+            Ensure.ArgumentNotNull(serializer, nameof(serializer));
 
             _serializer = serializer;
         }
 
         public void SerializeRequest(IRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             if (!request.Headers.ContainsKey("Accept"))
             {
@@ -41,7 +41,7 @@ namespace Octokit.Internal
 
         public IApiResponse<T> DeserializeResponse<T>(IResponse response)
         {
-            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(response, nameof(response));
 
             if (response.ContentType != null && response.ContentType.Equals("application/json", StringComparison.Ordinal))
             {

@@ -10,8 +10,8 @@ namespace Octokit
 
         public ResourceRateLimit(RateLimit core, RateLimit search)
         {
-            Ensure.ArgumentNotNull(core, "core");
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(core, nameof(core));
+            Ensure.ArgumentNotNull(search, nameof(search));
 
             Core = core;
             Search = search;

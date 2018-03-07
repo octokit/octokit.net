@@ -29,8 +29,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllWatchers(owner, name, ApiOptions.None);
         }
@@ -54,9 +54,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Watchers(owner, name), options);
         }
@@ -69,7 +69,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Watchers(repositoryId), options);
         }
@@ -96,7 +96,7 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Watched(), options);
         }
@@ -111,7 +111,7 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -127,8 +127,8 @@ namespace Octokit
         /// </returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.WatchedByUser(user), options);
         }
@@ -141,8 +141,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public async Task<bool> CheckWatched(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             try
             {
@@ -185,9 +185,9 @@ namespace Octokit
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newSubscription, "newSubscription");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
 
             return ApiConnection.Put<Subscription>(ApiUrls.Watched(owner, name), newSubscription);
         }
@@ -199,7 +199,7 @@ namespace Octokit
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         public Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription)
         {
-            Ensure.ArgumentNotNull(newSubscription, "newSubscription");
+            Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
 
             return ApiConnection.Put<Subscription>(ApiUrls.Watched(repositoryId), newSubscription);
         }
@@ -211,8 +211,8 @@ namespace Octokit
         /// <param name="name">The name of the repository to unstar</param>
         public async Task<bool> UnwatchRepo(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             try
             {

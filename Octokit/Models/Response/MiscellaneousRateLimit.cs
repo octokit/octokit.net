@@ -10,8 +10,8 @@ namespace Octokit
 
         public MiscellaneousRateLimit(ResourceRateLimit resources, RateLimit rate)
         {
-            Ensure.ArgumentNotNull(resources, "resource");
-            Ensure.ArgumentNotNull(rate, "rate");
+            Ensure.ArgumentNotNull(resources, nameof(resources));
+            Ensure.ArgumentNotNull(rate, nameof(rate));
 
             Resources = resources;
             Rate = rate;

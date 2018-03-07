@@ -29,8 +29,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         public Task<CommitComment> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number), null, AcceptHeaders.ReactionsPreview);
         }
@@ -54,8 +54,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -79,9 +79,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -94,7 +94,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -108,9 +108,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             return GetAllForCommit(owner, name, sha, ApiOptions.None);
         }
@@ -123,7 +123,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             return GetAllForCommit(repositoryId, sha, ApiOptions.None);
         }
@@ -138,10 +138,10 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -155,8 +155,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -171,10 +171,10 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         public Task<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(newCommitComment, nameof(newCommitComment));
 
             return ApiConnection.Post<CommitComment>(ApiUrls.CommitComments(owner, name, sha), newCommitComment);
         }
@@ -188,8 +188,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         public Task<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(newCommitComment, nameof(newCommitComment));
 
             return ApiConnection.Post<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), newCommitComment);
         }
@@ -204,9 +204,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         public Task<CommitComment> Update(string owner, string name, int number, string commentUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return ApiConnection.Patch<CommitComment>(ApiUrls.CommitComment(owner, name, number), new BodyWrapper(commentUpdate));
         }
@@ -220,7 +220,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         public Task<CommitComment> Update(long repositoryId, int number, string commentUpdate)
         {
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return ApiConnection.Patch<CommitComment>(ApiUrls.CommitComment(repositoryId, number), new BodyWrapper(commentUpdate));
         }
@@ -234,8 +234,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         public Task Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.CommitComment(owner, name, number));
         }

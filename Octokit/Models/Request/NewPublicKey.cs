@@ -14,8 +14,8 @@ namespace Octokit
 
         public NewPublicKey(string title, string key)
         {
-            Ensure.ArgumentNotNullOrEmptyString(title, "title");
-            Ensure.ArgumentNotNullOrEmptyString(key, "key");
+            Ensure.ArgumentNotNullOrEmptyString(title, nameof(title));
+            Ensure.ArgumentNotNullOrEmptyString(key, nameof(key));
 
             Title = title;
             Key = key;

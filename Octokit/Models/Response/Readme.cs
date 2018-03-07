@@ -16,8 +16,8 @@ namespace Octokit
 
         internal Readme(ReadmeResponse response, IApiConnection client)
         {
-            Ensure.ArgumentNotNull(response, "response");
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(response, nameof(response));
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             Name = response.Name;
             Url = response.Url;

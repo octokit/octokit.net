@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableIssueReactionsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Reaction.Issue;
             _connection = client.Connection;
@@ -32,8 +32,8 @@ namespace Octokit.Reactive
         /// <param name="number">The issue id</param>        
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview);
         }
@@ -59,9 +59,9 @@ namespace Octokit.Reactive
         /// <param name="reaction">The reaction to create</param>
         public IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return _client.Create(owner, name, number, reaction).ToObservable();
         }
@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// <param name="reaction">The reaction to create </param>
         public IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return _client.Create(repositoryId, number, reaction).ToObservable();
         }

@@ -28,7 +28,7 @@ namespace Octokit.Reactive
 
         public ObservableGitHubClient(IGitHubClient gitHubClient)
         {
-            Ensure.ArgumentNotNull(gitHubClient, "githubClient");
+            Ensure.ArgumentNotNull(gitHubClient, nameof(gitHubClient));
 
             _gitHubClient = gitHubClient;
             Authorization = new ObservableAuthorizationsClient(gitHubClient);

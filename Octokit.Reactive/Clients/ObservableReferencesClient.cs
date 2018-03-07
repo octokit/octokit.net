@@ -18,7 +18,7 @@ namespace Octokit.Reactive
 
         public ObservableReferencesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _reference = client.Git.Reference;
             _connection = client.Connection;
@@ -36,9 +36,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _reference.Get(owner, name, reference).ToObservable();
         }
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _reference.Get(repositoryId, reference).ToObservable();
         }
@@ -85,9 +85,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name), options);
         }
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId), options);
         }
@@ -149,10 +149,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name, subNamespace), options);
         }
@@ -183,8 +183,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options);
         }
@@ -201,9 +201,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Create(string owner, string name, NewReference reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return _reference.Create(owner, name, reference).ToObservable();
         }
@@ -219,7 +219,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Create(long repositoryId, NewReference reference)
         {
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return _reference.Create(repositoryId, reference).ToObservable();
         }
@@ -237,10 +237,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(referenceUpdate, "update");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
 
             return _reference.Update(owner, name, reference, referenceUpdate).ToObservable();
         }
@@ -257,8 +257,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(referenceUpdate, "update");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
 
             return _reference.Update(repositoryId, reference, referenceUpdate).ToObservable();
         }
@@ -275,9 +275,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Delete(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _reference.Delete(owner, name, reference).ToObservable();
         }
@@ -293,7 +293,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Delete(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _reference.Delete(repositoryId, reference).ToObservable();
         }
