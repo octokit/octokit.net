@@ -103,9 +103,6 @@ namespace Octokit
 
         public IResponse HttpResponse { get; private set; }
 
-        /// <summary>
-        /// The error message
-        /// </summary>
         public override string Message
         {
             get { return ApiErrorMessageSafe ?? "An error occurred with this API request"; }

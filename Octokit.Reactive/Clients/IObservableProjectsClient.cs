@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         IObservable<Project> GetAllForRepository(string owner, string name);
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request);
 
@@ -58,7 +58,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<Project> GetAllForRepository(string owner, string name, ApiOptions options);
 
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
+        /// <param name="repo">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options);

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
+using System.Collections.Generic;
 
 namespace Octokit
 {
@@ -10,9 +11,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewSubmit : RequestParameters
     {
-        /// <summary>
-        /// Initializes a new empty Pull Request Review.
-        /// </summary>
         public PullRequestReviewSubmit()
         {
         }
