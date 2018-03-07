@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableIssueTimelineClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _connection = client.Connection;
         }
@@ -31,8 +31,8 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
             return GetAllForIssue(owner, repo, number, ApiOptions.None);
         }
@@ -49,9 +49,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
         }
@@ -80,7 +80,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
         }

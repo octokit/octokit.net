@@ -16,7 +16,7 @@ namespace Octokit
         /// <param name="ldapDistinguishedName">The LDAP Distinguished Name</param>
         public NewLdapMapping(string ldapDistinguishedName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(ldapDistinguishedName, "ldapDistinguishedName");
+            Ensure.ArgumentNotNullOrEmptyString(ldapDistinguishedName, nameof(ldapDistinguishedName));
 
             LdapDistinguishedName = ldapDistinguishedName;
         }

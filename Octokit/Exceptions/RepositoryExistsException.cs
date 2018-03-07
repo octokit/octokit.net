@@ -34,9 +34,9 @@ namespace Octokit
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(baseAddress, nameof(baseAddress));
 
             Organization = organization;
             RepositoryName = name;
@@ -59,7 +59,7 @@ namespace Octokit
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             RepositoryName = name;
 

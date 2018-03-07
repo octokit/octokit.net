@@ -15,7 +15,7 @@ namespace Octokit.Internal
         /// <param name="credentials"></param>
         public InMemoryCredentialStore(Credentials credentials)
         {
-            Ensure.ArgumentNotNull(credentials, "credentials");
+            Ensure.ArgumentNotNull(credentials, nameof(credentials));
 
             _credentials = credentials;
         }

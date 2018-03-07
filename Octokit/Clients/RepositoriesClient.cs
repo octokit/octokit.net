@@ -52,7 +52,7 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
         public Task<Repository> Create(NewRepository newRepository)
         {
-            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
 
             return Create(ApiUrls.Repositories(), null, newRepository);
         }
@@ -69,8 +69,8 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
-            Ensure.ArgumentNotNull(organizationLogin, "organizationLogin");
-            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            Ensure.ArgumentNotNull(organizationLogin, nameof(organizationLogin));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
@@ -143,8 +143,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Delete(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.Repository(owner, name));
         }
@@ -172,10 +172,10 @@ namespace Octokit
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(update, "update");
-            Ensure.ArgumentNotNull(update.Name, "update.Name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(update, nameof(update));
+            Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
             return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
         }
@@ -188,7 +188,7 @@ namespace Octokit
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
         }
@@ -205,8 +205,8 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Get(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
         }
@@ -253,7 +253,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
@@ -287,7 +287,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -305,15 +305,15 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForCurrent(request, ApiOptions.None);
         }
 
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview, options);
         }
@@ -330,7 +330,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAllForUser(login, ApiOptions.None);
         }
@@ -347,8 +347,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -364,7 +364,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
             return GetAllForOrg(organization, ApiOptions.None);
         }
@@ -381,8 +381,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -509,8 +509,8 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllContributors(owner, name, false);
         }
@@ -540,9 +540,9 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllContributors(owner, name, false, options);
         }
@@ -558,7 +558,7 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllContributors(repositoryId, false, options);
         }
@@ -575,8 +575,8 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
         }
@@ -608,9 +608,9 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var parameters = new Dictionary<string, string>();
             if (includeAnonymous)
@@ -631,7 +631,7 @@ namespace Octokit
         /// <returns>All contributors of the repository.</returns>
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var parameters = new Dictionary<string, string>();
             if (includeAnonymous)
@@ -651,8 +651,8 @@ namespace Octokit
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryLanguages(owner, name);
             var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
@@ -689,8 +689,8 @@ namespace Octokit
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllTeams(owner, name, ApiOptions.None);
         }
@@ -720,9 +720,9 @@ namespace Octokit
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
         }
@@ -738,7 +738,7 @@ namespace Octokit
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
         }
@@ -754,8 +754,8 @@ namespace Octokit
         /// <returns>All of the repositories tags.</returns>
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllTags(owner, name, ApiOptions.None);
         }
@@ -785,9 +785,9 @@ namespace Octokit
         /// <returns>All of the repositories tags.</returns>
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options);
         }
@@ -803,7 +803,7 @@ namespace Octokit
         /// <returns>All of the repositories tags.</returns>
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options);
         }

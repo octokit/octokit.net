@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableSearchClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Search;
         }
@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <returns>List of repositories</returns>
         public IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchRepo(search).ToObservable();
         }
 
@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         /// <returns>List of users</returns>
         public IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchUsers(search).ToObservable();
         }
 
@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// <returns>List of issues</returns>
         public IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchIssues(search).ToObservable();
         }
 
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// <returns>List of files</returns>
         public IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchCode(search).ToObservable();
         }
     }

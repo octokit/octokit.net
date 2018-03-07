@@ -30,9 +30,9 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the tag</param>
         public Task<GitTag> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
@@ -47,7 +47,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the tag</param>
         public Task<GitTag> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
@@ -63,9 +63,9 @@ namespace Octokit
         /// <param name="tag">The tag to create</param>
         public Task<GitTag> Create(string owner, string name, NewTag tag)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(tag, "tag");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(tag, nameof(tag));
 
             return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(owner, name), tag);
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="tag">The tag to create</param>
         public Task<GitTag> Create(long repositoryId, NewTag tag)
         {
-            Ensure.ArgumentNotNull(tag, "tag");
+            Ensure.ArgumentNotNull(tag, nameof(tag));
 
             return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(repositoryId), tag);
         }

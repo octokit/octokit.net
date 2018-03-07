@@ -13,7 +13,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryInvitationsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Invitation;
             _connection = client.Connection;
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="permissions">The permission to set.</param>
         public IObservable<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
-            Ensure.ArgumentNotNull(permissions, "persmissions");
+            Ensure.ArgumentNotNull(permissions, nameof(permissions));
 
             return _client.Edit(repositoryId, invitationId, permissions).ToObservable();
         }
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>        
         public IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
             return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
@@ -118,7 +118,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
             return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
         }
     }

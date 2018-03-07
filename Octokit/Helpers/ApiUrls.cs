@@ -1825,10 +1825,10 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoCompare(string owner, string name, string @base, string head)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
             var encodedBase = @base.UriEncode();
             var encodedHead = head.UriEncode();
@@ -3080,8 +3080,8 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for comparing two commits.</returns>
         public static Uri RepoCompare(long repositoryId, string @base, string head)
         {
-            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
             var encodedBase = @base.UriEncode();
             var encodedHead = head.UriEncode();
             return "repositories/{0}/compare/{1}...{2}".FormatUri(repositoryId, encodedBase, encodedHead);

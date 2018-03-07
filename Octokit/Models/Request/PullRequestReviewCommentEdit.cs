@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="body">The new text of the comment</param>
         public PullRequestReviewCommentEdit(string body)
         {
-            Ensure.ArgumentNotNullOrEmptyString(body, "body");
+            Ensure.ArgumentNotNullOrEmptyString(body, nameof(body));
 
             Body = body;
         }

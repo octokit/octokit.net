@@ -8,10 +8,10 @@ namespace Octokit
     {
         public LicenseMetadata(string key, string name, string spdxId, string url, bool featured)
         {
-            Ensure.ArgumentNotNullOrEmptyString(key, "key");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(spdxId, "spdxId");
-            Ensure.ArgumentNotNull(url, "url");
+            Ensure.ArgumentNotNullOrEmptyString(key, nameof(key));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(spdxId, nameof(spdxId));
+            Ensure.ArgumentNotNull(url, nameof(url));
 
             Key = key;
             Name = name;

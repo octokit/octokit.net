@@ -10,7 +10,7 @@ namespace Octokit.Reactive
 
         public ObservableReactionsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Reaction;
 

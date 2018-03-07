@@ -52,7 +52,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), options);
         }
@@ -94,7 +94,7 @@ namespace Octokit
         /// <returns>The created <see cref="Authorization"/>.</returns>
         public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -130,8 +130,8 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -169,9 +169,9 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -214,10 +214,10 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -257,9 +257,9 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -300,10 +300,10 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -338,8 +338,8 @@ namespace Octokit
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
         public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
             return ApiConnection.Get<ApplicationAuthorization>(endpoint, null);
@@ -357,8 +357,8 @@ namespace Octokit
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
         public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             var requestData = new { };
 
@@ -377,8 +377,8 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task RevokeApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             return ApiConnection.Delete(
                 ApiUrls.ApplicationAuthorization(clientId, accessToken));
@@ -401,7 +401,7 @@ namespace Octokit
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         public Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
         {
-            Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
+            Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
             return ApiConnection.Patch<Authorization>(
                 ApiUrls.Authorizations(id),

@@ -19,9 +19,9 @@ namespace Octokit
         /// <param name="code">The code you received as a response to making the OAuth login request</param>
         public OauthTokenRequest(string clientId, string clientSecret, string code)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNullOrEmptyString(code, "code");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNullOrEmptyString(code, nameof(code));
 
             ClientId = clientId;
             ClientSecret = clientSecret;

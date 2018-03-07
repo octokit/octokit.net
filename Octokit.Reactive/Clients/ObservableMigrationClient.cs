@@ -4,7 +4,7 @@
     {
         public ObservableMigrationClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             Migrations = new ObservableMigrationsClient(client);
         }

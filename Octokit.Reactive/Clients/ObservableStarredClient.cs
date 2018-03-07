@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableStarredClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Activity.Starring;
             _connection = client.Connection;
@@ -31,8 +31,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllStargazers(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllStargazers(owner, name, ApiOptions.None);
         }
@@ -56,9 +56,9 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllStargazers(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Stargazers(owner, name), options);
         }
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllStargazers(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Stargazers(repositoryId), options);
         }
@@ -84,8 +84,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<UserStar> GetAllStargazersWithTimestamps(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllStargazersWithTimestamps(owner, name, ApiOptions.None);
         }
@@ -109,9 +109,9 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<UserStar> GetAllStargazersWithTimestamps(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -124,7 +124,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<UserStar> GetAllStargazersWithTimestamps(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(repositoryId), null, AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred(), options);
         }
@@ -164,7 +164,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -177,7 +177,7 @@ namespace Octokit.Reactive
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<Repository> GetAllForCurrent(StarredRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForCurrent(request, ApiOptions.None);
         }
@@ -190,8 +190,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForCurrent(StarredRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Starred(), request.ToParametersDictionary(), options);
         }
@@ -204,7 +204,7 @@ namespace Octokit.Reactive
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForCurrentWithTimestamps(request, ApiOptions.None);
         }
@@ -217,8 +217,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<RepositoryStar> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -230,7 +230,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -243,8 +243,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user), options);
         }
@@ -256,7 +256,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUserWithTimestamps(user, ApiOptions.None);
         }
@@ -269,8 +269,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -284,8 +284,8 @@ namespace Octokit.Reactive
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<Repository> GetAllForUser(string user, StarredRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForUser(user, request, ApiOptions.None);
         }
@@ -299,9 +299,9 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForUser(string user, StarredRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), options);
         }
@@ -315,8 +315,8 @@ namespace Octokit.Reactive
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForUserWithTimestamps(user, request, ApiOptions.None);
         }
@@ -330,9 +330,9 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<RepositoryStar> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
         }
@@ -345,8 +345,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public IObservable<bool> CheckStarred(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.CheckStarred(owner, name).ToObservable();
         }
@@ -358,8 +358,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository to star</param>
         public IObservable<bool> StarRepo(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.StarRepo(owner, name).ToObservable();
         }
@@ -371,8 +371,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository to unstar</param>
         public IObservable<bool> RemoveStarFromRepo(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.RemoveStarFromRepo(owner, name).ToObservable();
         }

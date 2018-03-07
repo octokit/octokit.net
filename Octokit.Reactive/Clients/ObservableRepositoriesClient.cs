@@ -16,7 +16,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoriesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository;
             _connection = client.Connection;
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
         public IObservable<Repository> Create(NewRepository newRepository)
         {
-            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
@@ -62,8 +62,8 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
         public IObservable<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
-            Ensure.ArgumentNotNull(organizationLogin, "organizationLogin");
-            Ensure.ArgumentNotNull(newRepository, "newRepository");
+            Ensure.ArgumentNotNull(organizationLogin, nameof(organizationLogin));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
@@ -79,8 +79,8 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
         public IObservable<Unit> Delete(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name).ToObservable();
         }
@@ -104,8 +104,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Repository"/></returns>
         public IObservable<Repository> Get(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name).ToObservable();
         }
@@ -142,7 +142,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllPublic(PublicRepositoryRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
@@ -170,7 +170,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -186,7 +186,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForCurrent(RepositoryRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForCurrent(request, ApiOptions.None);
         }
@@ -200,8 +200,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview);
         }
@@ -213,7 +213,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForUser(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAllForUser(login, ApiOptions.None);
         }
@@ -226,8 +226,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForUser(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -241,7 +241,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForOrg(string organization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
             return GetAllForOrg(organization, ApiOptions.None);
         }
@@ -254,8 +254,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllForOrg(string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
         }
@@ -334,8 +334,8 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllContributors(owner, name, ApiOptions.None);
         }
@@ -365,9 +365,9 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllContributors(owner, name, false, options);
         }
@@ -383,7 +383,7 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllContributors(repositoryId, false, options);
         }
@@ -400,8 +400,8 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
         }
@@ -433,9 +433,9 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryContributors(owner, name);
             var parameters = new Dictionary<string, string>();
@@ -457,7 +457,7 @@ namespace Octokit.Reactive
         /// <returns>All contributors of the repository.</returns>
         public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryContributors(repositoryId);
             var parameters = new Dictionary<string, string>();
@@ -478,8 +478,8 @@ namespace Octokit.Reactive
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         public IObservable<RepositoryLanguage> GetAllLanguages(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryLanguages(owner, name);
             return _connection
@@ -514,8 +514,8 @@ namespace Octokit.Reactive
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public IObservable<Team> GetAllTeams(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllTeams(owner, name, ApiOptions.None);
         }
@@ -545,9 +545,9 @@ namespace Octokit.Reactive
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public IObservable<Team> GetAllTeams(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), options);
         }
@@ -563,7 +563,7 @@ namespace Octokit.Reactive
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         public IObservable<Team> GetAllTeams(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
         }
@@ -579,8 +579,8 @@ namespace Octokit.Reactive
         /// <returns>All of the repositories tags.</returns>
         public IObservable<RepositoryTag> GetAllTags(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllTags(owner, name, ApiOptions.None);
         }
@@ -610,9 +610,9 @@ namespace Octokit.Reactive
         /// <returns>All of the repositories tags.</returns>
         public IObservable<RepositoryTag> GetAllTags(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options);
         }
@@ -628,7 +628,7 @@ namespace Octokit.Reactive
         /// <returns>All of the repositories tags.</returns>
         public IObservable<RepositoryTag> GetAllTags(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options);
         }
@@ -642,9 +642,9 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.Edit(owner, name, update).ToObservable();
         }
@@ -687,7 +687,7 @@ namespace Octokit.Reactive
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         public IObservable<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.Edit(repositoryId, update).ToObservable();
         }

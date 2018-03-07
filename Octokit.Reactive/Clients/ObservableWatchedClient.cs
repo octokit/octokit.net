@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableWatchedClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Activity.Watching;
             _connection = client.Connection;
@@ -31,8 +31,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllWatchers(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllWatchers(owner, name, ApiOptions.None);
         }
@@ -56,9 +56,9 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllWatchers(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Watchers(owner, name), options);
         }
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<User> GetAllWatchers(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Watchers(repositoryId), options);
         }
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Watched(), options);
         }
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -117,8 +117,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<Repository> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.WatchedByUser(user), options);
         }
@@ -131,8 +131,8 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated</exception>
         public IObservable<bool> CheckWatched(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.CheckWatched(owner, name).ToObservable();
         }
@@ -155,9 +155,9 @@ namespace Octokit.Reactive
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         public IObservable<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newSubscription, "newSubscription");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
 
             return _client.WatchRepo(owner, name, newSubscription).ToObservable();
         }
@@ -169,7 +169,7 @@ namespace Octokit.Reactive
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         public IObservable<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription)
         {
-            Ensure.ArgumentNotNull(newSubscription, "newSubscription");
+            Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
 
             return _client.WatchRepo(repositoryId, newSubscription).ToObservable();
         }
@@ -181,8 +181,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository to unstar</param>
         public IObservable<bool> UnwatchRepo(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.UnwatchRepo(owner, name).ToObservable();
         }

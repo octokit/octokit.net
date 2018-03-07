@@ -17,8 +17,8 @@ namespace Octokit
         /// <param name="position">The line index in the diff to comment on</param>
         public DraftPullRequestReviewComment(string body, string path, int position)
         {
-            Ensure.ArgumentNotNullOrEmptyString(body, "body");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(body, nameof(body));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             Body = body;
             Path = path;

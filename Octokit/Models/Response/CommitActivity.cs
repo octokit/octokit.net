@@ -13,7 +13,7 @@ namespace Octokit
 
         public CommitActivity(IEnumerable<WeeklyCommitActivity> activity)
         {
-            Ensure.ArgumentNotNull(activity, "activity");
+            Ensure.ArgumentNotNull(activity, nameof(activity));
 
             Activity = new ReadOnlyCollection<WeeklyCommitActivity>(activity.ToList());
         }

@@ -25,7 +25,7 @@ namespace Octokit.Internal
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public HttpClientAdapter(Func<HttpMessageHandler> getHandler)
         {
-            Ensure.ArgumentNotNull(getHandler, "getHandler");
+            Ensure.ArgumentNotNull(getHandler, nameof(getHandler));
 
 #if HAS_SERVICEPOINTMANAGER
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -42,7 +42,7 @@ namespace Octokit.Internal
         /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
         public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var cancellationTokenForRequest = GetCancellationTokenForRequest(request, cancellationToken);
 
@@ -71,7 +71,7 @@ namespace Octokit.Internal
 
         protected virtual async Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
         {
-            Ensure.ArgumentNotNull(responseMessage, "responseMessage");
+            Ensure.ArgumentNotNull(responseMessage, nameof(responseMessage));
 
             object responseBody = null;
             string contentType = null;
@@ -110,7 +110,7 @@ namespace Octokit.Internal
 
         protected virtual HttpRequestMessage BuildRequestMessage(IRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
             HttpRequestMessage requestMessage = null;
             try
             {

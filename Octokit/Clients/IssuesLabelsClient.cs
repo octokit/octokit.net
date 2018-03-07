@@ -27,8 +27,8 @@ namespace Octokit
         /// <param name="number">The number of the issue</param>
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForIssue(owner, name, number, ApiOptions.None);
         }
@@ -58,9 +58,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), options);
         }
@@ -76,7 +76,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
         }
@@ -91,8 +91,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -120,9 +120,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), options);
         }
@@ -137,7 +137,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), options);
         }
@@ -153,8 +153,8 @@ namespace Octokit
         /// <param name="number">The number of the milestone</param>
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForMilestone(owner, name, number, ApiOptions.None);
         }
@@ -184,9 +184,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
         }
@@ -202,7 +202,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
         }
@@ -218,9 +218,9 @@ namespace Octokit
         /// <param name="labelName">The name of the label</param>
         public Task<Label> Get(string owner, string name, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName));
         }
@@ -235,7 +235,7 @@ namespace Octokit
         /// <param name="labelName">The name of the label</param>
         public Task<Label> Get(long repositoryId, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName));
         }
@@ -251,9 +251,9 @@ namespace Octokit
         /// <param name="labelName">The name of the label</param>
         public Task Delete(string owner, string name, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Delete(ApiUrls.Label(owner, name, labelName));
         }
@@ -268,7 +268,7 @@ namespace Octokit
         /// <param name="labelName">The name of the label</param>
         public Task Delete(long repositoryId, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Delete(ApiUrls.Label(repositoryId, labelName));
         }
@@ -284,9 +284,9 @@ namespace Octokit
         /// <param name="newLabel">The data for the label to be created</param>
         public Task<Label> Create(string owner, string name, NewLabel newLabel)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newLabel, "newLabel");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newLabel, nameof(newLabel));
 
             return ApiConnection.Post<Label>(ApiUrls.Labels(owner, name), newLabel);
         }
@@ -301,7 +301,7 @@ namespace Octokit
         /// <param name="newLabel">The data for the label to be created</param>
         public Task<Label> Create(long repositoryId, NewLabel newLabel)
         {
-            Ensure.ArgumentNotNull(newLabel, "newLabel");
+            Ensure.ArgumentNotNull(newLabel, nameof(newLabel));
 
             return ApiConnection.Post<Label>(ApiUrls.Labels(repositoryId), newLabel);
         }
@@ -318,10 +318,10 @@ namespace Octokit
         /// <param name="labelUpdate">The data for the label to be updated</param>
         public Task<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
-            Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
+            Ensure.ArgumentNotNull(labelUpdate, nameof(labelUpdate));
 
             return ApiConnection.Post<Label>(ApiUrls.Label(owner, name, labelName), labelUpdate);
         }
@@ -337,8 +337,8 @@ namespace Octokit
         /// <param name="labelUpdate">The data for the label to be updated</param>
         public Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
-            Ensure.ArgumentNotNull(labelUpdate, "labelUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
+            Ensure.ArgumentNotNull(labelUpdate, nameof(labelUpdate));
 
             return ApiConnection.Post<Label>(ApiUrls.Label(repositoryId, labelName), labelUpdate);
         }
@@ -355,9 +355,9 @@ namespace Octokit
         /// <param name="labels">The names of the labels to add</param>
         public Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int number, string[] labels)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(labels, "labels");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(labels, nameof(labels));
 
             return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels);
         }
@@ -373,7 +373,7 @@ namespace Octokit
         /// <param name="labels">The names of the labels to add</param>
         public Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int number, string[] labels)
         {
-            Ensure.ArgumentNotNull(labels, "labels");
+            Ensure.ArgumentNotNull(labels, nameof(labels));
 
             return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
         }
@@ -390,9 +390,9 @@ namespace Octokit
         /// <param name="labelName">The name of the label to remove</param>
         public Task RemoveFromIssue(string owner, string name, int number, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Delete(ApiUrls.IssueLabel(owner, name, number, labelName));
         }
@@ -408,7 +408,7 @@ namespace Octokit
         /// <param name="labelName">The name of the label to remove</param>
         public Task RemoveFromIssue(long repositoryId, int number, string labelName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(labelName, "labelName");
+            Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
             return ApiConnection.Delete(ApiUrls.IssueLabel(repositoryId, number, labelName));
         }
@@ -425,9 +425,9 @@ namespace Octokit
         /// <param name="labels">The names of the labels to set</param>
         public Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int number, string[] labels)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(labels, "labels");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(labels, nameof(labels));
 
             return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels);
         }
@@ -443,7 +443,7 @@ namespace Octokit
         /// <param name="labels">The names of the labels to set</param>
         public Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int number, string[] labels)
         {
-            Ensure.ArgumentNotNull(labels, "labels");
+            Ensure.ArgumentNotNull(labels, nameof(labels));
 
             return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
         }
@@ -459,8 +459,8 @@ namespace Octokit
         /// <param name="number">The number of the issue</param>
         public Task RemoveAllFromIssue(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.IssueLabels(owner, name, number));
         }

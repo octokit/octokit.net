@@ -65,7 +65,7 @@ namespace Octokit
         public NewRepositoryWebHook(string name, IReadOnlyDictionary<string, string> config, string url)
             : base(name, config)
         {
-            Ensure.ArgumentNotNullOrEmptyString(url, "url");
+            Ensure.ArgumentNotNullOrEmptyString(url, nameof(url));
 
             Url = url;
             ContentType = WebHookContentType.Form;

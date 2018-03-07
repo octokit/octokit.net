@@ -15,7 +15,7 @@ namespace Octokit
 
         public WeeklyCommitActivity(IEnumerable<int> days, int total, long week)
         {
-            Ensure.ArgumentNotNull(days, "days");
+            Ensure.ArgumentNotNull(days, nameof(days));
 
             Days = new ReadOnlyCollection<int>(days.ToList());
             Total = total;

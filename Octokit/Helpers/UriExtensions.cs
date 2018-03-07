@@ -41,7 +41,7 @@ namespace Octokit
         /// <returns>Updated request Uri</returns>
         public static Uri ApplyParameters(this Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             if (parameters == null || !parameters.Any()) return uri;
 

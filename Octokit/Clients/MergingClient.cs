@@ -30,9 +30,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Merge> Create(string owner, string name, NewMerge merge)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(merge, "merge");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(merge, nameof(merge));
 
             return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge);
         }
@@ -48,7 +48,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<Merge> Create(long repositoryId, NewMerge merge)
         {
-            Ensure.ArgumentNotNull(merge, "merge");
+            Ensure.ArgumentNotNull(merge, nameof(merge));
 
             return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge);
         }

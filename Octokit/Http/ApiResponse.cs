@@ -21,7 +21,7 @@
         /// <param name="bodyAsObject">The payload from an existing request</param>
         public ApiResponse(IResponse response, T bodyAsObject)
         {
-            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(response, nameof(response));
 
             HttpResponse = response;
             Body = bodyAsObject;

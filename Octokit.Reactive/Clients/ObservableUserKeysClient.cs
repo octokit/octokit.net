@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableUserKeysClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User.GitSshKey;
         }
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <returns>Lists the verified public keys for a user.</returns>
         public IObservable<PublicKey> GetAll(string userName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
 
             return GetAll(userName, ApiOptions.None);
         }
@@ -48,8 +48,8 @@ namespace Octokit.Reactive
         /// <returns>Lists the verified public keys for a user.</returns>
         public IObservable<PublicKey> GetAll(string userName, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _client.GetAll(userName, options).ToObservable().SelectMany(k => k);
         }
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         /// <returns>Lists the current user's keys.</returns>
         public IObservable<PublicKey> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _client.GetAllForCurrent(options).ToObservable().SelectMany(k => k);
         }
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// <returns>Creates a public key.</returns>
         public IObservable<PublicKey> Create(NewPublicKey newKey)
         {
-            Ensure.ArgumentNotNull(newKey, "newKey");
+            Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
             return _client.Create(newKey).ToObservable();
         }

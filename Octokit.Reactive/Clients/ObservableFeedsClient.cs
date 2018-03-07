@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableFeedsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Activity.Feeds;
         }

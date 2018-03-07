@@ -18,8 +18,8 @@ namespace Octokit
         /// <param name="email">The email address of the user</param>
         public NewUser(string login, string email)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(email, "email");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(email, nameof(email));
 
             Login = login;
             Email = email;
