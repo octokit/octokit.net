@@ -28,8 +28,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<Milestone> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<Milestone>(ApiUrls.Milestone(owner, name, number));
         }
@@ -57,8 +57,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, new MilestoneRequest());
         }
@@ -88,9 +88,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(owner, name, new MilestoneRequest(), options);
         }
@@ -106,7 +106,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(repositoryId, new MilestoneRequest(), options);
         }
@@ -123,9 +123,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -141,7 +141,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -159,10 +159,10 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(owner, name),
                 request.ToParametersDictionary(), options);
@@ -180,8 +180,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Milestone>(ApiUrls.Milestones(repositoryId),
                 request.ToParametersDictionary(), options);
@@ -198,9 +198,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newMilestone, "newMilestone");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newMilestone, nameof(newMilestone));
 
             return ApiConnection.Post<Milestone>(ApiUrls.Milestones(owner, name), newMilestone);
         }
@@ -215,7 +215,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<Milestone> Create(long repositoryId, NewMilestone newMilestone)
         {
-            Ensure.ArgumentNotNull(newMilestone, "newMilestone");
+            Ensure.ArgumentNotNull(newMilestone, nameof(newMilestone));
 
             return ApiConnection.Post<Milestone>(ApiUrls.Milestones(repositoryId), newMilestone);
         }
@@ -233,9 +233,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
             return ApiConnection.Patch<Milestone>(ApiUrls.Milestone(owner, name, number), milestoneUpdate);
         }
@@ -252,7 +252,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate)
         {
-            Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
+            Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
             return ApiConnection.Patch<Milestone>(ApiUrls.Milestone(repositoryId, number), milestoneUpdate);
         }
@@ -268,8 +268,8 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.Milestone(owner, name, number));
         }

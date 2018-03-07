@@ -31,9 +31,9 @@ namespace Octokit
         /// <param name="path">The content path</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="path">The content path</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId, string path)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             var url = ApiUrls.RepositoryContent(repositoryId, path);
 
@@ -67,8 +67,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var url = ApiUrls.RepositoryContent(owner, name, string.Empty);
 
@@ -102,10 +102,10 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository�s default branch (usually master)</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             var url = ApiUrls.RepositoryContent(owner, name, path, reference);
 
@@ -123,8 +123,8 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string path, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             var url = ApiUrls.RepositoryContent(repositoryId, path, reference);
 
@@ -142,9 +142,9 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository�s default branch (usually master)</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             var url = ApiUrls.RepositoryContent(owner, name, string.Empty, reference);
 
@@ -162,7 +162,7 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             var url = ApiUrls.RepositoryContent(repositoryId, string.Empty, reference);
 
@@ -180,8 +180,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<Readme> GetReadme(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryReadme(owner, name);
             var readmeInfo = await ApiConnection.Get<ReadmeResponse>(endpoint, null).ConfigureAwait(false);
@@ -216,8 +216,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<string> GetReadmeHtml(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetHtml(ApiUrls.RepositoryReadme(owner, name), null);
         }
@@ -243,8 +243,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<byte[]> GetArchive(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetArchive(owner, name, ArchiveFormat.Tarball, string.Empty);
         }
@@ -268,8 +268,8 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetArchive(owner, name, archiveFormat, string.Empty);
         }
@@ -295,9 +295,9 @@ namespace Octokit
         /// <param name="reference">A valid Git reference.</param>
         public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return GetArchive(owner, name, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
@@ -311,7 +311,7 @@ namespace Octokit
         /// <param name="reference">A valid Git reference.</param>
         public Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference)
         {
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return GetArchive(repositoryId, archiveFormat, reference, TimeSpan.FromMinutes(60));
         }
@@ -327,10 +327,10 @@ namespace Octokit
         /// <param name="timeout"> Time span until timeout </param>
         public async Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reference, "reference");
-            Ensure.GreaterThanZero(timeout, "timeout");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reference, nameof(reference));
+            Ensure.GreaterThanZero(timeout, nameof(timeout));
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
 
@@ -349,8 +349,8 @@ namespace Octokit
         /// <param name="timeout"> Time span until timeout </param>
         public async Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
-            Ensure.ArgumentNotNull(reference, "reference");
-            Ensure.GreaterThanZero(timeout, "timeout");
+            Ensure.ArgumentNotNull(reference, nameof(reference));
+            Ensure.GreaterThanZero(timeout, nameof(timeout));
 
             var endpoint = ApiUrls.RepositoryArchiveLink(repositoryId, archiveFormat, reference);
 
@@ -368,10 +368,10 @@ namespace Octokit
         /// <param name="request">Information about the file to create</param>
         public Task<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var createUrl = ApiUrls.RepositoryContent(owner, name, path);
             return ApiConnection.Put<RepositoryContentChangeSet>(createUrl, request);
@@ -385,8 +385,8 @@ namespace Octokit
         /// <param name="request">Information about the file to create</param>
         public Task<RepositoryContentChangeSet> CreateFile(long repositoryId, string path, CreateFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var createUrl = ApiUrls.RepositoryContent(repositoryId, path);
             return ApiConnection.Put<RepositoryContentChangeSet>(createUrl, request);
@@ -401,10 +401,10 @@ namespace Octokit
         /// <param name="request">Information about the file to update</param>
         public Task<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var updateUrl = ApiUrls.RepositoryContent(owner, name, path);
             return ApiConnection.Put<RepositoryContentChangeSet>(updateUrl, request);
@@ -418,8 +418,8 @@ namespace Octokit
         /// <param name="request">Information about the file to update</param>
         public Task<RepositoryContentChangeSet> UpdateFile(long repositoryId, string path, UpdateFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var updateUrl = ApiUrls.RepositoryContent(repositoryId, path);
             return ApiConnection.Put<RepositoryContentChangeSet>(updateUrl, request);
@@ -434,10 +434,10 @@ namespace Octokit
         /// <param name="request">Information about the file to delete</param>
         public Task DeleteFile(string owner, string name, string path, DeleteFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var deleteUrl = ApiUrls.RepositoryContent(owner, name, path);
             return ApiConnection.Delete(deleteUrl, request);
@@ -451,8 +451,8 @@ namespace Octokit
         /// <param name="request">Information about the file to delete</param>
         public Task DeleteFile(long repositoryId, string path, DeleteFileRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var deleteUrl = ApiUrls.RepositoryContent(repositoryId, path);
             return ApiConnection.Delete(deleteUrl, request);

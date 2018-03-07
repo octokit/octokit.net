@@ -42,7 +42,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Followers(), options);
         }
@@ -57,7 +57,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAll(login, ApiOptions.None);
         }
@@ -73,8 +73,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Followers(login), options);
         }
@@ -101,7 +101,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Following(), options);
         }
@@ -116,7 +116,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowing(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAllFollowing(login, ApiOptions.None);
         }
@@ -132,8 +132,8 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Following(login), options);
         }
@@ -148,7 +148,7 @@ namespace Octokit
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> IsFollowingForCurrent(string following)
         {
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
+            Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             try
             {
@@ -172,8 +172,8 @@ namespace Octokit
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> IsFollowing(string login, string following)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             try
             {
@@ -196,7 +196,7 @@ namespace Octokit
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public async Task<bool> Follow(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             try
             {
@@ -224,7 +224,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Unfollow(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return ApiConnection.Delete(ApiUrls.IsFollowing(login));
         }

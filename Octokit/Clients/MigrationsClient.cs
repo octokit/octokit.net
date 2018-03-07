@@ -31,8 +31,8 @@ namespace Octokit
         /// <returns>The started migration.</returns>
         public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(migration, "migration");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(migration, nameof(migration));
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
@@ -49,7 +49,7 @@ namespace Octokit
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         public async Task<List<Migration>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
@@ -67,7 +67,7 @@ namespace Octokit
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         public async Task<Migration> Get(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
@@ -85,7 +85,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive as a byte array.</returns>
         public async Task<byte[]> GetArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
             var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
@@ -104,7 +104,7 @@ namespace Octokit
         /// <returns></returns>
         public Task DeleteArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
@@ -123,8 +123,8 @@ namespace Octokit
         /// <returns></returns>
         public Task UnlockRepository(string org, int id, string repo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
             var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
 

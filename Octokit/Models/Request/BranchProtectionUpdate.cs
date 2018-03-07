@@ -202,7 +202,7 @@ namespace Octokit
         /// <param name="teams">Teams allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             Teams = teams;
             Users = new BranchProtectionUserCollection();
@@ -214,7 +214,7 @@ namespace Octokit
         /// <param name="users">Users allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = new BranchProtectionTeamCollection();
             Users = users;
@@ -227,8 +227,8 @@ namespace Octokit
         /// <param name="users">Users allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = teams;
             Users = users;
@@ -383,7 +383,7 @@ namespace Octokit
         /// <param name="teams">Teams allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             Teams = teams;
             Users = new BranchProtectionUserCollection();
@@ -395,7 +395,7 @@ namespace Octokit
         /// <param name="users">Users allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = new BranchProtectionTeamCollection();
             Users = users;
@@ -408,8 +408,8 @@ namespace Octokit
         /// <param name="users">Users allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = teams;
             Users = users;

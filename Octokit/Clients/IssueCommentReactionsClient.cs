@@ -26,9 +26,9 @@ namespace Octokit
         /// <param name="reaction">The reaction to create</param>
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
         }
@@ -42,7 +42,7 @@ namespace Octokit
         /// <param name="reaction">The reaction to create</param>
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), reaction, AcceptHeaders.ReactionsPreview);
         }
@@ -56,8 +56,8 @@ namespace Octokit
         /// <param name="number">The comment id</param>        
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
         }

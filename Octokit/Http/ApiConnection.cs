@@ -31,8 +31,8 @@ namespace Octokit
         /// <param name="pagination">A paginator for paging API responses</param>
         protected ApiConnection(IConnection connection, IApiPagination pagination)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
-            Ensure.ArgumentNotNull(pagination, "pagination");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
+            Ensure.ArgumentNotNull(pagination, nameof(pagination));
 
             Connection = connection;
             _pagination = pagination;
@@ -52,7 +52,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<T> Get<T>(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Get<T>(uri, null);
         }
@@ -67,7 +67,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
             return response.Body;
@@ -84,8 +84,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
             return response.Body;
@@ -100,7 +100,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<string> GetHtml(Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await Connection.GetHtml(uri, parameters).ConfigureAwait(false);
             return response.Body;
@@ -182,15 +182,15 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts).ConfigureAwait(false), uri);
         }
 
         public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             parameters = Pagination.Setup(parameters, options);
 
@@ -205,7 +205,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task Post(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Connection.Post(uri);
         }
@@ -219,7 +219,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Post<T>(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await Connection.Post<T>(uri).ConfigureAwait(false);
             return response.Body;
@@ -235,8 +235,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public Task<T> Post<T>(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             return Post<T>(uri, data, null, null);
         }
@@ -267,8 +267,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
             return response.Body;
@@ -287,9 +287,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.Body;
@@ -298,8 +298,8 @@ namespace Octokit
 
         public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout).ConfigureAwait(false);
             return response.Body;
@@ -312,7 +312,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Put(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Connection.Put(uri);
         }
@@ -327,8 +327,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
 
@@ -346,9 +346,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
@@ -367,8 +367,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode, accepts).ConfigureAwait(false);
 
@@ -382,7 +382,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Patch(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Connection.Patch(uri);
         }
@@ -395,8 +395,8 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Patch(Uri uri, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             return Connection.Patch(uri, accepts);
         }
@@ -411,8 +411,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Patch<T>(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
 
@@ -430,9 +430,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public async Task<T> Patch<T>(Uri uri, object data, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
 
@@ -446,7 +446,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Connection.Delete(uri);
         }
@@ -459,7 +459,7 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri, string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return Connection.Delete(uri, twoFactorAuthenticationCode);
         }
@@ -472,8 +472,8 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Delete(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             return Connection.Delete(uri, data);
         }
@@ -487,9 +487,9 @@ namespace Octokit
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
         public Task Delete(Uri uri, object data, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             return Connection.Delete(uri, data, accepts);
         }
@@ -502,8 +502,8 @@ namespace Octokit
         /// <param name="data">The object to serialize as the body of the request</param>
         public async Task<T> Delete<T>(Uri uri, object data)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
 
             var response = await Connection.Delete<T>(uri, data).ConfigureAwait(false);
 
@@ -520,9 +520,9 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         public async Task<T> Delete<T>(Uri uri, object data, string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
-            Ensure.ArgumentNotNull(data, "data");
-            Ensure.ArgumentNotNull(accepts, "accepts");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             var response = await Connection.Delete<T>(uri, data, accepts).ConfigureAwait(false);
 
@@ -544,7 +544,7 @@ namespace Octokit
         {
             while (true)
             {
-                Ensure.ArgumentNotNull(uri, "uri");
+                Ensure.ArgumentNotNull(uri, nameof(uri));
 
                 var response = await Connection.GetResponse<IReadOnlyList<T>>(uri, cancellationToken).ConfigureAwait(false);
 
@@ -568,7 +568,7 @@ namespace Octokit
             IDictionary<string, string> parameters,
             string accepts)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var response = await Connection.Get<List<T>>(uri, parameters, accepts).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
@@ -582,7 +582,7 @@ namespace Octokit
             string accepts,
             ApiOptions options)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var connection = Connection;
 

@@ -501,8 +501,8 @@ namespace Octokit
 
         static string GetRepositoryName(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", owner, name);
         }

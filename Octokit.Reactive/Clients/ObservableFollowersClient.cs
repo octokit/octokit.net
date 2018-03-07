@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableFollowersClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User.Followers;
             _connection = client.Connection;
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         public IObservable<User> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(), options);
         }
@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public IObservable<User> GetAll(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAll(login, ApiOptions.None);
         }
@@ -75,8 +75,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         public IObservable<User> GetAll(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login), options);
         }
@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         public IObservable<User> GetAllFollowingForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(), options);
         }
@@ -118,7 +118,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public IObservable<User> GetAllFollowing(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return GetAllFollowing(login, ApiOptions.None);
         }
@@ -134,8 +134,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         public IObservable<User> GetAllFollowing(string login, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login), options);
         }
@@ -150,7 +150,7 @@ namespace Octokit.Reactive
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public IObservable<bool> IsFollowingForCurrent(string following)
         {
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
+            Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             return _client.IsFollowingForCurrent(following).ToObservable();
         }
@@ -166,8 +166,8 @@ namespace Octokit.Reactive
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public IObservable<bool> IsFollowing(string login, string following)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(following, "following");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             return _client.IsFollowing(login, following).ToObservable();
         }
@@ -182,7 +182,7 @@ namespace Octokit.Reactive
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         public IObservable<bool> Follow(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.Follow(login).ToObservable();
         }
@@ -197,7 +197,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Unfollow(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.Unfollow(login).ToObservable();
         }

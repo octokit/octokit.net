@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         public GitHubClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
@@ -149,7 +149,7 @@ namespace Octokit
             // Note this is for convenience. We probably shouldn't allow this to be mutable.
             set
             {
-                Ensure.ArgumentNotNull(value, "value");
+                Ensure.ArgumentNotNull(value, nameof(value));
                 Connection.Credentials = value;
             }
         }
@@ -298,7 +298,7 @@ namespace Octokit
 
         static Uri FixUpBaseUri(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
             {

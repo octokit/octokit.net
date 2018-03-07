@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableBlobClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Git.Blob;
         }
@@ -31,9 +31,9 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA of the blob</param>
         public IObservable<Blob> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(owner, name, reference).ToObservable();
         }
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA of the blob</param>
         public IObservable<Blob> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(repositoryId, reference).ToObservable();
         }
@@ -64,9 +64,9 @@ namespace Octokit.Reactive
         /// <param name="newBlob">The new Blob</param>
         public IObservable<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newBlob, "newBlob");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
             return _client.Create(owner, name, newBlob).ToObservable();
         }
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="newBlob">The new Blob</param>
         public IObservable<BlobReference> Create(long repositoryId, NewBlob newBlob)
         {
-            Ensure.ArgumentNotNull(newBlob, "newBlob");
+            Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
             return _client.Create(repositoryId, newBlob).ToObservable();
         }

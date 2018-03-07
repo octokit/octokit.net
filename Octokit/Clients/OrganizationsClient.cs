@@ -46,7 +46,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Organization"/>.</returns>
         public Task<Organization> Get(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
         }
@@ -69,7 +69,7 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
         }
@@ -83,7 +83,7 @@ namespace Octokit
         [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public Task<IReadOnlyList<Organization>> GetAll(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAll(user, ApiOptions.None);
         }
@@ -98,8 +98,8 @@ namespace Octokit
         [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
         public Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
@@ -112,7 +112,7 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -126,8 +126,8 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
@@ -151,7 +151,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
@@ -167,8 +167,8 @@ namespace Octokit
         /// <returns>A <see cref="Organization"/></returns>
         public Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
-            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
             var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
 

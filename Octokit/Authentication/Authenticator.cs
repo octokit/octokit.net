@@ -16,14 +16,14 @@ namespace Octokit.Internal
 
         public Authenticator(ICredentialStore credentialStore)
         {
-            Ensure.ArgumentNotNull(credentialStore, "credentialStore");
+            Ensure.ArgumentNotNull(credentialStore, nameof(credentialStore));
 
             CredentialStore = credentialStore;
         }
 
         public async Task Apply(IRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var credentials = await CredentialStore.GetCredentials().ConfigureAwait(false) ?? Credentials.Anonymous;
             authenticators[credentials.AuthenticationType].Authenticate(request, credentials);

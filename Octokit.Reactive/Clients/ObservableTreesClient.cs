@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableTreesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Git.Tree;
         }
@@ -31,9 +31,9 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA that references the tree</param>
         public IObservable<TreeResponse> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(owner, name, reference).ToObservable();
         }
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA that references the tree</param>
         public IObservable<TreeResponse> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(repositoryId, reference).ToObservable();
         }
@@ -64,9 +64,9 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA that references the tree</param>
         public IObservable<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.GetRecursive(owner, name, reference).ToObservable();
         }
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The SHA that references the tree</param>
         public IObservable<TreeResponse> GetRecursive(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.GetRecursive(repositoryId, reference).ToObservable();
         }
@@ -97,9 +97,9 @@ namespace Octokit.Reactive
         /// <param name="newTree">The value of the new tree</param>
         public IObservable<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newTree, "newTree");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
             return _client.Create(owner, name, newTree).ToObservable();
         }
@@ -114,7 +114,7 @@ namespace Octokit.Reactive
         /// <param name="newTree">The value of the new tree</param>
         public IObservable<TreeResponse> Create(long repositoryId, NewTree newTree)
         {
-            Ensure.ArgumentNotNull(newTree, "newTree");
+            Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
             return _client.Create(repositoryId, newTree).ToObservable();
         }

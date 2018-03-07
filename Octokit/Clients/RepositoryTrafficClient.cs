@@ -51,8 +51,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
         }
@@ -98,8 +98,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
         }
@@ -112,7 +112,7 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
         }
@@ -126,9 +126,9 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
         }
@@ -141,7 +141,7 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
         }
@@ -155,9 +155,9 @@ namespace Octokit
         /// <param name="per">Breakdown per day or week</param>
         public Task<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
         }

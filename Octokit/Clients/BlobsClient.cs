@@ -30,9 +30,9 @@ namespace Octokit
         /// <param name="reference">The SHA of the blob</param>
         public Task<Blob> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Blob>(ApiUrls.Blob(owner, name, reference));
         }
@@ -47,7 +47,7 @@ namespace Octokit
         /// <param name="reference">The SHA of the blob</param>
         public Task<Blob> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Blob>(ApiUrls.Blob(repositoryId, reference));
         }
@@ -63,9 +63,9 @@ namespace Octokit
         /// <param name="newBlob">The new Blob</param>
         public Task<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newBlob, "newBlob");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
             return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(owner, name), newBlob);
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="newBlob">The new Blob</param>
         public Task<BlobReference> Create(long repositoryId, NewBlob newBlob)
         {
-            Ensure.ArgumentNotNull(newBlob, "newBlob");
+            Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
             return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(repositoryId), newBlob);
         }

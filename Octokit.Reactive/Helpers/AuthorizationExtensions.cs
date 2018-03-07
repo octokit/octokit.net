@@ -35,10 +35,10 @@ namespace Octokit
             NewAuthorization newAuthorization,
             Func<TwoFactorRequiredException, IObservable<TwoFactorChallengeResult>> twoFactorChallengeHandler)
         {
-            Ensure.ArgumentNotNull(authorizationsClient, "authorizationsClient");
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
+            Ensure.ArgumentNotNull(authorizationsClient, nameof(authorizationsClient));
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             return authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
                 .Catch<ApplicationAuthorization, TwoFactorRequiredException>(exception => twoFactorChallengeHandler(exception)
@@ -106,10 +106,10 @@ namespace Octokit
             string twoFactorAuthenticationCode,
             bool retryInvalidTwoFactorCode)
         {
-            Ensure.ArgumentNotNull(authorizationsClient, "authorizationsClient");
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "newAuthorization");
+            Ensure.ArgumentNotNull(authorizationsClient, nameof(authorizationsClient));
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             // If retryInvalidTwoFactorCode is false, then we only show the TwoFactorDialog when we catch 
             // a TwoFactorRequiredException. If it's true, we show it for TwoFactorRequiredException and 
