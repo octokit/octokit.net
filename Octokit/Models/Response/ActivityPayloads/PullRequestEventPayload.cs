@@ -9,5 +9,7 @@ namespace Octokit
         public int Number { get; protected set; }
 
         public PullRequest PullRequest { get; protected set; }
+
+        public Installation Installation { get; protected set; }
     }
 }
