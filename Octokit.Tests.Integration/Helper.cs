@@ -72,22 +72,24 @@ namespace Octokit.Tests.Integration
 
         static readonly Lazy<Credentials> _githubAppCredentials = new Lazy<Credentials>(() =>
         {
-#if GITHUBJWT
+            // GitHubJwt nuget package only available for netstandard2.0+
+#if GITHUBJWT_HELPER_AVAILABLE
             var generator = new GitHubJwt.GitHubJwtFactory(
-                new GitHubJwt.FilePrivateKeySource(@"C:\Users\scarecrow420\Downloads\ryangribble-test2-app.2018-03-06.private-key.pem"),
+                new GitHubJwt.FilePrivateKeySource(GitHubAppPemFile),
                 new GitHubJwt.GitHubJwtFactoryOptions
                 {
-                    AppIntegrationId = GitHubAppId,
+                    AppIntegrationId = Convert.ToInt32(GitHubAppId),
                     ExpirationSeconds = 600
                 }
             );
 
             var jwtToken = generator.CreateEncodedJwtToken();
-#else
-            // Until we can get GitHubJWT nuget package in, hardcode a JWT value via ENV VAR (painful since they can only last 10 minutes!)
-            var jwtToken = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_JWT");
-#endif
             return new Credentials(jwtToken, AuthenticationType.Bearer);
+#else
+            // return null, which will cause the [GitHubAppTest]'s to not be discovered
+            return null;
+#endif
+            
         });
 
         static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>
@@ -157,6 +159,11 @@ namespace Octokit.Tests.Integration
         public static long GitHubAppId
         {
             get { return Convert.ToInt64(Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_ID")); }
+        }
+
+        public static string GitHubAppPemFile
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_PEMFILE"); }
         }
 
         public static string GitHubAppSlug
