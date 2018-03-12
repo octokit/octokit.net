@@ -27,7 +27,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
         {
             return GetAllForRepository(owner, name, ApiOptions.None);
@@ -40,7 +40,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
