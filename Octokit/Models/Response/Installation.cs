@@ -12,18 +12,12 @@ namespace Octokit
     /// For more information see https://developer.github.com/v3/apps/#find-installations
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class Installation
+    public class Installation : InstallationId
     {
         public Installation() { }
 
-        public Installation(long id)
+        public Installation(long id, User account, string accessTokenUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection) : base(id)
         {
-            Id = id;
-        }
-
-        public Installation(long id, User account, string accessTokenUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection)
-        {
-            Id = id;
             Account = account;
             HtmlUrl = htmlUrl;
             AppId = appId;
@@ -34,11 +28,6 @@ namespace Octokit
             SingleFileName = singleFileName;
             RepositorySelection = repositorySelection;
         }
-
-        /// <summary>
-        /// The Installation Id.
-        /// </summary>
-        public long Id { get; protected set; }
 
         /// <summary>
         /// The user who owns the Installation.

@@ -7,7 +7,7 @@ namespace Octokit
     {
         public Repository Repository { get; protected set; }
         public User Sender { get; protected set; }
-        public Installation Installation { get; protected set; }
+        public InstallationId Installation { get; protected set; }
 
         internal string DebuggerDisplay
         {
