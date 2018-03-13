@@ -25,11 +25,11 @@ namespace Octokit
         /// https://developer.github.com/v3/apps/available-endpoints/
         /// </remarks>
         /// <param name="client">The client to use</param>
-        public Task<AccessToken> CreateAccessToken(IGitHubClient client)
+        public Task<AccessToken> CreateAccessToken(IGitHubAppsClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
 
-            return client.GitHubApps.CreateInstallationToken(Id);
+            return client.CreateInstallationToken(Id);
         }
     }
 }

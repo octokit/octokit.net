@@ -26,10 +26,12 @@ Each GitHub App has a private certificate (PEM file) generated through the GitHu
 var jwtToken = @"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjA0Mjc3MTQsImV4cCI6MTUyMDQyODMxNCwiaXNzIjo5NzM1fQ.K-d3FKWKddMygFqvPZYWQusqhbF1LYfcIM0VbBq4uJsS9VkjhyXALlHmTJWjdblzx-U55lkZc_KWdJd6GlDxvoRb5w_9nrLcIFRbYVgi9XTYpCc3o5j7Qh3FvKxA1bzEs8XGrxjjE7-WJn_xi85ugFKTy9tlIRPa-PHeIOvNp4fz4ru8SFPoD4epiraeEyLfpU_ke-HYF7Ws7ar19zQkfJKRHSIFm1LxJ5MGKWT8pQBBUSGxGPgEG_tYI83aYw6cVx-DLV290bpr23LRUC684Wv_XabUDzXjPUYynAc01APZF6aN8B0LHdPbG8I6Yd74sQfmN-aHz5moz8ZNWLNm8Q
 @";
 
-var appClient = new GitHubClient(new ProductHeaderValue("MyApp"))
+var gitHubClient = new GitHubClient(new ProductHeaderValue("MyApp"))
 {
     Credentials = new Credentials(jwtToken, AuthenticationType.Bearer)
 };
+
+var appsClient = gitHubClient.GitHubApps;
 ```
 
 The authenticated app can query various top level information about itself
@@ -69,6 +71,26 @@ Once authenticated as an `Installation`, a [subset of regular API endpoints](htt
 // - Assuming the GitHub App has read/write permission for issues scope
 // - Assuming we are operating on a repository that the Installation has access to
 var response = await installationClient.Issue.Comment.Create("owner", "repo", 1, "Hello from my GitHubApp Installation!");
+```
+
+## A Note on Installations
+GitHub sends the specific installation id with every event payload. You can access it using, for instance:
+
+``` csharp
+var payload = serializer_.Deserialize<PullRequestEventPayload>(json);
+long installationId = payload.Installation.Id;
+```
+
+You can also get its access token if you have the GitHubClient:
+
+``` csharp
+var token = await appClient.CreateInstallationToken(installationId);
+```
+
+Or in a more Object Oriented way:
+
+``` csharp
+var token = await payload.Installation.CreateAccessToken(appClient);
 ```
 
 ## A Note on JWT Tokens
