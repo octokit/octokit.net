@@ -76,7 +76,7 @@ namespace Octokit
 
         internal string DebuggerDisplay
         {
-            get { return string.Format(CultureInfo.InvariantCulture, "Installation Id: {0} ; App Id: {1}", Id, AppId); }
+            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} AppId: {1}", Id, AppId); }
         }
     }
 

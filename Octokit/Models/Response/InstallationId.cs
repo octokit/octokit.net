@@ -1,5 +1,9 @@
-﻿namespace Octokit
+﻿using System.Diagnostics;
+using System.Globalization;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InstallationId
     {
         public InstallationId() { }
@@ -13,5 +17,10 @@
         /// The Installation Id.
         /// </summary>
         public long Id { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id); }
+        }
     }
 }
