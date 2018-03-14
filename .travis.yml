@@ -15,5 +15,4 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - dotnet --info
-  - ./build.sh --linksources=true --verbosity=diagnostic
+  - ./build.sh --verbosity=diagnostic
