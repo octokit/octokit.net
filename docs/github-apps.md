@@ -23,18 +23,16 @@ Each GitHub App has a private certificate (PEM file) generated through the GitHu
 
 ``` csharp
 // A time based JWT token, signed by the GitHub App's private certificate
-var jwtToken = @"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjA0Mjc3MTQsImV4cCI6MTUyMDQyODMxNCwiaXNzIjo5NzM1fQ.K-d3FKWKddMygFqvPZYWQusqhbF1LYfcIM0VbBq4uJsS9VkjhyXALlHmTJWjdblzx-U55lkZc_KWdJd6GlDxvoRb5w_9nrLcIFRbYVgi9XTYpCc3o5j7Qh3FvKxA1bzEs8XGrxjjE7-WJn_xi85ugFKTy9tlIRPa-PHeIOvNp4fz4ru8SFPoD4epiraeEyLfpU_ke-HYF7Ws7ar19zQkfJKRHSIFm1LxJ5MGKWT8pQBBUSGxGPgEG_tYI83aYw6cVx-DLV290bpr23LRUC684Wv_XabUDzXjPUYynAc01APZF6aN8B0LHdPbG8I6Yd74sQfmN-aHz5moz8ZNWLNm8Q
-@";
+var jwtToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjA0Mjc3MTQsImV4cCI6MTUyMDQyODMxNCwiaXNzIjo5NzM1fQ.K-d3FKWKddMygFqvPZYWQusqhbF1LYfcIM0VbBq4uJsS9VkjhyXALlHmTJWjdblzx-U55lkZc_KWdJd6GlDxvoRb5w_9nrLcIFRbYVgi9XTYpCc3o5j7Qh3FvKxA1bzEs8XGrxjjE7-WJn_xi85ugFKTy9tlIRPa-PHeIOvNp4fz4ru8SFPoD4epiraeEyLfpU_ke-HYF7Ws7ar19zQkfJKRHSIFm1LxJ5MGKWT8pQBBUSGxGPgEG_tYI83aYw6cVx-DLV290bpr23LRUC684Wv_XabUDzXjPUYynAc01APZF6aN8B0LHdPbG8I6Yd74sQfmN-aHz5moz8ZNWLNm8Q";
 
+// Use the JWT as a Bearer token
 var gitHubClient = new GitHubClient(new ProductHeaderValue("MyApp"))
 {
     Credentials = new Credentials(jwtToken, AuthenticationType.Bearer)
 };
-
-var appsClient = gitHubClient.GitHubApps;
 ```
 
-The authenticated app can query various top level information about itself
+The authenticated `GitHubApp` can query various top level information about itself:
 
 ``` csharp
 // Get the current authenticated GitHubApp
@@ -48,13 +46,13 @@ var installation = await appClient.GetInstallation(123);
 
 ```
 
-In order to do much more, a GitHubApp needs to create a temporary installation token for a specific Installation Id, and use that as further authentication:
+In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary installation token, and using that for authentication:
 
 ``` csharp
 // Create an Installation token for Insallation Id 123
 var response = await appClient.CreateInstallationToken(123);
 
-// The token will expire!
+// NOTE - the token will expire!
 response.ExpiresAt;
 
 // Create a new GitHubClient using the installation token as authentication
@@ -117,7 +115,7 @@ var response = await appClient.CreateInstallationToken(payload.Installation.Id);
 ## A Note on JWT Tokens
 Octokit.net expects that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
 
-Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ([GitHub](https://github.com/adriangodong/githubjwt) [NuGet.org](https://www.nuget.org/packages/githubjwt)) which you can use to help with this (as long as you are targetting `netstandard2.0` or above).
+Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use to help with this (as long as you are targetting `netstandard2.0` or above).
 
 ``` csharp
 var generator = new GitHubJwt.GitHubJwtFactory(
