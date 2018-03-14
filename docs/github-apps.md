@@ -81,16 +81,10 @@ var payload = serializer_.Deserialize<PullRequestEventPayload>(json);
 long installationId = payload.Installation.Id;
 ```
 
-You can also get its access token if you have the GitHubClient:
+You can then get use the installation id to get an access token using the GitHubClient:
 
 ``` csharp
 var token = await appClient.CreateInstallationToken(installationId);
-```
-
-Or in a more Object Oriented way:
-
-``` csharp
-var token = await payload.Installation.CreateAccessToken(appClient);
 ```
 
 ## A Note on JWT Tokens
