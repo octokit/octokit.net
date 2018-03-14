@@ -8,4 +8,4 @@ fi
 
 cd build
 dotnet restore
-dotnet run -- "$@"
+dotnet run "$@"
