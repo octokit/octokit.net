@@ -7,7 +7,7 @@ matrix:
       sudo: required
       dotnet: 2.0.3
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode8.3
       dotnet: 2.0.3
 
 before_script:
