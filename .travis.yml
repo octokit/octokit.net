@@ -15,5 +15,5 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - git remote
+  - git remote -v show origin
   - ./build.sh --verbosity=verbose
