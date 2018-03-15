@@ -106,13 +106,13 @@ $Arguments = @{
 # Start Cake
 Push-Location
 Set-Location build
-Write-Host "Restoring packages..."
+Write-Host "Preparing Cake.Frosting build runner..."
 Invoke-Expression "dotnet restore"
 if($LASTEXITCODE -ne 0) {
     Pop-Location;
     exit $LASTEXITCODE;
 }
-Write-Host "Running build..."
+Write-Host "Running Cake.Frosting build runner..."
 Invoke-Expression "dotnet run $Arguments"
 if($LASTEXITCODE -ne 0) {
     Pop-Location;
