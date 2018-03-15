@@ -15,4 +15,5 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - ./build.sh --verbosity=diagnostic
+  - git remote
+  - ./build.sh --verbosity=verbose
