@@ -34,8 +34,8 @@
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="3.1.0" />
     <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.0" />
-    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.1.0" />
-    <DotNetCliToolReference Include="dotnet-sourcelink" Version="2.1.0" />
+    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.8.0" />
+    <DotNetCliToolReference Include="dotnet-sourcelink" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
