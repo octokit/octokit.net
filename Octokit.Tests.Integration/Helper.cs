@@ -79,7 +79,7 @@ namespace Octokit.Tests.Integration
                 new GitHubJwt.GitHubJwtFactoryOptions
                 {
                     AppIntegrationId = Convert.ToInt32(GitHubAppId),
-                    ExpirationSeconds = 600
+                    ExpirationSeconds = 590
                 }
             );
 
