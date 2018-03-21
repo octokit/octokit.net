@@ -16,7 +16,7 @@ namespace Octokit
         /// <summary>
         /// The Installation Id.
         /// </summary>
-        public long Id { get; private set; }
+        public long Id { get; protected set; }
 
         internal string DebuggerDisplay
         {
