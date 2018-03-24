@@ -124,7 +124,7 @@ public class SearchIssuesRequestTests
             Assert.False(request.MergedQualifiers().Any(x => x.Contains("milestone:")));
 
             request.Milestone = "testMilestone";
-            Assert.True(request.MergedQualifiers().Contains("milestone:testMilestone"));
+            Assert.True(request.MergedQualifiers().Contains("milestone:\"testMilestone\""));
         }
 
         [Fact]

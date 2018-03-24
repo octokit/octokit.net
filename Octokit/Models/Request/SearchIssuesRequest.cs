@@ -398,7 +398,7 @@ namespace Octokit
 
             if (Milestone.IsNotBlank())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:{0}", Milestone));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", Milestone));
             }
 
             // Add any exclusion parameters
