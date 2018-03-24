@@ -42,7 +42,7 @@ public class SearchIssuesRequestTests
                 { "head:", (x,value) => x.Head = value },
                 { "base:", (x,value) => x.Base = value },
                 { "user:", (x,value) => x.User = value },
-                {"milestone:", (x,value)=>x.Milestone=value }
+                { "milestone:", (x,value) => x.Milestone = value }
             };
 
             foreach (var property in stringProperties)

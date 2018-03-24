@@ -261,11 +261,7 @@ namespace Octokit
         /// <summary>
         /// Gets or sets the milestone to filter issues based on
         /// </summary>
-        public string Milestone
-        {
-            get;
-            set;
-        }
+        public string Milestone { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
