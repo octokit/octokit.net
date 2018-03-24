@@ -258,6 +258,15 @@ namespace Octokit
         /// </remarks>
         public string User { get; set; }
 
+        /// <summary>
+        /// Gets or sets the milestone to filter issues based on
+        /// </summary>
+        public string Milestone
+        {
+            get;
+            set;
+        }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
 
@@ -389,6 +398,11 @@ namespace Octokit
                 }
 
                 parameters.AddRange(Repos.Select(x => string.Format(CultureInfo.InvariantCulture, "repo:{0}", x)));
+            }
+
+            if (Milestone.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:{0}", Milestone));
             }
 
             // Add any exclusion parameters
