@@ -118,13 +118,45 @@ public class SearchIssuesRequestTests
         }
 
         [Fact]
-        public void HandlesMilestoneAttributeCorrectly()
+        public void HandlesMilestoneAttributeWithoutQuotes()
         {
             var request = new SearchIssuesRequest("text");
             Assert.False(request.MergedQualifiers().Any(x => x.Contains("milestone:")));
 
             request.Milestone = "testMilestone";
             Assert.True(request.MergedQualifiers().Contains("milestone:\"testMilestone\""));
+        }
+
+        [Fact]
+        public void DoesntWrapMilestoneWithDoubleQuotesForQuotedMilestone()
+        {
+            var request = new SearchIssuesRequest("text");
+            Assert.False(request.MergedQualifiers().Any(x => x.Contains("milestone:")));
+
+            request.Milestone = "\"testMilestone\"";
+            Assert.Contains<string>("milestone:\"\\\"testMilestone\\\"\"", request.MergedQualifiers());
+        }
+
+        [Fact]
+        public void EscapeDoubleQuotesReturnsNullForNullInput()
+        {
+            Assert.Equal(null, SearchIssuesRequest.EscapeDoubleQuotes(null));
+        }
+
+        [Fact]
+        public void EscapeDoubleQuotesReturnsInputWithoutDoubleQuotes()
+        {
+            string input = "some test input without double quotes in it";
+
+            Assert.Equal(input, SearchIssuesRequest.EscapeDoubleQuotes(input));
+        }
+
+        [Fact]
+        public void EscapeDoubleQuotesEscapesAllDoubleQuotes()
+        {
+            string input = "\"test milestone\"";
+
+            Assert.Equal("\\\"test milestone\\\"", SearchIssuesRequest.EscapeDoubleQuotes(input));
         }
 
         [Fact]

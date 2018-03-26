@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -168,6 +168,7 @@ namespace Octokit
         public Language? Language { get; set; }
 
         private IEnumerable<IssueIsQualifier> _is;
+
         /// <summary>
         /// Searches for issues using a more human syntax covering options like state, type, merged status, private/public repository
         /// </summary>
@@ -398,7 +399,7 @@ namespace Octokit
 
             if (Milestone.IsNotBlank())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", Milestone));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", EscapeDoubleQuotes(Milestone)));
             }
 
             // Add any exclusion parameters
@@ -416,6 +417,16 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture, "Search: {0} {1}", Term, string.Join(" ", MergedQualifiers()));
             }
+        }
+
+        internal static string EscapeDoubleQuotes(string value)
+        {
+            if (value != null)
+            {
+                return value.Replace("\"", "\\\"");
+            }
+
+            return value;
         }
     }
 
