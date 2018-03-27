@@ -399,7 +399,7 @@ namespace Octokit
 
             if (Milestone.IsNotBlank())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", EscapeDoubleQuotes(Milestone)));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", Milestone.EscapeDoubleQuotes()));
             }
 
             // Add any exclusion parameters
@@ -417,16 +417,6 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture, "Search: {0} {1}", Term, string.Join(" ", MergedQualifiers()));
             }
-        }
-
-        internal static string EscapeDoubleQuotes(string value)
-        {
-            if (value != null)
-            {
-                return value.Replace("\"", "\\\"");
-            }
-
-            return value;
         }
     }
 

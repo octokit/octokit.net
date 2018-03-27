@@ -138,28 +138,6 @@ public class SearchIssuesRequestTests
         }
 
         [Fact]
-        public void EscapeDoubleQuotesReturnsNullForNullInput()
-        {
-            Assert.Equal(null, SearchIssuesRequest.EscapeDoubleQuotes(null));
-        }
-
-        [Fact]
-        public void EscapeDoubleQuotesReturnsInputWithoutDoubleQuotes()
-        {
-            string input = "some test input without double quotes in it";
-
-            Assert.Equal(input, SearchIssuesRequest.EscapeDoubleQuotes(input));
-        }
-
-        [Fact]
-        public void EscapeDoubleQuotesEscapesAllDoubleQuotes()
-        {
-            string input = "\"test milestone\"";
-
-            Assert.Equal("\\\"test milestone\\\"", SearchIssuesRequest.EscapeDoubleQuotes(input));
-        }
-
-        [Fact]
         public void HandlesNoMetadataAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -192,7 +190,7 @@ namespace Octokit
 
             if (Milestone.IsNotBlank())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "-milestone:\"{0}\"", SearchIssuesRequest.EscapeDoubleQuotes(Milestone)));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "-milestone:\"{0}\"", Milestone.EscapeDoubleQuotes()));
             }
 
             return new ReadOnlyCollection<string>(parameters);
