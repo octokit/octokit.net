@@ -41,7 +41,8 @@ public class SearchIssuesRequestTests
                 { "team:", (x,value) => x.Team = value },
                 { "head:", (x,value) => x.Head = value },
                 { "base:", (x,value) => x.Base = value },
-                { "user:", (x,value) => x.User = value }
+                { "user:", (x,value) => x.User = value },
+                { "milestone:", (x,value) => x.Milestone = value }
             };
 
             foreach (var property in stringProperties)
@@ -114,6 +115,26 @@ public class SearchIssuesRequestTests
             request.Labels = new[] { "label1", "label2" };
             Assert.True(request.MergedQualifiers().Contains("label:label1"));
             Assert.True(request.MergedQualifiers().Contains("label:label2"));
+        }
+
+        [Fact]
+        public void HandlesMilestoneAttributeWithoutQuotes()
+        {
+            var request = new SearchIssuesRequest("text");
+            Assert.False(request.MergedQualifiers().Any(x => x.Contains("milestone:")));
+
+            request.Milestone = "testMilestone";
+            Assert.True(request.MergedQualifiers().Contains("milestone:\"testMilestone\""));
+        }
+
+        [Fact]
+        public void DoesntWrapMilestoneWithDoubleQuotesForQuotedMilestone()
+        {
+            var request = new SearchIssuesRequest("text");
+            Assert.False(request.MergedQualifiers().Any(x => x.Contains("milestone:")));
+
+            request.Milestone = "\"testMilestone\"";
+            Assert.Contains<string>("milestone:\"\\\"testMilestone\\\"\"", request.MergedQualifiers());
         }
 
         [Fact]

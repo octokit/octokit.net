@@ -19,7 +19,8 @@ public class SearchIssuesRequestExclusionsTests
                 { "commenter:", (x,value) => x.Commenter = value },
                 { "involves:", (x,value) => x.Involves = value },
                 { "head:", (x,value) => x.Head = value },
-                { "base:", (x,value) => x.Base = value }
+                { "base:", (x,value) => x.Base = value },
+                { "milestone:", (x,value) => x.Milestone = value }
             };
 
             foreach (var property in stringProperties)
@@ -79,6 +80,26 @@ public class SearchIssuesRequestExclusionsTests
             request.Status = CommitState.Error;
 
             Assert.True(request.MergedQualifiers().Contains("-status:error"));
+        }
+
+        [Fact]
+        public void HandlesMilestoneAttributeWithoutQuotes()
+        {
+            var request = new SearchIssuesRequestExclusions();
+            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-milestone:")));
+
+            request.Milestone = "testMilestone";
+            Assert.True(request.MergedQualifiers().Contains("-milestone:\"testMilestone\""));
+        }
+
+        [Fact]
+        public void DoesntWrapMilestoneWithDoubleQuotesForQuotedMilestone()
+        {
+            var request = new SearchIssuesRequestExclusions();
+            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-milestone:")));
+
+            request.Milestone = "\"testMilestone\"";
+            Assert.Contains<string>("-milestone:\"\\\"testMilestone\\\"\"", request.MergedQualifiers());
         }
     }
 }

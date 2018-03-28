@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Octokit.Internal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -168,6 +168,7 @@ namespace Octokit
         public Language? Language { get; set; }
 
         private IEnumerable<IssueIsQualifier> _is;
+
         /// <summary>
         /// Searches for issues using a more human syntax covering options like state, type, merged status, private/public repository
         /// </summary>
@@ -257,6 +258,11 @@ namespace Octokit
         /// https://help.github.com/articles/searching-issues/#search-within-a-users-or-organizations-repositories
         /// </remarks>
         public string User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the milestone to filter issues based on
+        /// </summary>
+        public string Milestone { get; set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
@@ -389,6 +395,11 @@ namespace Octokit
                 }
 
                 parameters.AddRange(Repos.Select(x => string.Format(CultureInfo.InvariantCulture, "repo:{0}", x)));
+            }
+
+            if (Milestone.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", Milestone.EscapeDoubleQuotes()));
             }
 
             // Add any exclusion parameters

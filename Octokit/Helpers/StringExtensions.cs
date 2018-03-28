@@ -87,6 +87,17 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(value, nameof(value));
             return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
         }
+
+        internal static string EscapeDoubleQuotes(this string value)
+        {
+            if (value != null)
+            {
+                return value.Replace("\"", "\\\"");
+            }
+
+            return value;
+        }
+
         static IEnumerable<string> SplitUpperCase(this string source)
         {
             Ensure.ArgumentNotNullOrEmptyString(source, nameof(source));
