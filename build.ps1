@@ -33,7 +33,7 @@ Param(
 )
 
 $DotNetChannel = "preview";
-$DotNetVersion = "1.0.1";
+$DotNetVersion = "1.0.4";
 $DotNetInstallerUri = "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.1/scripts/obtain/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
