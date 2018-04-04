@@ -4,7 +4,7 @@
 
 To retrieve all releases for a repository:
 
-```
+```csharp
 var releases = client.Repository.Release.GetAll("octokit", "octokit.net");
 var latest = releases[0];
 Console.WriteLine(
@@ -17,7 +17,7 @@ Console.WriteLine(
 
 To create a new release you must have a corresponding tag in the repository. See the `git-database.md` docs for details.
 
-```
+```csharp
 var newRelease = new NewRelease("v1.0.0");
 newRelease.Name = "Version One Point Oh";
 newRelease.Body = "**This** is some *Markdown*";
@@ -34,7 +34,7 @@ Note that the `Draft` flag is used to indicate when a release should be publishe
 
 Once the release is ready for the public, you can apply an update to the release:
 
-```
+```csharp
 var release = client.Repository.Release.Get("octokit", "octokit.net", 1);
 var updateRelease = release.ToUpdate();
 updateRelease.Draft = false;
@@ -47,7 +47,7 @@ var result = await client.Repository.Release.Edit("octokit", "octokit.net", 1, u
 
 If you have any assets to include with the release, you can upload them after creating the release:
 
-```
+```csharp
 var archiveContents = await File.OpenRead("output.zip"); // TODO: better sample
 var assetUpload = new ReleaseAssetUpload() 
 {
