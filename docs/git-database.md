@@ -4,7 +4,7 @@
 
 Tags can be created through the GitHub API
 
-```
+```csharp
 var tag = new NewTag {
     Message = "Tagging a new release of Octokit",
     Tag = "v1.0.0",
@@ -23,6 +23,6 @@ Console.WriteLine("Created a tag for {0} at {1}", result.Tag, result.Sha);
 
 Or you can fetch an existing tag from the API:
 
-```
+```csharp
 var tag = await client.Git.Tags.Get("octokit", "octokit.net", "v1.0.0");
 ```
