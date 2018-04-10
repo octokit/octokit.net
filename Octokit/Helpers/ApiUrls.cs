@@ -216,6 +216,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns></returns>
+        public static Uri Releases(string owner, string name, string tag)
+        {
+            return "repos/{0}/{1}/releases/tags/{2}".FormatUri(owner, name, tag);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the latest release for the specified repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
