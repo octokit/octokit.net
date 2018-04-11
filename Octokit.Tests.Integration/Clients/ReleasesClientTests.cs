@@ -168,6 +168,44 @@ public class ReleasesClientTests
         }
     }
 
+    public class TheGetReleaseByTagMethod
+    {
+        private readonly IReleasesClient _releaseClient;
+        private readonly IGitHubClient _client;
+
+        public TheGetReleaseByTagMethod()
+        {
+            _client = Helper.GetAuthenticatedClient();
+            _releaseClient = _client.Repository.Release;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsLatestRelease()
+        {
+            var lastReleaseFromGetAll = (await _releaseClient.GetAll("octokit", "octokit.net")).OrderBy(r => r.CreatedAt).Last();
+            var releaseByTag = await _releaseClient.Get("octokit", "octokit.net", lastReleaseFromGetAll.TagName);
+
+            Assert.Equal(lastReleaseFromGetAll.Id, releaseByTag.Id);
+        }
+
+        [IntegrationTest]
+        public async Task NoReleaseOnRepo()
+        {
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+            await _client.Repository.Create(new NewRepository(repoName));
+
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get(Helper.UserName, repoName, "0.0"));
+
+            await _client.Repository.Delete(Helper.UserName, repoName);
+        }
+
+        [IntegrationTest]
+        public async Task NoReleaseWithTag()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get("octokit", "octokit.net", "0.0"));
+        }
+    }
+
     public class TheGetAllMethod
     {
         readonly IReleasesClient _releaseClient;
