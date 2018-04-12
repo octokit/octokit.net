@@ -3053,6 +3053,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
+        public static Uri Releases(long repositoryId, string tag)
+        {
+            return "repositories/{0}/releases/tags/{1}".FormatUri(repositoryId, tag);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository branch.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

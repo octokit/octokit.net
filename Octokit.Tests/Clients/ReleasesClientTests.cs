@@ -146,6 +146,17 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryIdByTag()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReleasesClient(connection);
+
+                await client.Get(1, "tag");
+
+                connection.Received().Get<Release>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/releases/tags/tag"));
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
@@ -162,6 +173,9 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.Get("", "name", "tag"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Get("owner", null, "tag"));
                 await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.Get("owner", "", "tag"));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Get(1, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.Get(1, ""));
             }
         }
 

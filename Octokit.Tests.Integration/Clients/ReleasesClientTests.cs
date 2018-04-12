@@ -190,9 +190,25 @@ public class ReleasesClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsReleaseWithRepositoryIdByTag()
+        {
+            var releaseByTag = await _releaseClient.Get(7528679, "v0.28.0");
+
+            Assert.Equal(releaseByTag.Id, 8396883);
+            Assert.Equal(releaseByTag.Name, "v0.28 - Get to the Chopper!!!");
+            Assert.Equal(releaseByTag.TagName, "v0.28.0");
+        }
+
+        [IntegrationTest]
         public async Task ThrowsWhenTagNotFound()
         {
             await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get("octokit", "octokit.net", "0.0"));
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsWhenTagNotFoundWithRepositoryId()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get(7528679, "0.0"));
         }
     }
 
