@@ -127,7 +127,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void RequestsTheCorrectUrlWithTag()
+            public void RequestsTheCorrectUrlByTag()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableReleasesClient(gitHubClient);
