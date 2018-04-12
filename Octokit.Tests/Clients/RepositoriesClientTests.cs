@@ -722,6 +722,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        AcceptHeaders.NestedTeamsPreview,
                         Args.ApiOptions);
             }
 
@@ -757,6 +759,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        AcceptHeaders.NestedTeamsPreview,
                         options);
             }
 
