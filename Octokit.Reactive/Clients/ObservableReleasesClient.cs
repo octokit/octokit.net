@@ -141,6 +141,22 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<Release> Get(long repositoryId, string tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
+
+            return _client.Get(repositoryId, tag).ToObservable();
+        }
+
+        /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>

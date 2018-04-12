@@ -138,6 +138,17 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryIdByTag()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
+
+                client.Get(1, "tag");
+
+                gitHubClient.Repository.Release.Received(1).Get(1, "tag");
+            }
+
+            [Fact]
             public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
