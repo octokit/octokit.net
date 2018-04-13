@@ -270,35 +270,27 @@ public class EnterprisePreReceiveEnvironmentClientTests
         }
     }
 
-    public class TheDownloadStatusMethod
+    public class TheDownloadStatusMethod : IDisposable
     {
         private readonly IGitHubClient _githubEnterprise;
         private readonly IEnterprisePreReceiveEnvironmentsClient _preReceiveEnvironmentsClient;
+        private readonly PreReceiveEnvironment _preReceiveEnvironment;
 
         public TheDownloadStatusMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
             _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+
+            var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
+            _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
         }
 
         [IntegrationTest]
         public async Task CanGetDownloadStatus()
         {
-            PreReceiveEnvironment preReceiveEnvironment = null;
-            try
-            {
-                var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
-                preReceiveEnvironment = await _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment);
+            var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(_preReceiveEnvironment.Id);
 
-                var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(preReceiveEnvironment.Id);
-
-                Assert.NotNull(downloadStatus);
-            }
-            finally
-            {
-                //Cleanup
-                EnterpriseHelper.DeletePreReceiveEnvironment(_githubEnterprise.Connection, preReceiveEnvironment);
-            }
+            Assert.NotNull(downloadStatus);
         }
 
         [IntegrationTest]
@@ -306,43 +298,46 @@ public class EnterprisePreReceiveEnvironmentClientTests
         {
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.DownloadStatus(-1));
         }
+
+        public void Dispose()
+        {
+            EnterpriseHelper.DeletePreReceiveEnvironment(_githubEnterprise.Connection, _preReceiveEnvironment);
+        }
     }
 
-    public class TheTriggerDownloadMethod
+    public class TheTriggerDownloadMethod : IDisposable
     {
         private readonly IGitHubClient _githubEnterprise;
         private readonly IEnterprisePreReceiveEnvironmentsClient _preReceiveEnvironmentsClient;
+        private readonly PreReceiveEnvironment _preReceiveEnvironment;
 
         public TheTriggerDownloadMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
             _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+
+            var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
+            _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
+            EnterpriseHelper.WaitForPreReceiveEnvironmentToComplete(_githubEnterprise.Connection, _preReceiveEnvironment);
         }
 
         [IntegrationTest]
         public async Task CanTriggerDownload()
         {
-            PreReceiveEnvironment preReceiveEnvironment = null;
-            try
-            {
-                var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
-                preReceiveEnvironment = await _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment);
+            var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(_preReceiveEnvironment.Id);
 
-                var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(preReceiveEnvironment.Id);
-
-                Assert.NotNull(downloadStatus);
-            }
-            finally
-            {
-                //Cleanup
-                EnterpriseHelper.DeletePreReceiveEnvironment(_githubEnterprise.Connection, preReceiveEnvironment);
-            }
+            Assert.NotNull(downloadStatus);
         }
 
         [IntegrationTest]
         public async Task CannotTriggerDownloadWhenNoEnvironmentExists()
         {
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.DownloadStatus(-1));
+        }
+
+        public void Dispose()
+        {
+            EnterpriseHelper.DeletePreReceiveEnvironment(_githubEnterprise.Connection, _preReceiveEnvironment);
         }
     }
 }
