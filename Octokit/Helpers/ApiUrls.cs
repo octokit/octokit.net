@@ -2463,6 +2463,42 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environments.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironments()
+        {
+            return "admin/pre-receive-environments".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environments.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironments(int environmentId)
+        {
+            return "admin/pre-receive-environments/{0}".FormatUri(environmentId);
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environment download status.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironmentDownload(int environmentId)
+        {
+            return "admin/pre-receive-environments/{0}/downloads".FormatUri(environmentId);
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environment download status.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironmentDownloadStatus(int environmentId)
+        {
+            return "admin/pre-receive-environments/{0}/downloads/latest".FormatUri(environmentId);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
         /// </summary>
         /// <param name="login">The login for the intended user.</param>
