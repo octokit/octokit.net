@@ -1,10 +1,13 @@
-﻿using Octokit.Internal;
+﻿using System.Diagnostics;
+using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     /// <summary>
     /// Describes a new pre-receive environment.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewPreReceiveEnvironment
     {
         /// <summary>
@@ -31,5 +34,10 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "image_url")]
         public string ImageUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Name: {0} ImageUrl: {1}", Name, ImageUrl); }
+        }
     }
 }

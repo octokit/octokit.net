@@ -1,8 +1,11 @@
-﻿namespace Octokit
+﻿using System.Diagnostics;
+
+namespace Octokit
 {
     /// <summary>
     /// Describes an update to an existing pre-receive environment.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdatePreReceiveEnvironment : NewPreReceiveEnvironment
     {
         /// <summary>
