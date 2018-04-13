@@ -171,7 +171,7 @@ namespace Octokit.Tests.Clients
                 await preReceiveEnvironmentsClient.TriggerDownload(1);
 
                 connection.Received().Post<PreReceiveEnvironmentDownload>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1/downloads"),
-                    string.Empty,
+                    Arg.Any<object>(),
                     "application/vnd.github.eye-scream-preview+json");
             }
         }
