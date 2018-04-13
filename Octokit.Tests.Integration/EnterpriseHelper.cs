@@ -124,6 +124,44 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
+        public static void WaitForPreReceiveEnvironmentToComplete(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    var downloadStatus = preReceiveEnvironment.Download;
+
+                    var sw = Stopwatch.StartNew();
+                    while (sw.Elapsed < TimeSpan.FromSeconds(15) && (downloadStatus.State == PreReceiveEnvironmentDownloadState.NotStarted || downloadStatus.State == PreReceiveEnvironmentDownloadState.InProgress))
+                    {
+                        downloadStatus = client.Enterprise.PreReceiveEnvironments.DownloadStatus(preReceiveEnvironment.Id).Result;
+                    }
+
+                    sw.Stop();
+                }
+                catch
+                { }
+            }
+        }
+
+        public static void DeletePreReceiveEnvironment(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                WaitForPreReceiveEnvironmentToComplete(connection, preReceiveEnvironment);
+
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    client.Enterprise.PreReceiveEnvironments.Delete(preReceiveEnvironment.Id).Wait(TimeSpan.FromSeconds(15));
+                }
+                catch
+                { }
+            }
+        }
+
         public static IGitHubClient GetAuthenticatedClient()
         {
             return new GitHubClient(new ProductHeaderValue("OctokitEnterpriseTests"), GitHubEnterpriseUrl)
