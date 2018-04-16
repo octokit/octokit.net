@@ -73,27 +73,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
-        public static Uri Organizations()
-        {
-            return _currentUserOrganizationsUrl;
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.
-        /// </summary>
-        /// <param name="login">The login for the user</param>
-        /// <returns></returns>
-        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
-        public static Uri Organizations(string login)
-        {
-            return "users/{0}/orgs".FormatUri(login);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
-        /// </summary>
-        /// <returns></returns>
         public static Uri UserOrganizations()
         {
             return "user/orgs".FormatUri();
