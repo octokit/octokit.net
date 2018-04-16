@@ -112,7 +112,11 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var releasesClient = new ObservableEnterprisePreReceiveEnvironmentsClient(gitHubClient);
-                var data = new UpdatePreReceiveEnvironment("name", "url");
+                var data = new UpdatePreReceiveEnvironment
+                {
+                    Name = "name",
+                    ImageUrl = "url"
+                };
 
                 releasesClient.Edit(1, data);
 
@@ -123,11 +127,6 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 var client = new ObservableEnterprisePreReceiveEnvironmentsClient(Substitute.For<IGitHubClient>());
-
-                Assert.Throws<ArgumentNullException>(() => new UpdatePreReceiveEnvironment(null, "url"));
-                Assert.Throws<ArgumentException>(() => new UpdatePreReceiveEnvironment("", "url"));
-                Assert.Throws<ArgumentNullException>(() => new UpdatePreReceiveEnvironment("name", null));
-                Assert.Throws<ArgumentException>(() => new UpdatePreReceiveEnvironment("name", ""));
 
                 Assert.Throws<ArgumentNullException>(() => client.Edit(1, null));
             }

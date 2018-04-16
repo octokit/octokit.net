@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -29,31 +28,26 @@ namespace Octokit
         /// <summary>
         /// URL to the tarball that will be downloaded and extracted.
         /// </summary>
-        [Parameter(Key = "image_url")]
         public string ImageUrl { get; protected set; }
 
         /// <summary>
         /// UI URL to the pre-receive environment.
         /// </summary>
-        [Parameter(Key = "html_url")]
         public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// Whether this is the default environment that ships with GitHub Enterprise.
         /// </summary>
-        [Parameter(Key = "default_environment")]
         public bool DefaultEnvironment { get; protected set; }
 
         /// <summary>
         /// The time when the pre-receive environment was created.
         /// </summary>
-        [Parameter(Key = "created_at")]
         public DateTimeOffset? CreatedAt { get; protected set; }
 
         /// <summary>
         /// The number of pre-receive hooks that use this environment.
         /// </summary>
-        [Parameter(Key = "hooks_count")]
         public int HooksCount { get; protected set; }
 
         /// <summary>
@@ -67,7 +61,11 @@ namespace Octokit
         /// <returns></returns>
         public UpdatePreReceiveEnvironment ToUpdate()
         {
-            return new UpdatePreReceiveEnvironment(Name, ImageUrl);
+            return new UpdatePreReceiveEnvironment
+            {
+                Name = Name,
+                ImageUrl = ImageUrl
+            };
         }
 
         internal string DebuggerDisplay

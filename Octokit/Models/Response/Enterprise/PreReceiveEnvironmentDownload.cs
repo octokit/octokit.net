@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -29,7 +28,6 @@ namespace Octokit
         /// <summary>
         /// The time when the most recent download started.
         /// </summary>
-        [Parameter(Key = "downloaded_at")]
         public DateTimeOffset? DownloadedAt { get; protected set; }
 
         internal string DebuggerDisplay

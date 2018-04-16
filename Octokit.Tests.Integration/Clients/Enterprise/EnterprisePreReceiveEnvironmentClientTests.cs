@@ -213,25 +213,31 @@ public class EnterprisePreReceiveEnvironmentClientTests
         [IntegrationTest]
         public async Task CanChangeNameOfPreReceiveEnvironment()
         {
-            var updatePreReceiveEnvironment = _preReceiveEnvironment.ToUpdate();
-            updatePreReceiveEnvironment.Name = Helper.MakeNameWithTimestamp("pre-receive");
+            var updatePreReceiveEnvironment = new UpdatePreReceiveEnvironment
+            {
+                Name = Helper.MakeNameWithTimestamp("pre-receive")
+            };
 
             var updatedPreReceiveEnvironment = await _preReceiveEnvironmentsClient.Edit(_preReceiveEnvironment.Id, updatePreReceiveEnvironment);
 
             Assert.Equal(_preReceiveEnvironment.Id, updatedPreReceiveEnvironment.Id);
             Assert.Equal(updatePreReceiveEnvironment.Name, updatedPreReceiveEnvironment.Name);
+            Assert.Equal(_preReceiveEnvironment.ImageUrl, updatedPreReceiveEnvironment.ImageUrl);
         }
 
         [IntegrationTest]
         public async Task CanChangeImageUrlOfPreReceiveEnvironment()
         {
-            var updatePreReceiveEnvironment = _preReceiveEnvironment.ToUpdate();
-            updatePreReceiveEnvironment.ImageUrl = "https://example.com/bar.zip";
+            var updatePreReceiveEnvironment = new UpdatePreReceiveEnvironment
+            {
+                ImageUrl = "https://example.com/bar.zip"
+            };
 
             var updatedPreReceiveEnvironment = await _preReceiveEnvironmentsClient.Edit(_preReceiveEnvironment.Id, updatePreReceiveEnvironment);
 
             Assert.Equal(_preReceiveEnvironment.Id, updatedPreReceiveEnvironment.Id);
             Assert.Equal(updatePreReceiveEnvironment.ImageUrl, updatedPreReceiveEnvironment.ImageUrl);
+            Assert.Equal(_preReceiveEnvironment.Name, updatedPreReceiveEnvironment.Name);
         }
 
         public void Dispose()

@@ -2475,7 +2475,7 @@ namespace Octokit
         /// Creates the <see cref="Uri"/> for pre-receive environments.
         /// </summary>
         /// <returns></returns>
-        public static Uri AdminPreReceiveEnvironments(int environmentId)
+        public static Uri AdminPreReceiveEnvironments(long environmentId)
         {
             return "admin/pre-receive-environments/{0}".FormatUri(environmentId);
         }
@@ -2484,7 +2484,7 @@ namespace Octokit
         /// Creates the <see cref="Uri"/> for pre-receive environment download status.
         /// </summary>
         /// <returns></returns>
-        public static Uri AdminPreReceiveEnvironmentDownload(int environmentId)
+        public static Uri AdminPreReceiveEnvironmentDownload(long environmentId)
         {
             return "admin/pre-receive-environments/{0}/downloads".FormatUri(environmentId);
         }
@@ -2493,7 +2493,7 @@ namespace Octokit
         /// Creates the <see cref="Uri"/> for pre-receive environment download status.
         /// </summary>
         /// <returns></returns>
-        public static Uri AdminPreReceiveEnvironmentDownloadStatus(int environmentId)
+        public static Uri AdminPreReceiveEnvironmentDownloadStatus(long environmentId)
         {
             return "admin/pre-receive-environments/{0}/downloads/latest".FormatUri(environmentId);
         }

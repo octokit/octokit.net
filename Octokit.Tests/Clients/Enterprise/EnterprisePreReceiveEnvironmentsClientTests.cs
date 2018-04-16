@@ -106,7 +106,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
-                var data = new UpdatePreReceiveEnvironment("name", "url");
+                var data = new UpdatePreReceiveEnvironment
+                {
+                    Name = "name",
+                    ImageUrl = "url"
+                };
 
                 await preReceiveEnvironmentsClient.Edit(1, data);
 
@@ -119,10 +123,6 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(Substitute.For<IApiConnection>());
-                Assert.Throws<ArgumentNullException>(() => new UpdatePreReceiveEnvironment(null, "url"));
-                Assert.Throws<ArgumentException>(() => new UpdatePreReceiveEnvironment("", "url"));
-                Assert.Throws<ArgumentNullException>(() => new UpdatePreReceiveEnvironment("name", null));
-                Assert.Throws<ArgumentException>(() => new UpdatePreReceiveEnvironment("name", ""));
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => preReceiveEnvironmentsClient.Edit(1, null));
             }

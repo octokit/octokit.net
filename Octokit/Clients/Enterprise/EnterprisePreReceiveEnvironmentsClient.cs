@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<PreReceiveEnvironment> Get(int environmentId)
+        public Task<PreReceiveEnvironment> Get(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironments(environmentId);
             return ApiConnection.Get<PreReceiveEnvironment>(endpoint, null, AcceptHeaders.PreReceiveEnvironmentsPreview);
@@ -86,7 +86,7 @@ namespace Octokit
         /// <param name="updatePreReceiveEnvironment">A description of the pre-receive environment to edit</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<PreReceiveEnvironment> Edit(int environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment)
+        public Task<PreReceiveEnvironment> Edit(long environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment)
         {
             Ensure.ArgumentNotNull(updatePreReceiveEnvironment, nameof(updatePreReceiveEnvironment));
 
@@ -103,7 +103,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task Delete(int environmentId)
+        public Task Delete(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironments(environmentId);
             return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.PreReceiveEnvironmentsPreview);
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<PreReceiveEnvironmentDownload> DownloadStatus(int environmentId)
+        public Task<PreReceiveEnvironmentDownload> DownloadStatus(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironmentDownloadStatus(environmentId);
             return ApiConnection.Get<PreReceiveEnvironmentDownload>(endpoint, null, AcceptHeaders.PreReceiveEnvironmentsPreview);
@@ -134,7 +134,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<PreReceiveEnvironmentDownload> TriggerDownload(int environmentId)
+        public Task<PreReceiveEnvironmentDownload> TriggerDownload(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironmentDownload(environmentId);
             return ApiConnection.Post<PreReceiveEnvironmentDownload>(endpoint, new object(), AcceptHeaders.PreReceiveEnvironmentsPreview);

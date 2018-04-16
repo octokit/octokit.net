@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -6,15 +7,21 @@ namespace Octokit
     /// Describes an update to an existing pre-receive environment.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class UpdatePreReceiveEnvironment : NewPreReceiveEnvironment
+    public class UpdatePreReceiveEnvironment
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewPreReceiveEnvironment"/> class.
+        /// The name of the environment as displayed in the UI.
         /// </summary>
-        /// <param name="name">The name of the environment as displayed in the UI.</param>
-        /// <param name="imageUrl">URL to the tarball that will be downloaded and extracted.</param>
-        public UpdatePreReceiveEnvironment(string name, string imageUrl)
-            : base(name, imageUrl)
-        { }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// URL to the tarball that will be downloaded and extracted.
+        /// </summary>
+        public string ImageUrl { get; set; }
+
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "Name: {0} ImageUrl: {1}", Name, ImageUrl); }
+        }
     }
 }

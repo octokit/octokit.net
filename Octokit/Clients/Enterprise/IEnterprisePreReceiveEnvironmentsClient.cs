@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<PreReceiveEnvironment> Get(int environmentId);
+        Task<PreReceiveEnvironment> Get(long environmentId);
 
         /// <summary>
         /// Creates a new <see cref="PreReceiveEnvironment"/>.
@@ -61,7 +61,7 @@ namespace Octokit
         /// <param name="updatePreReceiveEnvironment">A description of the pre-receive environment to edit</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<PreReceiveEnvironment> Edit(int environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment);
+        Task<PreReceiveEnvironment> Edit(long environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment);
 
         /// <summary>
         /// Deletes an existing <see cref="PreReceiveEnvironment"/>.
@@ -72,7 +72,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(int environmentId);
+        Task Delete(long environmentId);
 
         /// <summary>
         /// Gets the download status for an existing <see cref="PreReceiveEnvironment"/>.
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<PreReceiveEnvironmentDownload> DownloadStatus(int environmentId);
+        Task<PreReceiveEnvironmentDownload> DownloadStatus(long environmentId);
 
         /// <summary>
         /// Triggers a new download of the <see cref="PreReceiveEnvironment"/>'s tarball from the environment's <see cref="PreReceiveEnvironment.ImageUrl"/>.
@@ -95,6 +95,6 @@ namespace Octokit
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<PreReceiveEnvironmentDownload> TriggerDownload(int environmentId);
+        Task<PreReceiveEnvironmentDownload> TriggerDownload(long environmentId);
     }
 }

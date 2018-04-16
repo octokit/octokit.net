@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -32,7 +31,6 @@ namespace Octokit
         /// <summary>
         /// URL to the tarball that will be downloaded and extracted.
         /// </summary>
-        [Parameter(Key = "image_url")]
         public string ImageUrl { get; set; }
 
         internal string DebuggerDisplay
