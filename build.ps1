@@ -32,9 +32,9 @@ Param(
     [string[]]$ScriptArgs
 )
 
-$DotNetChannel = "preview";
-$DotNetVersion = "1.0.4";
-$DotNetInstallerUri = "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.1/scripts/obtain/dotnet-install.ps1";
+$DotNetChannel = "2.0";
+$DotNetVersion = "2.0.3";
+$DotNetInstallerUri = "https://dot.net/v1/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
 # Make sure tools folder exists
@@ -65,7 +65,7 @@ if (Get-Command dotnet -ErrorAction SilentlyContinue) {
     $FoundDotNetCliVersion = dotnet --version;
 }
 
-if($FoundDotNetCliVersion -ne $DotNetVersion) {
+if($FoundDotNetCliVersion -lt $DotNetVersion) {
     $InstallPath = Join-Path $PSScriptRoot ".dotnet"
     if (!(Test-Path $InstallPath)) {
         mkdir -Force $InstallPath | Out-Null;

@@ -4,7 +4,7 @@
     <Description>Tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp1.0;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests</AssemblyName>
     <PackageId>Octokit.Tests</PackageId>
@@ -32,7 +32,7 @@
     <PackageReference Include="NSubstitute" Version="3.1.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <DefineConstants>$(DefineConstants);NO_SERIALIZABLE;HAS_TYPEINFO</DefineConstants>
   </PropertyGroup>
 
