@@ -19,6 +19,10 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE</DefineConstants>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
@@ -39,6 +43,12 @@
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
+    <PackageReference Include="GitHubJwt">
+      <Version>0.0.2</Version>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

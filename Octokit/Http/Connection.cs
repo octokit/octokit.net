@@ -148,7 +148,7 @@ namespace Octokit
             {
                 throw new ArgumentException(
                     string.Format(CultureInfo.InvariantCulture, "The base address '{0}' must be an absolute URI",
-                        baseAddress), "baseAddress");
+                        baseAddress), nameof(baseAddress));
             }
 
             UserAgent = FormatUserAgent(productInformation);
@@ -262,6 +262,14 @@ namespace Octokit
             Ensure.ArgumentNotNull(body, nameof(body));
 
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
+        }
+
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(body, nameof(body));
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
         }
 
         /// <summary>

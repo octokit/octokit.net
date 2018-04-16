@@ -1293,6 +1293,7 @@ namespace Octokit
         private static readonly string[] Iso8601Format = new string[]
                                                              {
                                                                  @"yyyy-MM-dd\THH:mm:ss.FFFFFFF\Z",
+                                                                 @"yyyy-MM-dd\THH:mm:ss.FFFFFFFK",
                                                                  @"yyyy-MM-dd\THH:mm:ss\Z",
                                                                  @"yyyy-MM-dd\THH:mm:ssK"
                                                              };

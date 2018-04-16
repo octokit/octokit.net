@@ -109,6 +109,26 @@ namespace Octokit
         /// Gets a single <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<Release> Get(string owner, string name, string tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
+
+            var endpoint = ApiUrls.Releases(owner, name, tag);
+            return ApiConnection.Get<Release>(endpoint);
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -117,6 +137,23 @@ namespace Octokit
         public Task<Release> Get(long repositoryId, int id)
         {
             var endpoint = ApiUrls.Releases(repositoryId, id);
+            return ApiConnection.Get<Release>(endpoint);
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<Release> Get(long repositoryId, string tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
+
+            var endpoint = ApiUrls.Releases(repositoryId, tag);
             return ApiConnection.Get<Release>(endpoint);
         }
 

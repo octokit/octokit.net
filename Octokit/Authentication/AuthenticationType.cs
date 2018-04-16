@@ -16,6 +16,10 @@
         /// <summary>
         /// Delegated access to a third party
         /// </summary>
-        Oauth
+        Oauth,
+        /// <summary>
+        /// Credential for GitHub App using signed JWT
+        /// </summary>
+        Bearer
     }
 }
