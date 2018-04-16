@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="since">The integer Id of the last Organization that you've seen.</param>
         public OrganizationRequest(int since)
         {
-            Ensure.ArgumentNotNull(since, "since");
+            Ensure.ArgumentNotNull(since, nameof(since));
 
             Since = since;
         }

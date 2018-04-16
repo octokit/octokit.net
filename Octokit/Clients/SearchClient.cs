@@ -27,7 +27,7 @@ namespace Octokit
         /// <returns>List of repos</returns>
         public Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchRepositoryResult>(ApiUrls.SearchRepositories(), search.Parameters);
         }
 
@@ -39,7 +39,7 @@ namespace Octokit
         /// <returns>List of users</returns>
         public Task<SearchUsersResult> SearchUsers(SearchUsersRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchUsersResult>(ApiUrls.SearchUsers(), search.Parameters);
         }
 
@@ -51,7 +51,7 @@ namespace Octokit
         /// <returns>List of issues</returns>
         public Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchIssuesResult>(ApiUrls.SearchIssues(), search.Parameters);
         }
 
@@ -63,7 +63,7 @@ namespace Octokit
         /// <returns>List of files</returns>
         public Task<SearchCodeResult> SearchCode(SearchCodeRequest search)
         {
-            Ensure.ArgumentNotNull(search, "search");
+            Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
         }
     }

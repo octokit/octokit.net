@@ -11,7 +11,7 @@ namespace Octokit
             switch (position)
             {
                 case ProjectColumnPosition.After:
-                    Ensure.ArgumentNotNull(columnId, "columnId");
+                    Ensure.ArgumentNotNull(columnId, nameof(columnId));
                     Position = string.Format(CultureInfo.InvariantCulture, "after:{0}", columnId);
                     break;
                 case ProjectColumnPosition.First:

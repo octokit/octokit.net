@@ -24,14 +24,14 @@ namespace Octokit
             IEnumerable<string> permitted,
             IEnumerable<string> forbidden) : base(key, name, spdxId, url, featured)
         {
-            Ensure.ArgumentNotNull(htmlUrl, "htmlUrl");
-            Ensure.ArgumentNotNull(description, "description");
-            Ensure.ArgumentNotNull(category, "category");
-            Ensure.ArgumentNotNull(implementation, "implementation");
-            Ensure.ArgumentNotNull(body, "body");
-            Ensure.ArgumentNotNull(required, "required");
-            Ensure.ArgumentNotNull(permitted, "permitted");
-            Ensure.ArgumentNotNull(forbidden, "forbidden");
+            Ensure.ArgumentNotNull(htmlUrl, nameof(htmlUrl));
+            Ensure.ArgumentNotNull(description, nameof(description));
+            Ensure.ArgumentNotNull(category, nameof(category));
+            Ensure.ArgumentNotNull(implementation, nameof(implementation));
+            Ensure.ArgumentNotNull(body, nameof(body));
+            Ensure.ArgumentNotNull(required, nameof(required));
+            Ensure.ArgumentNotNull(permitted, nameof(permitted));
+            Ensure.ArgumentNotNull(forbidden, nameof(forbidden));
 
             HtmlUrl = htmlUrl;
             Description = description;

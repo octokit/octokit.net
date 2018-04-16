@@ -9,20 +9,20 @@ If you want to view all assigned, open issues against repositories you belong to
 (either you own them, or you belong to a team or organization), use this
 method:
 
-```
+```csharp
 var issues = await client.Issue.GetAllForCurrent();
 ```
 
 If you want to skip organization repositories, you can instead use this
 rather verbose method:
 
-```
+```csharp
 var issues = await client.Issue.GetAllForOwnedAndMemberRepositories();
 ```
 
 If you know the specific repository, just invoke that:
 
-```
+```csharp
 var issuesForOctokit = await client.Issue.GetAllForRepository("octokit", "octokit.net");
 ```
 
@@ -41,7 +41,7 @@ The simplest request is `IssueRequest` which has these options:
 
 For example, this is how you could find all issues updated in the past two weeks:
 
-```
+```csharp
 var recently = new IssueRequest
 {
     Filter = IssueFilter.All,
@@ -60,7 +60,7 @@ var issues = await client.Issue.GetAllForCurrent(recently);
 
 For example, to find all issues which need to be prioritized:
 
-```
+```csharp
 var shouldPrioritize = new RepositoryIssueRequest
 {
     Assignee = "none",
@@ -74,7 +74,7 @@ var issues = await client.Issue.GetAllForRepository("octokit", "octokit.net", sh
 
 At a minimum, you need to specify the title:
 
-```
+```csharp
 var client = new GitHubClient(....); // More on GitHubClient can be found in "Getting Started"
 var createIssue = new NewIssue("this thing doesn't work");
 var issue = await client.Issue.Create("owner", "name", createIssue);
@@ -99,13 +99,13 @@ sections for more details.
 You can either hold the new issue in memory, or use the id to fetch the issue
 later:
 
-```
+```csharp
 var issue = await client.Issue.Get("octokit", "octokit.net", 405);
 ```
 
 With this issue, you can transform it into an `IssueUpdate` using the extension method:
 
-```
+```csharp
 var update = issue.ToUpdate();
 ```
 

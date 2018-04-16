@@ -26,8 +26,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -49,9 +49,9 @@ namespace Octokit
         /// <param name="options">The options to change API's response.</param>
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.Assignees(owner, name);
 
@@ -65,7 +65,7 @@ namespace Octokit
         /// <param name="options">The options to change API's response.</param>
         public Task<IReadOnlyList<User>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.Assignees(repositoryId);
 
@@ -80,9 +80,9 @@ namespace Octokit
         /// <param name="assignee">Username of the prospective assignee</param>
         public async Task<bool> CheckAssignee(string owner, string name, string assignee)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
             try
             {
@@ -105,9 +105,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(assignees, "assignees");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
             return ApiConnection.Post<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees);
         }
@@ -122,9 +122,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(assignees, "assignees");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
             return ApiConnection.Delete<Issue>(ApiUrls.IssueAssignees(owner, name, number), assignees);
         }
@@ -136,7 +136,7 @@ namespace Octokit
         /// <param name="assignee">Username of the prospective assignee</param>
         public async Task<bool> CheckAssignee(long repositoryId, string assignee)
         {
-            Ensure.ArgumentNotNullOrEmptyString(assignee, "assignee");
+            Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
             try
             {

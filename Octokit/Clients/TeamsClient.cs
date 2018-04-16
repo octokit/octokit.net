@@ -57,8 +57,8 @@ namespace Octokit
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.OrganizationTeams(org);
             return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
@@ -82,7 +82,7 @@ namespace Octokit
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
         public Task<IReadOnlyList<Team>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.UserTeams();
 
@@ -104,10 +104,11 @@ namespace Octokit
         /// <summary>
         /// Returns all child teams of the given team.
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
         public Task<IReadOnlyList<Team>> GetAllChildTeams(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -139,7 +140,7 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.TeamMembers(id);
 
@@ -189,7 +190,7 @@ namespace Octokit
         [Obsolete("Please use GetMembershipDetails instead")]
         public async Task<TeamMembership> GetMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.TeamMember(id, login);
 
@@ -235,8 +236,8 @@ namespace Octokit
         /// <returns>Newly created <see cref="Team"/></returns>
         public Task<Team> Create(string org, NewTeam team)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(team, "team");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(team, nameof(team));
 
             var endpoint = ApiUrls.OrganizationTeams(org);
             return ApiConnection.Post<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
@@ -249,7 +250,7 @@ namespace Octokit
         /// <returns>Updated <see cref="Team"/></returns>
         public Task<Team> Update(int id, UpdateTeam team)
         {
-            Ensure.ArgumentNotNull(team, "team");
+            Ensure.ArgumentNotNull(team, nameof(team));
 
             var endpoint = ApiUrls.Teams(id);
             return ApiConnection.Patch<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
@@ -278,7 +279,7 @@ namespace Octokit
         [Obsolete("Please use AddOrEditMembership instead")]
         public async Task<TeamMembership> AddMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.TeamMember(id, login);
 
@@ -333,7 +334,7 @@ namespace Octokit
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         public async Task<bool> RemoveMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.TeamMember(id, login);
 
@@ -369,7 +370,7 @@ namespace Octokit
         /// <returns>The team's repositories</returns>
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.TeamRepositories(id);
 
@@ -383,8 +384,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> AddRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -410,8 +411,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -433,8 +434,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -462,8 +463,8 @@ namespace Octokit
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
         public async Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
             var endpoint = ApiUrls.TeamRepository(id, owner, repo);
 

@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="clientId">The client Id you received from GitHub when you registered the application.</param>
         public OauthLoginRequest(string clientId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
 
             ClientId = clientId;
             Scopes = new Collection<string>();

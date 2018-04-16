@@ -10,7 +10,7 @@
     {
         public ObservableEnterpriseClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             AdminStats = new ObservableEnterpriseAdminStatsClient(client);
             Ldap = new ObservableEnterpriseLdapClient(client);

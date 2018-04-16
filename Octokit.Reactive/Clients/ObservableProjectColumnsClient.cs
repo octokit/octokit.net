@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableProjectColumnsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Project.Column;
             _connection = client.Connection;
@@ -40,7 +40,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.ProjectColumns(projectId);
 
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// <param name="newProjectColumn">The column to create</param>
         public IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
         {
-            Ensure.ArgumentNotNull(newProjectColumn, "newProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
             return _client.Create(projectId, newProjectColumn).ToObservable();
         }
@@ -84,7 +84,7 @@ namespace Octokit.Reactive
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         public IObservable<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
         {
-            Ensure.ArgumentNotNull(projectColumnUpdate, "projectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
             return _client.Update(id, projectColumnUpdate).ToObservable();
         }
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// <param name="position">The position to move the column</param>
         public IObservable<bool> Move(int id, ProjectColumnMove position)
         {
-            Ensure.ArgumentNotNull(position, "position");
+            Ensure.ArgumentNotNull(position, nameof(position));
 
             return _client.Move(id, position).ToObservable();
         }

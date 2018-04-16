@@ -25,7 +25,7 @@ namespace Octokit.Reactive
 
         public ObservableUserGpgKeysClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User.GpgKey;
         }
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
         public IObservable<GpgKey> Create(NewGpgKey newGpgKey)
         {
-            Ensure.ArgumentNotNull(newGpgKey, "newGpgKey");
+            Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
             return _client.Create(newGpgKey).ToObservable();
         }

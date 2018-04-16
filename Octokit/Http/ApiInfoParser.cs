@@ -18,7 +18,7 @@ namespace Octokit.Internal
 
         public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
         {
-            Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
+            Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
 
             var httpLinks = new Dictionary<string, Uri>();
             var oauthScopes = new List<string>();

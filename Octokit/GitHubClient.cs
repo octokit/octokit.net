@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="connection">The underlying <seealso cref="IConnection"/> used to make requests</param>
         public GitHubClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             Connection = connection;
             var apiConnection = new ApiConnection(connection);
@@ -99,6 +99,7 @@ namespace Octokit
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
+            GitHubApps = new GitHubAppsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Migration = new MigrationClient(apiConnection);
             Miscellaneous = new MiscellaneousClient(connection);
@@ -148,7 +149,7 @@ namespace Octokit
             // Note this is for convenience. We probably shouldn't allow this to be mutable.
             set
             {
-                Ensure.ArgumentNotNull(value, "value");
+                Ensure.ArgumentNotNull(value, nameof(value));
                 Connection.Credentials = value;
             }
         }
@@ -264,6 +265,14 @@ namespace Octokit
         public IGitDatabaseClient Git { get; private set; }
 
         /// <summary>
+        /// Access GitHub's Apps API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/
+        /// </remarks>
+        public IGitHubAppsClient GitHubApps { get; private set; }
+
+        /// <summary>
         /// Access GitHub's Search API.
         /// </summary>
         /// <remarks>
@@ -289,7 +298,7 @@ namespace Octokit
 
         static Uri FixUpBaseUri(Uri uri)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             if (uri.Host.Equals("github.com") || uri.Host.Equals("api.github.com"))
             {

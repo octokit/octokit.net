@@ -18,7 +18,7 @@ namespace Octokit
         /// <param name="name">The name of the repository. This is the only required parameter.</param>
         public RepositoryUpdate(string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             Name = name;
         }

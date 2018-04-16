@@ -66,8 +66,19 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
         Task<Release> Get(string owner, string name, int id);
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<Release> Get(string owner, string name, string tag);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -78,8 +89,18 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "Method makes a network request")]
         Task<Release> Get(long repositoryId, int id);
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<Release> Get(long repositoryId, string tag);
 
         /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.

@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableTeamsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
             _connection = client.Connection;
             _client = client.Organization.Team;
         }
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, ApiOptions.None);
         }
@@ -61,8 +61,8 @@ namespace Octokit.Reactive
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAll(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org), null, AcceptHeaders.NestedTeamsPreview, options);
         }
@@ -85,7 +85,7 @@ namespace Octokit.Reactive
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
         public IObservable<Team> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams(), null, AcceptHeaders.NestedTeamsPreview, options);
         }
@@ -105,13 +105,14 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns all child teams of the given team.
         /// </summary>
-        /// <param name="id">The team identifier</param>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
         public IObservable<Team> GetAllChildTeams(int id, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Team>(ApiUrls.TeamChildTeams(id), null, AcceptHeaders.NestedTeamsPreview, options);
         }
@@ -142,7 +143,7 @@ namespace Octokit.Reactive
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         public IObservable<User> GetAllMembers(int id, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), null, AcceptHeaders.NestedTeamsPreview, options);
         }
@@ -186,8 +187,8 @@ namespace Octokit.Reactive
         /// <returns>Newly created <see cref="Team"/></returns>
         public IObservable<Team> Create(string org, NewTeam team)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(team, "team");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(team, nameof(team));
 
             return _client.Create(org, team).ToObservable();
         }
@@ -199,7 +200,7 @@ namespace Octokit.Reactive
         /// <returns>Updated <see cref="Team"/></returns>
         public IObservable<Team> Update(int id, UpdateTeam team)
         {
-            Ensure.ArgumentNotNull(team, "team");
+            Ensure.ArgumentNotNull(team, nameof(team));
 
             return _client.Update(id, team).ToObservable();
         }
@@ -225,7 +226,7 @@ namespace Octokit.Reactive
         [Obsolete("Please use AddOrEditMembership instead")]
         public IObservable<TeamMembership> AddMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.AddMembership(id, login).ToObservable();
         }
@@ -258,7 +259,7 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> RemoveMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.RemoveMembership(id, login).ToObservable();
         }
@@ -272,7 +273,7 @@ namespace Octokit.Reactive
         [Obsolete("Please use GetMembershipDetails instead")]
         public IObservable<TeamMembership> GetMembership(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.GetMembership(id, login).ToObservable();
         }
@@ -289,7 +290,7 @@ namespace Octokit.Reactive
         /// <param name="login">The user to check.</param>
         public IObservable<TeamMembershipDetails> GetMembershipDetails(int id, string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return _client.GetMembershipDetails(id, login).ToObservable();
         }
@@ -313,7 +314,7 @@ namespace Octokit.Reactive
         /// <returns>The team's repositories</returns>
         public IObservable<Repository> GetAllRepositories(int id, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.NestedTeamsPreview, options);
         }
@@ -331,8 +332,8 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> AddRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             return _client.AddRepository(id, organization, repoName).ToObservable();
         }
@@ -351,8 +352,8 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             return _client.AddRepository(id, organization, repoName, permission).ToObservable();
         }
@@ -364,8 +365,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<bool> RemoveRepository(int id, string organization, string repoName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(repoName, "repoName");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             return _client.RemoveRepository(id, organization, repoName).ToObservable();
         }
@@ -382,8 +383,8 @@ namespace Octokit.Reactive
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
         public IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
             return _client.IsRepositoryManagedByTeam(id, owner, repo).ToObservable();
         }
 

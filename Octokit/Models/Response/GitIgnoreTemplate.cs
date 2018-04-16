@@ -8,8 +8,8 @@ namespace Octokit
     {
         public GitIgnoreTemplate(string name, string source)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(source, "source");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(source, nameof(source));
 
             Name = name;
             Source = source;

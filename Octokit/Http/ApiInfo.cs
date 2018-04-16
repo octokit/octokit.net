@@ -15,9 +15,9 @@ namespace Octokit
             string etag,
             RateLimit rateLimit)
         {
-            Ensure.ArgumentNotNull(links, "links");
-            Ensure.ArgumentNotNull(oauthScopes, "oauthScopes");
-            Ensure.ArgumentNotNull(acceptedOauthScopes, "acceptedOauthScopes");
+            Ensure.ArgumentNotNull(links, nameof(links));
+            Ensure.ArgumentNotNull(oauthScopes, nameof(oauthScopes));
+            Ensure.ArgumentNotNull(acceptedOauthScopes, nameof(acceptedOauthScopes));
 
             Links = new ReadOnlyDictionary<string, Uri>(links);
             OauthScopes = new ReadOnlyCollection<string>(oauthScopes);

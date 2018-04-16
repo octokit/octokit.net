@@ -31,8 +31,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -62,9 +62,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), options);
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<User>> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), options);
         }
@@ -97,9 +97,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<bool> IsCollaborator(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -123,7 +123,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<bool> IsCollaborator(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -148,9 +148,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<CollaboratorPermission> ReviewPermission(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
                 .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null, AcceptHeaders.OrganizationMembershipPreview);
@@ -167,7 +167,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<CollaboratorPermission> ReviewPermission(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
                 .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null, AcceptHeaders.OrganizationMembershipPreview);
@@ -185,9 +185,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Add(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Put(ApiUrls.RepoCollaborator(owner, name, user));
         }
@@ -205,9 +205,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<bool> Add(string owner, string name, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -231,7 +231,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Add(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Put(ApiUrls.RepoCollaborator(repositoryId, user));
         }
@@ -248,7 +248,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public async Task<bool> Add(long repositoryId, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -273,9 +273,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<RepositoryInvitation> Invite(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
         }
@@ -293,10 +293,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "permission");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
@@ -312,7 +312,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<RepositoryInvitation> Invite(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
         }
@@ -329,8 +329,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
         public Task<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "permission");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), permission, null, AcceptHeaders.InvitationsApiPreview);
         }
@@ -347,9 +347,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Delete(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(owner, name, user));
         }
@@ -365,7 +365,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task Delete(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete(ApiUrls.RepoCollaborator(repositoryId, user));
         }

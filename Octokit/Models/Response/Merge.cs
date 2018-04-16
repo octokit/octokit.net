@@ -12,7 +12,7 @@ namespace Octokit
 
         public Merge(Author author, Author committer, Commit commit, IEnumerable<GitReference> parents, string commentsUrl, int commentCount, string htmlUrl)
         {
-            Ensure.ArgumentNotNull(parents, "parents");
+            Ensure.ArgumentNotNull(parents, nameof(parents));
 
             Author = author;
             Committer = committer;

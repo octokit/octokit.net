@@ -186,6 +186,7 @@ namespace Octokit.Tests.Conventions
                     .SelectMany(type => type.GetProperties())
                     .SelectMany(property => UnwrapGenericArguments(property.PropertyType))
                     .Where(type => type.GetTypeInfo().Assembly.Equals(Octokit) && type.GetTypeInfo().IsEnum)
+                    .Distinct()
                     .Select(type => new[] { type });
             }
         }

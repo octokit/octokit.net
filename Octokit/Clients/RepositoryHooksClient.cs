@@ -28,8 +28,8 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -53,9 +53,9 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, name), options);
         }
@@ -68,7 +68,7 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options);
         }
@@ -82,8 +82,8 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> Get(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHookById(owner, name, hookId));
         }
@@ -108,9 +108,9 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(owner, name), hook.ToRequest());
         }
@@ -123,7 +123,7 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> Create(long repositoryId, NewRepositoryHook hook)
         {
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), hook.ToRequest());
         }
@@ -138,9 +138,9 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(owner, name, hookId), hook);
         }
@@ -154,7 +154,7 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public Task<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook)
         {
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(repositoryId, hookId), hook);
         }
@@ -170,8 +170,8 @@ namespace Octokit
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
         public Task Test(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, name, hookId));
         }
@@ -198,8 +198,8 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public Task Ping(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, name, hookId));
         }
@@ -224,8 +224,8 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         public Task Delete(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, name, hookId));
         }

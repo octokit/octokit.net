@@ -15,7 +15,7 @@ namespace Octokit.Reactive
 
         public ObservableTagsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Git.Tag;
         }
@@ -31,9 +31,9 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the tag</param>
         public IObservable<GitTag> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(owner, name, reference).ToObservable();
         }
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the tag</param>
         public IObservable<GitTag> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return _client.Get(repositoryId, reference).ToObservable();
         }
@@ -64,9 +64,9 @@ namespace Octokit.Reactive
         /// <param name="tag">The tag to create</param>
         public IObservable<GitTag> Create(string owner, string name, NewTag tag)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(tag, "tag");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(tag, nameof(tag));
 
             return _client.Create(owner, name, tag).ToObservable();
         }
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="tag">The tag to create</param>
         public IObservable<GitTag> Create(long repositoryId, NewTag tag)
         {
-            Ensure.ArgumentNotNull(tag, "tag");
+            Ensure.ArgumentNotNull(tag, nameof(tag));
 
             return _client.Create(repositoryId, tag).ToObservable();
         }

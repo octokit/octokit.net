@@ -26,7 +26,7 @@ namespace Octokit
         /// <returns>Lists the verified public keys for a user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
 
             return GetAll(userName, ApiOptions.None);
         }
@@ -42,8 +42,8 @@ namespace Octokit
         /// <returns>Lists the verified public keys for a user.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
         }
@@ -70,7 +70,7 @@ namespace Octokit
         /// <returns>Lists the current user's keys.</returns>
         public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
@@ -98,7 +98,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<PublicKey> Create(NewPublicKey newKey)
         {
-            Ensure.ArgumentNotNull(newKey, "newKey");
+            Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
             return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey);
         }

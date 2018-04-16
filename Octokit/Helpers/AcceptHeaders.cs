@@ -55,6 +55,8 @@ namespace Octokit
 
         public const string NestedTeamsPreview = "application/vnd.github.hellcat-preview+json";
 
+        public const string GitHubAppsPreview = "application/vnd.github.machine-man-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.

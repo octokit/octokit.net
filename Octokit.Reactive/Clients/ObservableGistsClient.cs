@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableGistsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Gist;
             _connection = client.Connection;
@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         public IObservable<Gist> Get(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return _client.Get(id).ToObservable();
         }
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <param name="newGist">The new gist to create</param>
         public IObservable<Gist> Create(NewGist newGist)
         {
-            Ensure.ArgumentNotNull(newGist, "newGist");
+            Ensure.ArgumentNotNull(newGist, nameof(newGist));
 
             return _client.Create(newGist).ToObservable();
         }
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         public IObservable<Unit> Delete(string id)
         {
-            Ensure.ArgumentNotNull(id, "id");
+            Ensure.ArgumentNotNull(id, nameof(id));
 
             return _client.Delete(id).ToObservable();
         }
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gist(), options);
         }
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAll(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options);
@@ -152,7 +152,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllPublic(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.PublicGists(), options);
         }
@@ -179,7 +179,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllPublic(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);
@@ -205,7 +205,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllStarred(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.StarredGists(), options);
         }
@@ -232,7 +232,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllStarred(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="user">The user</param>
         public IObservable<Gist> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -262,8 +262,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.UsersGists(user), options);
         }
@@ -278,7 +278,7 @@ namespace Octokit.Reactive
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public IObservable<Gist> GetAllForUser(string user, DateTimeOffset since)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, since, ApiOptions.None);
         }
@@ -294,8 +294,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Gist> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return _connection.GetAndFlattenAllPages<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
@@ -310,7 +310,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         public IObservable<GistHistory> GetAllCommits(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return GetAllCommits(id, ApiOptions.None);
         }
@@ -325,8 +325,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<GistHistory> GetAllCommits(string id, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<GistHistory>(ApiUrls.GistCommits(id), options);
         }
@@ -340,7 +340,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         public IObservable<GistFork> GetAllForks(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return GetAllForks(id, ApiOptions.None);
         }
@@ -355,8 +355,8 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<GistFork> GetAllForks(string id, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<GistFork>(ApiUrls.ForkGist(id), options);
         }
@@ -371,8 +371,8 @@ namespace Octokit.Reactive
         /// <param name="gistUpdate">The update to the gist</param>
         public IObservable<Gist> Edit(string id, GistUpdate gistUpdate)
         {
-            Ensure.ArgumentNotNull(id, "id");
-            Ensure.ArgumentNotNull(gistUpdate, "gistUpdate");
+            Ensure.ArgumentNotNull(id, nameof(id));
+            Ensure.ArgumentNotNull(gistUpdate, nameof(gistUpdate));
 
             return _client.Edit(id, gistUpdate).ToObservable();
         }
@@ -410,7 +410,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         public IObservable<bool> IsStarred(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return _client.IsStarred(id).ToObservable();
         }

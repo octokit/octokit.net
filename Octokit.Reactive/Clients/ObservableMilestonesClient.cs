@@ -18,7 +18,7 @@ namespace Octokit.Reactive
 
         public ObservableMilestonesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Issue.Milestone;
             _connection = client.Connection;
@@ -33,8 +33,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name, number).ToObservable();
         }
@@ -62,8 +62,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -93,9 +93,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name), options);
         }
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(repositoryId), options);
         }
@@ -128,9 +128,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -146,7 +146,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -164,10 +164,10 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(owner, name),
                 request.ToParametersDictionary(), options);
@@ -185,8 +185,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Milestone>(ApiUrls.Milestones(repositoryId),
                 request.ToParametersDictionary(), options);
@@ -203,9 +203,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> Create(string owner, string name, NewMilestone newMilestone)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newMilestone, "newMilestone");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newMilestone, nameof(newMilestone));
 
             return _client.Create(owner, name, newMilestone).ToObservable();
         }
@@ -220,7 +220,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> Create(long repositoryId, NewMilestone newMilestone)
         {
-            Ensure.ArgumentNotNull(newMilestone, "newMilestone");
+            Ensure.ArgumentNotNull(newMilestone, nameof(newMilestone));
 
             return _client.Create(repositoryId, newMilestone).ToObservable();
         }
@@ -238,9 +238,9 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
             return _client.Update(owner, name, number, milestoneUpdate).ToObservable();
         }
@@ -257,7 +257,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate)
         {
-            Ensure.ArgumentNotNull(milestoneUpdate, "milestoneUpdate");
+            Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
             return _client.Update(repositoryId, number, milestoneUpdate).ToObservable();
         }
@@ -273,8 +273,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, number).ToObservable();
         }

@@ -18,7 +18,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryDeployKeysClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.DeployKeys;
             _connection = client.Connection;
@@ -35,8 +35,8 @@ namespace Octokit.Reactive
         /// <param name="number">The id of the deploy key.</param>
         public IObservable<DeployKey> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name, number).ToObservable();
         }
@@ -64,8 +64,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         public IObservable<DeployKey> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -93,9 +93,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<DeployKey> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
         }
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<DeployKey> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
         }
@@ -126,9 +126,9 @@ namespace Octokit.Reactive
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         public IObservable<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
 
             if (string.IsNullOrWhiteSpace(newDeployKey.Title))
@@ -150,7 +150,7 @@ namespace Octokit.Reactive
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         public IObservable<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey)
         {
-            Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
+            Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
 
             if (string.IsNullOrWhiteSpace(newDeployKey.Title))
@@ -173,8 +173,8 @@ namespace Octokit.Reactive
         /// <param name="number">The id of the deploy key to delete.</param>
         public IObservable<Unit> Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, number).ToObservable();
         }

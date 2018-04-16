@@ -9,7 +9,7 @@ namespace Octokit
         public RepositoryContentLicense(LicenseMetadata license, string name, string path, string sha, int size, ContentType type, string downloadUrl, string url, string gitUrl, string htmlUrl)
             : base(name, path, sha, size, type, downloadUrl, url, gitUrl, htmlUrl)
         {
-            Ensure.ArgumentNotNull(license, "license");
+            Ensure.ArgumentNotNull(license, nameof(license));
 
             License = license;
         }
