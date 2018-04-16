@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<PreReceiveEnvironment> Get(int environmentId)
+        public IObservable<PreReceiveEnvironment> Get(long environmentId)
         {
             return _client.Get(environmentId).ToObservable();
         }
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <param name="updatePreReceiveEnvironment">A description of the pre-receive environment to edit</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<PreReceiveEnvironment> Edit(int environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment)
+        public IObservable<PreReceiveEnvironment> Edit(long environmentId, UpdatePreReceiveEnvironment updatePreReceiveEnvironment)
         {
             Ensure.ArgumentNotNull(updatePreReceiveEnvironment, nameof(updatePreReceiveEnvironment));
 
@@ -106,7 +106,7 @@ namespace Octokit.Reactive
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(int environmentId)
+        public IObservable<Unit> Delete(long environmentId)
         {
             return _client.Delete(environmentId).ToObservable();
         }
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<PreReceiveEnvironmentDownload> DownloadStatus(int environmentId)
+        public IObservable<PreReceiveEnvironmentDownload> DownloadStatus(long environmentId)
         {
             return _client.DownloadStatus(environmentId).ToObservable();
         }
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="environmentId">The id of the pre-receive environment</param>
         /// <exception cref="NotFoundException">Thrown when the specified <paramref name="environmentId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<PreReceiveEnvironmentDownload> TriggerDownload(int environmentId)
+        public IObservable<PreReceiveEnvironmentDownload> TriggerDownload(long environmentId)
         {
             return _client.TriggerDownload(environmentId).ToObservable();
         }
