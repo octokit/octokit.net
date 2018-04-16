@@ -13,7 +13,7 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(Type modelType, IEnumerable<PropertyInfo> propertiesWithInvalidType)
         {
-            return string.Format("Model type '{0}' contains the following properties that are named or suffixed with 'Url' but are not of type String: {!}{2}",
+            return string.Format("Model type '{0}' contains the following properties that are named or suffixed with 'Url' but are not of type String: {1}{2}",
                 modelType.FullName,
                 Environment.NewLine,
                 string.Join(Environment.NewLine, propertiesWithInvalidType.Select(x => x.Name)));

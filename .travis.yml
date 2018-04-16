@@ -7,7 +7,7 @@ matrix:
       sudo: required
       dotnet: 1.0.4
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode8.3
       dotnet: 1.0.4
 
 before_script:
@@ -15,5 +15,4 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - dotnet --info
-  - ./build.sh --linksources=true
+  - ./build.sh --linksources=true --verbosity=verbose

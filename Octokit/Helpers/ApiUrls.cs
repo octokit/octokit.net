@@ -285,10 +285,52 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        /// <returns></returns>
         public static Uri NotificationSubscription(int id)
         {
             return "notifications/threads/{0}/subscription".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a new installation token.
+        /// </summary>
+        /// <param name="installationId">The Id of the GitHub App installation.</param>
+        public static Uri AccessTokens(long installationId)
+        {
+            return "installations/{0}/access_tokens".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App()
+        {
+            return "app".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App(string slug)
+        {
+            return "apps/{0}".FormatUri(slug);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installations()
+        {
+            return "app/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installation(long installationId)
+        {
+            return "app/installations/{0}".FormatUri(installationId);
         }
 
         /// <summary>

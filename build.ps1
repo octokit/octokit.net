@@ -26,14 +26,14 @@ Param(
     [string]$Configuration = "Release",
     [switch]$LinkSources,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
-    [string]$Verbosity = "Verbose",
+    [string]$Verbosity = "Normal",
     [switch]$WhatIf,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
 )
 
 $DotNetChannel = "preview";
-$DotNetVersion = "1.0.1";
+$DotNetVersion = "1.0.4";
 $DotNetInstallerUri = "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.1/scripts/obtain/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
@@ -106,14 +106,14 @@ $Arguments = @{
 # Start Cake
 Push-Location
 Set-Location build
-Write-Host "Restoring packages..."
+Write-Host "Preparing Cake.Frosting build runner..."
 Invoke-Expression "dotnet restore"
 if($LASTEXITCODE -ne 0) {
     Pop-Location;
     exit $LASTEXITCODE;
 }
-Write-Host "Running build..."
-Invoke-Expression "dotnet run -- $Arguments"
+Write-Host "Running Cake.Frosting build runner..."
+Invoke-Expression "dotnet run $Arguments"
 if($LASTEXITCODE -ne 0) {
     Pop-Location;
     exit $LASTEXITCODE;
