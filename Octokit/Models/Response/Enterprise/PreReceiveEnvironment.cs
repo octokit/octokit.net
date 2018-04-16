@@ -13,7 +13,7 @@ namespace Octokit
         /// <summary>
         /// Identifier for the pre-receive environment.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The name of the environment as displayed in the UI.
