@@ -30,7 +30,7 @@ namespace Octokit
         public string Base { get; set; }
 
         /// <summary>
-        /// Whether maintainers of the base repository can push to the pull request's HEAD if it is a branch
+        /// Whether maintainers of the base repository can push to the HEAD branch.
         /// </summary>
         public bool? MaintainerCanModify { get; set; }
 
