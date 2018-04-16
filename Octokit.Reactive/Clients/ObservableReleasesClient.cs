@@ -111,6 +111,25 @@ namespace Octokit.Reactive
         /// Gets a single <see cref="Release"/> for the specified repository.
         /// </summary>
         /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<Release> Get(string owner, string name, string tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
+
+            return _client.Get(owner, name, tag).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -119,6 +138,22 @@ namespace Octokit.Reactive
         public IObservable<Release> Get(long repositoryId, int id)
         {
             return _client.Get(repositoryId, id).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a single <see cref="Release"/> for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<Release> Get(long repositoryId, string tag)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
+
+            return _client.Get(repositoryId, tag).ToObservable();
         }
 
         /// <summary>

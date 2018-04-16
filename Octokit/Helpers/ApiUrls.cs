@@ -216,6 +216,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns></returns>
+        public static Uri Releases(string owner, string name, string tag)
+        {
+            return "repos/{0}/{1}/releases/tags/{2}".FormatUri(owner, name, tag);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the latest release for the specified repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -285,10 +297,52 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        /// <returns></returns>
         public static Uri NotificationSubscription(int id)
         {
             return "notifications/threads/{0}/subscription".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a new installation token.
+        /// </summary>
+        /// <param name="installationId">The Id of the GitHub App installation.</param>
+        public static Uri AccessTokens(long installationId)
+        {
+            return "installations/{0}/access_tokens".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App()
+        {
+            return "app".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App(string slug)
+        {
+            return "apps/{0}".FormatUri(slug);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installations()
+        {
+            return "app/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Installation(long installationId)
+        {
+            return "app/installations/{0}".FormatUri(installationId);
         }
 
         /// <summary>
@@ -3074,6 +3128,17 @@ namespace Octokit
         public static Uri Releases(long repositoryId, int id)
         {
             return "repositories/{0}/releases/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
+        public static Uri Releases(long repositoryId, string tag)
+        {
+            return "repositories/{0}/releases/tags/{1}".FormatUri(repositoryId, tag);
         }
 
         /// <summary>

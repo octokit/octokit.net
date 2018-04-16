@@ -55,6 +55,8 @@ namespace Octokit
 
         public const string NestedTeamsPreview = "application/vnd.github.hellcat-preview+json";
 
+        public const string GitHubAppsPreview = "application/vnd.github.machine-man-preview+json";
+
         public const string PreReceiveEnvironmentsPreview = "application/vnd.github.eye-scream-preview+json";
 
         /// <summary>
