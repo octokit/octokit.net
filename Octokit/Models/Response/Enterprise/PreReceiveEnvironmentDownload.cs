@@ -13,9 +13,10 @@ namespace Octokit
         public PreReceiveEnvironmentDownload()
         { }
 
-        public PreReceiveEnvironmentDownload(string url, string message, DateTimeOffset? downloadedAt)
+        public PreReceiveEnvironmentDownload(string url, PreReceiveEnvironmentDownloadState state, string message, DateTimeOffset? downloadedAt)
         {
             Url = url;
+            State = state;
             Message = message;
             DownloadedAt = downloadedAt;
         }
