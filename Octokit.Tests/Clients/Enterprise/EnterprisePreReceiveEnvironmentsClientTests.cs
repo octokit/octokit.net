@@ -21,12 +21,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
-                await preReceiveEnvironmentsClient.GetAll();
+                await client.GetAll();
 
-                client.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
+                connection.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
                     null,
                     "application/vnd.github.eye-scream-preview+json",
                     Args.ApiOptions);
@@ -35,8 +35,8 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrlWithApiOptions()
             {
-                var client = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
                 var options = new ApiOptions
                 {
@@ -45,9 +45,9 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                await preReceiveEnvironmentsClient.GetAll(options);
+                await client.GetAll(options);
 
-                client.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
+                connection.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
                     null,
                     "application/vnd.github.eye-scream-preview+json",
                     options);
@@ -60,9 +60,9 @@ namespace Octokit.Tests.Clients
             public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
-                await preReceiveEnvironmentsClient.Get(1);
+                await client.Get(1);
 
                 connection.Received().Get<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
                     null,
@@ -75,13 +75,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var client = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(client);
+                var connection = Substitute.For<IApiConnection>();
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
                 var data = new NewPreReceiveEnvironment("name", "url");
 
-                await preReceiveEnvironmentsClient.Create(data);
+                await client.Create(data);
 
-                client.Received().Post<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
+                connection.Received().Post<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
                     data,
                     "application/vnd.github.eye-scream-preview+json");
             }
@@ -89,13 +89,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var releasesClient = new EnterprisePreReceiveEnvironmentsClient(Substitute.For<IApiConnection>());
+                var client = new EnterprisePreReceiveEnvironmentsClient(Substitute.For<IApiConnection>());
                 Assert.Throws<ArgumentNullException>(() => new NewPreReceiveEnvironment(null, "url"));
                 Assert.Throws<ArgumentException>(() => new NewPreReceiveEnvironment("", "url"));
                 Assert.Throws<ArgumentNullException>(() => new NewPreReceiveEnvironment("name", null));
                 Assert.Throws<ArgumentException>(() => new NewPreReceiveEnvironment("name", ""));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.Create(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null));
             }
         }
 
@@ -105,14 +105,14 @@ namespace Octokit.Tests.Clients
             public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
                 var data = new UpdatePreReceiveEnvironment
                 {
                     Name = "name",
                     ImageUrl = "url"
                 };
 
-                await preReceiveEnvironmentsClient.Edit(1, data);
+                await client.Edit(1, data);
 
                 connection.Received().Patch<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
                     data,
@@ -122,9 +122,9 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task EnsuresNonNullArguments()
             {
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(Substitute.For<IApiConnection>());
+                var client = new EnterprisePreReceiveEnvironmentsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => preReceiveEnvironmentsClient.Edit(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(1, null));
             }
         }
 
@@ -134,9 +134,9 @@ namespace Octokit.Tests.Clients
             public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
-                await preReceiveEnvironmentsClient.Delete(1);
+                await client.Delete(1);
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
                     Arg.Any<object>(),
@@ -150,9 +150,9 @@ namespace Octokit.Tests.Clients
             public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
-                await preReceiveEnvironmentsClient.DownloadStatus(1);
+                await client.DownloadStatus(1);
 
                 connection.Received().Get<PreReceiveEnvironmentDownload>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1/downloads/latest"),
                     null,
@@ -166,9 +166,9 @@ namespace Octokit.Tests.Clients
             public async Task RequestsTheCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var preReceiveEnvironmentsClient = new EnterprisePreReceiveEnvironmentsClient(connection);
+                var client = new EnterprisePreReceiveEnvironmentsClient(connection);
 
-                await preReceiveEnvironmentsClient.TriggerDownload(1);
+                await client.TriggerDownload(1);
 
                 connection.Received().Post<PreReceiveEnvironmentDownload>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1/downloads"),
                     Arg.Any<object>(),

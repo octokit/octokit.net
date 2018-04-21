@@ -12,7 +12,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
         [Fact]
         public void EnsuresNonNullArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new ReleasesClient(null));
+            Assert.Throws<ArgumentNullException>(() => new EnterprisePreReceiveEnvironmentsClient(null));
         }
     }
 

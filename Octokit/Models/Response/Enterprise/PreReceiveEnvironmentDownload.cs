@@ -10,6 +10,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PreReceiveEnvironmentDownload
     {
+        public PreReceiveEnvironmentDownload()
+        { }
+
+        public PreReceiveEnvironmentDownload(string url, string message, DateTimeOffset? downloadedAt)
+        {
+            Url = url;
+            Message = message;
+            DownloadedAt = downloadedAt;
+        }
+
         /// <summary>
         /// URL to the download status for a pre-receive environment.
         /// </summary>

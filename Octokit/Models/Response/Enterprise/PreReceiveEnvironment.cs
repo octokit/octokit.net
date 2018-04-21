@@ -10,6 +10,22 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PreReceiveEnvironment
     {
+        public PreReceiveEnvironment()
+        { }
+
+        public PreReceiveEnvironment(long id, string name, string url, string imageUrl, string htmlUrl, bool defaultEnvironment, DateTimeOffset? createdAt, int hooksCount, PreReceiveEnvironmentDownload download)
+        {
+            Id = id;
+            Name = name;
+            Url = url;
+            ImageUrl = imageUrl;
+            HtmlUrl = htmlUrl;
+            DefaultEnvironment = defaultEnvironment;
+            CreatedAt = createdAt;
+            HooksCount = hooksCount;
+            Download = download;
+        }
+
         /// <summary>
         /// Identifier for the pre-receive environment.
         /// </summary>
