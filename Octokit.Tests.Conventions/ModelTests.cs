@@ -54,6 +54,38 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData(nameof(ResponseModelTypes))]
+        public void AllResponseModelsHavePublicCtorWithAllProperties(Type modelType)
+        {
+            var constructors = modelType.GetConstructors();
+            var properties = modelType.GetProperties()
+                .Where(prop => prop.CanWrite &&
+                               prop.DeclaringType == modelType)
+                .ToList();
+
+            var missingProperties = properties.ToList();
+            foreach (var constructor in constructors)
+            {
+                var parameters = constructor.GetParameters();
+
+                var constructorMissingProperties = properties.Where(property =>
+                        !parameters.Any(param =>
+                            string.Equals(param.Name, property.Name, StringComparison.InvariantCultureIgnoreCase)))
+                    .ToList();
+
+                if (constructorMissingProperties.Count < missingProperties.Count)
+                {
+                    missingProperties = constructorMissingProperties;
+                }
+            }
+
+            if (missingProperties.Any())
+            {
+                throw new MissingPublicConstructorWithAllPropertiesException(modelType, missingProperties);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
