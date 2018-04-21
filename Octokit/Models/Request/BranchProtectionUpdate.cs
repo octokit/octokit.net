@@ -68,21 +68,6 @@ namespace Octokit
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        [Obsolete("This constructor will be removed for housekeeping purposes, please use another ctor")]
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
-        {
-            RequiredStatusChecks = requiredStatusChecks;
-            RequiredPullRequestReviews = null;
-            Restrictions = restrictions;
-            EnforceAdmins = enforceAdmins;
-        }
-
-        /// <summary>
-        /// Create a BranchProtection update request
-        /// </summary>
-        /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, bool enforceAdmins)

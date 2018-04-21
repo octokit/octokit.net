@@ -21,12 +21,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Client for managing review comments.
-        /// </summary>
-        [Obsolete("Please use PullRequestsClient.ReviewComment instead. This method will be removed in a future version")]
-        public IPullRequestReviewCommentsClient Comment { get { return this.ReviewComment; } }
-
-        /// <summary>
         /// Client for managing reviews.
         /// </summary>
         public IPullRequestReviewsClient Review { get; set; }

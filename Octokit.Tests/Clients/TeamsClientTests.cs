@@ -213,49 +213,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheAddMembershipMethod
-        {
-            [Fact]
-            public async Task RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-
-                var client = new TeamsClient(connection);
-
-                await client.AddMembership(1, "user");
-
-                connection.Received().Put<Dictionary<string, string>>(
-                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
-                    Args.Object);
-            }
-
-            [Fact]
-            public async Task AllowsEmptyBody()
-            {
-                var connection = Substitute.For<IConnection>();
-
-                var apiConnection = new ApiConnection(connection);
-
-                var client = new TeamsClient(apiConnection);
-
-                await client.AddMembership(1, "user");
-
-                connection.Received().Put<Dictionary<string, string>>(
-                    Arg.Is<Uri>(u => u.ToString() == "teams/1/memberships/user"),
-                    Arg.Is<object>(u => u == RequestBody.Empty));
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullOrEmptyLogin()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamsClient(connection);
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddMembership(1, null));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.AddMembership(1, ""));
-            }
-        }
-
         public class TheAddOrEditMembershipMethod
         {
             [Fact]
@@ -301,27 +258,6 @@ namespace Octokit.Tests.Clients
                     null,
                     "application/vnd.github.hellcat-preview+json",
                     Args.ApiOptions);
-            }
-        }
-
-        public class TheGetMembershipMethod
-        {
-            [Fact]
-            public async Task EnsuresNonNullLogin()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamsClient(connection);
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetMembership(1, null));
-            }
-
-            [Fact]
-            public async Task EnsuresNonEmptyLogin()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamsClient(connection);
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetMembership(1, ""));
             }
         }
 
