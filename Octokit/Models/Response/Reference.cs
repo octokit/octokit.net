@@ -8,11 +8,11 @@ namespace Octokit
     {
         public Reference() { }
 
-        public Reference(string @ref, string url, TagObject objectVar)
+        public Reference(string @ref, string url, TagObject @object)
         {
             Ref = @ref;
             Url = url;
-            Object = objectVar;
+            Object = @object;
         }
 
         public string Ref { get; protected set; }
