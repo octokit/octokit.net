@@ -165,6 +165,13 @@ namespace Octokit
     {
         public BranchProtectionRequiredReviews() { }
 
+        public BranchProtectionRequiredReviews(BranchProtectionRequiredReviewsDismissalRestrictions dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        {
+            DismissalRestrictions = dismissalRestrictions;
+            DismissStaleReviews = dismissStaleReviews;
+            RequireCodeOwnerReviews = requireCodeOwnerReviews;
+        }
+
         /// <summary>
         /// Specify which users and teams can dismiss pull request reviews.
         /// </summary>
