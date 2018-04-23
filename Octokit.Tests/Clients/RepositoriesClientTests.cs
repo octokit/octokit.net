@@ -723,7 +723,7 @@ namespace Octokit.Tests.Clients
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
                         null,
-                        AcceptHeaders.NestedTeamsPreview,
+                        "application/vnd.github.loki-preview+json",
                         Args.ApiOptions);
             }
 
@@ -760,7 +760,7 @@ namespace Octokit.Tests.Clients
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
                         null,
-                        AcceptHeaders.NestedTeamsPreview,
+                        "application/vnd.github.loki-preview+json",
                         options);
             }
 

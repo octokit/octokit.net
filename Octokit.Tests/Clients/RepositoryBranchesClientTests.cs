@@ -1043,8 +1043,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
-                    null, 
-                    AcceptHeaders.NestedTeamsPreview);
+                    null,
+                    "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1058,8 +1058,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
-                    null, 
-                    AcceptHeaders.NestedTeamsPreview);
+                    null,
+                    "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1096,8 +1096,8 @@ namespace Octokit.Tests.Clients
                     .Put<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
                     Arg.Any<IReadOnlyList<string>>(), 
-                    null, 
-                    AcceptHeaders.NestedTeamsPreview);
+                    null,
+                    "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1113,8 +1113,8 @@ namespace Octokit.Tests.Clients
                     .Put<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
                         Arg.Any<IReadOnlyList<string>>(), 
-                        null, 
-                        AcceptHeaders.NestedTeamsPreview);
+                        null,
+                        "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1154,7 +1154,7 @@ namespace Octokit.Tests.Clients
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
                         Arg.Any<IReadOnlyList<string>>(),
-                        AcceptHeaders.NestedTeamsPreview);
+                        "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1170,7 +1170,7 @@ namespace Octokit.Tests.Clients
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
                         Arg.Any<IReadOnlyList<string>>(),
-                        AcceptHeaders.NestedTeamsPreview);
+                        "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1210,7 +1210,7 @@ namespace Octokit.Tests.Clients
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
                         Arg.Any<BranchProtectionTeamCollection>(),
-                        AcceptHeaders.NestedTeamsPreview);
+                        "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
@@ -1225,8 +1225,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
-                        Arg.Any<IReadOnlyList<string>>(), 
-                        AcceptHeaders.NestedTeamsPreview);
+                        Arg.Any<IReadOnlyList<string>>(),
+                        "application/vnd.github.loki-preview+json");
             }
 
             [Fact]
