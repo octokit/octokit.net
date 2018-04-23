@@ -906,7 +906,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -921,7 +921,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -941,7 +941,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -958,7 +958,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -978,7 +978,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -995,7 +995,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -1015,7 +1015,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -1032,7 +1032,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
