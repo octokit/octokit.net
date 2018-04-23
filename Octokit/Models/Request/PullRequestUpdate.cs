@@ -29,6 +29,11 @@ namespace Octokit
         /// </summary>
         public string Base { get; set; }
 
+        /// <summary>
+        /// Whether maintainers of the base repository can push to the HEAD branch.
+        /// </summary>
+        public bool? MaintainerCanModify { get; set; }
+
         internal string DebuggerDisplay
         {
             get
