@@ -13,7 +13,7 @@ namespace Octokit
     {
         public Activity() { }
 
-        public Activity(string type, bool @public, Repository repo, User actor, Organization org, DateTimeOffset createdAt, string id)
+        public Activity(string type, bool @public, Repository repo, User actor, Organization org, DateTimeOffset createdAt, string id, ActivityPayload payload)
         {
             Type = type;
             Public = @public;
@@ -22,6 +22,7 @@ namespace Octokit
             Org = org;
             CreatedAt = createdAt;
             Id = id;
+            Payload = payload;
         }
 
         /// <summary>

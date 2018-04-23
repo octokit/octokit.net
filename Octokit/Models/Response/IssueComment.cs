@@ -10,7 +10,7 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
+        public IssueComment(int id, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions)
         {
             Id = id;
             Url = url;
@@ -19,6 +19,7 @@ namespace Octokit
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             User = user;
+            Reactions = reactions;
         }
 
         /// <summary>
@@ -56,6 +57,9 @@ namespace Octokit
         /// </summary>
         public User User { get; protected set; }
 
+        /// <summary>
+        /// The reaction summary for this comment.
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
 
         internal string DebuggerDisplay
