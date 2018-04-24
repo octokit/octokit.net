@@ -8,7 +8,7 @@ namespace Octokit
     /// <summary>
     /// Represents a user on GitHub.
     /// </summary>
-    [ExcludeFromAllResponseModelsHavePublicCtorWithAllPropertiesConventionTest(nameof(Type))]
+    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Type))]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class User : Account
     {

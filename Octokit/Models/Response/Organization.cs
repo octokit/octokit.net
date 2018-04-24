@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Octokit
 {
-    [ExcludeFromAllResponseModelsHavePublicCtorWithAllPropertiesConventionTest(nameof(Type))]
+    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Type))]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Organization : Account
     {
