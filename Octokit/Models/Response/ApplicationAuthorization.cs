@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace Octokit
@@ -13,7 +14,8 @@ namespace Octokit
         {
         }
 
-        public ApplicationAuthorization(string token)
+        public ApplicationAuthorization(int id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes, string token)
+            : base(id, url, application, tokenLastEight, hashedToken, fingerprint, note, noteUrl, createdAt, updateAt, scopes)
         {
             Token = token;
         }
