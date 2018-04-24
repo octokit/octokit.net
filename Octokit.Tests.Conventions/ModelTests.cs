@@ -56,10 +56,14 @@ namespace Octokit.Tests.Conventions
         [MemberData(nameof(ResponseModelTypes))]
         public void AllResponseModelsHavePublicCtorWithAllProperties(Type modelType)
         {
+            var excludedProperties = modelType.GetCustomAttribute<ExcludeFromAllResponseModelsHavePublicCtorWithAllPropertiesConventionTestAttribute>()?
+                                         .Properties ??
+                                     new string[] { };
+
             var constructors = modelType.GetConstructors();
             var properties = modelType.GetProperties()
                 .Where(prop => prop.CanWrite &&
-                               prop.DeclaringType == modelType)
+                               !excludedProperties.Contains(prop.Name))
                 .ToList();
 
             var missingProperties = properties.ToList();
