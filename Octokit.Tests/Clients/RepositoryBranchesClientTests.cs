@@ -1037,12 +1037,14 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.GetAllProtectedBranchTeamRestrictions("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                    null,
+                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1050,12 +1052,14 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.GetAllProtectedBranchTeamRestrictions(1, "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                    null,
+                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1085,12 +1089,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newTeams = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
 
                 connection.Received()
-                    .Put<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<Team>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                    Arg.Any<IReadOnlyList<string>>(), 
+                    null,
+                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1099,12 +1106,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newTeams = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.UpdateProtectedBranchTeamRestrictions(1, "branch", newTeams);
 
                 connection.Received()
-                    .Put<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<Team>>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                        Arg.Any<IReadOnlyList<string>>(), 
+                        null,
+                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1137,12 +1147,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newTeams = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchTeamRestrictions("owner", "repo", "branch", newTeams);
 
                 connection.Received()
-                    .Post<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<Team>>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                        Arg.Any<IReadOnlyList<string>>(),
+                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1151,12 +1163,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newTeams = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.AddProtectedBranchTeamRestrictions(1, "branch", newTeams);
 
                 connection.Received()
-                    .Post<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<Team>>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                        Arg.Any<IReadOnlyList<string>>(),
+                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1189,12 +1203,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchTeamRestrictions("owner", "repo", "branch", teamsToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<Team>>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                        Arg.Any<BranchProtectionTeamCollection>(),
+                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1203,12 +1219,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var teamsToRemove = new BranchProtectionTeamCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
 
                 client.DeleteProtectedBranchTeamRestrictions(1, "branch", teamsToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<Team>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<Team>>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                        Arg.Any<IReadOnlyList<string>>(),
+                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]

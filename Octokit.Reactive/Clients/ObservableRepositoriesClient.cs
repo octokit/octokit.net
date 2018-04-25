@@ -549,7 +549,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
@@ -565,7 +565,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>
