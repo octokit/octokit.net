@@ -13,7 +13,7 @@ namespace Octokit
     {
         public Deployment() { }
 
-        public Deployment(int id, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl)
+        public Deployment(int id, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, bool transientEnvironment, bool productionEnvironment)
         {
             Id = id;
             Sha = sha;
@@ -24,6 +24,8 @@ namespace Octokit
             UpdatedAt = updatedAt;
             Description = description;
             StatusesUrl = statusesUrl;
+            TransientEnvironment = transientEnvironment;
+            ProductionEnvironment = productionEnvironment;
         }
 
         /// <summary>

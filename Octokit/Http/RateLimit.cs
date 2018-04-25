@@ -32,15 +32,15 @@ namespace Octokit
             ResetAsUtcEpochSeconds = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset");
         }
 
-        public RateLimit(int limit, int remaining, long reset)
+        public RateLimit(int limit, int remaining, long resetAsUtcEpochSeconds)
         {
             Ensure.ArgumentNotNull(limit, nameof(limit));
             Ensure.ArgumentNotNull(remaining, nameof(remaining));
-            Ensure.ArgumentNotNull(reset, nameof(reset));
+            Ensure.ArgumentNotNull(resetAsUtcEpochSeconds, nameof(resetAsUtcEpochSeconds));
 
             Limit = limit;
             Remaining = remaining;
-            ResetAsUtcEpochSeconds = reset;
+            ResetAsUtcEpochSeconds = resetAsUtcEpochSeconds;
         }
 
         /// <summary>
