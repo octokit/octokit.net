@@ -19,7 +19,7 @@
             License = new EnterpriseLicenseClient(apiConnection);
             Organization = new EnterpriseOrganizationClient(apiConnection);
             SearchIndexing = new EnterpriseSearchIndexingClient(apiConnection);
-            PreReceiveEnvironments = new EnterprisePreReceiveEnvironmentsClient(apiConnection);
+            PreReceiveEnvironment = new EnterprisePreReceiveEnvironmentsClient(apiConnection);
         }
 
         /// <summary>
@@ -68,6 +68,6 @@
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise-admin/pre_receive_environments/">Enterprise Pre-receive Environments API documentation</a> for more information.
         ///</remarks>
-        public IEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironments { get; private set; }
+        public IEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironment { get; private set; }
     }
 }

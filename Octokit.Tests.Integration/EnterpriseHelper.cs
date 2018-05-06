@@ -136,7 +136,7 @@ namespace Octokit.Tests.Integration
                     var sw = Stopwatch.StartNew();
                     while (sw.Elapsed < TimeSpan.FromSeconds(15) && (downloadStatus.State == PreReceiveEnvironmentDownloadState.NotStarted || downloadStatus.State == PreReceiveEnvironmentDownloadState.InProgress))
                     {
-                        downloadStatus = client.Enterprise.PreReceiveEnvironments.DownloadStatus(preReceiveEnvironment.Id).Result;
+                        downloadStatus = client.Enterprise.PreReceiveEnvironment.DownloadStatus(preReceiveEnvironment.Id).Result;
                     }
 
                     sw.Stop();
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Integration
                 try
                 {
                     var client = new GitHubClient(connection);
-                    client.Enterprise.PreReceiveEnvironments.Delete(preReceiveEnvironment.Id).Wait(TimeSpan.FromSeconds(15));
+                    client.Enterprise.PreReceiveEnvironment.Delete(preReceiveEnvironment.Id).Wait(TimeSpan.FromSeconds(15));
                 }
                 catch
                 { }

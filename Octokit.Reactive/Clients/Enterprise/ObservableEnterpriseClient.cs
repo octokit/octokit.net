@@ -17,7 +17,7 @@
             License = new ObservableEnterpriseLicenseClient(client);
             Organization = new ObservableEnterpriseOrganizationClient(client);
             SearchIndexing = new ObservableEnterpriseSearchIndexingClient(client);
-            PreReceiveEnvironments = new ObservableEnterprisePreReceiveEnvironmentsClient(client);
+            PreReceiveEnvironment = new ObservableEnterprisePreReceiveEnvironmentsClient(client);
         }
 
         /// <summary>
@@ -66,6 +66,6 @@
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise-admin/pre_receive_environments/">Enterprise Pre-receive Environments API documentation</a> for more information.
         ///</remarks>
-        public IObservableEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironments { get; private set; }
+        public IObservableEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironment { get; private set; }
     }
 }

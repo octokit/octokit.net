@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
 
-            _client = client.Enterprise.PreReceiveEnvironments;
+            _client = client.Enterprise.PreReceiveEnvironment;
             _connection = client.Connection;
         }
 
