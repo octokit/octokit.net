@@ -370,35 +370,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllRequiredStatusChecksContexts instead")]
-        public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(string owner, string name, string branch)
-        {
-            return GetAllRequiredStatusChecksContexts(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get the required status checks contexts for the specified branch
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllRequiredStatusChecksContexts instead")]
-        public Task<IReadOnlyList<string>> GetRequiredStatusChecksContexts(long repositoryId, string branch)
-        {
-            return GetAllRequiredStatusChecksContexts(repositoryId, branch);
-        }
-
-        /// <summary>
-        /// Get the required status checks contexts for the specified branch
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
         public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -871,42 +842,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
-        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(string owner, string name, string branch)
-        {
-            return GetAllProtectedBranchTeamRestrictions(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
-        public Task<IReadOnlyList<Team>> GetProtectedBranchTeamRestrictions(long repositoryId, string branch)
-        {
-            return GetAllProtectedBranchTeamRestrictions(repositoryId, branch);
-        }
-
-        /// <summary>
-        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
         public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -921,7 +863,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -941,7 +883,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -958,7 +900,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -978,7 +920,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -995,7 +937,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -1015,7 +957,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.ProtectedBranchesApiPreview);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>
@@ -1032,36 +974,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.ProtectedBranchesApiPreview);
-        }
-
-        /// <summary>
-        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
-        public Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(string owner, string name, string branch)
-        {
-            return GetAllProtectedBranchUserRestrictions(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
-        public Task<IReadOnlyList<User>> GetProtectedBranchUserRestrictions(long repositoryId, string branch)
-        {
-            return GetAllProtectedBranchUserRestrictions(repositoryId, branch);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.NestedTeamsPreview));
         }
 
         /// <summary>

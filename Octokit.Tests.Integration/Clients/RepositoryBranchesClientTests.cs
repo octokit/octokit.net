@@ -612,12 +612,12 @@ public class RepositoryBranchesClientTests
         }
     }
 
-    public class TheGetRequiredStatusChecksContextsMethod : IDisposable
+    public class TheGetAllRequiredStatusChecksContextsMethod : IDisposable
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
 
-        public TheGetRequiredStatusChecksContextsMethod()
+        public TheGetAllRequiredStatusChecksContextsMethod()
         {
             var github = Helper.GetAuthenticatedClient();
             _client = github.Repository.Branch;
@@ -630,7 +630,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var requiredStatusChecksContexts = await _client.GetRequiredStatusChecksContexts(repoOwner, repoName, "master");
+            var requiredStatusChecksContexts = await _client.GetAllRequiredStatusChecksContexts(repoOwner, repoName, "master");
 
             Assert.NotNull(requiredStatusChecksContexts);
             Assert.Equal(2, requiredStatusChecksContexts.Count);
@@ -640,7 +640,7 @@ public class RepositoryBranchesClientTests
         public async Task GetsRequiredStatusChecksContextsWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var requiredStatusChecksContexts = await _client.GetRequiredStatusChecksContexts(repoId, "master");
+            var requiredStatusChecksContexts = await _client.GetAllRequiredStatusChecksContexts(repoId, "master");
 
             Assert.NotNull(requiredStatusChecksContexts);
             Assert.Equal(2, requiredStatusChecksContexts.Count);

@@ -10,7 +10,8 @@ namespace Octokit
     {
         public Merge() { }
 
-        public Merge(Author author, Author committer, Commit commit, IEnumerable<GitReference> parents, string commentsUrl, int commentCount, string htmlUrl)
+        public Merge(string url, string label, string @ref, string sha, User user, Repository repository, Author author, Author committer, Commit commit, IEnumerable<GitReference> parents, string commentsUrl, int commentCount, string htmlUrl)
+            : base(url, label, @ref, sha, user, repository)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 

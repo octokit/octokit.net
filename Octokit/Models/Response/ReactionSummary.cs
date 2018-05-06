@@ -7,6 +7,20 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReactionSummary
     {
+        public ReactionSummary() { }
+
+        public ReactionSummary(int totalCount, int plus1, int minus1, int laugh, int confused, int heart, int hooray, string url)
+        {
+            TotalCount = totalCount;
+            Plus1 = plus1;
+            Minus1 = minus1;
+            Laugh = laugh;
+            Confused = confused;
+            Heart = heart;
+            Hooray = hooray;
+            Url = url;
+        }
+
         public int TotalCount { get; protected set; }
         [Parameter(Key = "+1")]
         public int Plus1 { get; protected set; }

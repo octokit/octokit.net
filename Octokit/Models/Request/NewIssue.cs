@@ -33,15 +33,6 @@ namespace Octokit
         public string Body { get; set; }
 
         /// <summary>
-        /// Login for the user that this issue should be assigned to.
-        /// </summary>
-        /// <remarks>
-        /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
-        /// </remarks>
-        [Obsolete("Please use Assignees property.  This property will no longer be supported by the GitHub API and will be removed in a future version")]
-        public string Assignee { get; set; }
-
-        /// <summary>
         /// List of logins for the multiple users that this issue should be assigned to
         /// </summary>
         /// <remarks>

@@ -42,6 +42,11 @@ namespace Octokit
         public string Head { get; private set; }
 
         /// <summary>
+        /// Whether maintainers of the base repository can push to the HEAD branch (optional).
+        /// </summary>
+        public bool? MaintainerCanModify { get; set; }
+
+        /// <summary>
         /// Body of the pull request (optional)
         /// </summary>
         public string Body { get; set; }

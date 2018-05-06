@@ -724,7 +724,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), null, AcceptHeaders.NestedTeamsPreview, options);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Octokit
     {
         public CommitComment() { }
 
-        public CommitComment(int id, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public CommitComment(int id, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt, ReactionSummary reactions)
         {
             Id = id;
             Url = url;
@@ -22,6 +22,7 @@ namespace Octokit
             User = user;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            Reactions = reactions;
         }
 
         /// <summary>
@@ -79,6 +80,9 @@ namespace Octokit
         /// </summary>
         public DateTimeOffset? UpdatedAt { get; protected set; }
 
+        /// <summary>
+        /// The reaction summary for this comment.
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
 
         internal string DebuggerDisplay

@@ -12,7 +12,7 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(string url, int id, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, string ldapDistinguishedName)
+        public Team(string url, int id, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
@@ -23,6 +23,7 @@ namespace Octokit
             MembersCount = membersCount;
             ReposCount = reposCount;
             Organization = organization;
+            Parent = parent;
             LdapDistinguishedName = ldapDistinguishedName;
         }
 

@@ -7,6 +7,14 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class TeamMembershipDetails
     {
+        public TeamMembershipDetails() { }
+
+        public TeamMembershipDetails(TeamRole role, MembershipState state)
+        {
+            Role = role;
+            State = state;
+        }
+
         public StringEnum<TeamRole> Role { get; protected set; }
 
         public StringEnum<MembershipState> State { get; protected set; }

@@ -16,12 +16,6 @@ namespace Octokit.Reactive
         readonly IConnection _connection;
 
         /// <summary>
-        /// Client for managing review comments.
-        /// </summary>
-        [Obsolete("Please use ObservablePullRequestsClient.ReviewComment. This will be removed in a future version")]
-        public IObservablePullRequestReviewCommentsClient Comment { get { return this.ReviewComment; } }
-
-        /// <summary>
         /// Client for managing reviews.
         /// </summary>
         public IObservablePullRequestReviewsClient Review { get; private set; }

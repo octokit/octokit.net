@@ -184,35 +184,6 @@ namespace Octokit
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The team to check.</param>
-        /// <param name="login">The user to check.</param>
-        [Obsolete("Please use GetMembershipDetails instead")]
-        public async Task<TeamMembership> GetMembership(int id, string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-
-            Dictionary<string, string> response;
-
-            try
-            {
-                response = await ApiConnection.Get<Dictionary<string, string>>(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
-            }
-            catch (NotFoundException)
-            {
-                return TeamMembership.NotFound;
-            }
-
-            return response["state"] == "active"
-                ? TeamMembership.Active
-                : TeamMembership.Pending;
-        }
-
-        /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
-        /// is a member of the team with the given <paramref name="id"/>.
         /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
         /// </summary>
         /// <remarks>
@@ -266,42 +237,6 @@ namespace Octokit
             var endpoint = ApiUrls.Teams(id);
 
             return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.NestedTeamsPreview);
-        }
-
-        /// <summary>
-        /// Adds a <see cref="User"/> to a <see cref="Team"/>.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="id">The team identifier.</param>
-        /// <param name="login">The user to add to the team.</param>
-        [Obsolete("Please use AddOrEditMembership instead")]
-        public async Task<TeamMembership> AddMembership(int id, string login)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
-
-            var endpoint = ApiUrls.TeamMember(id, login);
-
-            Dictionary<string, string> response;
-
-            try
-            {
-                response = await ApiConnection.Put<Dictionary<string, string>>(endpoint, RequestBody.Empty).ConfigureAwait(false);
-            }
-            catch (NotFoundException)
-            {
-                return TeamMembership.NotFound;
-            }
-
-            if (response == null || !response.ContainsKey("state"))
-            {
-                return TeamMembership.NotFound;
-            }
-
-            return response["state"] == "active"
-                ? TeamMembership.Active
-                : TeamMembership.Pending;
         }
 
         /// <summary>

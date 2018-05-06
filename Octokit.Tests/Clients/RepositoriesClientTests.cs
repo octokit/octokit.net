@@ -722,6 +722,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        "application/vnd.github.hellcat-preview+json",
                         Args.ApiOptions);
             }
 
@@ -757,6 +759,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        "application/vnd.github.hellcat-preview+json",
                         options);
             }
 

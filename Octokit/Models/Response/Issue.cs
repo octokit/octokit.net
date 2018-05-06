@@ -11,7 +11,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository)
+        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, bool locked, Repository repository, ReactionSummary reactions)
         {
             Id = id;
             Url = url;
@@ -35,6 +35,7 @@ namespace Octokit
             UpdatedAt = updatedAt;
             Locked = locked;
             Repository = repository;
+            Reactions = reactions;
         }
 
         /// <summary>
@@ -144,6 +145,9 @@ namespace Octokit
         /// </summary>
         public Repository Repository { get; protected set; }
 
+        /// <summary>
+        /// The reaction summary for this issue.
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
 
         internal string DebuggerDisplay

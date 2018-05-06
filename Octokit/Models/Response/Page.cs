@@ -48,9 +48,10 @@ namespace Octokit
         public Page() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "cname")]
-        public Page(string url, PagesBuildStatus status, string cname, bool custom404)
+        public Page(string url, string htmlUrl, PagesBuildStatus status, string cname, bool custom404)
         {
             Url = url;
+            HtmlUrl = htmlUrl;
             Status = status;
             CName = cname;
             Custom404 = custom404;

@@ -200,48 +200,6 @@ public class TeamsClientTests
         }
     }
 
-    public class TheGetMembershipMethod
-    {
-        readonly Team team;
-
-        public TheGetMembershipMethod()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
-        }
-
-        [OrganizationTest]
-        public async Task FailsWhenAuthenticatedWithBadCredentials()
-        {
-            var github = Helper.GetBadCredentialsClient();
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(
-                () => github.Organization.Team.GetMembership(team.Id, Helper.UserName));
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest]
-        public async Task GetsIsMemberWhenAuthenticated()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var membership = await github.Organization.Team.GetMembership(team.Id, Helper.UserName);
-
-            Assert.Equal(TeamMembership.Active, membership);
-        }
-
-        [OrganizationTest]
-        public async Task GetsIsMemberFalseForNonMemberWhenAuthenticated()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var membership = await github.Organization.Team.GetMembership(team.Id, "foo");
-
-            Assert.Equal(TeamMembership.NotFound, membership);
-        }
-    }
-
     public class TheGetMembershipDetailsMethod : IDisposable
     {
         private readonly IGitHubClient _github;
