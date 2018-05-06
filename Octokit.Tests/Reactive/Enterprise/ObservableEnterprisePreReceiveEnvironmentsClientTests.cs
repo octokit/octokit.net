@@ -73,7 +73,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).Get(1);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).Get(1);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(data);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).Create(data);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).Create(data);
             }
 
             [Fact]
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Reactive
 
                 releasesClient.Edit(1, data);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).Edit(1, data);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).Edit(1, data);
             }
 
             [Fact]
@@ -142,7 +142,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).Delete(1);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).Delete(1);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Reactive
 
                 client.DownloadStatus(1);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).DownloadStatus(1);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).DownloadStatus(1);
             }
         }
 
@@ -170,7 +170,7 @@ namespace Octokit.Tests.Reactive
 
                 client.TriggerDownload(1);
 
-                gitHubClient.Enterprise.PreReceiveEnvironments.Received(1).TriggerDownload(1);
+                gitHubClient.Enterprise.PreReceiveEnvironment.Received(1).TriggerDownload(1);
             }
         }
     }

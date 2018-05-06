@@ -5,7 +5,7 @@ using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
-public class EnterprisePreReceiveEnvironmentClientTests
+public class EnterprisePreReceiveEnvironmentsClientTests
 {
     public class TheCtor
     {
@@ -25,7 +25,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheGetAllMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
 
             _preReceiveEnvironments = new List<PreReceiveEnvironment>();
             for (var count = 0; count < 5; count++)
@@ -35,7 +35,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             }
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsPreReceiveEnvironments()
         {
             var preReceiveEnvironments = await _preReceiveEnvironmentsClient.GetAll();
@@ -43,7 +43,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.NotEmpty(preReceiveEnvironments);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsCorrectCountOfPreReceiveEnvironmentsWithoutStart()
         {
             var options = new ApiOptions
@@ -57,7 +57,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.Equal(1, preReceiveEnvironments.Count);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsCorrectCountOfPreReceiveEnvironmentsWithStart()
         {
             var options = new ApiOptions
@@ -72,7 +72,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.Equal(1, preReceiveEnvironments.Count);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
             var startOptions = new ApiOptions
@@ -115,7 +115,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheGetMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
 
             _preReceiveEnvironmentName = Helper.MakeNameWithTimestamp("pre-receive");
             _preReceiveEnvironmentUrl = "https://example.com/foo.zip";
@@ -123,7 +123,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsName()
         {
             var preReceiveEnvironment = await _preReceiveEnvironmentsClient.Get(_preReceiveEnvironment.Id);
@@ -132,7 +132,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.Equal(_preReceiveEnvironmentName, preReceiveEnvironment.Name);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task ReturnsImageUrl()
         {
             var preReceiveEnvironment = await _preReceiveEnvironmentsClient.Get(_preReceiveEnvironment.Id);
@@ -141,7 +141,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.Equal(_preReceiveEnvironmentUrl, preReceiveEnvironment.ImageUrl);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task NoEnvironmentExists()
         {
             await Assert.ThrowsAsync<NotFoundException>(() => _preReceiveEnvironmentsClient.Get(-1));
@@ -161,7 +161,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheCreateMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
         }
 
         [Fact]
@@ -203,14 +203,14 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheEditMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
 
             var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
             _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
             EnterpriseHelper.WaitForPreReceiveEnvironmentToComplete(_githubEnterprise.Connection, _preReceiveEnvironment);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CanChangeNameOfPreReceiveEnvironment()
         {
             var updatePreReceiveEnvironment = new UpdatePreReceiveEnvironment
@@ -225,7 +225,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.Equal(_preReceiveEnvironment.ImageUrl, updatedPreReceiveEnvironment.ImageUrl);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CanChangeImageUrlOfPreReceiveEnvironment()
         {
             var updatePreReceiveEnvironment = new UpdatePreReceiveEnvironment
@@ -254,10 +254,10 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheDeleteMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CanDeletePreReceiveEnvironment()
         {
             var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
@@ -269,7 +269,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.Get(preReceiveEnvironment.Id));
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CannotDeleteWhenNoEnvironmentExists()
         {
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.Delete(-1));
@@ -285,13 +285,13 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheDownloadStatusMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
 
             var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
             _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CanGetDownloadStatus()
         {
             var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(_preReceiveEnvironment.Id);
@@ -299,7 +299,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.NotNull(downloadStatus);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CannotGetDownloadStatusWhenNoEnvironmentExists()
         {
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.DownloadStatus(-1));
@@ -320,14 +320,14 @@ public class EnterprisePreReceiveEnvironmentClientTests
         public TheTriggerDownloadMethod()
         {
             _githubEnterprise = EnterpriseHelper.GetAuthenticatedClient();
-            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironments;
+            _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
 
             var newPreReceiveEnvironment = new NewPreReceiveEnvironment(Helper.MakeNameWithTimestamp("pre-receive"), "https://example.com/foo.zip");
             _preReceiveEnvironment = _preReceiveEnvironmentsClient.Create(newPreReceiveEnvironment).Result;
             EnterpriseHelper.WaitForPreReceiveEnvironmentToComplete(_githubEnterprise.Connection, _preReceiveEnvironment);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CanTriggerDownload()
         {
             var downloadStatus = await _preReceiveEnvironmentsClient.DownloadStatus(_preReceiveEnvironment.Id);
@@ -335,7 +335,7 @@ public class EnterprisePreReceiveEnvironmentClientTests
             Assert.NotNull(downloadStatus);
         }
 
-        [IntegrationTest]
+        [GitHubEnterpriseTest]
         public async Task CannotTriggerDownloadWhenNoEnvironmentExists()
         {
             await Assert.ThrowsAsync<NotFoundException>(async () => await _preReceiveEnvironmentsClient.DownloadStatus(-1));
