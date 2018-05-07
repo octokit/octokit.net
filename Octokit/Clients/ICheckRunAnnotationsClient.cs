@@ -5,7 +5,9 @@ namespace Octokit
 {
     public interface ICheckRunAnnotationsClient
     {
-        Task<IReadOnlyList<CheckAnnotation>> List(long repositoryId, long checkRunId);
-        Task<IReadOnlyList<CheckAnnotation>> List(string owner, string name, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> List(long repositoryId, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> List(string owner, string name, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> List(long repositoryId, long checkRunId, ApiOptions options);
+        Task<IReadOnlyList<CheckRunAnnotation>> List(string owner, string name, long checkRunId, ApiOptions options);
     }
 }

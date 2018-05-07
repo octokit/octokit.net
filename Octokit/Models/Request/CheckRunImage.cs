@@ -1,6 +1,6 @@
 ﻿namespace Octokit
 {
-    public sealed class CheckImage
+    public sealed class CheckRunImage
     {
         string Alt { get; set; }
         string ImageUrl { get; set; }

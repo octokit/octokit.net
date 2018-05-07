@@ -12,7 +12,7 @@ namespace Octokit
         public DateTimeOffset StartedAt { get; set; }
         public CheckConclusion Conclusion { get; set; }
         public DateTimeOffset CompletedAt { get; set; }
-        public CheckOutput Output { get; set; }
+        public CheckRunOutput Output { get; set; }
     }
     
     public enum CheckStatus

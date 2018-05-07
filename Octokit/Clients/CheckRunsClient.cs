@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Octokit
+{
+    public sealed class CheckRunsClient : ApiClient, ICheckRunsClient
+    {
+        public ICheckRunAnnotationsClient Annotations { get; }
+
+        public CheckRunsClient(IApiConnection apiConnection) : base(apiConnection)
+        {
+            Annotations = new CheckRunAnnotationsClient(apiConnection);
+        }
+
+        public Task Create(long repositoryId, NewCheckRun newCheckRun)
+        {
+            Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(repositoryId), newCheckRun);
+        }
+
+        public Task Create(string owner, string name, NewCheckRun newCheckRun)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(owner, name), newCheckRun);
+        }
+
+        public Task<CheckRun> Get(long repositoryId, long checkRunId)
+        {
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId));
+        }
+
+        public Task<CheckRun> Get(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId));
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, string reference, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return List(repositoryId, reference, checkRunRequest, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, string reference, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return List(owner, name, reference, checkRunRequest, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            
+            return List(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return List(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            throw new NotImplementedException();
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            throw new NotImplementedException();
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            throw new NotImplementedException();
+        }
+
+        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            throw new NotImplementedException();
+        }
+
+        public Task Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        {
+            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+
+            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), checkRunUpdate);
+        }
+
+        public Task Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+
+            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), checkRunUpdate);
+        }
+    }
+}

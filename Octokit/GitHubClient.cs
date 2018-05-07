@@ -110,6 +110,7 @@ namespace Octokit
             Search = new SearchClient(apiConnection);
             User = new UsersClient(apiConnection);
             Reaction = new ReactionsClient(apiConnection);
+            CheckRuns = new CheckRunsClient(apiConnection);
         }
 
         /// <summary>
@@ -295,6 +296,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         public IReactionsClient Reaction { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Check Runs API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/runs
+        /// </remarks>
+        public ICheckRunsClient CheckRuns { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public sealed class CheckAnnotation
+    public sealed class CheckRunAnnotation
     {
         string Filename { get; set; }
         string BlobHref { get; set; }

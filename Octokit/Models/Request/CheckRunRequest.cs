@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    public sealed class CheckRunRequest
+    public sealed class CheckRunRequest : RequestParameters
     {
         public string CheckName { get; set; }
         public CheckStatus? Status { get; set; }
