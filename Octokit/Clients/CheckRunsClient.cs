@@ -17,7 +17,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(repositoryId), newCheckRun);
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(repositoryId), newCheckRun, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task Create(string owner, string name, NewCheckRun newCheckRun)
@@ -26,12 +26,12 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(owner, name), newCheckRun);
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(owner, name), newCheckRun, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckRun> Get(long repositoryId, long checkRunId)
         {
-            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId));
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckRun> Get(string owner, string name, long checkRunId)
@@ -39,7 +39,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId));
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<IReadOnlyList<CheckRun>> List(long repositoryId, string reference, CheckRunRequest checkRunRequest)
@@ -118,7 +118,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
-            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), checkRunUpdate);
+            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), checkRunUpdate, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
@@ -127,7 +127,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
-            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), checkRunUpdate);
+            return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), checkRunUpdate, AcceptHeaders.ChecksApiPreview);
         }
     }
 }

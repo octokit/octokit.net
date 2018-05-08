@@ -24,7 +24,7 @@ namespace Octokit
 
         public Task<IReadOnlyList<CheckRunAnnotation>> List(long repositoryId, long checkRunId, ApiOptions options)
         {
-            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), options);
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
 
         public Task<IReadOnlyList<CheckRunAnnotation>> List(string owner, string name, long checkRunId, ApiOptions options)
@@ -32,7 +32,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), options);
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
     }
 }
