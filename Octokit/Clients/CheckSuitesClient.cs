@@ -11,82 +11,134 @@ namespace Octokit
 
         public Task Create(long repositoryId, NewCheckSuite newCheckSuite)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(repositoryId), newCheckSuite, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task Create(string owner, string name, NewCheckSuite newCheckSuite)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(owner, name), newCheckSuite, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckSuite> Get(long repositoryId, long checkSuiteId)
         {
-            throw new System.NotImplementedException();
+            return ApiConnection.Get<CheckSuite>(ApiUrls.CheckSuite(repositoryId, checkSuiteId), null, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckSuite> Get(string owner, string name, long checkSuiteId)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Get<CheckSuite>(ApiUrls.CheckSuite(owner, name, checkSuiteId), null, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(repositoryId, reference, ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(owner, name, reference, ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return GetAllForReference(owner, name, reference, request, ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             throw new System.NotImplementedException();
         }
 
-        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, ApiOptions options)
+        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, ApiOptions request)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
             throw new System.NotImplementedException();
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
             throw new System.NotImplementedException();
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             throw new System.NotImplementedException();
         }
 
         public Task Request(long repositoryId, CheckSuiteTriggerRequest request)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(repositoryId), request, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task Request(string owner, string name, CheckSuiteTriggerRequest request)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(owner, name), request, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences)
+        public Task<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNull(preferences, nameof(preferences));
+
+            return ApiConnection.Patch<CheckSuitePreferences>(ApiUrls.CheckSuitePreferences(repositoryId), preferences, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences)
+        public Task<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences)
         {
-            throw new System.NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(preferences, nameof(preferences));
+
+            return ApiConnection.Patch<CheckSuitePreferences>(ApiUrls.CheckSuitePreferences(owner, name), preferences, AcceptHeaders.ChecksApiPreview);
         }
     }
 }
