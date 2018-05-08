@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRun
     {
         public CheckRun()
@@ -41,5 +44,6 @@ namespace Octokit
         public CheckSuite CheckSuite { get; protected set; }
         public GitHubApp App { get; protected set; }
         public IReadOnlyList<PullRequest> PullRequests { get; protected set; }
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}, HeadSha: {1}, Conclusion: {2}", Id, HeadSha, Conclusion);
     }
 }

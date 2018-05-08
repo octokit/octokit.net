@@ -1,7 +1,10 @@
 ﻿using Octokit.Internal;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRunAnnotation
     {
         public CheckRunAnnotation()
@@ -28,6 +31,8 @@ namespace Octokit
         public string Message { get; protected set; }
         public string Title { get; protected set; }
         public string RawDetails { get; protected set; }
+
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Title: {0}, Filename: {1}, WarningLevel: {2}", Title ?? "<Untitled>", Filename, WarningLevel.DebuggerDisplay);
     }
 
     public enum CheckWarningLevel

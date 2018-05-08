@@ -1,8 +1,11 @@
 ﻿using Octokit.Internal;
 using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRunUpdate
     {
         public string Name { get; set; }
@@ -13,6 +16,8 @@ namespace Octokit
         public CheckConclusion Conclusion { get; set; }
         public DateTimeOffset CompletedAt { get; set; }
         public CheckRunOutput Output { get; set; }
+
+        internal virtual string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Name: {0}, Conclusion: {1}", Name, Conclusion);
     }
     
     public enum CheckStatus

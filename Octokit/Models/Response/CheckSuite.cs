@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckSuite
     {
         public CheckSuite()
@@ -34,5 +37,7 @@ namespace Octokit
         public IReadOnlyList<PullRequest> PullRequests { get; protected set; }
         public GitHubApp App { get; protected set; }
         public Repository Repository { get; protected set; }
+
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}, HeadBranch: {1}, HeadSha: {2}, Conclusion: {3}", Id, HeadBranch, HeadSha, Conclusion);
     }
 }

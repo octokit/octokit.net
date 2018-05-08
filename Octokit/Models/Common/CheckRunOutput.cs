@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRunOutput
     {
         public CheckRunOutput()
@@ -20,5 +23,7 @@ namespace Octokit
         public string Summary { get; protected set; }
         public IReadOnlyList<CheckRunAnnotation> Annotations { get; protected set; }
         public IReadOnlyList<CheckRunImage> Images { get; protected set; }
+
+        internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "Title: {0}", Title);
     }
 }
