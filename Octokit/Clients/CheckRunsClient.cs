@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    public sealed class CheckRunsClient : ApiClient, ICheckRunsClient
+    public class CheckRunsClient : ApiClient, ICheckRunsClient
     {
         public ICheckRunAnnotationsClient Annotations { get; }
 

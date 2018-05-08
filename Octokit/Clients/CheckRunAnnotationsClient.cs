@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
-    internal class CheckRunAnnotationsClient : ApiClient, ICheckRunAnnotationsClient
+    class CheckRunAnnotationsClient : ApiClient, ICheckRunAnnotationsClient
     {
         public CheckRunAnnotationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
