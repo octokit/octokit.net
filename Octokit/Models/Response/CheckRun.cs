@@ -28,8 +28,8 @@ namespace Octokit
         public string ExternalId { get; protected set; }
         public string Url { get; protected set; }
         public string HtmlUrl { get; protected set; }
-        public CheckStatus Status { get; protected set; }
-        public CheckConclusion Conclusion { get; protected set; }
+        public StringEnum<CheckStatus> Status { get; protected set; }
+        public StringEnum<CheckConclusion> Conclusion { get; protected set; }
         public DateTimeOffset StartedAt { get; protected set; }
         public DateTimeOffset CompletedAt { get; protected set; }
         public CheckRunOutput Output { get; protected set; }
