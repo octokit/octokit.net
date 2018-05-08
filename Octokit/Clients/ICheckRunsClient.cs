@@ -5,8 +5,6 @@ namespace Octokit
 {
     public interface ICheckRunsClient
     {
-        ICheckRunAnnotationsClient Annotations { get; }
-
         Task Create(long repositoryId, NewCheckRun newCheckRun);
         Task Create(string owner, string name, NewCheckRun newCheckRun);
         Task Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate);
@@ -21,5 +19,9 @@ namespace Octokit
         Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options);
         Task<CheckRun> Get(long repositoryId, long checkRunId);
         Task<CheckRun> Get(string owner, string name, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options);
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options);
     }
 }

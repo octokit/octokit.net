@@ -6,11 +6,8 @@ namespace Octokit
 {
     public class CheckRunsClient : ApiClient, ICheckRunsClient
     {
-        public ICheckRunAnnotationsClient Annotations { get; }
-
         public CheckRunsClient(IApiConnection apiConnection) : base(apiConnection)
         {
-            Annotations = new CheckRunAnnotationsClient(apiConnection);
         }
 
         public Task Create(long repositoryId, NewCheckRun newCheckRun)
@@ -128,6 +125,31 @@ namespace Octokit
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
             return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), checkRunUpdate, AcceptHeaders.ChecksApiPreview);
+        }
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId)
+        {
+            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
+        {
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+        }
+
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
     }
 }
