@@ -42,41 +42,41 @@ namespace Octokit
             return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, string reference, CheckRunRequest checkRunRequest)
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return List(repositoryId, reference, checkRunRequest, ApiOptions.None);
+            return GetAllForReference(repositoryId, reference, checkRunRequest, ApiOptions.None);
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, string reference, CheckRunRequest checkRunRequest)
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return List(owner, name, reference, checkRunRequest, ApiOptions.None);
+            return GetAllForReference(owner, name, reference, checkRunRequest, ApiOptions.None);
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             
-            return List(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return List(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
+            return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
@@ -85,7 +85,7 @@ namespace Octokit
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -96,7 +96,7 @@ namespace Octokit
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -104,7 +104,7 @@ namespace Octokit
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<CheckRun>> List(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
