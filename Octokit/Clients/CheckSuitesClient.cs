@@ -9,20 +9,20 @@ namespace Octokit
         {
         }
 
-        public Task<CheckRun> Create(long repositoryId, NewCheckSuite newCheckSuite)
+        public Task<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite)
         {
             Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(repositoryId), newCheckSuite, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(repositoryId), newCheckSuite, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task<CheckRun> Create(string owner, string name, NewCheckSuite newCheckSuite)
+        public Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(owner, name), newCheckSuite, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(owner, name), newCheckSuite, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckSuite> Get(long repositoryId, long checkSuiteId)
@@ -109,20 +109,20 @@ namespace Octokit
             throw new System.NotImplementedException();
         }
 
-        public Task<CheckRun> Request(long repositoryId, CheckSuiteTriggerRequest request)
+        public Task<CheckSuite> Request(long repositoryId, CheckSuiteTriggerRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(repositoryId), request, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(repositoryId), request, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task<CheckRun> Request(string owner, string name, CheckSuiteTriggerRequest request)
+        public Task<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return ApiConnection.Post<CheckRun>(ApiUrls.CheckSuites(owner, name), request, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(owner, name), request, AcceptHeaders.ChecksApiPreview);
         }
 
         public Task<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences)
