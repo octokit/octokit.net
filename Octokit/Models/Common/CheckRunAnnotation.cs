@@ -4,6 +4,10 @@ namespace Octokit
 {
     public class CheckRunAnnotation
     {
+        public CheckRunAnnotation()
+        {
+        }
+
         public CheckRunAnnotation(string filename, string blobHref, int startLine, int endLine, CheckWarningLevel warningLevel, string message, string title, string rawDetails)
         {
             Filename = filename;
