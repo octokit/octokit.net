@@ -151,11 +151,11 @@ namespace Octokit
         IReactionsClient Reaction { get; }
 
         /// <summary>
-        /// Access GitHub's Check Runs API.
+        /// Access GitHub's Checks API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/runs/
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
-        ICheckRunsClient CheckRuns { get; }
+        IChecksClient Checks { get; }
     }
 }
