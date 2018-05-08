@@ -17,6 +17,7 @@
             License = new ObservableEnterpriseLicenseClient(client);
             Organization = new ObservableEnterpriseOrganizationClient(client);
             SearchIndexing = new ObservableEnterpriseSearchIndexingClient(client);
+            PreReceiveEnvironment = new ObservableEnterprisePreReceiveEnvironmentsClient(client);
         }
 
         /// <summary>
@@ -58,5 +59,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise/search_indexing/">Enterprise Search Indexing API documentation</a> for more information.
         ///</remarks>
         public IObservableEnterpriseSearchIndexingClient SearchIndexing { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Pre-receive Environments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise-admin/pre_receive_environments/">Enterprise Pre-receive Environments API documentation</a> for more information.
+        ///</remarks>
+        public IObservableEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironment { get; private set; }
     }
 }
