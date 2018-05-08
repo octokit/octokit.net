@@ -3819,7 +3819,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
         public static Uri CheckRun(string owner, string repo, long id)
         {
-            return "repositories/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, id);
+            return "repos/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, id);
         }
 
         /// <summary>
@@ -3840,7 +3840,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
         public static Uri CheckRuns(string owner, string repo)
         {
-            return "repositories/{0}/{1}/check-runs".FormatUri(owner, repo);
+            return "repos/{0}/{1}/check-runs".FormatUri(owner, repo);
         }
 
         /// <summary>
@@ -3863,7 +3863,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that returns the specified check run's annotations.</returns>
         public static Uri CheckRunAnnotations(string owner, string repo, long id)
         {
-            return "repositories/{0}/{1}/check-runs/{2}/annotations".FormatUri(owner, repo, id);
+            return "repos/{0}/{1}/check-runs/{2}/annotations".FormatUri(owner, repo, id);
         }
 
         /// <summary>
@@ -3886,7 +3886,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
         public static Uri ReferenceCheckRuns(string owner, string repo, string reference)
         {
-            return "repositories/{0}/{1}/commits/{2}/check-runs".FormatUri(owner, repo, reference);
+            return "repos/{0}/{1}/commits/{2}/check-runs".FormatUri(owner, repo, reference);
         }
 
         /// <summary>
@@ -3909,7 +3909,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that returns the specified pull request.</returns>
         public static Uri CheckSuiteRuns(string owner, string repo, long id)
         {
-            return "repositories/{0}/{1}/check-suites/{2}/check-runs".FormatUri(owner, repo, id);
+            return "repos/{0}/{1}/check-suites/{2}/check-runs".FormatUri(owner, repo, id);
         }
     }
 }
