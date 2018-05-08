@@ -17,9 +17,9 @@ namespace Octokit
         Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options);
         Task<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences);
         Task<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences);
-        Task Create(long repositoryId, NewCheckSuite newCheckSuite);
-        Task Create(string owner, string name, NewCheckSuite newCheckSuite);
-        Task Request(long repositoryId, CheckSuiteTriggerRequest request);
-        Task Request(string owner, string name, CheckSuiteTriggerRequest request);
+        Task<CheckRun> Create(long repositoryId, NewCheckSuite newCheckSuite);
+        Task<CheckRun> Create(string owner, string name, NewCheckSuite newCheckSuite);
+        Task<CheckRun> Request(long repositoryId, CheckSuiteTriggerRequest request);
+        Task<CheckRun> Request(string owner, string name, CheckSuiteTriggerRequest request);
     }
 }

@@ -48,7 +48,7 @@ namespace Octokit.Reactive
             Enterprise = new ObservableEnterpriseClient(gitHubClient);
             Migration = new ObservableMigrationClient(gitHubClient);
             Reaction = new ObservableReactionsClient(gitHubClient);
-            //Checks = new ObservableChecksClient(gitHubClient);
+            Checks = new ObservableChecksClient(gitHubClient);
         }
 
         public IConnection Connection

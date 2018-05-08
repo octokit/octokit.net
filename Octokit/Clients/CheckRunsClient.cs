@@ -10,14 +10,14 @@ namespace Octokit
         {
         }
 
-        public Task Create(long repositoryId, NewCheckRun newCheckRun)
+        public Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
         {
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
 
             return ApiConnection.Post<CheckRun>(ApiUrls.CheckRuns(repositoryId), newCheckRun, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task Create(string owner, string name, NewCheckRun newCheckRun)
+        public Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -111,14 +111,14 @@ namespace Octokit
             throw new NotImplementedException();
         }
 
-        public Task Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        public Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
             return ApiConnection.Patch<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), checkRunUpdate, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
+        public Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));

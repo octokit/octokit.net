@@ -5,10 +5,10 @@ namespace Octokit
 {
     public interface ICheckRunsClient
     {
-        Task Create(long repositoryId, NewCheckRun newCheckRun);
-        Task Create(string owner, string name, NewCheckRun newCheckRun);
-        Task Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate);
-        Task Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate);
+        Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun);
+        Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun);
+        Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate);
+        Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate);
         Task<IReadOnlyList<CheckRun>> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest);
         Task<IReadOnlyList<CheckRun>> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest);
         Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest);
