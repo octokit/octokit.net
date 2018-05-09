@@ -1,5 +1,8 @@
-﻿namespace Octokit
+﻿using System.Diagnostics;
+
+namespace Octokit
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckSuiteEventPayload : ActivityPayload
     {
         public string Action { get; protected set; }
