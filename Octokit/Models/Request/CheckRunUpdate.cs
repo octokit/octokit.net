@@ -13,7 +13,7 @@ namespace Octokit
         public string ExternalId { get; set; }
         public CheckStatus? Status { get; set; }
         public DateTimeOffset StartedAt { get; set; }
-        public CheckConclusion Conclusion { get; set; }
+        public CheckConclusion? Conclusion { get; set; }
         public DateTimeOffset CompletedAt { get; set; }
         public CheckRunOutput Output { get; set; }
 
