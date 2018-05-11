@@ -32,6 +32,6 @@ namespace Octokit.Reactive
         IObservableEnterpriseClient Enterprise { get; }
         IObservableMigrationClient Migration { get; }
         IObservableReactionsClient Reaction { get; }
-        IObservableChecksClient Checks { get; }
+        IObservableChecksClient Check { get; }
     }
 }

@@ -4,12 +4,12 @@
     {
         public ObservableChecksClient(IGitHubClient gitHubClient)
         {
-            Runs = new ObservableCheckRunsClient(gitHubClient);
-            Suites = new ObservableCheckSuitesClient(gitHubClient);
+            Run = new ObservableCheckRunsClient(gitHubClient);
+            Suite = new ObservableCheckSuitesClient(gitHubClient);
         }
 
-        public IObservableCheckRunsClient Runs { get; private set; }
+        public IObservableCheckRunsClient Run { get; private set; }
 
-        public IObservableCheckSuitesClient Suites { get; private set; }
+        public IObservableCheckSuitesClient Suite { get; private set; }
     }
 }

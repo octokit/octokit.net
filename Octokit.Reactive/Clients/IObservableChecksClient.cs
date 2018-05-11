@@ -2,7 +2,7 @@
 {
     public interface IObservableChecksClient
     {
-        IObservableCheckRunsClient Runs { get; }
-        IObservableCheckSuitesClient Suites { get; }
+        IObservableCheckRunsClient Run { get; }
+        IObservableCheckSuitesClient Suite { get; }
     }
 }
