@@ -11,7 +11,7 @@ namespace Octokit.Reactive
 
         public ObservableCheckSuitesClient(IGitHubClient gitHubClient)
         {
-            _client = gitHubClient.Checks.Suites;
+            _client = gitHubClient.Check.Suite;
             _connection = gitHubClient.Connection;
         }
 

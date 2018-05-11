@@ -156,6 +156,6 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
-        IChecksClient Checks { get; }
+        IChecksClient Check { get; }
     }
 }

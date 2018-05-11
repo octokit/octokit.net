@@ -11,7 +11,7 @@ namespace Octokit.Reactive
 
         public ObservableCheckRunsClient(IGitHubClient gitHubClient)
         {
-            _client = gitHubClient.Checks.Runs;
+            _client = gitHubClient.Check.Run;
             _connection = gitHubClient.Connection;
         }
 

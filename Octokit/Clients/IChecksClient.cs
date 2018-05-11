@@ -2,8 +2,8 @@
 {
     public interface IChecksClient
     {
-        ICheckRunsClient Runs { get; }
+        ICheckRunsClient Run { get; }
 
-        ICheckSuitesClient Suites { get; }
+        ICheckSuitesClient Suite { get; }
     }
 }
