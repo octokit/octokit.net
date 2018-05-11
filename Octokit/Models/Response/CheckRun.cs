@@ -12,7 +12,7 @@ namespace Octokit
         {
         }
 
-        public CheckRun(long id, string headSha, string externalId, string url, string htmlUrl, CheckStatus status, CheckConclusion conclusion, DateTimeOffset startedAt, DateTimeOffset completedAt, CheckRunOutput output, string name, CheckSuite checkSuite, GitHubApp app, IReadOnlyList<PullRequest> pullRequests)
+        public CheckRun(long id, string headSha, string externalId, string url, string htmlUrl, CheckStatus status, CheckConclusion? conclusion, DateTimeOffset startedAt, DateTimeOffset completedAt, CheckRunOutput output, string name, CheckSuite checkSuite, GitHubApp app, IReadOnlyList<PullRequest> pullRequests)
         {
             Id = id;
             HeadSha = headSha;
@@ -36,7 +36,7 @@ namespace Octokit
         public string Url { get; protected set; }
         public string HtmlUrl { get; protected set; }
         public StringEnum<CheckStatus> Status { get; protected set; }
-        public StringEnum<CheckConclusion> Conclusion { get; protected set; }
+        public StringEnum<CheckConclusion>? Conclusion { get; protected set; }
         public DateTimeOffset StartedAt { get; protected set; }
         public DateTimeOffset CompletedAt { get; protected set; }
         public CheckRunOutput Output { get; protected set; }
