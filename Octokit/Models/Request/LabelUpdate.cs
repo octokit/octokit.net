@@ -18,13 +18,15 @@ namespace Octokit
         /// </summary>
         /// <param name="name">The name of the label.</param>
         /// <param name="color">The color of the label.</param>
-        public LabelUpdate(string name, string color)
+        /// <param name="description">The description of the label.</param>
+        public LabelUpdate(string name, string color, string description = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(color, nameof(color));
 
             Name = name;
             Color = color;
+            Description = description;
         }
 
         /// <summary>
@@ -48,6 +50,11 @@ namespace Octokit
                 _color = value;
             }
         }
+
+        /// <summary>
+        /// A short description of the label (optional).
+        /// </summary>
+        public string Description { get; set; }
 
         internal string DebuggerDisplay
         {

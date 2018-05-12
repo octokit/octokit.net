@@ -29,7 +29,7 @@ public class IssuesLabelsClientTests : IDisposable
     public async Task CanListIssueLabelsForAnIssue()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var newLabel = new NewLabel("test label", "FFFFFF");
+        var newLabel = new NewLabel("test label", "FFFFFF", "Test label description.");
 
         var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
@@ -46,13 +46,14 @@ public class IssuesLabelsClientTests : IDisposable
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
+        Assert.Equal(newLabel.Description, issueLabelsInfo[0].Description);
     }
 
     [IntegrationTest]
     public async Task CanListIssueLabelsForAnIssueWithRepositoryId()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var newLabel = new NewLabel("test label", "FFFFFF");
+        var newLabel = new NewLabel("test label", "FFFFFF", "Test label description.");
 
         var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
@@ -69,6 +70,7 @@ public class IssuesLabelsClientTests : IDisposable
 
         Assert.Equal(1, issueLabelsInfo.Count);
         Assert.Equal(newLabel.Color, issueLabelsInfo[0].Color);
+        Assert.Equal(newLabel.Description, issueLabelsInfo[0].Description);
     }
 
     [IntegrationTest]
