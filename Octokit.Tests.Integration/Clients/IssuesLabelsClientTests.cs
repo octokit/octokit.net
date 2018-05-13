@@ -794,6 +794,7 @@ public class IssuesLabelsClientTests : IDisposable
 
         Assert.Equal(label.Name, issueLabelLookupByName.Name);
         Assert.Equal(label.Color, issueLabelLookupByName.Color);
+        Assert.Equal(label.Description, issueLabelLookupByName.Description);
     }
 
     [IntegrationTest]
@@ -807,6 +808,51 @@ public class IssuesLabelsClientTests : IDisposable
 
         Assert.Equal(label.Name, issueLabelLookupByName.Name);
         Assert.Equal(label.Color, issueLabelLookupByName.Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateIssueLabel()
+    {
+        var newLabel = new NewLabel("test label", "FFFFFF");
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        Assert.Equal(label.Name, issueLabelLookupByName.Name);
+        Assert.Equal(label.Color, issueLabelLookupByName.Color);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateIssueLabelWithDescription()
+    {
+        var newLabel = new NewLabel("test label", "FFFFFF") { Description = "Test label description." };
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        Assert.Equal(label.Name, issueLabelLookupByName.Name);
+        Assert.Equal(label.Color, issueLabelLookupByName.Color);
+        Assert.Equal(label.Description, issueLabelLookupByName.Description);
+    }
+
+    [IntegrationTest]
+    public async Task CanUpdateIssueLabel()
+    {
+        var newLabel = new NewLabel("test label", "FFFFFF") { Description = "Test label description." };
+        var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
+        Assert.NotNull(label);
+
+        var labelUpdate = new LabelUpdate("test label", "000000") { Description = "Updated label description." };
+        label = await _issuesLabelsClient.Update(_context.RepositoryOwner, _context.RepositoryName, labelUpdate.Name, labelUpdate);
+        Assert.NotNull(label);
+
+        var issueLabelLookupByName = await _issuesLabelsClient.Get(_context.RepositoryOwner, _context.RepositoryName, label.Name);
+
+        Assert.Equal(labelUpdate.Name, issueLabelLookupByName.Name);
+        Assert.Equal(labelUpdate.Color, issueLabelLookupByName.Color);
+        Assert.Equal(labelUpdate.Description, issueLabelLookupByName.Description);
     }
 
     [IntegrationTest]
