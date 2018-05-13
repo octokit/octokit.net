@@ -18,15 +18,13 @@ namespace Octokit
         /// </summary>
         /// <param name="name">The name of the label.</param>
         /// <param name="color">The color of the label.</param>
-        /// <param name="description">The description of the label.</param>
-        public NewLabel(string name, string color, string description = null)
+        public NewLabel(string name, string color)
         {
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(color, nameof(color));
 
             Name = name;
             Color = color;
-            Description = description;
         }
 
         /// <summary>

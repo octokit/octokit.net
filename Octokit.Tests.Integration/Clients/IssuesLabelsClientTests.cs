@@ -29,7 +29,7 @@ public class IssuesLabelsClientTests : IDisposable
     public async Task CanListIssueLabelsForAnIssue()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var newLabel = new NewLabel("test label", "FFFFFF", "Test label description.");
+        var newLabel = new NewLabel("test label", "FFFFFF");
 
         var label = await _issuesLabelsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
@@ -53,7 +53,7 @@ public class IssuesLabelsClientTests : IDisposable
     public async Task CanListIssueLabelsForAnIssueWithRepositoryId()
     {
         var newIssue = new NewIssue("A test issue") { Body = "A new unassigned issue" };
-        var newLabel = new NewLabel("test label", "FFFFFF", "Test label description.");
+        var newLabel = new NewLabel("test label", "FFFFFF");
 
         var label = await _issuesLabelsClient.Create(_context.Repository.Id, newLabel);
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);

@@ -14,7 +14,7 @@ namespace Octokit
             Name = name;
             Color = color;
             Description = description;
-            IsDefault = @default;
+            Default = @default;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// <summary>
         /// Is default label
         /// </summary>
-        public bool IsDefault { get; protected set; }
+        public bool Default { get; protected set; }
 
         internal string DebuggerDisplay
         {

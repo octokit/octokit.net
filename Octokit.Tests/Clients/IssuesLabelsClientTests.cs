@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue("fake", "repo", 42);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue(1, 42);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue("fake", "repo", 42, options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -75,7 +75,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue(1, 42, options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -108,7 +108,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("fake", "repo");
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -137,7 +137,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1, options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForMilestone("fake", "repo", 42);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -199,7 +199,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForMilestone(1, 42);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), Args.ApiOptions);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), null, "application/vnd.github.symmetra-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -217,7 +217,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForMilestone("fake", "repo", 42, options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -235,7 +235,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForMilestone(1, 42, options);
 
-                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), options);
+                connection.Received().GetAll<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), null, "application/vnd.github.symmetra-preview+json", options);
             }
 
             [Fact]
@@ -268,7 +268,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("fake", "repo", "label");
 
-                connection.Received().Get<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels/label"));
+                connection.Received().Get<Label>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels/label"), null, "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
@@ -279,7 +279,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1, "label");
 
-                connection.Received().Get<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels/label"));
+                connection.Received().Get<Label>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels/label"), null, "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]

@@ -62,7 +62,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName));
+            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName), null, AcceptHeaders.LabelsApiPreview);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName));
+            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName), null, AcceptHeaders.LabelsApiPreview);
         }
 
         /// <summary>
