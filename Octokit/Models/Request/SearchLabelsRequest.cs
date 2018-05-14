@@ -9,8 +9,8 @@ using Octokit.Internal;
 namespace Octokit
 {
     /// <summary>
-    /// Searching Code/Files
-    /// http://developer.github.com/v3/search/#search-code
+    /// Search labels
+    /// https://developer.github.com/v3/search/#search-labels
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchLabelsRequest : BaseSearchRequest
@@ -41,6 +41,7 @@ namespace Octokit
         /// http://developer.github.com/v3/search/#search-code
         /// </remarks>
         public LabelSearchSort? SortField { get; set; }
+
         public override string Sort
         {
             get { return SortField.ToParameter(); }

@@ -44,6 +44,7 @@ namespace Octokit
 
         /// <summary>
         /// search labels
+        /// https://developer.github.com/v3/search/#search-labels
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
