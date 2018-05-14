@@ -15,13 +15,6 @@ namespace Octokit.Reactive
             _connection = gitHubClient.Connection;
         }
 
-        public IObservable<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
-        {
-            Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
-
-            return _client.Create(repositoryId, newCheckRun).ToObservable();
-        }
-
         public IObservable<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -31,9 +24,11 @@ namespace Octokit.Reactive
             return _client.Create(owner, name, newCheckRun).ToObservable();
         }
 
-        public IObservable<CheckRun> Get(long repositoryId, long checkRunId)
+        public IObservable<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
         {
-            return _client.Get(repositoryId, checkRunId).ToObservable();
+            Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
+
+            return _client.Create(repositoryId, newCheckRun).ToObservable();
         }
 
         public IObservable<CheckRun> Get(string owner, string name, long checkRunId)
@@ -44,9 +39,9 @@ namespace Octokit.Reactive
             return _client.Get(owner, name, checkRunId).ToObservable();
         }
 
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId)
+        public IObservable<CheckRun> Get(long repositoryId, long checkRunId)
         {
-            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
+            return _client.Get(repositoryId, checkRunId).ToObservable();
         }
 
         public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId)
@@ -57,11 +52,9 @@ namespace Octokit.Reactive
             return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None);
         }
 
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId)
         {
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
         }
 
         public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
@@ -73,11 +66,11 @@ namespace Octokit.Reactive
             return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
 
-        public IObservable<CheckRun> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
 
         public IObservable<CheckRun> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
@@ -89,12 +82,11 @@ namespace Octokit.Reactive
             return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
         }
 
-        public IObservable<CheckRun> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRun> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
-            Ensure.ArgumentNotNull(options, nameof(options));
 
-            throw new NotImplementedException();
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
         }
 
         public IObservable<CheckRun> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
@@ -107,10 +99,10 @@ namespace Octokit.Reactive
             throw new NotImplementedException();
         }
 
-        public IObservable<CheckRun> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRun> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             throw new NotImplementedException();
         }
@@ -125,7 +117,7 @@ namespace Octokit.Reactive
             throw new NotImplementedException();
         }
 
-        public IObservable<CheckRun> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRun> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
@@ -143,11 +135,12 @@ namespace Octokit.Reactive
             throw new NotImplementedException();
         }
 
-        public IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        public IObservable<CheckRun> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return _client.Update(repositoryId, checkRunId, checkRunUpdate).ToObservable();
+            throw new NotImplementedException();
         }
 
         public IObservable<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
@@ -157,6 +150,13 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
             return _client.Update(owner, name, checkRunId, checkRunUpdate).ToObservable();
+        }
+
+        public IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        {
+            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+
+            return _client.Update(repositoryId, checkRunId, checkRunUpdate).ToObservable();
         }
     }
 }
