@@ -41,5 +41,12 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of files</returns>
         Task<SearchCodeResult> SearchCode(SearchCodeRequest search);
+
+        /// <summary>
+        /// search labels
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of labels</returns>
+        Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search);
     }
 }

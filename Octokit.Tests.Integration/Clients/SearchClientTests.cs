@@ -616,4 +616,14 @@ public class SearchClientTests
         // Ensure no items from the first search are in the results for the second
         Assert.DoesNotContain(issues.Items, x1 => otherIssues.Items.Any(x2 => x2.Id == x1.Id));
     }
+
+    [IntegrationTest]
+    public async Task SearchForAllLabelsUsingTermAndRepositoryId()
+    {
+        var request = new SearchLabelsRequest("category", 7528679);
+        
+        var labels = await _gitHubClient.Search.SearchLabels(request);
+
+        Assert.NotEmpty(labels.Items);
+    }
 }
