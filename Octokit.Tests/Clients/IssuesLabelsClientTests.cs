@@ -313,7 +313,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddToIssue("fake", "repo", 42, labels);
 
-                connection.Received().Post<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Any<string[]>());
+                connection.Received().Post<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Any<string[]>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Clients
 
                 client.AddToIssue(1, 42, labels);
 
-                connection.Received().Post<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Any<string[]>());
+                connection.Received().Post<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Any<string[]>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
@@ -398,7 +398,7 @@ namespace Octokit.Tests.Clients
 
                 client.ReplaceAllForIssue("fake", "repo", 42, labels);
 
-                connection.Received().Put<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Any<string[]>());
+                connection.Received().Put<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Any<string[]>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
@@ -409,7 +409,7 @@ namespace Octokit.Tests.Clients
 
                 client.ReplaceAllForIssue(1, 42, labels);
 
-                connection.Received().Put<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Any<string[]>());
+                connection.Received().Put<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Any<string[]>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
