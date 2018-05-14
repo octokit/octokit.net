@@ -67,6 +67,11 @@ namespace Octokit
             return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
         }
 
+        /// <summary>
+        /// search labels
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of labels</returns>
         public Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
         {
             Ensure.ArgumentNotNull(search, nameof(search));

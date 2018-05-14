@@ -64,5 +64,16 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchCode(search).ToObservable();
         }
+
+        /// <summary>
+        /// search labels
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of labels</returns>
+        public IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
+        {
+            Ensure.ArgumentNotNull(search, nameof(search));
+            return _client.SearchLabels(search).ToObservable();
+        }
     }
 }
