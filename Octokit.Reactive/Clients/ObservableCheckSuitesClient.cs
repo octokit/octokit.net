@@ -50,14 +50,14 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAllForReference(owner, name, reference, ApiOptions.None);
+            return GetAllForReference(owner, name, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
         public IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAllForReference(repositoryId, reference, ApiOptions.None);
+            return GetAllForReference(repositoryId, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
         public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
@@ -77,25 +77,7 @@ namespace Octokit.Reactive
 
             return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
         }
-
-        public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            throw new NotImplementedException();
-        }
-
-        public IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            throw new NotImplementedException();
-        }
-
+        
         public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

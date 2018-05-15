@@ -8,6 +8,10 @@ namespace Octokit.Reactive
         IObservable<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun);
         IObservable<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate);
         IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate);
+        IObservable<CheckRun> GetAllForReference(string owner, string name, string reference);
+        IObservable<CheckRun> GetAllForReference(long repositoryId, string reference);
+        IObservable<CheckRun> GetAllForCheckSuite(string owner, string name, long checkSuiteId);
+        IObservable<CheckRun> GetAllForCheckSuite(long repositoryId, long checkSuiteId);
         IObservable<CheckRun> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest);
         IObservable<CheckRun> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest);
         IObservable<CheckRun> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest);

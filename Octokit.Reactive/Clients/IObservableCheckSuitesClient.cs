@@ -10,8 +10,6 @@ namespace Octokit.Reactive
         IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference);
         IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request);
         IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request);
-        IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, ApiOptions options);
-        IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, ApiOptions options);
         IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options);
         IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options);
         IObservable<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences);
