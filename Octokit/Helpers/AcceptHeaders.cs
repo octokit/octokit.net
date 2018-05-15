@@ -59,6 +59,8 @@ namespace Octokit
 
         public const string PreReceiveEnvironmentsPreview = "application/vnd.github.eye-scream-preview+json";
 
+        public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
