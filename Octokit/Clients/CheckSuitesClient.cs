@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -44,14 +45,14 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAllForReference(owner, name, reference, ApiOptions.None);
+            return GetAllForReference(owner, name, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAllForReference(repositoryId, reference, ApiOptions.None);
+            return GetAllForReference(repositoryId, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
         public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
@@ -71,25 +72,7 @@ namespace Octokit
             return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
         }
 
-        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, ApiOptions request)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
-            Ensure.ArgumentNotNull(request, nameof(request));
-
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
+        public async Task<IReadOnlyList<CheckSuite>> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -97,16 +80,18 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            throw new System.NotImplementedException();
+            var results = await ApiConnection.GetAll<CheckSuiteList>(ApiUrls.ReferenceCheckSuites(owner, name, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+            return results.SelectMany(x => x.CheckSuites).ToList();
         }
 
-        public Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
+        public async Task<IReadOnlyList<CheckSuite>> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            throw new System.NotImplementedException();
+            var results = await ApiConnection.GetAll<CheckSuiteList>(ApiUrls.ReferenceCheckSuites(repositoryId, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+            return results.SelectMany(x => x.CheckSuites).ToList();
         }
 
         public Task<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request)
