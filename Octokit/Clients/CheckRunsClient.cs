@@ -39,6 +39,35 @@ namespace Octokit
             return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview);
         }
 
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(long repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(repositoryId, reference, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(string owner, string name, long checkSuiteId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllForCheckSuite(owner, name, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<CheckRun>> GetAllForReference(string owner, string name, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(owner, name, reference, new CheckRunRequest(), ApiOptions.None);
+        }
+
         public Task<IReadOnlyList<CheckRun>> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
