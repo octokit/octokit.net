@@ -66,5 +66,17 @@ namespace Octokit
             Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
         }
+
+        /// <summary>
+        /// search labels
+        /// https://developer.github.com/v3/search/#search-labels
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of labels</returns>
+        public Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
+        {
+            Ensure.ArgumentNotNull(search, nameof(search));
+            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters, AcceptHeaders.LabelsApiPreview);
+        }
     }
 }

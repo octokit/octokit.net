@@ -1782,6 +1782,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching labels
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchLabels()
+        {
+            return "search/labels".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

@@ -49,6 +49,11 @@ namespace Octokit
             }
         }
 
+        /// <summary>
+        /// A short description of the label (optional).
+        /// </summary>
+        public string Description { get; set; }
+
         internal string DebuggerDisplay
         {
             get
