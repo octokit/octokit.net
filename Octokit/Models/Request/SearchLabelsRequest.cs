@@ -33,13 +33,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Optional Sort field. Can only be indexed, which indicates how recently 
-        /// a file has been indexed by the GitHub search infrastructure. 
+        /// Optional Sort field. One of created or updated.
         /// If not provided, results are sorted by best match.
         /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/search/#search-code
-        /// </remarks>
         public LabelSearchSort? SortField { get; set; }
 
         public override string Sort
@@ -48,11 +44,8 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Limits searches to a specific organization.
+        /// The repository to search in
         /// </summary>
-        /// <remarks>
-        /// https://help.github.com/articles/searching-code/#search-within-a-users-or-organizations-repositories
-        /// </remarks>
         public long RepositoryId { get; set; }
 
         public override IDictionary<string, string> AdditionalParameters()
