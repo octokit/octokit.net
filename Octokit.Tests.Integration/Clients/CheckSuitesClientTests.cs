@@ -70,6 +70,38 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+        public class TheUpdatePreferencesMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheUpdatePreferencesMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task UpdatesPreferences()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    var preference = new AutoTriggerChecksObject(new[]
+                    {
+                        new CheckSuitePreference(Helper.GitHubAppId, false)
+                    });
+
+                    var response = await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryOwner, repoContext.RepositoryName, preference);
+                    
+                    Assert.Equal(repoContext.RepositoryId, response.Repository.Id);
+                    Assert.Equal(Helper.GitHubAppId, response.Preferences.AutoTriggerChecks[0].AppId);
+                    Assert.Equal(false, response.Preferences.AutoTriggerChecks[0].Setting);
+                }
+            }
+        }
+
         public class TheCreateMethod
         {
             IGitHubClient _github;
