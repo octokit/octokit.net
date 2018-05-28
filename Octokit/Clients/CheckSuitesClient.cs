@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -94,21 +95,35 @@ namespace Octokit
             return results.SelectMany(x => x.CheckSuites).ToList();
         }
 
-        public Task<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request)
+        public async Task<bool> Request(string owner, string name, CheckSuiteTriggerRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(owner, name), request, AcceptHeaders.ChecksApiPreview);
+            var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRequests(owner, name), request, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
+
+            if (httpStatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
+            }
+
+            return httpStatusCode == HttpStatusCode.Created;
         }
 
 
-        public Task<CheckSuite> Request(long repositoryId, CheckSuiteTriggerRequest request)
+        public async Task<bool> Request(long repositoryId, CheckSuiteTriggerRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(repositoryId), request, AcceptHeaders.ChecksApiPreview);
+            var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRequests(repositoryId), request, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
+            
+            if (httpStatusCode != HttpStatusCode.Created)
+            {
+                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
+            }
+
+            return httpStatusCode == HttpStatusCode.Created;
         }
 
         public Task<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences)

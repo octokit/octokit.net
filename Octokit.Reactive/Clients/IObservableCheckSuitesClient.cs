@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         IObservable<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences);
         IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite);
         IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite);
-        IObservable<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request);
-        IObservable<CheckSuite> Request(long repositoryId, CheckSuiteTriggerRequest request);
+        IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request);
+        IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request);
     }
 }

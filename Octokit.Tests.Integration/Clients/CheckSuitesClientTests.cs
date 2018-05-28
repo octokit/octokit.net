@@ -90,5 +90,32 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
         }
+
+        public class TheRequestMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheRequestMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task RequestsCheckSuite()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+
+                    var result = await _githubAppInstallation.Check.Suite.Request(repoContext.RepositoryOwner, repoContext.RepositoryName, new CheckSuiteTriggerRequest(headCommit.Sha));
+
+                    Assert.True(result);
+                }
+            }
+        }
     }
 }

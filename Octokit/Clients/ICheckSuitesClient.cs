@@ -17,7 +17,7 @@ namespace Octokit
         Task<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences);
         Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite);
         Task<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite);
-        Task<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request);
-        Task<CheckSuite> Request(long repositoryId, CheckSuiteTriggerRequest request);
+        Task<bool> Request(string owner, string name, CheckSuiteTriggerRequest request);
+        Task<bool> Request(long repositoryId, CheckSuiteTriggerRequest request);
     }
 }

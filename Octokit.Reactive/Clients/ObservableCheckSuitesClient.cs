@@ -98,7 +98,7 @@ namespace Octokit.Reactive
             throw new NotImplementedException();
         }
 
-        public IObservable<CheckSuite> Request(string owner, string name, CheckSuiteTriggerRequest request)
+        public IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -106,7 +106,7 @@ namespace Octokit.Reactive
             return _client.Request(owner, name, request).ToObservable();
         }
 
-        public IObservable<CheckSuite> Request(long repositoryId, CheckSuiteTriggerRequest request)
+        public IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request)
         {
             return _client.Request(repositoryId, request).ToObservable();
         }
