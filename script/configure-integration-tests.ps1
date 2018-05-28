@@ -102,7 +102,6 @@ if (AskYesNoQuestion "Do you wish to setup GitHubApps integration test settings?
 {
 	VerifyEnvironmentVariable "GitHub App ID" "OCTOKIT_GITHUBAPP_ID"
 	VerifyEnvironmentVariable "GitHub App SLUG" "OCTOKIT_GITHUBAPP_SLUG"
-	VerifyEnvironmentVariable "GitHub App Installation ID" "OCTOKIT_GITHUBAPP_INSTALLATIONID"
 	VerifyEnvironmentVariable "GitHub App Pem File" "OCTOKIT_GITHUBAPP_PEMFILE"
 }
 

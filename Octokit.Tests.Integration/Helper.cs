@@ -171,11 +171,6 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_SLUG"); }
         }
 
-        public static long GitHubAppInstallationId
-        {
-            get { return Convert.ToInt64(Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_INSTALLATIONID")); }
-        }
-
         public static void DeleteRepo(IConnection connection, Repository repository)
         {
             if (repository != null)
@@ -302,6 +297,15 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = GitHubAppCredentials
             };
+        }
+
+        public static Installation GetGitHubAppInstallationForOwner(string owner)
+        {
+            var client = GetAuthenticatedGitHubAppsClient();
+            var installations = client.GitHubApps.GetAllInstallationsForCurrent().Result;
+            var installation = installations.First(x => x.Account.Login == owner);
+
+            return installation;
         }
 
         public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
