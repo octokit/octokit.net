@@ -8,7 +8,12 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRunUpdate
     {
-        public string Name { get; set; }
+        public CheckRunUpdate(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
         public string DetailsUrl { get; set; }
         public string ExternalId { get; set; }
         public CheckStatus? Status { get; set; }
