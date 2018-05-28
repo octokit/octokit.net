@@ -1,5 +1,4 @@
 ﻿using Octokit.Tests.Integration.Helpers;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -36,6 +35,37 @@ namespace Octokit.Tests.Integration.Clients
                     // Check result
                     Assert.Equal(checkSuite.Id, result.Id);
                     Assert.Equal(headCommit.Sha, result.HeadSha);
+                }
+            }
+        }
+
+        public class TheGetAllForReferenceMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheGetAllForReferenceMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsAllCheckSuites()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+
+                    var checkSuites = await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha);
+
+                    Assert.NotEmpty(checkSuites);
+                    foreach (var checkSuite in checkSuites)
+                    {
+                        Assert.Equal(headCommit.Sha, checkSuite.HeadSha);
+                    }
                 }
             }
         }
