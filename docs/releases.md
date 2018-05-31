@@ -25,7 +25,7 @@ newRelease.Draft = true;
 newRelease.Prerelease = false;
 
 var result = await client.Repository.Release.Create("octokit", "octokit.net", newRelease);
-Console.WriteLine("Created release id {0}", release.Id);
+Console.WriteLine("Created release id {0}", result.Id);
 ```
 
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
