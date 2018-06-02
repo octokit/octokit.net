@@ -48,15 +48,16 @@ var result = await client.Repository.Release.Edit("octokit", "octokit.net", 1, u
 If you have any assets to include with the release, you can upload them after creating the release:
 
 ```csharp
-var archiveContents = await File.OpenRead("output.zip"); // TODO: better sample
-var assetUpload = new ReleaseAssetUpload() 
-{
-     FileName = "my-cool-project-1.0.zip",
-     ContentType = "application/zip",
-     RawData = archiveContents
-};
-var release = client.Repository.Release.Get("octokit", "octokit.net", 1);
-var asset = await client.Repository.Release.UploadAsset(release, assetUpload);
+using(var archiveContents = File.OpenRead("output.zip")) { // TODO: better sample
+    var assetUpload = new ReleaseAssetUpload() 
+    {
+         FileName = "my-cool-project-1.0.zip",
+         ContentType = "application/zip",
+         RawData = archiveContents
+    };
+    var release = client.Repository.Release.Get("octokit", "octokit.net", 1);
+    var asset = await client.Repository.Release.UploadAsset(release, assetUpload);
+}
 ```
 
 **TODO:** are there any known limits documented to upload assets?
