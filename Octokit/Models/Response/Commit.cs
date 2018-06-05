@@ -10,11 +10,12 @@ namespace Octokit
     {
         public Commit() { }
 
-        public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount, Verification verification)
+        public Commit(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount, Verification verification)
             : base(url, label, @ref, sha, user, repository)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 
+            NodeId = nodeId;
             Message = message;
             Author = author;
             Committer = committer;
@@ -23,6 +24,11 @@ namespace Octokit
             CommentCount = commentCount;
             Verification = verification;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public string Message { get; protected set; }
 
