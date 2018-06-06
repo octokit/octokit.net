@@ -48,10 +48,10 @@ namespace Octokit
             throw new ArgumentException("Timespan must be greater than zero", name);
         }
 
-        public static void ArgumentNotNullOrEmptyArray<T>([ValidatedNotNull]T[] array, string name)
+        public static void ArgumentNotNullOrEmptyArray<T>([ValidatedNotNull]T[] value, string name)
         {
-            ArgumentNotNull(array, name);
-            if (array.Length > 0) return;
+            ArgumentNotNull(value, name);
+            if (value.Length > 0) return;
 
             throw new ArgumentException("Array cannot be empty", name);
         }
