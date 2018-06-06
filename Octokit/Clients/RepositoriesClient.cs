@@ -172,6 +172,7 @@ namespace Octokit
         /// <param name="currentOwner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer)
         {
             return ApiConnection.Post<Repository>(ApiUrls.Repository(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
