@@ -61,6 +61,8 @@ namespace Octokit
 
         public const string LabelsApiPreview = "application/vnd.github.symmetra-preview+json";
 
+        public const string RepositoryTransferPreview = "application/vnd.github.nightshade-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
