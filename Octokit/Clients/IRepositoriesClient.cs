@@ -101,6 +101,17 @@ namespace Octokit
         Task Delete(long repositoryId);
 
         /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="currentOwner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="repositoryTransfer">Reposoitory transfer information</param>
+        Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer);
+
+        /// <summary>
         /// Gets the specified repository.
         /// </summary>
         /// <remarks>
