@@ -48,6 +48,11 @@ namespace Octokit
             throw new ArgumentException("Timespan must be greater than zero", name);
         }
 
+        /// <summary>
+        /// Checks an array argument to ensure it isn't null or empty.
+        /// </summary>
+        /// <param name = "value">The argument value to check</param>
+        /// <param name = "name">The name of the argument</param>
         public static void ArgumentNotNullOrEmptyArray<T>([ValidatedNotNull]T[] value, string name)
         {
             ArgumentNotNull(value, name);
