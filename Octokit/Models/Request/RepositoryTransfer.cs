@@ -14,8 +14,7 @@ namespace Octokit
         public RepositoryTransfer(string newOwner, int[] teamId)
             : this(newOwner)
         {
-            // TODO Create Ensure method to check for empty arrays
-            // Ensure.ArgumentNotNullOrEmptyArray(teamId, nameof(teamId));
+            Ensure.ArgumentNotNullOrEmptyArray(teamId, nameof(teamId));
 
             TeamId = new int[teamId.Length];
             Array.Copy(teamId, TeamId, teamId.Length);
