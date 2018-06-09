@@ -14,11 +14,12 @@ namespace Octokit
             Number = number;
         }
 
-        public Milestone(string url, string htmlUrl, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt, DateTimeOffset? updatedAt)
+        public Milestone(string url, string htmlUrl, int number, string nodeId, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt, DateTimeOffset? updatedAt)
         {
             Url = url;
             HtmlUrl = htmlUrl;
             Number = number;
+            NodeId = nodeId;
             State = state;
             Title = title;
             Description = description;
@@ -45,6 +46,11 @@ namespace Octokit
         /// The milestone number.
         /// </summary>
         public int Number { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// Whether the milestone is open or closed.
