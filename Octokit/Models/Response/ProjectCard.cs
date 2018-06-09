@@ -9,11 +9,12 @@ namespace Octokit
     {
         public ProjectCard() { }
 
-        public ProjectCard(string columnUrl, string contentUrl, int id, string note, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectCard(string columnUrl, string contentUrl, int id, string nodeId, string note, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             ColumnUrl = columnUrl;
             ContentUrl = contentUrl;
             Id = id;
+            NodeId = nodeId;
             Note = note;
             Creator = creator;
             CreatedAt = createdAt;
@@ -34,6 +35,11 @@ namespace Octokit
         /// The Id for this card.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The note for this card.

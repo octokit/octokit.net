@@ -9,11 +9,12 @@ namespace Octokit
     {
         public Project() { }
 
-        public Project(string ownerUrl, string url, int id, string name, string body, int number, ItemState state, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public Project(string ownerUrl, string url, int id, string nodeId, string name, string body, int number, ItemState state, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             OwnerUrl = ownerUrl;
             Url = url;
             Id = id;
+            NodeId = nodeId;
             Name = name;
             Body = body;
             Number = number;
@@ -37,6 +38,11 @@ namespace Octokit
         /// The Id for this project.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The name for this project.
