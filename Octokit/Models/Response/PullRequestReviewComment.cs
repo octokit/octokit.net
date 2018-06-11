@@ -15,11 +15,12 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(string url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId)
+        public PullRequestReviewComment(string url, int id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId)
         {
             PullRequestReviewId = pullRequestReviewId;
             Url = url;
             Id = id;
+            NodeId = nodeId;
             DiffHunk = diffHunk;
             Path = path;
             Position = position;
@@ -45,6 +46,11 @@ namespace Octokit
         /// The comment Id.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The diff hunk the comment is about.
