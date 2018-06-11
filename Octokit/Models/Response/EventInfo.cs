@@ -11,9 +11,10 @@ namespace Octokit
     {
         public EventInfo() { }
 
-        public EventInfo(int id, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
+        public EventInfo(int id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             Actor = actor;
             Assignee = assignee;
@@ -27,6 +28,11 @@ namespace Octokit
         /// The id of the issue/pull request event.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL for this event.
