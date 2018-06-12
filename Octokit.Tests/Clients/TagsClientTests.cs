@@ -113,7 +113,7 @@ public class TagsClientTests
                 Tag = "tag-name",
                 Object = "tag-object",
                 Type = TaggedType.Tree,
-                Tagger = new Committer("tagger-name", "tagger-email", DateTimeOffset.Parse("2013-09-03T13:42:52Z"))
+                Tagger = new Committer("123ABC", "tagger-name", "tagger-email", DateTimeOffset.Parse("2013-09-03T13:42:52Z"))
             };
 
             var json = new SimpleJsonSerializer().Serialize(tag);
@@ -123,6 +123,7 @@ public class TagsClientTests
                                             "\"object\":\"tag-object\"," +
                                             "\"type\":\"tree\"," +
                                             "\"tagger\":{" +
+                                                "\"node_id\":\"123ABC\"," +
                                                 "\"name\":\"tagger-name\"," +
                                                 "\"email\":\"tagger-email\"," +
                                                 "\"date\":\"2013-09-03T13:42:52Z\"" +
