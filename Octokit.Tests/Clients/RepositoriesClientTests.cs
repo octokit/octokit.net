@@ -211,6 +211,37 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheTransferMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(null, "name", transfer));
+                Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", null, transfer));
+                Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", "name", null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("", "name", transfer));
+                Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("owner", "", transfer));
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
