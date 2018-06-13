@@ -13,9 +13,13 @@ namespace Octokit
     public class RepositoryTransfer
     {
         /// <summary>
-        /// Creates a new repository transfer description where TeamId is empty.
+        /// Creates a new repository transfer description with no team Ids.
         /// </summary>
         /// <param name="newOwner">The new owner of the repository after the transfer.</param>
+        /// <remarks>
+        /// This is the only valid constructor for repositories whose current owner is not an
+        /// organization.
+        /// </remarks>
         public RepositoryTransfer(string newOwner)
         {
             Ensure.ArgumentNotNullOrEmptyString(newOwner, nameof(newOwner));
