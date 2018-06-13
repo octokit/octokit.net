@@ -81,14 +81,6 @@ namespace Octokit.Tests.Models
                 RepositoryTransfer repositoryTransfer = new RepositoryTransfer(nonemptyName, testTeamId);
                 Assert.Equal(repositoryTransfer.TeamId, testTeamId);
             }
-
-            [Fact]
-            public void DoesntKeepReferenceToTeamId()
-            {
-                int[] testTeamId = nonemptyTeamId;
-                RepositoryTransfer repositoryTransfer = new RepositoryTransfer(nonemptyName, testTeamId);
-                Assert.False(Object.ReferenceEquals(repositoryTransfer.TeamId, testTeamId));
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
@@ -49,16 +50,16 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Checks an array argument to ensure it isn't null or empty.
+        /// Checks a list argument to ensure it isn't null or empty.
         /// </summary>
         /// <param name = "value">The argument value to check</param>
         /// <param name = "name">The name of the argument</param>
-        public static void ArgumentNotNullOrEmptyArray<T>([ValidatedNotNull]T[] value, string name)
+        public static void ArgumentNotNullOrEmptyList<T>([ValidatedNotNull]IReadOnlyList<T> value, string name)
         {
             ArgumentNotNull(value, name);
-            if (value.Length > 0) return;
+            if (value.Count > 0) return;
 
-            throw new ArgumentException("Array cannot be empty", name);
+            throw new ArgumentException("List cannot be empty", name);
         }
     }
 

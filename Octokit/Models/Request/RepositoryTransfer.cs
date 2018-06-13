@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Diagnostics;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace Octokit
 {
@@ -15,18 +16,17 @@ namespace Octokit
             NewOwner = newOwner;
         }
 
-        public RepositoryTransfer(string newOwner, int[] teamId)
+        public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamId)
             : this(newOwner)
         {
-            Ensure.ArgumentNotNullOrEmptyArray(teamId, nameof(teamId));
+            Ensure.ArgumentNotNullOrEmptyList(teamId, nameof(teamId));
 
-            TeamId = new int[teamId.Length];
-            Array.Copy(teamId, TeamId, teamId.Length);
+            TeamId = teamId;
         }
 
         public string NewOwner { get; set; }
 
-        public int[] TeamId { get; set; }
+        public IReadOnlyList<int> TeamId { get; set; }
 
         internal string DebuggerDisplay
         {
