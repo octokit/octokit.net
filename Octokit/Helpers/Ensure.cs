@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -50,15 +51,15 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Checks a list argument to ensure it isn't null or empty.
+        /// Checks an enumerable argument to ensure it isn't null or empty.
         /// </summary>
         /// <param name = "value">The argument value to check</param>
         /// <param name = "name">The name of the argument</param>
-        public static void ArgumentNotNullOrEmptyList<T>([ValidatedNotNull]IReadOnlyList<T> value, string name)
+        public static void ArgumentNotNullOrEmptyEnumerable<T>([ValidatedNotNull]IEnumerable<T> value, string name)
         {
             ArgumentNotNull(value, name);
-            if (value.Count > 0) return;
-
+            if (Enumerable.Any(value)) return;
+            
             throw new ArgumentException("List cannot be empty", name);
         }
     }

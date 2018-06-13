@@ -19,7 +19,7 @@ namespace Octokit
         public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamId)
             : this(newOwner)
         {
-            Ensure.ArgumentNotNullOrEmptyList(teamId, nameof(teamId));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(teamId, nameof(teamId));
 
             TeamId = teamId;
         }
