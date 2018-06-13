@@ -32,21 +32,8 @@ namespace Octokit
         {
             get
             {
-                StringBuilder strBuilder = new StringBuilder();
-                strBuilder.AppendFormat(CultureInfo.InvariantCulture, "NewOwner: {0}", NewOwner);
-                strBuilder.Append(", TeamId: ");
-                if (TeamId == null) {
-                    strBuilder.Append("null");
-                    return strBuilder.ToString();
-                }
-
-                strBuilder.Append("[ ");
-                foreach (int id in TeamId)
-                {
-                    strBuilder.AppendFormat(CultureInfo.InvariantCulture, "{0} ", id.ToString());
-                }
-                strBuilder.Append("]");
-                return strBuilder.ToString();
+                string teamIdStr = string.Join(", ", TeamId ?? new int[0]);
+                return string.Format(CultureInfo.InvariantCulture, "NewOwner: {0}, TeamId: [{1}]", NewOwner, teamIdStr);
             }
         }
     }
