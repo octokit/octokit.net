@@ -175,7 +175,7 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer)
         {
-            return ApiConnection.Post<Repository>(ApiUrls.Repository(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
         }
 
         /// <summary>
