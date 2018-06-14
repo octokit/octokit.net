@@ -240,6 +240,59 @@ namespace Octokit.Tests.Clients
                 Assert.ThrowsAsync<ArgumentException>(
                     () => client.Transfer("owner", "", transfer));
             }
+
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] {35, 42};
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/transfer"),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task SendsCorrectRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] {35, 42};
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<RepositoryTransfer>(
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamId)),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task SendsPreviewHeader()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] {35, 42};
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Is<string>(
+                            s => s.Contains(AcceptHeaders.RepositoryTransferPreview)));
+            }
         }
 
         public class TheDeleteMethod
