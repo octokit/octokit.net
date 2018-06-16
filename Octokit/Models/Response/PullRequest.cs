@@ -224,7 +224,7 @@ namespace Octokit
         /// Whether maintainers of the base repository can push to the HEAD branch
         /// </summary>
         public bool? MaintainerCanModify { get; protected set; }
-        
+
         /// <summary>
         /// Users requested for review
         /// </summary>

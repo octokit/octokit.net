@@ -92,7 +92,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task GetsInstallation()
             {
                 var installationId = Helper.GitHubAppInstallationId;
-                
+
                 var result = await _github.GitHubApps.GetInstallation(installationId);
 
                 Assert.True(result.AppId == Helper.GitHubAppId);

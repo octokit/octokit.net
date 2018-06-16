@@ -72,7 +72,7 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "created")]
         Created,
-        
+
         /// <summary>
         /// search by last updated
         /// </summary>
