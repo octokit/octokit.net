@@ -1681,4 +1681,21 @@ public class RepositoriesClientTests
             Assert.Equal("MIT License", license.License.Name);
         }
     }
+
+    public class TheTransferMethod
+    {
+        [IntegrationTest]
+        public async Task CanTransferOrgRepoToUser()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.UserName;
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
+            }
+        }
+    }
 }
