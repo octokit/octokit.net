@@ -11,4 +11,5 @@ echo "Preparing Cake.Frosting build runner..."
 dotnet restore
 
 echo "Executing Cake.Frosting build runner..."
+echo  "dotnet run $@"
 dotnet run "$@"
