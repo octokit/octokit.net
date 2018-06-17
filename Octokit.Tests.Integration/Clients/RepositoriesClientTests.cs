@@ -1711,5 +1711,30 @@ public class RepositoriesClientTests
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
             }
         }
+
+        [IntegrationTest]
+        public async Task CanTransferToOrgWithTeams()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+
+            Random rand = new Random();
+            IReadOnlyList<Team> teams = await github.Organization.Team.GetAll(Helper.Organization);
+            var randomTeam = teams[rand.Next(teams.Count)];
+            var transferTeamIds = new int[] { randomTeam.Id };
+
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var repoTeams = await github.Repository.GetAllTeams(context.RepositoryId);
+
+                // transferTeamIds is a subset of repoTeams
+                Assert.Empty(
+                    transferTeamIds.Except(
+                        repoTeams.Select(t => t.Id)));
+            }
+        }
     }
 }
