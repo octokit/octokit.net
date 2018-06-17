@@ -7,7 +7,7 @@ init:
 
 build_script:
   - dotnet --info
-  - ps: .\build.ps1 -LinkSources -Verbosity Normal
+  - ps: .\build.ps1 -LinkSources -Verbosity Verbose
 
 test: off
 

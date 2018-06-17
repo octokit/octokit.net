@@ -19,4 +19,4 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - ./build.sh --linksources=true --verbosity=normal
+  - ./build.sh --linksources=true --verbosity=verbose

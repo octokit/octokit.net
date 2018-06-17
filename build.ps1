@@ -113,8 +113,8 @@ if($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE;
 }
 Write-Host "Running Cake.Frosting build runner..."
-Write-Host "dotnet run $Arguments"
-Invoke-Expression "dotnet run $Arguments"
+Write-Host "dotnet run -- $Arguments"
+Invoke-Expression "dotnet run -- $Arguments"
 if($LASTEXITCODE -ne 0) {
     Pop-Location;
     exit $LASTEXITCODE;
