@@ -621,7 +621,7 @@ public class SearchClientTests
     public async Task SearchForAllLabelsUsingTermAndRepositoryId()
     {
         var request = new SearchLabelsRequest("category", 7528679);
-        
+
         var labels = await _gitHubClient.Search.SearchLabels(request);
 
         Assert.NotEmpty(labels.Items);

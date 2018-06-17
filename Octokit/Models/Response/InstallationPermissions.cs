@@ -25,7 +25,7 @@ namespace Octokit
             OrganizationProjects = organizationProjects;
             TeamDiscussions = teamDiscussions;
         }
-        
+
         /// <summary>
         /// Repository metadata
         /// Search repositories, list collaborators, and access repository metadata.

@@ -166,7 +166,7 @@ public class ObservableEnterprisePreReceiveEnvironmentsClientTests
             _preReceiveEnvironmentsClient = _githubEnterprise.Enterprise.PreReceiveEnvironment;
         }
 
-        [Fact]
+        [GitHubEnterpriseTest]
         public async Task CanCreatePreReceiveEnvironment()
         {
             PreReceiveEnvironment preReceiveEnvironment = null;
@@ -187,7 +187,7 @@ public class ObservableEnterprisePreReceiveEnvironmentsClientTests
             }
         }
 
-        [Fact]
+        [GitHubEnterpriseTest]
         public async Task CannotCreateWithSameName()
         {
             var newPreReceiveEnvironment = new NewPreReceiveEnvironment("default", "https://example.com/foo.zip");

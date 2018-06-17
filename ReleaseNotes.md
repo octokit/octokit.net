@@ -1,3 +1,73 @@
+### New in 0.30.0 (released 17/06/2018)
+
+## Advisories and Breaking Changes
+
+- Note that the `IssuesLabelsClient.RemoveFromIssue()` methods which previously had no return value, will now return an `IReadonlyList<Label>`.  This change is source compatible but not binary compatible.
+- The following `[Obsolete]` items have been removed from octokit, please use the indicated replacements:
+
+Client Methods
+- `OranizationsClient.GetAll()` => `GetAllForUser()`
+- `PullRequestsClient.Comment` => `ReviewComment`
+- `RepositoryBranchesClient.GetRequiredStatusChecksContexts()` => `GetAllRequiredStatusChecksContexts()`
+- `RepositoryBranchesClient.GetProtectedBranchTeamRestrictions()` => `GetAllProtectedBranchTeamRestrictions()`
+- `RepositoryBranchesClient.GetProtectedBranchUserRestrictions()` => `GetAllProtectedBranchUserRestrictions()`
+- `RepositoryTrafficClient.GetReferrers()` => `GetAllReferrers()`
+- `RepositoryTrafficClient.GetPaths()` => `GetAllPaths()`
+- `TeamsClient.GetMembership()` => `GetMembershipDetails()`
+- `TeamsClient.AddMembership()` => `AddOrEditMembership()`
+- `TeamsClient.AddMembership()` => `AddOrEditMembership()`
+
+Request Models
+- Remove unwanted `ctor`'s from `BranchProtectionUpdateSettings` and `UpdateTeam`
+- `NewIssue` `Assignee` => `Assignees`
+- `IssueUpdate` `Assignee` => `Assignees`
+
+Response Models
+- `TeamMembership` => `TeamMembershipDetails`
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Add initial support for GitHub Apps, see [the documentation](http://octokitnet.readthedocs.io/en/latest/github-apps/) for further information - [#1738](https://github.com/octokit/octokit.net/pull/1738) via [@itaibh](https://github.com/itaibh), [@adriangodong](https://github.com/adriangodong), [@ryangribble](https://github.com/ryangribble)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Added `PreviousFileName` field to `PullRequestFile` response - [#1770](https://github.com/octokit/octokit.net/pull/1770) via [@Kaneraz](https://github.com/Kaneraz)
+- Support `PullRequestReviewEvent` payloads using new response model `PullRequestReviewEventPayload` - [#1767](https://github.com/octokit/octokit.net/pull/1767) via [@Cyberboss](https://github.com/Cyberboss)
+- Add the ability to search issues by milestones, using `SearchIssuesRequest.Milestone` - [#1788](https://github.com/octokit/octokit.net/pull/1788) via [@mkArtak](https://github.com/mkArtak)
+- Add an overload to `IReleasesClient.Get()` that allows retrieving a `Release` by the associated tag - [#1793](https://github.com/octokit/octokit.net/pull/1793) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+- Add `MaintainerCanModify` field to `PullRequest` response and `NewPullRequest` and `UpdatePullRequest` requests - [#1771](https://github.com/octokit/octokit.net/pull/1771) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+- Enabled additional methods for preview "Nested Teams" support:
+  - `IRepositoriesClient.GetAllTeams()`
+  - `IRepositoryBranchesClient.GetAllProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.UpdateProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.AddProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.DeleteProtectedBranchTeamRestrictions()` - [#1795](https://github.com/octokit/octokit.net/pull/1795) via [@MikhailTymchukDX](https://github.com/MikhailTymchukDX), [@ryangribble](https://github.com/ryangribble)
+- Implement [Pre Receive Environments API (Preview)](https://developer.github.com/enterprise/2.13/v3/enterprise/pre_receive_environments/) for GitHub Enterprise - [#1796](https://github.com/octokit/octokit.net/pull/1796) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+- Implement support for [Label API Improvements](https://developer.github.com/changes/2018-02-22-label-description-search-preview/), including additional fields (`Description` and `Default`), emoji support and searching for labels (`SearchClient.SearchLabels()`) - [#1802](https://github.com/octokit/octokit.net/pull/1802) via [@jozefizso](https://github.com/jozefizso), [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Correct missing/incorrect XmlDoc entries for parameters on some methods - [#1779](https://github.com/octokit/octokit.net/pull/1779) via [@ryangribble](https://github.com/ryangribble)
+- Parameter names in validation exception messages are now derived from the parameters themselves, rather than a literal string that was hopefully kept up to date - [#1781](https://github.com/octokit/octokit.net/pull/1781) via [@itaibh](https://github.com/itaibh)
+- Update Octokit build tooling to use .NET SDK 2.x (note that this is only an SDK tooling update - `Octokit` and `Octokit.Reactive` libraries are still targeting `netstandard1.1`) - [#1784](https://github.com/octokit/octokit.net/pull/1784) via [@ryangribble](https://github.com/ryangribble)
+- Removed a number of `[Obsolete]` methods, members and constructors inline with our standard deprecation schedule - [#1780](https://github.com/octokit/octokit.net/pull/1780) via [@ryangribble](https://github.com/ryangribble)
+- Ensure all response models have appropriate `ctor`'s to allow mocking, and enforce with a convention test - [#1798](https://github.com/octokit/octokit.net/pull/1798) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Tidy up code formatting in docs/samples - [#1791](https://github.com/octokit/octokit.net/pull/1791) via [@txdv](https://github.com/txdv)
+- Clarify the usage of `reference` parameter in `IReferencesClient` methods - [#1778](https://github.com/octokit/octokit.net/pull/1778) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+- Improved the "Upload Release Asset" doc sample - [#1805](https://github.com/octokit/octokit.net/pull/1805) via [@mungojam](https://github.com/mungojam)
+- Fixed error in "Create Release" doc sample - [#1804](https://github.com/octokit/octokit.net/pull/1804) via [@mungojam](https://github.com/mungojam)
+
+
 ### New in 0.29.0 (released 19/02/2018)
 
 ## Advisories and Breaking Changes
@@ -62,6 +132,7 @@
 **Housekeeping**
 
 - Correct rendering of `HttpClient` documentation page - [#1699](https://github.com/octokit/octokit.net/pull/1699) via [@scovetta](https://github.com/scovetta)
+
 
 ### New in 0.27.0 (released 7/10/2017)
 

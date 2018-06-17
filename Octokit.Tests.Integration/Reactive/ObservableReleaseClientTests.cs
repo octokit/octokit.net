@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Reactive
         public class TheGetMethod
         {
             readonly ObservableReleasesClient _releaseClient;
-            
+
             public TheGetMethod()
             {
                 var github = Helper.GetAuthenticatedClient();

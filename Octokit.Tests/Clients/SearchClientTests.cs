@@ -1708,7 +1708,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchLabelsResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
-                    Arg.Is<Dictionary<string, string>>(d => 
+                    Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something" &&
                         d["repository_id"] == "1"),
                     "application/vnd.github.symmetra-preview+json");
@@ -1776,7 +1776,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchLabelsResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something" && 
+                        d["q"] == "something" &&
                         d["repository_id"] == "1"),
                     "application/vnd.github.symmetra-preview+json");
             }
