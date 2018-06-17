@@ -1697,5 +1697,19 @@ public class RepositoriesClientTests
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
             }
         }
+
+        [IntegrationTest]
+        public async Task CanTransferUserRepoToOrg()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
+            }
+        }
     }
 }
