@@ -1715,6 +1715,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task CanTransferToOrgWithTeams()
         {
+            // FIXME API doesn't add teams when transferring to an organization
             var github = Helper.GetAuthenticatedClient();
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
             var newOwner = Helper.Organization;
