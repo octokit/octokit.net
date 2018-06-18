@@ -49,6 +49,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
         IObservable<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer);
+        
+        IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer);
 
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.

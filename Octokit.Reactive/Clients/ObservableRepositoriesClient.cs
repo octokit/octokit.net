@@ -111,6 +111,11 @@ namespace Octokit.Reactive
             return _client.Transfer(currentOwner, name, repositoryTransfer).ToObservable();
         }
 
+        public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
+        {
+            return _client.Transfer(repositoryId, repositoryTransfer).ToObservable();
+        }
+
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
