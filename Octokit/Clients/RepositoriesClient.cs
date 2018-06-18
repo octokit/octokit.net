@@ -178,6 +178,11 @@ namespace Octokit
             return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
         }
 
+        public Task<Repository> Transfer(long id, RepositoryTransfer repositoryTransfer)
+        {
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(id), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+        }
+
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
