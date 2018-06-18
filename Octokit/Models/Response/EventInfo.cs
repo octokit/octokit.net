@@ -275,9 +275,15 @@ namespace Octokit
         CommitCommented,
         
         /// <summary>
-        /// A commit comment was made.
+        /// A user with write permissions marked an issue as a duplicate of another issue or a pull request as a duplicate of another pull request.
         /// </summary>
-        [Parameter(Value = "comment_deleted")]
-        CommentDeleted
+        [Parameter(Value = "marked_as_duplicate")]
+        MarkedAsDuplicate,
+        
+        /// <summary>
+        /// An issue that a user had previously marked as a duplicate of another issue is no longer considered a duplicate.
+        /// </summary>
+        [Parameter(Value = "unmarked_as_duplicate")]
+        UnmarkedAsDuplicate
     }
 }
