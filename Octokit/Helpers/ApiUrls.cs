@@ -1845,9 +1845,9 @@ namespace Octokit
             return "repos/{0}/{1}/transfer".FormatUri(currentOwner, name);
         }
 
-        public static Uri RepositoryTransfer(long id)
+        public static Uri RepositoryTransfer(long repositoryId)
         {
-            return "repositories/{0}/transfer".FormatUri(id);
+            return "repositories/{0}/transfer".FormatUri(repositoryId);
         }
 
         /// <summary>
