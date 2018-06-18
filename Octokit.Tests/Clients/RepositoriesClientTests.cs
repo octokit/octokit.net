@@ -211,7 +211,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheTransferByNameMethod
+        public class TheTransferMethod
         {
             [Fact]
             public void EnsuresNonNullArguments()
@@ -226,6 +226,18 @@ namespace Octokit.Tests.Clients
                     () => client.Transfer("owner", null, transfer));
                 Assert.ThrowsAsync<ArgumentNullException>(
                     () => client.Transfer("owner", "name", null));
+            }
+            
+            [Fact]
+            public void EnsuresNonNullArgumentsById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+                var repositoryId = 1;
+
+                Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(repositoryId, null));
             }
 
             [Fact]
@@ -257,6 +269,24 @@ namespace Octokit.Tests.Clients
                         Arg.Any<RepositoryTransfer>(),
                         Arg.Any<string>());
             }
+            
+            [Fact]
+            public async Task RequestsCorrectUrlById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] {35, 42};
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+                var repositoryId = 1;
+
+                await client.Transfer(repositoryId, transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/transfer"),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Any<string>());
+            }
 
             [Fact]
             public async Task SendsCorrectRequest()
@@ -267,6 +297,25 @@ namespace Octokit.Tests.Clients
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<RepositoryTransfer>(
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamId)),
+                        Arg.Any<string>());
+            }
+            
+            [Fact]
+            public async Task SendsCorrectRequestById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] {35, 42};
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+                var repositoryId = 1;
+
+                await client.Transfer(repositoryId, transfer);
 
                 connection.Received()
                     .Post<Repository>(
@@ -293,69 +342,17 @@ namespace Octokit.Tests.Clients
                         Arg.Is<string>(
                             s => s.Contains(AcceptHeaders.RepositoryTransferPreview)));
             }
-        }
-        
-        public class TheTransferByIdMethod
-        {
-            [Fact]
-            public void EnsuresNonNullArguments()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var transfer = new RepositoryTransfer("newOwner");
-                var id = 1;
-
-                Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.Transfer(id, null));
-            }
 
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task SendsPreviewHeaderById()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
                 var teamId = new int[2] {35, 42};
                 var transfer = new RepositoryTransfer("newOwner", teamId);
-                var id = 1;
+                var repositoryId = 1;
 
-                await client.Transfer(id, transfer);
-
-                connection.Received()
-                    .Post<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/transfer"),
-                        Arg.Any<RepositoryTransfer>(),
-                        Arg.Any<string>());
-            }
-
-            [Fact]
-            public async Task SendsCorrectRequest()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
-                var transfer = new RepositoryTransfer("newOwner", teamId);
-                var id = 1;
-
-                await client.Transfer(id, transfer);
-
-                connection.Received()
-                    .Post<Repository>(
-                        Arg.Any<Uri>(),
-                        Arg.Is<RepositoryTransfer>(
-                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamId)),
-                        Arg.Any<string>());
-            }
-
-            [Fact]
-            public async Task SendsPreviewHeader()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
-                var transfer = new RepositoryTransfer("newOwner", teamId);
-                var id = 1;
-
-                await client.Transfer(id, transfer);
+                await client.Transfer(repositoryId, transfer);
 
                 connection.Received()
                     .Post<Repository>(
