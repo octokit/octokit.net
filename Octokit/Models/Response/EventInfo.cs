@@ -272,6 +272,12 @@ namespace Octokit
         /// A commit comment was made.
         /// </summary>
         [Parameter(Value = "commit-commented")]
-        CommitCommented
+        CommitCommented,
+        
+        /// <summary>
+        /// A commit comment was made.
+        /// </summary>
+        [Parameter(Value = "comment_deleted")]
+        CommentDeleted
     }
 }
