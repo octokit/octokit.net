@@ -112,6 +112,8 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer);
 
+        Task<Repository> Transfer(long id, RepositoryTransfer repositoryTransfer);
+
         /// <summary>
         /// Gets the specified repository.
         /// </summary>
