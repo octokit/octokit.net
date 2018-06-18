@@ -284,6 +284,12 @@ namespace Octokit
         /// An issue that a user had previously marked as a duplicate of another issue is no longer considered a duplicate.
         /// </summary>
         [Parameter(Value = "unmarked_as_duplicate")]
-        UnmarkedAsDuplicate
+        UnmarkedAsDuplicate,
+        
+        /// <summary>
+        /// An issue comment was deleted.
+        /// </summary>
+        [Parameter(Value = "comment_deleted")]
+        CommentDeleted
     }
 }
