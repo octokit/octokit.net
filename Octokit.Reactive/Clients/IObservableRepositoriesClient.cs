@@ -49,7 +49,16 @@ namespace Octokit.Reactive
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
         IObservable<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer);
-        
+
+        /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
         IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer);
 
         /// <summary>
