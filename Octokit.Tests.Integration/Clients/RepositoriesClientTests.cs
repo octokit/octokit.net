@@ -1682,7 +1682,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheTransferMethod
+    public class TheTransferByNameMethod
     {
         [IntegrationTest]
         public async Task CanTransferOrgRepoToUser()
@@ -1729,6 +1729,63 @@ public class RepositoriesClientTests
             {
                 var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var repoTeams = await github.Repository.GetAllTeams(context.RepositoryId);
+
+                // transferTeamIds is a subset of repoTeams
+                Assert.Empty(
+                    transferTeamIds.Except(
+                        repoTeams.Select(t => t.Id)));
+            }
+        }
+    }
+
+    public class TheTransferByIdMethod
+    {
+        [IntegrationTest]
+        public async Task CanTransferOrgRepoToUser()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.UserName;
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryId, transfer);
+                var transferred = await github.Repository.Get(context.RepositoryId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanTransferUserRepoToOrg()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryId, transfer);
+                var transferred = await github.Repository.Get(context.RepositoryId);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CanTransferToOrgWithTeams()
+        {
+            // FIXME API doesn't add teams when transferring to an organization
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+
+            Random rand = new Random();
+            IReadOnlyList<Team> teams = await github.Organization.Team.GetAll(Helper.Organization);
+            var randomTeam = teams[rand.Next(teams.Count)];
+            var transferTeamIds = new int[] { randomTeam.Id };
+
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                await github.Repository.Transfer(context.RepositoryId, transfer);
                 var repoTeams = await github.Repository.GetAllTeams(context.RepositoryId);
 
                 // transferTeamIds is a subset of repoTeams
