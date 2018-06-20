@@ -89,7 +89,7 @@ var rateLimit = apiInfo?.RateLimit;
 
 var howManyRequestsCanIMakePerHour = rateLimit?.Limit;
 var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
-var whenDoesTheLimitReset = rateLimit?.Reset;
+var whenDoesTheLimitReset = rateLimit?.Reset; // UTC time
 ```
 
 However, if in some cases you need to get the Rate Limit directly from Github, you should call `GitHubClient.Miscellaneous.GetRateLimits()`.
@@ -107,14 +107,14 @@ var coreRateLimit = miscellaneousRateLimit.Resources.Core;
 
 var howManyCoreRequestsCanIMakePerHour = coreRateLimit.Limit;
 var howManyCoreRequestsDoIHaveLeft = coreRateLimit.Remaining;
-var whenDoesTheCoreLimitReset = coreRateLimit.Reset;
+var whenDoesTheCoreLimitReset = coreRateLimit.Reset; // UTC time
 
 // the "search" object provides your rate limit status for the Search API.
 var searchRateLimit = miscellaneousRateLimit.Resources.Search;
 
 var howManySearchRequestsCanIMakePerMinute = searchRateLimit.Limit;
 var howManySearchRequestsDoIHaveLeft = searchRateLimit.Remaining;
-var whenDoesTheSearchLimitReset = searchRateLimit.Reset;
+var whenDoesTheSearchLimitReset = searchRateLimit.Reset; // UTC time
 ```
 
 An authenticated client will have a significantly higher limit than an anonymous client. 
