@@ -1748,21 +1748,21 @@ public class RepositoriesClientTests
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
             var newOwner = Helper.Organization;
 
-            Random rand = new Random();
-            IReadOnlyList<Team> teams = await github.Organization.Team.GetAll(Helper.Organization);
-            var randomTeam = teams[rand.Next(teams.Count)];
-            var transferTeamIds = new int[] { randomTeam.Id };
-
-            using (var context = await github.CreateRepositoryContext(newRepo))
+            using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
             {
-                var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
-                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
-                var repoTeams = await github.Repository.GetAllTeams(context.RepositoryId);
+                NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team)) {
+                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                    await github.Repository.Transfer(
+                        repositoryContext.RepositoryOwner, repositoryContext.RepositoryName, transfer);
+                    var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
 
-                // transferTeamIds is a subset of repoTeams
-                Assert.Empty(
-                    transferTeamIds.Except(
-                        repoTeams.Select(t => t.Id)));
+                    // transferTeamIds is a subset of repoTeams
+                    Assert.Empty(
+                        transferTeamIds.Except(
+                            repoTeams.Select(t => t.Id)));
+                }
             }
         }
         
@@ -1774,21 +1774,20 @@ public class RepositoriesClientTests
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
             var newOwner = Helper.Organization;
 
-            Random rand = new Random();
-            IReadOnlyList<Team> teams = await github.Organization.Team.GetAll(Helper.Organization);
-            var randomTeam = teams[rand.Next(teams.Count)];
-            var transferTeamIds = new int[] { randomTeam.Id };
-
-            using (var context = await github.CreateRepositoryContext(newRepo))
+            using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
             {
-                var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
-                await github.Repository.Transfer(context.RepositoryId, transfer);
-                var repoTeams = await github.Repository.GetAllTeams(context.RepositoryId);
+                NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team)) {
+                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                    await github.Repository.Transfer(repositoryContext.RepositoryId, transfer);
+                    var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
 
-                // transferTeamIds is a subset of repoTeams
-                Assert.Empty(
-                    transferTeamIds.Except(
-                        repoTeams.Select(t => t.Id)));
+                    // transferTeamIds is a subset of repoTeams
+                    Assert.Empty(
+                        transferTeamIds.Except(
+                            repoTeams.Select(t => t.Id)));
+                }
             }
         }
     }
