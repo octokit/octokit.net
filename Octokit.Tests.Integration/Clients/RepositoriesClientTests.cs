@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -1699,7 +1699,7 @@ public class RepositoriesClientTests
         }
         
         [IntegrationTest]
-        public async Task TransfersFromOrgToUserWithId()
+        public async Task TransfersFromOrgToUserById()
         {
             var github = Helper.GetAuthenticatedClient();
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
