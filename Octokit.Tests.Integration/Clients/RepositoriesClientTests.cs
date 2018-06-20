@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -1695,6 +1695,8 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
+                
+                Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
         
@@ -1709,6 +1711,8 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryId, transfer);
                 var transferred = await github.Repository.Get(context.RepositoryId);
+
+                Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
 
@@ -1723,6 +1727,8 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
+                
+                Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
         
@@ -1737,6 +1743,8 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryId, transfer);
                 var transferred = await github.Repository.Get(context.RepositoryId);
+
+                Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
 
@@ -1756,8 +1764,10 @@ public class RepositoriesClientTests
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(
                         repositoryContext.RepositoryOwner, repositoryContext.RepositoryName, transfer);
+                    var transferred = await github.Repository.Get(repositoryContext.RepositoryId);
                     var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
 
+                    Assert.Equal(newOwner, transferred.Owner.Login);
                     // transferTeamIds is a subset of repoTeams
                     Assert.Empty(
                         transferTeamIds.Except(
@@ -1781,8 +1791,10 @@ public class RepositoriesClientTests
                     var transferTeamIds = new int[] { teamContext.TeamId };
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(repositoryContext.RepositoryId, transfer);
+                    var transferred = await github.Repository.Get(repositoryContext.RepositoryId);
                     var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
 
+                    Assert.Equal(newOwner, transferred.Owner.Login);
                     // transferTeamIds is a subset of repoTeams
                     Assert.Empty(
                         transferTeamIds.Except(
