@@ -35,7 +35,7 @@ Each GitHub App has a private certificate (PEM file) which is [generated via the
 
 The first step in the authentication process, is to generate a JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's Id, which is obtainable from the GitHub website.
 
-:lightbulb: There are several ways to generate JWT tokens in `.NET` and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string, as an example.  See the notes at the end of this document, for one possible library you can use.
+:lightbulb: There are several ways to generate JWT tokens in `.NET` and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string, as an example.  See the Additional Notes section for one library we can recommend.
 
 :warning: These JWT tokens can only be valid for up to 10 minutes, and a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
 
@@ -66,7 +66,7 @@ var installation = await appClient.GetInstallation(123);
 
 In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary installation token (currently these expire after 1 hour), and using that for authentication. 
 
-:lightbulb: The Installation Id to use, would typically come from a webhook payload.  See below note section for more details.
+:lightbulb: The Installation Id to use, would typically come from a webhook payload.  See the Additional Notes section for more details.
 
 :warning: These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
 
@@ -93,7 +93,34 @@ Once authenticated as an `Installation`, a [subset of regular API endpoints](htt
 var response = await installationClient.Issue.Comment.Create("owner", "repo", 1, "Hello from my GitHubApp Installation!");
 ```
 
-## A Note on identifying Installation Id's
+## Additional Notes
+
+### A Note on JWT Tokens
+Octokit.net aims to have no external dependencies, therefore we do not curently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
+
+Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
+
+``` csharp
+// Use GitHubJwt library to create the GitHubApp Jwt Token using our private certificate PEM file
+var generator = new GitHubJwt.GitHubJwtFactory(
+    new GitHubJwt.FilePrivateKeySource("/path/to/pem_file"),
+    new GitHubJwt.GitHubJwtFactoryOptions
+    {
+        AppIntegrationId = 1, // The GitHub App Id
+        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
+    }
+);
+
+var jwtToken = generator.CreateEncodedJwtToken();
+
+// Pass the JWT as a Bearer token to Octokit.net
+var appClient = new GitHubClient(new ProductHeaderValue("MyApp"))
+{
+    Credentials = new Credentials(jwtToken, AuthenticationType.Bearer)
+};
+```
+
+### A Note on identifying Installation Id's
 GitHub Apps can be registered for webhook events.
 
 WebHook payloads sent to these registrations now include an extra field to indicate the Id of the GitHub App Installation that is associated with the received webhook.
@@ -132,29 +159,4 @@ var payload = serializer_.Deserialize<PullRequestEventPayload>(json);
 
 // Create an Installation token for the associated Insallation Id
 var response = await appClient.CreateInstallationToken(payload.Installation.Id);
-```
-
-## A Note on JWT Tokens
-Octokit.net aims to have no external dependencies, therefore we do not curently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
-
-Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
-
-``` csharp
-// Use GitHubJwt library to create the GitHubApp Jwt Token using our private certificate PEM file
-var generator = new GitHubJwt.GitHubJwtFactory(
-    new GitHubJwt.FilePrivateKeySource("/path/to/pem_file"),
-    new GitHubJwt.GitHubJwtFactoryOptions
-    {
-        AppIntegrationId = 1, // The GitHub App Id
-        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
-    }
-);
-
-var jwtToken = generator.CreateEncodedJwtToken();
-
-// Pass the JWT as a Bearer token to Octokit.net
-var appClient = new GitHubClient(new ProductHeaderValue("MyApp"))
-{
-    Credentials = new Credentials(jwtToken, AuthenticationType.Bearer)
-};
 ```
