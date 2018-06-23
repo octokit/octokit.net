@@ -175,6 +175,10 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer)
         {
+            Ensure.ArgumentNotNullOrEmptyString(currentOwner, nameof(currentOwner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+
             return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
         }
 
@@ -189,6 +193,8 @@ namespace Octokit
         /// <returns>A <see cref="Repository"/></returns>
         public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+
             return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
         }
 
