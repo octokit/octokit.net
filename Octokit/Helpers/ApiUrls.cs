@@ -1845,6 +1845,11 @@ namespace Octokit
             return "repos/{0}/{1}/transfer".FormatUri(currentOwner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository transfer.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns></returns>
         public static Uri RepositoryTransfer(long repositoryId)
         {
             return "repositories/{0}/transfer".FormatUri(repositoryId);
