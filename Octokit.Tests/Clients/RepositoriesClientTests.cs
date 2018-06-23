@@ -214,43 +214,43 @@ namespace Octokit.Tests.Clients
         public class TheTransferMethod
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
                 var transfer = new RepositoryTransfer("newOwner");
 
-                Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await client.Transfer(null, "name", transfer));
-                Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await client.Transfer("owner", null, transfer));
-                Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await client.Transfer("owner", "name", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(null, "name", transfer));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", null, transfer));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", "name", null));
             }
             
             [Fact]
-            public void EnsuresNonNullArgumentsById()
+            public async Task EnsuresNonNullArgumentsById()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
                 var transfer = new RepositoryTransfer("newOwner");
                 var repositoryId = 1;
 
-                Assert.ThrowsAsync<ArgumentNullException>(
-                    async () => await client.Transfer(repositoryId, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(repositoryId, null));
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
                 var transfer = new RepositoryTransfer("newOwner");
 
-                Assert.ThrowsAsync<ArgumentException>(
-                    async () => await client.Transfer("", "name", transfer));
-                Assert.ThrowsAsync<ArgumentException>(
-                    async () => await client.Transfer("owner", "", transfer));
+                await Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("", "name", transfer));
+                await Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("owner", "", transfer));
             }
 
             [Fact]
