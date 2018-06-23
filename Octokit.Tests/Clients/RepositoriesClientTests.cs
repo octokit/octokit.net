@@ -221,11 +221,11 @@ namespace Octokit.Tests.Clients
                 var transfer = new RepositoryTransfer("newOwner");
 
                 Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.Transfer(null, "name", transfer));
+                    async () => await client.Transfer(null, "name", transfer));
                 Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.Transfer("owner", null, transfer));
+                    async () => await client.Transfer("owner", null, transfer));
                 Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.Transfer("owner", "name", null));
+                    async () => await client.Transfer("owner", "name", null));
             }
             
             [Fact]
@@ -237,7 +237,7 @@ namespace Octokit.Tests.Clients
                 var repositoryId = 1;
 
                 Assert.ThrowsAsync<ArgumentNullException>(
-                    () => client.Transfer(repositoryId, null));
+                    async () => await client.Transfer(repositoryId, null));
             }
 
             [Fact]
@@ -248,9 +248,9 @@ namespace Octokit.Tests.Clients
                 var transfer = new RepositoryTransfer("newOwner");
 
                 Assert.ThrowsAsync<ArgumentException>(
-                    () => client.Transfer("", "name", transfer));
+                    async () => await client.Transfer("", "name", transfer));
                 Assert.ThrowsAsync<ArgumentException>(
-                    () => client.Transfer("owner", "", transfer));
+                    async () => await client.Transfer("owner", "", transfer));
             }
 
             [Fact]
