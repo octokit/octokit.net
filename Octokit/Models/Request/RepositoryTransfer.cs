@@ -16,10 +16,6 @@ namespace Octokit
         /// Creates a new repository transfer description with no team Ids.
         /// </summary>
         /// <param name="newOwner">The new owner of the repository after the transfer.</param>
-        /// <remarks>
-        /// This is the only valid constructor for repositories whose current owner is not an
-        /// organization.
-        /// </remarks>
         public RepositoryTransfer(string newOwner)
         {
             Ensure.ArgumentNotNullOrEmptyString(newOwner, nameof(newOwner));
@@ -31,11 +27,7 @@ namespace Octokit
         /// Creates a new repository transfer description.
         /// </summary>
         /// <param name="newOwner">The new owner of the repository after the transfer.</param>
-        /// <param name="teamId">A list of team Ids to add to the repository after the transfer.</param>
-        /// <remarks>
-        /// Teams can only be added to organization-owned repositories, so this constructor
-        /// will create an invalid description if that is not the case.
-        /// </remarks>
+        /// <param name="teamIds">A list of team Ids to add to the repository after the transfer (only applies to transferring to an Organization).</param>
         public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamIds)
             : this(newOwner)
         {
@@ -50,12 +42,8 @@ namespace Octokit
         public string NewOwner { get; set; }
 
         /// <summary>
-        /// A list of team Ids to add to the repository after the transfer.
+        /// A list of team Ids to add to the repository after the transfer (only applies to transferring to an Organization).
         /// </summary>
-        /// <remarks>
-        /// Teams can only be added to organization-owned repositories, so this constructor
-        /// will create an invalid description if that is not the case.
-        /// </remarks>
         public IReadOnlyList<int> TeamIds { get; set; }
 
         internal string DebuggerDisplay
