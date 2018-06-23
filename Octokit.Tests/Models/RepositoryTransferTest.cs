@@ -36,7 +36,7 @@ namespace Octokit.Tests.Models
             public void SetsTeamIdToNull()
             {
                 RepositoryTransfer repositoryTransfer = new RepositoryTransfer(nonemptyName);
-                Assert.Null(repositoryTransfer.TeamId);
+                Assert.Null(repositoryTransfer.TeamIds);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Models
             {
                 int[] testTeamId = nonemptyTeamId;
                 RepositoryTransfer repositoryTransfer = new RepositoryTransfer(nonemptyName, testTeamId);
-                Assert.Equal(repositoryTransfer.TeamId, testTeamId);
+                Assert.Equal(repositoryTransfer.TeamIds, testTeamId);
             }
         }
     }

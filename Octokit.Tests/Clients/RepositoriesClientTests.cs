@@ -302,7 +302,7 @@ namespace Octokit.Tests.Clients
                     .Post<Repository>(
                         Arg.Any<Uri>(),
                         Arg.Is<RepositoryTransfer>(
-                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamId)),
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamIds)),
                         Arg.Any<string>());
             }
             
@@ -321,7 +321,7 @@ namespace Octokit.Tests.Clients
                     .Post<Repository>(
                         Arg.Any<Uri>(),
                         Arg.Is<RepositoryTransfer>(
-                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamId)),
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamIds)),
                         Arg.Any<string>());
             }
 

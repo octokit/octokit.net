@@ -36,12 +36,12 @@ namespace Octokit
         /// Teams can only be added to organization-owned repositories, so this constructor
         /// will create an invalid description if that is not the case.
         /// </remarks>
-        public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamId)
+        public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamIds)
             : this(newOwner)
         {
-            Ensure.ArgumentNotNullOrEmptyEnumerable(teamId, nameof(teamId));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(teamIds, nameof(teamIds));
 
-            TeamId = teamId;
+            TeamIds = teamIds;
         }
 
         /// <summary>
@@ -56,14 +56,14 @@ namespace Octokit
         /// Teams can only be added to organization-owned repositories, so this constructor
         /// will create an invalid description if that is not the case.
         /// </remarks>
-        public IReadOnlyList<int> TeamId { get; set; }
+        public IReadOnlyList<int> TeamIds { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                string teamIdStr = string.Join(", ", TeamId ?? new int[0]);
-                return string.Format(CultureInfo.InvariantCulture, "NewOwner: {0}, TeamId: [{1}]", NewOwner, teamIdStr);
+                string teamIdsStr = string.Join(", ", TeamIds ?? new int[0]);
+                return string.Format(CultureInfo.InvariantCulture, "NewOwner: {0}, TeamIds: [{1}]", NewOwner, teamIdsStr);
             }
         }
     }
