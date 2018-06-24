@@ -95,6 +95,41 @@ namespace Octokit.Reactive
         {
             return _client.Delete(repositoryId).ToObservable();
         }
+        
+        /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
+        public IObservable<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+
+            return _client.Transfer(owner, name, repositoryTransfer).ToObservable();
+        }
+
+        /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
+        public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
+        {
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+            
+            return _client.Transfer(repositoryId, repositoryTransfer).ToObservable();
+        }
 
         /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
