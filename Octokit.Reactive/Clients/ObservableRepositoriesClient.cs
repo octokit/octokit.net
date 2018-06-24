@@ -108,6 +108,10 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Repository"/></returns>
         public IObservable<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+
             return _client.Transfer(owner, name, repositoryTransfer).ToObservable();
         }
 
@@ -122,6 +126,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Repository"/></returns>
         public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
+            Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
+            
             return _client.Transfer(repositoryId, repositoryTransfer).ToObservable();
         }
 
