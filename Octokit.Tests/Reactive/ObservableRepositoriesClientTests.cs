@@ -21,6 +21,71 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheTransferMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                Assert.Throws<ArgumentNullException>(
+                    () => client.Transfer(null, "name", transfer));
+                Assert.Throws<ArgumentNullException>(
+                    () => client.Transfer("owner", null, transfer));
+                Assert.Throws<ArgumentNullException>(
+                    () => client.Transfer("owner", "name", null));
+            }
+            
+            [Fact]
+            public void EnsuresNonNullArgumentsById()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var transfer = new RepositoryTransfer("newOwner");
+                var repositoryId = 1;
+
+                Assert.Throws<ArgumentNullException>(
+                    () => client.Transfer(repositoryId, null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                Assert.Throws<ArgumentException>(
+                    () => client.Transfer("", "name", transfer));
+                Assert.Throws<ArgumentException>(
+                    () => client.Transfer("owner", "", transfer));
+            }
+
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                client.Transfer("owner", "name", transfer);
+                gitHubClient.Repository.Received().Transfer("owner", "name", transfer);
+            }
+
+            [Fact]
+            public void CallsIntoClientById()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(gitHubClient);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                client.Transfer(1, transfer);
+                gitHubClient.Repository.Received().Transfer(1, transfer);
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
