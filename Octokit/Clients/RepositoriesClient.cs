@@ -169,17 +169,17 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="currentOwner">The current owner of the repository</param>
+        /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        public Task<Repository> Transfer(string currentOwner, string name, RepositoryTransfer repositoryTransfer)
+        public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
-            Ensure.ArgumentNotNullOrEmptyString(currentOwner, nameof(currentOwner));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(currentOwner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
         }
 
         /// <summary>

@@ -1837,12 +1837,12 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a repository transfer.
         /// </summary>
-        /// <param name="currentOwner">The current owner of the repository</param>
+        /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public static Uri RepositoryTransfer(string currentOwner, string name)
+        public static Uri RepositoryTransfer(string owner, string name)
         {
-            return "repos/{0}/{1}/transfer".FormatUri(currentOwner, name);
+            return "repos/{0}/{1}/transfer".FormatUri(owner, name);
         }
 
         /// <summary>
