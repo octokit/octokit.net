@@ -1343,6 +1343,30 @@ public class RepositoriesClientTests
             Assert.NotEmpty(languages);
             Assert.True(languages.Any(l => l.Name == "C#"));
         }
+
+        [IntegrationTest]
+        public async Task GetsEmptyLanguagesWhenNone()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var languages = await github.Repository.GetAllLanguages(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.Empty(languages);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task GetsEmptyLanguagesWhenNoneWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var languages = await github.Repository.GetAllLanguages(context.RepositoryId);
+
+                Assert.Empty(languages);
+            }
+        }
     }
 
     public class TheGetAllTagsMethod

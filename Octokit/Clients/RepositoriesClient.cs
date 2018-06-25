@@ -693,7 +693,8 @@ namespace Octokit
             var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
-                data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
+                (data ?? new Dictionary<string, long>())
+                .Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
         }
 
         /// <summary>
@@ -710,7 +711,8 @@ namespace Octokit
             var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
-                data.Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
+                (data ?? new Dictionary<string, long>())
+                .Select(kvp => new RepositoryLanguage(kvp.Key, kvp.Value)).ToList());
         }
 
         /// <summary>
