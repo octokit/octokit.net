@@ -19,6 +19,19 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="Committer"/> class.
         /// </summary>
+        /// <param name="name">The full name of the author or committer.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="date">The date.</param>
+        public Committer(string name, string email, DateTimeOffset date)
+        {
+            Name = name;
+            Email = email;
+            Date = date;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Committer"/> class.
+        /// </summary>
         /// <param name="nodeId">The GraphQL Node Id</param>
         /// <param name="name">The full name of the author or committer.</param>
         /// <param name="email">The email.</param>
