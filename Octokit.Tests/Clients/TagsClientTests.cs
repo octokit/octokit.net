@@ -123,7 +123,6 @@ public class TagsClientTests
                                             "\"object\":\"tag-object\"," +
                                             "\"type\":\"tree\"," +
                                             "\"tagger\":{" +
-                                                "\"node_id\":\"123ABC\"," +
                                                 "\"name\":\"tagger-name\"," +
                                                 "\"email\":\"tagger-email\"," +
                                                 "\"date\":\"2013-09-03T13:42:52Z\"" +
