@@ -11,6 +11,7 @@ namespace Octokit
     {
         public License(
             string key,
+            string nodeId,
             string name,
             string spdxId,
             string url,
@@ -22,17 +23,8 @@ namespace Octokit
             string body,
             IEnumerable<string> required,
             IEnumerable<string> permitted,
-            IEnumerable<string> forbidden) : base(key, name, spdxId, url, featured)
+            IEnumerable<string> forbidden) : base(key, nodeId, name, spdxId, url, featured)
         {
-            Ensure.ArgumentNotNull(htmlUrl, nameof(htmlUrl));
-            Ensure.ArgumentNotNull(description, nameof(description));
-            Ensure.ArgumentNotNull(category, nameof(category));
-            Ensure.ArgumentNotNull(implementation, nameof(implementation));
-            Ensure.ArgumentNotNull(body, nameof(body));
-            Ensure.ArgumentNotNull(required, nameof(required));
-            Ensure.ArgumentNotNull(permitted, nameof(permitted));
-            Ensure.ArgumentNotNull(forbidden, nameof(forbidden));
-
             HtmlUrl = htmlUrl;
             Description = description;
             Category = category;

@@ -12,10 +12,11 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(string url, int id, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
+        public Team(string url, int id, string nodeId, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
+            NodeId = nodeId;
             Name = name;
             Description = description;
             Privacy = privacy;
@@ -36,6 +37,11 @@ namespace Octokit
         /// team id
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// team name

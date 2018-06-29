@@ -10,9 +10,10 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions)
+        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             HtmlUrl = htmlUrl;
             Body = body;
@@ -26,6 +27,11 @@ namespace Octokit
         /// The issue comment Id.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL for this issue comment.

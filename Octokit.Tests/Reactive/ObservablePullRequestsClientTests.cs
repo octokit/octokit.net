@@ -629,7 +629,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllCommitsForPullRequest()
             {
-                var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
+                var commit = new PullRequestCommit("123ABC", null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
                 var expectedUrl = "repos/fake/repo/pulls/42/commits";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();
@@ -653,7 +653,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task FetchesAllCommitsForPullRequestWithRepositoryId()
             {
-                var commit = new PullRequestCommit(null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
+                var commit = new PullRequestCommit("123ABC", null, null, null, null, null, Enumerable.Empty<GitReference>(), null, null);
                 var expectedUrl = "repositories/1/pulls/42/commits";
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var connection = Substitute.For<IConnection>();

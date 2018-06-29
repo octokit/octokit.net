@@ -11,10 +11,11 @@ namespace Octokit
     {
         public PullRequestCommit() { }
 
-        public PullRequestCommit(Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
+        public PullRequestCommit(string nodeId, Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 
+            NodeId = nodeId;
             Author = author;
             CommentsUrl = commentsUrl;
             Commit = commit;
@@ -24,6 +25,11 @@ namespace Octokit
             Sha = sha;
             Url = url;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public Committer Author { get; protected set; }
 

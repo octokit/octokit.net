@@ -8,10 +8,11 @@ namespace Octokit
     {
         public Label() { }
 
-        public Label(string url, string name, string color, string description, bool @default)
+        public Label(string url, string name, string nodeId, string color, string description, bool @default)
         {
             Url = url;
             Name = name;
+            NodeId = nodeId;
             Color = color;
             Description = description;
             Default = @default;
@@ -26,6 +27,11 @@ namespace Octokit
         /// Name of the label
         /// </summary>
         public string Name { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// Color of the label
