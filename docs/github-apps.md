@@ -9,11 +9,11 @@ To learn more about GitHub Apps, head to the GitHub Apps section under the GitHu
 
 ## Overview
 
-A GitHub App (known in Octokit as a `GitHubApp`) is a global entity on GitHub, and globally specifies permissions (read, write, none) it will be granted for various scopes and also registers for various webhook events.
+A GitHub App (known in Octokit as a `GitHubApp`) is a global entity on GitHub, that specifies permissions (read, write, none) it will be granted for various scopes and additionally defines a list of webhook events the app will be interested in.
 
 An "instance" of a GitHub App is then installed in an `Organization` or `User` account (known in Octokit as an `Installation`) where it is further limited to nominated (or all) repositories for that account.
 
-An `Intsallation` of a `GitHubApp`, thus operates at the "intersection" between the globally defined permissions/scopes and webhooks of the GitHub App itself PLUS the Organization/User repositories that were nominated.
+An `Intsallation` of a `GitHubApp`, thus operates at the "intersection" between the globally defined permissions/scopes/webhooks of the GitHub App itself PLUS the Organization/User repositories that were nominated.
 
 The [GitHub Api Documentation](https://developer.github.com/v3/apps/) on GitHub Apps contains more detailed information.
 
@@ -22,22 +22,22 @@ The [GitHub Api Documentation](https://developer.github.com/v3/apps/) on GitHub 
 Authentication for GitHub Apps is reasonably complicated, as there are a few moving parts to take into account.
 
 The below walkthrough outlines how to use Octokit.net to
-- Authenticate as the `GitHubApp` itself using a JWT token
+- Authenticate as the `GitHubApp` itself using a temporary JWT token
 - Query top level endpoints as the `GitHubApp`
-- Generate a Temporary Installation Token to authenticate as a specific `Installation` of the `GitHubApp`
-- Query specific endpoints as the `Installation`
+- Generate a temporary Installation Token as the `GitHubApp`, to allow further authentication as a specific `Installation` of the `GitHubApp`
+- Access specific endpoints as the `Installation`
 
-Be sure to read the  [GitHub Api Documentation](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps) on GitHub Apps authentication, before proceeding.
+Be sure to read the  [GitHub Api Documentation](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps) on GitHub Apps authentication, before proceeding!
 
 ## GitHub App Walkthrough
 
 Each GitHub App has a private certificate (PEM file) which is [generated via the GitHub website](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#generating-a-private-key) by the owner of the GitHub App.  Wherever the owner decides to host the GitHub App, it would need access to this private certificate, as it is the entry point to authentication with GitHub.
 
-The first step in the authentication process, is to generate a JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's Id, which is obtainable from the GitHub website.
+The first step in the authentication process, is to generate a temporary JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's unique Id, which is obtainable from the GitHub website.
 
-:lightbulb: There are several ways to generate JWT tokens in `.NET` and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string, as an example.  See the Additional Notes section for one library we can recommend.
+:bulb: There are several ways to generate JWT tokens in .NET and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
 
-:warning: These JWT tokens can only be valid for up to 10 minutes, and a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
+:warning: GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
 
 ``` csharp
 // A time based JWT token, signed by the GitHub App's private certificate
@@ -64,9 +64,9 @@ var installation = await appClient.GetInstallation(123);
 
 ```
 
-In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary installation token (currently these expire after 1 hour), and using that for authentication. 
+In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary Installation Token (currently these expire after 1 hour), and using that for authentication. 
 
-:lightbulb: The Installation Id to use, would typically come from a webhook payload.  See the Additional Notes section for more details.
+:bulb: The example below includes a hardcoded Installation Id, but this would typically come from a webhook payload (so a GitHub App knows which Installation it needs to authenticate as, to deal with the received webhook).  See the Additional Notes section for more details on Installation Id's in webhooks.
 
 :warning: These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
 
@@ -92,6 +92,8 @@ Once authenticated as an `Installation`, a [subset of regular API endpoints](htt
 // - Assuming we are operating on a repository that the Installation has access to
 var response = await installationClient.Issue.Comment.Create("owner", "repo", 1, "Hello from my GitHubApp Installation!");
 ```
+
+That concludes the walkthrough!
 
 ## Additional Notes
 
@@ -121,9 +123,9 @@ var appClient = new GitHubClient(new ProductHeaderValue("MyApp"))
 ```
 
 ### A Note on identifying Installation Id's
-GitHub Apps can be registered for webhook events.
+GitHub Apps specify which webhook events they are interested in, and when installed in a User/Organization account and restricted to some/all repositories, these webhooks will then be sent to the GitHub App's URL.
 
-WebHook payloads sent to these registrations now include an extra field to indicate the Id of the GitHub App Installation that is associated with the received webhook.
+WebHook payloads now include an extra field to indicate the Id of the GitHub App Installation that is associated with the received webhook.
 
 Example webhook for an opened Pull Request:
 ``` json
