@@ -4,13 +4,13 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckSuitePreference
+    public class CheckSuiteAutoTriggerChecksPreference
     {
-        public CheckSuitePreference()
+        public CheckSuiteAutoTriggerChecksPreference()
         {
         }
 
-        public CheckSuitePreference(long appId, bool setting)
+        public CheckSuiteAutoTriggerChecksPreference(long appId, bool setting)
         {
             AppId = appId;
             Setting = setting;

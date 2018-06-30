@@ -6,18 +6,18 @@ using System.Linq;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class AutoTriggerChecksObject
+    public class CheckSuitePreferences
     {
-        public AutoTriggerChecksObject()
+        public CheckSuitePreferences()
         {
         }
 
-        public AutoTriggerChecksObject(IReadOnlyList<CheckSuitePreference> autoTriggerChecks)
+        public CheckSuitePreferences(IReadOnlyList<CheckSuiteAutoTriggerChecksPreference> autoTriggerChecks)
         {
             AutoTriggerChecks = autoTriggerChecks;
         }
 
-        public IReadOnlyList<CheckSuitePreference> AutoTriggerChecks { get; protected set; }
+        public IReadOnlyList<CheckSuiteAutoTriggerChecksPreference> AutoTriggerChecks { get; protected set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "AutoTriggerChecks: {0}", string.Join(", ", AutoTriggerChecks.Select(x => x.DebuggerDisplay)));
     }

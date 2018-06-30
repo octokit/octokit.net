@@ -4,19 +4,20 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckSuitePreferences
+    public class CheckSuitePreferencesResponse
     {
-        public CheckSuitePreferences()
+        public CheckSuitePreferencesResponse()
         {
         }
 
-        public CheckSuitePreferences(AutoTriggerChecksObject preferences, Repository repository)
+        public CheckSuitePreferencesResponse(CheckSuitePreferences preferences, Repository repository)
         {
             Preferences = preferences;
             Repository = repository;
         }
 
-        public AutoTriggerChecksObject Preferences { get; protected set; }
+        public CheckSuitePreferences Preferences { get; protected set; }
+
         public Repository Repository { get; protected set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Preferences: {0}, Repository: {1}", Preferences.DebuggerDisplay, Repository.DebuggerDisplay);

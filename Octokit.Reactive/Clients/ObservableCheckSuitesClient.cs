@@ -111,7 +111,7 @@ namespace Octokit.Reactive
             return _client.Request(repositoryId, request).ToObservable();
         }
 
-        public IObservable<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences)
+        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
             return _client.UpdatePreferences(owner, name, preferences).ToObservable();
         }
 
-        public IObservable<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences)
+        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
 

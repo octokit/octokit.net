@@ -70,6 +70,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
+
             return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
         }
 
@@ -126,20 +127,20 @@ namespace Octokit
             return httpStatusCode == HttpStatusCode.Created;
         }
 
-        public Task<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences)
+        public Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
 
-            return ApiConnection.Patch<CheckSuitePreferences>(ApiUrls.CheckSuitePreferences(owner, name), preferences, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Patch<CheckSuitePreferencesResponse>(ApiUrls.CheckSuitePreferences(owner, name), preferences, AcceptHeaders.ChecksApiPreview);
         }
 
-        public Task<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences)
+        public Task<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
 
-            return ApiConnection.Patch<CheckSuitePreferences>(ApiUrls.CheckSuitePreferences(repositoryId), preferences, AcceptHeaders.ChecksApiPreview);
+            return ApiConnection.Patch<CheckSuitePreferencesResponse>(ApiUrls.CheckSuitePreferences(repositoryId), preferences, AcceptHeaders.ChecksApiPreview);
         }
     }
 }

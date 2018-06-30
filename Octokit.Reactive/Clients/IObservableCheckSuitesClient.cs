@@ -12,8 +12,8 @@ namespace Octokit.Reactive
         IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request);
         IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options);
         IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options);
-        IObservable<CheckSuitePreferences> UpdatePreferences(string owner, string name, AutoTriggerChecksObject preferences);
-        IObservable<CheckSuitePreferences> UpdatePreferences(long repositoryId, AutoTriggerChecksObject preferences);
+        IObservable<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences);
+        IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences);
         IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite);
         IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite);
         IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request);

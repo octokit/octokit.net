@@ -88,9 +88,9 @@ namespace Octokit.Tests.Integration.Clients
             {
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    var preference = new AutoTriggerChecksObject(new[]
+                    var preference = new CheckSuitePreferences(new[]
                     {
-                        new CheckSuitePreference(Helper.GitHubAppId, false)
+                        new CheckSuiteAutoTriggerChecksPreference(Helper.GitHubAppId, false)
                     });
 
                     var response = await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryOwner, repoContext.RepositoryName, preference);
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Turn off auto creation of check suite for this repo
-                    var preference = new AutoTriggerChecksObject(new[] { new CheckSuitePreference(Helper.GitHubAppId, false) });
+                    var preference = new CheckSuitePreferences(new[] { new CheckSuiteAutoTriggerChecksPreference(Helper.GitHubAppId, false) });
                     var response = await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryOwner, repoContext.RepositoryName, preference);
 
                     // Create a new feature branch
