@@ -209,12 +209,51 @@ public class ObservableProjectCardsClientTests
             var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
             var column = await CreateColumnHelper(_github, project.Id);
             var card = await CreateCardHelper(_github, column.Id);
-            var cardUpdate = new ProjectCardUpdate("newNameOfNote");
+            var cardUpdate = new ProjectCardUpdate
+            {
+                Note = "newNameOfNote"
+            };
 
             var result = await _github.Repository.Project.Card.Update(card.Id, cardUpdate);
 
             Assert.Equal("newNameOfNote", result.Note);
             Assert.Equal(card.Id, result.Id);
+        }
+
+        [IntegrationTest]
+        public async Task ArchivesCard()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateCardHelper(_github, column.Id);
+            var cardUpdate = new ProjectCardUpdate
+            {
+                Archived = true
+            };
+
+            var result = await _github.Repository.Project.Card.Update(card.Id, cardUpdate);
+
+            Assert.Equal(card.Id, result.Id);
+            Assert.False(card.Archived);
+            Assert.True(result.Archived);
+        }
+
+        [IntegrationTest]
+        public async Task UnarchivesCard()
+        {
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+            var column = await CreateColumnHelper(_github, project.Id);
+            var card = await CreateArchivedCardHelper(_github, column.Id);
+            var cardUpdate = new ProjectCardUpdate
+            {
+                Archived = false
+            };
+
+            var result = await _github.Repository.Project.Card.Update(card.Id, cardUpdate);
+
+            Assert.Equal(card.Id, result.Id);
+            Assert.True(card.Archived);
+            Assert.False(result.Archived);
         }
 
         public void Dispose()
@@ -341,6 +380,15 @@ public class ObservableProjectCardsClientTests
     {
         var newCard = new NewProjectCard(Helper.MakeNameWithTimestamp("new-card"));
         var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
+
+        return result;
+    }
+
+    private static async Task<ProjectCard> CreateArchivedCardHelper(IObservableGitHubClient githubClient, int columnId)
+    {
+        var newCard = new NewProjectCard(Helper.MakeNameWithTimestamp("new-card"));
+        var card = await githubClient.Repository.Project.Card.Create(columnId, newCard);
+        var result = await githubClient.Repository.Project.Card.Update(card.Id, new ProjectCardUpdate { Archived = true });
 
         return result;
     }
