@@ -12,12 +12,12 @@ namespace Octokit
         {
         }
 
-        public CheckSuitePreferences(IReadOnlyList<CheckSuiteAutoTriggerChecksPreference> autoTriggerChecks)
+        public CheckSuitePreferences(IReadOnlyList<CheckSuitePreferenceBool> autoTriggerChecks)
         {
             AutoTriggerChecks = autoTriggerChecks;
         }
 
-        public IReadOnlyList<CheckSuiteAutoTriggerChecksPreference> AutoTriggerChecks { get; protected set; }
+        public IReadOnlyList<CheckSuitePreferenceBool> AutoTriggerChecks { get; protected set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "AutoTriggerChecks: {0}", string.Join(", ", AutoTriggerChecks.Select(x => x.DebuggerDisplay)));
     }

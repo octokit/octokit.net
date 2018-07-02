@@ -4,13 +4,13 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckSuiteAutoTriggerChecksPreference
+    public class CheckSuitePreferenceBool
     {
-        public CheckSuiteAutoTriggerChecksPreference()
+        public CheckSuitePreferenceBool()
         {
         }
 
-        public CheckSuiteAutoTriggerChecksPreference(long appId, bool setting)
+        public CheckSuitePreferenceBool(long appId, bool setting)
         {
             AppId = appId;
             Setting = setting;
@@ -20,6 +20,6 @@ namespace Octokit
 
         public bool Setting { get; protected set; }
 
-        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "{0}: {1}", AppId, Setting ? "On" : "Off");
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "{0}: {1}", AppId, Setting);
     }
 }
