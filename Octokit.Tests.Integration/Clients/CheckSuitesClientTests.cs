@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Clients
                 {
                     // Need to get a CheckSuiteId so we can test the Get method
                     var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
-                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha)).First();
+                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha)).CheckSuites.First();
                     
                     // Get Check Suite by Id
                     var result = await _github.Check.Suite.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, checkSuite.Id);
@@ -61,8 +61,8 @@ namespace Octokit.Tests.Integration.Clients
 
                     var checkSuites = await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha);
 
-                    Assert.NotEmpty(checkSuites);
-                    foreach (var checkSuite in checkSuites)
+                    Assert.NotEmpty(checkSuites.CheckSuites);
+                    foreach (var checkSuite in checkSuites.CheckSuites)
                     {
                         Assert.Equal(headCommit.Sha, checkSuite.HeadSha);
                     }
