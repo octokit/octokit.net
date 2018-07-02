@@ -185,7 +185,7 @@ public class ObservableTeamsClientTests
         [OrganizationTest]
         public async Task ThrowsWhenNotAMember()
         {
-            Assert.ThrowsAsync<NotFoundException>(async () => await _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, "foo"));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, "foo"));
         }
 
         public void Dispose()
