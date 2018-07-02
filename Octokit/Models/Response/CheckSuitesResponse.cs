@@ -2,13 +2,13 @@
 
 namespace Octokit
 {
-    public class CheckSuiteList
+    public class CheckSuitesResponse
     {
-        public CheckSuiteList()
+        public CheckSuitesResponse()
         {
         }
 
-        public CheckSuiteList(int totalCount, IReadOnlyList<CheckSuite> checkSuites)
+        public CheckSuitesResponse(int totalCount, IReadOnlyList<CheckSuite> checkSuites)
         {
             TotalCount = totalCount;
             CheckSuites = checkSuites;
