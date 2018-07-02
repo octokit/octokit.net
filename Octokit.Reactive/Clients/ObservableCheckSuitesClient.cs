@@ -44,7 +44,7 @@ namespace Octokit.Reactive
             return _client.Get(repositoryId, checkSuiteId).ToObservable();
         }
 
-        public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -53,14 +53,14 @@ namespace Octokit.Reactive
             return GetAllForReference(owner, name, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
-        public IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return GetAllForReference(repositoryId, reference, new CheckSuiteRequest(), ApiOptions.None);
         }
 
-        public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
             return GetAllForReference(owner, name, reference, request, ApiOptions.None);
         }
 
-        public IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
             return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
         }
         
-        public IObservable<CheckSuite> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -89,7 +89,7 @@ namespace Octokit.Reactive
             throw new NotImplementedException();
         }
 
-        public IObservable<CheckSuite> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
