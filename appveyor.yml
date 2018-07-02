@@ -1,6 +1,8 @@
 image: Visual Studio 2017
 
-skip_branch_with_pr: true
+branches:
+  only:
+    - master
 
 init:
   - git config --global core.autocrlf input
