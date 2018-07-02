@@ -1,7 +1,6 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
 using System.Reactive.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -48,9 +47,41 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
+            return GetAll(columnId, new ProjectCardRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="request">Used to filter the list of project cards returned</param>
+        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return GetAll(columnId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="request">Used to filter the list of project cards returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             var url = ApiUrls.ProjectCards(columnId);
 
-            return _connection.GetAndFlattenAllPages<ProjectCard>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<ProjectCard>(url, request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
