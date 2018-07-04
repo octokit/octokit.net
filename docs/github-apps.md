@@ -13,7 +13,7 @@ A GitHub App (known in Octokit as a `GitHubApp`) is a global entity on GitHub, t
 
 An "instance" of a GitHub App is then installed in an `Organization` or `User` account (known in Octokit as an `Installation`) where it is further limited to nominated (or all) repositories for that account.
 
-An `Intsallation` of a `GitHubApp`, thus operates at the "intersection" between the globally defined permissions/scopes/webhooks of the GitHub App itself PLUS the Organization/User repositories that were nominated.
+An `Installation` of a `GitHubApp`, thus operates at the "intersection" between the globally defined permissions/scopes/webhooks of the GitHub App itself PLUS the Organization/User repositories that were nominated.
 
 The [GitHub Api Documentation](https://developer.github.com/v3/apps/) on GitHub Apps contains more detailed information.
 
