@@ -7,9 +7,9 @@ namespace Octokit
     /// Enables or disables automatic creation of CheckSuite events upon pushes to the repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckSuitePreferenceBool
+    public class CheckSuitePreferenceAutoTrigger
     {
-        public CheckSuitePreferenceBool()
+        public CheckSuitePreferenceAutoTrigger()
         {
         }
 
@@ -18,7 +18,7 @@ namespace Octokit
         /// </summary>
         /// <param name="appId">The Id of the GitHub App (required)</param>
         /// <param name="setting">Set to true to enable automatic creation of CheckSuite events upon pushes to the repository, or false to disable them (required)</param>
-        public CheckSuitePreferenceBool(long appId, bool setting)
+        public CheckSuitePreferenceAutoTrigger(long appId, bool setting)
         {
             AppId = appId;
             Setting = setting;

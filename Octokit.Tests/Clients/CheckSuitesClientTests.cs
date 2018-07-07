@@ -218,7 +218,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceBool(123, true) });
+                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceAutoTrigger(123, true) });
 
                 await client.UpdatePreferences("fake", "repo", preferences);
 
@@ -234,7 +234,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceBool(123, true) });
+                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceAutoTrigger(123, true) });
 
                 await client.UpdatePreferences(1, preferences);
 
@@ -250,7 +250,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceBool(123, true) });
+                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceAutoTrigger(123, true) });
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdatePreferences(null, "repo", preferences));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdatePreferences("fake", null, preferences));
@@ -263,7 +263,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceBool(123, true) });
+                var preferences = new CheckSuitePreferences(new[] { new CheckSuitePreferenceAutoTrigger(123, true) });
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.UpdatePreferences("", "repo", preferences));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.UpdatePreferences("fake", "", preferences));
