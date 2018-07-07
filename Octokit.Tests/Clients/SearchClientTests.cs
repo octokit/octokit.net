@@ -1675,5 +1675,111 @@ namespace Octokit.Tests.Clients
                     async () => await client.SearchCode(request));
             }
         }
+
+        public class TheSearchLabelsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                client.SearchLabels(new SearchLabelsRequest("something", 1));
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchLabels(null));
+            }
+
+            [Fact]
+            public void TestingTheTermParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "created" &&
+                        d["order"] == "asc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheRepositoryIdParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+        }
     }
 }

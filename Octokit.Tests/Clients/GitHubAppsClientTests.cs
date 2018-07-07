@@ -38,7 +38,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllInstallationsForCurrent(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllInstallationsForCurrent(null));
             }
 
             [Fact]

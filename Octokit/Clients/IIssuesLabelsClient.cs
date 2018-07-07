@@ -263,7 +263,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task RemoveFromIssue(string owner, string name, int number, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int number, string labelName);
 
         /// <summary>
         /// Removes a label from an issue
@@ -274,7 +274,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task RemoveFromIssue(long repositoryId, int number, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int number, string labelName);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels

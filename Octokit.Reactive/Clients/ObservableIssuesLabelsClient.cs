@@ -71,7 +71,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, name), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(repositoryId), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
         }
 
         /// <summary>
@@ -401,13 +401,15 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Unit> RemoveFromIssue(string owner, string name, int number, string labelName)
+        public IObservable<Label> RemoveFromIssue(string owner, string name, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return _client.RemoveFromIssue(owner, name, number, labelName).ToObservable();
+            return _client.RemoveFromIssue(owner, name, number, labelName)
+                .ToObservable()
+                .SelectMany(x => x); // HACK: DELETE is not compatible with GetAndFlattenPages
         }
 
         /// <summary>
@@ -419,11 +421,13 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Unit> RemoveFromIssue(long repositoryId, int number, string labelName)
+        public IObservable<Label> RemoveFromIssue(long repositoryId, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return _client.RemoveFromIssue(repositoryId, number, labelName).ToObservable();
+            return _client.RemoveFromIssue(repositoryId, number, labelName)
+                .ToObservable()
+                .SelectMany(x => x); // HACK: DELETE is not compatible with GetAndFlattenPages
         }
 
         /// <summary>

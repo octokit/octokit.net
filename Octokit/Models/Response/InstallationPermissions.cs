@@ -26,7 +26,7 @@ namespace Octokit
             TeamDiscussions = teamDiscussions;
             Checks = checks;
         }
-        
+
         /// <summary>
         /// Repository metadata
         /// Search repositories, list collaborators, and access repository metadata.

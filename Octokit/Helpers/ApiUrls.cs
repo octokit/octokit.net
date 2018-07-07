@@ -1782,6 +1782,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching labels
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchLabels()
+        {
+            return "search/labels".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1823,6 +1832,27 @@ namespace Octokit
         public static Uri RepositoryTags(string owner, string name)
         {
             return "repos/{0}/{1}/tags".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository transfer.
+        /// </summary>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTransfer(string owner, string name)
+        {
+            return "repos/{0}/{1}/transfer".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository transfer.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTransfer(long repositoryId)
+        {
+            return "repositories/{0}/transfer".FormatUri(repositoryId);
         }
 
         /// <summary>

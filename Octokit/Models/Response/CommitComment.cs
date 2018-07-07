@@ -9,9 +9,10 @@ namespace Octokit
     {
         public CommitComment() { }
 
-        public CommitComment(int id, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt, ReactionSummary reactions)
+        public CommitComment(int id, string nodeId, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt, ReactionSummary reactions)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             HtmlUrl = htmlUrl;
             Body = body;
@@ -29,6 +30,11 @@ namespace Octokit
         /// The issue comment Id.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL for this repository comment.

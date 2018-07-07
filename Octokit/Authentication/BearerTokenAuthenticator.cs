@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Octokit.Internal
 {
-    class BearerTokenAuthenticator: IAuthenticationHandler
+    class BearerTokenAuthenticator : IAuthenticationHandler
     {
         public void Authenticate(IRequest request, Credentials credentials)
         {

@@ -11,7 +11,7 @@ namespace Octokit
     public class Verification
     {
         public Verification() { }
-        
+
         public Verification(bool verified, VerificationReason reason, string signature, string payload)
         {
             Verified = verified;

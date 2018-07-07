@@ -11,9 +11,10 @@ namespace Octokit
     {
         public EventInfo() { }
 
-        public EventInfo(int id, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
+        public EventInfo(int id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             Actor = actor;
             Assignee = assignee;
@@ -27,6 +28,11 @@ namespace Octokit
         /// The id of the issue/pull request event.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL for this event.
@@ -272,6 +278,24 @@ namespace Octokit
         /// A commit comment was made.
         /// </summary>
         [Parameter(Value = "commit-commented")]
-        CommitCommented
+        CommitCommented,
+        
+        /// <summary>
+        /// A user with write permissions marked an issue as a duplicate of another issue or a pull request as a duplicate of another pull request.
+        /// </summary>
+        [Parameter(Value = "marked_as_duplicate")]
+        MarkedAsDuplicate,
+        
+        /// <summary>
+        /// An issue that a user had previously marked as a duplicate of another issue is no longer considered a duplicate.
+        /// </summary>
+        [Parameter(Value = "unmarked_as_duplicate")]
+        UnmarkedAsDuplicate,
+        
+        /// <summary>
+        /// An issue comment was deleted.
+        /// </summary>
+        [Parameter(Value = "comment_deleted")]
+        CommentDeleted
     }
 }

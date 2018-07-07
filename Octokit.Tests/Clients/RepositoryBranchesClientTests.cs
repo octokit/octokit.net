@@ -1042,7 +1042,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                     null,
                     "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1057,7 +1057,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
-                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                     null,
                     "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1094,8 +1094,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
-                    Arg.Any<IReadOnlyList<string>>(), 
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
+                    Arg.Any<IReadOnlyList<string>>(),
                     null,
                     "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1111,8 +1111,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
-                        Arg.Any<IReadOnlyList<string>>(), 
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
+                        Arg.Any<IReadOnlyList<string>>(),
                         null,
                         "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1152,7 +1152,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Post<IReadOnlyList<Team>>(
-                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
                         "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1168,7 +1168,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Post<IReadOnlyList<Team>>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
                         "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1208,7 +1208,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Delete<IReadOnlyList<Team>>(
-                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"), 
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                         Arg.Any<BranchProtectionTeamCollection>(),
                         "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }
@@ -1224,7 +1224,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Delete<IReadOnlyList<Team>>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"), 
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
                         "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
             }

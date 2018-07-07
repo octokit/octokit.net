@@ -10,8 +10,8 @@ namespace Octokit
     {
         public Commit() { }
 
-        public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount, Verification verification)
-            : base(url, label, @ref, sha, user, repository)
+        public Commit(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount, Verification verification)
+            : base(nodeId, url, label, @ref, sha, user, repository)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 

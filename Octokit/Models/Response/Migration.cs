@@ -23,6 +23,7 @@ namespace Octokit
 
         public Migration(
             int id,
+            string nodeId,
             string guid,
             MigrationState state,
             bool lockRepositories,
@@ -33,6 +34,7 @@ namespace Octokit
             IReadOnlyList<Repository> repositories)
         {
             Id = id;
+            NodeId = nodeId;
             Guid = guid;
             State = state;
             LockRepositories = lockRepositories;
@@ -47,6 +49,11 @@ namespace Octokit
         /// Id of migration.
         /// </summary>
         public int Id { get; private set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// Guid of migration.

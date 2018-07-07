@@ -15,9 +15,10 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
+        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
         {
             Id = id;
+            NodeId = nodeId;
             CommitId = commitId;
             User = user;
             Body = body;
@@ -30,6 +31,11 @@ namespace Octokit
         /// The review Id.
         /// </summary>
         public long Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The state of the review

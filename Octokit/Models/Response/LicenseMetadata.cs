@@ -6,14 +6,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class LicenseMetadata
     {
-        public LicenseMetadata(string key, string name, string spdxId, string url, bool featured)
+        public LicenseMetadata(string key, string nodeId, string name, string spdxId, string url, bool featured)
         {
-            Ensure.ArgumentNotNullOrEmptyString(key, nameof(key));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNullOrEmptyString(spdxId, nameof(spdxId));
-            Ensure.ArgumentNotNull(url, nameof(url));
-
             Key = key;
+            NodeId = nodeId;
             Name = name;
             SpdxId = spdxId;
             Url = url;
@@ -28,6 +24,11 @@ namespace Octokit
         /// The 
         /// </summary>
         public string Key { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// Friendly name of the license.

@@ -91,7 +91,7 @@ namespace Octokit.Tests.Integration
             // return null, which will cause the [GitHubAppTest]'s to not be discovered
             return null;
 #endif
-            
+
         });
 
         static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>

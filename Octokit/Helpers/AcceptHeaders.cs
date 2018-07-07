@@ -59,6 +59,10 @@ namespace Octokit
 
         public const string PreReceiveEnvironmentsPreview = "application/vnd.github.eye-scream-preview+json";
 
+        public const string LabelsApiPreview = "application/vnd.github.symmetra-preview+json";
+
+        public const string RepositoryTransferPreview = "application/vnd.github.nightshade-preview+json";
+
         public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Octokit
         /// The type of the target (User or Organization)
         /// </summary>
         public StringEnum<AccountType> TargetType { get; protected set; }
-        
+
         /// <summary>
         /// The Permissions granted to the Installation
         /// </summary>

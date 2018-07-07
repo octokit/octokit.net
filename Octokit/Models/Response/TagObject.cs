@@ -9,8 +9,8 @@ namespace Octokit
     {
         public TagObject() { }
 
-        public TagObject(string url, string label, string @ref, string sha, User user, Repository repository, TaggedType type)
-            : base(url, label, @ref, sha, user, repository)
+        public TagObject(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository, TaggedType type)
+            : base(nodeId, url, label, @ref, sha, user, repository)
         {
             Type = type;
         }
