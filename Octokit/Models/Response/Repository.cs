@@ -132,6 +132,8 @@ namespace Octokit
 
         public long Size { get; protected set; }
 
+        public bool Archived { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
