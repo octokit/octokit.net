@@ -15,10 +15,12 @@ namespace Octokit.Reactive
         readonly ICheckSuitesClient _client;
         readonly IConnection _connection;
 
-        public ObservableCheckSuitesClient(IGitHubClient gitHubClient)
+        public ObservableCheckSuitesClient(IGitHubClient client)
         {
-            _client = gitHubClient.Check.Suite;
-            _connection = gitHubClient.Connection;
+            Ensure.ArgumentNotNull(client, nameof(client));
+
+            _client = client.Check.Suite;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            throw new NotImplementedException();
+            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.ReferenceCheckSuites(owner, name, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
         }
 
         /// <summary>
@@ -155,11 +157,11 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change the API response</param>
         public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
         {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            throw new NotImplementedException();
+            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.ReferenceCheckSuites(repositoryId, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
         }
 
         /// <summary>
