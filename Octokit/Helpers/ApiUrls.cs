@@ -3858,7 +3858,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The git reference</param>
         /// <returns>The <see cref="Uri"/> that returns the check suites for the specified reference.</returns>
-        public static Uri ReferenceCheckSuites(long repositoryId, string reference)
+        public static Uri CheckSuitesForReference(long repositoryId, string reference)
         {
             return "repositories/{0}/commits/{1}/check-suites".FormatUri(repositoryId, reference);
         }
@@ -3870,7 +3870,7 @@ namespace Octokit
         /// <param name="repo">The name of repo</param>
         /// <param name="reference">The git reference</param>
         /// <returns>The <see cref="Uri"/> that returns the check suites for the specified reference.</returns>
-        public static Uri ReferenceCheckSuites(string owner, string repo, string reference)
+        public static Uri CheckSuitesForReference(string owner, string repo, string reference)
         {
             return "repos/{0}/{1}/commits/{2}/check-suites".FormatUri(owner, repo, reference);
         }

@@ -139,7 +139,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<CheckSuitesResponse>(ApiUrls.ReferenceCheckSuites(owner, name, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(owner, name, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
 
             return new CheckSuitesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -162,7 +162,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, nameof(options));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            var results = await ApiConnection.GetAll<CheckSuitesResponse>(ApiUrls.ReferenceCheckSuites(repositoryId, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(repositoryId, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
 
             return new CheckSuitesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
