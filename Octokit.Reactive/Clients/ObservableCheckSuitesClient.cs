@@ -171,69 +171,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
-        public IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
-
-            return _client.Create(owner, name, newCheckSuite).ToObservable();
-        }
-
-        /// <summary>
-        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="preferences">The check suite preferences</param>
-        public IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite)
-        {
-            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
-
-            return _client.Create(repositoryId, newCheckSuite).ToObservable();
-        }
-
-        /// <summary>
-        /// Creates a new Check Suite
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#create-a-check-suite">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        public IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-
-            return _client.Request(owner, name, request).ToObservable();
-        }
-
-        /// <summary>
-        /// Creates a new Check Suite
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#create-a-check-suite">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        public IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request)
-        {
-            return _client.Request(repositoryId, request).ToObservable();
-        }
-
-        /// <summary>
-        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="request">Details of the Check Suite request</param>
         public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -244,6 +181,72 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="preferences">The check suite preferences</param>
+        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
+        {
+            Ensure.ArgumentNotNull(preferences, nameof(preferences));
+
+            return _client.UpdatePreferences(repositoryId, preferences).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a new Check Suite
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#create-a-check-suite">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="newCheckSuite">Details of the Check Suite to create</param>
+        public IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
+
+            return _client.Create(owner, name, newCheckSuite).ToObservable();
+        }
+
+        /// <summary>
+        /// Creates a new Check Suite
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#create-a-check-suite">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="newCheckSuite">Details of the Check Suite to create</param>
+        public IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite)
+        {
+            Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
+
+            return _client.Create(repositoryId, newCheckSuite).ToObservable();
+        }
+
+        /// <summary>
+        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="request">Details of the Check Suite request</param>
+        public IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return _client.Request(owner, name, request).ToObservable();
+        }
+
+        /// <summary>
         /// Triggers GitHub to create a new check suite, without pushing new code to a repository
         /// </summary>
         /// <remarks>
@@ -251,11 +254,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Details of the Check Suite request</param>
-        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
-        {
-            Ensure.ArgumentNotNull(preferences, nameof(preferences));
 
-            return _client.UpdatePreferences(repositoryId, preferences).ToObservable();
+        public IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return _client.Request(repositoryId, request).ToObservable();
         }
     }
 }
