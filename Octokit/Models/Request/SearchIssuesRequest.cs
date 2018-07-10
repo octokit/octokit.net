@@ -264,6 +264,11 @@ namespace Octokit
         /// </summary>
         public string Milestone { get; set; }
 
+        /// <summary>
+        /// Filters issues or pull requests based on whether they are in an archived repository.
+        /// </summary>
+        public bool? Archived { get; set; }
+
         [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
 
@@ -400,6 +405,11 @@ namespace Octokit
             if (Milestone.IsNotBlank())
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "milestone:\"{0}\"", Milestone.EscapeDoubleQuotes()));
+            }
+
+            if (Archived != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "archived:{0}", Archived.ToString().ToLower()));
             }
 
             // Add any exclusion parameters
