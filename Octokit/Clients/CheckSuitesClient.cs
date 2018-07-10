@@ -273,7 +273,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
 
             var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRequests(repositoryId), request, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
-            
+
             if (httpStatusCode != HttpStatusCode.Created)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);

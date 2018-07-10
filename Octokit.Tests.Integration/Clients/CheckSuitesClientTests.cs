@@ -1,6 +1,6 @@
-﻿using Octokit.Tests.Integration.Helpers;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Integration.Clients
                     // Need to get a CheckSuiteId so we can test the Get method
                     var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
                     var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha)).CheckSuites.First();
-                    
+
                     // Get Check Suite by Id
                     var result = await _github.Check.Suite.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, checkSuite.Id);
 
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Integration.Clients
                     });
 
                     var response = await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryOwner, repoContext.RepositoryName, preference);
-                    
+
                     Assert.Equal(repoContext.RepositoryId, response.Repository.Id);
                     Assert.Equal(Helper.GitHubAppId, response.Preferences.AutoTriggerChecks[0].AppId);
                     Assert.Equal(false, response.Preferences.AutoTriggerChecks[0].Setting);
