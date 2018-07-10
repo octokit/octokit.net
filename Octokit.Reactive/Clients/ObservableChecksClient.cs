@@ -8,9 +8,11 @@
     /// </remarks>
     public class ObservableChecksClient : IObservableChecksClient
     {
-        public ObservableChecksClient(IGitHubClient gitHubClient)
+        public ObservableChecksClient(IGitHubClient client)
         {
-            Suite = new ObservableCheckSuitesClient(gitHubClient);
+            Ensure.ArgumentNotNull(client, nameof(client));
+
+            Suite = new ObservableCheckSuitesClient(client);
         }
 
         /// <summary>
