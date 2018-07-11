@@ -58,5 +58,40 @@ namespace Octokit.Reactive
 
             return _client.Create(repositoryId, newCheckRun).ToObservable();
         }
+
+        /// <summary>
+        /// Updates a Check Run
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="checkRunUpdate">The updates to the check run</param>
+        public IObservable<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+
+            return _client.Update(owner, name, checkRunId, checkRunUpdate).ToObservable();
+        }
+
+        /// <summary>
+        /// Updates a Check Run
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="checkRunUpdate">The updates to the check run</param>
+        public IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        {
+            Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
+
+            return _client.Update(repositoryId, checkRunId, checkRunUpdate).ToObservable();
+        }
     }
 }

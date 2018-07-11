@@ -72,5 +72,59 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentException>(() => client.Create("fake", "", newCheckRun));
             }
         }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                client.Update("fake", "repo", 1, update);
+
+                gitHubClient.Check.Run.Received().Update("fake", "repo", 1, update);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                client.Update(1, 1, update);
+
+                gitHubClient.Check.Run.Received().Update(1, 1, update);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                Assert.Throws<ArgumentNullException>(() => client.Update(null, "repo", 1, update));
+                Assert.Throws<ArgumentNullException>(() => client.Update("fake", null, 1, update));
+                Assert.Throws<ArgumentNullException>(() => client.Update("fake", "repo", 1, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                Assert.Throws<ArgumentException>(() => client.Update("", "repo", 1, update));
+                Assert.Throws<ArgumentException>(() => client.Update("fake", "", 1, update));
+            }
+        }
     }
 }

@@ -77,5 +77,65 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fake", "", newCheckRun));
             }
         }
+
+        public class TheUpdateMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                await client.Update("fake", "repo", 1, update);
+
+                connection.Received().Patch<CheckRun>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1"),
+                    update,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                await client.Update(1, 1, update);
+
+                connection.Received().Patch<CheckRun>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1"),
+                    update,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "repo", 1, update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("fake", null, 1, update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("fake", "repo", 1, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "repo", 1, update));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Update("fake", "", 1, update));
+            }
+        }
     }
 }
