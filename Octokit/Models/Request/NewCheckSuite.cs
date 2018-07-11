@@ -6,15 +6,20 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewCheckSuite
     {
+        /// <summary>
+        /// Creates a new Check Suite
+        /// </summary>
+        /// <param name="headSha">Required. The sha of the head commit.</param>
         public NewCheckSuite(string headSha)
         {
             HeadSha = headSha;
         }
 
+        /// <summary>
+        /// Required. The sha of the head commit.
+        /// </summary>
         public string HeadSha { get; private set; }
 
-        public string HeadBranch { get; set; }
-
-        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "HeadSha: {0} HeadBranch: {1}", HeadSha, HeadBranch);
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "HeadSha: {0}", HeadSha);
     }
 }

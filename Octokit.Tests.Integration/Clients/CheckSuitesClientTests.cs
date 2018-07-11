@@ -129,10 +129,7 @@ namespace Octokit.Tests.Integration.Clients
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check suite for the feature branch
-                    var newCheckSuite = new NewCheckSuite(featureBranch.Object.Sha)
-                    {
-                        HeadBranch = "my-feature"
-                    };
+                    var newCheckSuite = new NewCheckSuite(featureBranch.Object.Sha);
                     var result = await _githubAppInstallation.Check.Suite.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckSuite);
 
                     // Check result

@@ -266,7 +266,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckSuitesClient(gitHubClient);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 client.Create("fake", "repo", newCheckSuite);
 
@@ -279,7 +279,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckSuitesClient(gitHubClient);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 client.Create(1, newCheckSuite);
 
@@ -292,7 +292,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckSuitesClient(gitHubClient);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "repo", newCheckSuite));
                 Assert.Throws<ArgumentNullException>(() => client.Create("fake", null, newCheckSuite));
@@ -307,7 +307,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckSuitesClient(gitHubClient);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 Assert.Throws<ArgumentException>(() => client.Create("", "repo", newCheckSuite));
                 Assert.Throws<ArgumentException>(() => client.Create("fake", "", newCheckSuite));

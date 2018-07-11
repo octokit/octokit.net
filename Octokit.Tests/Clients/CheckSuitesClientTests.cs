@@ -278,7 +278,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 await client.Create("fake", "repo", newCheckSuite);
 
@@ -294,7 +294,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 await client.Create(1, newCheckSuite);
 
@@ -310,7 +310,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null, "repo", newCheckSuite));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create("fake", null, newCheckSuite));
@@ -325,7 +325,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckSuitesClient(connection);
 
-                var newCheckSuite = new NewCheckSuite("123abc") { HeadBranch = "feature" };
+                var newCheckSuite = new NewCheckSuite("123abc");
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("", "repo", newCheckSuite));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Create("fake", "", newCheckSuite));
