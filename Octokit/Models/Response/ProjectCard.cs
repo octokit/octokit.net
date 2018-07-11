@@ -9,7 +9,7 @@ namespace Octokit
     {
         public ProjectCard() { }
 
-        public ProjectCard(string columnUrl, string contentUrl, int id, string nodeId, string note, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectCard(string columnUrl, string contentUrl, int id, string nodeId, string note, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt, bool archived)
         {
             ColumnUrl = columnUrl;
             ContentUrl = contentUrl;
@@ -19,6 +19,7 @@ namespace Octokit
             Creator = creator;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            Archived = archived;
         }
 
         /// <summary>
@@ -60,6 +61,11 @@ namespace Octokit
         /// When this card was last updated.
         /// </summary>
         public DateTimeOffset UpdatedAt { get; protected set; }
+
+        /// <summary>
+        /// Whether this card is archived.
+        /// </summary>
+        public bool Archived { get; protected set; }
 
         internal string DebuggerDisplay
         {

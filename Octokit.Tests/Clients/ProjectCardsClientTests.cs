@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -34,11 +35,32 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task SendsAppropriateParameters()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ProjectCardsClient(connection);
+
+                await client.GetAll(1, new ProjectCardRequest(ProjectCardArchivedStateFilter.NotArchived));
+
+                connection.Received().GetAll<ProjectCard>(
+                    Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
+                    Arg.Is<Dictionary<string,string>>(x =>
+                        x.Count == 1
+                        && x["archived_state"] == "not_archived"),
+                    "application/vnd.github.inertia-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
+                var request = new ProjectCardRequest();
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (ProjectCardRequest)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (ApiOptions)null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, request, null));
             }
         }
 

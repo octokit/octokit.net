@@ -38,12 +38,33 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public async Task SendsAppropriateParameters()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableProjectCardsClient(gitHubClient);
+
+                client.GetAll(1, new ProjectCardRequest(ProjectCardArchivedStateFilter.NotArchived));
+
+                connection.Received().Get<List<ProjectCard>>(
+                    Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                         x.Count == 1
+                         && x["archived_state"] == "not_archived"),
+                    "application/vnd.github.inertia-preview+json");
+            }
+
+            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectCardsClient(gitHubClient);
+                var request = new ProjectCardRequest();
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (ProjectCardRequest)null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, (ApiOptions)null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null, ApiOptions.None).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, request, null).ToTask());
             }
         }
 
