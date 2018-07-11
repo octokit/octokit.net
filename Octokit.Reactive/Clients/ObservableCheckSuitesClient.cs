@@ -15,6 +15,10 @@ namespace Octokit.Reactive
         readonly ICheckSuitesClient _client;
         readonly IConnection _connection;
 
+        /// <summary>
+        /// Initializes a new GitHub Check Suites API client.
+        /// </summary>
+        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableCheckSuitesClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
