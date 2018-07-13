@@ -187,5 +187,91 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(repositoryId, reference), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
         }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllForCheckSuite(owner, name, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(owner, name, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(repositoryId, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+        }
     }
 }

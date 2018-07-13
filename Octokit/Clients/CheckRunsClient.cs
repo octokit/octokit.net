@@ -189,5 +189,99 @@ namespace Octokit
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
                 results.SelectMany(x => x.CheckRuns).ToList());
         }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllForCheckSuite(owner, name, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public async Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var results = await ApiConnection.GetAll<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(owner, name, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+
+            return new CheckRunsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.CheckRuns).ToList());
+        }
+
+        /// <summary>
+        /// Lists check runs for a check suite using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public async Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var results = await ApiConnection.GetAll<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(repositoryId, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options).ConfigureAwait(false);
+
+            return new CheckRunsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.CheckRuns).ToList());
+        }
     }
 }

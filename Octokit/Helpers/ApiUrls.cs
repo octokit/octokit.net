@@ -3897,6 +3897,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return "repositories/{0}/check-suites/{1}/check-runs".FormatUri(repositoryId, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(string owner, string repo, long checkSuiteId)
+        {
+            return "repos/{0}/{1}/check-suites/{2}/check-runs".FormatUri(owner, repo, checkSuiteId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified check suite.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

@@ -302,5 +302,164 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentException>(() => client.GetAllForReference(1, "", request, ApiOptions.None));
             }
         }
+
+        public class TheGetAllForCheckSuiteMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.GetAllForCheckSuite("fake", "repo", 1);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.GetAllForCheckSuite(1, 1);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequest()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+
+                client.GetAllForCheckSuite("fake", "repo", 1, request);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithRepositoryId()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+
+                client.GetAllForCheckSuite(1, 1, request);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithApiOptions()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                client.GetAllForCheckSuite("fake", "repo", 1, request, options);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithApiOptionsWithRepositoryId()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                client.GetAllForCheckSuite(1, 1, request, options);
+
+                connection.Received().Get<List<CheckRunsResponse>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build" };
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(null, "repo", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", null, 1));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(null, "repo", 1, request));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", null, 1, request));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", "repo", 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(null, "repo", 1, request, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", null, 1, request, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", "repo", 1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite("fake", "repo", 1, request, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(1, 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(1, 1, null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForCheckSuite(1, 1, request, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var request = new CheckRunRequest { CheckName = "build" };
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("", "repo", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("fake", "", 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("", "repo", 1, request));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("fake", "", 1, request));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("", "repo", 1, request, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("fake", "", 1, request, ApiOptions.None));
+            }
+        }
     }
 }
