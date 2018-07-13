@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -135,6 +136,181 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "repo", 1, update));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("fake", "", 1, update));
+            }
+        }
+
+        public class TheGetAllForReferenceMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.GetAllForReference("fake", "repo", "ref");
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.GetAllForReference(1, "ref");
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+
+                await client.GetAllForReference("fake", "repo", "ref", request);
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+
+                await client.GetAllForReference(1, "ref", request);
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.GetAllForReference("fake", "repo", "ref", request, options);
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRequestWithApiOptionsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build", Filter = CheckRunCompletedAtFilter.Latest, Status = CheckStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.GetAllForReference(1, "ref", request, options);
+
+                connection.Received().GetAll<CheckRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x["check_name"] == "build"
+                            && x["status"] == "in_progress"
+                            && x["filter"] == "latest"),
+                    "application/vnd.github.antiope-preview+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build" };
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(null, "repo", "ref"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", null, "ref"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(null, "repo", "ref", request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", null, "ref", request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", null, request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", "ref", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(null, "repo", "ref", request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", null, "ref", request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", null, request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", "ref", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference("fake", "repo", "ref", request, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, null, request));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, "ref", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, null, request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, "ref", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForReference(1, "ref", request, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var request = new CheckRunRequest { CheckName = "build" };
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("", "repo", "ref"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "", "ref"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "repo", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("", "repo", "ref", request));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "", "ref", request));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "repo", "", request));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("", "repo", "ref", request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "", "ref", request, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference("fake", "repo", "", request, ApiOptions.None));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference(1, ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference(1, "", request));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForReference(1, "", request, ApiOptions.None));
             }
         }
     }

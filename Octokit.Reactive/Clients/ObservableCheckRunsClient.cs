@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -92,6 +93,99 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
             return _client.Update(repositoryId, checkRunId, checkRunUpdate).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(owner, name, reference, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            return GetAllForReference(repositoryId, reference, new CheckRunRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForReference(owner, name, reference, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+
+            return GetAllForReference(repositoryId, reference, checkRunRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(owner, name, reference), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+        }
+
+        /// <summary>
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(repositoryId, reference), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
         }
     }
 }
