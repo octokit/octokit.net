@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration
 {
@@ -171,11 +173,6 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_SLUG"); }
         }
 
-        public static long GitHubAppInstallationId
-        {
-            get { return Convert.ToInt64(Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_INSTALLATIONID")); }
-        }
-
         public static void DeleteRepo(IConnection connection, Repository repository)
         {
             if (repository != null)
@@ -304,6 +301,28 @@ namespace Octokit.Tests.Integration
             };
         }
 
+        public static Installation GetGitHubAppInstallationForOwner(string owner)
+        {
+            var client = GetAuthenticatedGitHubAppsClient();
+            var installations = client.GitHubApps.GetAllInstallationsForCurrent().Result;
+            var installation = installations.First(x => x.Account.Login == owner);
+
+            return installation;
+        }
+
+        public static GitHubClient GetAuthenticatedGitHubAppInstallationForOwner(string owner)
+        {
+            var client = GetAuthenticatedGitHubAppsClient();
+            var installation = GetGitHubAppInstallationForOwner(owner);
+
+            var token = client.GitHubApps.CreateInstallationToken(installation.Id).Result.Token;
+
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            {
+                Credentials = new Credentials(token)
+            };
+        }
+
         public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
         {
             try
@@ -326,6 +345,43 @@ namespace Octokit.Tests.Integration
             catch { }
 
             return login;
+        }
+
+        public async static Task<Reference> CreateFeatureBranch(string owner, string repo, string parentSha, string branchName)
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            // Create content blob
+            var baselineBlob = new NewBlob
+            {
+                Content = "I am overwriting this blob with something new",
+                Encoding = EncodingType.Utf8
+            };
+            var baselineBlobResult = await github.Git.Blob.Create(owner, repo, baselineBlob);
+
+            // Create tree item
+            var treeItem = new NewTreeItem
+            {
+                Type = TreeType.Blob,
+                Mode = FileMode.File,
+                Path = "README.md",
+                Sha = baselineBlobResult.Sha
+            };
+
+            // Create tree
+            var newTree = new NewTree();
+            newTree.Tree.Add(treeItem);
+            var tree = await github.Git.Tree.Create(owner, repo, newTree);
+
+            // Create commit
+            var newCommit = new NewCommit("this is the new commit", tree.Sha, parentSha);
+            var commit = await github.Git.Commit.Create(owner, repo, newCommit);
+
+            // Create branch
+            var branch = await github.Git.Reference.Create(owner, repo, new NewReference($"refs/heads/{branchName}", commit.Sha));
+
+            // Return commit
+            return branch;
         }
     }
 }

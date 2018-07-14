@@ -48,6 +48,7 @@ namespace Octokit.Reactive
             Enterprise = new ObservableEnterpriseClient(gitHubClient);
             Migration = new ObservableMigrationClient(gitHubClient);
             Reaction = new ObservableReactionsClient(gitHubClient);
+            Check = new ObservableChecksClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -85,6 +86,7 @@ namespace Octokit.Reactive
         public IObservableEnterpriseClient Enterprise { get; private set; }
         public IObservableMigrationClient Migration { get; private set; }
         public IObservableReactionsClient Reaction { get; private set; }
+        public IObservableChecksClient Check { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

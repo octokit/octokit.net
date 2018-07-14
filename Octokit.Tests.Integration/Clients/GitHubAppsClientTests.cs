@@ -65,7 +65,6 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var result = await _github.GitHubApps.GetAllInstallationsForCurrent();
 
-                Assert.True(result.Any(x => x.Id == Helper.GitHubAppInstallationId));
                 foreach (var installation in result)
                 {
                     Assert.Equal(Helper.GitHubAppId, installation.AppId);
@@ -91,8 +90,10 @@ namespace Octokit.Tests.Integration.Clients
             [GitHubAppsTest]
             public async Task GetsInstallation()
             {
-                var installationId = Helper.GitHubAppInstallationId;
+                // Get the installation Id
+                var installationId = Helper.GetGitHubAppInstallationForOwner(Helper.UserName).Id;
 
+                // Get the installation by Id
                 var result = await _github.GitHubApps.GetInstallation(installationId);
 
                 Assert.True(result.AppId == Helper.GitHubAppId);
@@ -116,10 +117,12 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [GitHubAppsTest]
-            public async Task GetsInstallation()
+            public async Task CreatesInstallationToken()
             {
-                var installationId = Helper.GitHubAppInstallationId;
+                // Get the installation Id
+                var installationId = Helper.GetGitHubAppInstallationForOwner(Helper.UserName).Id;
 
+                // Create installation token
                 var result = await _github.GitHubApps.CreateInstallationToken(installationId);
 
                 Assert.NotNull(result.Token);

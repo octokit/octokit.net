@@ -9,7 +9,7 @@ namespace Octokit
     {
         public InstallationPermissions() { }
 
-        public InstallationPermissions(InstallationPermissionLevel? metadata, InstallationPermissionLevel? administration, InstallationPermissionLevel? statuses, InstallationPermissionLevel? deployments, InstallationPermissionLevel? issues, InstallationPermissionLevel? pages, InstallationPermissionLevel? pullRequests, InstallationPermissionLevel? contents, InstallationPermissionLevel? singleFile, InstallationPermissionLevel? repositoryProjects, InstallationPermissionLevel? members, InstallationPermissionLevel? organizationProjects, InstallationPermissionLevel? teamDiscussions)
+        public InstallationPermissions(InstallationPermissionLevel? metadata, InstallationPermissionLevel? administration, InstallationPermissionLevel? statuses, InstallationPermissionLevel? deployments, InstallationPermissionLevel? issues, InstallationPermissionLevel? pages, InstallationPermissionLevel? pullRequests, InstallationPermissionLevel? contents, InstallationPermissionLevel? singleFile, InstallationPermissionLevel? repositoryProjects, InstallationPermissionLevel? members, InstallationPermissionLevel? organizationProjects, InstallationPermissionLevel? teamDiscussions, InstallationPermissionLevel? checks)
         {
             Metadata = metadata;
             Administration = administration;
@@ -24,6 +24,7 @@ namespace Octokit
             Members = members;
             OrganizationProjects = organizationProjects;
             TeamDiscussions = teamDiscussions;
+            Checks = checks;
         }
 
         /// <summary>
@@ -85,6 +86,12 @@ namespace Octokit
         /// Manage repository projects, columns, and cards.
         /// </summary>
         public StringEnum<InstallationPermissionLevel>? RepositoryProjects { get; protected set; }
+
+        /// <summary>
+        /// Checks
+        /// Detailed information about CI checks
+        /// </summary>
+        public StringEnum<InstallationPermissionLevel>? Checks { get; protected set; }
 
         /// <summary>
         /// Organization members (only applicable when installed for an Organization )

@@ -149,5 +149,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IReactionsClient Reaction { get; }
+
+        /// <summary>
+        /// Access GitHub's Checks API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
+        /// </remarks>
+        IChecksClient Check { get; }
     }
 }
