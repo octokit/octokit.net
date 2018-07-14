@@ -297,5 +297,59 @@ namespace Octokit.Reactive
         {
             return _client.Get(repositoryId, checkRunId).ToObservable();
         }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns></returns>
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId)
+        {
+            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+        }
     }
 }

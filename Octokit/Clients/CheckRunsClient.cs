@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -305,6 +306,60 @@ namespace Octokit
         public Task<CheckRun> Get(long repositoryId, long checkRunId)
         {
             return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId)
+        {
+            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+        }
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
         }
     }
 }

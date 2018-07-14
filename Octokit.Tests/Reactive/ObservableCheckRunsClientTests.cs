@@ -174,7 +174,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -194,7 +195,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -215,7 +217,9 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 4
+                            && x["per_page"] == "1"
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -236,7 +240,9 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 4
+                            && x["per_page"] == "1"
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -349,7 +355,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -369,7 +376,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -390,7 +398,9 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 4
+                            && x["per_page"] == "1"
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -411,7 +421,9 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<CheckRunsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 4
+                            && x["per_page"] == "1"
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json");
@@ -504,6 +516,106 @@ namespace Octokit.Tests.Clients
 
                 Assert.Throws<ArgumentException>(() => client.Get("", "repo", 1));
                 Assert.Throws<ArgumentException>(() => client.Get("fake", "", 1));
+            }
+        }
+
+        public class TheGetAllAnnotationsMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.GetAllAnnotations("fake", "repo", 1);
+
+                connection.Received().Get<List<CheckRunAnnotation>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.GetAllAnnotations(1, 1);
+
+                connection.Received().Get<List<CheckRunAnnotation>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var options = new ApiOptions { PageSize = 1 };
+
+                client.GetAllAnnotations("fake", "repo", 1, options);
+
+                connection.Received().Get<List<CheckRunAnnotation>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 1
+                            && x["per_page"] == "1"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                var options = new ApiOptions { PageSize = 1 };
+
+                client.GetAllAnnotations(1, 1, options);
+
+                connection.Received().Get<List<CheckRunAnnotation>>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 1
+                            && x["per_page"] == "1"),
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations(null, "repo", 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations("fake", null, 1));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations(null, "repo", 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations("fake", null, 1, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations("fake", "repo", 1, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAnnotations(1, 1, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                Assert.Throws<ArgumentException>(() => client.GetAllAnnotations("", "repo", 1));
+                Assert.Throws<ArgumentException>(() => client.GetAllAnnotations("fake", "", 1));
+
+                Assert.Throws<ArgumentException>(() => client.GetAllAnnotations("", "repo", 1, ApiOptions.None));
+                Assert.Throws<ArgumentException>(() => client.GetAllAnnotations("fake", "", 1, ApiOptions.None));
             }
         }
     }

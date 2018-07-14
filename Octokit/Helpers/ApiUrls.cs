@@ -3920,6 +3920,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(long repositoryId, long checkRunId)
+        {
+            return "repositories/{0}/check-runs/{1}/annotations".FormatUri(repositoryId, checkRunId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(string owner, string repo, long checkRunId)
+        {
+            return "repos/{0}/{1}/check-runs/{2}/annotations".FormatUri(owner, repo, checkRunId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified check suite.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

@@ -184,7 +184,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -204,7 +205,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -225,7 +227,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -246,7 +249,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -359,7 +363,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -379,7 +384,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -400,7 +406,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -421,7 +428,8 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
-                            x["check_name"] == "build"
+                            x.Count == 3
+                            && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
                     "application/vnd.github.antiope-preview+json",
@@ -521,6 +529,102 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "repo", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("fake", "", 1));
+            }
+        }
+
+        public class TheGetAllAnnotationsMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.GetAllAnnotations("fake", "repo", 1);
+
+                connection.Received().GetAll<CheckRunAnnotation>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
+                    null,
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.GetAllAnnotations(1, 1);
+
+                connection.Received().GetAll<CheckRunAnnotation>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
+                    null,
+                    "application/vnd.github.antiope-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.GetAllAnnotations("fake", "repo", 1, options);
+
+                connection.Received().GetAll<CheckRunAnnotation>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
+                    null,
+                    "application/vnd.github.antiope-preview+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.GetAllAnnotations(1, 1, options);
+
+                connection.Received().GetAll<CheckRunAnnotation>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
+                    null,
+                    "application/vnd.github.antiope-preview+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations(null, "repo", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations("fake", null, 1));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations(null, "repo", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations("fake", null, 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations("fake", "repo", 1, null));
+                                                                                   
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations(1, 1, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAnnotations("", "repo", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAnnotations("fake", "", 1));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAnnotations("", "repo", 1, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAnnotations("fake", "", 1, ApiOptions.None));
             }
         }
     }

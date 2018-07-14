@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
@@ -307,70 +309,150 @@ namespace Octokit.Tests.Integration.Clients
                     }
                 }
             }
+        }
 
-            public class TheGetMethod
+        public class TheGetMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheGetMethod()
             {
-                IGitHubClient _github;
-                IGitHubClient _githubAppInstallation;
+                _github = Helper.GetAuthenticatedClient();
 
-                public TheGetMethod()
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsCheckRun()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    _github = Helper.GetAuthenticatedClient();
+                    // Create a new feature branch
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
-                    // Authenticate as a GitHubApp Installation
-                    _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
-                }
-
-                [GitHubAppsTest]
-                public async Task GetsCheckRun()
-                {
-                    using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                    // Create a check run for the feature branch
+                    var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
                     {
-                        // Create a new feature branch
-                        var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
-                        var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+                        Status = CheckStatus.InProgress
+                    };
+                    var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckRun);
 
-                        // Create a check run for the feature branch
-                        var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
-                        {
-                            Status = CheckStatus.InProgress
-                        };
-                        var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckRun);
+                    // Get the check
+                    var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, created.Id);
 
-                        // Get the check
-                        var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, created.Id);
-
-                        // Check result
-                        Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
-                        Assert.Equal("name", checkRun.Name);
-                        Assert.Equal(CheckStatus.InProgress, checkRun.Status);
-                    }
+                    // Check result
+                    Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
+                    Assert.Equal("name", checkRun.Name);
+                    Assert.Equal(CheckStatus.InProgress, checkRun.Status);
                 }
+            }
 
-                [GitHubAppsTest]
-                public async Task GetsCheckRunWithRepositoryId()
+            [GitHubAppsTest]
+            public async Task GetsCheckRunWithRepositoryId()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                    // Create a new feature branch
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+
+                    // Create a check run for the feature branch
+                    var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
                     {
-                        // Create a new feature branch
-                        var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
-                        var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+                        Status = CheckStatus.InProgress
+                    };
+                    var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryId, newCheckRun);
 
-                        // Create a check run for the feature branch
-                        var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
+                    // Get the check
+                    var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryId, created.Id);
+
+                    // Check result
+                    Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
+                    Assert.Equal("name", checkRun.Name);
+                    Assert.Equal(CheckStatus.InProgress, checkRun.Status);
+                }
+            }
+        }
+
+        public class TheGetAllAnnotationsMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheGetAllAnnotationsMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsAllAnnotations()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    // Create a new feature branch
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+
+                    // Create a check run for the feature branch
+                    var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
+                    {
+                        Status = CheckStatus.InProgress,
+                        Output = new CheckRunOutput("title", "summary")
                         {
-                            Status = CheckStatus.InProgress
-                        };
-                        var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryId, newCheckRun);
+                            Annotations = new[]
+                            {
+                                new CheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                            }
+                        }
+                    };
+                    var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckRun);
 
-                        // Get the check
-                        var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryId, created.Id);
+                    // Get the annotations
+                    var annotations = await _githubAppInstallation.Check.Run.GetAllAnnotations(repoContext.RepositoryOwner, repoContext.RepositoryName, created.Id);
 
-                        // Check result
-                        Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
-                        Assert.Equal("name", checkRun.Name);
-                        Assert.Equal(CheckStatus.InProgress, checkRun.Status);
-                    }
+                    // Check result
+                    Assert.Equal(1, annotations.Count);
+                    Assert.Equal("this is a warning", annotations.First().Message);
+                    Assert.Equal(CheckWarningLevel.Warning, annotations.First().WarningLevel);
+                }
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsAllAnnotationsWithRepositoryId()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    // Create a new feature branch
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+
+                    // Create a check run for the feature branch
+                    var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
+                    {
+                        Status = CheckStatus.InProgress,
+                        Output = new CheckRunOutput("title", "summary")
+                        {
+                            Annotations = new[]
+                            {
+                                new CheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                            }
+                        }
+                    };
+                    var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryId, newCheckRun);
+
+                    // Get the annotations
+                    var annotations = await _githubAppInstallation.Check.Run.GetAllAnnotations(repoContext.RepositoryId, created.Id);
+
+                    // Check result
+                    Assert.Equal(1, annotations.Count);
+                    Assert.Equal("this is a warning", annotations.First().Message);
+                    Assert.Equal(CheckWarningLevel.Warning, annotations.First().WarningLevel);
                 }
             }
         }

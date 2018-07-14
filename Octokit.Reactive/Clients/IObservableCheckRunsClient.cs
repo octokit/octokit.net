@@ -170,5 +170,38 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         IObservable<CheckRun> Get(long repositoryId, long checkRunId);
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId);
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns></returns>
+        IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId);
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options);
+
+        /// <summary>
+        /// Lists annotations for a check run using the check run Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="options">Options to change the API response</param>
+        IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options);
     }
 }

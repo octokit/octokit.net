@@ -6,6 +6,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CheckRunAnnotation
     {
+        public CheckRunAnnotation()
+        {
+        }
+
         /// <summary>
         /// Constructs a CheckRunAnnotation request object
         /// </summary>
@@ -65,6 +69,6 @@ namespace Octokit
         /// </summary>
         public string RawDetails { get; set; }
 
-        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Title: {0}, Filename: {1}, WarningLevel: {2}", Title ?? "<Untitled>", Filename, WarningLevel.DebuggerDisplay);
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Filename: {0}, StartLine: {1}, WarningLevel: {2}", Filename, StartLine, WarningLevel.DebuggerDisplay);
     }
 }
