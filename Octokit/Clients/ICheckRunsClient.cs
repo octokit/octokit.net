@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -12,7 +11,7 @@ namespace Octokit
     public interface ICheckRunsClient
     {
         /// <summary>
-        /// Creates a new Check Run
+        /// Creates a new check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -23,7 +22,7 @@ namespace Octokit
         Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun);
 
         /// <summary>
-        /// Creates a new Check Run
+        /// Creates a new check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -33,7 +32,7 @@ namespace Octokit
         Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun);
 
         /// <summary>
-        /// Updates a Check Run
+        /// Updates a check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
@@ -45,7 +44,7 @@ namespace Octokit
         Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate);
 
         /// <summary>
-        /// Updates a Check Run
+        /// Updates a check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.

@@ -259,7 +259,7 @@ namespace Octokit.Tests.Integration.Clients
                         CheckName = "name",
                         Status = CheckStatusFilter.InProgress
                     };
-                    
+
                     var checkRuns = await _githubAppInstallation.Check.Run.GetAllForCheckSuite(repoContext.RepositoryOwner, repoContext.RepositoryName, created.CheckSuite.Id, request);
 
                     // Check result

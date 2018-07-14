@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates a new Check Run
+        /// Creates a new check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates a new Check Run
+        /// Creates a new check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Updates a Check Run
+        /// Updates a check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
@@ -80,7 +80,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Updates a Check Run
+        /// Updates a check run for a specific commit in a repository.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
