@@ -56,12 +56,12 @@ namespace Octokit
         /// <summary>
         /// Check runs can accept a variety of data in the output object, including a title and summary and can optionally provide descriptive details about the run.
         /// </summary>
-        public CheckRunOutput Output { get; set; }
+        public NewCheckRunOutput Output { get; set; }
 
         /// <summary>
         /// Possible further actions the integrator can perform, which a user may trigger. Each action includes a label, identifier and description. A maximum of three actions are accepted.
         /// </summary>
-        public IReadOnlyList<CheckRunAction> Actions { get; set; }
+        public IReadOnlyList<NewCheckRunAction> Actions { get; set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Name: {0}, Status: {1}, Conclusion: {2}", Name, Status, Conclusion);
     }

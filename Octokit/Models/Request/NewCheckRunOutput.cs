@@ -5,14 +5,14 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckRunOutput
+    public class NewCheckRunOutput
     {
         /// <summary>
         /// Constructs a CheckRunOutput request object
         /// </summary>
         /// <param name="title">Required. The title of the check run.</param>
         /// <param name="summary">Required. The summary of the check run. This parameter supports Markdown.</param>
-        public CheckRunOutput(string title, string summary)
+        public NewCheckRunOutput(string title, string summary)
         {
             Title = title;
             Summary = summary;
@@ -36,12 +36,12 @@ namespace Octokit
         /// <summary>
         /// Adds information from your analysis to specific lines of code. Annotations are visible in GitHub's pull request UI. For details about annotations in the UI, see "About status checks".
         /// </summary>
-        public IReadOnlyList<CheckRunAnnotation> Annotations { get; set; }
+        public IReadOnlyList<NewCheckRunAnnotation> Annotations { get; set; }
 
         /// <summary>
         /// Adds images to the output displayed in the GitHub pull request UI.
         /// </summary>
-        public IReadOnlyList<CheckRunImage> Images { get; set; }
+        public IReadOnlyList<NewCheckRunImage> Images { get; set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "Title: {0}", Title);
     }

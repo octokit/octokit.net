@@ -4,14 +4,14 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckRunImage
+    public class NewCheckRunImage
     {
         /// <summary>
         /// Constructs a CheckRunImage request object
         /// </summary>
         /// <param name="alt">Required. The alternative text for the image.</param>
         /// <param name="imageUrl">Required. The full URL of the image.</param>
-        public CheckRunImage(string alt, string imageUrl)
+        public NewCheckRunImage(string alt, string imageUrl)
         {
             Alt = alt;
             ImageUrl = imageUrl;

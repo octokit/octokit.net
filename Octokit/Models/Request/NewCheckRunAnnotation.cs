@@ -4,14 +4,10 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CheckRunAnnotation
+    public class NewCheckRunAnnotation
     {
-        public CheckRunAnnotation()
-        {
-        }
-
         /// <summary>
-        /// Constructs a CheckRunAnnotation request object
+        /// Constructs a CheckRunCreateAnnotation request object
         /// </summary>
         /// <param name="filename">Required. The path of the file to add an annotation to. For example, assets/css/main.css.</param>
         /// <param name="blobHref">Required. The file's full blob URL. You can find the blob_href in the response of the Get a single commit endpoint, by reading the blob_url from an element of the files array. You can also construct the blob URL from the head_sha, the repository, and the filename: https://github.com/:owner/:repo/blob/:head_sha/:filename.</param>
@@ -19,7 +15,7 @@ namespace Octokit
         /// <param name="endLine">Required. The end line of the annotation.</param>
         /// <param name="warningLevel">Required. The warning level of the annotation. Can be one of notice, warning, or failure.</param>
         /// <param name="message">Required. A short description of the feedback for these lines of code. The maximum size is 64 KB.</param>
-        public CheckRunAnnotation(string filename, string blobHref, int startLine, int endLine, CheckWarningLevel warningLevel, string message)
+        public NewCheckRunAnnotation(string filename, string blobHref, int startLine, int endLine, CheckWarningLevel warningLevel, string message)
         {
             Filename = filename;
             BlobHref = blobHref;

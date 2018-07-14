@@ -404,11 +404,11 @@ namespace Octokit.Tests.Integration.Reactive
                     var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
                     {
                         Status = CheckStatus.InProgress,
-                        Output = new CheckRunOutput("title", "summary")
+                        Output = new NewCheckRunOutput("title", "summary")
                         {
                             Annotations = new[]
                             {
-                                new CheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                                new NewCheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
                             }
                         }
                     };
@@ -437,11 +437,11 @@ namespace Octokit.Tests.Integration.Reactive
                     var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
                     {
                         Status = CheckStatus.InProgress,
-                        Output = new CheckRunOutput("title", "summary")
+                        Output = new NewCheckRunOutput("title", "summary")
                         {
                             Annotations = new[]
                             {
-                                new CheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                                new NewCheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
                             }
                         }
                     };
