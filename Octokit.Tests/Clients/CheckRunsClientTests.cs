@@ -472,5 +472,56 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForCheckSuite("fake", "", 1, request, ApiOptions.None));
             }
         }
+
+        public class TheGetMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.Get("fake", "repo", 1);
+
+                connection.Received().Get<CheckRun>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1"),
+                    null,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await client.Get(1, 1);
+
+                connection.Received().Get<CheckRun>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1"),
+                    null,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "repo", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("fake", null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckRunsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "repo", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("fake", "", 1));
+            }
+        }
     }
 }

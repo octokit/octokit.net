@@ -283,5 +283,29 @@ namespace Octokit
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
                 results.SelectMany(x => x.CheckRuns).ToList());
         }
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public Task<CheckRun> Get(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview);
+        }
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public Task<CheckRun> Get(long repositoryId, long checkRunId)
+        {
+            return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview);
+        }
     }
 }

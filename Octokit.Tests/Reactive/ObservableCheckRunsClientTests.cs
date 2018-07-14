@@ -461,5 +461,50 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentException>(() => client.GetAllForCheckSuite("fake", "", 1, request, ApiOptions.None));
             }
         }
+
+        public class TheGetMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.Get("fake", "repo", 1);
+
+                gitHubClient.Check.Run.Received().Get("fake", "repo", 1);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                client.Get(1, 1);
+
+                gitHubClient.Check.Run.Received().Get(1, 1);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "repo", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get("fake", null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckRunsClient(gitHubClient);
+
+                Assert.Throws<ArgumentException>(() => client.Get("", "repo", 1));
+                Assert.Throws<ArgumentException>(() => client.Get("fake", "", 1));
+            }
+        }
     }
 }

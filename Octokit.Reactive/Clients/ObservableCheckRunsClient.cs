@@ -273,5 +273,29 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(repositoryId, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
         }
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public IObservable<CheckRun> Get(string owner, string name, long checkRunId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.Get(owner, name, checkRunId).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        public IObservable<CheckRun> Get(long repositoryId, long checkRunId)
+        {
+            return _client.Get(repositoryId, checkRunId).ToObservable();
+        }
     }
 }

@@ -155,5 +155,20 @@ namespace Octokit.Reactive
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
         IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options);
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        IObservable<CheckRun> Get(string owner, string name, long checkRunId);
+
+        /// <summary>
+        /// Gets a single check run using its Id.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        IObservable<CheckRun> Get(long repositoryId, long checkRunId);
     }
 }

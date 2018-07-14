@@ -307,6 +307,72 @@ namespace Octokit.Tests.Integration.Clients
                     }
                 }
             }
+
+            public class TheGetMethod
+            {
+                IGitHubClient _github;
+                IGitHubClient _githubAppInstallation;
+
+                public TheGetMethod()
+                {
+                    _github = Helper.GetAuthenticatedClient();
+
+                    // Authenticate as a GitHubApp Installation
+                    _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+                }
+
+                [GitHubAppsTest]
+                public async Task GetsCheckRun()
+                {
+                    using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                    {
+                        // Create a new feature branch
+                        var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                        var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+
+                        // Create a check run for the feature branch
+                        var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
+                        {
+                            Status = CheckStatus.InProgress
+                        };
+                        var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckRun);
+
+                        // Get the check
+                        var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, created.Id);
+
+                        // Check result
+                        Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
+                        Assert.Equal("name", checkRun.Name);
+                        Assert.Equal(CheckStatus.InProgress, checkRun.Status);
+                    }
+                }
+
+                [GitHubAppsTest]
+                public async Task GetsCheckRunWithRepositoryId()
+                {
+                    using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                    {
+                        // Create a new feature branch
+                        var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                        var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
+
+                        // Create a check run for the feature branch
+                        var newCheckRun = new NewCheckRun("name", featureBranch.Object.Sha)
+                        {
+                            Status = CheckStatus.InProgress
+                        };
+                        var created = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryId, newCheckRun);
+
+                        // Get the check
+                        var checkRun = await _githubAppInstallation.Check.Run.Get(repoContext.RepositoryId, created.Id);
+
+                        // Check result
+                        Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
+                        Assert.Equal("name", checkRun.Name);
+                        Assert.Equal(CheckStatus.InProgress, checkRun.Status);
+                    }
+                }
+            }
         }
     }
 }
