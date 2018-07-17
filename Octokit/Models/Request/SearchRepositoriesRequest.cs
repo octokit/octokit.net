@@ -112,6 +112,11 @@ namespace Octokit
         /// </summary>
         public DateRange Updated { get; set; }
 
+        /// <summary>
+        /// Filters whether archived repositories should be included (true) or not (false).
+        /// </summary>
+        public bool? Archived { get; set; }
+
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -160,6 +165,12 @@ namespace Octokit
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
+
+            if (Archived != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "archived:{0}", Archived.ToString().ToLower()));
+            }
+
             return parameters;
         }
 

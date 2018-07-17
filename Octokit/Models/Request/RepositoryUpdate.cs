@@ -78,6 +78,11 @@ namespace Octokit
         /// </summary>
         public bool? AllowMergeCommit { get; set; }
 
+        /// <summary>
+        /// Optional. True to archive this repository.  Note: you cannot unarchive repositories through the API.
+        /// </summary>
+        public bool? Archived { get; set; }
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay
         {
