@@ -1719,11 +1719,11 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
-                
+
                 Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
-        
+
         [IntegrationTest]
         public async Task TransfersFromOrgToUserById()
         {
@@ -1751,11 +1751,11 @@ public class RepositoriesClientTests
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
                 var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
-                
+
                 Assert.Equal(newOwner, transferred.Owner.Login);
             }
         }
-        
+
         [IntegrationTest]
         public async Task TransfersFromUserToOrgById()
         {
@@ -1783,7 +1783,8 @@ public class RepositoriesClientTests
             using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
             {
                 NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
-                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team)) {
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
+                {
                     var transferTeamIds = new int[] { teamContext.TeamId };
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(
@@ -1799,7 +1800,7 @@ public class RepositoriesClientTests
                 }
             }
         }
-        
+
         [IntegrationTest]
         public async Task TransfersFromUserToOrgWithTeamsById()
         {
@@ -1811,7 +1812,8 @@ public class RepositoriesClientTests
             using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
             {
                 NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
-                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team)) {
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
+                {
                     var transferTeamIds = new int[] { teamContext.TeamId };
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(repositoryContext.RepositoryId, transfer);

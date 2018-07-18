@@ -7,21 +7,21 @@ namespace Octokit.Tests.Models
     {
         public static readonly string emptyName = "";
         public static readonly string nonemptyName = "name";
-        public static readonly int[] emptyTeamId = new int[] {};
-        public static readonly int[] nonemptyTeamId = new int[] {1, 2, 3};
+        public static readonly int[] emptyTeamId = new int[] { };
+        public static readonly int[] nonemptyTeamId = new int[] { 1, 2, 3 };
 
         public class TheSingleArgumentConstructor
         {
             [Fact]
             public void ChecksForEmptyName()
             {
-                Assert.Throws<ArgumentException>(() => {new RepositoryTransfer(emptyName);});
+                Assert.Throws<ArgumentException>(() => { new RepositoryTransfer(emptyName); });
             }
 
             [Fact]
             public void ChecksForNullName()
             {
-                Assert.Throws<ArgumentNullException>(() => {new RepositoryTransfer(null);});
+                Assert.Throws<ArgumentNullException>(() => { new RepositoryTransfer(null); });
             }
 
             [Fact]
@@ -45,25 +45,25 @@ namespace Octokit.Tests.Models
             [Fact]
             public void ChecksForEmptyName()
             {
-                Assert.Throws<ArgumentException>(() => {new RepositoryTransfer(emptyName, nonemptyTeamId);});
+                Assert.Throws<ArgumentException>(() => { new RepositoryTransfer(emptyName, nonemptyTeamId); });
             }
 
             [Fact]
             public void ChecksForNullName()
             {
-                Assert.Throws<ArgumentNullException>(() => {new RepositoryTransfer(null, nonemptyTeamId);});
+                Assert.Throws<ArgumentNullException>(() => { new RepositoryTransfer(null, nonemptyTeamId); });
             }
 
             [Fact]
             public void ChecksForEmptyTeamId()
             {
-                Assert.Throws<ArgumentException>(() => {new RepositoryTransfer(nonemptyName, emptyTeamId);});
+                Assert.Throws<ArgumentException>(() => { new RepositoryTransfer(nonemptyName, emptyTeamId); });
             }
 
             [Fact]
             public void ChecksForNullTeamId()
             {
-                Assert.Throws<ArgumentNullException>(() => {new RepositoryTransfer(nonemptyName, null);});
+                Assert.Throws<ArgumentNullException>(() => { new RepositoryTransfer(nonemptyName, null); });
             }
 
             [Fact]

@@ -227,7 +227,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(
                     () => client.Transfer("owner", "name", null));
             }
-            
+
             [Fact]
             public async Task EnsuresNonNullArgumentsById()
             {
@@ -258,7 +258,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -269,13 +269,13 @@ namespace Octokit.Tests.Clients
                         Arg.Any<RepositoryTransfer>(),
                         Arg.Any<string>());
             }
-            
+
             [Fact]
             public async Task RequestsCorrectUrlById()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 
@@ -293,7 +293,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -305,13 +305,13 @@ namespace Octokit.Tests.Clients
                             t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamIds)),
                         Arg.Any<string>());
             }
-            
+
             [Fact]
             public async Task SendsCorrectRequestById()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 
@@ -330,7 +330,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -348,7 +348,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] {35, 42};
+                var teamId = new int[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 

@@ -610,7 +610,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations(null, "repo", 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations("fake", null, 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations("fake", "repo", 1, null));
-                                                                                   
+
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAnnotations(1, 1, null));
             }
 

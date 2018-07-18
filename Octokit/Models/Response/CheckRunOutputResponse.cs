@@ -15,7 +15,7 @@ namespace Octokit
         {
             Title = title;
             Summary = summary;
-			Text = text;
+            Text = text;
             AnnotationsCount = annotationsCount;
         }
 
