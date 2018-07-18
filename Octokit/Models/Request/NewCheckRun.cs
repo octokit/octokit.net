@@ -11,15 +11,15 @@ namespace Octokit
         /// <summary>
         /// Creates a new Check Run
         /// </summary>
-        /// <param name="name">Required. The name of the check. For example, "code-coverage".</param>
-        /// <param name="headSha">Required. The SHA of the commit.</param>
+        /// <param name="name">Required. The name of the check. For example, "code-coverage"</param>
+        /// <param name="headSha">Required. The SHA of the commit</param>
         public NewCheckRun(string name, string headSha) : base(name)
         {
             HeadSha = headSha;
         }
 
         /// <summary>
-        /// Required. The SHA of the commit.
+        /// Required. The SHA of the commit
         /// </summary>
         public string HeadSha { get; private set; }
 

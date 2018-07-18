@@ -27,57 +27,57 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The Id of this check suite
+        /// The Id of the check suite
         /// </summary>
         public long Id { get; protected set; }
 
         /// <summary>
-        /// The head branch of the commit this check suite is associated with
+        /// The branch the check suite is associated with
         /// </summary>
         public string HeadBranch { get; protected set; }
 
         /// <summary>
-        /// The commit this check suite is associated with
+        /// The SHA of the head commit in the push that created the check suite
         /// </summary>
         public string HeadSha { get; protected set; }
 
         /// <summary>
-        /// The summarized status of the check runs included in this check suite
+        /// The summarized status of the check runs included in the check suite
         /// </summary>
         public StringEnum<CheckStatus> Status { get; protected set; }
 
         /// <summary>
-        /// The summarized conclusion of the check runs included in this check suite
+        /// The summarized conclusion of the check runs included in the check suite
         /// </summary>
         public StringEnum<CheckConclusion>? Conclusion { get; protected set; }
 
         /// <summary>
-        /// The GitHub Api URL of this check suite
+        /// The GitHub Api URL of the check suite
         /// </summary>
         public string Url { get; protected set; }
 
         /// <summary>
-        /// The hash of the commit prior to the HeadSha
+        /// The hash of the commit prior to the push that created the check suite
         /// </summary>
         public string Before { get; protected set; }
 
         /// <summary>
-        /// The hash of the commit after the HeadSha
+        /// The hash of the commit after the push that created the check suite (or HeadSha if no later commits exist)
         /// </summary>
         public string After { get; protected set; }
 
         /// <summary>
-        /// The pull requests that are associated with the check suite (via the HeadSha)
+        /// The pull requests that are associated with the check suite
         /// </summary>
         public IReadOnlyList<PullRequest> PullRequests { get; protected set; }
 
         /// <summary>
-        /// The GitHub App that is associated with this check suite
+        /// The GitHub App for the check suite
         /// </summary>
         public GitHubApp App { get; protected set; }
 
         /// <summary>
-        /// The repository that is associated with this check suite
+        /// The repository for the check suite
         /// </summary>
         public Repository Repository { get; protected set; }
 

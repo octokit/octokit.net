@@ -35,7 +35,7 @@ namespace Octokit
         public string Text { get; protected set; }
 
         /// <summary>
-        /// The number of annotations (use ICheckRunsClient.GetAllAnnotations() to load annotations)
+        /// The number of annotation entries for the check run (use <see cref="ICheckRunsClient.GetAllAnnotations(string, string, long)"/> to get annotation details)
         /// </summary>
         public long AnnotationsCount { get; protected set; }
 

@@ -31,27 +31,27 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The Id of this check run
+        /// The Id of the check run
         /// </summary>
         public long Id { get; protected set; }
 
         /// <summary>
-        /// The commit this check run is associated with
+        /// The SHA of the commit the check run is associated with
         /// </summary>
         public string HeadSha { get; protected set; }
 
         /// <summary>
-        /// A reference for the run on the integrator's system.
+        /// A reference for the run on the integrator's system
         /// </summary>
         public string ExternalId { get; protected set; }
 
         /// <summary>
-        /// The GitHub Api URL of this check run
+        /// The GitHub Api URL of the check run
         /// </summary>
         public string Url { get; protected set; }
 
         /// <summary>
-        /// The GitHub.com URL of this check run
+        /// The GitHub.com URL of the check run
         /// </summary>
         public string HtmlUrl { get; protected set; }
 

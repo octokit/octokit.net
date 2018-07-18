@@ -22,37 +22,37 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The path of the file the annotation refers to. For example, assets/css/main.css.
+        /// The path of the file the annotation refers to
         /// </summary>
         public string Filename { get; protected set; }
 
         /// <summary>
-        /// The file's full blob URL.
+        /// The file's full blob URL
         /// </summary>
         public string BlobHref { get; protected set; }
 
         /// <summary>
-        /// The start line of the annotation.
+        /// The start line of the annotation
         /// </summary>
         public int StartLine { get; protected set; }
 
         /// <summary>
-        /// The end line of the annotation.
+        /// The end line of the annotation
         /// </summary>
         public int EndLine { get; protected set; }
 
         /// <summary>
-        /// The warning level of the annotation. Can be one of notice, warning, or failure.
+        /// The warning level of the annotation. Can be one of notice, warning, or failure
         /// </summary>
         public StringEnum<CheckWarningLevel> WarningLevel { get; protected set; }
 
         /// <summary>
-        /// A short description of the feedback for these lines of code.
+        /// A short description of the feedback for these lines of code
         /// </summary>
         public string Message { get; protected set; }
 
         /// <summary>
-        /// Details about this annotation.
+        /// Details about this annotation
         /// </summary>
         public string RawDetails { get; protected set; }
 

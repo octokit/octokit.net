@@ -9,8 +9,8 @@ namespace Octokit
         /// <summary>
         /// Constructs a CheckRunImage request object
         /// </summary>
-        /// <param name="alt">Required. The alternative text for the image.</param>
-        /// <param name="imageUrl">Required. The full URL of the image.</param>
+        /// <param name="alt">Required. The alternative text for the image</param>
+        /// <param name="imageUrl">Required. The full URL of the image</param>
         public NewCheckRunImage(string alt, string imageUrl)
         {
             Alt = alt;
@@ -18,17 +18,17 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Required. The alternative text for the image.
+        /// Required. The alternative text for the image
         /// </summary>
         public string Alt { get; protected set; }
 
         /// <summary>
-        /// Required. The full URL of the image.
+        /// Required. The full URL of the image
         /// </summary>
         public string ImageUrl { get; protected set; }
 
         /// <summary>
-        /// A short image description.
+        /// A short image description
         /// </summary>
         public string Caption { get; set; }
 

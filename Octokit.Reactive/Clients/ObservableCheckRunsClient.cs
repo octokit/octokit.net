@@ -5,7 +5,7 @@ using Octokit.Reactive.Internal;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub's Check Runs API.
+    /// A client for GitHub's Check Runs API
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/checks/runs/">Check Runs API documentation</a> for more information.
@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         readonly IConnection _connection;
 
         /// <summary>
-        /// Initializes a new GitHub Check Runs API client.
+        /// Initializes a new GitHub Check Runs API client
         /// </summary>
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableCheckRunsClient(IGitHubClient client)
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates a new check run for a specific commit in a repository.
+        /// Creates a new check run for a specific commit in a repository
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -46,7 +46,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Creates a new check run for a specific commit in a repository.
+        /// Creates a new check run for a specific commit in a repository
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#create-a-check-run">Check Runs API documentation</a> for more information.
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Updates a check run for a specific commit in a repository.
+        /// Updates a check run for a specific commit in a repository
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
@@ -80,7 +80,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Updates a check run for a specific commit in a repository.
+        /// Updates a check run for a specific commit in a repository
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/runs/#update-a-check-run">Check Runs API documentation</a> for more information.
@@ -96,8 +96,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
@@ -111,8 +114,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference)
@@ -123,8 +129,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
@@ -140,8 +149,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
@@ -154,8 +166,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
@@ -173,8 +188,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name.
+        /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-specific-ref">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
@@ -189,8 +207,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
@@ -203,8 +224,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
@@ -213,8 +237,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
@@ -229,8 +256,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
@@ -242,8 +272,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
@@ -260,8 +293,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists check runs for a check suite using its Id.
+        /// Lists check runs for a check suite using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
@@ -275,8 +311,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a single check run using its Id.
+        /// Gets a single check run using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#get-a-single-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
@@ -289,8 +328,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a single check run using its Id.
+        /// Gets a single check run using its Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#get-a-single-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         public IObservable<CheckRun> Get(long repositoryId, long checkRunId)
@@ -299,8 +341,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists annotations for a check run using the check run Id.
+        /// Lists annotations for a check run using the check run Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-annotations-for-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
@@ -313,8 +358,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists annotations for a check run using the check run Id.
+        /// Lists annotations for a check run using the check run Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-annotations-for-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <returns></returns>
@@ -324,8 +372,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists annotations for a check run using the check run Id.
+        /// Lists annotations for a check run using the check run Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-annotations-for-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
@@ -340,8 +391,11 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Lists annotations for a check run using the check run Id.
+        /// Lists annotations for a check run using the check run Id
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/runs/#list-annotations-for-a-check-run">Check Runs API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>

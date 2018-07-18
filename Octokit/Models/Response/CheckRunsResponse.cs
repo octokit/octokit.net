@@ -18,12 +18,12 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The total number of check suites that match the request filter
+        /// The total number of check runs that match the request filter
         /// </summary>
         public int TotalCount { get; protected set; }
 
         /// <summary>
-        /// The retrieved check suites
+        /// The retrieved check runs
         /// </summary>
         public IReadOnlyList<CheckRun> CheckRuns { get; protected set; }
 
