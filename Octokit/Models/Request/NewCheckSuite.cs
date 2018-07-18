@@ -9,14 +9,14 @@ namespace Octokit
         /// <summary>
         /// Creates a new Check Suite
         /// </summary>
-        /// <param name="headSha">Required. The sha of the head commit.</param>
+        /// <param name="headSha">Required. The sha of the head commit</param>
         public NewCheckSuite(string headSha)
         {
             HeadSha = headSha;
         }
 
         /// <summary>
-        /// Required. The sha of the head commit.
+        /// Required. The sha of the head commit
         /// </summary>
         public string HeadSha { get; private set; }
 

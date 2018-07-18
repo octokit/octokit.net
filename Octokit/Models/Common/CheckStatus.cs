@@ -34,4 +34,16 @@ namespace Octokit
         [Parameter(Value = "action_required")]
         ActionRequired,
     }
+
+    public enum CheckWarningLevel
+    {
+        [Parameter(Value = "notice")]
+        Notice,
+
+        [Parameter(Value = "warning")]
+        Warning,
+
+        [Parameter(Value = "failure")]
+        Failure,
+    }
 }

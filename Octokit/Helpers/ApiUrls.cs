@@ -3830,6 +3830,119 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check run.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
+        public static Uri CheckRun(long repositoryId, long id)
+        {
+            return "repositories/{0}/check-runs/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check run.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
+        public static Uri CheckRun(string owner, string repo, long id)
+        {
+            return "repos/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check runs for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that handles the check runs for the repository.</returns>
+        public static Uri CheckRuns(long repositoryId)
+        {
+            return "repositories/{0}/check-runs".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check runs for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the check runs for the repository.</returns>
+        public static Uri CheckRuns(string owner, string repo)
+        {
+            return "repos/{0}/{1}/check-runs".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForReference(long repositoryId, string reference)
+        {
+            return "repositories/{0}/commits/{1}/check-runs".FormatUri(repositoryId, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForReference(string owner, string repo, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/check-runs".FormatUri(owner, repo, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return "repositories/{0}/check-suites/{1}/check-runs".FormatUri(repositoryId, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(string owner, string repo, long checkSuiteId)
+        {
+            return "repos/{0}/{1}/check-suites/{2}/check-runs".FormatUri(owner, repo, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(long repositoryId, long checkRunId)
+        {
+            return "repositories/{0}/check-runs/{1}/annotations".FormatUri(repositoryId, checkRunId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(string owner, string repo, long checkRunId)
+        {
+            return "repos/{0}/{1}/check-runs/{2}/annotations".FormatUri(owner, repo, checkRunId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified check suite.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

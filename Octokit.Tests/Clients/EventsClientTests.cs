@@ -553,6 +553,7 @@ namespace Octokit.Tests.Clients
 
         private readonly Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
         {
+            {"CheckRunEvent", typeof(CheckRunEventPayload)},
             {"CheckSuiteEvent", typeof(CheckSuiteEventPayload)},
             {"CommitCommentEvent", typeof(CommitCommentPayload)},
             {"ForkEvent", typeof(ForkEventPayload)},

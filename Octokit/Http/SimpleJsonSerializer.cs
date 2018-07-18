@@ -206,6 +206,8 @@ namespace Octokit.Internal
             {
                 switch (activityType)
                 {
+                    case "CheckRunEvent":
+                        return typeof(CheckRunEventPayload);
                     case "CheckSuiteEvent":
                         return typeof(CheckSuiteEventPayload);
                     case "CommitCommentEvent":
