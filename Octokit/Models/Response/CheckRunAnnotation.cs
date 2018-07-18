@@ -18,6 +18,7 @@ namespace Octokit
             EndLine = endLine;
             WarningLevel = warningLevel;
             Message = message;
+            Title = title;
             RawDetails = rawDetails;
         }
 
@@ -50,6 +51,11 @@ namespace Octokit
         /// A short description of the feedback for these lines of code
         /// </summary>
         public string Message { get; protected set; }
+
+        /// <summary>
+        /// The title that represents the annotation
+        /// </summary>
+        public string Title { get; set; }
 
         /// <summary>
         /// Details about this annotation
