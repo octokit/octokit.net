@@ -55,7 +55,7 @@ namespace Octokit
         /// <summary>
         /// The title that represents the annotation
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; protected set; }
 
         /// <summary>
         /// Details about this annotation
