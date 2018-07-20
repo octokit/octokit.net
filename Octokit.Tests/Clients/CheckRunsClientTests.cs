@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckRunsClient(connection);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 await client.Update("fake", "repo", 1, update);
 
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckRunsClient(connection);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 await client.Update(1, 1, update);
 
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckRunsClient(connection);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "repo", 1, update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("fake", null, 1, update));
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new CheckRunsClient(connection);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", "repo", 1, update));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("fake", "", 1, update));

@@ -96,8 +96,9 @@ namespace Octokit.Tests.Integration.Clients
                     var checkRun = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryOwner, repoContext.RepositoryName, newCheckRun);
 
                     // Update the check run
-                    var update = new CheckRunUpdate("new-name")
+                    var update = new CheckRunUpdate
                     {
+                        Name = "new-name",
                         Status = CheckStatus.InProgress
                     };
                     var result = await _githubAppInstallation.Check.Run.Update(repoContext.RepositoryOwner, repoContext.RepositoryName, checkRun.Id, update);
@@ -127,8 +128,9 @@ namespace Octokit.Tests.Integration.Clients
                     var checkRun = await _githubAppInstallation.Check.Run.Create(repoContext.RepositoryId, newCheckRun);
 
                     // Update the check run
-                    var update = new CheckRunUpdate("new-name")
+                    var update = new CheckRunUpdate
                     {
+                        Name = "new-name",
                         Status = CheckStatus.InProgress
                     };
                     var result = await _githubAppInstallation.Check.Run.Update(repoContext.RepositoryId, checkRun.Id, update);
