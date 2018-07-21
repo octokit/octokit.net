@@ -235,8 +235,8 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
-                Assert.Equal(webHookConfig.Keys, hook.Config.Keys);
-                Assert.Equal(webHookConfig.Values, hook.Config.Values);
+                Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
+                Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
                 Assert.Equal(false, hook.Active);
             }
 
@@ -279,8 +279,8 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
                 Assert.NotNull(hook.CreatedAt);
                 Assert.NotNull(hook.UpdatedAt);
-                Assert.Equal(webHookConfig.Keys, hook.Config.Keys);
-                Assert.Equal(webHookConfig.Values, hook.Config.Values);
+                Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
+                Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
                 Assert.Equal(false, hook.Active);
             }
 

@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckRunsClient(gitHubClient);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 client.Update("fake", "repo", 1, update);
 
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckRunsClient(gitHubClient);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 client.Update(1, 1, update);
 
@@ -108,7 +108,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckRunsClient(gitHubClient);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 Assert.Throws<ArgumentNullException>(() => client.Update(null, "repo", 1, update));
                 Assert.Throws<ArgumentNullException>(() => client.Update("fake", null, 1, update));
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCheckRunsClient(gitHubClient);
 
-                var update = new CheckRunUpdate("status") { Status = CheckStatus.InProgress };
+                var update = new CheckRunUpdate { Status = CheckStatus.InProgress };
 
                 Assert.Throws<ArgumentException>(() => client.Update("", "repo", 1, update));
                 Assert.Throws<ArgumentException>(() => client.Update("fake", "", 1, update));

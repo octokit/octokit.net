@@ -21,7 +21,7 @@ namespace Octokit
         /// <summary>
         /// The sha of the head commit
         /// </summary>
-        public string HeadSha { get; private set; }
+        public string HeadSha { get; protected set; }
 
         internal virtual string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "HeadSha: {0}", HeadSha);
     }

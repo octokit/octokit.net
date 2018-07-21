@@ -44,9 +44,9 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<ProjectCard>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
-                    Arg.Is<Dictionary<string,string>>(x =>
-                        x.Count == 1
-                        && x["archived_state"] == "not_archived"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                         x.Count == 1
+                         && x["archived_state"] == "not_archived"),
                     "application/vnd.github.inertia-preview+json",
                     Args.ApiOptions);
             }

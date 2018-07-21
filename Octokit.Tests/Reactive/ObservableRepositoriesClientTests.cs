@@ -37,7 +37,7 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(
                     () => client.Transfer("owner", "name", null));
             }
-            
+
             [Fact]
             public void EnsuresNonNullArgumentsById()
             {

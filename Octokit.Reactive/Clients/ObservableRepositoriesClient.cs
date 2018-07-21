@@ -95,7 +95,7 @@ namespace Octokit.Reactive
         {
             return _client.Delete(repositoryId).ToObservable();
         }
-        
+
         /// <summary>
         /// Transfers the ownership of the specified repository.
         /// </summary>
@@ -127,7 +127,7 @@ namespace Octokit.Reactive
         public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
-            
+
             return _client.Transfer(repositoryId, repositoryTransfer).ToObservable();
         }
 

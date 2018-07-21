@@ -1,3 +1,42 @@
+### New in 0.31.0 (released 21/07/2018)
+
+## Advisories and Breaking Changes
+
+- None
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Implemented Check Suites component of [New Checks Api (Public Beta)](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/) - [#1846](https://github.com/octokit/octokit.net/pull/1846) via [@ryangribble](https://github.com/ryangribble), [@Cyberboss](https://github.com/Cyberboss)
+- Implemented Check Runs component of [New Checks Api (Public Beta)](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/) - [#1847](https://github.com/octokit/octokit.net/pull/1847) via [@ryangribble](https://github.com/ryangribble), [@Cyberboss](https://github.com/Cyberboss)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Add new `EventInfoState` values (`MarkedAsDuplicate`, `UnmarkedAsDuplicate` and `CommentDeleted`) - [#1818](https://github.com/octokit/octokit.net/pull/1818) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Add GraphQL NodeId property to all affected response models - [#1806](https://github.com/octokit/octokit.net/pull/1806) via [@ryangribble](https://github.com/ryangribble)
+- Implemented [New API parameters for Project Card archiving (Preview)](https://developer.github.com/changes/2018-06-27-project-card-archiving/) including `ProjectCard.Archived`, `ProjectCardUpdate.Archived` and new `ProjectCardRequest` request - [#1842](https://github.com/octokit/octokit.net/pull/1842) via [@ryangribble](https://github.com/ryangribble)
+- Implement support for [Archiving repositories](https://developer.github.com/changes/2017-11-08-archiving-repositories/) including adding `Archived` property to `Repository` response model, adding the ability to archive a repository via `UpdateRepository.Archived` request, and filtering repo/issues searches with `SearchRepositoriesRequest.Archived` and `SearchIssuesRequest.Archived` - [#1845](https://github.com/octokit/octokit.net/pull/1845) via [@jguevara](https://github.com/jguevara), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Fix exception in `RepositoriesClient.GetAllLanguages()` when no languages exist - [#1831](https://github.com/octokit/octokit.net/pull/1831) via [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Remove nuget dependency on `SourceLink.Create.GitHub` package - [#1822](https://github.com/octokit/octokit.net/pull/1822) via [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Clarify the rate limit `Reset` field is in UTC - [#1819](https://github.com/octokit/octokit.net/pull/1819) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Revise GitHub Apps walkthrough documentation to provide more clarity - [#1824](https://github.com/octokit/octokit.net/pull/1824) via [@ryangribble](https://github.com/ryangribble)
+
+
 ### New in 0.30.0 (released 17/06/2018)
 
 ## Advisories and Breaking Changes

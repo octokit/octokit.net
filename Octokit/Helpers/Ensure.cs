@@ -59,7 +59,7 @@ namespace Octokit
         {
             ArgumentNotNull(value, name);
             if (Enumerable.Any(value)) return;
-            
+
             throw new ArgumentException("List cannot be empty", name);
         }
     }
