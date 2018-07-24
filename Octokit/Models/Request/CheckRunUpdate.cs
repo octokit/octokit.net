@@ -33,7 +33,7 @@ namespace Octokit
         /// <summary>
         /// The current status. Can be one of queued, in_progress, or completed. Default: queued
         /// </summary>
-        public StringEnum<CheckStatus> Status { get; set; }
+        public StringEnum<CheckStatus>? Status { get; set; }
 
         /// <summary>
         /// The time that the check run began
