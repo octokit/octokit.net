@@ -33,12 +33,12 @@ namespace Octokit
         /// <summary>
         /// The current status. Can be one of queued, in_progress, or completed. Default: queued
         /// </summary>
-        public StringEnum<CheckStatus> Status { get; set; }
+        public StringEnum<CheckStatus>? Status { get; set; }
 
         /// <summary>
         /// The time that the check run began
         /// </summary>
-        public DateTimeOffset StartedAt { get; set; }
+        public DateTimeOffset? StartedAt { get; set; }
 
         /// <summary>
         /// Required if you provide completed_at or a status of completed. The final conclusion of the check. Can be one of success, failure, neutral, cancelled, timed_out, or action_required. When the conclusion is action_required, additional details should be provided on the site specified by details_url.
