@@ -54,13 +54,13 @@ Now we have an authenticated `GitHubApp` (`appClient`), we can query various top
 
 ``` csharp
 // Get the current authenticated GitHubApp
-var app = await appClient.GetCurrent();
+var app = await appClient.GitHubApps.GetCurrent();
 
 // Get a list of installations for the authenticated GitHubApp
-var installations = await appClient.GetAllInstallationsForCurrent();
+var installations = await appClient.GitHubApps.GetAllInstallationsForCurrent();
 
 // Get a specific installation of the authenticated GitHubApp by it's installation Id
-var installation = await appClient.GetInstallation(123);
+var installation = await appClient.GitHubApps.GetInstallation(123);
 
 ```
 
@@ -72,7 +72,7 @@ In order to do more than top level calls, a `GitHubApp` needs to authenticate as
 
 ``` csharp
 // Create an Installation token for Insallation Id 123
-var response = await appClient.CreateInstallationToken(123);
+var response = await appClient.GitHubApps.CreateInstallationToken(123);
 
 // NOTE - the token will expire in 1 hour!
 response.ExpiresAt;
