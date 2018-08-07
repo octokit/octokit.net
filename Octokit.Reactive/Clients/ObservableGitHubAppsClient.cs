@@ -81,5 +81,56 @@ namespace Octokit.Reactive
         {
             return _client.CreateInstallationToken(installationId).ToObservable();
         }
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        public IObservable<Installation> GetAllInstallationsForUser()
+        {
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        public IObservable<Installation> GetAllInstallationsForUser(ApiOptions options)
+        {
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetRepositoryInstallation(string owner, string repo)
+        {
+            return _client.GetRepositoryInstallation(owner, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetOrganizationInstallation(string organization)
+        {
+            return _client.GetOrganizationInstallation(organization).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the users's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetUserInstallation(string user)
+        {
+            return _client.GetUserInstallation(user).ToObservable();
+        }
     }
 }
