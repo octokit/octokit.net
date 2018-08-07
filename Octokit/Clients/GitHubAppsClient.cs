@@ -92,7 +92,7 @@ namespace Octokit
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public Task<IReadOnlyList<Installation>> GetInstallationsForUser(ApiOptions options)
+        public Task<IReadOnlyList<Installation>> GetAllInstallationsForUser(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

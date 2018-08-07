@@ -116,7 +116,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetInstallationsForUserMethod
+        public class TheGetAllInstallationsForUserMethodWithApiOptions
         {
             [Fact]
             public void GetsFromCorrectUrl()
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetInstallationsForUser(options);
+                client.GetAllInstallationsForUser(options);
 
                 connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }

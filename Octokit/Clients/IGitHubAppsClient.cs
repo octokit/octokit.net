@@ -65,6 +65,6 @@ namespace Octokit
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<IReadOnlyList<Installation>> GetInstallationsForUser(ApiOptions options);
+        Task<IReadOnlyList<Installation>> GetAllInstallationsForUser(ApiOptions options);
     }
 }
