@@ -316,6 +316,33 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri RepoInstallation(string owner, string repo)
+        {
+            return "repos/{0}/{1}/installation".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OrganizationInstallation(string organization)
+        {
+            return "org/{0}/installation".FormatUri(organization); ;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri UserInstallation(string username)
+        {
+            return "users/{0}/installation".FormatUri(username);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
         /// </summary>
         /// <returns></returns>

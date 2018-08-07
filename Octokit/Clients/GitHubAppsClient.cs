@@ -56,6 +56,39 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public Task<Installation> GetRepositoryInstallation(string owner, string repo)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(owner, repo), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public Task<Installation> GetOrganizationInstallation(string organization)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.OrganizationInstallation(organization), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the users's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public Task<Installation> GetUserInstallation(string user)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.UserInstallation(user), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
         /// Get a single GitHub App Installation (requires GitHubApp JWT token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
