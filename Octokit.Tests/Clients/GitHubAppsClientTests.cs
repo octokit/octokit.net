@@ -136,5 +136,68 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }
         }
+
+        public class TheGetRepositoryInstallationMethod
+        {
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllInstallationsForUser(options);
+
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+            }
+        }
+
+        public class TheGetOrganizationInstallationMethod
+        {
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllInstallationsForUser(options);
+
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+            }
+        }
+
+        public class TheGetUserInstallationMethod
+        {
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAllInstallationsForUser(options);
+
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+            }
+        }
     }
 }
