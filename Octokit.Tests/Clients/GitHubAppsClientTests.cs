@@ -101,5 +101,40 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
             }
         }
+
+        public class TheGetAllInstallationsForUserMethod
+        {
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                client.GetAllInstallationsForUser();
+
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json");
+            }
+        }
+
+        public class TheGetInstallationsForUserMethod
+        {
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetInstallationsForUser(options);
+
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+            }
+        }
     }
 }

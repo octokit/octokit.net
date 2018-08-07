@@ -54,5 +54,17 @@ namespace Octokit
         /// </remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         Task<AccessToken> CreateInstallationToken(long installationId);
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        Task<IReadOnlyList<Installation>> GetAllInstallationsForUser();
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        Task<IReadOnlyList<Installation>> GetInstallationsForUser(ApiOptions options);
     }
 }

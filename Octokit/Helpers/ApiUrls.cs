@@ -325,6 +325,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations in repositories the user has explicit permission to access
+        /// </summary>
+        /// <returns></returns>
+        public static Uri UserInstallations()
+        {
+            return "user/installations".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the issues  across all the authenticated user’s visible
         /// repositories including owned repositories, member repositories, and organization repositories:
         /// </summary>

@@ -78,5 +78,25 @@ namespace Octokit
         {
             return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.GitHubAppsPreview);
         }
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        public Task<IReadOnlyList<Installation>> GetAllInstallationsForUser()
+        {
+            return ApiConnection.GetAll<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        public Task<IReadOnlyList<Installation>> GetInstallationsForUser(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
+        }
     }
 }
