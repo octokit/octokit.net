@@ -19,9 +19,13 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
+            Installations = new ObservableGitHubAppsInstallationsClient(client);
+
             _client = client.GitHubApps;
             _connection = client.Connection;
         }
+
+        public IObservableGitHubAppsInstallationsClient Installations { get; private set; }
 
         public IObservable<GitHubApp> Get(string slug)
         {

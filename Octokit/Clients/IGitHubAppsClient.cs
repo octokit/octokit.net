@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Octokit.Clients;
 
 namespace Octokit
 {
@@ -11,6 +12,14 @@ namespace Octokit
     /// </remarks>
     public interface IGitHubAppsClient
     {
+        /// <summary>
+        /// Access GitHub's Apps Installations API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
+        /// </remarks>
+        IGitHubAppsInstallationsClient Installations { get; }
+
         /// <summary>
         /// Get a single GitHub App.
         /// </summary>

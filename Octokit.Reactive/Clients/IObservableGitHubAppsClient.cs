@@ -11,6 +11,14 @@ namespace Octokit.Reactive
     public interface IObservableGitHubAppsClient
     {
         /// <summary>
+        /// Access GitHub's Apps Installations API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
+        /// </remarks>
+        IObservableGitHubAppsInstallationsClient Installations { get; }
+
+        /// <summary>
         /// Get a single GitHub App.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-github-app</remarks>
