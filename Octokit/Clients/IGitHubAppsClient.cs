@@ -88,16 +88,14 @@ namespace Octokit
         /// Enables an authenticated GitHub App to find the repository's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="organization">The name of the organization</param>
         Task<Installation> GetOrganizationInstallation(string organization);
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the users's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
         Task<Installation> GetUserInstallation(string user);
     }
 }
