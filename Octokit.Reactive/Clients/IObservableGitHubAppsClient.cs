@@ -58,13 +58,13 @@ namespace Octokit.Reactive
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<Installation> GetAllInstallationsForUser();
+        IObservable<InstallationsResponse> GetAllInstallationsForUser();
 
         /// <summary>
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<Installation> GetAllInstallationsForUser(ApiOptions options);
+        IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the organizations's installation information.

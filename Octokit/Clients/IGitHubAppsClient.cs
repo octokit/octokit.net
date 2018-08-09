@@ -59,13 +59,13 @@ namespace Octokit
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<IReadOnlyList<Installation>> GetAllInstallationsForUser();
+        Task<InstallationsResponse> GetAllInstallationsForUser();
 
         /// <summary>
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<IReadOnlyList<Installation>> GetAllInstallationsForUser(ApiOptions options);
+        Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the organizations's installation information.

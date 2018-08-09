@@ -86,18 +86,18 @@ namespace Octokit.Reactive
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<Installation> GetAllInstallationsForUser()
+        public IObservable<InstallationsResponse> GetAllInstallationsForUser()
         {
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
+            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<Installation> GetAllInstallationsForUser(ApiOptions options)
+        public IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
+            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
         }
 
         /// <summary>

@@ -105,21 +105,21 @@ namespace Octokit.Tests.Clients
         public class TheGetAllInstallationsForUserMethod
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public async Task GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
 
-                client.GetAllInstallationsForUser();
+                await client.GetAllInstallationsForUser();
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json");
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json");
             }
         }
 
         public class TheGetAllInstallationsForUserMethodWithApiOptions
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public async Task GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
@@ -131,16 +131,16 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAllInstallationsForUser(options);
+                await client.GetAllInstallationsForUser(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }
         }
 
         public class TheGetRepositoryInstallationMethod
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public async Task GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
@@ -152,16 +152,16 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAllInstallationsForUser(options);
+                await client.GetAllInstallationsForUser(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }
         }
 
         public class TheGetOrganizationInstallationMethod
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public async Task GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
@@ -173,16 +173,16 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAllInstallationsForUser(options);
+                await client.GetAllInstallationsForUser(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }
         }
 
         public class TheGetUserInstallationMethod
         {
             [Fact]
-            public void GetsFromCorrectUrl()
+            public async Task GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
@@ -194,9 +194,9 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAllInstallationsForUser(options);
+                await client.GetAllInstallationsForUser(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }
         }
     }

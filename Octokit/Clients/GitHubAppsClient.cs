@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -116,20 +117,28 @@ namespace Octokit
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public Task<IReadOnlyList<Installation>> GetAllInstallationsForUser()
+        public async Task<InstallationsResponse> GetAllInstallationsForUser()
         {
-            return ApiConnection.GetAll<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
+            var results = await ApiConnection.GetAll<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview).ConfigureAwait(false);
+
+            return new InstallationsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.Installations).ToList());
         }
 
         /// <summary>
         /// List installations for user
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public Task<IReadOnlyList<Installation>> GetAllInstallationsForUser(ApiOptions options)
+        public async Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Installation>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
+            var results = await ApiConnection.GetAll<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options).ConfigureAwait(false);
+
+            return new InstallationsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.Installations).ToList());
         }
     }
 }
