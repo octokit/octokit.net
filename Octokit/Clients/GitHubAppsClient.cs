@@ -35,6 +35,8 @@ namespace Octokit
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
         public Task<GitHubApp> Get(string slug)
         {
+            Ensure.ArgumentNotNull(slug, nameof(slug));
+
             return ApiConnection.Get<GitHubApp>(ApiUrls.App(slug), null, AcceptHeaders.GitHubAppsPreview);
         }
 
@@ -86,6 +88,9 @@ namespace Octokit
         /// <param name="repo">The name of the repo</param>
         public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
         {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+
             return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(owner, repo), null, AcceptHeaders.GitHubAppsPreview);
         }
 
@@ -103,10 +108,11 @@ namespace Octokit
         /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="organization">The name of the organization</param>
         public Task<Installation> GetOrganizationInstallationForCurrent(string organization)
         {
+            Ensure.ArgumentNotNull(organization, nameof(organization));
+
             return ApiConnection.Get<Installation>(ApiUrls.OrganizationInstallation(organization), null, AcceptHeaders.GitHubAppsPreview);
         }
 
@@ -114,10 +120,11 @@ namespace Octokit
         /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
         public Task<Installation> GetUserInstallationForCurrent(string user)
         {
+            Ensure.ArgumentNotNull(user, nameof(user));
+
             return ApiConnection.Get<Installation>(ApiUrls.UserInstallation(user), null, AcceptHeaders.GitHubAppsPreview);
         }
 
