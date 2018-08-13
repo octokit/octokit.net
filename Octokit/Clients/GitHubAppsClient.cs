@@ -69,12 +69,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get a single GitHub App Installation (requires GitHubApp JWT token auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        public Task<Installation> GetInstallationForCurrent(long installationId)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
         /// Enables an authenticated GitHub App to find the organizations's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public Task<Installation> GetRepositoryInstallation(string owner, string repo)
+        public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
         {
             return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(owner, repo), null, AcceptHeaders.GitHubAppsPreview);
         }
@@ -84,7 +94,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="repositoryId">The id of the repo</param>
-        public Task<Installation> GetRepositoryInstallation(long repositoryId)
+        public Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
         {
             return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(repositoryId), null, AcceptHeaders.GitHubAppsPreview);
         }
@@ -95,7 +105,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public Task<Installation> GetOrganizationInstallation(string organization)
+        public Task<Installation> GetOrganizationInstallationForCurrent(string organization)
         {
             return ApiConnection.Get<Installation>(ApiUrls.OrganizationInstallation(organization), null, AcceptHeaders.GitHubAppsPreview);
         }
@@ -106,19 +116,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public Task<Installation> GetUserInstallation(string user)
+        public Task<Installation> GetUserInstallationForCurrent(string user)
         {
             return ApiConnection.Get<Installation>(ApiUrls.UserInstallation(user), null, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
-        /// Get a single GitHub App Installation (requires GitHubApp JWT token auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
-        /// <param name="installationId">The Id of the GitHub App Installation</param>
-        public Task<Installation> GetInstallation(long installationId)
-        {
-            return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.GitHubAppsPreview);
         }
 
         /// <summary>

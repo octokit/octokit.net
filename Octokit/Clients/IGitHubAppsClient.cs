@@ -51,7 +51,36 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        Task<Installation> GetInstallation(long installationId);
+        Task<Installation> GetInstallationForCurrent(long installationId);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The id of the repo</param>
+        Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="organization">The name of the organization</param>
+        Task<Installation> GetOrganizationInstallationForCurrent(string organization);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the users's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
+        /// <param name="user">The name of the user</param>
+        Task<Installation> GetUserInstallationForCurrent(string user);
 
         /// <summary>
         /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
@@ -75,34 +104,5 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        Task<Installation> GetRepositoryInstallation(string owner, string repo);
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="repositoryId">The id of the repo</param>
-        Task<Installation> GetRepositoryInstallation(long repositoryId);
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="organization">The name of the organization</param>
-        Task<Installation> GetOrganizationInstallation(string organization);
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the users's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="user">The name of the user</param>
-        Task<Installation> GetUserInstallation(string user);
     }
 }

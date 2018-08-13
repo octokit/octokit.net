@@ -22,7 +22,7 @@ namespace Octokit.Reactive
             Installation = new ObservableGitHubAppsInstallationsClient(client);
 
             _client = client.GitHubApps;
-            _connection = client.Connection;
+            _connection = client.Connection;.
         }
 
         public IObservableGitHubAppsInstallationsClient Installation { get; private set; }
@@ -67,9 +67,52 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        public IObservable<Installation> GetInstallation(long installationId)
+        public IObservable<Installation> GetInstallationForCurrent(long installationId)
         {
-            return _client.GetInstallation(installationId).ToObservable();
+            return _client.GetInstallationForCurrent(installationId).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
+        {
+            return _client.GetRepositoryInstallationForCurrent(owner, repo).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The id of the repo</param>
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
+        {
+            return _client.GetRepositoryInstallationForCurrent(repositoryId).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
+        {
+            return _client.GetOrganizationInstallationForCurrent(organization).ToObservable();
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the users's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public IObservable<Installation> GetUserInstallationForCurrent(string user)
+        {
+            return _client.GetUserInstallationForCurrent(user).ToObservable();
         }
 
         /// <summary>
@@ -102,50 +145,6 @@ namespace Octokit.Reactive
         public IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)
         {
             return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
-        {
-            return _client.GetRepositoryInstallation(owner, repo).ToObservable();
-        }
-
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="repositoryId">The id of the repo</param>
-        public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
-        {
-            return _client.GetRepositoryInstallation(repositoryId).ToObservable();
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
-        {
-            return _client.GetOrganizationInstallation(organization).ToObservable();
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the users's installation information.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetUserInstallationForCurrent(string user)
-        {
-            return _client.GetUserInstallation(user).ToObservable();
         }
     }
 }

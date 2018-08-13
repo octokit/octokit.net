@@ -49,30 +49,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        IObservable<Installation> GetInstallation(long installationId);
-
-        /// <summary>
-        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
-        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
-        /// https://developer.github.com/v3/apps/available-endpoints/
-        /// </remarks>
-        /// <param name="installationId">The Id of the GitHub App Installation</param>
-        IObservable<AccessToken> CreateInstallationToken(long installationId);
-
-        /// <summary>
-        /// List installations for user
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<InstallationsResponse> GetAllInstallationsForUser();
-
-        /// <summary>
-        /// List installations for user
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
+        IObservable<Installation> GetInstallationForCurrent(long installationId);
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the organizations's installation information.
@@ -102,5 +79,28 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
         IObservable<Installation> GetUserInstallationForCurrent(string user);
+
+        /// <summary>
+        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
+        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
+        /// https://developer.github.com/v3/apps/available-endpoints/
+        /// </remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        IObservable<AccessToken> CreateInstallationToken(long installationId);
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        IObservable<InstallationsResponse> GetAllInstallationsForUser();
+
+        /// <summary>
+        /// List installations for user
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
     }
 }
