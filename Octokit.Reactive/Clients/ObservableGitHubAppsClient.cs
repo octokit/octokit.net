@@ -22,7 +22,7 @@ namespace Octokit.Reactive
             Installation = new ObservableGitHubAppsInstallationsClient(client);
 
             _client = client.GitHubApps;
-            _connection = client.Connection;.
+            _connection = client.Connection;
         }
 
 
