@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetInstallationMethod
+        public class TheGetInstallationForCurrentMethod
         {
             [Fact]
             public void GetsFromCorrectUrl()
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
 
-                client.GetInstallation(123);
+                client.GetInstallationForCurrent(123);
 
                 connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations/123"), null, "application/vnd.github.machine-man-preview+json");
             }
