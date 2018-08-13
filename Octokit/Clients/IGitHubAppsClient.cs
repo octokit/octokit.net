@@ -85,6 +85,13 @@ namespace Octokit
         Task<Installation> GetRepositoryInstallation(string owner, string repo);
 
         /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The id of the repo</param>
+        Task<Installation> GetRepositoryInstallation(long repositoryId);
+
+        /// <summary>
         /// Enables an authenticated GitHub App to find the repository's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>

@@ -19,13 +19,13 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            Installations = new ObservableGitHubAppsInstallationsClient(client);
+            Installation = new ObservableGitHubAppsInstallationsClient(client);
 
             _client = client.GitHubApps;
             _connection = client.Connection;
         }
 
-        public IObservableGitHubAppsInstallationsClient Installations { get; private set; }
+        public IObservableGitHubAppsInstallationsClient Installation { get; private set; }
 
         public IObservable<GitHubApp> Get(string slug)
         {
@@ -110,9 +110,20 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetRepositoryInstallation(string owner, string repo)
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
         {
             return _client.GetRepositoryInstallation(owner, repo).ToObservable();
+        }
+
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The id of the repo</param>
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
+        {
+            return _client.GetRepositoryInstallation(repositoryId).ToObservable();
         }
 
         /// <summary>
@@ -121,7 +132,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetOrganizationInstallation(string organization)
+        public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
         {
             return _client.GetOrganizationInstallation(organization).ToObservable();
         }
@@ -132,7 +143,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetUserInstallation(string user)
+        public IObservable<Installation> GetUserInstallationForCurrent(string user)
         {
             return _client.GetUserInstallation(user).ToObservable();
         }

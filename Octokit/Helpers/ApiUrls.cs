@@ -335,6 +335,15 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the repository's installation information.
         /// </summary>
+        /// <returns></returns>
+        public static Uri RepoInstallation(long repositoryId)
+        {
+            return "repositories/{0}/installation".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
         public static Uri OrganizationInstallation(string organization)
         {
             return "org/{0}/installation".FormatUri(organization); ;

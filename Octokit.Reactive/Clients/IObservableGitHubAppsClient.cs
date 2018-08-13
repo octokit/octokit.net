@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
         /// </remarks>
-        IObservableGitHubAppsInstallationsClient Installations { get; }
+        IObservableGitHubAppsInstallationsClient Installation { get; }
 
         /// <summary>
         /// Get a single GitHub App.
@@ -80,22 +80,27 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        IObservable<Installation> GetRepositoryInstallation(string owner, string repo);
+        IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo);
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information.
+        /// Enables an authenticated GitHub App to find the organizations's installation information.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organization's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        IObservable<Installation> GetOrganizationInstallation(string organization);
+        /// <param name="organization">The name of the organization</param>
+        IObservable<Installation> GetOrganizationInstallationForCurrent(string organization);
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the users's installation information.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        IObservable<Installation> GetUserInstallation(string user);
+        /// <param name="user">The name of the user</param>
+        IObservable<Installation> GetUserInstallationForCurrent(string user);
     }
 }
