@@ -18,7 +18,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
         /// </remarks>
-        IGitHubAppsInstallationsClient Installations { get; }
+        IGitHubAppsInstallationsClient Installation { get; }
 
         /// <summary>
         /// Get a single GitHub App (if private, requires Personal Access Token or GitHubApp auth)
