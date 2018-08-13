@@ -11,27 +11,27 @@ namespace Octokit
     public interface IGitHubAppsInstallationsClient
     {
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp JWT token auth).
+        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         Task<RepositoriesResponse> GetAllRepositoriesForCurrent();
 
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp JWT token auth).
+        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options);
 
         /// <summary>
-        /// List repositories accessible to the user for an installation.
+        /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <param name="installationId">The id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         Task<RepositoriesResponse> GetAllRepositoriesForUser(long installationId);
 
         /// <summary>
-        /// List repositories accessible to the user for an installation.
+        /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <param name="installationId">The id of the installation</param>
         /// <param name="options">Options for changing the API response</param>

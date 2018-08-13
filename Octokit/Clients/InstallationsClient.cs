@@ -16,7 +16,7 @@ namespace Octokit.Clients
         }
 
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp JWT token auth).
+        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent()
@@ -29,7 +29,7 @@ namespace Octokit.Clients
         }
 
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp JWT token auth).
+        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
@@ -45,7 +45,7 @@ namespace Octokit.Clients
         }
 
         /// <summary>
-        /// List repositories accessible to the user for an installation.
+        /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <param name="installationId"></param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
@@ -59,7 +59,7 @@ namespace Octokit.Clients
         }
 
         /// <summary>
-        /// List repositories accessible to the user for an installation.
+        /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <param name="installationId"></param>
         /// <param name="options">Options for changing the API response</param>
