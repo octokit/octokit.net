@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsClient(connection);
 
-                await client.GetAllInstallationsForUser();
+                await client.GetAllInstallationsForCurrentUser();
 
                 await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json");
             }
@@ -231,7 +231,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                await client.GetAllInstallationsForUser(options);
+                await client.GetAllInstallationsForCurrentUser(options);
 
                 await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
             }

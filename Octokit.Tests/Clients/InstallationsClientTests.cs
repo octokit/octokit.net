@@ -57,7 +57,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new GitHubAppsInstallationsClient(connection);
 
-                client.GetAllRepositoriesForUser(1234);
+                client.GetAllRepositoriesForCurrentUser(1234);
 
                 var calls = connection.ReceivedCalls().ToList();
 
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAllRepositoriesForUser(1234, options);
+                client.GetAllRepositoriesForCurrentUser(1234, options);
 
                 connection.Received().GetAll<RepositoriesResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"), null, "application/vnd.github.machine-man-preview+json", options);
             }

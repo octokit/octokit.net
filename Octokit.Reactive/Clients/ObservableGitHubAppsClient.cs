@@ -142,7 +142,7 @@ namespace Octokit.Reactive
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<InstallationsResponse> GetAllInstallationsForUser()
+        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser()
         {
             return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
         }
@@ -151,7 +151,7 @@ namespace Octokit.Reactive
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)
+        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
         {
             return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
         }

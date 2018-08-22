@@ -146,7 +146,7 @@ namespace Octokit
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public async Task<InstallationsResponse> GetAllInstallationsForUser()
+        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser()
         {
             var results = await ApiConnection.GetAll<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview).ConfigureAwait(false);
 
@@ -159,7 +159,7 @@ namespace Octokit
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public async Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)
+        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

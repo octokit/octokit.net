@@ -49,7 +49,7 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public async Task<RepositoriesResponse> GetAllRepositoriesForUser(long installationId)
+        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
         {
             var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview).ConfigureAwait(false);
 
@@ -64,7 +64,7 @@ namespace Octokit.Clients
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public async Task<RepositoriesResponse> GetAllRepositoriesForUser(long installationId, ApiOptions options)
+        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

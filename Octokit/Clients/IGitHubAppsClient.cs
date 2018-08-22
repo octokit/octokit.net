@@ -97,12 +97,12 @@ namespace Octokit
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<InstallationsResponse> GetAllInstallationsForUser();
+        Task<InstallationsResponse> GetAllInstallationsForCurrentUser();
 
         /// <summary>
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
+        Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options);
     }
 }

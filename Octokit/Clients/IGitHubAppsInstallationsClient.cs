@@ -28,7 +28,7 @@ namespace Octokit
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        Task<RepositoriesResponse> GetAllRepositoriesForUser(long installationId);
+        Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId);
 
         /// <summary>
         /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
@@ -36,6 +36,6 @@ namespace Octokit
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        Task<RepositoriesResponse> GetAllRepositoriesForUser(long installationId, ApiOptions options);
+        Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options);
     }
 }

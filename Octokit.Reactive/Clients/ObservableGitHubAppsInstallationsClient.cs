@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForUser(long installationId)
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
         {
             return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview);
         }
@@ -56,7 +56,7 @@ namespace Octokit.Reactive
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForUser(long installationId, ApiOptions options)
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
             return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview);
         }
