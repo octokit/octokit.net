@@ -8,7 +8,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/installations/">GitHub Apps Installations API documentation</a> for more information.
     /// </remarks>
-    public interface IGitHubAppsInstallationsClient
+    public interface IGitHubAppInstallationsClient
     {
         /// <summary>
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).

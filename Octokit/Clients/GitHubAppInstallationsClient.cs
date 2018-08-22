@@ -9,9 +9,9 @@ namespace Octokit.Clients
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/installations/">GitHub Apps Installations API documentation</a> for more information.
     /// </remarks>
-    public class GitHubAppsInstallationsClient : ApiClient, IGitHubAppsInstallationsClient
+    public class GitHubAppInstallationsClient : ApiClient, IGitHubAppInstallationsClient
     {
-        public GitHubAppsInstallationsClient(IApiConnection apiConnection) : base(apiConnection)
+        public GitHubAppInstallationsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
 

@@ -205,7 +205,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllInstallationsForUserMethod
+        public class TheGetAllInstallationsForCurrentUserMethod
         {
             [Fact]
             public async Task GetsFromCorrectUrl()

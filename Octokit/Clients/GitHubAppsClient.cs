@@ -17,7 +17,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(apiConnection, nameof(apiConnection));
 
-            Installation = new GitHubAppsInstallationsClient(apiConnection);
+            Installation = new GitHubAppInstallationsClient(apiConnection);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Octokit
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
         /// </remarks>
-        public IGitHubAppsInstallationsClient Installation { get; }
+        public IGitHubAppInstallationsClient Installation { get; }
 
         /// <summary>
         /// Get a single GitHub App (if private, requires Personal Access Token or GitHubApp auth)

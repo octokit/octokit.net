@@ -10,12 +10,12 @@ namespace Octokit.Reactive
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/installations/">GitHub Apps Installations API documentation</a> for more information.
     /// </remarks>
-    public class ObservableGitHubAppsInstallationsClient : IObservableGitHubAppsInstallationsClient
+    public class ObservableGitHubAppInstallationsClient : IObservableGitHubAppInstallationsClient
     {
-        private IGitHubAppsInstallationsClient _client;
+        private IGitHubAppInstallationsClient _client;
         private readonly IConnection _connection;
 
-        public ObservableGitHubAppsInstallationsClient(IGitHubClient client)
+        public ObservableGitHubAppInstallationsClient(IGitHubClient client)
         {
             _client = client.GitHubApps.Installation;
             _connection = client.Connection;

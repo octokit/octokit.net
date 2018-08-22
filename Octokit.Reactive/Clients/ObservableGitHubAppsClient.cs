@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, "client");
 
-            Installation = new ObservableGitHubAppsInstallationsClient(client);
+            Installation = new ObservableGitHubAppInstallationsClient(client);
 
             _client = client.GitHubApps;
             _connection = client.Connection;
@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
         /// </remarks>
-        public IObservableGitHubAppsInstallationsClient Installation { get; private set; }
+        public IObservableGitHubAppInstallationsClient Installation { get; private set; }
 
         /// <summary>
         /// Get a single GitHub App (if private, requires Personal Access Token or GitHubApp auth)

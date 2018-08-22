@@ -6,14 +6,14 @@ using Xunit;
 
 namespace Octokit.Tests.Clients
 {
-    public class InstallationsClientTests
+    public class GitHubAppInstallationsClientTests
     {
         public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new GitHubAppsInstallationsClient(null));
+                Assert.Throws<ArgumentNullException>(() => new GitHubAppInstallationsClient(null));
             }
         }
 
@@ -23,7 +23,7 @@ namespace Octokit.Tests.Clients
             public void GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsInstallationsClient(connection);
+                var client = new GitHubAppInstallationsClient(connection);
 
                 client.GetAllRepositoriesForCurrent();
 
@@ -34,7 +34,7 @@ namespace Octokit.Tests.Clients
             public void GetsFromCorrectUrllWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsInstallationsClient(connection);
+                var client = new GitHubAppInstallationsClient(connection);
 
                 var options = new ApiOptions
                 {
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
             public void GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsInstallationsClient(connection);
+                var client = new GitHubAppInstallationsClient(connection);
 
                 client.GetAllRepositoriesForCurrentUser(1234);
 
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Clients
             public void GetsFromCorrectUrllWithApiOptions()
             {
                 var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsInstallationsClient(connection);
+                var client = new GitHubAppInstallationsClient(connection);
 
                 var options = new ApiOptions
                 {
