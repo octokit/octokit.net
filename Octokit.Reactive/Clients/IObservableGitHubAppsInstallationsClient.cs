@@ -3,7 +3,7 @@
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub Applications Installations API. Provides the methods required to get GitHub Apps installations.
+    /// A client for GitHub Applications Installations API.
     /// </summary>
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/installations/">GitHub Apps Installations API documentation</a> for more information.
@@ -11,13 +11,13 @@ namespace Octokit.Reactive
     public interface IObservableGitHubAppsInstallationsClient
     {
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
+        /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent();
 
         /// <summary>
-        /// List repositories of the authenticated GitHub App (requires GitHubApp auth).
+        /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
@@ -26,14 +26,14 @@ namespace Octokit.Reactive
         /// <summary>
         /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
-        /// <param name="installationId">The id of the installation</param>
+        /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         IObservable<RepositoriesResponse> GetAllRepositoriesForUser(long installationId);
 
         /// <summary>
         /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
-        /// <param name="installationId">The id of the installation</param>
+        /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         IObservable<RepositoriesResponse> GetAllRepositoriesForUser(long installationId, ApiOptions options);

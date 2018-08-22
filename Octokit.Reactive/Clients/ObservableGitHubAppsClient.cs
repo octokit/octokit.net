@@ -5,7 +5,7 @@ using System.Reactive.Threading.Tasks;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub Applications API. Provides the methods required to get GitHub applications and installations.
+    /// A client for GitHub Applications API.
     /// </summary>
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/">GitHub Apps API documentation</a> for more information.
@@ -25,7 +25,12 @@ namespace Octokit.Reactive
             _connection = client.Connection;
         }
 
-
+        /// <summary>
+        /// Access GitHub's Apps Installations API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/installations/
+        /// </remarks>
         public IObservableGitHubAppsInstallationsClient Installation { get; private set; }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
@@ -90,21 +95,20 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="repositoryId">The id of the repo</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
         {
             return _client.GetRepositoryInstallationForCurrent(repositoryId).ToObservable();
         }
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="organization">The name of the organization</param>
         public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
         {
             return _client.GetOrganizationInstallationForCurrent(organization).ToObservable();
@@ -114,8 +118,7 @@ namespace Octokit.Reactive
         /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
+        /// <param name="user">The name of the user</param>
         public IObservable<Installation> GetUserInstallationForCurrent(string user)
         {
             return _client.GetUserInstallationForCurrent(user).ToObservable();
@@ -136,7 +139,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// List installations for user (requires GitHubApp User-To-Server Auth).
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         public IObservable<InstallationsResponse> GetAllInstallationsForUser()
@@ -145,7 +148,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// List installations for user (requires GitHubApp User-To-Server Auth).
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         public IObservable<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options)

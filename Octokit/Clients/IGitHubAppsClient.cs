@@ -5,7 +5,7 @@ using Octokit.Clients;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub Applications API. Provides the methods required to get GitHub applications and installations.
+    /// A client for GitHub Applications API.
     /// </summary>
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/apps/">GitHub Apps API documentation</a> for more information.
@@ -54,7 +54,7 @@ namespace Octokit
         Task<Installation> GetInstallationForCurrent(long installationId);
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
@@ -62,14 +62,14 @@ namespace Octokit
         Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo);
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the organizations's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="repositoryId">The id of the repo</param>
+        /// <param name="repositoryId">The Id of the repository</param>
         Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId);
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
+        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="organization">The name of the organization</param>
@@ -94,13 +94,13 @@ namespace Octokit
         Task<AccessToken> CreateInstallationToken(long installationId);
 
         /// <summary>
-        /// List installations for the user (requires GitHubApp User-To-Server Auth).
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         Task<InstallationsResponse> GetAllInstallationsForUser();
 
         /// <summary>
-        /// List installations for the user (requires GitHubApp User-To-Server Auth).
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         Task<InstallationsResponse> GetAllInstallationsForUser(ApiOptions options);
