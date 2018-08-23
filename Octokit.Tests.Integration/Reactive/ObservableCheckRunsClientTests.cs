@@ -410,7 +410,7 @@ namespace Octokit.Tests.Integration.Reactive
                         {
                             Annotations = new[]
                             {
-                                new NewCheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                                new NewCheckRunAnnotation("file.txt", 1, 1, CheckAnnotationLevel.Warning, "this is a warning")
                             }
                         }
                     };
@@ -422,7 +422,7 @@ namespace Octokit.Tests.Integration.Reactive
                     // Check result
                     Assert.Equal(1, annotations.Count);
                     Assert.Equal("this is a warning", annotations.First().Message);
-                    Assert.Equal(CheckWarningLevel.Warning, annotations.First().WarningLevel);
+                    Assert.Equal(CheckAnnotationLevel.Warning, annotations.First().AnnotationLevel);
                 }
             }
 
@@ -443,7 +443,7 @@ namespace Octokit.Tests.Integration.Reactive
                         {
                             Annotations = new[]
                             {
-                                new NewCheckRunAnnotation("file.txt", "blob", 1, 1, CheckWarningLevel.Warning, "this is a warning")
+                                new NewCheckRunAnnotation("file.txt", 1, 1, CheckAnnotationLevel.Warning, "this is a warning")
                             }
                         }
                     };
@@ -455,7 +455,7 @@ namespace Octokit.Tests.Integration.Reactive
                     // Check result
                     Assert.Equal(1, annotations.Count);
                     Assert.Equal("this is a warning", annotations.First().Message);
-                    Assert.Equal(CheckWarningLevel.Warning, annotations.First().WarningLevel);
+                    Assert.Equal(CheckAnnotationLevel.Warning, annotations.First().AnnotationLevel);
                 }
             }
         }
