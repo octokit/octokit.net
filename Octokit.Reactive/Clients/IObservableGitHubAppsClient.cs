@@ -52,6 +52,36 @@ namespace Octokit.Reactive
         IObservable<Installation> GetInstallationForCurrent(long installationId);
 
         /// <summary>
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser();
+
+        /// <summary>
+        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
+        IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options);
+
+        /// <summary>
+        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
+        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
+        /// https://developer.github.com/v3/apps/available-endpoints/
+        /// </remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        IObservable<AccessToken> CreateInstallationToken(long installationId);
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="organization">The name of the organization</param>
+        IObservable<Installation> GetOrganizationInstallationForCurrent(string organization);
+
+        /// <summary>
         /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
@@ -67,40 +97,10 @@ namespace Octokit.Reactive
         IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId);
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="organization">The name of the organization</param>
-        IObservable<Installation> GetOrganizationInstallationForCurrent(string organization);
-
-        /// <summary>
         /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
         IObservable<Installation> GetUserInstallationForCurrent(string user);
-
-        /// <summary>
-        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
-        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
-        /// https://developer.github.com/v3/apps/available-endpoints/
-        /// </remarks>
-        /// <param name="installationId">The Id of the GitHub App Installation</param>
-        IObservable<AccessToken> CreateInstallationToken(long installationId);
-
-        /// <summary>
-        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser();
-
-        /// <summary>
-        /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options);
     }
 }

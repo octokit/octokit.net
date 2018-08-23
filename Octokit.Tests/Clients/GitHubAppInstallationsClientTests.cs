@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllRepositoriesForUserMethod
+        public class TheGetAllRepositoriesForCurrentUserMethod
         {
             [Fact]
             public void GetsFromCorrectUrl()

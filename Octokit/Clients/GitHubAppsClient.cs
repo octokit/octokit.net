@@ -81,68 +81,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="owner">The owner of the repo</param>
-        /// <param name="repo">The name of the repo</param>
-        public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
-        {
-            Ensure.ArgumentNotNull(owner, nameof(owner));
-            Ensure.ArgumentNotNull(repo, nameof(repo));
-
-            return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(owner, repo), null, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        public Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
-        {
-            return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(repositoryId), null, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
-        /// <param name="organization">The name of the organization</param>
-        public Task<Installation> GetOrganizationInstallationForCurrent(string organization)
-        {
-            Ensure.ArgumentNotNull(organization, nameof(organization));
-
-            return ApiConnection.Get<Installation>(ApiUrls.OrganizationInstallation(organization), null, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
-        /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
-        /// <param name="user">The name of the user</param>
-        public Task<Installation> GetUserInstallationForCurrent(string user)
-        {
-            Ensure.ArgumentNotNull(user, nameof(user));
-
-            return ApiConnection.Get<Installation>(ApiUrls.UserInstallation(user), null, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
-        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp auth).
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
-        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
-        /// https://developer.github.com/v3/apps/available-endpoints/
-        /// </remarks>
-        /// <param name="installationId">The Id of the GitHub App Installation</param>
-        public Task<AccessToken> CreateInstallationToken(long installationId)
-        {
-            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.GitHubAppsPreview);
-        }
-
-        /// <summary>
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
@@ -168,6 +106,68 @@ namespace Octokit
             return new InstallationsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
                 results.SelectMany(x => x.Installations).ToList());
+        }
+
+        /// <summary>
+        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
+        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
+        /// https://developer.github.com/v3/apps/available-endpoints/
+        /// </remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        public Task<AccessToken> CreateInstallationToken(long installationId)
+        {
+            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
+        /// <param name="organization">The name of the organization</param>
+        public Task<Installation> GetOrganizationInstallationForCurrent(string organization)
+        {
+            Ensure.ArgumentNotNull(organization, nameof(organization));
+
+            return ApiConnection.Get<Installation>(ApiUrls.OrganizationInstallation(organization), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
+        {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+
+            return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(owner, repo), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        public Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
+        {
+            return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(repositoryId), null, AcceptHeaders.GitHubAppsPreview);
+        }
+
+        /// <summary>
+        /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
+        /// <param name="user">The name of the user</param>
+        public Task<Installation> GetUserInstallationForCurrent(string user)
+        {
+            Ensure.ArgumentNotNull(user, nameof(user));
+
+            return ApiConnection.Get<Installation>(ApiUrls.UserInstallation(user), null, AcceptHeaders.GitHubAppsPreview);
         }
     }
 }
