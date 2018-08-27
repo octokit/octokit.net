@@ -81,5 +81,20 @@ namespace Octokit.Reactive
         {
             return _client.CreateInstallationToken(installationId).ToObservable();
         }
+
+        /// <summary>
+        /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp JWT token auth).
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/apps/#create-a-new-installation-token
+        /// https://developer.github.com/apps/building-github-apps/authentication-options-for-github-apps/#authenticating-as-an-installation
+        /// https://developer.github.com/v3/apps/available-endpoints/
+        /// </remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        [Obsolete("This method is provided to enable Installation Tokens under the initial GitHub App Preview functionality, which may still be required on GitHub Enterprise 2.14")]
+        public IObservable<AccessToken> CreateInstallationTokenPreview(long installationId)
+        {
+            return _client.CreateInstallationTokenPreview(installationId).ToObservable();
+        }
     }
 }
