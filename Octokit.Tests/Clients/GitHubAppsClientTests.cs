@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
 
                 client.CreateInstallationToken(fakeInstallationId);
 
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "app/installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
             }
         }
 
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Clients
                 client.CreateInstallationTokenPreview(fakeInstallationId);
 #pragma warning restore CS0618 // Type or member is obsolete
 
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "app/installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
             }
         }
     }
