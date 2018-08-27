@@ -147,7 +147,9 @@ namespace Octokit.Tests.Integration.Clients
                 var installationId = Helper.GetGitHubAppInstallationForOwner(Helper.UserName).Id;
 
                 // Create installation token
+#pragma warning disable CS0618 // Type or member is obsolete
                 var result = await _github.GitHubApps.CreateInstallationTokenPreview(installationId);
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 Assert.NotNull(result.Token);
                 Assert.True(DateTimeOffset.Now < result.ExpiresAt);
