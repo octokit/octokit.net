@@ -129,5 +129,29 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.True(DateTimeOffset.Now < result.ExpiresAt);
             }
         }
+
+        public class TheCreateInstallationTokenPreviewMethod
+        {
+            IGitHubClient _github;
+
+            public TheCreateInstallationTokenPreviewMethod()
+            {
+                // Authenticate as a GitHubApp
+                _github = Helper.GetAuthenticatedGitHubAppsClient();
+            }
+
+            [GitHubAppsTest]
+            public async Task CreatesInstallationToken()
+            {
+                // Get the installation Id
+                var installationId = Helper.GetGitHubAppInstallationForOwner(Helper.UserName).Id;
+
+                // Create installation token
+                var result = await _github.GitHubApps.CreateInstallationTokenPreview(installationId);
+
+                Assert.NotNull(result.Token);
+                Assert.True(DateTimeOffset.Now < result.ExpiresAt);
+            }
+        }
     }
 }
