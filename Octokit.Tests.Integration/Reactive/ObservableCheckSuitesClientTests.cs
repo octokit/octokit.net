@@ -215,6 +215,7 @@ namespace Octokit.Tests.Integration.Reactive
             }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public class TheRequestMethod
         {
             IObservableGitHubClient _github;
@@ -254,5 +255,6 @@ namespace Octokit.Tests.Integration.Reactive
                 }
             }
         }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }

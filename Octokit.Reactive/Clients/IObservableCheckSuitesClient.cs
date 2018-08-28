@@ -151,6 +151,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Details of the Check Suite request</param>
+        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
         IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request);
 
         /// <summary>
@@ -161,6 +162,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Details of the Check Suite request</param>
+        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
         IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request);
     }
 }

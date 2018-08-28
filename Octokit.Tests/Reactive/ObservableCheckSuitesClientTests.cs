@@ -313,6 +313,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public class TheRequestMethod
         {
             [Fact]
@@ -368,5 +369,6 @@ namespace Octokit.Tests.Clients
                 Assert.Throws<ArgumentException>(() => client.Request("fake", "", request));
             }
         }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }

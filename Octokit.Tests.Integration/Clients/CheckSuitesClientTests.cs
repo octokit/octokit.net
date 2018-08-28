@@ -213,6 +213,7 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public class TheRequestMethod
         {
             IGitHubClient _github;
@@ -252,5 +253,6 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
         }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
