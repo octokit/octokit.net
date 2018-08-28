@@ -254,5 +254,51 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 #pragma warning restore CS0618 // Type or member is obsolete
+
+        public class TheRerequestMethod
+        {
+            IGitHubClient _github;
+            IGitHubClient _githubAppInstallation;
+
+            public TheRerequestMethod()
+            {
+                _github = Helper.GetAuthenticatedClient();
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName);
+            }
+
+            [GitHubAppsTest]
+            public async Task RerequestsCheckSuite()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    // Need to get a CheckSuiteId so we can test the Get method
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
+
+                    // Get Check Suite by Id
+                    var result = await _githubAppInstallation.Check.Suite.Rerequest(repoContext.RepositoryOwner, repoContext.RepositoryName, checkSuite.Id);
+
+                    Assert.True(result);
+                }
+            }
+
+            [GitHubAppsTest]
+            public async Task RerequestsCheckSuiteWithRepositoryId()
+            {
+                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
+                {
+                    // Need to get a CheckSuiteId so we can test the Get method
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
+
+                    // Get Check Suite by Id
+                    var result = await _githubAppInstallation.Check.Suite.Rerequest(repoContext.RepositoryId, checkSuite.Id);
+
+                    Assert.True(result);
+                }
+            }
+        }
     }
 }

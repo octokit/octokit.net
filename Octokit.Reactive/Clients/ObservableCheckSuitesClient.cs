@@ -268,5 +268,35 @@ namespace Octokit.Reactive
 
             return _client.Request(repositoryId, request).ToObservable();
         }
+
+        /// <summary>
+        /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public IObservable<bool> Rerequest(string owner, string name, long checkSuiteId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.Rerequest(owner, name, checkSuiteId).ToObservable();
+        }
+
+        /// <summary>
+        /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        public IObservable<bool> Rerequest(long repositoryId, long checkSuiteId)
+        {
+            return _client.Rerequest(repositoryId, checkSuiteId).ToObservable();
+        }
     }
 }

@@ -370,5 +370,50 @@ namespace Octokit.Tests.Clients
             }
         }
 #pragma warning restore CS0618 // Type or member is obsolete
+
+        public class TheRerequestMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckSuitesClient(gitHubClient);
+
+                client.Rerequest("fake", "repo", 1);
+
+                gitHubClient.Check.Suite.Received().Rerequest("fake", "repo", 1);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckSuitesClient(gitHubClient);
+
+                client.Rerequest(1, 1);
+
+                gitHubClient.Check.Suite.Received().Rerequest(1, 1);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckSuitesClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.Rerequest(null, "repo", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Rerequest("fake", null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableCheckSuitesClient(gitHubClient);
+
+                Assert.Throws<ArgumentException>(() => client.Rerequest("", "repo", 1));
+                Assert.Throws<ArgumentException>(() => client.Rerequest("fake", "", 1));
+            }
+        }
     }
 }
