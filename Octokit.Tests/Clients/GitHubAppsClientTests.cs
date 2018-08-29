@@ -28,6 +28,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get(""));
+            }
+
+            [Fact]
             public void GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -168,6 +177,15 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationInstallationForCurrent(""));
+            }
+
+            [Fact]
             public void GetsFromCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -189,6 +207,16 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRepositoryInstallationForCurrent(null, "ducks"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRepositoryInstallationForCurrent("mighty", null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRepositoryInstallationForCurrent("", "ducks"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRepositoryInstallationForCurrent("mighty", ""));
             }
 
             [Fact]
@@ -223,6 +251,15 @@ namespace Octokit.Tests.Clients
                 var client = new GitHubAppsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetUserInstallationForCurrent(null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetUserInstallationForCurrent(""));
             }
 
             [Fact]
