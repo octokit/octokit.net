@@ -122,6 +122,7 @@ namespace Octokit.Tests.Integration.Clients
                 var result = await _github.GitHubApps.GetAllInstallationsForCurrentUser();
 
                 Assert.NotNull(result);
+                Assert.True(result.TotalCount > 0);
             }
         }
 
