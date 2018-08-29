@@ -19,13 +19,9 @@ namespace Octokit.Clients
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent()
+        public Task<RepositoriesResponse> GetAllRepositoriesForCurrent()
         {
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, AcceptHeaders.GitHubAppsPreview).ConfigureAwait(false);
-
-            return new RepositoriesResponse(
-                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
-                results.SelectMany(x => x.Repositories).ToList());
+            return GetAllRepositoriesForCurrent(ApiOptions.None);
         }
 
         /// <summary>
@@ -49,13 +45,9 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
+        public Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
         {
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview).ConfigureAwait(false);
-
-            return new RepositoriesResponse(
-                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
-                results.SelectMany(x => x.Repositories).ToList());
+            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None);
         }
 
         /// <summary>

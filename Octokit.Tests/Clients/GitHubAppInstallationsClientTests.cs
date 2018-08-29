@@ -27,7 +27,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllRepositoriesForCurrent();
 
-                connection.Received().GetAll<RepositoriesResponse>(Arg.Is<Uri>(u => u.ToString() == "installation/repositories"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().GetAll<RepositoriesResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
+                    null,
+                    "application/vnd.github.machine-man-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -45,7 +49,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllRepositoriesForCurrent(options);
 
-                connection.Received().GetAll<RepositoriesResponse>(Arg.Is<Uri>(u => u.ToString() == "installation/repositories"), null, "application/vnd.github.machine-man-preview+json", options);
+                connection.Received().GetAll<RepositoriesResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
+                    null,
+                    "application/vnd.github.machine-man-preview+json",
+                    options);
             }
         }
 
@@ -61,7 +69,11 @@ namespace Octokit.Tests.Clients
 
                 var calls = connection.ReceivedCalls().ToList();
 
-                connection.Received().GetAll<RepositoriesResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().GetAll<RepositoriesResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
+                    null,
+                    "application/vnd.github.machine-man-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -79,7 +91,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllRepositoriesForCurrentUser(1234, options);
 
-                connection.Received().GetAll<RepositoriesResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"), null, "application/vnd.github.machine-man-preview+json", options);
+                connection.Received().GetAll<RepositoriesResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
+                    null,
+                    "application/vnd.github.machine-man-preview+json",
+                    options);
             }
         }
     }
