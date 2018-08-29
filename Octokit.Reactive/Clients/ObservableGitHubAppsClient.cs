@@ -40,6 +40,8 @@ namespace Octokit.Reactive
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
         public IObservable<GitHubApp> Get(string slug)
         {
+            Ensure.ArgumentNotNullOrEmptyString(slug, nameof(slug));
+
             return _client.Get(slug).ToObservable();
         }
 
@@ -122,6 +124,8 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
         {
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+
             return _client.GetOrganizationInstallationForCurrent(organization).ToObservable();
         }
 
@@ -133,6 +137,9 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repo</param>
         public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
             return _client.GetRepositoryInstallationForCurrent(owner, repo).ToObservable();
         }
 
@@ -153,6 +160,8 @@ namespace Octokit.Reactive
         /// <param name="user">The name of the user</param>
         public IObservable<Installation> GetUserInstallationForCurrent(string user)
         {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
             return _client.GetUserInstallationForCurrent(user).ToObservable();
         }
     }
