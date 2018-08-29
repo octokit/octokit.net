@@ -113,6 +113,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 // Need to Authenticate as User to Server but not possible without receiving redirect from github.com
                 //_github = Helper.GetAuthenticatedUserToServer();
+                _github = null;
             }
 
             [GitHubAppsTest(Skip ="Not possible to authenticate with User to Server auth")]

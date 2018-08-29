@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
@@ -106,6 +107,26 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+        public class TheGetAllInstallationsForCurrentUserMethod
+        {
+            IObservableGitHubClient _github;
+
+            public TheGetAllInstallationsForCurrentUserMethod()
+            {
+                // Need to Authenticate as User to Server but not possible without receiving redirect from github.com
+                //_github = new ObservableGitHubClient(Helper.GetAuthenticatedUserToServer());
+                _github = null;
+            }
+
+            [GitHubAppsTest(Skip = "Not possible to authenticate with User to Server auth")]
+            public async Task GetsAllInstallationsForCurrentUser()
+            {
+                var result = await _github.GitHubApps.GetAllInstallationsForCurrentUser();
+
+                Assert.NotNull(result);
+            }
+        }
+
         public class TheCreateInstallationTokenMethod
         {
             IObservableGitHubClient _github;
@@ -127,6 +148,85 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(result.Token);
                 Assert.True(DateTimeOffset.Now < result.ExpiresAt);
+            }
+        }
+
+        public class TheGetOrganizationInstallationForCurrentMethod
+        {
+            IObservableGitHubClient _github;
+
+            public TheGetOrganizationInstallationForCurrentMethod()
+            {
+                // Authenticate as a GitHubApp
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsOrganizationInstallations()
+            {
+                var result = await _github.GitHubApps.GetOrganizationInstallationForCurrent(Helper.Organization);
+
+                Assert.NotNull(result);
+            }
+        }
+
+        public class TheGetRepositoryInstallationForCurrentMethod
+        {
+            IObservableGitHubClient _github;
+            IObservableGitHubClient _githubAppInstallation;
+
+            public TheGetRepositoryInstallationForCurrentMethod()
+            {
+                // Autheticate as a GitHubApp
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
+
+                // Authenticate as a GitHubApp Installation
+                _githubAppInstallation = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName));
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsRepositoryInstallations()
+            {
+                // Find a repo under the installation
+                var repos = await _githubAppInstallation.GitHubApps.Installation.GetAllRepositoriesForCurrent();
+                var repo = repos.Repositories.First();
+
+                // Now, using the GitHub App auth, find this repository installation
+                var result = await _github.GitHubApps.GetRepositoryInstallationForCurrent(repo.Owner.Login, repo.Name);
+
+                Assert.NotNull(result);
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsRepositoryInstallationsWithRepositoryId()
+            {
+                // Find a repo under the installation
+                var repos = await _githubAppInstallation.GitHubApps.Installation.GetAllRepositoriesForCurrent();
+                var repo = repos.Repositories.First();
+
+                // Now, using the GitHub App auth, find this repository installation
+                var result = await _github.GitHubApps.GetRepositoryInstallationForCurrent(repo.Id);
+
+                Assert.NotNull(result);
+            }
+        }
+
+        public class TheGetUserInstallationForCurrentMethod
+        {
+            IObservableGitHubClient _github;
+
+            public TheGetUserInstallationForCurrentMethod()
+            {
+                // Authenticate as a GitHubApp
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
+            }
+
+            [GitHubAppsTest]
+            public async Task GetsUserInstallations()
+            {
+                var result = await _github.GitHubApps.GetUserInstallationForCurrent(Helper.UserName);
+
+                Assert.NotNull(result);
             }
         }
     }
