@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Octokit.Reactive;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class GitHubAppsClientTests
+    public class ObservableGitHubAppsClientTests
     {
         public class TheGetMethod
         {
-            IGitHubClient _github;
+            IObservableGitHubClient _github;
 
             public TheGetMethod()
             {
                 // Regular authentication
-                _github = Helper.GetAuthenticatedClient();
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
             }
 
             [GitHubAppsTest]
@@ -29,12 +31,12 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetCurrentMethod
         {
-            IGitHubClient _github;
+            IObservableGitHubClient _github;
 
             public TheGetCurrentMethod()
             {
                 // Authenticate as a GitHubApp
-                _github = Helper.GetAuthenticatedGitHubAppsClient();
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
             }
 
             [GitHubAppsTest]
@@ -50,18 +52,18 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllInstallationsForCurrentMethod
         {
-            IGitHubClient _github;
+            IObservableGitHubClient _github;
 
             public TheGetAllInstallationsForCurrentMethod()
             {
                 // Authenticate as a GitHubApp
-                _github = Helper.GetAuthenticatedGitHubAppsClient();
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
             }
 
             [GitHubAppsTest]
             public async Task GetsAllInstallations()
             {
-                var result = await _github.GitHubApps.GetAllInstallationsForCurrent();
+                var result = await _github.GitHubApps.GetAllInstallationsForCurrent().ToList();
 
                 foreach (var installation in result)
                 {
@@ -75,14 +77,14 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
-        public class TheGetInstallationForCurrentMethod
+        public class TheGetInstallationMethod
         {
-            IGitHubClient _github;
+            IObservableGitHubClient _github;
 
-            public TheGetInstallationForCurrentMethod()
+            public TheGetInstallationMethod()
             {
                 // Authenticate as a GitHubApp
-                _github = Helper.GetAuthenticatedGitHubAppsClient();
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
             }
 
             [GitHubAppsTest]
@@ -92,7 +94,7 @@ namespace Octokit.Tests.Integration.Clients
                 var installationId = Helper.GetGitHubAppInstallationForOwner(Helper.UserName).Id;
 
                 // Get the installation by Id
-                var result = await _github.GitHubApps.GetInstallationForCurrent(installationId);
+                var result = await _github.GitHubApps.GetInstallation(installationId);
 
                 Assert.True(result.AppId == Helper.GitHubAppId);
                 Assert.Equal(Helper.GitHubAppId, result.AppId);
@@ -106,12 +108,12 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheCreateInstallationTokenMethod
         {
-            IGitHubClient _github;
+            IObservableGitHubClient _github;
 
             public TheCreateInstallationTokenMethod()
             {
                 // Authenticate as a GitHubApp
-                _github = Helper.GetAuthenticatedGitHubAppsClient();
+                _github = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppsClient());
             }
 
             [GitHubAppsTest]
