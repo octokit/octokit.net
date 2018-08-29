@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllInstallationsForCurrentMethod
         {
             [Fact]
-            public async Task EnsuresNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableGitHubAppsClient(gitHubClient);
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public void RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
@@ -81,7 +81,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetInstallationMethod
+        public class TheGetInstallationForCurrentMethod
         {
             [Fact]
             public void GetsFromCorrectUrl()
@@ -89,9 +89,10 @@ namespace Octokit.Tests.Clients
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableGitHubAppsClient(gitHubClient);
 
-                client.GetInstallation(123);
+                client.GetInstallationForCurrent(123);
 
-                gitHubClient.GitHubApps.Received().GetInstallation(123);
+                gitHubClient.GitHubApps.Received().GetInstallationForCurrent(123);
+
             }
         }
 
