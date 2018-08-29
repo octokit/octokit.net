@@ -291,15 +291,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for creating a new installation token on GitHub Enterprise 2.14.
-        /// </summary>
-        /// <param name="installationId">The Id of the GitHub App installation.</param>
-        public static Uri AccessTokensPreview(long installationId)
-        {
-            return "installations/{0}/access_tokens".FormatUri(installationId);
-        }
-
-        /// <summary>
         /// Returns the <see cref="Uri"/> that creates a github app.
         /// </summary>
         public static Uri App()

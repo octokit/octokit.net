@@ -101,23 +101,5 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "app/installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
             }
         }
-
-        public class TheCreateInstallationTokenPreviewMethod
-        {
-            [Fact]
-            public void PostsToCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new GitHubAppsClient(connection);
-
-                int fakeInstallationId = 3141;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-                client.CreateInstallationTokenPreview(fakeInstallationId);
-#pragma warning restore CS0618 // Type or member is obsolete
-
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
-            }
-        }
     }
 }
