@@ -193,7 +193,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetOrganizationInstallationForCurrent("ducks");
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "org/ducks/installation"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "orgs/ducks/installation"), null, "application/vnd.github.machine-man-preview+json");
             }
         }
 
