@@ -67,8 +67,6 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllRepositoriesForCurrentUser(1234);
 
-                var calls = connection.ReceivedCalls().ToList();
-
                 connection.Received().GetAll<RepositoriesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
                     null,

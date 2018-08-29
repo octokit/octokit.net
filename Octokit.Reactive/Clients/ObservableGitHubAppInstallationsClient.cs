@@ -16,6 +16,8 @@ namespace Octokit.Reactive
 
         public ObservableGitHubAppInstallationsClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, nameof(client));
+
             _client = client.GitHubApps.Installation;
             _connection = client.Connection;
         }
@@ -26,7 +28,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, AcceptHeaders.GitHubAppsPreview);
+            return GetAllRepositoriesForCurrent(ApiOptions.None);
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
         {
-            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview);
+            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview);
+            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview, options);
         }
     }
 }
