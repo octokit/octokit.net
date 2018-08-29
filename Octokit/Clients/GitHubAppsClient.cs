@@ -55,7 +55,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent()
         {
-            return ApiConnection.GetAll<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview);
+            return GetAllInstallationsForCurrent(ApiOptions.None);
         }
 
         /// <summary>

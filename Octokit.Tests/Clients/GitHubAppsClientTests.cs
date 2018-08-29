@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllInstallationsForCurrent();
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json", Args.ApiOptions);
             }
 
             [Fact]
