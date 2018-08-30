@@ -83,6 +83,16 @@ namespace Octokit
         public int EndLine { get; protected set; }
 
         /// <summary>
+        /// Required. The start line of the annotation
+        /// </summary>
+        public int? StartColumn { get; set; }
+
+        /// <summary>
+        /// Required. The end line of the annotation
+        /// </summary>
+        public int? EndColumn { get; set; }
+
+        /// <summary>
         /// Required. The warning level of the annotation. Can be one of notice, warning, or failure
         /// </summary>
         [Obsolete("This property is replaced with AnnotationLevel but may still be required on GitHub Enterprise 2.14")]

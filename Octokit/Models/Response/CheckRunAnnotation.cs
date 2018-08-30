@@ -11,12 +11,14 @@ namespace Octokit
         {
         }
 
-        public CheckRunAnnotation(string path, string blobHref, int startLine, int endLine, CheckAnnotationLevel? annotationLevel, string message, string title, string rawDetails)
+        public CheckRunAnnotation(string path, string blobHref, int startLine, int endLine, int? startColumn, int? endColumn, CheckAnnotationLevel? annotationLevel, string message, string title, string rawDetails)
         {
             Path = path;
             BlobHref = blobHref;
             StartLine = startLine;
             EndLine = endLine;
+            StartColumn = startColumn;
+            EndColumn = endColumn;
             AnnotationLevel = annotationLevel;
             Message = message;
             Title = title;
@@ -30,13 +32,15 @@ namespace Octokit
         }
 
         [Obsolete("This ctor taking Filename, BlobHref and WarningLevel is deprecated but may still be required on GitHub Enterprise 2.14")]
-        public CheckRunAnnotation(string filename, string path, string blobHref, int startLine, int endLine, CheckWarningLevel? warningLevel, CheckAnnotationLevel? annotationLevel, string message, string title, string rawDetails)
+        public CheckRunAnnotation(string filename, string path, string blobHref, int startLine, int endLine, int? startColumn, int? endColumn, CheckWarningLevel? warningLevel, CheckAnnotationLevel? annotationLevel, string message, string title, string rawDetails)
         {
             Filename = filename;
             Path = path;
             BlobHref = blobHref;
             StartLine = startLine;
             EndLine = endLine;
+            StartColumn = startColumn;
+            EndColumn = endColumn;
             WarningLevel = warningLevel;
             AnnotationLevel = annotationLevel;
             Message = message;
@@ -69,6 +73,16 @@ namespace Octokit
         /// The end line of the annotation
         /// </summary>
         public int EndLine { get; protected set; }
+
+        /// <summary>
+        /// The start line of the annotation
+        /// </summary>
+        public int? StartColumn { get; protected set; }
+
+        /// <summary>
+        /// The end line of the annotation
+        /// </summary>
+        public int? EndColumn { get; protected set; }
 
         /// <summary>
         /// The warning level of the annotation. Can be one of notice, warning, or failure
