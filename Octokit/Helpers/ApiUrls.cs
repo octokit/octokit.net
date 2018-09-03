@@ -309,19 +309,77 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
         /// </summary>
-        /// <returns></returns>
         public static Uri Installations()
         {
             return "app/installations".FormatUri();
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// Returns the <see cref="Uri"/> that lists repositories accessible to the user for an installation..
+        /// </summary>
+        /// <param name="installationId">The id of the installation</param>
+        public static Uri UserInstallationRepositories(long installationId)
+        {
+            return "user/installations/{0}/repositories".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
         /// </summary>
         /// <returns></returns>
+        public static Uri RepoInstallation(string owner, string repo)
+        {
+            return "repos/{0}/{1}/installation".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri RepoInstallation(long repositoryId)
+        {
+            return "repositories/{0}/installation".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the organization's installation information.
+        /// </summary>
+        public static Uri OrganizationInstallation(string organization)
+        {
+            return "orgs/{0}/installation".FormatUri(organization); ;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the user's installation information.
+        /// </summary>
+        public static Uri UserInstallation(string username)
+        {
+            return "users/{0}/installation".FormatUri(username);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// </summary>
         public static Uri Installation(long installationId)
         {
             return "app/installations/{0}".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations in repositories the user has explicit permission to access
+        /// </summary>
+        public static Uri UserInstallations()
+        {
+            return "user/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the repositores
+        /// </summary>
+        /// <returns></returns>
+        public static Uri InstallationRepositories()
+        {
+            return "installation/repositories".FormatUri();
         }
 
         /// <summary>
