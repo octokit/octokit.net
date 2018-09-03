@@ -80,6 +80,17 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
+        [Obsolete("This method will be removed in a future release.  Please use GetInstallationForCurrent() instead")]
+        public IObservable<Installation> GetInstallation(long installationId)
+        {
+            return GetInstallationForCurrent(installationId);
+        }
+
+        /// <summary>
+        /// Get a single GitHub App Installation (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
         public IObservable<Installation> GetInstallationForCurrent(long installationId)
         {
             return _client.GetInstallationForCurrent(installationId).ToObservable();

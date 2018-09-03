@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -44,6 +45,14 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options);
+
+        /// <summary>
+        /// Get a single GitHub App Installation (requires GitHubApp auth).
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
+        /// <param name="installationId">The Id of the GitHub App Installation</param>
+        [Obsolete("This method will be removed in a future release.  Please use GetInstallationForCurrent() instead")]
+        Task<Installation> GetInstallation(long installationId);
 
         /// <summary>
         /// Get a single GitHub App Installation (requires GitHubApp auth).
