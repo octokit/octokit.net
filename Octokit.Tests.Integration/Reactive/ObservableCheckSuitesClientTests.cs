@@ -215,48 +215,6 @@ namespace Octokit.Tests.Integration.Reactive
             }
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        public class TheRequestMethod
-        {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
-
-            public TheRequestMethod()
-            {
-                _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
-
-                // Authenticate as a GitHubApp Installation
-                _githubAppInstallation = new ObservableGitHubClient(Helper.GetAuthenticatedGitHubAppInstallationForOwner(Helper.UserName));
-            }
-
-            [GitHubAppsTest]
-            public async Task RequestsCheckSuite()
-            {
-                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
-                {
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, "master");
-
-                    var result = await _githubAppInstallation.Check.Suite.Request(repoContext.RepositoryOwner, repoContext.RepositoryName, new CheckSuiteTriggerRequest(headCommit.Sha));
-
-                    Assert.True(result);
-                }
-            }
-
-            [GitHubAppsTest]
-            public async Task RequestsCheckSuiteWithRepositoryId()
-            {
-                using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
-                {
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
-
-                    var result = await _githubAppInstallation.Check.Suite.Request(repoContext.RepositoryId, new CheckSuiteTriggerRequest(headCommit.Sha));
-
-                    Assert.True(result);
-                }
-            }
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
         public class TheRerequestMethod
         {
             IObservableGitHubClient _github;
