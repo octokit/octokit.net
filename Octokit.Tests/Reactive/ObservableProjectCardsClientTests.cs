@@ -113,7 +113,10 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableProjectCardsClient(gitHubClient);
-                var updateCard = new ProjectCardUpdate("someNewNote");
+                var updateCard = new ProjectCardUpdate
+                {
+                    Note = "someNewNote"
+                };
 
                 client.Update(1, updateCard);
 
@@ -124,7 +127,10 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableProjectCardsClient(Substitute.For<IGitHubClient>());
-                var updateCard = new ProjectCardUpdate("someNewNote");
+                var updateCard = new ProjectCardUpdate
+                {
+                    Note = "someNewNote"
+                };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null).ToTask());
             }

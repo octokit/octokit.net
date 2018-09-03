@@ -215,12 +215,12 @@ namespace Octokit.Tests.Integration.Reactive
             }
         }
 
-        public class TheRequestMethod
+        public class TheRerequestMethod
         {
             IObservableGitHubClient _github;
             IObservableGitHubClient _githubAppInstallation;
 
-            public TheRequestMethod()
+            public TheRerequestMethod()
             {
                 _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
 
@@ -229,26 +229,30 @@ namespace Octokit.Tests.Integration.Reactive
             }
 
             [GitHubAppsTest]
-            public async Task RequestsCheckSuite()
+            public async Task RerequestsCheckSuite()
             {
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, "master");
+                    // Need to get a CheckSuiteId so we can test the Get method
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
 
-                    var result = await _githubAppInstallation.Check.Suite.Request(repoContext.RepositoryOwner, repoContext.RepositoryName, new CheckSuiteTriggerRequest(headCommit.Sha));
+                    var result = await _githubAppInstallation.Check.Suite.Rerequest(repoContext.RepositoryOwner, repoContext.RepositoryName, checkSuite.Id);
 
                     Assert.True(result);
                 }
             }
 
             [GitHubAppsTest]
-            public async Task RequestsCheckSuiteWithRepositoryId()
+            public async Task RerequestsCheckSuiteWithRepositoryId()
             {
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
+                    // Need to get a CheckSuiteId so we can test the Get method
                     var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
 
-                    var result = await _githubAppInstallation.Check.Suite.Request(repoContext.RepositoryId, new CheckSuiteTriggerRequest(headCommit.Sha));
+                    var result = await _githubAppInstallation.Check.Suite.Rerequest(repoContext.RepositoryId, checkSuite.Id);
 
                     Assert.True(result);
                 }

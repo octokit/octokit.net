@@ -332,6 +332,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public class TheRequestMethod
         {
             [Fact]
@@ -391,6 +392,58 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Request("", "repo", request));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Request("fake", "", request));
+            }
+        }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        public class TheRerequestMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = MockedIApiConnection.PostReturnsHttpStatus(HttpStatusCode.Created);
+                var client = new CheckSuitesClient(connection);
+
+                await client.Rerequest("fake", "repo", 1);
+
+                connection.Connection.Received().Post(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/rerequest"),
+                    Args.Object,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = MockedIApiConnection.PostReturnsHttpStatus(HttpStatusCode.Created);
+                var client = new CheckSuitesClient(connection);
+
+                await client.Rerequest(1, 1);
+
+                connection.Connection.Received().Post(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/rerequest"),
+                    Args.Object,
+                    "application/vnd.github.antiope-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckSuitesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Rerequest(null, "repo", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Rerequest("fake", null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CheckSuitesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Rerequest("", "repo", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Rerequest("fake", "", 1));
             }
         }
     }

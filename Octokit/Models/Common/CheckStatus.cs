@@ -1,4 +1,5 @@
-﻿using Octokit.Internal;
+﻿using System;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -35,6 +36,19 @@ namespace Octokit
         ActionRequired,
     }
 
+    public enum CheckAnnotationLevel
+    {
+        [Parameter(Value = "notice")]
+        Notice,
+
+        [Parameter(Value = "warning")]
+        Warning,
+
+        [Parameter(Value = "failure")]
+        Failure,
+    }
+
+    [Obsolete("This enum is replaced with CheckAnnotationLevel but may still be required on GitHub Enterprise 2.14")]
     public enum CheckWarningLevel
     {
         [Parameter(Value = "notice")]

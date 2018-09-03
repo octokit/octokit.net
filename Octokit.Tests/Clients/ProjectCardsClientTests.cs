@@ -115,7 +115,10 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ProjectCardsClient(connection);
-                var updateCard = new ProjectCardUpdate("someNewNote");
+                var updateCard = new ProjectCardUpdate
+                {
+                    Note = "someNewNote"
+                };
 
                 await client.Update(1, updateCard);
 
@@ -129,7 +132,10 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ProjectCardsClient(Substitute.For<IApiConnection>());
-                var updateCard = new ProjectCardUpdate("someNewNote");
+                var updateCard = new ProjectCardUpdate
+                {
+                    Note = "someNewNote"
+                };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
