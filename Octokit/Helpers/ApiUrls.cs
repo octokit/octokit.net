@@ -287,7 +287,7 @@ namespace Octokit
         /// <param name="installationId">The Id of the GitHub App installation.</param>
         public static Uri AccessTokens(long installationId)
         {
-            return "installations/{0}/access_tokens".FormatUri(installationId);
+            return "app/installations/{0}/access_tokens".FormatUri(installationId);
         }
 
         /// <summary>
