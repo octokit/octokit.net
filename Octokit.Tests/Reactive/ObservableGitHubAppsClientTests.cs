@@ -57,7 +57,7 @@ namespace Octokit.Tests.Clients
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableGitHubAppsClient(gitHubClient);
-                
+
                 client.GetCurrent();
 
                 gitHubClient.GitHubApps.Received().GetCurrent();
