@@ -582,7 +582,7 @@ public class PullRequestsClientTests : IDisposable
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Ascending });
         Assert.Equal(pullRequest.Title, pullRequests[0].Title);
 
-        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest());
+        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Descending });
         Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
     }
 
