@@ -83,9 +83,9 @@ namespace Octokit.Tests.Integration.Clients
 
                 var options = new ApiOptions
                 {
-                    PageSize = 2,
+                    PageSize = 3,
                     PageCount = 1,
-                    StartPage = 3
+                    StartPage = 2
                 };
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName, options);
@@ -100,9 +100,9 @@ namespace Octokit.Tests.Integration.Clients
 
                 var options = new ApiOptions
                 {
-                    PageSize = 2,
+                    PageSize = 3,
                     PageCount = 1,
-                    StartPage = 3
+                    StartPage = 2
                 };
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryId, options);

@@ -19,8 +19,7 @@ namespace Octokit.Tests.Integration.fixtures
                 CreateHook(_github, _repository, "awscodedeploy", "deployment"),
                 CreateHook(_github, _repository, "awsopsworks", "push"),
                 CreateHook(_github, _repository, "activecollab", "push"),
-                CreateHook(_github, _repository, "acunote", "push"),
-                CreateHook(_github, _repository, "agilezen", "push")
+                CreateHook(_github, _repository, "acunote", "push")
             };
             _hook = _hooks[0];
         }
