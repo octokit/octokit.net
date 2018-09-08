@@ -367,7 +367,7 @@ namespace Octokit.Tests.Reactive
 
                 client.RemoveFromIssue("fake", "repo", 42, "label");
 
-                connection.Received().Delete<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels/label"), "application/vnd.github.symmetra-preview+json");
+                connection.Received().Delete<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels/label"), Arg.Any<object>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]
@@ -379,7 +379,7 @@ namespace Octokit.Tests.Reactive
 
                 client.RemoveFromIssue(1, 42, "label");
 
-                connection.Received().Delete<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels/label"), "application/vnd.github.symmetra-preview+json");
+                connection.Received().Delete<IReadOnlyList<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels/label"), Arg.Any<object>(), "application/vnd.github.symmetra-preview+json");
             }
 
             [Fact]

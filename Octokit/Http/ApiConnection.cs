@@ -514,6 +514,24 @@ namespace Octokit
         /// Performs an asynchronous HTTP DELETE request.
         /// Attempts to map the response body to an object of type <typeparamref name="T"/>
         /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public async Task<T> Delete<T>(Uri uri, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+
+            var response = await Connection.Delete<T>(uri, null, accepts).ConfigureAwait(false);
+
+            return response.Body;
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
