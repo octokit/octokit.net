@@ -334,6 +334,16 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        Task<T> Delete<T>(Uri uri, string accepts);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request.
+        /// Attempts to map the response body to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The API resource's type.</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
