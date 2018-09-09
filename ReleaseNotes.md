@@ -1,4 +1,4 @@
-### New in 0.32.0 (released 05/09/2018)
+### New in 0.32.0 (released 09/09/2018)
 
 ## Advisories and Breaking Changes
 
