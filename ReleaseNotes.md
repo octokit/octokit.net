@@ -25,6 +25,13 @@
 - Fixed code samples in GitHub Apps sample docs to use the correct sub client property name - [#1853](https://github.com/octokit/octokit.net/pull/1853) via [@d-a-s](https://github.com/d-a-s)
 
 
+### Milestone: None
+
+**Fixes**
+
+- `IssueLabelsClient.RemoveFromIssue()` no longer fails with a HTTP 400 "Bad Request" error from the GitHub Api - [#1868](https://github.com/octokit/octokit.net/pull/1868) via [@ryangribble](https://github.com/ryangribble)
+
+
 ### New in 0.31.0 (released 21/07/2018)
 
 ## Advisories and Breaking Changes
