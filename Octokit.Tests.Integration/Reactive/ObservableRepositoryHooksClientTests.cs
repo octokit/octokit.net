@@ -60,9 +60,9 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var options = new ApiOptions
                 {
-                    PageSize = 2,
+                    PageSize = 3,
                     PageCount = 1,
-                    StartPage = 3
+                    StartPage = 2
                 };
 
                 var hooks = await client.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName, options).ToList();

@@ -1,3 +1,37 @@
+### New in 0.32.0 (released 09/09/2018)
+
+## Advisories and Breaking Changes
+
+- Due to upstream breaking changes in the CheckRuns API, using check runs against github.com will require using the new/renamed fields on `CheckRunAnnotation` response and `NewCheckRunAnnotation` request models.  However the old fields are maintained in octokit.net (marked as deprecated) to continue supporting GitHub Enterprise 2.14, which will not receive these changes.  Users of GHE 2.14 should use the old fields, whilst users of github.com should update to use the new fields
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Adjust GitHub App Installation Access Token route in line with [announced API changes](https://developer.github.com/changes/2018-08-16-renaming-and-deprecation-of-github-app-installation-access-token-route/) - [#1860](https://github.com/octokit/octokit.net/pull/1860) via [@ryangribble](https://github.com/ryangribble)
+- Implement additional endpoints for GitHub Apps to find installations for a given organization, repository or user - [#1854](https://github.com/octokit/octokit.net/pull/1854) via [@StanleyGoldman](https://github.com/StanleyGoldman), [@ryangribble](https://github.com/ryangribble)
+- Implement GitHub Apps Installation API to allow listing all repositories a GitHub App Installation or GitHub App authenticated user has access to - [#1854](https://github.com/octokit/octokit.net/pull/1854) via [@StanleyGoldman](https://github.com/StanleyGoldman), [@ryangribble](https://github.com/ryangribble)
+- Implement new/changed fields on `CheckRunAnnotation` response and `NewCheckRunAnnotation` request models - replace `Filename` with `Path`, `WarningLevel` with `AnnotationLevel` and add `StartColumn` and `EndColumn` - [#1857](https://github.com/octokit/octokit.net/pull/1857) via [@ryangribble](https://github.com/ryangribble)
+- Add new method `CheckSuitesClient.Rerequest()` and mark the old `CheckSuitesClient.Request()` method as deprecated (this will no longer function on github.com but will continue to be supported on GitHub Enterprise 2.14) - [#1857](https://github.com/octokit/octokit.net/pull/1857) via [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Adjust `StartedAt` and `Status` fields of `NewCheckRun` and `CheckRunUpdate` requests, to allow `null` values, avoiding resetting these to default values when not specified - [#1852](https://github.com/octokit/octokit.net/pull/1852) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Fixed code samples in GitHub Apps sample docs to use the correct sub client property name - [#1853](https://github.com/octokit/octokit.net/pull/1853) via [@d-a-s](https://github.com/d-a-s)
+
+
+### Milestone: None
+
+**Fixes**
+
+- `IssueLabelsClient.RemoveFromIssue()` no longer fails with a HTTP 400 "Bad Request" error from the GitHub Api - [#1868](https://github.com/octokit/octokit.net/pull/1868) via [@ryangribble](https://github.com/ryangribble)
+
+
 ### New in 0.31.0 (released 21/07/2018)
 
 ## Advisories and Breaking Changes
