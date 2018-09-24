@@ -17,18 +17,13 @@ A common scenario is to search for issues to triage:
 var request = new SearchIssuesRequest();
 
 // you can add individual repos to focus your search
-request.Repos.Add("aspnet/dnx");
-request.Repos.Add("aspnet", "dnvm");
+request.Repos.Add("aspnet/home");
+request.Repos.Add("dotnet", "core");
 
 // or use a series of repositories
 request.Repos = new RepositoryCollection {
-    "aspnet/dnx",
-    "aspnet/dnvm"
-};
-
-request.Repos = new RepositoryCollection {
-    { "aspnet", "dnx" },
-    { "aspnet", "dnvm" }
+    "aspnet/home",
+    "dotnet/core"
 };
 ```
 
@@ -59,7 +54,7 @@ request.Commenter = "haacked";
 
 // rather than setting all these, you can use this to find
 // all the above for a specific user with this one-liner
-request.Involves = "davidfowl";
+request.Involves = "terrajobst";
 
 // by default this will search on open issues, set this if
 // you want to get all issues
