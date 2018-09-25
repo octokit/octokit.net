@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCC-MSBuildLog" Version="0.0.2-alpha" />
+    <PackageReference Include="BCC-Submission" Version="0.0.2-alpha" />
     <PackageReference Include="Cake.BCC" Version="0.0.1" />
     <PackageReference Include="Cake.Frosting" Version="0.1.0-alpha0078" />
     <PackageReference Include="MSBuild.StructuredLogger" Version="2.0.11" />
