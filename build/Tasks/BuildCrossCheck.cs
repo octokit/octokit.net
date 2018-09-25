@@ -31,18 +31,23 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
                 .AppendSwitchQuoted("-o", checkRunJsonPath)
                 .AppendSwitchQuoted("-c", context.Environment.WorkingDirectory.FullPath));
 
-            var submissionDll = userProfilePath
-                .CombineWithFilePath(
-                    $".nuget\\packages\\bcc-submission\\0.0.2-alpha\\tools\\netcoreapp2.1\\BCC.Submission.dll")
-                .MakeAbsolute(context.Environment)
-                .FullPath;
+            var bccToken = context.EnvironmentVariable("BCC_TOKEN");
 
-            context.Information("Running BCC-Submission");
+            if (!string.IsNullOrWhiteSpace(bccToken))
+            {
+                var submissionDll = userProfilePath
+                    .CombineWithFilePath(
+                        $".nuget\\packages\\bcc-submission\\0.0.2-alpha\\tools\\netcoreapp2.1\\BCC.Submission.dll")
+                    .MakeAbsolute(context.Environment)
+                    .FullPath;
 
-            context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
-                .AppendSwitchQuoted("-i", checkRunJsonPath)
-                .AppendSwitchQuoted("-t", context.EnvironmentVariable("BCC_TOKEN"))
-                .AppendSwitchQuoted("-h", context.EnvironmentVariable("APPVEYOR_REPO_COMMIT")));
+                context.Information("Running BCC-Submission");
+
+                context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
+                    .AppendSwitchQuoted("-i", checkRunJsonPath)
+                    .AppendSwitchQuoted("-t", bccToken)
+                    .AppendSwitchQuoted("-h", context.EnvironmentVariable("APPVEYOR_REPO_COMMIT")));
+            }
         }
     }
 }
