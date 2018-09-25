@@ -39,12 +39,14 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
                 .MakeAbsolute(context.Environment)
                 .FullPath;
 
-            context.Information("Running BCC-Submission");
+            var repoCommit = context.EnvironmentVariable("APPVEYOR_REPO_COMMIT");
+
+            context.Information($"Running BCC-Submission repoCommit:{repoCommit}");
 
             context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
                 .AppendSwitchQuoted("-i", checkRunJsonPath)
                 .AppendSwitchQuoted("-t", bccToken)
-                .AppendSwitchQuoted("-h", context.EnvironmentVariable("APPVEYOR_REPO_COMMIT")));
+                .AppendSwitchQuoted("-h", repoCommit));
         }
     }
 }
