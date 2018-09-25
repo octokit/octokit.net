@@ -4,10 +4,6 @@ environment:
   BCC_TOKEN:
     secure: wDuKHZsPJj23tSL6zE+rUkbaE5BkWDSC9jl7d0/OrIV8s1MeOGWFo2PuEUznj+iMLTa1eRwrY1vikdDMgP6kVTIl8cS6O4PVYymCNQmh7zt7/tIT3A/WcYI/MQYj7SBGngSS4nZyTx/qyyDtuuY2Bbp7JRrU5B7cwdQO1UuNb5Y53UMSz3WlN2Esh6WEhiP0nIedLlQOHjqRqN5sUSUemdFEoMJlKXIL5FQtNqNCd0SZAd9Q9fzWVpveqvI6seNdNztiVBhWwlLO5H36LGfWzfasD9/4bx/enwzhf0oswA3GhMzzhTbn5MfdiSSzWjPdhui7JB3gnK67LX95sdZVSODKfjUdkn5fJCzF0l8Pe5GnxH7EZ1jikRX1NYMpeeRnis8bNwTbuC2x5lghG3fPCeDwdpo5T2vf36spSD1KzeXZ6RAThS/UokojG8Ejhp+WRlImwtfXPdTZXIdbwFyuFtLnWsbgphT+QlRs73R2R4nbTy/40IRVbNLpqYUeguH9J/hluUJGDM2eC8sz0owhFCOK34Yqt4ih/HQyxCBAAQg0U6ulu1fvSGBdrSGZTsofGCWAYTc5HTR7UnPjt2nVtYRXaeNQol7VNRT7Sw7atmg=
 
-branches:
-  only:
-    - master
-
 init:
   - git config --global core.autocrlf input
 
