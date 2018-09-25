@@ -1,5 +1,7 @@
 using Cake.Common;
+using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNetCore.Execute;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
@@ -22,6 +24,8 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
 
             var checkRunJsonPath = context.Artifacts.CombineWithFilePath("checkrun.json").FullPath;
 
+            context.Information("Running BCC-MSbuild");
+
             context.DotNetCoreExecute(msbuildLogDll, new ProcessArgumentBuilder()
                 .AppendSwitchQuoted("-i", context.Artifacts.CombineWithFilePath("output.binlog").FullPath)
                 .AppendSwitchQuoted("-o", checkRunJsonPath)
@@ -32,6 +36,8 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
                     $".nuget\\packages\\bcc-submission\\0.0.2-alpha\\tools\\netcoreapp2.1\\BCC.Submission.dll")
                 .MakeAbsolute(context.Environment)
                 .FullPath;
+
+            context.Information("Running BCC-Submission");
 
             context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
                 .AppendSwitchQuoted("-i", checkRunJsonPath)

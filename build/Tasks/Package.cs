@@ -6,8 +6,8 @@ using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
 [Dependency(typeof(ConventionTests))]
-[Dependency(typeof(BuildCrossCheck))]
 [Dependency(typeof(ValidateLINQPadSamples))]
+[Dependency(typeof(BuildCrossCheck))]
 public sealed class Package : FrostingTask<Context>
 {
     public override void Run(Context context)
