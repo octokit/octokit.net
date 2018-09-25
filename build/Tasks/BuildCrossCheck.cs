@@ -11,7 +11,12 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
         var checkRunDataPath = context.Artifacts.CombineWithFilePath("checkrun.json").FullPath;
         var cloneRoot = context.Environment.WorkingDirectory.FullPath;
 
-        context.BCCMSBuildLog(new BCCMSBuildLogToolSettings());
+        context.BCCMSBuildLog(new BCCMSBuildLogToolSettings()
+        {
+            InputPath = binaryLogPath,
+            OutputPath = checkRunDataPath,
+            ClonePath = cloneRoot
+        });
 
         context.BCCSubmission(new BCCMSBuildLogToolSettings());
     }
