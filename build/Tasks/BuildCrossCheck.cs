@@ -1,5 +1,7 @@
-using Cake.BCC;
 using Cake.Common;
+using Cake.Common.Tools.DotNetCore;
+using Cake.Core;
+using Cake.Core.IO;
 using Cake.Frosting;
 
 [Dependency(typeof(Build))]
@@ -7,17 +9,34 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        var binaryLogPath = context.Artifacts.CombineWithFilePath("output.binlog").FullPath;
-        var checkRunDataPath = context.Artifacts.CombineWithFilePath("checkrun.json").FullPath;
-        var cloneRoot = context.Environment.WorkingDirectory.FullPath;
-
-        context.BCCMSBuildLog(new BCCMSBuildLogToolSettings()
+        if (context.AppVeyor)
         {
-            InputPath = binaryLogPath,
-            OutputPath = checkRunDataPath,
-            ClonePath = cloneRoot
-        });
+            var userProfilePath = context.FileSystem.GetDirectory(context.EnvironmentVariable("USERPROFILE"))
+                .Path;
 
-        context.BCCSubmission(new BCCMSBuildLogToolSettings());
+            var msbuildLogDll = userProfilePath
+                .CombineWithFilePath(
+                    $".nuget\\packages\\bcc-msbuildlog\\0.0.2-alpha\\tools\\netcoreapp2.1\\BCC.MSBuildLog.dll")
+                .MakeAbsolute(context.Environment)
+                .FullPath;
+
+            var checkRunJsonPath = context.Artifacts.CombineWithFilePath("checkrun.json").FullPath;
+
+            context.DotNetCoreExecute(msbuildLogDll, new ProcessArgumentBuilder()
+                .AppendSwitchQuoted("-i", context.Artifacts.CombineWithFilePath("output.binlog").FullPath)
+                .AppendSwitchQuoted("-o", checkRunJsonPath)
+                .AppendSwitchQuoted("-c", context.Environment.WorkingDirectory.FullPath));
+
+            var submissionDll = userProfilePath
+                .CombineWithFilePath(
+                    $".nuget\\packages\\bcc-submission\\0.0.2-alpha\\tools\\netcoreapp2.1\\BCC.Submission.dll")
+                .MakeAbsolute(context.Environment)
+                .FullPath;
+
+            context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
+                .AppendSwitchQuoted("-i", checkRunJsonPath)
+                .AppendSwitchQuoted("-t", context.EnvironmentVariable("BCC_TOKEN"))
+                .AppendSwitchQuoted("-h", context.EnvironmentVariable("APPVEYOR_REPO_COMMIT")));
+        }
     }
 }
