@@ -41,7 +41,7 @@ public sealed class BuildCrossCheck : FrostingTask<Context>
 
             var pullRequestHeadCommit = context.EnvironmentVariable("APPVEYOR_PULL_REQUEST_HEAD_COMMIT");
 
-            context.Information("Running BCC-Submission: {0}", pullRequestHeadCommit);
+            context.Information("Running BCC-Submission");
 
             context.DotNetCoreExecute(submissionDll, new ProcessArgumentBuilder()
                 .AppendSwitchQuoted("-i", checkRunJsonPath)
