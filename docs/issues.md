@@ -45,7 +45,7 @@ For example, this is how you could find all issues updated in the past two weeks
 var recently = new IssueRequest
 {
     Filter = IssueFilter.All,
-    State = ItemState.All,
+    State = ItemStateFilter.All,
     Since = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(14))
 };
 var issues = await client.Issue.GetAllForCurrent(recently);
