@@ -10,7 +10,7 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions,AuthorAssociation? authorAssociation=null)
+        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions,AuthorAssociation authorAssociation)
         {
             Id = id;
             NodeId = nodeId;
@@ -67,7 +67,7 @@ namespace Octokit
         /// <summary>
         /// The comment author association with repository.
         /// </summary>
-        public StringEnum<AuthorAssociation>? AuthorAssociation { get; protected set; }
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
 
         /// <summary>
         /// The reaction summary for this comment.

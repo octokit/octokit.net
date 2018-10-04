@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state, AuthorAssociation? authorAssociation=null)
+        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state, AuthorAssociation authorAssociation)
         {
             Id = id;
             NodeId = nodeId;
@@ -72,7 +72,7 @@ namespace Octokit
         /// <summary>
         /// The comment author association with repository.
         /// </summary>
-        public StringEnum<AuthorAssociation>? AuthorAssociation { get; protected set; }
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
 
         internal string DebuggerDisplay
         {
