@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>

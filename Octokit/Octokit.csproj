@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit</AssemblyName>
     <PackageId>Octokit</PackageId>
@@ -24,7 +24,7 @@
     <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO;NO_SERIALIZABLE</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <DefineConstants>$(DefineConstants);HAS_ENVIRONMENT;HAS_REGEX_COMPILED_OPTIONS;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;HAS_SERVICEPOINTMANAGER</DefineConstants>
   </PropertyGroup>
 
@@ -32,7 +32,7 @@
     <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="System.Net.Http" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
