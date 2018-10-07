@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace Octokit
 {
+    /// <summary>
+    /// A client for GitHub's Issue Labels API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="http://developer.github.com/v3/issues/labels/">Issue Labels API documentation</a> for more information.
+    /// </remarks>
     public interface IIssuesLabelsClient
     {
         /// <summary>
@@ -13,10 +19,42 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        /// <returns>The list of labels</returns>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string repo, int number);
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number);
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number);
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
+        /// Gets all  labels for the issue.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -25,111 +63,38 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <returns>The list of labels</returns>
-        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string repo);
+        /// <param name="name">The name of the repository</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name);
 
         /// <summary>
-        /// Gets a single Label by name.
+        /// Gets all  labels for the repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-a-single-label">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="name">The name of the label</param>
-        /// <returns>The label</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
-        Justification = "Method makes a network request")]
-        Task<Label> Get(string owner, string repo, string name);
+        /// <param name="repositoryId">The Id of the repository</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId);
 
         /// <summary>
-        /// Deletes a label.
+        /// Gets all  labels for the repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#delete-a-label">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="name">The name of the label</param>
-        /// <returns></returns>
-        Task Delete(string owner, string repo, string name);
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
-        /// Creates a label.
+        /// Gets all  labels for the repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#create-a-label">API documentation</a> for more information.
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="newLabel">The data for the label to be created</param>
-        /// <returns>The created label</returns>
-        Task<Label> Create(string owner, string repo, NewLabel newLabel);
-
-        /// <summary>
-        /// Updates a label.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#update-a-label">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="name">The name of the label</param>
-        /// <param name="labelUpdate">The data for the label to be updated</param>
-        /// <returns>The updated label</returns>
-        Task<Label> Update(string owner, string repo, string name, LabelUpdate labelUpdate);
-
-        /// <summary>
-        /// Adds a label to an issue
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        /// <param name="labels">The names of the labels to add</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<Label>> AddToIssue(string owner, string repo, int number, string[] labels);
-
-        /// <summary>
-        /// Removes a label from an issue
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        /// <param name="label">The name of the label to remove</param>
-        /// <returns></returns>
-        Task RemoveFromIssue(string owner, string repo, int number, string label);
-
-        /// <summary>
-        /// Replaces all labels on the specified issues with the provided labels
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        /// <param name="labels">The names of the labels to set</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string repo, int number, string[] labels);
-
-        /// <summary>
-        /// Removes all labels from an issue
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        /// <returns></returns>
-        Task RemoveAllFromIssue(string owner, string repo, int number);
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -138,9 +103,221 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repo">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string repo, int number);
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number);
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number);
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
+        /// Gets labels for every issue in a milestone
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the milestone</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options);
+
+        /// <summary>
+        /// Gets a single Label by name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-a-single-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+        Justification = "Method makes a network request")]
+        Task<Label> Get(string owner, string name, string labelName);
+
+        /// <summary>
+        /// Gets a single Label by name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#get-a-single-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
+        Justification = "Method makes a network request")]
+        Task<Label> Get(long repositoryId, string labelName);
+
+        /// <summary>
+        /// Deletes a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#delete-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        Task Delete(string owner, string name, string labelName);
+
+        /// <summary>
+        /// Deletes a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#delete-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        Task Delete(long repositoryId, string labelName);
+
+        /// <summary>
+        /// Creates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#create-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="newLabel">The data for the label to be created</param>
+        Task<Label> Create(string owner, string name, NewLabel newLabel);
+
+        /// <summary>
+        /// Creates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#create-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="newLabel">The data for the label to be created</param>
+        Task<Label> Create(long repositoryId, NewLabel newLabel);
+
+        /// <summary>
+        /// Updates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#update-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <param name="labelUpdate">The data for the label to be updated</param>
+        Task<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate);
+
+        /// <summary>
+        /// Updates a label.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#update-a-label">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="labelName">The name of the label</param>
+        /// <param name="labelUpdate">The data for the label to be updated</param>
+        Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate);
+
+        /// <summary>
+        /// Adds a label to an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to add</param>
+        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int number, string[] labels);
+
+        /// <summary>
+        /// Adds a label to an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to add</param>
+        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int number, string[] labels);
+
+        /// <summary>
+        /// Removes a label from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labelName">The name of the label to remove</param>
+        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int number, string labelName);
+
+        /// <summary>
+        /// Removes a label from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labelName">The name of the label to remove</param>
+        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int number, string labelName);
+
+        /// <summary>
+        /// Replaces all labels on the specified issues with the provided labels
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to set</param>
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int number, string[] labels);
+
+        /// <summary>
+        /// Replaces all labels on the specified issues with the provided labels
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        /// <param name="labels">The names of the labels to set</param>
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int number, string[] labels);
+
+        /// <summary>
+        /// Removes all labels from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        Task RemoveAllFromIssue(string owner, string name, int number);
+
+        /// <summary>
+        /// Removes all labels from an issue
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The number of the issue</param>
+        Task RemoveAllFromIssue(long repositoryId, int number);
     }
 }

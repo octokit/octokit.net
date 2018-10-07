@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -10,8 +9,9 @@ namespace Octokit
     {
         public GitReference() { }
 
-        public GitReference(string url, string label, string @ref, string sha, User user, Repository repository)
+        public GitReference(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository)
         {
+            NodeId = nodeId;
             Url = url;
             Label = label;
             Ref = @ref;
@@ -19,6 +19,11 @@ namespace Octokit
             User = user;
             Repository = repository;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL associated with this reference.

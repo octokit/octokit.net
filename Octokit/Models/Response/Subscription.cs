@@ -9,7 +9,7 @@ namespace Octokit
     {
         public Subscription() { }
 
-        public Subscription(bool subscribed, bool ignored, string reason, DateTimeOffset createdAt, Uri url, Uri repositoryUrl)
+        public Subscription(bool subscribed, bool ignored, string reason, DateTimeOffset createdAt, string url, string repositoryUrl)
         {
             Subscribed = subscribed;
             Ignored = ignored;
@@ -42,12 +42,12 @@ namespace Octokit
         /// <summary>
         /// The API URL for this <see cref="Subscription"/>.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The API URL for this <see cref="Repository"/>.
         /// </summary>
-        public Uri RepositoryUrl { get; protected set; }
+        public string RepositoryUrl { get; protected set; }
 
         internal string DebuggerDisplay
         {

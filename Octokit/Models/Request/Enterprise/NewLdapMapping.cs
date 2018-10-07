@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -19,7 +16,7 @@ namespace Octokit
         /// <param name="ldapDistinguishedName">The LDAP Distinguished Name</param>
         public NewLdapMapping(string ldapDistinguishedName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(ldapDistinguishedName, "ldapDistinguishedName");
+            Ensure.ArgumentNotNullOrEmptyString(ldapDistinguishedName, nameof(ldapDistinguishedName));
 
             LdapDistinguishedName = ldapDistinguishedName;
         }

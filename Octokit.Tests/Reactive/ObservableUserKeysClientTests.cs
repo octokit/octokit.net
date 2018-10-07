@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -18,7 +17,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                gitHubClient.User.Keys.Received().GetAllForCurrent();
+                gitHubClient.User.GitSshKey.Received().GetAllForCurrent(Arg.Any<ApiOptions>());
             }
         }
 
@@ -32,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("auser");
 
-                gitHubClient.User.Keys.Received().GetAll("auser");
+                gitHubClient.User.GitSshKey.Received().GetAll("auser", Arg.Any<ApiOptions>());
             }
         }
 
@@ -46,7 +45,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                gitHubClient.User.Keys.Received().Get(1);
+                gitHubClient.User.GitSshKey.Received().Get(1);
             }
         }
 
@@ -60,7 +59,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Create(new NewPublicKey("title", "ABCDEFG"));
 
-                gitHubClient.User.Keys.Received().Create(
+                gitHubClient.User.GitSshKey.Received().Create(
                     Arg.Is<NewPublicKey>(a =>
                         a.Title == "title" &&
                         a.Key == "ABCDEFG"));
@@ -77,14 +76,14 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete(1);
 
-                gitHubClient.User.Keys.Received().Delete(1);
+                gitHubClient.User.GitSshKey.Received().Delete(1);
             }
         }
 
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableUserKeysClient(null));
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -83,26 +82,31 @@ namespace Octokit
         /// <summary>
         /// Return all repositories.
         /// </summary>
+        [Parameter(Value = "all")]
         All,
 
         /// <summary>
         /// Return repositories that the current authenticated user owns.
         /// </summary>
+        [Parameter(Value = "owner")]
         Owner,
 
         /// <summary>
-        /// Returns public repositoires.
+        /// Returns public repositories.
         /// </summary>
+        [Parameter(Value = "public")]
         Public,
 
         /// <summary>
         /// The privateReturn private repositories.
         /// </summary>
+        [Parameter(Value = "private")]
         Private,
 
         /// <summary>
         /// Return repositories for which the current authenticated user is a member of the org or team.
         /// </summary>
+        [Parameter(Value = "member")]
         Member
     }
 
@@ -114,16 +118,19 @@ namespace Octokit
         /// <summary>
         /// Sort by the date the repository was created.
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date the repository was last updated.
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated,
 
         /// <summary>
         /// Sort by the date the repository was last pushed.
         /// </summary>
+        [Parameter(Value = "pushed")]
         Pushed,
 
         /// <summary>
@@ -141,17 +148,20 @@ namespace Octokit
         /// <summary>
         /// Returns only public repositories
         /// </summary>     
+        [Parameter(Value = "public")]
         Public,
 
         /// <summary>
         /// Returns only private repositories
         /// </summary> 
+        [Parameter(Value = "private")]
         Private,
 
         /// <summary>
         /// Return both public and private repositories
         /// </summary>
-        All,
+        [Parameter(Value = "all")]
+        All
     }
 
     /// <summary>
@@ -162,11 +172,13 @@ namespace Octokit
         /// <summary>
         /// Repositories that are owned by the authenticated user
         /// </summary>
+        [Parameter(Value = "owner")]
         Owner,
 
         /// <summary>
         /// Repositories that the user has been added to as a collaborator.
         /// </summary>
+        [Parameter(Value = "collaborator")]
         Collaborator,
 
         /// <summary>

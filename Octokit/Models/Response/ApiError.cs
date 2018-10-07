@@ -8,7 +8,7 @@ namespace Octokit
     /// <summary>
     /// Error payload from the API reposnse
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

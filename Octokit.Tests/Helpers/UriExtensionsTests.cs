@@ -6,6 +6,23 @@ namespace Octokit.Tests.Helpers
 {
     public class UriExtensionsTests
     {
+        public class TheReplaceRelativeUriMethod
+        {
+            [Theory]
+            [InlineData("https://api.github.com", "my/new/path", "https://api.github.com/my/new/path")]
+            [InlineData("https://api.github.com", "/my/new/path", "https://api.github.com/my/new/path")]
+            [InlineData("https://example.com/api/v3", "my/new/path", "https://example.com/my/new/path")]
+            [InlineData("https://example.com/api/v3", "/my/new/path", "https://example.com/my/new/path")]
+            public void ReplacesRelativeUrisCorrectly(string baseUri, string relativeUri, string expectedUri)
+            {
+                var uri = new Uri(baseUri);
+
+                var newUri = uri.ReplaceRelativeUri(relativeUri.FormatUri());
+
+                Assert.Equal(newUri.ToString(), expectedUri);
+            }
+        }
+
         public class TheApplyParametersMethod
         {
             [Fact]
@@ -23,20 +40,7 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
-            public void ThrowsExceptionWhenNullValueProvided()
-            {
-                var uri = new Uri("https://example.com");
-
-                var parameters = new Dictionary<string, string>
-                {
-                    {"foo", null },
-                };
-
-                Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));
-            }
-
-            [Fact]
-            public void AppendsParametersAsQueryStringToRelativeUri()
+            public void AppendsParametersAsQueryStringWithRelativeUri()
             {
                 var uri = new Uri("issues", UriKind.Relative);
 
@@ -47,6 +51,32 @@ namespace Octokit.Tests.Helpers
                 });
 
                 Assert.Equal(new Uri("issues?foo=fooval&bar=barval", UriKind.Relative), uriWithParameters);
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenNullValueProvided()
+            {
+                var uri = new Uri("https://example.com");
+
+                var parameters = new Dictionary<string, string>
+                {
+                    {"foo", null }
+                };
+
+                Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenNullValueProvidedWithRelativeUri()
+            {
+                var uri = new Uri("api/example", UriKind.Relative);
+
+                var parameters = new Dictionary<string, string>
+                {
+                    {"foo", null }
+                };
+
+                Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(parameters));
             }
 
             [Fact]
@@ -62,24 +92,61 @@ namespace Octokit.Tests.Helpers
             }
 
             [Fact]
+            public void DoesNotChangeUrlWhenParametersEmptyWithRelativeUri()
+            {
+                var uri = new Uri("api/example", UriKind.Relative);
+
+                var uriWithEmptyParameters = uri.ApplyParameters(new Dictionary<string, string>());
+                var uriWithNullParameters = uri.ApplyParameters(null);
+
+                Assert.Equal(uri, uriWithEmptyParameters);
+                Assert.Equal(uri, uriWithNullParameters);
+            }
+
+            [Fact]
             public void CombinesExistingParametersWithNewParameters()
             {
                 var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
 
-                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" } };
+                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" }, { "per_page", "5" } };
 
                 var actual = uri.ApplyParameters(parameters);
 
-                Assert.True(actual.Query.Contains("state=open"));
-                Assert.True(actual.Query.Contains("sort=other"));
-                Assert.True(actual.Query.Contains("direction=asc"));
-                Assert.True(actual.Query.Contains("page=2"));
+                Assert.Equal(
+                    new Uri("https://api.github.com/repositories/1/milestones?state=open&sort=other&per_page=5&direction=asc&page=2"),
+                    actual);
+            }
+
+            [Fact]
+            public void CombinesExistingParametersWithNewParametersToRelativeUri()
+            {
+                var uri = new Uri("repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2", UriKind.Relative);
+
+                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" }, { "per_page", "5" } };
+
+                var actual = uri.ApplyParameters(parameters);
+
+                Assert.Equal(
+                    new Uri("repositories/1/milestones?state=open&sort=other&per_page=5&direction=asc&page=2", UriKind.Relative),
+                    actual);
             }
 
             [Fact]
             public void DoesNotChangePassedInDictionary()
             {
                 var uri = new Uri("https://api.github.com/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2");
+
+                var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" } };
+
+                uri.ApplyParameters(parameters);
+
+                Assert.Equal(2, parameters.Count);
+            }
+
+            [Fact]
+            public void DoesNotChangePassedInDictionaryForRelativeUri()
+            {
+                var uri = new Uri("/repositories/1/milestones?state=closed&sort=due_date&direction=asc&page=2", UriKind.Relative);
 
                 var parameters = new Dictionary<string, string> { { "state", "open" }, { "sort", "other" } };
 

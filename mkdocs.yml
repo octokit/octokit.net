@@ -24,12 +24,14 @@ pages:
   - 'Releases' : 'releases.md'
   - 'Search' : 'search.md'
   - 'Git Database' : 'git-database.md'
+  - 'GitHub Apps' : 'github-apps.md'
 
 - Samples:
   - 'Exploring Pull Requests' : 'demos/exploring-pull-requests.md'
 
 - Advanced:
   - 'API Options': 'extensibility.md'
+  - 'Working with Enums': 'working-with-enums.md'
   - 'Debugging from Source': 'debugging-source.md'
   - 'OAuth Flow': 'oauth-flow.md'
   - 'HttpClient': 'http-client.md'

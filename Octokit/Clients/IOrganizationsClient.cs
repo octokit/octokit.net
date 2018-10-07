@@ -1,8 +1,8 @@
-﻿#if NET_45
 using System.Threading.Tasks;
 using System.Collections.Generic;
-#endif
+
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace Octokit
 {
@@ -25,10 +25,16 @@ namespace Octokit
         ITeamsClient Team { get; }
 
         /// <summary>
+<<<<<<< HEAD
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         IOrganizationHooksClient Hook { get; }
+=======
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        IOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
+>>>>>>> master
 
         /// <summary>
         /// Returns the specified <see cref="Organization"/>.
@@ -50,11 +56,47 @@ namespace Octokit
         Task<IReadOnlyList<Organization>> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all <see cref="Organization" />s for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Method makes a network request")]
+        Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all <see cref="Organization" />s for the specified user.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
-        Task<IReadOnlyList<Organization>> GetAll(string user);
+        Task<IReadOnlyList<Organization>> GetAllForUser(string user);
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s for the specified user.
+        /// </summary>
+        /// <param name="user">The login of the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options);
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
+        Task<IReadOnlyList<Organization>> GetAll();
+
+        /// <summary>
+        /// Returns all <see cref="Organization" />s.
+        /// </summary>
+        /// <param name="request">Search parameters of the last organization seen</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of <see cref="Organization"/>s.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
+        Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.

@@ -13,16 +13,14 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicRepositoryRequest"/> class.
         /// </summary>
-        /// <param name="since">The integer ID of the last Repository that you’ve seen.</param>
-        public PublicRepositoryRequest(int since)
+        /// <param name="since">The Id of the last Repository that you’ve seen.</param>
+        public PublicRepositoryRequest(long since)
         {
-            Ensure.ArgumentNotNull(since, "since");
-
             Since = since;
         }
 
         /// <summary>
-        /// Gets or sets the integer ID of the last Repository that you’ve seen.
+        /// Gets or sets the integer Id of the last Repository that you’ve seen.
         /// </summary>
         /// <value>
         /// The since.

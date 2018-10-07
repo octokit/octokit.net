@@ -108,52 +108,58 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
-        public static void DeleteRepo(Repository repository)
-        {
-            if (repository != null)
-                DeleteRepo(repository.Owner.Login, repository.Name);
-        }
-
-        public static void DeleteRepo(string owner, string name)
-        {
-            var api = GetAuthenticatedClient();
-            try
-            {
-                api.Repository.Delete(owner, name).Wait(TimeSpan.FromSeconds(15));
-            }
-            catch { }
-        }
-
-        public static void DeleteTeam(Team team)
-        {
-            if (team != null)
-                DeleteTeam(team.Id);
-        }
-
-        public static void DeleteTeam(int teamId)
-        {
-            var api = GetAuthenticatedClient();
-            try
-            {
-                api.Organization.Team.Delete(teamId).Wait(TimeSpan.FromSeconds(15));
-            }
-            catch { }
-        }
-
-        public static void DeleteUser(User user)
+        public static void DeleteUser(IConnection connection, User user)
         {
             if (user != null)
-                DeleteUser(user.Login);
+                DeleteUser(connection, user.Login);
         }
 
-        public static void DeleteUser(string username)
+        public static void DeleteUser(IConnection connection, string username)
         {
-            var api = GetAuthenticatedClient();
             try
             {
-                api.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
+                var client = new GitHubClient(connection);
+                client.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
+        }
+
+        public static void WaitForPreReceiveEnvironmentToComplete(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    var downloadStatus = preReceiveEnvironment.Download;
+
+                    var sw = Stopwatch.StartNew();
+                    while (sw.Elapsed < TimeSpan.FromSeconds(15) && (downloadStatus.State == PreReceiveEnvironmentDownloadState.NotStarted || downloadStatus.State == PreReceiveEnvironmentDownloadState.InProgress))
+                    {
+                        downloadStatus = client.Enterprise.PreReceiveEnvironment.DownloadStatus(preReceiveEnvironment.Id).Result;
+                    }
+
+                    sw.Stop();
+                }
+                catch
+                { }
+            }
+        }
+
+        public static void DeletePreReceiveEnvironment(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                WaitForPreReceiveEnvironmentToComplete(connection, preReceiveEnvironment);
+
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    client.Enterprise.PreReceiveEnvironment.Delete(preReceiveEnvironment.Id).Wait(TimeSpan.FromSeconds(15));
+                }
+                catch
+                { }
+            }
         }
 
         public static IGitHubClient GetAuthenticatedClient()

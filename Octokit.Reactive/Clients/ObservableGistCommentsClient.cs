@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableGistCommentsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Gist.Comment;
             _connection = client.Connection;
@@ -38,7 +38,24 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetAllForGist(string gistId)
         {
-            return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId));
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+
+            return GetAllForGist(gistId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all comments for the gist with the specified id.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
+        /// <param name="gistId">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>IObservable{GistComment}.</returns>
+        public IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId), options);
         }
 
         /// <summary>
@@ -50,7 +67,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Create(string gistId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return _client.Create(gistId, comment).ToObservable();
         }
@@ -65,7 +82,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Update(string gistId, int commentId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return _client.Update(gistId, commentId, comment).ToObservable();
         }

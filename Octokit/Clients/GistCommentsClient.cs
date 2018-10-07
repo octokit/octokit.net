@@ -39,7 +39,24 @@ namespace Octokit
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId)
         {
-            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId));
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+
+            return GetAllForGist(gistId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all comments for the gist with the specified id.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
+        /// <param name="gistId">The id of the gist</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
+        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options);
         }
 
         /// <summary>
@@ -51,7 +68,7 @@ namespace Octokit
         /// <returns>Task{GistComment}.</returns>
         public Task<GistComment> Create(string gistId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), new BodyWrapper(comment));
         }
@@ -66,7 +83,7 @@ namespace Octokit
         /// <returns>Task{GistComment}.</returns>
         public Task<GistComment> Update(string gistId, int commentId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), new BodyWrapper(comment));
         }

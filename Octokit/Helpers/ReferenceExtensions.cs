@@ -19,17 +19,18 @@ namespace Octokit.Helpers
         /// <param name="baseReference">The <see cref="Reference" /> to base the branch from</param>
         public static async Task<Reference> CreateBranch(this IReferencesClient referencesClient, string owner, string name, string branchName, Reference baseReference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
-            Ensure.ArgumentNotNull(baseReference, "baseReference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branchName, nameof(branchName));
+            Ensure.ArgumentNotNull(baseReference, nameof(baseReference));
 
             if (branchName.StartsWith("refs/heads"))
             {
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
             }
 
-            return await referencesClient.Create(owner, name, new NewReference("refs/heads/" + branchName, baseReference.Object.Sha));
+            var newReference = new NewReference("refs/heads/" + branchName, baseReference.Object.Sha);
+            return await referencesClient.Create(owner, name, newReference).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -41,17 +42,18 @@ namespace Octokit.Helpers
         /// <param name="branchName">The new branch name</param>
         public static async Task<Reference> CreateBranch(this IReferencesClient referencesClient, string owner, string name, string branchName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branchName, "branchName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branchName, nameof(branchName));
 
             if (branchName.StartsWith("refs/heads"))
             {
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
             }
 
-            var baseBranch = await referencesClient.Get(owner, name, "heads/master");
-            return await referencesClient.Create(owner, name, new NewReference("refs/heads/" + branchName, baseBranch.Object.Sha));
+            var baseBranch = await referencesClient.Get(owner, name, "heads/master").ConfigureAwait(false);
+            var newReference = new NewReference("refs/heads/" + branchName, baseBranch.Object.Sha);
+            return await referencesClient.Create(owner, name, newReference).ConfigureAwait(false);
         }
     }
 }

@@ -1,14 +1,18 @@
+image: Visual Studio 2017
+
+branches:
+  only:
+    - master
+
 init:
   - git config --global core.autocrlf input
+
 build_script:
-  - cmd: build.cmd BuildApp
-  - cmd: build.cmd UnitTests
-  - cmd: build.cmd ConventionTests
-  - cmd: build.cmd CreatePackages
+  - dotnet --info
+  - ps: .\build.ps1 -LinkSources -Verbosity Verbose
+
 test: off
-nuget:
-  account_feed: true
-  project_feed: true
+
 artifacts:
 - path: 'packaging\octokit*.nupkg'
   name: OctokitPackages

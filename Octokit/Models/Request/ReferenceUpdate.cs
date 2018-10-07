@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -28,7 +27,7 @@ namespace Octokit
         /// </param>
         public ReferenceUpdate(string sha, bool force)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             Sha = sha;
             Force = force;

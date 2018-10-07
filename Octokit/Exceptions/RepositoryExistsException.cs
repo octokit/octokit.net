@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
+using System.Security;
 
 namespace Octokit
 {
     /// <summary>
     /// Exception thrown when creating a repository, but it already exists on the server.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -31,9 +34,9 @@ namespace Octokit
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(baseAddress, "baseAddress");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(baseAddress, nameof(baseAddress));
 
             Organization = organization;
             RepositoryName = name;
@@ -56,7 +59,7 @@ namespace Octokit
             ApiValidationException innerException)
             : base(innerException)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             RepositoryName = name;
 
@@ -94,7 +97,7 @@ namespace Octokit
         /// </summary>
         public bool OwnerIsOrganization { get; private set; }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of RepositoryExistsException.
         /// </summary>
@@ -114,9 +117,10 @@ namespace Octokit
             RepositoryName = info.GetString("RepositoryName");
             Organization = info.GetString("Organization");
             OwnerIsOrganization = info.GetBoolean("OwnerIsOrganization");
-            ExistingRepositoryWebUrl = (Uri)(info.GetValue("ExistingRepositoryWebUrl", typeof(Uri)));
+            ExistingRepositoryWebUrl = (Uri)info.GetValue("ExistingRepositoryWebUrl", typeof(Uri));
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

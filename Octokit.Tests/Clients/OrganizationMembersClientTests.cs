@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -15,10 +14,10 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class OrganizationMembersClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
-            public void EnsureNonNullArguments()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new OrganizationMembersClient(null));
             }
@@ -34,16 +33,51 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org");
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                orgMembersClient.GetAll("org", options);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members"), options);
             }
 
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetAll(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("org", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All, ApiOptions.None));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("org", OrganizationMembersFilter.All, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All, OrganizationMembersRole.Admin));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, OrganizationMembersFilter.All, OrganizationMembersRole.Admin, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.Admin, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", OrganizationMembersFilter.All));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", OrganizationMembersFilter.All, OrganizationMembersRole.Admin));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", OrganizationMembersFilter.All, OrganizationMembersRole.Admin, ApiOptions.None));
             }
 
             [Fact]
@@ -54,7 +88,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.All);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all"), Args.ApiOptions);
             }
 
             [Fact]
@@ -65,7 +99,25 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void TwoFactorFilterRequestTheCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled"), options);
             }
 
             [Fact]
@@ -76,7 +128,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersRole.All);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=all"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=all"), Args.ApiOptions);
             }
 
             [Fact]
@@ -87,7 +139,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersRole.Admin);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=admin"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=admin"), Args.ApiOptions);
             }
 
             [Fact]
@@ -98,7 +150,25 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersRole.Member);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void MemberRoleFilterRequestTheCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                orgMembersClient.GetAll("org", OrganizationMembersRole.Member, options);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"), options);
             }
 
             [Fact]
@@ -109,7 +179,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.All);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=all"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=all"), Args.ApiOptions);
             }
 
             [Fact]
@@ -120,7 +190,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.Admin);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=admin"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=admin"), Args.ApiOptions);
             }
 
             [Fact]
@@ -131,7 +201,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.All, OrganizationMembersRole.Member);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=member"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=all&role=member"), Args.ApiOptions);
             }
 
             [Fact]
@@ -142,7 +212,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.All);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=all"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=all"), Args.ApiOptions);
             }
 
             [Fact]
@@ -153,7 +223,7 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Admin);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=admin"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=admin"), Args.ApiOptions);
             }
 
             [Fact]
@@ -164,30 +234,70 @@ namespace Octokit.Tests.Clients
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Member);
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public void TwoFactorFilterPlusMemberRoleRequestTheCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembersClient = new OrganizationMembersClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Member, options);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"), options);
             }
         }
 
         public class TheGetPublicMethod
         {
             [Fact]
-            public void RequestsTheCorrectUrl()
+            public async Task RequestsTheCorrectUrl()
             {
                 var client = Substitute.For<IApiConnection>();
                 var orgMembers = new OrganizationMembersClient(client);
 
-                orgMembers.GetAllPublic("org");
+                await orgMembers.GetAllPublic("org");
 
-                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members"));
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithApiOptions()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var orgMembers = new OrganizationMembersClient(client);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await orgMembers.GetAllPublic("org", options);
+
+                client.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members"), options);
             }
 
             [Fact]
             public async Task EnsureNonNullArguments()
             {
-                var orgMembers = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.GetAllPublic(null));
-                await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.GetAllPublic(""));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic("org", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic(""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic("", ApiOptions.None));
             }
         }
 
@@ -382,6 +492,48 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("", "username"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.Conceal("org", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("org", ""));
+            }
+        }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.GetAllPendingInvitations("org");
+
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+                client.GetAllPendingInvitations("org", options);
+
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", options);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations(""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null));
             }
         }
     }

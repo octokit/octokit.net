@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableUserAdministrationClient(gitHubClient);
 
-                client.CreateImpersonationToken("auser", new NewImpersonationToken(new string[] { "public_repo" }));
+                client.CreateImpersonationToken("auser", new NewImpersonationToken(new[] { "public_repo" }));
 
                 gitHubClient.User.Administration.Received().CreateImpersonationToken(
                     "auser",
@@ -180,7 +180,7 @@ namespace Octokit.Tests.Reactive
         public class TheCtor
         {
             [Fact]
-            public void EnsuresArgument()
+            public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ObservableUserAdministrationClient(null));
             }

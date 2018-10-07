@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 
 namespace Octokit
 {
@@ -83,7 +81,7 @@ namespace Octokit
         {
             if (mode != _markdown && mode != _gfm)
             {
-                throw (new FormatException("The mode must be either 'markdown' or 'gfm'"));
+                throw new FormatException("The mode must be either 'markdown' or 'gfm'");
             }
             else
                 return mode;

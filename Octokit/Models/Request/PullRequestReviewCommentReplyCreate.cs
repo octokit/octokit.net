@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -17,7 +16,7 @@ namespace Octokit
         /// <param name="inReplyTo">The comment Id to reply to</param>
         public PullRequestReviewCommentReplyCreate(string body, int inReplyTo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(body, "body");
+            Ensure.ArgumentNotNullOrEmptyString(body, nameof(body));
 
             Body = body;
             InReplyTo = inReplyTo;

@@ -10,10 +10,11 @@ namespace Octokit
     {
         public Gist() { }
 
-        public Gist(string url, string id, string description, bool @public, User owner, IReadOnlyDictionary<string, GistFile> files, int comments, string commentsUrl, string htmlUrl, string gitPullUrl, string gitPushUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, IReadOnlyList<GistFork> forks, IReadOnlyList<GistHistory> history)
+        public Gist(string url, string id, string nodeId, string description, bool @public, User owner, IReadOnlyDictionary<string, GistFile> files, int comments, string commentsUrl, string htmlUrl, string gitPullUrl, string gitPushUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, IReadOnlyList<GistFork> forks, IReadOnlyList<GistHistory> history)
         {
             Url = url;
             Id = id;
+            NodeId = nodeId;
             Description = description;
             Public = @public;
             Owner = owner;
@@ -41,6 +42,11 @@ namespace Octokit
         /// Given a gist url of https://gist.github.com/UserName/1234 the Id would be '1234'.
         /// </remarks>
         public string Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// A description of the <see cref="Gist"/>.

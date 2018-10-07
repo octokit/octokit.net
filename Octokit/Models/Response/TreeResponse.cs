@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -10,7 +9,7 @@ namespace Octokit
     {
         public TreeResponse() { }
 
-        public TreeResponse(string sha, Uri url, IReadOnlyList<TreeItem> tree, bool truncated)
+        public TreeResponse(string sha, string url, IReadOnlyList<TreeItem> tree, bool truncated)
         {
             Sha = sha;
             Url = url;
@@ -26,7 +25,7 @@ namespace Octokit
         /// <summary>
         /// The URL for this Tree response.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The list of Tree Items for this Tree response.

@@ -46,5 +46,15 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Create(null));
             }
         }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new EnterpriseOrganizationClient(null));
+            }
+        }
     }
 }

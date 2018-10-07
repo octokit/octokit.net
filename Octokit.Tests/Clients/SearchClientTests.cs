@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using NSubstitute;
 using Xunit;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ namespace Octokit.Tests.Clients
     /// </summary>
     public class SearchClientTests
     {
-        public class TheConstructor
+        public class TheCtor
         {
             [Fact]
             public void EnsuresNonNullArguments()
@@ -378,7 +377,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are greater than 500
+                //get repos who's stargazers are greater than 500
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.GreaterThan(500);
                 client.SearchRepo(request);
@@ -392,7 +391,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are less than 500
+                //get repos who's stargazers are less than 500
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.LessThan(500);
                 client.SearchRepo(request);
@@ -406,7 +405,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos stargazers are less than 500 or equal to
+                //get repos who's stargazers are less than 500 or equal to
                 var request = new SearchRepositoriesRequest("github");
                 request.Stars = Range.LessThanOrEquals(500);
                 client.SearchRepo(request);
@@ -429,7 +428,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheForkQualifier()
+            public void TestingTheIncludeForkQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -438,7 +437,20 @@ namespace Octokit.Tests.Clients
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:true"));
+            }
+
+            [Fact]
+            public void TestingTheOnlyForkQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //search repos that contains rails and forks are included in the search
+                var request = new SearchRepositoriesRequest("github");
+                request.Fork = ForkQualifier.OnlyForks;
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:only"));
             }
 
             [Fact]
@@ -446,7 +458,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos whos language is Ruby
+                //get repos who's language is Ruby
                 var request = new SearchRepositoriesRequest("github");
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
@@ -807,12 +819,12 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheTypeQualifier_PR()
+            public void TestingTheTypeQualifier_PullRequest()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Type = IssueTypeQualifier.PR;
+                request.Type = IssueTypeQualifier.PullRequest;
 
                 client.SearchIssues(request);
 
@@ -1447,7 +1459,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:C#"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
             [Fact]
@@ -1615,18 +1627,18 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheRepoQualifier_InConstructor()
+            public void TestingTheOrgQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
+                var request = new SearchCodeRequest("something");
+                request.Organization = "octokit";
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+repo:octokit/octokit.net"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit"));
             }
 
             [Fact]
@@ -1661,6 +1673,112 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<RepositoryFormatException>(
                     async () => await client.SearchCode(request));
+            }
+        }
+
+        public class TheSearchLabelsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                client.SearchLabels(new SearchLabelsRequest("something", 1));
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchLabels(null));
+            }
+
+            [Fact]
+            public void TestingTheTermParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "created" &&
+                        d["order"] == "asc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheRepositoryIdParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
             }
         }
     }

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -6,7 +5,7 @@ namespace Octokit
 {
     /// <summary>
     /// Represents updatable fields on a user. Values that are null will not be sent in the request.
-    /// Use string.empty if you want to clear clear a value.
+    /// Use string.empty if you want to clear a value.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UserUpdate

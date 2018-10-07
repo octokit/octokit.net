@@ -4,7 +4,6 @@ using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 using System.Reactive.Linq;
 
-
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -24,7 +23,7 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableUserAdministrationClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User.Administration;
             _connection = client.Connection;

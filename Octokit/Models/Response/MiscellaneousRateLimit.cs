@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -11,8 +10,8 @@ namespace Octokit
 
         public MiscellaneousRateLimit(ResourceRateLimit resources, RateLimit rate)
         {
-            Ensure.ArgumentNotNull(resources, "resource");
-            Ensure.ArgumentNotNull(rate, "rate");
+            Ensure.ArgumentNotNull(resources, nameof(resources));
+            Ensure.ArgumentNotNull(rate, nameof(rate));
 
             Resources = resources;
             Rate = rate;

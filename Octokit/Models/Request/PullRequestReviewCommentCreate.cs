@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -19,9 +18,9 @@ namespace Octokit
         /// <param name="position">The line index in the diff to comment on</param>
         public PullRequestReviewCommentCreate(string body, string commitId, string path, int position)
         {
-            Ensure.ArgumentNotNullOrEmptyString(body, "body");
-            Ensure.ArgumentNotNullOrEmptyString(commitId, "commitId");
-            Ensure.ArgumentNotNullOrEmptyString(path, "path");
+            Ensure.ArgumentNotNullOrEmptyString(body, nameof(body));
+            Ensure.ArgumentNotNullOrEmptyString(commitId, nameof(commitId));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             Body = body;
             CommitId = commitId;

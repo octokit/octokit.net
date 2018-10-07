@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ namespace Octokit
 
         public CommitActivity(IEnumerable<WeeklyCommitActivity> activity)
         {
-            Ensure.ArgumentNotNull(activity, "activity");
+            Ensure.ArgumentNotNull(activity, nameof(activity));
 
             Activity = new ReadOnlyCollection<WeeklyCommitActivity>(activity.ToList());
         }
@@ -29,7 +28,7 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "Weeks of activity: {0}", Activity.Count());
+                    "Weeks of activity: {0}", Activity.Count);
             }
         }
     }

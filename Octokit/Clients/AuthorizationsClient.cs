@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System;
-#if NET_45
 using System.Collections.Generic;
-#endif
 
 namespace Octokit
 {
@@ -54,7 +52,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Authorization>(ApiUrls.Authorizations(), options);
         }
@@ -66,7 +64,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-a-single-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The ID of the <see cref="Authorization"/> to get</param>
+        /// <param name="id">The Id of the <see cref="Authorization"/> to get</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
@@ -96,7 +94,7 @@ namespace Octokit
         /// <returns>The created <see cref="Authorization"/>.</returns>
         public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -132,8 +130,8 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -155,7 +153,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
@@ -171,9 +169,9 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -198,7 +196,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
@@ -216,10 +214,10 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -243,7 +241,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <exception cref="AuthorizationException">
@@ -259,9 +257,9 @@ namespace Octokit
             string clientSecret,
             NewAuthorization newAuthorization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
             var requestData = new
             {
@@ -284,7 +282,7 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Describes the new authorization to create</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
@@ -302,10 +300,10 @@ namespace Octokit
             NewAuthorization newAuthorization,
             string twoFactorAuthenticationCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(clientSecret, "clientSecret");
-            Ensure.ArgumentNotNull(newAuthorization, "authorization");
-            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
+            Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
+            Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
             var requestData = new
             {
@@ -320,10 +318,7 @@ namespace Octokit
             {
                 var endpoint = ApiUrls.AuthorizationsForClient(clientId);
 
-                return await ApiConnection.Put<ApplicationAuthorization>(
-                    endpoint,
-                    requestData,
-                    twoFactorAuthenticationCode);
+                return await ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, twoFactorAuthenticationCode).ConfigureAwait(false);
             }
             catch (AuthorizationException e)
             {
@@ -338,22 +333,20 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#check-an-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="clientId">Client ID of the OAuth application for the token</param>
+        /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        public async Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
-            return await ApiConnection.Get<ApplicationAuthorization>(
-                endpoint,
-                null);
+            return ApiConnection.Get<ApplicationAuthorization>(endpoint, null);
         }
 
         /// <summary>
-        /// Resets a valid OAuth token for an OAuth application without end user involvment.
+        /// Resets a valid OAuth token for an OAuth application without end user involvement.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
@@ -362,15 +355,14 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        public async Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             var requestData = new { };
 
-            return await ApiConnection.Post<ApplicationAuthorization>(
-                ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
         }
 
         /// <summary>
@@ -385,29 +377,11 @@ namespace Octokit
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task RevokeApplicationAuthentication(string clientId, string accessToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-            Ensure.ArgumentNotNullOrEmptyString(accessToken, "accessToken");
+            Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
+            Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
             return ApiConnection.Delete(
                 ApiUrls.ApplicationAuthorization(clientId, accessToken));
-        }
-
-        /// <summary>
-        /// Revokes every OAuth token for an OAuth application.
-        /// </summary>
-        /// <remarks>
-        /// This method requires authentication.
-        /// See the <a href="https://developer.github.com/v3/oauth_authorizations/#revoke-all-authorizations-for-an-application">API documentation for more information.</a>
-        /// </remarks>
-        /// <param name="clientId">ClientID of the OAuth application for the token</param>
-        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        [Obsolete("This feature is no longer supported in the GitHub API and will be removed in a future release")]
-        public Task RevokeAllApplicationAuthentications(string clientId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(clientId, "clientId");
-
-            return ApiConnection.Delete(
-                ApiUrls.ApplicationAuthorization(clientId));
         }
 
         /// <summary>
@@ -418,7 +392,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">ID of the <see cref="Authorization"/> to update</param>
+        /// <param name="id">Id of the <see cref="Authorization"/> to update</param>
         /// <param name="authorizationUpdate">Describes the changes to make to the authorization</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
@@ -427,7 +401,7 @@ namespace Octokit
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         public Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
         {
-            Ensure.ArgumentNotNull(authorizationUpdate, "authorizationUpdate");
+            Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
             return ApiConnection.Patch<Authorization>(
                 ApiUrls.Authorizations(id),
@@ -442,7 +416,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
@@ -461,7 +435,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide ID of the authorization to delete</param>
+        /// <param name="id">The system-wide Id of the authorization to delete</param>
         /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.

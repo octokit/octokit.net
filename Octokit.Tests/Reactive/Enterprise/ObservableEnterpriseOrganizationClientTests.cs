@@ -7,6 +7,16 @@ namespace Octokit.Tests
 {
     public class ObservableEnterpriseOrganizationClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new ObservableEnterpriseOrganizationClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]

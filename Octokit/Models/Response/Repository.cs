@@ -9,12 +9,12 @@ namespace Octokit
     {
         public Repository() { }
 
-        public Repository(int id)
+        public Repository(long id)
         {
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, int id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, int subscribersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, User organization, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -24,6 +24,7 @@ namespace Octokit
             SvnUrl = svnUrl;
             MirrorUrl = mirrorUrl;
             Id = id;
+            NodeId = nodeId;
             Owner = owner;
             Name = name;
             FullName = fullName;
@@ -34,23 +35,25 @@ namespace Octokit
             Fork = fork;
             ForksCount = forksCount;
             StargazersCount = stargazersCount;
-#pragma warning disable 612,618
-            SubscribersCount = subscribersCount;
-#pragma warning restore 612,618
             DefaultBranch = defaultBranch;
             OpenIssuesCount = openIssuesCount;
             PushedAt = pushedAt;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Permissions = permissions;
-#pragma warning disable 612, 618
-            Organization = organization;
-#pragma warning restore 612, 618
             Parent = parent;
             Source = source;
+            License = license;
             HasIssues = hasIssues;
             HasWiki = hasWiki;
             HasDownloads = hasDownloads;
+            HasPages = hasPages;
+            SubscribersCount = subscribersCount;
+            Size = size;
+            AllowRebaseMerge = allowRebaseMerge;
+            AllowSquashMerge = allowSquashMerge;
+            AllowMergeCommit = allowMergeCommit;
+            Archived = archived;
         }
 
         public string Url { get; protected set; }
@@ -67,7 +70,12 @@ namespace Octokit
 
         public string MirrorUrl { get; protected set; }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public User Owner { get; protected set; }
 
@@ -89,9 +97,6 @@ namespace Octokit
 
         public int StargazersCount { get; protected set; }
 
-        [Obsolete("This property has been obsoleted. Please use WatchedClient.GetAllWatchers instead.")]
-        public int SubscribersCount { get; protected set; }
-
         public string DefaultBranch { get; protected set; }
 
         public int OpenIssuesCount { get; protected set; }
@@ -104,18 +109,31 @@ namespace Octokit
 
         public RepositoryPermissions Permissions { get; protected set; }
 
-        [Obsolete("This property has been obsoleted by Repository.Owner. Please use Repository.Owner.Type instead.")]
-        public User Organization { get; protected set; }
-
         public Repository Parent { get; protected set; }
 
         public Repository Source { get; protected set; }
+
+        public LicenseMetadata License { get; protected set; }
 
         public bool HasIssues { get; protected set; }
 
         public bool HasWiki { get; protected set; }
 
         public bool HasDownloads { get; protected set; }
+
+        public bool? AllowRebaseMerge { get; protected set; }
+
+        public bool? AllowSquashMerge { get; protected set; }
+
+        public bool? AllowMergeCommit { get; protected set; }
+
+        public bool HasPages { get; protected set; }
+
+        public int SubscribersCount { get; protected set; }
+
+        public long Size { get; protected set; }
+
+        public bool Archived { get; protected set; }
 
         internal string DebuggerDisplay
         {

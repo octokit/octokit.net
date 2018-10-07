@@ -9,11 +9,11 @@ namespace Octokit
     {
         public Branch() { }
 
-        public Branch(string name, GitReference commit, BranchProtection protection)
+        public Branch(string name, GitReference commit, bool @protected)
         {
             Name = name;
             Commit = commit;
-            Protection = protection;
+            Protected = @protected;
         }
 
         /// <summary>
@@ -22,10 +22,9 @@ namespace Octokit
         public string Name { get; protected set; }
 
         /// <summary>
-        /// The <see cref="BranchProtection"/> details for this <see cref="Branch"/>.
-        /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
+        /// Whether this <see cref="Branch"/> is protected. 
         /// </summary>
-        public BranchProtection Protection { get; protected set; }
+        public bool Protected { get; protected set; }
 
         /// <summary>
         /// The <see cref="GitReference"/> history for this <see cref="Branch"/>.

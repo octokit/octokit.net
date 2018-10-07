@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -12,15 +11,21 @@ namespace Octokit
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "tarball")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "zipball")]
-        public RepositoryTag(string name, GitReference commit, string zipballUrl, string tarballUrl)
+        public RepositoryTag(string name, string nodeId, GitReference commit, string zipballUrl, string tarballUrl)
         {
             Name = name;
+            NodeId = nodeId;
             Commit = commit;
             ZipballUrl = zipballUrl;
             TarballUrl = tarballUrl;
         }
 
         public string Name { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public GitReference Commit { get; protected set; }
 

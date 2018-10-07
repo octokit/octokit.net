@@ -16,10 +16,16 @@ namespace Octokit.Reactive
         IObservableTeamsClient Team { get; }
 
         /// <summary>
+<<<<<<< HEAD
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         IObservableOrganizationHooksClient Hook { get; }
+=======
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
+>>>>>>> master
 
         /// <summary>
         /// Returns the specified organization.
@@ -39,11 +45,41 @@ namespace Octokit.Reactive
         IObservable<Organization> GetAllForCurrent();
 
         /// <summary>
+        /// Returns all the organizations for the current user.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "Method makes a network request")]
+        IObservable<Organization> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Returns all the organizations for the specified user
         /// </summary>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<Organization> GetAll(string user);
+        IObservable<Organization> GetAllForUser(string user);
+
+        /// <summary>
+        /// Returns all the organizations for the specified user
+        /// </summary>
+        /// <param name="user">The login for the user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAllForUser(string user, ApiOptions options);
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <returns></returns>
+        IObservable<Organization> GetAll();
+
+        /// <summary>
+        /// Returns all the organizations
+        /// </summary>
+        /// <param name="request">Search parameters of the last organization seen</param>
+        /// <returns></returns>
+        IObservable<Organization> GetAll(OrganizationRequest request);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.

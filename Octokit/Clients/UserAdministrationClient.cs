@@ -32,7 +32,7 @@ namespace Octokit
         /// <returns>The created <see cref="User"/> object</returns>
         public Task<User> Create(NewUser newUser)
         {
-            Ensure.ArgumentNotNull(newUser, "newUser");
+            Ensure.ArgumentNotNull(newUser, nameof(newUser));
 
             var endpoint = ApiUrls.UserAdministration();
 
@@ -52,8 +52,8 @@ namespace Octokit
         /// <returns>A <see cref="UserRenameResponse"/> object indicating the queued task message and Url to the user</returns>
         public Task<UserRenameResponse> Rename(string login, UserRename userRename)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(userRename, "userRename");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(userRename, nameof(userRename));
 
             var endpoint = ApiUrls.UserAdministration(login);
 
@@ -72,8 +72,8 @@ namespace Octokit
         /// <returns>An <see cref="Authorization"/> object containing the impersonation token</returns>
         public Task<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNull(newImpersonationToken, "newImpersonationToken");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(newImpersonationToken, nameof(newImpersonationToken));
 
             var endpoint = ApiUrls.UserAdministrationAuthorization(login);
 
@@ -91,17 +91,15 @@ namespace Octokit
         /// <returns></returns>
         public async Task DeleteImpersonationToken(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.UserAdministrationAuthorization(login);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Promote(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSiteAdmin(login);
             return ApiConnection.Put(endpoint);
         }
@@ -131,7 +129,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Demote(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSiteAdmin(login);
             return ApiConnection.Delete(endpoint);
         }
@@ -147,7 +145,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Suspend(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSuspension(login);
             return ApiConnection.Put(endpoint);
         }
@@ -163,7 +161,7 @@ namespace Octokit
         /// <returns></returns>
         public Task Unsuspend(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSuspension(login);
             return ApiConnection.Delete(endpoint);
         }
@@ -193,16 +191,14 @@ namespace Octokit
         /// <returns></returns>
         public async Task Delete(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministration(login);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
 
         /// <summary>
@@ -216,16 +212,14 @@ namespace Octokit
         /// <returns></returns>
         public async Task DeletePublicKey(int keyId)
         {
-            Ensure.ArgumentNotNull(keyId, "keyId");
+            Ensure.ArgumentNotNull(keyId, nameof(keyId));
             var endpoint = ApiUrls.UserAdministrationPublicKeys(keyId);
 
-            var response = ((HttpStatusCode)await Connection.Delete(endpoint));
+            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
             }
-
-            return;
         }
     }
 }

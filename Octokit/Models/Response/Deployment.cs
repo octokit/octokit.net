@@ -13,9 +13,10 @@ namespace Octokit
     {
         public Deployment() { }
 
-        public Deployment(int id, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl)
+        public Deployment(int id, string nodeId, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, bool transientEnvironment, bool productionEnvironment)
         {
             Id = id;
+            NodeId = nodeId;
             Sha = sha;
             Url = url;
             Creator = creator;
@@ -24,12 +25,19 @@ namespace Octokit
             UpdatedAt = updatedAt;
             Description = description;
             StatusesUrl = statusesUrl;
+            TransientEnvironment = transientEnvironment;
+            ProductionEnvironment = productionEnvironment;
         }
 
         /// <summary>
         /// Id of this deployment.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// 
@@ -70,6 +78,16 @@ namespace Octokit
         /// The API URL for the <seealso cref="DeploymentStatus"/>es of this deployment.
         /// </summary>
         public string StatusesUrl { get; protected set; }
+
+        /// <summary>
+        /// Indicates if the environment is specific to a deployment and will no longer exist at some point in the future.
+        /// </summary>
+        public bool TransientEnvironment { get; protected set; }
+
+        /// <summary>
+        /// Indicates if the environment is one with which end users directly interact.
+        /// </summary>
+        public bool ProductionEnvironment { get; protected set; }
 
         internal string DebuggerDisplay
         {

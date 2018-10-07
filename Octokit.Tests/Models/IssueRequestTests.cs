@@ -13,7 +13,7 @@ public class IssueRequestTests
             var request = new IssueRequest
             {
                 Filter = IssueFilter.All,
-                State = ItemState.Closed,
+                State = ItemStateFilter.Closed,
                 SortProperty = IssueSort.Comments,
                 SortDirection = SortDirection.Ascending,
                 Since = DateTimeOffset.ParseExact("Wed 23 Jan 2013 8:30 AM -08:00",

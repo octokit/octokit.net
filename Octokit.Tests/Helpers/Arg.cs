@@ -72,5 +72,10 @@ namespace Octokit.Tests
         {
             get { return Arg.Any<ApiOptions>(); }
         }
+
+        public static string AnyAcceptHeaders
+        {
+            get { return Arg.Any<string>(); }
+        }
     }
 }

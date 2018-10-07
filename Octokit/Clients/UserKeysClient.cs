@@ -17,15 +17,18 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets all public keys for the authenticated user.
+        /// Gets all verified public keys for a user.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns></returns>
-        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys());
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
+
+            return GetAll(userName, ApiOptions.None);
         }
 
         /// <summary>
@@ -34,12 +37,42 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
         /// </remarks>
-        /// <returns></returns>
-        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
+        /// <param name="userName">The @ handle of the user.</param>
+        /// <param name="options">Options to change API's behavior.</param>
+        /// <returns>Lists the verified public keys for a user.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(userName, "userName");
+            Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName));
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
+        {
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all public keys for the authenticated user.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/users/keys/#list-your-public-keys
+        /// </remarks>
+        /// <param name="options">Options to chagne API's behavior.</param>
+        /// <returns>Lists the current user's keys.</returns>
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
         }
 
         /// <summary>
@@ -48,7 +81,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
         /// </remarks>
-        /// <param name="id">The ID of the SSH key</param>
+        /// <param name="id">The Id of the SSH key</param>
         /// <returns></returns>
         public Task<PublicKey> Get(int id)
         {
@@ -65,7 +98,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<PublicKey> Create(NewPublicKey newKey)
         {
-            Ensure.ArgumentNotNull(newKey, "newKey");
+            Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
             return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey);
         }

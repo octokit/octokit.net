@@ -33,17 +33,54 @@ public class ObservableIssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task ReturnsAllIssuesForARepository()
+    public async Task ReturnsPageOfIssuesForARepository()
     {
-        var issues = await _client.GetAllForRepository("libgit2", "libgit2sharp").ToList();
+        var options = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
 
-        Assert.NotEmpty(issues);
+        var issues = await _client.GetAllForRepository("libgit2", "libgit2sharp", options).ToList();
+
+        Assert.Equal(5, issues.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsPageOfIssuesFromStartForARepository()
+    {
+        var first = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1
+        };
+
+        var firstPage = await _client.GetAllForRepository("libgit2", "libgit2sharp", first).ToList();
+
+        var second = new ApiOptions
+        {
+            PageSize = 5,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var secondPage = await _client.GetAllForRepository("libgit2", "libgit2sharp", second).ToList();
+
+        Assert.Equal(5, firstPage.Count);
+        Assert.Equal(5, secondPage.Count);
+
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[1].Id, secondPage[1].Id);
+        Assert.NotEqual(firstPage[2].Id, secondPage[2].Id);
+        Assert.NotEqual(firstPage[3].Id, secondPage[3].Id);
+        Assert.NotEqual(firstPage[4].Id, secondPage[4].Id);
     }
 
     [IntegrationTest]
     public async Task ReturnsAllIssuesForCurrentUser()
     {
-        var newIssue = new NewIssue("Integration test issue") { Assignee = _context.RepositoryOwner };
+        var newIssue = new NewIssue("Integration test issue");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
         await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         var issues = await _client.GetAllForCurrent().ToList();
@@ -54,7 +91,8 @@ public class ObservableIssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task ReturnsAllIssuesForOwnedAndMemberRepositories()
     {
-        var newIssue = new NewIssue("Integration test issue") { Assignee = _context.RepositoryOwner };
+        var newIssue = new NewIssue("Integration test issue");
+        newIssue.Assignees.Add(_context.RepositoryOwner);
         await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         var result = await _client.GetAllForOwnedAndMemberRepositories().ToList();
 
@@ -70,6 +108,23 @@ public class ObservableIssuesClientTests : IDisposable
         var updateResult = await _client.Update(_context.RepositoryOwner, _context.RepositoryName, createResult.Number, new IssueUpdate { Title = "Modified integration test issue" });
 
         Assert.Equal("Modified integration test issue", updateResult.Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanLockAndUnlockIssues()
+    {
+        var newIssue = new NewIssue("Integration Test Issue");
+
+        var createResult = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.False(createResult.Locked);
+
+        await _client.Lock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        var lockResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        Assert.True(lockResult.Locked);
+
+        await _client.Unlock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        var unlockIssueResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        Assert.False(unlockIssueResult.Locked);
     }
 
     public void Dispose()

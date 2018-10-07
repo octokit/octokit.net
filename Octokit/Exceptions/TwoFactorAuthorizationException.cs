@@ -2,11 +2,14 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
+using System.Security;
 
 namespace Octokit
 {
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     /// <summary>
     /// Represents a failed 2FA challenge from the API
     /// </summary>
@@ -61,7 +64,7 @@ namespace Octokit
         /// </summary>
         public TwoFactorType TwoFactorType { get; private set; }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of TwoFactorRequiredException.
         /// </summary>
@@ -77,9 +80,10 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            TwoFactorType = (TwoFactorType)(info.GetInt32("TwoFactorType"));
+            TwoFactorType = (TwoFactorType)info.GetInt32("TwoFactorType");
         }
 
+        [SecurityCritical]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

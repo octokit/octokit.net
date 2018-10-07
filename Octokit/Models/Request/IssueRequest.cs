@@ -18,7 +18,7 @@ namespace Octokit
         public IssueRequest()
         {
             Filter = IssueFilter.Assigned;
-            State = ItemState.Open;
+            State = ItemStateFilter.Open;
             Labels = new Collection<string>();
             SortProperty = IssueSort.Created;
             SortDirection = SortDirection.Descending;
@@ -33,12 +33,12 @@ namespace Octokit
         public IssueFilter Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ItemState"/> for the issues to return.
+        /// Gets or sets the <see cref="ItemStateFilter"/> for the issues to return.
         /// </summary>
         /// <value>
         /// The state.
         /// </value>
-        public ItemState State { get; set; }
+        public ItemStateFilter State { get; set; }
 
         /// <summary>
         /// Gets the labels to filter by. Add labels to the collection to only request issues with those labels.
@@ -97,48 +97,74 @@ namespace Octokit
         /// <summary>
         /// Issues assigned to the authenticated user. (Default)
         /// </summary>
+        [Parameter(Value = "assigned")]
         Assigned,
 
         /// <summary>
         /// Issues created by the authenticated user.
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Issues mentioning the authenticated user.
         /// </summary>
+        [Parameter(Value = "mentioned")]
         Mentioned,
 
         /// <summary>
         /// Issues the authenticated user is subscribed to for updates.
         /// </summary>
+        [Parameter(Value = "subscribed")]
         Subscribed,
 
         /// <summary>
         /// All issues the authenticated user can see, regardless of participation or creation.
         /// </summary>
+        [Parameter(Value = "all")]
         All
     }
 
     /// <summary>
-    /// The range of states that an issue can be in.
+    /// Range of states for Issues, Milestones and PullRequest API.
+    /// </summary>
+    public enum ItemStateFilter
+    {
+        /// <summary>
+        /// Items that are open.
+        /// </summary>
+        [Parameter(Value = "open")]
+        Open,
+
+        /// <summary>
+        /// Items that are closed.
+        /// </summary>
+        [Parameter(Value = "closed")]
+        Closed,
+
+        /// <summary>
+        /// All the items.
+        /// </summary>
+        [Parameter(Value = "all")]
+        All
+    }
+
+    /// <summary>
+    /// Items that are open OR closed
     /// </summary>
     public enum ItemState
     {
         /// <summary>
-        /// Isuses that are open (default).
+        /// Items that are open
         /// </summary>
+        [Parameter(Value = "open")]
         Open,
 
         /// <summary>
-        /// Isuses that are closed.
+        /// Items that are closed
         /// </summary>
-        Closed,
-
-        /// <summary>
-        /// All the issues.
-        /// </summary>
-        All
+        [Parameter(Value = "closed")]
+        Closed
     }
 
     /// <summary>
@@ -149,16 +175,19 @@ namespace Octokit
         /// <summary>
         /// Sort by create date (default)
         /// </summary>
+        [Parameter(Value = "created")]
         Created,
 
         /// <summary>
         /// Sort by the date of the last update
         /// </summary>
+        [Parameter(Value = "updated")]
         Updated,
 
         /// <summary>
         /// Sort by the number of comments
         /// </summary>
+        [Parameter(Value = "comments")]
         Comments
     }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -17,7 +16,7 @@ namespace Octokit
         /// <param name="name">The name of the repository. This is the only required parameter.</param>
         public NewRepository(string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             Name = name;
         }
@@ -79,7 +78,7 @@ namespace Octokit
         public bool? Private { get; set; }
 
         /// <summary>
-        /// Optional. Gets or sets the ID of the team to grant access to this repository. This is only valid when creating a repository for an organization.
+        /// Optional. Gets or sets the Id of the team to grant access to this repository. This is only valid when creating a repository for an organization.
         /// </summary>
         public int? TeamId { get; set; }
 

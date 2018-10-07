@@ -1,0 +1,11 @@
+branches:
+  master:
+    mode: ContinuousDeployment
+    increment: Minor
+    tag: beta
+  dotnetcore:
+    mode: ContinuousDeployment
+    increment: Minor
+    tag: alpha
+ignore:
+  sha: []

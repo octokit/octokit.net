@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -13,7 +12,7 @@ namespace Octokit
     {
         public RepositoryContentInfo() { }
 
-        public RepositoryContentInfo(string name, string path, string sha, int size, ContentType type, Uri downloadUrl, Uri url, Uri gitUrl, Uri htmlUrl)
+        public RepositoryContentInfo(string name, string path, string sha, int size, ContentType type, string downloadUrl, string url, string gitUrl, string htmlUrl)
         {
             Name = name;
             Path = path;
@@ -37,7 +36,7 @@ namespace Octokit
         public string Path { get; protected set; }
 
         /// <summary>
-        /// SHA of the last commit that modified this content.
+        /// SHA of this content.
         /// </summary>
         public string Sha { get; protected set; }
 
@@ -50,27 +49,27 @@ namespace Octokit
         /// The type of this content. It might be a File, Directory, Submodule, or Symlink
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Matches the property name used by the API")]
-        public ContentType Type { get; protected set; }
+        public StringEnum<ContentType> Type { get; protected set; }
 
         /// <summary>
         /// URL to the raw content
         /// </summary>
-        public Uri DownloadUrl { get; protected set; }
+        public string DownloadUrl { get; protected set; }
 
         /// <summary>
         /// URL to this content
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The GIT URL to this content.
         /// </summary>
-        public Uri GitUrl { get; protected set; }
+        public string GitUrl { get; protected set; }
 
         /// <summary>
         /// The URL to view this content on GitHub.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         internal string DebuggerDisplay
         {

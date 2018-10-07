@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -16,7 +15,7 @@ namespace Octokit
         /// <param name="body">The new text of the comment</param>
         public PullRequestReviewCommentEdit(string body)
         {
-            Ensure.ArgumentNotNullOrEmptyString(body, "body");
+            Ensure.ArgumentNotNullOrEmptyString(body, nameof(body));
 
             Body = body;
         }

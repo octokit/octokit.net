@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -19,6 +18,14 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
         /// </summary>
+        public SearchCodeRequest() : base()
+        {
+            Repos = new RepositoryCollection();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchCodeRequest"/> class.
+        /// </summary>
         /// <param name="term">The search term.</param>
         public SearchCodeRequest(string term) : base(term)
         {
@@ -34,8 +41,8 @@ namespace Octokit
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             Repos.Add(owner, name);
         }
@@ -133,6 +140,14 @@ namespace Octokit
         public string User { get; set; }
 
         /// <summary>
+        /// Limits searches to a specific organization.
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-code/#search-within-a-users-or-organizations-repositories
+        /// </remarks>
+        public string Organization { get; set; }
+
+        /// <summary>
         /// Limits searches to a specific repository.
         /// </summary>
         /// <remarks>
@@ -199,6 +214,11 @@ namespace Octokit
 
                 parameters.Add(
                     string.Join("+", Repos.Select(x => "repo:" + x)));
+            }
+
+            if (Organization.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "org:{0}", Organization));
             }
 
             return new ReadOnlyCollection<string>(parameters);

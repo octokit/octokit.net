@@ -4,61 +4,108 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Octokit.Internal;
 
 namespace Octokit
 {
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2015-11-11-protected-branches-api/
     /// </summary>
+    /// <remarks>
+    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
+    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class BranchProtection
+    public class BranchProtectionSettings
     {
-        public BranchProtection() { }
+        public BranchProtectionSettings() { }
 
-        public BranchProtection(bool enabled, RequiredStatusChecks requiredStatusChecks)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredReviews requiredPullRequestReviews, EnforceAdmins enforceAdmins)
         {
-            Enabled = enabled;
             RequiredStatusChecks = requiredStatusChecks;
+            Restrictions = restrictions;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
+            EnforceAdmins = enforceAdmins;
         }
 
         /// <summary>
-        /// Should this branch be protected or not
+        /// Status check settings for the protected branch
         /// </summary>
-        public bool Enabled { get; protected set; }
+        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
 
         /// <summary>
-        /// The <see cref="RequiredStatusChecks"/> information for this <see cref="Branch"/>.
+        /// Required review settings for the protected branch
         /// </summary>
-        public RequiredStatusChecks RequiredStatusChecks { get; private set; }
+        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; protected set; }
+
+        /// <summary>
+        /// Push access restrictions for the protected branch
+        /// </summary>
+        public BranchProtectionPushRestrictions Restrictions { get; protected set; }
+
+        /// <summary>
+        /// Specifies whether the protections applied to this branch also apply to repository admins
+        /// </summary>
+        public EnforceAdmins EnforceAdmins { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+                return string.Format(CultureInfo.InvariantCulture,
+                    "RequiredStatusChecks: {0} RequiredPullRequestReviews {1} Restrictions: {2} EnforceAdmins: {3}",
+                    RequiredStatusChecks?.DebuggerDisplay ?? "disabled",
+                    RequiredPullRequestReviews?.DebuggerDisplay ?? "disabled",
+                    Restrictions?.DebuggerDisplay ?? "disabled",
+                    EnforceAdmins?.DebuggerDisplay ?? "disabled");
             }
         }
     }
 
+    /// <summary>
+    /// Specifies whether the protections applied to this branch also apply to repository admins
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RequiredStatusChecks
+    public class EnforceAdmins
     {
-        public RequiredStatusChecks() { }
+        public EnforceAdmins() { }
 
-        public RequiredStatusChecks(EnforcementLevel enforcementLevel, IEnumerable<string> contexts)
+        public EnforceAdmins(bool enabled)
         {
-            EnforcementLevel = enforcementLevel;
-            Contexts = new ReadOnlyCollection<string>(contexts.ToList());
+            Enabled = enabled;
+        }
+
+        public bool Enabled { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies settings for status checks which must pass before branches can be merged into the protected branch
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredStatusChecks
+    {
+        public BranchProtectionRequiredStatusChecks() { }
+
+        public BranchProtectionRequiredStatusChecks(bool strict, IReadOnlyList<string> contexts)
+        {
+            Strict = strict;
+            Contexts = contexts;
         }
 
         /// <summary>
-        /// Who required status checks apply to
+        /// Require branches to be up to date before merging
         /// </summary>
-        public EnforcementLevel EnforcementLevel { get; protected set; }
+        public bool Strict { get; protected set; }
 
         /// <summary>
-        /// The list of status checks to require in order to merge into this <see cref="Branch"/>
+        /// Require status checks to pass before merging
         /// </summary>
         public IReadOnlyList<string> Contexts { get; private set; }
 
@@ -66,29 +113,125 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "EnforcementLevel: {0} Contexts: {1}", EnforcementLevel.ToString(), Contexts.Count);
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Strict: {0} Contexts: {1}",
+                    Strict,
+                    Contexts == null ? "" : string.Join(",", Contexts));
             }
         }
     }
 
     /// <summary>
-    /// The enforcement levels that are available
+    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
     /// </summary>
-    public enum EnforcementLevel
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionPushRestrictions
     {
-        /// <summary>
-        /// Turn off required status checks for this <see cref="Branch"/>.
-        /// </summary>
-        Off,
+        public BranchProtectionPushRestrictions() { }
+
+        public BranchProtectionPushRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        {
+            Teams = teams;
+            Users = users;
+        }
 
         /// <summary>
-        /// Required status checks will be enforeced for non-admins.
+        /// Push access is restricted to the specified Teams
         /// </summary>
-        NonAdmins,
+        public IReadOnlyList<Team> Teams { get; private set; }
 
         /// <summary>
-        /// Required status checks will be enforced for everyone (including admins).
+        /// Push access is restricted to the specified Users
         /// </summary>
-        Everyone
+        public IReadOnlyList<User> Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : String.Join(",", Teams.Select(x => x.Name)),
+                    Users == null ? "" : String.Join(",", Users.Select(x => x.Login)));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies if pull request reviews are required before merging a pull request. Can optionally enforce the policy on repository administrators also.
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredReviews
+    {
+        public BranchProtectionRequiredReviews() { }
+
+        public BranchProtectionRequiredReviews(BranchProtectionRequiredReviewsDismissalRestrictions dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        {
+            DismissalRestrictions = dismissalRestrictions;
+            DismissStaleReviews = dismissStaleReviews;
+            RequireCodeOwnerReviews = requireCodeOwnerReviews;
+        }
+
+        /// <summary>
+        /// Specify which users and teams can dismiss pull request reviews.
+        /// </summary>
+        public BranchProtectionRequiredReviewsDismissalRestrictions DismissalRestrictions { get; protected set; }
+
+        /// <summary>
+        /// Dismiss approved reviews automatically when a new commit is pushed.
+        /// </summary>
+        public bool DismissStaleReviews { get; protected set; }
+
+        /// <summary>
+        /// Blocks merge until code owners have reviewed.
+        /// </summary>
+        public bool RequireCodeOwnerReviews { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2}",
+                    DismissalRestrictions?.DebuggerDisplay ?? "disabled",
+                    DismissStaleReviews,
+                    RequireCodeOwnerReviews);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Specifies people or teams allowed to push to the protected branch. Required status checks will still prevent these people from merging if the checks fail
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionRequiredReviewsDismissalRestrictions
+    {
+        public BranchProtectionRequiredReviewsDismissalRestrictions() { }
+
+        public BranchProtectionRequiredReviewsDismissalRestrictions(IReadOnlyList<Team> teams, IReadOnlyList<User> users)
+        {
+            Teams = teams;
+            Users = users;
+        }
+
+        /// <summary>
+        /// The specified Teams that can dismiss reviews
+        /// </summary>
+        public IReadOnlyList<Team> Teams { get; private set; }
+
+        /// <summary>
+        /// The specified Users who can dismiss reviews
+        /// </summary>
+        public IReadOnlyList<User> Users { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    "Teams: {0} Users: {1}",
+                    Teams == null ? "" : String.Join(",", Teams.Select(x => x.Name)),
+                    Users == null ? "" : String.Join(",", Users.Select(x => x.Login)));
+            }
+        }
     }
 }

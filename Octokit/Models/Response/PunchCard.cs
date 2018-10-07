@@ -10,11 +10,18 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PunchCard
     {
+        public PunchCard() { }
+
         public PunchCard(IEnumerable<IList<int>> punchCardData)
         {
-            Ensure.ArgumentNotNull(punchCardData, "punchCardData");
+            Ensure.ArgumentNotNull(punchCardData, nameof(punchCardData));
             PunchPoints = new ReadOnlyCollection<PunchCardPoint>(
-                punchCardData.Select(point => new PunchCardPoint(point)).ToList());
+            punchCardData.Select(point => new PunchCardPoint(point)).ToList());
+        }
+
+        public PunchCard(IEnumerable<PunchCardPoint> punchPoints)
+        {
+            PunchPoints = punchPoints?.ToList();
         }
 
         /// <summary>

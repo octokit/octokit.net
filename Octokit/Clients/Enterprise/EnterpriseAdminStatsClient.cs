@@ -21,12 +21,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsIssues"/> statistics.</returns>
-        public async Task<AdminStatsIssues> GetStatisticsIssues()
+        public Task<AdminStatsIssues> GetStatisticsIssues()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsIssues();
 
-            return await ApiConnection.Get<AdminStatsIssues>(endpoint)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsIssues>(endpoint);
         }
 
         /// <summary>
@@ -36,12 +35,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsHooks"/> statistics.</returns>
-        public async Task<AdminStatsHooks> GetStatisticsHooks()
+        public Task<AdminStatsHooks> GetStatisticsHooks()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsHooks();
 
-            return await ApiConnection.Get<AdminStatsHooks>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsHooks>(endpoint);
         }
 
         /// <summary>
@@ -51,12 +49,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsMilestones"/> statistics.</returns>
-        public async Task<AdminStatsMilestones> GetStatisticsMilestones()
+        public Task<AdminStatsMilestones> GetStatisticsMilestones()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsMilestones();
 
-            return await ApiConnection.Get<AdminStatsMilestones>(endpoint)
-                                                        .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsMilestones>(endpoint);
         }
 
         /// <summary>
@@ -66,12 +63,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsOrgs"/> statistics.</returns>
-        public async Task<AdminStatsOrgs> GetStatisticsOrgs()
+        public Task<AdminStatsOrgs> GetStatisticsOrgs()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsOrgs();
 
-            return await ApiConnection.Get<AdminStatsOrgs>(endpoint)
-                                                  .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsOrgs>(endpoint);
         }
 
         /// <summary>
@@ -81,12 +77,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsComments"/> statistics.</returns>
-        public async Task<AdminStatsComments> GetStatisticsComments()
+        public Task<AdminStatsComments> GetStatisticsComments()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsComments();
 
-            return await ApiConnection.Get<AdminStatsComments>(endpoint)
-                                                      .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsComments>(endpoint);
         }
 
         /// <summary>
@@ -96,12 +91,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsPages"/> statistics.</returns>
-        public async Task<AdminStatsPages> GetStatisticsPages()
+        public Task<AdminStatsPages> GetStatisticsPages()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsPages();
 
-            return await ApiConnection.Get<AdminStatsPages>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsPages>(endpoint);
         }
 
         /// <summary>
@@ -111,12 +105,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsUsers"/> statistics.</returns>
-        public async Task<AdminStatsUsers> GetStatisticsUsers()
+        public Task<AdminStatsUsers> GetStatisticsUsers()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsUsers();
 
-            return await ApiConnection.Get<AdminStatsUsers>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsUsers>(endpoint);
         }
 
         /// <summary>
@@ -126,12 +119,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsGists"/> statistics.</returns>
-        public async Task<AdminStatsGists> GetStatisticsGists()
+        public Task<AdminStatsGists> GetStatisticsGists()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsGists();
 
-            return await ApiConnection.Get<AdminStatsGists>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsGists>(endpoint);
         }
 
         /// <summary>
@@ -141,12 +133,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsPulls"/> statistics.</returns>
-        public async Task<AdminStatsPulls> GetStatisticsPulls()
+        public Task<AdminStatsPulls> GetStatisticsPulls()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsPulls();
 
-            return await ApiConnection.Get<AdminStatsPulls>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsPulls>(endpoint);
         }
 
         /// <summary>
@@ -156,12 +147,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsRepos"/> statistics.</returns>
-        public async Task<AdminStatsRepos> GetStatisticsRepos()
+        public Task<AdminStatsRepos> GetStatisticsRepos()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsRepos();
 
-            return await ApiConnection.Get<AdminStatsRepos>(endpoint)
-                                                   .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStatsRepos>(endpoint);
         }
 
         /// <summary>
@@ -171,12 +161,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStats"/> collection of statistics.</returns>
-        public async Task<AdminStats> GetStatisticsAll()
+        public Task<AdminStats> GetStatisticsAll()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsAll();
 
-            return await ApiConnection.Get<AdminStats>(endpoint)
-                                          .ConfigureAwait(false);
+            return ApiConnection.Get<AdminStats>(endpoint);
         }
     }
 }

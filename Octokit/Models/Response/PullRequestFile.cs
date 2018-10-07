@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -10,7 +9,7 @@ namespace Octokit
     {
         public PullRequestFile() { }
 
-        public PullRequestFile(string sha, string fileName, string status, int additions, int deletions, int changes, Uri blobUrl, Uri rawUrl, Uri contentsUrl, string patch)
+        public PullRequestFile(string sha, string fileName, string status, int additions, int deletions, int changes, string blobUrl, string rawUrl, string contentsUrl, string patch, string previousFileName)
         {
             Sha = sha;
             FileName = fileName;
@@ -22,6 +21,7 @@ namespace Octokit
             RawUrl = rawUrl;
             ContentsUrl = contentsUrl;
             Patch = patch;
+            PreviousFileName = previousFileName;
         }
 
         public string Sha { get; protected set; }
@@ -31,10 +31,12 @@ namespace Octokit
         public int Additions { get; protected set; }
         public int Deletions { get; protected set; }
         public int Changes { get; protected set; }
-        public Uri BlobUrl { get; protected set; }
-        public Uri RawUrl { get; protected set; }
-        public Uri ContentsUrl { get; protected set; }
+        public string BlobUrl { get; protected set; }
+        public string RawUrl { get; protected set; }
+        public string ContentsUrl { get; protected set; }
         public string Patch { get; protected set; }
+        [Parameter(Key = "previous_filename")]
+        public string PreviousFileName { get; protected set; }
 
         internal string DebuggerDisplay
         {

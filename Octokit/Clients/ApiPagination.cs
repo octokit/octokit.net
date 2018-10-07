@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.ObjectModel;
-#endif
 
 namespace Octokit
 {
@@ -19,7 +17,7 @@ namespace Octokit
     {
         public async Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage, Uri uri)
         {
-            Ensure.ArgumentNotNull(getFirstPage, "getFirstPage");
+            Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
             try
             {
                 var page = await getFirstPage().ConfigureAwait(false);

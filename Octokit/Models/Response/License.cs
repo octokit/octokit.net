@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -12,9 +11,11 @@ namespace Octokit
     {
         public License(
             string key,
+            string nodeId,
             string name,
-            Uri url,
-            Uri htmlUrl,
+            string spdxId,
+            string url,
+            string htmlUrl,
             bool featured,
             string description,
             string category,
@@ -22,19 +23,9 @@ namespace Octokit
             string body,
             IEnumerable<string> required,
             IEnumerable<string> permitted,
-            IEnumerable<string> forbidden) : base(key, name, url)
+            IEnumerable<string> forbidden) : base(key, nodeId, name, spdxId, url, featured)
         {
-            Ensure.ArgumentNotNull(htmlUrl, "htmlUrl");
-            Ensure.ArgumentNotNull(description, "description");
-            Ensure.ArgumentNotNull(category, "category");
-            Ensure.ArgumentNotNull(implementation, "implementation");
-            Ensure.ArgumentNotNull(body, "body");
-            Ensure.ArgumentNotNull(required, "required");
-            Ensure.ArgumentNotNull(permitted, "permitted");
-            Ensure.ArgumentNotNull(forbidden, "forbidden");
-
             HtmlUrl = htmlUrl;
-            Featured = featured;
             Description = description;
             Category = category;
             Implementation = implementation;
@@ -51,12 +42,7 @@ namespace Octokit
         /// <summary>
         /// Url to the license on https://choosealicense.com
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
-
-        /// <summary>
-        /// Whether the license is one of the licenses featured on https://choosealicense.com
-        /// </summary>
-        public bool Featured { get; protected set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// A description of the license.
@@ -79,7 +65,7 @@ namespace Octokit
         public IReadOnlyList<string> Required { get; protected set; }
 
         /// <summary>
-        /// Set of codes for what is permitted under the terms of the license. For example, "commerical-use"
+        /// Set of codes for what is permitted under the terms of the license. For example, "commercial-use"
         /// </summary>
         public IReadOnlyList<string> Permitted { get; protected set; }
 

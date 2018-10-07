@@ -112,6 +112,11 @@ namespace Octokit
         /// </summary>
         public DateRange Updated { get; set; }
 
+        /// <summary>
+        /// Filters whether archived repositories should be included (true) or not (false).
+        /// </summary>
+        public bool? Archived { get; set; }
+
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -133,7 +138,7 @@ namespace Octokit
 
             if (Fork != null)
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "fork:{0}", Fork.ToParameter()));
             }
 
             if (Stars != null)
@@ -160,6 +165,12 @@ namespace Octokit
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "pushed:{0}", Updated));
             }
+
+            if (Archived != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "archived:{0}", Archived.ToString().ToLower()));
+            }
+
             return parameters;
         }
 
@@ -179,8 +190,13 @@ namespace Octokit
     /// </summary>
     public enum InQualifier
     {
+        [Parameter(Value = "name")]
         Name,
+
+        [Parameter(Value = "description")]
         Description,
+
+        [Parameter(Value = "readme")]
         Readme
     }
 
@@ -321,10 +337,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a LessThan Date Comparision
+        /// helper method to create a LessThan Date Comparison
         /// e.g. &lt; 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThan(DateTime date)
         {
@@ -332,10 +348,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a LessThanOrEqualTo Date Comparision
+        /// helper method to create a LessThanOrEqualTo Date Comparison
         /// e.g. &lt;= 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
@@ -343,10 +359,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a GreaterThan Date Comparision
+        /// helper method to create a GreaterThan Date Comparison
         /// e.g. > 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThan(DateTime date)
         {
@@ -354,10 +370,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// helper method to create a GreaterThanOrEqualTo Date Comparision
+        /// helper method to create a GreaterThanOrEqualTo Date Comparison
         /// e.g. >= 2011
         /// </summary>
-        /// <param name="date">date to be used for comparision (times are ignored)</param>
+        /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
@@ -446,7 +462,7 @@ namespace Octokit
         Coq,
         [Parameter(Value = "C++")]
         CPlusPlus,
-        [Parameter(Value = "C#")]
+        [Parameter(Value = "CSharp")]
         CSharp,
         Css,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cpp")]
@@ -479,9 +495,9 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Edn")]
         Edn,
         Eiffel,
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixer")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixer")]
-        Elixer,
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
+        Elixir,
         Elm,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Emacs")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Emacs")]
@@ -709,9 +725,9 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TypeScript")]
         [Parameter(Value = "TypeScript")]
         TypeScript,
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Paralel")]
-        [Parameter(Value = "Unified Paralel C")]
-        UnifiedParalelC,
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Parallel")]
+        [Parameter(Value = "Unified Parallel C")]
+        UnifiedParallelC,
         Unknown,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vala")]
         Vala,
@@ -775,12 +791,12 @@ namespace Octokit
         /// <summary>
         /// only search for forked repos
         /// </summary>
-        [Parameter(Value = "Only")]
+        [Parameter(Value = "only")]
         OnlyForks,
         /// <summary>
         /// include forked repos into the search
         /// </summary>
-        [Parameter(Value = "True")]
+        [Parameter(Value = "true")]
         IncludeForks
     }
 }

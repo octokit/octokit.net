@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.ObjectModel;
-#endif
 
 namespace Octokit
 {
@@ -25,7 +23,7 @@ namespace Octokit
         /// <param name="connection">An API connection</param>
         public MiscellaneousClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             _connection = connection;
         }
@@ -38,10 +36,9 @@ namespace Octokit
         public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
             var endpoint = new Uri("emojis", UriKind.Relative);
-            var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<Emoji>(
-                response.Body.Select(kvp => new Emoji(kvp.Key, new Uri(kvp.Value))).ToArray());
+                response.Body.Select(kvp => new Emoji(kvp.Key, kvp.Value)).ToArray());
         }
 
         /// <summary>
@@ -53,8 +50,7 @@ namespace Octokit
         public async Task<string> RenderRawMarkdown(string markdown)
         {
             var endpoint = new Uri("markdown/raw", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
-                .ConfigureAwait(false);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
             return response.Body;
         }
 
@@ -67,8 +63,7 @@ namespace Octokit
         public async Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
         {
             var endpoint = new Uri("markdown", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain")
-                .ConfigureAwait(false);
+            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
             return response.Body;
         }
 
@@ -80,8 +75,7 @@ namespace Octokit
         {
             var endpoint = new Uri("gitignore/templates", UriKind.Relative);
 
-            var response = await _connection.Get<string[]>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<string[]>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<string>(response.Body);
         }
 
@@ -92,12 +86,11 @@ namespace Octokit
         /// <returns>A template and its source</returns>
         public async Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(templateName, "templateName");
+            Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
             var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
 
-            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -111,13 +104,12 @@ namespace Octokit
         {
             var endpoint = new Uri("licenses", UriKind.Relative);
 
-            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
             return new ReadOnlyCollection<LicenseMetadata>(response.Body);
         }
 
         /// <summary>
-        /// Retrieves a license based on the licence key such as "mit"
+        /// Retrieves a license based on the license key such as "mit"
         /// </summary>
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
@@ -125,8 +117,7 @@ namespace Octokit
         {
             var endpoint = new Uri("licenses/" + Uri.EscapeUriString(key), UriKind.Relative);
 
-            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview)
-                .ConfigureAwait(false);
+            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
             return response.Body;
         }
 

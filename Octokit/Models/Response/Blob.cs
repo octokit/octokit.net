@@ -1,6 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,13 +9,19 @@ namespace Octokit
     {
         public Blob() { }
 
-        public Blob(string content, EncodingType encoding, string sha, int size)
+        public Blob(string nodeId, string content, EncodingType encoding, string sha, int size)
         {
+            NodeId = nodeId;
             Content = content;
             Encoding = encoding;
             Sha = sha;
             Size = size;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The content of the blob.
@@ -25,7 +31,7 @@ namespace Octokit
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public EncodingType Encoding { get; protected set; }
+        public StringEnum<EncodingType> Encoding { get; protected set; }
 
         /// <summary>
         /// The SHA of the blob.
@@ -48,7 +54,10 @@ namespace Octokit
 
     public enum EncodingType
     {
+        [Parameter(Value = "utf-8")]
         Utf8,
+
+        [Parameter(Value = "base64")]
         Base64
     }
 }

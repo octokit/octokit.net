@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration
             Assert.Equal(AccountType.User, repository.Owner.Type);
         }
 
-        [IntegrationTest(Skip = "This test is super-unreliable right now - see https://github.com/octokit/octokit.net/issues/874 for discussion")]
+        [IntegrationTest]
         public async Task CanCreateIssueOnRedirectedRepository()
         {
             var client = Helper.GetAuthenticatedClient();
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration
             var issue = await client.Issue.Create(owner, oldRepoName, newIssue);
             Assert.NotNull(issue);
 
-            Assert.True(issue.Url.AbsoluteUri.Contains("repository-after-rename"));
+            Assert.True(issue.Url.Contains("repository-after-rename"));
 
             var resolvedIssue = await client.Issue.Get(owner, newRepoName, issue.Number);
 

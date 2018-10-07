@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -19,7 +18,7 @@ namespace Octokit
         /// <param name="tagName">Name of the tag to create in the repository for this release.</param>
         public NewRelease(string tagName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(tagName, "tagName");
+            Ensure.ArgumentNotNullOrEmptyString(tagName, nameof(tagName));
             TagName = tagName;
         }
 

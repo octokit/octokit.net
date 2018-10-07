@@ -23,51 +23,147 @@ namespace Octokit
         /// Gets the page metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public Task<Page> Get(string owner, string repositoryName)
+        public Task<Page> Get(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, repositoryName));
+            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, name));
+        }
+
+        /// <summary>
+        /// Gets the page metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
+        /// </remarks>
+        public Task<Page> Get(long repositoryId)
+        {
+            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId));
         }
 
         /// <summary>
         /// Gets all build metadata for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
-        ///  <remarks>
+        /// <param name="name">The name of the repository</param>
+        /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string repositoryName)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, repositoryName));
+            return GetAll(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId)
+        {
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.RepositoryPageBuilds(owner, name);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
+        }
+
+        /// <summary>
+        /// Gets all build metadata for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options to change the API response</param>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
+        /// </remarks>
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.RepositoryPageBuilds(repositoryId);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
         }
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="repositoryName">The name of the repository</param>
+        /// <param name="name">The name of the repository</param>
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        /// <returns></returns>
-        public Task<PagesBuild> GetLatest(string owner, string repositoryName)
+        public Task<PagesBuild> GetLatest(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repositoryName, "repositoryName");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, repositoryName));
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, name));
+        }
+
+        /// <summary>
+        /// Gets the build metadata for the last build for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
+        /// </remarks>
+        public Task<PagesBuild> GetLatest(long repositoryId)
+        {
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId));
+        }
+
+        /// <summary>
+        /// Requests your site be built from the latest revision on the default branch for a given repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
+        /// </remarks>
+        public Task<PagesBuild> RequestPageBuild(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), AcceptHeaders.PagesApiPreview);
+        }
+
+        /// <summary>
+        /// Requests your site be built from the latest revision on the default branch for a given repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        ///  <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
+        /// </remarks>
+        public Task<PagesBuild> RequestPageBuild(long repositoryId)
+        {
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), AcceptHeaders.PagesApiPreview);
         }
     }
 }

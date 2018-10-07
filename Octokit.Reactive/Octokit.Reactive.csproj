@@ -1,47 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{674B69B8-0780-4D54-AE2B-C15821FA51CB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Octokit.Reactive</RootNamespace>
+    <Description>An IObservable based GitHub API client library for .NET and .NET Core using Reactive Extensions</Description>
+    <AssemblyTitle>Octokit.Reactive</AssemblyTitle>
+    <Authors>GitHub</Authors>
+    <Version>0.0.0-dev</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <LangVersion>5</LangVersion>
+    <PackageId>Octokit.Reactive</PackageId>
+    <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
+    <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+    <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
+    <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <IntermediateOutputPath>obj\Debug\Net40</IntermediateOutputPath>
-    <OutputPath>bin\Debug\Net45\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+
+  <PropertyGroup>
+    <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <IntermediateOutputPath>obj\Release\Net40</IntermediateOutputPath>
-    <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS;NET_45;SIMPLE_JSON_READONLY_COLLECTIONS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\Octokit.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\Net45\Octokit.Reactive.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
+
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -200,26 +182,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+=======
+    <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
+>>>>>>> master
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
+
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
-      <Link>CustomDictionary.xml</Link>
-    </CodeAnalysisDictionary>
+    <ProjectReference Include="..\Octokit\Octokit.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Octokit\Octokit.csproj">
-      <Project>{08dd4305-7787-4823-a53f-4d0f725a07f3}</Project>
-      <Name>Octokit</Name>
-    </ProjectReference>
+    <PackageReference Include="System.Reactive" Version="3.1.0" />
+    <PackageReference Include="SourceLink.Create.GitHub" Version="2.8.2" PrivateAssets="all" />
+    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.8.2" />
+    <DotNetCliToolReference Include="dotnet-sourcelink" Version="2.8.2" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
 </Project>

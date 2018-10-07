@@ -1,15 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Tests.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
 {
     public class UserAdministrationClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new UserAdministrationClient(null));
+            }
+        }
+
         public class TheCreateMethod
         {
             [Fact]
@@ -141,7 +149,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<Authorization>(
                     Arg.Any<Uri>(),
                     Arg.Is<NewImpersonationToken>(a =>
-                        a.Scopes.Count() == scopes.Count() &&
+                        a.Scopes.Count() == scopes.Length &&
                         a.Scopes.ToList().All(s => scopes.Contains(s)) &&
                         scopes.ToList().All(s => a.Scopes.Contains(s))));
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -82,7 +81,7 @@ namespace Octokit
         /// <value>
         /// The configuration.
         /// </value>
-        public IReadOnlyDictionary<string, string> Config { get; private set; }
+        public IReadOnlyDictionary<string, string> Config { get; protected set; }
 
         /// <summary>
         /// Determines what events the hook is triggered for. Default: ["push"]

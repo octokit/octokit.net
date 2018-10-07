@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Octokit.Tests.Conventions
 {
@@ -13,10 +12,6 @@ namespace Octokit.Tests.Conventions
 
         public InterfaceMethodsMismatchException(Type type, Type clientInterface, Exception innerException)
             : base(CreateMessage(type, clientInterface), innerException)
-        { }
-
-        protected InterfaceMethodsMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         static string Format(ParameterInfo parameterInfo)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -9,14 +8,20 @@ namespace Octokit
     {
         public Reference() { }
 
-        public Reference(string @ref, string url, TagObject objectVar)
+        public Reference(string @ref, string nodeId, string url, TagObject @object)
         {
             Ref = @ref;
+            NodeId = nodeId;
             Url = url;
-            Object = objectVar;
+            Object = @object;
         }
 
         public string Ref { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public string Url { get; protected set; }
 

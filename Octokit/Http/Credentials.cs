@@ -6,30 +6,34 @@ namespace Octokit
     {
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes"
             , Justification = "Credentials is immutable")]
-        public readonly static Credentials Anonymous = new Credentials();
+        public static readonly Credentials Anonymous = new Credentials();
 
         private Credentials()
         {
             AuthenticationType = AuthenticationType.Anonymous;
         }
 
-        public Credentials(string token)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(token, "token");
+        public Credentials(string login, string password) : this(login, password, AuthenticationType.Basic) { }
 
-            Login = null;
-            Password = token;
-            AuthenticationType = AuthenticationType.Oauth;
-        }
-
-        public Credentials(string login, string password)
+        public Credentials(string login, string password, AuthenticationType authenticationType)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
-            Ensure.ArgumentNotNullOrEmptyString(password, "password");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNullOrEmptyString(password, nameof(password));
 
             Login = login;
             Password = password;
-            AuthenticationType = AuthenticationType.Basic;
+            AuthenticationType = authenticationType;
+        }
+
+        public Credentials(string token) : this(token, AuthenticationType.Oauth) { }
+
+        public Credentials(string token, AuthenticationType authenticationType)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(token, nameof(token));
+
+            Login = null;
+            Password = token;
+            AuthenticationType = authenticationType;
         }
 
         public string Login

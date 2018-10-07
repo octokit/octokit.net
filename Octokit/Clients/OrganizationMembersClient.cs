@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Octokit.Internal;
@@ -76,9 +75,38 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org));
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The users</returns>
+        public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<User>(ApiUrls.Members(org), options);
         }
 
         /// <summary>
@@ -104,24 +132,39 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter));
+            return GetAll(org, filter, ApiOptions.None);
         }
 
         /// <summary>
-        /// Obsolete, <see cref="GetAll(string,OrganizationMembersFilter)"/>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
         /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The user filter</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
-        [Obsolete("No longer supported, use GetAll(string, OrganizationMembersFilter) instead")]
-        public Task<IReadOnlyList<User>> GetAll(string org, string filter)
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(filter, "filter");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter));
+            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter), options);
         }
 
         /// <summary>
@@ -147,9 +190,39 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, role));
+            return GetAll(org, role, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The users</returns>
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<User>(ApiUrls.Members(org, role), options);
         }
 
         /// <summary>
@@ -176,9 +249,40 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter, role));
+            return GetAll(org, filter, role, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>The users</returns>
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter, role), options);
         }
 
         /// <summary>
@@ -189,9 +293,24 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllPublic(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org));
+            return GetAllPublic(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all users who have publicized their membership of the organization.
+        /// </summary>
+        /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org), options);
         }
 
         /// <summary>
@@ -206,13 +325,12 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> CheckMember(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
                 var statusCode = response.HttpResponse.StatusCode;
                 if (statusCode != HttpStatusCode.NotFound
                     && statusCode != HttpStatusCode.NoContent
@@ -240,13 +358,12 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> CheckMemberPublic(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.CheckMemberPublic(org, user), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -269,8 +386,8 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete("orgs/{0}/members/{1}".FormatUri(org, user));
         }
@@ -288,14 +405,13 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> Publicize(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
                 var requestData = new { };
-                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData)
-                                               .ConfigureAwait(false);
+                var response = await Connection.Put<object>(ApiUrls.OrganizationMembership(org, user), requestData).ConfigureAwait(false);
                 if (response.HttpResponse.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204", response.HttpResponse.StatusCode);
@@ -321,10 +437,44 @@ namespace Octokit
         /// <returns></returns>
         public Task Conceal(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllPendingInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
     }
 }

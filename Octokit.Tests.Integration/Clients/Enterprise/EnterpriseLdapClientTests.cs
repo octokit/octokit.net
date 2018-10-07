@@ -13,7 +13,7 @@ public class EnterpriseLdapClientTests : IDisposable
     readonly string _testUser = "test-user";
     readonly string _distinguishedNameUser = "uid=test-user,ou=users,dc=company,dc=com";
 
-    readonly EnterpriseTeamContext _context;
+    readonly TeamContext _context;
     readonly string _distinguishedNameTeam = "cn=test-team,ou=groups,dc=company,dc=com";
 
     public EnterpriseLdapClientTests()
@@ -21,7 +21,7 @@ public class EnterpriseLdapClientTests : IDisposable
         _github = EnterpriseHelper.GetAuthenticatedClient();
 
         NewTeam newTeam = new NewTeam(Helper.MakeNameWithTimestamp("test-team")) { Description = "Test Team" };
-        _context = _github.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
+        _context = _github.CreateTeamContext(EnterpriseHelper.Organization, newTeam).Result;
     }
 
     [GitHubEnterpriseTest]

@@ -26,7 +26,7 @@ public class MiscellaneousClientTests
 
             var result = await github.Miscellaneous.RenderRawMarkdown("This is\r\n a **test**");
 
-            Assert.Equal("<p>This is\n a <strong>test</strong></p>\n", result);
+            Assert.Equal("<p>This is\na <strong>test</strong></p>\n", result);
         }
     }
 
@@ -113,6 +113,11 @@ public class MiscellaneousClientTests
             var result = await github.Miscellaneous.GetMetadata();
 
             Assert.True(result.VerifiablePasswordAuthentication);
+            Assert.NotEmpty(result.GitHubServicesSha);
+            Assert.True(result.Hooks.Count > 0);
+            Assert.True(result.Git.Count > 0);
+            Assert.True(result.Pages.Count > 0);
+            Assert.True(result.Importer.Count > 0);
         }
     }
 }

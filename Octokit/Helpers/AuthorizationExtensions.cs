@@ -24,7 +24,7 @@ namespace Octokit
         /// </para>
         /// </remarks>
         /// <param name="authorizationsClient">The <see cref="IAuthorizationsClient" /> this method extends</param>
-        /// <param name="clientId">Client ID for the OAuth application that is requesting the token</param>
+        /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <param name="twoFactorChallengeHandler">Callback used to retrieve the two-factor authentication code
@@ -41,8 +41,7 @@ namespace Octokit
             TwoFactorRequiredException twoFactorException = null;
             try
             {
-                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization)
-                                                 .ConfigureAwait(false);
+                return await authorizationsClient.GetOrCreateApplicationAuthentication(clientId, clientSecret, newAuthorization).ConfigureAwait(false);
             }
             catch (TwoFactorRequiredException exception)
             {

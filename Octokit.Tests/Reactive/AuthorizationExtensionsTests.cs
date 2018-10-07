@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -12,11 +13,11 @@ namespace Octokit.Tests.Reactive
         public class TheGetOrCreateApplicationAuthenticationMethod
         {
             [Fact]
-            public async Task UsesCallbackToRetrievTwoFactorCode()
+            public async Task UsesCallbackToRetrieveTwoFactorCode()
             {
                 var firstResponse = new TwoFactorRequiredException(TwoFactorType.AuthenticatorApp);
                 var twoFactorChallengeResult = new TwoFactorChallengeResult("two-factor-code");
-                var secondResponse = new ApplicationAuthorization("OAUTHSECRET");
+                var secondResponse = new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)
@@ -51,7 +52,7 @@ namespace Octokit.Tests.Reactive
                     TwoFactorChallengeResult.RequestResendCode,
                     new TwoFactorChallengeResult("two-factor-code")
                 });
-                var secondResponse = new ApplicationAuthorization("OAUTHSECRET");
+                var secondResponse = new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET");
 
                 var client = Substitute.For<IObservableAuthorizationsClient>();
                 client.GetOrCreateApplicationAuthentication(Args.String, Args.String, Args.NewAuthorization)

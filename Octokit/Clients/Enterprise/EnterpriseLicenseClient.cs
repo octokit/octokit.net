@@ -21,12 +21,11 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/license/#get-license-information
         /// </remarks>
         /// <returns>The <see cref="LicenseInfo"/> statistics.</returns>
-        public async Task<LicenseInfo> Get()
+        public Task<LicenseInfo> Get()
         {
             var endpoint = ApiUrls.EnterpriseLicense();
 
-            return await ApiConnection.Get<LicenseInfo>(endpoint)
-                                                    .ConfigureAwait(false);
+            return ApiConnection.Get<LicenseInfo>(endpoint);
         }
     }
 }

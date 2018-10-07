@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -24,6 +23,16 @@ namespace Octokit
         /// The body for the pull request. Supports GFM.
         /// </summary>
         public string Body { get; set; }
+
+        /// <summary>
+        /// The base branch of the pull request.
+        /// </summary>
+        public string Base { get; set; }
+
+        /// <summary>
+        /// Whether maintainers of the base repository can push to the HEAD branch.
+        /// </summary>
+        public bool? MaintainerCanModify { get; set; }
 
         internal string DebuggerDisplay
         {

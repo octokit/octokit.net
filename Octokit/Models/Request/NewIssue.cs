@@ -18,6 +18,7 @@ namespace Octokit
         public NewIssue(string title)
         {
             Title = title;
+            Assignees = new Collection<string>();
             Labels = new Collection<string>();
         }
 
@@ -32,12 +33,12 @@ namespace Octokit
         public string Body { get; set; }
 
         /// <summary>
-        /// Login for the user that this issue should be assigned to.
+        /// List of logins for the multiple users that this issue should be assigned to
         /// </summary>
         /// <remarks>
-        /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
+        /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
         /// </remarks>
-        public string Assignee { get; set; }
+        public Collection<string> Assignees { get; private set; }
 
         /// <summary>
         /// Milestone to associate this issue with.

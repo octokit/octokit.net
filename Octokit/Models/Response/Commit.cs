@@ -10,10 +10,10 @@ namespace Octokit
     {
         public Commit() { }
 
-        public Commit(string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount)
-            : base(url, label, @ref, sha, user, repository)
+        public Commit(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository, string message, Committer author, Committer committer, GitReference tree, IEnumerable<GitReference> parents, int commentCount, Verification verification)
+            : base(nodeId, url, label, @ref, sha, user, repository)
         {
-            Ensure.ArgumentNotNull(parents, "parents");
+            Ensure.ArgumentNotNull(parents, nameof(parents));
 
             Message = message;
             Author = author;
@@ -21,6 +21,7 @@ namespace Octokit
             Tree = tree;
             Parents = new ReadOnlyCollection<GitReference>(parents.ToList());
             CommentCount = commentCount;
+            Verification = verification;
         }
 
         public string Message { get; protected set; }
@@ -34,5 +35,7 @@ namespace Octokit
         public IReadOnlyList<GitReference> Parents { get; protected set; }
 
         public int CommentCount { get; protected set; }
+
+        public Verification Verification { get; protected set; }
     }
 }

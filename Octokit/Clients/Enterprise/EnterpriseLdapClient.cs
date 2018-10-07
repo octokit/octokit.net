@@ -26,8 +26,8 @@ namespace Octokit
         /// <returns>The <see cref="User"/> object.</returns>
         public Task<User> UpdateUserMapping(string userName, NewLdapMapping newLdapMapping)
         {
-            Ensure.ArgumentNotNull(userName, "userName");
-            Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
+            Ensure.ArgumentNotNull(userName, nameof(userName));
+            Ensure.ArgumentNotNull(newLdapMapping, nameof(newLdapMapping));
 
             var endpoint = ApiUrls.EnterpriseLdapUserMapping(userName);
 
@@ -44,11 +44,11 @@ namespace Octokit
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public async Task<LdapSyncResponse> QueueSyncUserMapping(string userName)
         {
-            Ensure.ArgumentNotNull(userName, "userName");
+            Ensure.ArgumentNotNull(userName, nameof(userName));
 
             var endpoint = ApiUrls.EnterpriseLdapUserSync(userName);
 
-            var response = await Connection.Post<LdapSyncResponse>(endpoint);
+            var response = await Connection.Post<LdapSyncResponse>(endpoint).ConfigureAwait(false);
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
@@ -68,8 +68,8 @@ namespace Octokit
         /// <returns>The <see cref="Team"/> object.</returns>
         public Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
         {
-            Ensure.ArgumentNotNull(teamId, "teamId");
-            Ensure.ArgumentNotNull(newLdapMapping, "newLdapMapping");
+            Ensure.ArgumentNotNull(teamId, nameof(teamId));
+            Ensure.ArgumentNotNull(newLdapMapping, nameof(newLdapMapping));
 
             var endpoint = ApiUrls.EnterpriseLdapTeamMapping(teamId);
 
@@ -86,11 +86,11 @@ namespace Octokit
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         public async Task<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
         {
-            Ensure.ArgumentNotNull(teamId, "teamId");
+            Ensure.ArgumentNotNull(teamId, nameof(teamId));
 
             var endpoint = ApiUrls.EnterpriseLdapTeamSync(teamId);
 
-            var response = await Connection.Post<LdapSyncResponse>(endpoint);
+            var response = await Connection.Post<LdapSyncResponse>(endpoint).ConfigureAwait(false);
             if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);

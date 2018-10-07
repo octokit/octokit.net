@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -8,6 +7,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryLanguage
     {
+        public RepositoryLanguage() { }
+
         public RepositoryLanguage(string name, long numberOfBytes)
         {
             Name = name;
