@@ -23,16 +23,10 @@ namespace Octokit
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>
-<<<<<<< HEAD
-        /// <remarks>See <a href="https://developer.github.com/v3/repos/hooks/#list-hooks">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string repositoryName)
-=======
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public Task<IReadOnlyList<RepositoryHook>> GetAll(string owner, string name)
->>>>>>> master
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -198,17 +192,11 @@ namespace Octokit
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
         /// </summary>
-<<<<<<< HEAD
-        /// <remarks>See <a href="https://developer.github.com/v3/repos/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        public Task Ping(string owner, string repositoryName, int hookId)
-=======
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public Task Ping(string owner, string name, int hookId)
->>>>>>> master
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));

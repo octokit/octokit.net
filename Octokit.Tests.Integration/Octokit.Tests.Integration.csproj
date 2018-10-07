@@ -24,98 +24,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Clients\AssigneesClientTests.cs" />
-    <Compile Include="Clients\AuthorizationClientTests.cs" />
-    <Compile Include="Clients\BlobClientTests.cs" />
-    <Compile Include="Clients\BranchesClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseLdapClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseLicenseClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseAdminStatsClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseSearchIndexingClientTests.cs" />
-    <Compile Include="Clients\Enterprise\EnterpriseOrganizationClientTests.cs" />
-    <Compile Include="Clients\GitHubClientTests.cs" />
-    <Compile Include="Clients\MergingClientTests.cs" />
-    <Compile Include="Clients\CommitsClientTests.cs" />
-    <Compile Include="Clients\CommitStatusClientTests.cs" />
-    <Compile Include="Clients\DeploymentsClientTests.cs" />
-    <Compile Include="Clients\DeploymentStatusClientTests.cs" />
-    <Compile Include="Clients\EventsClientTests.cs" />
-    <Compile Include="Clients\IssuesLabelsClientTests.cs" />
-    <Compile Include="Clients\GistsClientTests.cs" />
-    <Compile Include="Clients\IssuesEventsClientTests.cs" />
-    <Compile Include="Clients\MilestonesClientTests.cs" />
-    <Compile Include="Clients\OrganizationMembersClientTests.cs" />
-    <Compile Include="Clients\PullRequestsClientTests.cs" />
-    <Compile Include="Clients\ReferencesClientTests.cs" />
-    <Compile Include="Clients\RepositoryCommitsClientTests.cs" />
-    <Compile Include="Clients\RepositoryContentsClientTests.cs" />
-    <Compile Include="Clients\RepositoryDeployKeysClientTests.cs" />
-    <Compile Include="Clients\RepositoryForksClientTests.cs" />
-    <Compile Include="Clients\OrganizationHooksClientTests.cs" />
-    <Compile Include="Clients\RepositoryHooksClientTests.cs" />
-    <Compile Include="Clients\SearchClientTests.cs" />
-    <Compile Include="Clients\StarredClientTests.cs" />
-    <Compile Include="Clients\StatisticsClientTests.cs" />
-    <Compile Include="Clients\TreeClientTests.cs" />
-    <Compile Include="Clients\UserAdministrationClientTests.cs" />
-    <Compile Include="Clients\UserEmailsClientTests.cs" />
-    <Compile Include="Clients\FollowersClientTests.cs" />
-    <Compile Include="Clients\UserKeysClientTests.cs" />
-    <Compile Include="Fixtures\OrganizationsHooksCollection.cs" />
-    <Compile Include="Fixtures\RepositoriesHooksCollection.cs" />
-    <Compile Include="Fixtures\OrganizationsHooksFixture.cs" />
-    <Compile Include="Fixtures\RepositoriesHooksFixture.cs" />
-    <Compile Include="EnterpriseHelper.cs" />
-    <Compile Include="Helpers\ApplicationTestAttribute.cs" />
-    <Compile Include="Helpers\PublicKeyContext.cs" />
-    <Compile Include="Helpers\EnterpriseUserContext.cs" />
-    <Compile Include="Helpers\GithubClientExtensions.cs" />
-    <Compile Include="Helpers\ObservableGithubClientExtensions.cs" />
-    <Compile Include="Helpers\BasicAuthenticationTestAttribute.cs" />
-    <Compile Include="Helpers\GitHubEnterpriseTestAttribute.cs" />
-    <Compile Include="Helpers\PersonalAccessTokenTestAttribute.cs" />
-    <Compile Include="Helpers\PaidAccountTestAttribute.cs" />
-    <Compile Include="Helpers\ReferenceExtensionsTests.cs" />
-    <Compile Include="Helpers\EnterpriseTeamContext.cs" />
-    <Compile Include="Helpers\RepositoryContext.cs" />
-    <Compile Include="Helpers\RepositorySetupHelper.cs" />
-    <Compile Include="HttpClientAdapterTests.cs" />
-    <Compile Include="Clients\TeamsClientTests.cs" />
-    <Compile Include="Helpers\IntegrationTestAttribute.cs" />
-    <Compile Include="Clients\PullRequestReviewCommentsClientTests.cs" />
-    <Compile Include="Clients\IssuesClientTests.cs" />
-    <Compile Include="Clients\MiscellaneousClientTests.cs" />
-    <Compile Include="Helpers\OrganizationTestAttribute.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
-    <Compile Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
-    <Compile Include="Reactive\ObservableAssigneesClientTests.cs" />
-    <Compile Include="Reactive\ObservableAuthorizationsClientTests.cs" />
-    <Compile Include="Reactive\ObservableIssuesClientTests.cs" />
-    <Compile Include="Reactive\ObservableMilestonesClientTests.cs" />
-    <Compile Include="Reactive\ObservableReleaseClientTests.cs" />
-    <Compile Include="Reactive\ObservableRepositoriesClientTests.cs" />
-    <Compile Include="Clients\ReleasesClientTests.cs" />
-    <Compile Include="Clients\RepositoriesClientTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Clients\UsersClientTests.cs" />
-    <Compile Include="Reactive\ObservableRespositoryDeployKeysClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserAdministrationClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserEmailsClientTests.cs" />
-    <Compile Include="Reactive\ObservableTeamsClientTests.cs" />
-    <Compile Include="Reactive\ObservableUserKeysClientTests.cs" />
-    <Compile Include="RedirectTests.cs" />
-    <Compile Include="Clients\RepositoryCollaboratorClientTests.cs" />
-    <Compile Include="SelfTests.cs" />
-=======
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
     <None Include="app.config" />
->>>>>>> master
   </ItemGroup>
 
   <ItemGroup>
@@ -125,32 +36,19 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <None Include="app.config" />
-    <EmbeddedResource Include="Fixtures\hello-world.zip" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-=======
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta4-build3742" />
->>>>>>> master
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-<<<<<<< HEAD
-  <ItemGroup>
-    <EmbeddedResource Include="Fixtures\hello-world.txt" />
-=======
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <PackageReference Include="GitHubJwt">
       <Version>0.0.2</Version>
     </PackageReference>
->>>>>>> master
   </ItemGroup>
 
 </Project>

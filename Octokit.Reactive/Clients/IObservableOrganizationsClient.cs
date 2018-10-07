@@ -16,16 +16,14 @@ namespace Octokit.Reactive
         IObservableTeamsClient Team { get; }
 
         /// <summary>
-<<<<<<< HEAD
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         IObservableOrganizationHooksClient Hook { get; }
-=======
+        
         /// Returns a client to manage outside collaborators of an organization.
         /// </summary>
         IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
->>>>>>> master
 
         /// <summary>
         /// Returns the specified organization.

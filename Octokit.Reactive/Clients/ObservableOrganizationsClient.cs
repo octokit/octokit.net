@@ -19,11 +19,8 @@ namespace Octokit.Reactive
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
-<<<<<<< HEAD
             Hook = new ObservableOrganizationHooksClient(client);
-=======
             OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
->>>>>>> master
 
             _client = client.Organization;
             _connection = client.Connection;
@@ -40,16 +37,14 @@ namespace Octokit.Reactive
         public IObservableTeamsClient Team { get; private set; }
 
         /// <summary>
-<<<<<<< HEAD
         /// A client for GitHub's Organization Hooks API.
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         public IObservableOrganizationHooksClient Hook { get; private set; }
-=======
+
         /// Returns a client to manage outside collaborators of an organization.
         /// </summary>
         public IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; private set; }
->>>>>>> master
 
         /// <summary>
         /// Returns the specified organization.
@@ -142,14 +137,10 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Organization"/></returns>
         public IObservable<Organization> Update(string org, OrganizationUpdate updateRequest)
         {
-<<<<<<< HEAD
-            return _client.Update(org, updateRequest).ToObservable();
-=======
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
-            return _client.Update(organizationName, updateRequest).ToObservable();
->>>>>>> master
+            return _client.Update(org, updateRequest).ToObservable();
         }
         
     }

@@ -15,16 +15,10 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>
-<<<<<<< HEAD
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list-hooks">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        IObservable<RepositoryHook> GetAll(string owner, string repositoryName);
-=======
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         IObservable<RepositoryHook> GetAll(string owner, string name);
->>>>>>> master
 
         /// <summary>
         /// Gets the list of hooks defined for a repository
@@ -138,11 +132,6 @@ namespace Octokit.Reactive
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
         /// </summary>
-<<<<<<< HEAD
-        /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
-        IObservable<Unit> Ping(string owner, string repositoryName, int hookId);
-=======
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
@@ -156,7 +145,6 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         IObservable<Unit> Delete(string owner, string name, int hookId);
->>>>>>> master
 
         /// <summary>
         /// Deletes a hook for a repository

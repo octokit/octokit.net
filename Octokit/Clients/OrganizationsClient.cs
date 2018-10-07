@@ -20,11 +20,8 @@ namespace Octokit
         {
             Member = new OrganizationMembersClient(apiConnection);
             Team = new TeamsClient(apiConnection);
-<<<<<<< HEAD
             Hook = new OrganizationHooksClient(apiConnection);
-=======
             OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
->>>>>>> master
         }
 
         /// <summary>
@@ -147,13 +144,8 @@ namespace Octokit
         /// <returns>A <see cref="Organization"/></returns>
         public Task<Organization> Update(string org, OrganizationUpdate updateRequest)
         {
-<<<<<<< HEAD
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
-=======
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
->>>>>>> master
 
             var updateUri = new Uri("orgs/" + org, UriKind.Relative);
 

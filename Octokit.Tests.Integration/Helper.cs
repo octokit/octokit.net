@@ -244,13 +244,8 @@ namespace Octokit.Tests.Integration
 
         public static Stream LoadFixture(string fileName)
         {
-<<<<<<< HEAD
-            var key = "Octokit.Tests.Integration.Fixtures." + fileName;
-            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
-=======
             var key = "Octokit.Tests.Integration.fixtures." + fileName;
             var stream = typeof(Helper).GetTypeInfo().Assembly.GetManifestResourceStream(key);
->>>>>>> master
             if (stream == null)
             {
                 throw new InvalidOperationException(
@@ -259,7 +254,7 @@ namespace Octokit.Tests.Integration
             return stream;
         }
 
-        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)
+        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)#
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
             {
