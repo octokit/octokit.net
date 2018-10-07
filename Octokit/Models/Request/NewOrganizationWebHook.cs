@@ -109,18 +109,11 @@ namespace Octokit
 
         public override NewOrganizationHook ToRequest()
         {
-            var webHookConfig = GetWebHookConfig();
-            if (Config.Any(c => webHookConfig.ContainsKey(c.Key)))
-            {
-                var invalidConfigs = Config.Where(c => webHookConfig.ContainsKey(c.Key)).Select(c => c.Key);
-                throw new OrganizationWebHookConfigException(invalidConfigs);
-            }
-
-            var config = webHookConfig
+            Config = GetWebHookConfig()
                 .Union(Config, new WebHookConfigComparer())
                 .ToDictionary(k => k.Key, v => v.Value);
 
-            return new NewOrganizationHook(Name, config);
+            return this;
         }
 
         Dictionary<string, string> GetWebHookConfig()

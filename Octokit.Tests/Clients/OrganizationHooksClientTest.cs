@@ -8,17 +8,47 @@ namespace Octokit.Tests.Clients
 {
     public class OrganizationHooksClientTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(
+                    () => new OrganizationHooksClient(null));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                client.Hook.GetAll("org");
+                await client.Hook.GetAll("org");
 
                 connection.Received().GetAll<OrganizationHook>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/hooks"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1,
+                    StartPage = 1
+                };
+
+                await client.Hook.GetAll("org", options);
+
+                connection.Received(1)
+                    .GetAll<OrganizationHook>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/hooks"),
+                        options);
             }
 
             [Fact]
@@ -30,22 +60,23 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.GetAll(""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.GetAll(""));
             }
         }
 
         public class TheGetMethod
         {
             [Fact]
-            public void RequestsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationsClient(connection);
 
-                client.Hook.Get("org", 12345678);
+                await client.Hook.Get("org", 12345678);
 
                 connection.Received().Get<OrganizationHook>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/hooks/12345678"));
             }
@@ -59,10 +90,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Get("",123));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Get("",123));
             }
         }
 

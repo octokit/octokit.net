@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableOrganizationHooksClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Organization.Hook;
             _connection = client.Connection;
@@ -21,24 +21,38 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets the list of hooks defined for a organization
         /// </summary>
+        /// <param name="org">The organizations name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<OrganizationHook> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _connection.GetAndFlattenAllPages<OrganizationHook>(ApiUrls.OrganizationHooks(org));
         }
 
         /// <summary>
+        /// Gets the list of hooks defined for a organization
+        /// </summary>
+        /// <param name="org">The organizations name</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
+        public IObservable<OrganizationHook> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<OrganizationHook>(ApiUrls.OrganizationHooks(org), options);
+        }
+
+        /// <summary>
         /// Gets a single hook defined for a organization by id
         /// </summary>
+        /// <param name="org">The organizations name</param>
+        /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<OrganizationHook> Get(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _client.Get(org, hookId).ToObservable();
         }
@@ -46,12 +60,13 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a hook for a organization
         /// </summary>
+        /// <param name="org">The organizations name</param>
+        /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<OrganizationHook> Create(string org, NewOrganizationHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Create(org, hook).ToObservable();
         }
@@ -59,12 +74,15 @@ namespace Octokit.Reactive
         /// <summary>
         /// Edits a hook for a organization
         /// </summary>
+        /// <param name="org">The organizations name</param>
+        /// <param name="hookId">The organizations hook id</param>
+        /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         public IObservable<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Edit(org, hookId, hook).ToObservable();
         }
@@ -72,11 +90,12 @@ namespace Octokit.Reactive
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
         /// </summary>
+        /// <param name="org">The organizations name</param>
+        /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Ping(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _client.Ping(org, hookId).ToObservable();
         }
@@ -84,13 +103,12 @@ namespace Octokit.Reactive
         /// <summary>
         /// Deletes a hook for a organization
         /// </summary>
-        /// <param name="org"></param>
-        /// <param name="hookId"></param>
+        /// <param name="org">The organizations name</param>
+        /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        /// <returns></returns>
         public IObservable<Unit> Delete(string org, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _client.Delete(org, hookId).ToObservable();
         }

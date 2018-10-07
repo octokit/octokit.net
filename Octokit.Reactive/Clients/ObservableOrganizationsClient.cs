@@ -42,6 +42,7 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
         public IObservableOrganizationHooksClient Hook { get; private set; }
 
+        /// <summary>
         /// Returns a client to manage outside collaborators of an organization.
         /// </summary>
         public IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; private set; }
