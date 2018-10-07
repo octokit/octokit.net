@@ -254,7 +254,7 @@ namespace Octokit.Tests.Integration
             return stream;
         }
 
-        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)#
+        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
             {
