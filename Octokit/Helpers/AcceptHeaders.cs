@@ -71,6 +71,8 @@ namespace Octokit
 
         public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview";
 
+        public const string DeploymentStatusesPreview = "application/vnd.github.flash-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
