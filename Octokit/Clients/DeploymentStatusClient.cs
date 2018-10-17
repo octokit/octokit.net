@@ -108,7 +108,7 @@ namespace Octokit
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                         newDeploymentStatus,
-                                                        AcceptHeaders.DeploymentApiPreview);
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
 
         /// <summary>
@@ -126,7 +126,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
-                                                        newDeploymentStatus);
+                                                        newDeploymentStatus,
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
     }
 }
