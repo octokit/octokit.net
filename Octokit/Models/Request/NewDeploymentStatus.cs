@@ -42,6 +42,11 @@ namespace Octokit
         public string EnvironmentUrl { get; set; }
 
         /// <summary>
+        /// Name for the target deployment environment.
+        /// </summary>
+        public string Environment { get; set; }
+
+        /// <summary>
         /// Indicates if a new inactive status should be added to all non-transient, 
         /// non-production environment deployments with the same repository and environment 
         /// name as the created status's deployment. 
