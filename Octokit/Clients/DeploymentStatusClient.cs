@@ -68,7 +68,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                           null,
-                                                          AcceptHeaders.DeploymentApiPreview,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
                                                           options);
         }
 
@@ -86,7 +86,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
+                                                          null,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
+                                                          options);
         }
 
         /// <summary>
