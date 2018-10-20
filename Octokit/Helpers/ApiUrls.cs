@@ -634,7 +634,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.        
+        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -726,7 +726,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the
         /// organization.
         /// Otherwise returns a 404.
         /// </summary>
@@ -1650,7 +1650,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for org teams 
+        /// returns the <see cref="Uri"/> for org teams
         /// use for both Get and Create methods
         /// </summary>
         /// <param name="organization"></param>
@@ -1661,7 +1661,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to discover teams 
+        /// Returns the <see cref="Uri"/> to discover teams
         /// for the current user
         /// </summary>
         /// <returns></returns>
@@ -1689,6 +1689,27 @@ namespace Octokit
         public static Uri Teams(int id)
         {
             return "teams/{0}".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for team discussion
+        /// use for getting, updating, or deleting a <see cref="TeamDiscussion"/>.
+        /// </summary>
+        /// <param name="id">The team id</param>
+        /// <param name="discussionNumber">The team discussion number.</param>
+        public static Uri TeamDiscussion(int teamId, int discussionNumber)
+        {
+            return "teams/{0}/discussions/{1}".FormatUri(teamId, discussionNumber);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for team discussions
+        /// use for getting, updating, or deleting <see cref="TeamDiscussion"/>.
+        /// </summary>
+        /// <param name="id">The team id</param>
+        public static Uri TeamDiscussions(int teamId)
+        {
+            return "teams/{0}/discussions".FormatUri(teamId);
         }
 
         /// <summary>
@@ -2206,7 +2227,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// Creates the relative <see cref="Uri"/> for retrieving the
         /// current users followers
         /// </summary>
         /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>

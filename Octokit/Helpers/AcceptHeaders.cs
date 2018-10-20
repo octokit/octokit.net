@@ -65,6 +65,8 @@ namespace Octokit
 
         public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
 
+        public const string TeamDiscussionsApiPreview = "application/vnd.github.echo-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
