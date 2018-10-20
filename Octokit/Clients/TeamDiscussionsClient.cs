@@ -13,6 +13,8 @@ namespace Octokit
     /// </remarks>
     public class TeamDiscussionsClient : ApiClient, ITeamDiscussionsClient
     {
+        private static readonly string AcceptHeader = AcceptHeaders.Concat(AcceptHeaders.TeamDiscussionsApiPreview, AcceptHeaders.ReactionsPreview);
+
         /// <summary>
         /// Initializes a new GitHub Orgs Team API client.
         /// </summary>
@@ -22,12 +24,32 @@ namespace Octokit
         {
         }
 
+        public Task<TeamDiscussion> Get(int teamId, int number)
+        {
+            var endpoint = ApiUrls.TeamDiscussion(teamId, number);
+
+            return ApiConnection.Get<TeamDiscussion>(endpoint, null, AcceptHeader);
+        }
+
+        public Task<IReadOnlyList<TeamDiscussion>> GetAll(int teamId)
+        {
+            return GetAll(teamId, ApiOptions.None);
+        }
+
+        public Task<IReadOnlyList<TeamDiscussion>> GetAll(int teamId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.TeamDiscussions(teamId);
+            return ApiConnection.GetAll<TeamDiscussion>(endpoint, null, AcceptHeader, options);
+        }
+
         public Task<TeamDiscussion> Create(int teamId, NewTeamDiscussion teamDiscussion)
         {
             Ensure.ArgumentNotNull(teamDiscussion, nameof(teamDiscussion));
 
             var endpoint = ApiUrls.TeamDiscussions(teamId);
-            return ApiConnection.Post<TeamDiscussion>(endpoint, teamDiscussion, AcceptHeaders.Concat(AcceptHeaders.ProjectsApiPreview, AcceptHeaders.NestedTeamsPreview, AcceptHeaders.TeamDiscussionsApiPreview));
+            return ApiConnection.Post<TeamDiscussion>(endpoint, teamDiscussion, AcceptHeader);
         }
     }
 }

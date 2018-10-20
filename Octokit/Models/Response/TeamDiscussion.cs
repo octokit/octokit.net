@@ -48,19 +48,41 @@ namespace Octokit
         public string Body { get; protected set; }
 
         /// <summary>
+        /// team discussion body
+        /// </summary>
+        public string BodyHtml { get; protected set; }
+
+        /// <summary>
+        /// team discussion body
+        /// </summary>
+        public string BodyVersion { get; protected set; }
+
+        /// <summary>
         /// is team discussion private
         /// </summary>
         public bool Private { get; protected set; }
 
         /// <summary>
-        /// permission attached to this team
+        /// is team discussion pinned
         /// </summary>
-        public StringEnum<Permission> Permission { get; protected set; }
+        public bool Pinned { get; protected set; }
+
+        /// <summary>
+        /// team discussion body
+        /// </summary>
+        public string TeamUrl { get; protected set; }
+
+        /// <summary>
+        /// team discussion body
+        /// </summary>
+        public string CommentsUrl { get; protected set; }
 
         /// <summary>
         /// how many members in this team
         /// </summary>
         public int CommentsCount { get; protected set; }
+
+        public ReactionSummary Reactions { get; protected set; }
 
         /////// <summary>
         /////// The parent team
