@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1, 2);
 
-            connection.Received().Get<Team>(
+            connection.Received().Get<TeamDiscussion>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/discussions/2"),
                     null,
                     "application/vnd.github.echo-preview+json,application/vnd.github.squirrel-girl-preview");
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<Team>(
+                connection.Received().GetAll<TeamDiscussion>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/discussions"),
                     null,
                     "application/vnd.github.echo-preview+json,application/vnd.github.squirrel-girl-preview",
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Clients
 
                 client.Update(1, 2, discussion);
 
-                connection.Received().Patch<Team>(
+                connection.Received().Patch<TeamDiscussion>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/discussions/2"),
                     discussion,
                     "application/vnd.github.echo-preview+json,application/vnd.github.squirrel-girl-preview");
