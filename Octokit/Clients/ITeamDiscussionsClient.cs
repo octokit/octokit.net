@@ -14,7 +14,7 @@ namespace Octokit
     public interface ITeamDiscussionsClient
     {
         /// <summary>
-        /// Gets a single <see cref="TeamDiscussion"/> by identifier.
+        /// Get a specific discussion on a team's page.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
@@ -26,7 +26,7 @@ namespace Octokit
         Task<TeamDiscussion> Get(int teamId, int number);
 
         /// <summary>
-        /// Returns all <see cref="TeamDiscussion" />s for the team.
+        /// List all discussions on a team's page.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/teams/discussions/#list-discussions
@@ -37,7 +37,7 @@ namespace Octokit
         Task<IReadOnlyList<TeamDiscussion>> GetAll(int teamId);
 
         /// <summary>
-        /// Returns all <see cref="TeamDiscussion" />s for the team.
+        /// List all discussions on a team's page.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/teams/discussions/#list-discussions
@@ -49,10 +49,41 @@ namespace Octokit
         Task<IReadOnlyList<TeamDiscussion>> GetAll(int teamId, ApiOptions options);
 
         /// <summary>
-        /// Returns newly created <see cref="TeamDiscussion" /> for the current team.
+        /// Creates a new discussion post on a team's page.
         /// </summary>
+        /// <remarks>
+        /// OAuth access tokens require the write:discussion scope.
+        /// https://developer.github.com/v3/teams/discussions/#create-a-discussion
+        /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>Newly created <see cref="TeamDiscussion"/></returns>
+        /// <returns>Newly created <see cref="TeamDiscussion"/> object.</returns>
         Task<TeamDiscussion> Create(int teamId, NewTeamDiscussion teamDiscussion);
+
+        /// <summary>
+        /// Edits the title and body text of a discussion post.
+        /// Only the parameters you provide are updated.
+        /// </summary>
+        /// <remarks>
+        /// OAuth access tokens require the write:discussion scope.
+        /// https://developer.github.com/v3/teams/discussions/#edit-a-discussion
+        /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="number">The discussion number which will be update with new values.</param>
+        /// <param name="teamDiscussion">New values for the discussion.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>Updated <see cref="TeamDiscussion"/> object.</returns>
+        Task<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion teamDiscussion);
+
+        /// <summary>
+        /// Delete a discussion from a team's page.
+        /// </summary>
+        /// <remarks>
+        /// OAuth access tokens require the write:discussion scope.
+        /// https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+        /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="number">The discussion number.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task Delete(int teamId, int number);
     }
 }

@@ -51,5 +51,19 @@ namespace Octokit
             var endpoint = ApiUrls.TeamDiscussions(teamId);
             return ApiConnection.Post<TeamDiscussion>(endpoint, teamDiscussion, AcceptHeader);
         }
+
+        public Task<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion teamDiscussion)
+        {
+            Ensure.ArgumentNotNull(teamDiscussion, nameof(teamDiscussion));
+
+            var endpoint = ApiUrls.TeamDiscussion(teamId, number);
+            return ApiConnection.Patch<TeamDiscussion>(endpoint, teamDiscussion, AcceptHeader);
+        }
+
+        public Task Delete(int teamId, int number)
+        {
+            var endpoint = ApiUrls.TeamDiscussion(teamId, number);
+            return ApiConnection.Delete(endpoint, new object(), AcceptHeader);
+        }
     }
 }
