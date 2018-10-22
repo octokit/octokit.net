@@ -11,15 +11,21 @@ namespace Octokit
     {
         public TeamDiscussion() { }
 
-        public TeamDiscussion(string url, int number, string nodeId, string title, string body, bool @private, int commentsCount)
+        public TeamDiscussion(string url, int number, string nodeId, string title, string body, string bodyHtml, string bodyVersion, bool @private, bool pinned, string teamUrl, string commentsUrl, int commentsCount, ReactionSummary reactions)
         {
             Url = url;
             Number = number;
             NodeId = nodeId;
             Title = title;
             Body = body;
+            BodyHtml = bodyHtml;
+            BodyVersion = bodyVersion;
             Private = @private;
+            Pinned = pinned;
+            TeamUrl = teamUrl;
+            CommentsUrl = commentsUrl;
             CommentsCount = commentsCount;
+            Reactions = reactions;
         }
 
         /// <summary>
