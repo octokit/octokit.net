@@ -313,16 +313,16 @@ namespace Octokit
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(CultureInfo.InvariantCulture, ">{0:DatePatten}", date);
+                    query = string.Format(CultureInfo.InvariantCulture, ">{0:DateTimePattern}", date);
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format(CultureInfo.InvariantCulture, "<{0:DatePatten}", date);
+                    query = string.Format(CultureInfo.InvariantCulture, "<{0:DateTimePattern}", date);
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, "<={0:DatePatten}", date);
+                    query = string.Format(CultureInfo.InvariantCulture, "<={0:DateTimePattern}", date);
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, ">={0:DatePatten}", date);
+                    query = string.Format(CultureInfo.InvariantCulture, ">={0:DateTimePattern}", date);
                     break;
             }
         }
@@ -333,7 +333,7 @@ namespace Octokit
         [Obsolete("This constructor doesn't use the time component of the specified DateTime. Please use the overload accepting a DateTimeOffset, which also supports time.")]
         public DateRange(DateTime from, DateTime to) 
         {
-            query = string.Format(CultureInfo.InvariantCulture, "{0:DatePatten}..{1:DatePatten}", from, to);
+            query = string.Format(CultureInfo.InvariantCulture, "{0:DateTimePattern}..{1:DateTimePattern}", from, to);
         }
 
         public DateRange(DateTimeOffset from, DateTimeOffset to)
