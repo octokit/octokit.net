@@ -298,8 +298,8 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DateRange
     {
-        public const string DateTimePatten = "yyyy-MM-dd'T'HH:mm:ss zzz";
-        public const string DatePatten = "yyyy-MM-dd";
+        public const string DateTimePattern = "yyyy-MM-dd'T'HH:mm:ss zzz";
+        public const string DatePattern = "yyyy-MM-dd";
 
         private readonly string query = string.Empty;
 
@@ -307,7 +307,7 @@ namespace Octokit
         /// Matches repositories with regards to the <param name="date"/>.
         /// We will use the <param name="op"/> to see what operator will be applied to the date qualifier
         /// </summary>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This constructor doesn't use the time component of the specified DateTime. Please use the overload accepting a DateTimeOffset, which also supports time.")]
         public DateRange(DateTime date, SearchQualifierOperator op)
         {
             switch (op)
@@ -330,7 +330,7 @@ namespace Octokit
         /// <summary>
         /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
         /// </summary>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This constructor doesn't use the time component of the specified DateTime. Please use the overload accepting a DateTimeOffset, which also supports time.")]
         public DateRange(DateTime from, DateTime to) 
         {
             query = string.Format(CultureInfo.InvariantCulture, "{0:DatePatten}..{1:DatePatten}", from, to);
