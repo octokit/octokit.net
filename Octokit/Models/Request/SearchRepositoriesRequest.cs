@@ -304,31 +304,41 @@ namespace Octokit
         /// Matches repositories with regards to the <param name="date"/>.
         /// We will use the <param name="op"/> to see what operator will be applied to the date qualifier
         /// </summary>
-        public DateRange(DateTime date, SearchQualifierOperator op)
+        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        public DateRange(DateTime date, SearchQualifierOperator op) : this(new DateTimeOffset(date), op)
         {
-            switch (op)
-            {
-                case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(CultureInfo.InvariantCulture, ">{0:yyyy-MM-dd}", date);
-                    break;
-                case SearchQualifierOperator.LessThan:
-                    query = string.Format(CultureInfo.InvariantCulture, "<{0:yyyy-MM-dd}", date);
-                    break;
-                case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, "<={0:yyyy-MM-dd}", date);
-                    break;
-                case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, ">={0:yyyy-MM-dd}", date);
-                    break;
-            }
         }
 
         /// <summary>
         /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
         /// </summary>
-        public DateRange(DateTime from, DateTime to)
+        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        public DateRange(DateTime from, DateTime to) : this(new DateTimeOffset(from), new DateTimeOffset(to))
         {
-            query = string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}..{1:yyyy-MM-dd}", from, to);
+        }
+
+        public DateRange(DateTimeOffset from, DateTimeOffset to)
+        {
+            query = string.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd'T'HH:mm:ss zzz}..{1:yyyy-MM-dd'T'HH:mm:ss zzz}", from.DateTime, to.DateTime);
+        }
+
+        public DateRange(DateTimeOffset date, SearchQualifierOperator op)
+        {
+            switch (op)
+            {
+                case SearchQualifierOperator.GreaterThan:
+                    query = string.Format(CultureInfo.InvariantCulture, ">{0:yyyy-MM-dd'T'HH:mm:ss zzz}", date);
+                    break;
+                case SearchQualifierOperator.LessThan:
+                    query = string.Format(CultureInfo.InvariantCulture, "<{0:yyyy-MM-dd'T'HH:mm:ss zzz}", date);
+                    break;
+                case SearchQualifierOperator.LessThanOrEqualTo:
+                    query = string.Format(CultureInfo.InvariantCulture, "<={0:yyyy-MM-dd'T'HH:mm:ss zzz}", date);
+                    break;
+                case SearchQualifierOperator.GreaterThanOrEqualTo:
+                    query = string.Format(CultureInfo.InvariantCulture, ">={0:yyyy-MM-dd'T'HH:mm:ss zzz}", date);
+                    break;
+            }
         }
 
         internal string DebuggerDisplay
@@ -344,7 +354,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThan(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.LessThan);
+            return new DateRange(new DateTimeOffset(date), SearchQualifierOperator.LessThan);
         }
 
         /// <summary>
@@ -355,7 +365,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange LessThanOrEquals(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.LessThanOrEqualTo);
+            return new DateRange(new DateTimeOffset(date), SearchQualifierOperator.LessThanOrEqualTo);
         }
 
         /// <summary>
@@ -366,7 +376,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThan(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.GreaterThan);
+            return new DateRange(new DateTimeOffset(date), SearchQualifierOperator.GreaterThan);
         }
 
         /// <summary>
@@ -377,7 +387,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
-            return new DateRange(date, SearchQualifierOperator.GreaterThanOrEqualTo);
+            return new DateRange(new DateTimeOffset(date), SearchQualifierOperator.GreaterThanOrEqualTo);
         }
 
         /// <summary>
@@ -389,7 +399,7 @@ namespace Octokit
         /// <returns><see cref="DateRange"/></returns>
         public static DateRange Between(DateTime from, DateTime to)
         {
-            return new DateRange(from, to);
+            return new DateRange(new DateTimeOffset(from), new DateTimeOffset(to));
         }
 
         public override string ToString()
