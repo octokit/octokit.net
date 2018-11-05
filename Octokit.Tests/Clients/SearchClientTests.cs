@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Octokit.Tests.Clients
 {
+    public enum DateTimeStrategies
+    {
+        DateTimeStrategy,
+        DateTimeOffSetStrategy
+    }
+
     /// <summary>
     /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
@@ -209,65 +215,85 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_GreaterThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_GreaterThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy 
+                    ? DateRange.GreaterThan(new DateTime(2014, 1, 1)) 
+                    : DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+                client.SearchUsers(request);        
+                connection.Received().Get<SearchUsersResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
+            }
+
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_GreaterThanOrEqualTo(DateTimeStrategies strategy)
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchUsersRequest("github");
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy 
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1)) 
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_GreaterThanOrEqualTo()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThanOrEqualTo(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThanOrEqualTo()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2014, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_Between(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.LessThan(new DateTime(2014, 1, 1));
-                client.SearchUsers(request);
-                connection.Received().Get<SearchUsersResult>(
-                    Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
-            }
-
-            [Fact]
-            public void TestingTheCreatedQualifier_Between()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new SearchClient(connection);
-                var request = new SearchUsersRequest("github");
-                request.Created = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 1))
+                    : DateRange.Between(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2014, 2, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
@@ -518,130 +544,170 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+in:Readme,Description,Name"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2011, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThan(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_GreaterThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_GreaterThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2011, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2011, 1, 1))
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2011, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.LessThan(new DateTime(2011, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2011, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2011, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2011, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2011, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2011, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_Between()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_Between(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.Between(new DateTime(2011, 1, 1), new DateTime(2012, 11, 11));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.Between(new DateTime(2011, 1, 1), new DateTime(2012, 11, 11))
+                    : DateRange.Between(new DateTimeOffset(2011, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2012, 11, 11, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.GreaterThan(new DateTime(2013, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThan(new DateTime(2013, 1, 1))
+                    : DateRange.GreaterThan(new DateTimeOffset(2013, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+pushed:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_GreaterThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_GreaterThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.GreaterThanOrEquals(new DateTime(2013, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2013, 1, 1))
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2013, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+pushed:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.LessThan(new DateTime(2013, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2013, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2013, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+pushed:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_LessThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_LessThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.LessThanOrEquals(new DateTime(2013, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2013, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2013, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+pushed:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_Between()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_Between(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4))
+                    : DateRange.Between(new DateTimeOffset(2012, 4, 30, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2012, 7, 4, 2, 4, 6, new TimeSpan(10, 0, 0)));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"github+pushed:{request.Updated}"));
@@ -983,13 +1049,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_GreaterThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_GreaterThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThan(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -998,13 +1068,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_GreaterThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_GreaterThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1013,13 +1087,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2014, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1028,13 +1106,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_LessThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_LessThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1043,13 +1125,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheCreatedQualifier_Between()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheCreatedQualifier_Between(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2));
+                request.Created = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2))
+                    : DateRange.Between(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1058,13 +1144,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+created:{request.Created}"));
             }
 
-            [Fact]
-            public void TestingTheMergedQualifier_GreaterThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheMergedQualifier_GreaterThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Merged = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThan(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1073,13 +1163,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+merged:{request.Merged}"));
             }
 
-            [Fact]
-            public void TestingTheMergedQualifier_GreaterThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheMergedQualifier_GreaterThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Merged = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1088,13 +1182,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+merged:{request.Merged}"));
             }
 
-            [Fact]
-            public void TestingTheMergedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheMergedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Merged = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2014, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1103,13 +1201,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+merged:{request.Merged}"));
             }
 
-            [Fact]
-            public void TestingTheMergedQualifier_LessThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheMergedQualifier_LessThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Merged = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1118,13 +1220,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+merged:{request.Merged}"));
             }
 
-            [Fact]
-            public void TestingTheMergedQualifier_Between()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheMergedQualifier_Between(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2));
+                request.Merged = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2))
+                    : DateRange.Between(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1133,13 +1239,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+merged:{request.Merged}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_GreaterThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_GreaterThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThan(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1148,13 +1258,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+updated:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_GreaterThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_GreaterThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1163,13 +1277,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+updated:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_LessThan()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_LessThan(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThan(new DateTime(2014, 1, 1))
+                    : DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
@@ -1178,13 +1296,17 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == $"something+updated:{request.Updated}"));
             }
 
-            [Fact]
-            public void TestingTheUpdatedQualifier_LessThanOrEquals()
+            [Theory]
+            [InlineData(DateTimeStrategies.DateTimeStrategy)]
+            [InlineData(DateTimeStrategies.DateTimeOffSetStrategy)]
+            public void TestingTheUpdatedQualifier_LessThanOrEquals(DateTimeStrategies strategy)
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Updated = strategy == DateTimeStrategies.DateTimeStrategy
+                    ? DateRange.LessThanOrEquals(new DateTime(2014, 1, 1))
+                    : DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
 
                 client.SearchIssues(request);
 
