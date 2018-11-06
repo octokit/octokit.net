@@ -371,7 +371,7 @@ namespace Octokit
         /// </summary>
         /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This method has been deprecated as GitHub API now supports date and time")]
         public static DateRange LessThan(DateTime date)
         {
             return new DateRange(date, SearchQualifierOperator.LessThan);
@@ -383,7 +383,7 @@ namespace Octokit
         /// </summary>
         /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This method has been deprecated as GitHub API now supports date and time")]
         public static DateRange LessThanOrEquals(DateTime date)
         {
             return new DateRange(date, SearchQualifierOperator.LessThanOrEqualTo);
@@ -395,7 +395,7 @@ namespace Octokit
         /// </summary>
         /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This method has been deprecated as GitHub API now supports date and time")]
         public static DateRange GreaterThan(DateTime date)
         {
             return new DateRange(date, SearchQualifierOperator.GreaterThan);
@@ -407,7 +407,7 @@ namespace Octokit
         /// </summary>
         /// <param name="date">date to be used for comparison (times are ignored)</param>
         /// <returns><see cref="DateRange"/></returns>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This method has been deprecated as GitHub API now supports date and time")]
         public static DateRange GreaterThanOrEquals(DateTime date)
         {
             return new DateRange(date, SearchQualifierOperator.GreaterThanOrEqualTo);
@@ -420,7 +420,7 @@ namespace Octokit
         /// <param name="from">earlier date of the two</param>
         /// <param name="to">latter date of the two</param>
         /// <returns><see cref="DateRange"/></returns>
-        [Obsolete("This ctor has been deprecated as GitHub API now supports date and time")]
+        [Obsolete("This method has been deprecated as GitHub API now supports date and time")]
         public static DateRange Between(DateTime from, DateTime to)
         {
             return new DateRange(from, to);
