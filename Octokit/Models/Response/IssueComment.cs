@@ -10,7 +10,7 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions,AuthorAssociation authorAssociation)
+        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions, AuthorAssociation authorAssociation)
         {
             Id = id;
             NodeId = nodeId;

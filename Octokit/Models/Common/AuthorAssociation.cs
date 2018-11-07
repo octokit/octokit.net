@@ -1,5 +1,4 @@
-﻿using System;
-using Octokit.Internal;
+﻿using Octokit.Internal;
 
 namespace Octokit
 {
@@ -8,7 +7,6 @@ namespace Octokit
     /// </summary>
     public enum AuthorAssociation
     {
-
         /// <summary>
         /// Author has been invited to collaborate on the repository.
         /// </summary>

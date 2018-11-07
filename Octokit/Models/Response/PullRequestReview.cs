@@ -26,7 +26,6 @@ namespace Octokit
             PullRequestUrl = pullRequestUrl;
             State = state;
             AuthorAssociation = authorAssociation;
-
         }
 
         /// <summary>
