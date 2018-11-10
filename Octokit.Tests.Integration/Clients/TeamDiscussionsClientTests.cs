@@ -27,7 +27,7 @@ public class TeamDiscussionsClientTests
                 var discussionBody = Helper.MakeNameWithTimestamp("discussion text");
 
                 var newDiscussion = new NewTeamDiscussion(discussionTitle, discussionBody);
-                var discussion = await _github.Organization.TeamDiscussions.Create(parentTeamContext.TeamId, newDiscussion);
+                var discussion = await _github.Organization.Team.TeamDiscussion.Create(parentTeamContext.TeamId, newDiscussion);
 
                 Assert.Equal(discussionTitle, discussion.Title);
                 Assert.Equal(discussionBody, discussion.Body);
@@ -50,7 +50,7 @@ public class TeamDiscussionsClientTests
         {
             using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
             {
-                var discussions = await _github.Organization.TeamDiscussions.GetAll(parentTeamContext.TeamId);
+                var discussions = await _github.Organization.Team.TeamDiscussion.GetAll(parentTeamContext.TeamId);
 
                 Assert.Empty(discussions);
             }
@@ -75,11 +75,11 @@ public class TeamDiscussionsClientTests
                 var discussionBody = Helper.MakeNameWithTimestamp("discussion text");
 
                 var newDiscussion = new NewTeamDiscussion(discussionTitle, discussionBody);
-                var discussion = await _github.Organization.TeamDiscussions.Create(parentTeamContext.TeamId, newDiscussion);
+                var discussion = await _github.Organization.Team.TeamDiscussion.Create(parentTeamContext.TeamId, newDiscussion);
 
                 var updateDiscussion = new UpdateTeamDiscussion("Octokittens", "Aren't they lovely?");
 
-                var discussion2 = await _github.Organization.TeamDiscussions.Update(parentTeamContext.TeamId, discussion.Number, updateDiscussion);
+                var discussion2 = await _github.Organization.Team.TeamDiscussion.Update(parentTeamContext.TeamId, discussion.Number, updateDiscussion);
 
                 Assert.Equal("Octokittens", discussion.Title);
                 Assert.Equal("Aren't they lovely?", discussion.Body);
@@ -105,9 +105,9 @@ public class TeamDiscussionsClientTests
                 var discussionBody = Helper.MakeNameWithTimestamp("discussion text");
 
                 var newDiscussion = new NewTeamDiscussion(discussionTitle, discussionBody);
-                var discussion = await _github.Organization.TeamDiscussions.Create(parentTeamContext.TeamId, newDiscussion);
+                var discussion = await _github.Organization.Team.TeamDiscussion.Create(parentTeamContext.TeamId, newDiscussion);
 
-                await _github.Organization.TeamDiscussions.Delete(parentTeamContext.TeamId, discussion.Number);
+                await _github.Organization.Team.TeamDiscussion.Delete(parentTeamContext.TeamId, discussion.Number);
             }
         }
     }

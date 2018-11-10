@@ -25,11 +25,6 @@ namespace Octokit
         ITeamsClient Team { get; }
 
         /// <summary>
-        /// Returns a client to manage discussions in a team.
-        /// </summary>
-        ITeamDiscussionsClient TeamDiscussions { get; }
-
-        /// <summary>
         /// Returns a client to manage outside collaborators of an organization.
         /// </summary>
         IOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }

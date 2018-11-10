@@ -20,7 +20,13 @@ namespace Octokit
         public TeamsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
+            TeamDiscussion = new TeamDiscussionsClient(apiConnection);
         }
+
+        /// <summary>
+        /// Returns a client to manage discussions in a team.
+        /// </summary>
+        public ITeamDiscussionsClient TeamDiscussion { get; private set; }
 
         /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.

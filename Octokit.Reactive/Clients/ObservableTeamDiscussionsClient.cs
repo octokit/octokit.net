@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
             _connection = client.Connection;
-            _client = client.Organization.TeamDiscussions;
+            _client = client.Organization.Team.TeamDiscussion;
         }
 
         public IObservable<TeamDiscussion> Get(int teamId, int number)

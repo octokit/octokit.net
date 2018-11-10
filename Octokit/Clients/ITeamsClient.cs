@@ -14,6 +14,11 @@ namespace Octokit
     public interface ITeamsClient
     {
         /// <summary>
+        /// Returns a client to manage discussions in a team.
+        /// </summary>
+        ITeamDiscussionsClient TeamDiscussion { get; }
+
+        /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.
         /// </summary>
         /// <remarks>

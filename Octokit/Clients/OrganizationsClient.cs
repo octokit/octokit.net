@@ -20,7 +20,6 @@ namespace Octokit
         {
             Member = new OrganizationMembersClient(apiConnection);
             Team = new TeamsClient(apiConnection);
-            TeamDiscussions = new TeamDiscussionsClient(apiConnection);
             OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
         }
 
@@ -33,11 +32,6 @@ namespace Octokit
         /// Returns a client to manage teams of an organization.
         /// </summary>
         public ITeamsClient Team { get; private set; }
-
-        /// <summary>
-        /// Returns a client to manage discussions in a team.
-        /// </summary>
-        public ITeamDiscussionsClient TeamDiscussions { get; private set; }
 
         /// <summary>
         /// Returns a client to manage outside collaborators of an organization.
