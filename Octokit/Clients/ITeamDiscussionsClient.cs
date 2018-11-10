@@ -55,9 +55,11 @@ namespace Octokit
         /// OAuth access tokens require the write:discussion scope.
         /// https://developer.github.com/v3/teams/discussions/#create-a-discussion
         /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="newTeamDiscussion">New team discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="TeamDiscussion"/> object.</returns>
-        Task<TeamDiscussion> Create(int teamId, NewTeamDiscussion teamDiscussion);
+        Task<TeamDiscussion> Create(int teamId, NewTeamDiscussion newTeamDiscussion);
 
         /// <summary>
         /// Edits the title and body text of a discussion post.
@@ -68,11 +70,11 @@ namespace Octokit
         /// https://developer.github.com/v3/teams/discussions/#edit-a-discussion
         /// </remarks>
         /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The discussion number which will be update with new values.</param>
-        /// <param name="teamDiscussion">New values for the discussion.</param>
+        /// <param name="number">The team discussion number.</param>
+        /// <param name="updateTeamDiscussion">New values for the discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="TeamDiscussion"/> object.</returns>
-        Task<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion teamDiscussion);
+        Task<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion updateTeamDiscussion);
 
         /// <summary>
         /// Delete a discussion from a team's page.
@@ -82,7 +84,7 @@ namespace Octokit
         /// https://developer.github.com/v3/teams/discussions/#delete-a-discussion
         /// </remarks>
         /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The discussion number.</param>
+        /// <param name="number">The team discussion number.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task Delete(int teamId, int number);
     }

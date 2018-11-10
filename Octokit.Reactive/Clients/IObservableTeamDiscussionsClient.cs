@@ -5,7 +5,7 @@ using System.Reactive;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub's Teams Discussions API.
+    /// A client for GitHub's Team Discussions API.
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/teams/discussions/">Team Discussions API documentation</a> for more information.
@@ -54,9 +54,11 @@ namespace Octokit.Reactive
         /// OAuth access tokens require the write:discussion scope.
         /// https://developer.github.com/v3/teams/discussions/#create-a-discussion
         /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="newTeamDiscussion">New team discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="TeamDiscussion"/> object.</returns>
-        IObservable<TeamDiscussion> Create(int teamId, NewTeamDiscussion teamDiscussion);
+        IObservable<TeamDiscussion> Create(int teamId, NewTeamDiscussion newTeamDiscussion);
 
         /// <summary>
         /// Edits the title and body text of a discussion post.
@@ -67,11 +69,11 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/teams/discussions/#edit-a-discussion
         /// </remarks>
         /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The discussion number which will be update with new values.</param>
-        /// <param name="teamDiscussion">New values for the discussion.</param>
+        /// <param name="number">The team discussion number.</param>
+        /// <param name="updateTeamDiscussion">New values for the discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="TeamDiscussion"/> object.</returns>
-        IObservable<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion teamDiscussion);
+        IObservable<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion updateTeamDiscussion);
 
         /// <summary>
         /// Delete a discussion from a team's page.
@@ -81,7 +83,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/teams/discussions/#delete-a-discussion
         /// </remarks>
         /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The discussion number.</param>
+        /// <param name="number">The team discussion number.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<Unit> Delete(int teamId, int number);
     }
