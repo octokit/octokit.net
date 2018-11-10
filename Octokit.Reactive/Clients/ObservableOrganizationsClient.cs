@@ -19,7 +19,6 @@ namespace Octokit.Reactive
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
-            TeamDiscussions = new ObservableTeamDiscussionsClient(client);
             OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
 
             _client = client.Organization;
@@ -35,11 +34,6 @@ namespace Octokit.Reactive
         /// Returns a client to manage teams for an organization.
         /// </summary>
         public IObservableTeamsClient Team { get; private set; }
-
-        /// <summary>
-        /// Returns a client to manage discussions for a team.
-        /// </summary>
-        public IObservableTeamDiscussionsClient TeamDiscussions { get; private set; }
 
         /// <summary>
         /// Returns a client to manage outside collaborators of an organization.

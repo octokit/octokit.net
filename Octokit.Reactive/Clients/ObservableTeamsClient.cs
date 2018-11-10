@@ -23,9 +23,17 @@ namespace Octokit.Reactive
         public ObservableTeamsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
+
+            TeamDiscussion = new ObservableTeamDiscussionsClient(client);
+
             _connection = client.Connection;
             _client = client.Organization.Team;
         }
+
+        /// <summary>
+        /// Returns a client to manage discussions for a team.
+        /// </summary>
+        public IObservableTeamDiscussionsClient TeamDiscussion { get; private set; }
 
         /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.

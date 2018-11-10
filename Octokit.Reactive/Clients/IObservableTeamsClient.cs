@@ -13,6 +13,11 @@ namespace Octokit.Reactive
     public interface IObservableTeamsClient
     {
         /// <summary>
+        /// Returns a client to manage discussions for a team.
+        /// </summary>
+        IObservableTeamDiscussionsClient TeamDiscussion { get; }
+
+        /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.
         /// </summary>
         /// <remarks>
