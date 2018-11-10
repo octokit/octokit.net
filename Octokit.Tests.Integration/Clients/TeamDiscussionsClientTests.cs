@@ -76,8 +76,12 @@ public class TeamDiscussionsClientTests
 
                 var newDiscussion = new NewTeamDiscussion(discussionTitle, discussionBody);
                 var discussion = await _github.Organization.Team.TeamDiscussion.Create(parentTeamContext.TeamId, newDiscussion);
-
-                var updateDiscussion = new UpdateTeamDiscussion("Octokittens", "Aren't they lovely?");
+                
+                var updateDiscussion = new UpdateTeamDiscussion
+                {
+                    Title = "Octokittens",
+                    Body = "Aren't they lovely?"
+                };
 
                 var discussion2 = await _github.Organization.Team.TeamDiscussion.Update(parentTeamContext.TeamId, discussion.Number, updateDiscussion);
 

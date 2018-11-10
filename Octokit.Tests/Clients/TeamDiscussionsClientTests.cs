@@ -99,7 +99,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamDiscussionsClient(connection);
-                var discussion = new UpdateTeamDiscussion("Octokittens", "Aren't they lovely?");
+                var discussion = new UpdateTeamDiscussion
+                {
+                    Title = "Octokittens",
+                    Body = "Aren't they lovely?"
+                };
 
                 client.Update(1, 2, discussion);
 

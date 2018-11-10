@@ -8,29 +8,23 @@ namespace Octokit
     /// Edits the title and body text of a discussion post. Only the parameters you provide are updated.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// In order to create a team discussions, the OAuth access tokens require the write:discussion scope.
-    /// </para>
-    /// <para>API: https://developer.github.com/v3/teams/discussions/#create-a-discussion </para>
+    /// OAuth access tokens require the write:discussion scope.
+    /// See the <a href="https://developer.github.com/v3/teams/discussions/#edit-a-discussion">Edit a discussion</a> for more information.
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateTeamDiscussion
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewTeamDiscussion"/> class.
+        /// Initializes a new instance of the <see cref="UpdateTeamDiscussion"/> class.
         /// </summary>
-        /// <param name="title">The discussion post's title.</param>
-        /// <param name="body">The discussion post's body text.</param>
-        public UpdateTeamDiscussion(string title, string body)
+        public UpdateTeamDiscussion()
         {
-            Title = title;
-            Body = body;
         }
 
         /// <summary>
         /// The discussion post's title (optional).
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The discussion post's body text (optional).

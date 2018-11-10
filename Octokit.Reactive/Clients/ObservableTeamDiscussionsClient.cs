@@ -87,11 +87,11 @@ namespace Octokit.Reactive
         /// <param name="newTeamDiscussion">New team discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="TeamDiscussion"/> object.</returns>
-        public IObservable<TeamDiscussion> Create(int teamId, NewTeamDiscussion teamDiscussion)
+        public IObservable<TeamDiscussion> Create(int teamId, NewTeamDiscussion newTeamDiscussion)
         {
-            Ensure.ArgumentNotNull(teamDiscussion, nameof(teamDiscussion));
+            Ensure.ArgumentNotNull(newTeamDiscussion, nameof(newTeamDiscussion));
 
-            return _client.Create(teamId, teamDiscussion).ToObservable();
+            return _client.Create(teamId, newTeamDiscussion).ToObservable();
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace Octokit.Reactive
         /// <param name="updateTeamDiscussion">New values for the discussion.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="TeamDiscussion"/> object.</returns>
-        public IObservable<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion teamDiscussion)
+        public IObservable<TeamDiscussion> Update(int teamId, int number, UpdateTeamDiscussion updateTeamDiscussion)
         {
-            Ensure.ArgumentNotNull(teamDiscussion, nameof(teamDiscussion));
+            Ensure.ArgumentNotNull(updateTeamDiscussion, nameof(updateTeamDiscussion));
 
-            return _client.Update(teamId, number, teamDiscussion).ToObservable();
+            return _client.Update(teamId, number, updateTeamDiscussion).ToObservable();
         }
 
         /// <summary>

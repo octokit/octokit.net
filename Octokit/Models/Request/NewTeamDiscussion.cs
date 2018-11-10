@@ -8,10 +8,8 @@ namespace Octokit
     /// Used to create a team discussion.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// In order to create a team discussions, the OAuth access tokens require the write:discussion scope.
-    /// </para>
-    /// <para>API: https://developer.github.com/v3/teams/discussions/#create-a-discussion </para>
+    /// OAuth access tokens require the write:discussion scope.
+    /// See the <a href="https://developer.github.com/v3/teams/discussions/#create-a-discussion">Create a discussion</a> for more information.
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewTeamDiscussion
@@ -30,7 +28,7 @@ namespace Octokit
         /// <summary>
         /// The discussion post's title (required).
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The discussion post's body text (required).
@@ -42,7 +40,7 @@ namespace Octokit
         /// Public posts are visible to all members of the organization. Set to true to create a private post.
         /// Default: false.
         /// </summary>
-        public bool Private { get; set; }
+        public bool? Private { get; set; }
 
         internal string DebuggerDisplay
         {
