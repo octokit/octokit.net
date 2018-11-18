@@ -28,12 +28,12 @@ namespace Octokit
         /// <summary>
         /// The discussion post's title (required).
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// The discussion post's body text (required).
         /// </summary>
-        public string Body { get; set; }
+        public string Body { get; private set; }
 
         /// <summary>
         /// Private posts are only visible to team members, organization owners, and team maintainers.

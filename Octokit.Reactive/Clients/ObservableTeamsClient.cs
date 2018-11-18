@@ -24,7 +24,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
 
-            TeamDiscussion = new ObservableTeamDiscussionsClient(client);
+            Discussion = new ObservableTeamDiscussionsClient(client);
 
             _connection = client.Connection;
             _client = client.Organization.Team;
@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns a client to manage discussions for a team.
         /// </summary>
-        public IObservableTeamDiscussionsClient TeamDiscussion { get; private set; }
+        public IObservableTeamDiscussionsClient Discussion { get; private set; }
 
         /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.

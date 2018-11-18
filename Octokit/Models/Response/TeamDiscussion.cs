@@ -54,12 +54,12 @@ namespace Octokit
         public string Body { get; protected set; }
 
         /// <summary>
-        /// team discussion body
+        /// team discussion body in HTML format
         /// </summary>
         public string BodyHtml { get; protected set; }
 
         /// <summary>
-        /// team discussion body
+        /// team discussion body version
         /// </summary>
         public string BodyVersion { get; protected set; }
 
@@ -74,26 +74,24 @@ namespace Octokit
         public bool Pinned { get; protected set; }
 
         /// <summary>
-        /// team discussion body
+        /// URL of the team of this discussion
         /// </summary>
         public string TeamUrl { get; protected set; }
 
         /// <summary>
-        /// team discussion body
+        /// URL of comments of this discussion
         /// </summary>
         public string CommentsUrl { get; protected set; }
 
         /// <summary>
-        /// how many members in this team
+        /// how many comments in this discussion
         /// </summary>
         public int CommentsCount { get; protected set; }
 
+        /// <summary>
+        /// reaction summary for this discussion
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
-
-        /////// <summary>
-        /////// The parent team
-        /////// </summary>
-        ////public Team Parent { get; protected set; }
 
         internal string DebuggerDisplay
         {

@@ -16,7 +16,7 @@ namespace Octokit
         /// <summary>
         /// Returns a client to manage discussions in a team.
         /// </summary>
-        ITeamDiscussionsClient TeamDiscussion { get; }
+        ITeamDiscussionsClient Discussion { get; }
 
         /// <summary>
         /// Gets a single <see cref="Team"/> by identifier.

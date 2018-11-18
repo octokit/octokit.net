@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
             _connection = client.Connection;
-            _client = client.Organization.Team.TeamDiscussion;
+            _client = client.Organization.Team.Discussion;
         }
 
         /// <summary>
