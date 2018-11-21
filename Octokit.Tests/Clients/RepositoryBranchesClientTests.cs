@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(1);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", Args.ApiOptions);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("owner", "name", options);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json", options);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json", options);
             }
 
             [Fact]
@@ -83,7 +83,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json", options);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json", options);
             }
 
             [Fact]
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null, "application/vnd.github.loki-preview+json");
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json");
             }
 
             [Fact]
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Clients
                 await client.Get(1, "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), null, "application/vnd.github.loki-preview+json");
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), null, "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json");
             }
 
             [Fact]
@@ -157,7 +157,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetBranchProtection("owner", "repo", "branch");
 
@@ -170,7 +170,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetBranchProtection(1, "branch");
 
@@ -206,7 +206,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
 
@@ -221,7 +221,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateBranchProtection(1, "branch", update);
 
@@ -259,7 +259,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteBranchProtection("owner", "repo", "branch");
 
@@ -272,7 +272,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteBranchProtection(1, "branch");
 
@@ -306,7 +306,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetRequiredStatusChecks("owner", "repo", "branch");
 
@@ -319,7 +319,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetRequiredStatusChecks(1, "branch");
 
@@ -354,7 +354,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecks("owner", "repo", "branch", update);
 
@@ -368,7 +368,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecks(1, "branch", update);
 
@@ -405,7 +405,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecks("owner", "repo", "branch");
 
@@ -418,7 +418,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecks(1, "branch");
 
@@ -452,7 +452,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllRequiredStatusChecksContexts("owner", "repo", "branch");
 
@@ -465,7 +465,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllRequiredStatusChecksContexts(1, "branch");
 
@@ -500,7 +500,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecksContexts("owner", "repo", "branch", update);
 
@@ -514,7 +514,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecksContexts(1, "branch", update);
 
@@ -552,7 +552,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newContexts = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddRequiredStatusChecksContexts("owner", "repo", "branch", newContexts);
 
@@ -566,7 +566,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newContexts = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddRequiredStatusChecksContexts(1, "branch", newContexts);
 
@@ -604,7 +604,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var contextsToRemove = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecksContexts("owner", "repo", "branch", contextsToRemove);
 
@@ -618,7 +618,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var contextsToRemove = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecksContexts(1, "branch", contextsToRemove);
 
@@ -655,7 +655,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetReviewEnforcement("owner", "repo", "branch");
 
@@ -668,7 +668,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetReviewEnforcement(1, "branch");
 
@@ -702,8 +702,8 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false, 2);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateReviewEnforcement("owner", "repo", "branch", update);
 
@@ -716,8 +716,8 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false, 2);
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateReviewEnforcement(1, "branch", update);
 
@@ -730,7 +730,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
 
-                var update = new BranchProtectionRequiredReviewsUpdate(false, false);
+                var update = new BranchProtectionRequiredReviewsUpdate(false, false, 2);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateReviewEnforcement(null, "repo", "branch", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateReviewEnforcement("owner", null, "branch", update));
@@ -755,7 +755,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveReviewEnforcement("owner", "repo", "branch");
 
@@ -768,7 +768,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveReviewEnforcement(1, "branch");
 
@@ -802,7 +802,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAdminEnforcement("owner", "repo", "branch");
 
@@ -815,7 +815,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAdminEnforcement(1, "branch");
 
@@ -849,7 +849,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddAdminEnforcement("owner", "repo", "branch");
 
@@ -862,7 +862,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddAdminEnforcement(1, "branch");
 
@@ -896,7 +896,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveAdminEnforcement("owner", "repo", "branch");
 
@@ -909,7 +909,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveAdminEnforcement(1, "branch");
 
@@ -943,7 +943,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetProtectedBranchRestrictions("owner", "repo", "branch");
 
@@ -956,7 +956,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetProtectedBranchRestrictions(1, "branch");
 
@@ -990,7 +990,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchRestrictions("owner", "repo", "branch");
 
@@ -1003,7 +1003,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchRestrictions(1, "branch");
 
@@ -1044,7 +1044,7 @@ namespace Octokit.Tests.Clients
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                     null,
-                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                    "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1059,7 +1059,7 @@ namespace Octokit.Tests.Clients
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                     null,
-                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                    "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1097,7 +1097,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                     Arg.Any<IReadOnlyList<string>>(),
                     null,
-                    "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                    "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1114,7 +1114,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
                         null,
-                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                        "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1154,7 +1154,7 @@ namespace Octokit.Tests.Clients
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                        "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1170,7 +1170,7 @@ namespace Octokit.Tests.Clients
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                        "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1210,7 +1210,7 @@ namespace Octokit.Tests.Clients
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
                         Arg.Any<BranchProtectionTeamCollection>(),
-                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                        "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1226,7 +1226,7 @@ namespace Octokit.Tests.Clients
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
                         Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.loki-preview+json,application/vnd.github.hellcat-preview+json");
+                        "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json,application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -1258,7 +1258,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllProtectedBranchUserRestrictions("owner", "repo", "branch");
 
@@ -1271,7 +1271,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllProtectedBranchUserRestrictions(1, "branch");
 
@@ -1306,7 +1306,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
@@ -1320,7 +1320,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateProtectedBranchUserRestrictions(1, "branch", newUsers);
 
@@ -1358,7 +1358,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
@@ -1372,7 +1372,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.AddProtectedBranchUserRestrictions(1, "branch", newUsers);
 
@@ -1410,7 +1410,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var usersToRemove = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions("owner", "repo", "branch", usersToRemove);
 
@@ -1424,7 +1424,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var usersToRemove = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json";
+                const string previewAcceptsHeader = "application/vnd.github.loki-preview+json,application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions(1, "branch", usersToRemove);
 
