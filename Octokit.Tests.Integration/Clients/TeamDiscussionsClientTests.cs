@@ -85,8 +85,8 @@ public class TeamDiscussionsClientTests
 
                 var discussion2 = await _github.Organization.Team.Discussion.Update(parentTeamContext.TeamId, discussion.Number, updateDiscussion);
 
-                Assert.Equal("Octokittens", discussion.Title);
-                Assert.Equal("Aren't they lovely?", discussion.Body);
+                Assert.Equal("Octokittens", discussion2.Title);
+                Assert.Equal("Aren't they lovely?", discussion2.Body);
             }
         }
     }
