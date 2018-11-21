@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -15,23 +13,6 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new TeamDiscussionsClient(null));
-            }
-        }
-
-        public class TheGetMethod
-        {
-            [Fact]
-            public void RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamDiscussionsClient(connection);
-
-                client.Get(1, 2);
-
-            connection.Received().Get<TeamDiscussion>(
-                    Arg.Is<Uri>(u => u.ToString() == "teams/1/discussions/2"),
-                    null,
-                    "application/vnd.github.echo-preview+json,application/vnd.github.squirrel-girl-preview");
             }
         }
 
@@ -58,6 +39,23 @@ namespace Octokit.Tests.Clients
                 var teams = new TeamDiscussionsClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetAll(1, null));
+            }
+        }
+
+        public class TheGetMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamDiscussionsClient(connection);
+
+                client.Get(1, 2);
+
+            connection.Received().Get<TeamDiscussion>(
+                    Arg.Is<Uri>(u => u.ToString() == "teams/1/discussions/2"),
+                    null,
+                    "application/vnd.github.echo-preview+json,application/vnd.github.squirrel-girl-preview");
             }
         }
 
