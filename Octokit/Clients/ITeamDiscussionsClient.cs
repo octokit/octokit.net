@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Octokit
@@ -13,18 +11,6 @@ namespace Octokit
     /// </remarks>
     public interface ITeamDiscussionsClient
     {
-        /// <summary>
-        /// Get a specific discussion on a team's page.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
-        /// </remarks>
-        /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The team discussion number.</param>
-        /// <returns>The <see cref="TeamDiscussion"/> with the given identifier.</returns>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<TeamDiscussion> Get(int teamId, int number);
-
         /// <summary>
         /// List all discussions on a team's page.
         /// </summary>
@@ -47,6 +33,18 @@ namespace Octokit
         /// <returns>A list of discussions in the team.</returns>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task<IReadOnlyList<TeamDiscussion>> GetAll(int teamId, ApiOptions options);
+        
+        /// <summary>
+        /// Get a specific discussion on a team's page.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+        /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="number">The team discussion number.</param>
+        /// <returns>The <see cref="TeamDiscussion"/> with the given identifier.</returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<TeamDiscussion> Get(int teamId, int number);
 
         /// <summary>
         /// Creates a new discussion post on a team's page.

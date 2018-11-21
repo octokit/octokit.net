@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Octokit
@@ -22,23 +20,6 @@ namespace Octokit
         public TeamDiscussionsClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
-        }
-
-        /// <summary>
-        /// Get a specific discussion on a team's page.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
-        /// </remarks>
-        /// <param name="teamId">The team identifier.</param>
-        /// <param name="number">The team discussion number.</param>
-        /// <returns>The <see cref="TeamDiscussion"/> with the given identifier.</returns>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public Task<TeamDiscussion> Get(int teamId, int number)
-        {
-            var endpoint = ApiUrls.TeamDiscussion(teamId, number);
-
-            return ApiConnection.Get<TeamDiscussion>(endpoint, null, AcceptHeader);
         }
 
         /// <summary>
@@ -71,6 +52,23 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamDiscussions(teamId);
             return ApiConnection.GetAll<TeamDiscussion>(endpoint, null, AcceptHeader, options);
+        }
+
+        /// <summary>
+        /// Get a specific discussion on a team's page.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/teams/discussions/#get-a-single-discussion
+        /// </remarks>
+        /// <param name="teamId">The team identifier.</param>
+        /// <param name="number">The team discussion number.</param>
+        /// <returns>The <see cref="TeamDiscussion"/> with the given identifier.</returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<TeamDiscussion> Get(int teamId, int number)
+        {
+            var endpoint = ApiUrls.TeamDiscussion(teamId, number);
+
+            return ApiConnection.Get<TeamDiscussion>(endpoint, null, AcceptHeader);
         }
 
         /// <summary>
