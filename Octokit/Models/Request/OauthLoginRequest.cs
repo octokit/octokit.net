@@ -41,6 +41,12 @@ namespace Octokit
         public Uri RedirectUri { get; set; }
 
         /// <summary>
+        /// Suggests a specific account to use for signing in and authorizing the app.
+        /// </summary>
+        [Parameter(Key = "login")]
+        public string Login { get; set; }
+
+        /// <summary>
         /// A set of scopes to request. If not provided, scope defaults to an empty list of scopes for users that don’t
         /// have a valid token for the app. For users who do already have a valid token for the app, the user won’t be
         /// shown the OAuth authorization page with the list of scopes. Instead, this step of the flow will
@@ -59,6 +65,13 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "state")]
         public string State { get; set; }
+
+        /// <summary>
+        /// Whether or not unauthenticated users will be offered an option to sign up for GitHub during the OAuth flow.
+        /// The default is <c>true</c>. Use <c>false</c> in the case that a policy prohibits signups.
+        /// </summary>
+        [Parameter(Key = "allow_signup")]
+        public bool? AllowSignup { get; set; }
 
         internal string DebuggerDisplay
         {
