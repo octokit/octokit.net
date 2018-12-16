@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Frosting" Version="0.30.0" />
+    <PackageReference Include="Cake.Frosting" Version="0.31.0" />
   </ItemGroup>
 
 </Project>
