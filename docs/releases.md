@@ -5,7 +5,7 @@
 To retrieve all releases for a repository:
 
 ```csharp
-var releases = client.Repository.Release.GetAll("octokit", "octokit.net");
+var releases = await client.Repository.Release.GetAll("octokit", "octokit.net");
 var latest = releases[0];
 Console.WriteLine(
     "The latest release is tagged at {0} and is named {1}", 
