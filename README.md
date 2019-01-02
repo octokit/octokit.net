@@ -77,8 +77,7 @@ for more details. All contributors are expected to follow our
 
 ## Problems?
 
-Octokit is 100% certified to be bug free. If you find an issue with our
-certification, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
+If you find an issue with our library, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
 and report the issue.
 
 Please be kind and search to see if the issue is already logged before creating
