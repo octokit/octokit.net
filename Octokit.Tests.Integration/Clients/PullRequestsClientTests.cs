@@ -16,6 +16,7 @@ public class PullRequestsClientTests : IDisposable
 
     const string branchName = "my-branch";
     const string otherBranchName = "my-other-branch";
+    const string labelName = "my-label";
 
     public PullRequestsClientTests()
     {
@@ -120,6 +121,52 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
         Assert.Equal(1, pullRequests[0].Assignees.Count);
         Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(Helper.UserName, _context.RepositoryName, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.True(pullRequests[0].Labels.Any(x => x.Name == labelName));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(_context.Repository.Id, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.True(pullRequests[0].Labels.Any(x => x.Name == labelName));
     }
 
     [IntegrationTest]
