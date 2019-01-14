@@ -37,7 +37,7 @@ The first step in the authentication process, is to generate a temporary JWT tok
 
 :bulb: There are several ways to generate JWT tokens in .NET and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
 
-:warning: GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
+:warning: GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
 
 ``` csharp
 // A time based JWT token, signed by the GitHub App's private certificate
@@ -68,7 +68,7 @@ In order to do more than top level calls, a `GitHubApp` needs to authenticate as
 
 :bulb: The example below includes a hardcoded Installation Id, but this would typically come from a webhook payload (so a GitHub App knows which Installation it needs to authenticate as, to deal with the received webhook).  See the Additional Notes section for more details on Installation Id's in webhooks.
 
-:warning: These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your appliction will need to handle this itself.
+:warning: These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
 
 ``` csharp
 // Create an Installation token for Insallation Id 123
@@ -98,7 +98,7 @@ That concludes the walkthrough!
 ## Additional Notes
 
 ### A Note on JWT Tokens
-Octokit.net aims to have no external dependencies, therefore we do not curently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
+Octokit.net aims to have no external dependencies, therefore we do not currently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
 
 Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
 
