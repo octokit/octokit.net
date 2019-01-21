@@ -12,4 +12,5 @@ dotnet restore
 
 echo "Executing Cake.Frosting build runner..."
 echo  "dotnet run -- $@"
-dotnet run -- "$@"
+# skip targeting .NET framework by engaging the NoFramework switch
+dotnet run -- --noframework=true "$@"

@@ -24,6 +24,8 @@ public class Context : FrostingContext
     public bool AppVeyor { get; set; }
     public bool TravisCI { get; set; }
 
+    public bool NoFramework { get; set; }
+
     public Project[] Projects { get; set; }
 
     public DotNetCoreTestSettings GetTestSettings()
