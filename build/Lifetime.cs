@@ -20,6 +20,11 @@ public class Lifetime : FrostingLifetime<Context>
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;
 
+        if (context.NoFramework && !context.IsLocalBuild)
+        {
+            context.Warning("NoFramework was specified on a non-local build. Artifacts may be versioned incorrectly!");
+        }
+
         context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;
         context.TravisCI = buildSystem.TravisCI.IsRunningOnTravisCI;
         context.IsTagged = IsBuildTagged(buildSystem);
