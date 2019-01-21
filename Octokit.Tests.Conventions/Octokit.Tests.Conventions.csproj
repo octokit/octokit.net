@@ -4,7 +4,7 @@
     <Description>Convention-based tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Conventions</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <TargetFrameworks>net46</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Conventions</AssemblyName>
     <PackageId>Octokit.Tests.Conventions</PackageId>
