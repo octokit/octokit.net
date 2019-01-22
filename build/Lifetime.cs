@@ -56,9 +56,16 @@ public class Lifetime : FrostingLifetime<Context>
         };
 
         // Install tools
-        context.Information("Installing tools...");
-        ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
-        ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
+        if (context.CoreOnly)
+        {
+            context.Information("Skipping tool installation for core-only build");
+        }
+        else
+        {
+            context.Information("Installing tools...");
+            ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
+            ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
+        }
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
