@@ -12,7 +12,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
         context.LinkSources = context.Argument("linkSources", false);
-        context.CoreOnly = context.Argument("CoreOnly", false);
+        context.CoreOnly = context.Argument("CoreOnly", !context.IsRunningOnWindows());
 
         context.Artifacts = "./packaging/";
 
