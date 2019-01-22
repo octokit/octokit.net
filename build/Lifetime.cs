@@ -76,6 +76,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Version suffix: {0}", context.Version.Suffix);
         context.Information("Configuration:  {0}", context.Configuration);
         context.Information("LinkSources:    {0}", context.LinkSources);
+        context.Information("CoreOnly:       {0}", context.CoreOnly);
         context.Information("Target:         {0}", context.Target);
         context.Information("AppVeyor:       {0}", context.AppVeyor);
         context.Information("TravisCI:       {0}", context.TravisCI);
