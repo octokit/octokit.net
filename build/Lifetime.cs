@@ -12,7 +12,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
         context.LinkSources = context.Argument("linkSources", false);
-        context.NoFramework = context.Argument("NoFramework", false);
+        context.CoreOnly = context.Argument("CoreOnly", false);
 
         context.Artifacts = "./packaging/";
 
@@ -20,9 +20,9 @@ public class Lifetime : FrostingLifetime<Context>
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;
 
-        if (context.NoFramework && !context.IsLocalBuild)
+        if (context.CoreOnly && !context.IsLocalBuild)
         {
-            context.Warning("NoFramework was specified on a non-local build. Artifacts may be versioned incorrectly!");
+            context.Warning("CoreOnly was specified on a non-local build. Artifacts may be versioned incorrectly!");
         }
 
         context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;

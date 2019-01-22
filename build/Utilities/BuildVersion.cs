@@ -30,7 +30,7 @@ public class BuildVersion
     public static BuildVersion Calculate(Context context)
     {
         context.Information("Calculating semantic version...");
-        if (context.NoFramework)
+        if (context.CoreOnly)
         {
             context.Information("Skipping GitVersion query for local build");
             return new BuildVersion("0.0.0", "dev");

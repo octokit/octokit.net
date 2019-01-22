@@ -23,7 +23,7 @@ public sealed class Package : FrostingTask<Context>
                     OutputDirectory = context.Artifacts,
                     ArgumentCustomization = args => args
                         .Append("/p:Version={0}", context.Version.GetSemanticVersion())
-                        .Append("/p:NoFramework={0}", context.NoFramework),
+                        .Append("/p:CoreOnly={0}", context.CoreOnly),
                 });
             }
         }
