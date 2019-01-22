@@ -212,6 +212,10 @@ namespace Octokit.Internal
                         return typeof(CheckSuiteEventPayload);
                     case "CommitCommentEvent":
                         return typeof(CommitCommentPayload);
+                    case "CreateEvent":
+                        return typeof(CreateEventPayload);
+                    case "DeleteEvent":
+                        return typeof(DeleteEventPayload);
                     case "ForkEvent":
                         return typeof(ForkEventPayload);
                     case "IssueCommentEvent":

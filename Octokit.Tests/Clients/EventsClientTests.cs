@@ -556,6 +556,8 @@ namespace Octokit.Tests.Clients
             {"CheckRunEvent", typeof(CheckRunEventPayload)},
             {"CheckSuiteEvent", typeof(CheckSuiteEventPayload)},
             {"CommitCommentEvent", typeof(CommitCommentPayload)},
+            {"CreateEvent", typeof(CreateEventPayload)},
+            {"DeleteEvent", typeof(DeleteEventPayload)},
             {"ForkEvent", typeof(ForkEventPayload)},
             {"IssueCommentEvent", typeof(IssueCommentPayload)},
             {"IssuesEvent", typeof(IssueEventPayload)},
@@ -621,6 +623,54 @@ namespace Octokit.Tests.Clients
 
             var payload = activities.FirstOrDefault().Payload as CommitCommentPayload;
             Assert.Equal(1337, payload.Comment.Id);
+        }
+
+        [Fact]
+        public async Task DeserializesCreateEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "CreateEvent" },
+                {
+                    "payload", new
+                    {
+                        @ref = "master",
+                        ref_type = "branch",
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as CreateEventPayload;
+            Assert.Equal("master", payload.Ref);
+            Assert.Equal(RefType.Branch, payload.RefType);
+        }
+
+        [Fact]
+        public async Task DeserializesDeleteEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "DeleteEvent" },
+                {
+                    "payload", new
+                    {
+                        @ref = "master",
+                        ref_type = "branch",
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as DeleteEventPayload;
+            Assert.Equal("master", payload.Ref);
+            Assert.Equal(RefType.Branch, payload.RefType);
         }
 
         [Fact]
