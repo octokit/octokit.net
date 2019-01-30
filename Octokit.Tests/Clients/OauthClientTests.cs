@@ -44,8 +44,10 @@ public class OauthClientTests
             var request = new OauthLoginRequest("secret")
             {
                 RedirectUri = new Uri("https://example.com/foo?foo=bar"),
+                Login = "johnDOE",
                 Scopes = { "foo", "bar" },
-                State = "canARY"
+                State = "canARY",
+                AllowSignup = false
             };
             var connection = Substitute.For<IConnection>();
             connection.BaseAddress.Returns(new Uri("https://api.github.com"));
@@ -54,7 +56,7 @@ public class OauthClientTests
             var result = client.GetGitHubLoginUrl(request);
 
             Assert.Equal("/login/oauth/authorize", result.AbsolutePath);
-            Assert.Equal("?client_id=secret&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo%3Ffoo%3Dbar&scope=foo%2Cbar&state=canARY", result.Query);
+            Assert.Equal("?client_id=secret&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo%3Ffoo%3Dbar&login=johnDOE&scope=foo%2Cbar&state=canARY&allow_signup=false", result.Query);
         }
     }
 
