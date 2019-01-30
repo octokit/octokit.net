@@ -4,6 +4,7 @@
     <Description>Convention-based tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Conventions</AssemblyTitle>
     <Authors>GitHub</Authors>
+    <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net452</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
