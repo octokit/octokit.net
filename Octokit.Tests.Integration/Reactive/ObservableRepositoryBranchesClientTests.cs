@@ -38,6 +38,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Null(protection.Restrictions);
 
@@ -56,6 +57,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Null(protection.Restrictions);
 
@@ -76,6 +78,7 @@ namespace Octokit.Tests.Integration
                 Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
                 Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Equal(1, protection.Restrictions.Teams.Count);
                 Assert.Equal(0, protection.Restrictions.Users.Count);
@@ -96,6 +99,7 @@ namespace Octokit.Tests.Integration
                 Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
                 Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Equal(1, protection.Restrictions.Teams.Count);
                 Assert.Equal(0, protection.Restrictions.Users.Count);
@@ -135,7 +139,7 @@ namespace Octokit.Tests.Integration
                 var repoName = _userRepoContext.RepositoryName;
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(false, true),
+                    new BranchProtectionRequiredReviewsUpdate(false, true, 2),
                     false);
 
                 var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
@@ -146,6 +150,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Null(protection.Restrictions);
 
@@ -158,7 +163,7 @@ namespace Octokit.Tests.Integration
                 var repoId = _userRepoContext.RepositoryId;
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(false, true),
+                    new BranchProtectionRequiredReviewsUpdate(false, true, 2),
                     false);
 
                 var protection = await _client.UpdateBranchProtection(repoId, "master", update);
@@ -169,6 +174,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Null(protection.Restrictions);
 
@@ -182,7 +188,7 @@ namespace Octokit.Tests.Integration
                 var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false),
+                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                     new BranchProtectionPushRestrictionsUpdate(),
                     false);
 
@@ -194,6 +200,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Empty(protection.Restrictions.Teams);
                 Assert.Empty(protection.Restrictions.Users);
@@ -207,7 +214,7 @@ namespace Octokit.Tests.Integration
                 var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false),
+                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                     new BranchProtectionPushRestrictionsUpdate(),
                     false);
 
@@ -219,6 +226,7 @@ namespace Octokit.Tests.Integration
                 Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                 Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                 Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                 Assert.Empty(protection.Restrictions.Teams);
                 Assert.Empty(protection.Restrictions.Users);
@@ -391,26 +399,28 @@ namespace Octokit.Tests.Integration
             {
                 var repoOwner = _userRepoContext.RepositoryOwner;
                 var repoName = _userRepoContext.RepositoryName;
-                var update = new BranchProtectionRequiredReviewsUpdate(false, true);
+                var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
 
                 Assert.Null(requiredReviews.DismissalRestrictions);
                 Assert.False(requiredReviews.DismissStaleReviews);
                 Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
             }
 
             [IntegrationTest]
             public async Task UpdatesReviewEnforcementWithRepositoryId()
             {
                 var repoId = _userRepoContext.RepositoryId;
-                var update = new BranchProtectionRequiredReviewsUpdate(false, true);
+                var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
 
                 Assert.Null(requiredReviews.DismissalRestrictions);
                 Assert.False(requiredReviews.DismissStaleReviews);
                 Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
             }
 
             [IntegrationTest]
@@ -421,13 +431,15 @@ namespace Octokit.Tests.Integration
                 var update = new BranchProtectionRequiredReviewsUpdate(
                     new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
                     false,
-                    false);
+                    false,
+                    2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
 
                 Assert.Null(requiredReviews.DismissalRestrictions);
                 Assert.False(requiredReviews.DismissStaleReviews);
                 Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
             }
 
             [IntegrationTest]
@@ -437,13 +449,15 @@ namespace Octokit.Tests.Integration
                 var update = new BranchProtectionRequiredReviewsUpdate(
                     new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
                     false,
-                    false);
+                    false,
+                    2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
 
                 Assert.Null(requiredReviews.DismissalRestrictions);
                 Assert.False(requiredReviews.DismissStaleReviews);
                 Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
             }
 
             [IntegrationTest]
@@ -454,7 +468,8 @@ namespace Octokit.Tests.Integration
                 var update = new BranchProtectionRequiredReviewsUpdate(
                     new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
                     false,
-                    false);
+                    false,
+                    2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
 
@@ -471,7 +486,8 @@ namespace Octokit.Tests.Integration
                 var update = new BranchProtectionRequiredReviewsUpdate(
                     new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
                     false,
-                    false);
+                    false,
+                    2);
 
                 var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
 
@@ -479,6 +495,7 @@ namespace Octokit.Tests.Integration
                 Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                 Assert.False(requiredReviews.DismissStaleReviews);
                 Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
             }
 
             public void Dispose()
