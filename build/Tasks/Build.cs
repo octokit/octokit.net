@@ -14,6 +14,7 @@ public class Build : FrostingTask<Context>
             ArgumentCustomization = args => args
                 .Append("/p:Version={0}", context.Version.GetSemanticVersion())
                 .Append("/p:SourceLinkCreate={0}", context.LinkSources.ToString().ToLower())
+                .Append("/p:CoreOnly={0}", context.CoreOnly),
         });
     }
 }

@@ -12,12 +12,18 @@ public class Lifetime : FrostingLifetime<Context>
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
         context.LinkSources = context.Argument("linkSources", false);
+        context.CoreOnly = context.Argument("CoreOnly", !context.IsRunningOnWindows());
 
         context.Artifacts = "./packaging/";
 
         // Build system information.
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;
+
+        if (context.CoreOnly && !context.IsLocalBuild)
+        {
+            context.Warning("CoreOnly was specified on a non-local build. Artifacts may be versioned incorrectly!");
+        }
 
         context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;
         context.TravisCI = buildSystem.TravisCI.IsRunningOnTravisCI;
@@ -50,9 +56,16 @@ public class Lifetime : FrostingLifetime<Context>
         };
 
         // Install tools
-        context.Information("Installing tools...");
-        ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
-        ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
+        if (context.CoreOnly)
+        {
+            context.Information("Skipping tool installation for core-only build");
+        }
+        else
+        {
+            context.Information("Installing tools...");
+            ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
+            ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
+        }
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
@@ -63,6 +76,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Version suffix: {0}", context.Version.Suffix);
         context.Information("Configuration:  {0}", context.Configuration);
         context.Information("LinkSources:    {0}", context.LinkSources);
+        context.Information("CoreOnly:       {0}", context.CoreOnly);
         context.Information("Target:         {0}", context.Target);
         context.Information("AppVeyor:       {0}", context.AppVeyor);
         context.Information("TravisCI:       {0}", context.TravisCI);

@@ -6,7 +6,9 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
+    <TargetFrameworks>netstandard1.1</TargetFrameworks>
+    <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net45</TargetFrameworks>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>

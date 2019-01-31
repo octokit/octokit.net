@@ -19,4 +19,5 @@ before_script:
 
 script:
   - git fetch --unshallow --tags
-  - ./build.sh --linksources=true --verbosity=verbose
+  # disengage core only switch because mono ships .NETFramework targets
+  - ./build.sh --coreonly=false --linksources=true --verbosity=verbose

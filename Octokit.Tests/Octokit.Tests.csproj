@@ -4,7 +4,9 @@
     <Description>Tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net452</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests</AssemblyName>
     <PackageId>Octokit.Tests</PackageId>
