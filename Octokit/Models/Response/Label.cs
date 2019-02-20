@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -8,8 +8,9 @@ namespace Octokit
     {
         public Label() { }
 
-        public Label(string url, string name, string nodeId, string color, string description, bool @default)
+        public Label(int id, string url, string name, string nodeId, string color, string description, bool @default)
         {
+            Id = id;
             Url = url;
             Name = name;
             NodeId = nodeId;
@@ -17,6 +18,11 @@ namespace Octokit
             Description = description;
             Default = @default;
         }
+
+        /// <summary>
+        /// Id of the label
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// Url of the label
