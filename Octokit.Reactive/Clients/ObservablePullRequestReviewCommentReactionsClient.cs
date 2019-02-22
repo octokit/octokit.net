@@ -32,10 +32,16 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>        
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
+            return GetAll(owner, name, number, ApiOptions.None);
+        }
+
+        public IObservable<Reaction> GetAll(string owner, string name, int number, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -46,7 +52,21 @@ namespace Octokit.Reactive
         /// <param name="number">The comment id</param>        
         public IObservable<Reaction> GetAll(long repositoryId, int number)
         {
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+            return GetAll(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all reactions for a specified Pull Request Review Comment.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        public IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReaction(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
