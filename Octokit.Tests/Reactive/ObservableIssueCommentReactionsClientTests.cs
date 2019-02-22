@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlTypes;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;

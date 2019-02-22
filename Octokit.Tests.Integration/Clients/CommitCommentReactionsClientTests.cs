@@ -61,7 +61,7 @@ public class CommitCommentReactionsClientTests
             var newReaction = new NewReaction(ReactionType.Confused);
             var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
 
-            var reactions = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id);    
+            var reactions = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             Assert.NotEmpty(reactions);
 
