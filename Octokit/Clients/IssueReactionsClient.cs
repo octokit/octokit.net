@@ -25,10 +25,24 @@ namespace Octokit
         /// <param name="number">The issue id</param>        
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
+            return GetAll(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all reactions for a specified Issue
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -39,7 +53,21 @@ namespace Octokit
         /// <param name="number">The issue id</param>        
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
         {
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(repositoryId, number), AcceptHeaders.ReactionsPreview);
+            return GetAll(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all reactions for a specified Issue
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
