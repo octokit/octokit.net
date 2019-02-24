@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        IObservable<IReadOnlyList<Migration>> GetAll(
+        IObservable<Migration> GetAll(
             string org);
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organization of which to list migrations.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        IObservable<IReadOnlyList<Migration>> GetAll(
+        IObservable<Migration> GetAll(
             string org,
             ApiOptions options);
 

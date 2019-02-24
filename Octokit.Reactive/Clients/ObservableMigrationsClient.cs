@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -15,6 +16,7 @@ namespace Octokit.Reactive
     public class ObservableMigrationsClient : IObservableMigrationsClient
     {
         private readonly IMigrationsClient _client;
+        private readonly IConnection _connection;
 
         /// <summary>
         /// Instantiates a GitHub Migrations API client.
@@ -25,6 +27,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Migration.Migrations;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -50,14 +53,16 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public IObservable<IReadOnlyList<Migration>> GetAll(string org)
+        public IObservable<Migration> GetAll(string org)
         {
             return GetAll(org, ApiOptions.None);
         }
 
-        public IObservable<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
+        public IObservable<Migration> GetAll(string org, ApiOptions options)
         {
-            return _client.GetAll(org, options).ToObservable();
+            Ensure.ArgumentNotNull(options, nameof(options));
+            
+            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, AcceptHeaders.MigrationsApiPreview, options);
         }
 
         /// <summary>

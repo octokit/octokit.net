@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NSubstitute;
 using Octokit.Reactive;
+using Octokit.Reactive.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Reactive
@@ -46,7 +48,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableMigrationsClient(github);
 
                 client.GetAll("fake");
-                github.Migration.Migrations.Received(1).GetAll("fake", Args.ApiOptions);
+                github.Received().Migration.Migrations.GetAll("fake", Args.ApiOptions);
             }
 
             [Fact]
@@ -61,7 +63,8 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAll("fake", options);
-                github.Migration.Migrations.Received(1).GetAll("fake", options);
+
+                github.Received().Migration.Migrations.GetAll("fake", options);
             }
         }
 
