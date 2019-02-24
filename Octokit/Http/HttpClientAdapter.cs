@@ -32,7 +32,7 @@ namespace Octokit.Internal
             // 
             // .NET Frameworks less than 4.6 did not enable TLS1.2 by default
             //
-            // Eventhough this is an AppDomain wide setting, the decision was made for Octokit to
+            // Even though this is an AppDomain wide setting, the decision was made for Octokit to
             // ensure that TLS1.2 is enabled so that existing applications using Octokit did not need to
             // make changes outside Octokit to continue to work with GitHub Api
             //
