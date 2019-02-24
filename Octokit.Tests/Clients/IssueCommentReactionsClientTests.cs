@@ -89,6 +89,15 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
             }
+
+            [Fact]
+            public async Task EnsuresNonNullArgumentsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new IssueCommentReactionsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, 1, null));
+            }
         }
 
         public class TheCreateMethod

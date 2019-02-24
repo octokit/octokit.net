@@ -85,6 +85,15 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
             }
+
+            [Fact]
+            public void EnsuresNonNullArgumentsWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(1, 1, null));
+            }
         }
 
         public class TheCreateMethod

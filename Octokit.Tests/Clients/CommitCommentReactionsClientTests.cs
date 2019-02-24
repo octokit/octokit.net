@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -88,6 +89,15 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNotNullArgumentsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitCommentReactionsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, 1, null));
             }
         }
 
