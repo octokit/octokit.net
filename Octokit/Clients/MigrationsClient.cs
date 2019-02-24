@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -47,13 +48,28 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public async Task<List<Migration>> GetAll(string org)
+        public async Task<IReadOnlyList<Migration>> GetAll(string org)
+        {
+            return await GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of the most recent migrations of the the organization.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
+        /// </remarks>
+        /// <param name="org">The organization of which to list migrations.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Get<List<Migration>>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
+            return await ApiConnection.GetAll<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview, options).ConfigureAwait(false);
         }
 
         /// <summary>
