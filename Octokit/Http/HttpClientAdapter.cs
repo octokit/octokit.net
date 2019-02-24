@@ -34,7 +34,7 @@ namespace Octokit.Internal
             //
             // Even though this is an AppDomain wide setting, the decision was made for Octokit to
             // ensure that TLS1.2 is enabled so that existing applications using Octokit did not need to
-            // make changes outside Octokit to continue to work with GitHub Api
+            // make changes outside Octokit to continue to work with GitHub API
             //
             // *Update*
             // .NET Framework 4.7 introduced a new value (SecurityProtocolType.SystemDefault = 0)
