@@ -28,7 +28,7 @@ namespace Octokit.Internal
             Ensure.ArgumentNotNull(getHandler, nameof(getHandler));
 
 #if HAS_SERVICEPOINTMANAGER
-            // GitHub Api requires TLS1.2 as of Febryary 2018
+            // GitHub API requires TLS1.2 as of February 2018
             // 
             // .NET Frameworks less than 4.6 did not enable TLS1.2 by default
             //
