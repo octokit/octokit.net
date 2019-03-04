@@ -463,7 +463,7 @@ namespace Octokit.Tests.Clients
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
             }
 
             [Fact]
