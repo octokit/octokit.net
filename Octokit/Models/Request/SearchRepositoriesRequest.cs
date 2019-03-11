@@ -313,16 +313,16 @@ namespace Octokit
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(CultureInfo.InvariantCulture, ">{0:DateTimePattern}", date);
+                    query = date.ToString($">{DatePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format(CultureInfo.InvariantCulture, "<{0:DateTimePattern}", date);
+                    query = date.ToString($"<{DatePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, "<={0:DateTimePattern}", date);
+                    query = date.ToString($"<={DatePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, ">={0:DateTimePattern}", date);
+                    query = date.ToString($">={DatePattern}", CultureInfo.InvariantCulture);
                     break;
             }
         }
@@ -333,29 +333,36 @@ namespace Octokit
         [Obsolete("This constructor doesn't use the time component of the specified DateTime. Please use the overload accepting a DateTimeOffset, which also supports time.")]
         public DateRange(DateTime from, DateTime to) 
         {
-            query = string.Format(CultureInfo.InvariantCulture, "{0:DateTimePattern}..{1:DateTimePattern}", from, to);
+            query = $"{from.ToString(DatePattern, CultureInfo.InvariantCulture)}..{to.ToString(DatePattern, CultureInfo.InvariantCulture)}";
         }
 
+        /// <summary>
+        /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> date and time values.
+        /// </summary>
         public DateRange(DateTimeOffset from, DateTimeOffset to)
         {
-            query = string.Format(CultureInfo.InvariantCulture, "{0:DateTimePatten}..{1:DateTimePatten}", from, to);
+            query = $"{from.ToString(DateTimePattern, CultureInfo.InvariantCulture)}..{to.ToString(DateTimePattern, CultureInfo.InvariantCulture)}";
         }
 
+        /// <summary>
+        /// Matches repositories with regards to the <param name="dateTime"/>.
+        /// We will use the <param name="op"/> to see what operator will be applied to the date qualifier
+        /// </summary>
         public DateRange(DateTimeOffset dateTime, SearchQualifierOperator op)
         {
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = string.Format(CultureInfo.InvariantCulture, ">{0:DateTimePatten}", dateTime);
+                    query = dateTime.ToString($">{DateTimePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = string.Format(CultureInfo.InvariantCulture, "<{0:DateTimePatten}", dateTime);
+                    query = dateTime.ToString($"<{DateTimePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, "<={0:DateTimePatten}", dateTime);
+                    query = dateTime.ToString($"<={DateTimePattern}", CultureInfo.InvariantCulture);
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = string.Format(CultureInfo.InvariantCulture, ">={0:DateTimePatten}", dateTime);
+                    query = dateTime.ToString($">={DateTimePattern}", CultureInfo.InvariantCulture);
                     break;
             }
         }
