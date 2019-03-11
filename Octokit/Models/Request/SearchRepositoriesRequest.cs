@@ -460,7 +460,7 @@ namespace Octokit
         ColdFusion,
         CommonLisp,
         Coq,
-        [Parameter(Value = "C++")]
+        [Parameter(Value = "cpp")]
         CPlusPlus,
         [Parameter(Value = "CSharp")]
         CSharp,
