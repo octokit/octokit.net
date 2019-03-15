@@ -143,6 +143,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), listCollaboratorRequest.ToParametersDictionary(), AcceptHeaders.OrganizationMembershipPreview, options);
@@ -160,6 +161,7 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<User> GetAll(long repositoryId, ListCollaboratorRequest listCollaboratorRequest, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), listCollaboratorRequest.ToParametersDictionary(), AcceptHeaders.OrganizationMembershipPreview, options);
