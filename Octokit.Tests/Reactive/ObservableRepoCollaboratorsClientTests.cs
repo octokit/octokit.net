@@ -40,14 +40,18 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, name));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, null));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, new ListCollaboratorRequest(), null));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, new ListCollaboratorRequest(), null));
             }
 
             [Fact]
             public void EnsuresNonEmptyArguments()
             {
                 Assert.Throws<ArgumentException>(() => _client.GetAll("", name));
+                Assert.Throws<ArgumentException>(() => _client.GetAll("", name, new ListCollaboratorRequest()));
                 Assert.Throws<ArgumentException>(() => _client.GetAll(owner, ""));
+                Assert.Throws<ArgumentException>(() => _client.GetAll(owner, "", new ListCollaboratorRequest()));
             }
 
             [Fact]
@@ -57,6 +61,10 @@ namespace Octokit.Tests.Reactive
                     async whitespace => await _client.GetAll(whitespace, name));
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.GetAll(owner, whitespace));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.GetAll(whitespace, name, new ListCollaboratorRequest()));
+                await AssertEx.ThrowsWhenGivenWhitespaceArgument(
+                    async whitespace => await _client.GetAll(owner, whitespace, new ListCollaboratorRequest()));
             }
 
             [Fact]
@@ -67,8 +75,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -79,8 +87,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -96,11 +104,11 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                _client.GetAll(owner, name, options);
+                _client.GetAll(owner, name, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -108,11 +116,11 @@ namespace Octokit.Tests.Reactive
                     StartPage = 1
                 };
 
-                _client.GetAll(owner, name, options);
+                _client.GetAll(owner, name, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -120,11 +128,11 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                _client.GetAll(owner, name, options);
+                _client.GetAll(owner, name, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
             }
 
             [Fact]
@@ -140,11 +148,11 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                _client.GetAll(repositoryId, options);
+                _client.GetAll(repositoryId, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -152,11 +160,11 @@ namespace Octokit.Tests.Reactive
                     StartPage = 1
                 };
 
-                _client.GetAll(repositoryId, options);
+                _client.GetAll(repositoryId, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -164,11 +172,11 @@ namespace Octokit.Tests.Reactive
                     PageCount = 1
                 };
 
-                _client.GetAll(repositoryId, options);
+                _client.GetAll(repositoryId, new ListCollaboratorRequest(), options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
             }
         }
 

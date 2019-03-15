@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -9,22 +10,38 @@ using Octokit.Tests.Integration.Helpers;
 
 public class ObservableRepositoryCollaboratorClientTests
 {
+    static async Task AcceptInvitation(IGitHubClient github, IGitHubClient github2, long repositoryId, string user)
+    {
+        var invitations = await github.Repository.Invitation.GetAllForRepository(repositoryId);
+        await github2.Repository.Invitation.Accept(invitations.First(i => i.Invitee.Login == user).Id);        
+    }
+
     public class TheGetAllMethod
     {
-        [IntegrationTest]
+        readonly IGitHubClient github;
+        readonly IObservableRepoCollaboratorsClient client;
+
+        readonly IGitHubClient github2;
+
+        public TheGetAllMethod()
+        {
+            github = Helper.GetAuthenticatedClient();
+            client = new ObservableRepoCollaboratorsClient(github);
+
+            github2 = Helper.GetAuthenticatedClient(true);
+        }
+
+        [DualAccountTest]
         public async Task ReturnsAllCollaborators()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
             {
-                var fixture = new ObservableRepoCollaboratorsClient(github);
-
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName).ToList();
+                var collaborators = await client.GetAll(context.RepositoryOwner, context.RepositoryName).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(2, collaborators.Count);
                 Assert.NotNull(collaborators[0].Permissions);
@@ -32,18 +49,15 @@ public class ObservableRepositoryCollaboratorClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfCollaboratorsWithoutStart()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
             {
-                var fixture = new ObservableRepoCollaboratorsClient(github);
-
                 // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
                 var options = new ApiOptions
                 {
@@ -51,24 +65,21 @@ public class ObservableRepositoryCollaboratorClientTests
                     PageCount = 1
                 };
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
+                var collaborators = await client.GetAll(context.RepositoryOwner, context.RepositoryName, new ListCollaboratorRequest(), options).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfCollaboratorsWithStart()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
             {
-                var fixture = new ObservableRepoCollaboratorsClient(github);
-
                 // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
                 var options = new ApiOptions
                 {
@@ -77,24 +88,21 @@ public class ObservableRepositoryCollaboratorClientTests
                     StartPage = 2
                 };
 
-                var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
+                var collaborators = await client.GetAll(context.RepositoryOwner, context.RepositoryName, new ListCollaboratorRequest(), options).ToList();
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsDistinctResultsBasedOnStartPage()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
             {
-                var fixture = new ObservableRepoCollaboratorsClient(github);
-
                 // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
                 var startOptions = new ApiOptions
                 {
@@ -102,7 +110,7 @@ public class ObservableRepositoryCollaboratorClientTests
                     PageCount = 1
                 };
 
-                var firstPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, startOptions).ToList();
+                var firstPage = await client.GetAll(context.RepositoryOwner, context.RepositoryName, new ListCollaboratorRequest(), startOptions).ToList();
 
                 var skipStartOptions = new ApiOptions
                 {
@@ -111,7 +119,7 @@ public class ObservableRepositoryCollaboratorClientTests
                     StartPage = 2
                 };
 
-                var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions).ToList();
+                var secondPage = await client.GetAll(context.RepositoryOwner, context.RepositoryName, new ListCollaboratorRequest(), skipStartOptions).ToList();
 
                 Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             }
@@ -120,20 +128,30 @@ public class ObservableRepositoryCollaboratorClientTests
 
     public class TheIsCollaboratorMethod
     {
-        [IntegrationTest]
+        readonly IGitHubClient github;
+        readonly IObservableRepoCollaboratorsClient client;
+
+        readonly IGitHubClient github2;
+
+        public TheIsCollaboratorMethod()
+        {
+            github = Helper.GetAuthenticatedClient();
+            client = new ObservableRepoCollaboratorsClient(github);
+
+            github2 = Helper.GetAuthenticatedClient(true);
+        }
+
+        [DualAccountTest]
         public async Task ReturnsTrueIfUserIsCollaborator()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-
-            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
             {
-                var fixture = new ObservableRepoCollaboratorsClient(github);
-
                 // add a collaborator
-                fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
-                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                var isCollab = await client.IsCollaborator(context.RepositoryOwner, context.RepositoryName, collaborator);
 
                 Assert.True(isCollab);
             }
@@ -150,7 +168,7 @@ public class ObservableRepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-
+                
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Read, permission.Permission);
@@ -173,39 +191,47 @@ public class ObservableRepositoryCollaboratorClientTests
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsWritePermissionForCollaborator()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
+            var github2 = Helper.GetAuthenticatedClient(true);
+
+            var collaborator = Helper.UserName2;
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-
+                
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, collaborator);
 
                 Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
         }
 
-        [IntegrationTest]
+        [DualAccountTest]
         public async Task ReturnsWritePermissionForCollaboratorWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
+            var github2 = Helper.GetAuthenticatedClient(true);
+
+            var collaborator = Helper.UserName2;
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-
+                
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
+                var permission = await fixture.ReviewPermission(context.RepositoryId, collaborator);
 
                 Assert.Equal(PermissionLevel.Write, permission.Permission);
             }
