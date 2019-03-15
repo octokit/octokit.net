@@ -28,6 +28,18 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        IObservable<User> GetAll(string owner, string name, ListCollaboratorRequest listCollaboratorRequest);
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<User> GetAll(long repositoryId);
@@ -38,11 +50,23 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        IObservable<User> GetAll(long repositoryId, ListCollaboratorRequest listCollaboratorRequest);
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<User> GetAll(string owner, string name, ApiOptions options);
+        IObservable<User> GetAll(string owner, string name, ListCollaboratorRequest listCollaboratorRequest, ApiOptions options);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -51,9 +75,10 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<User> GetAll(long repositoryId, ApiOptions options);
+        IObservable<User> GetAll(long repositoryId, ListCollaboratorRequest listCollaboratorRequest, ApiOptions options);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
