@@ -100,6 +100,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), listCollaboratorRequest.ToParametersDictionary(), AcceptHeaders.OrganizationMembershipPreview, options);
