@@ -50,6 +50,52 @@ public class ObservableRepositoryCollaboratorClientTests
         }
 
         [DualAccountTest]
+        public async Task ReturnsOutsideCollaborators()
+        {
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                // add a collaborator
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                var collaborators = await client.GetAll(context.RepositoryOwner, context.RepositoryName, listCollaboratorRequest).ToList();
+                Assert.NotNull(collaborators);
+                Assert.Equal(1, collaborators.Count);
+                Assert.NotNull(collaborators[0].Permissions);
+                Assert.Equal(collaborator, collaborators[0].Login);
+            }
+        }
+
+        [DualAccountTest]
+        public async Task ReturnsDirectCollaborators()
+        {
+            var collaborator = Helper.UserName2;
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                // add a collaborator
+                await client.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
+                await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Direct
+                };
+
+                var collaborators = await client.GetAll(context.RepositoryOwner, context.RepositoryName, listCollaboratorRequest).ToList();
+                Assert.NotNull(collaborators);
+                Assert.Equal(1, collaborators.Count);
+                Assert.NotNull(collaborators[0].Permissions);
+                Assert.Equal(collaborator, collaborators[0].Login);
+            }
+        }
+
+        [DualAccountTest]
         public async Task ReturnsCorrectCountOfCollaboratorsWithoutStart()
         {
             var collaborator = Helper.UserName2;
