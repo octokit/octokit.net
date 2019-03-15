@@ -70,6 +70,25 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAll(owner, name, new ListCollaboratorRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<User> GetAll(long repositoryId)
@@ -91,6 +110,22 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
             
             return GetAll(repositoryId, listCollaboratorRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAll(repositoryId, new ListCollaboratorRequest(), options);
         }
 
         /// <summary>
