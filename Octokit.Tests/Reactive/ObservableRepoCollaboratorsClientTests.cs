@@ -136,6 +136,55 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestAndApiOptions()
+            {
+                var expectedUrl = string.Format("repos/{0}/{1}/collaborators", owner, name);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                // all properties are setted => only 2 options (StartPage, PageSize) in dictionary
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                _client.GetAll(owner, name, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3 && dictionary["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json");
+
+                // StartPage is setted => only 1 option (StartPage) in dictionary
+                options = new ApiOptions
+                {
+                    StartPage = 1
+                };
+
+                _client.GetAll(owner, name, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2 && dictionary["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json");
+
+                // PageCount is setted => none of options in dictionary
+                options = new ApiOptions
+                {
+                    PageCount = 1
+                };
+
+                _client.GetAll(owner, name, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1 && dictionary["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
             public void RequestsCorrectUrlWithApiOptionsAndRepositoryId()
             {
                 var expectedUrl = string.Format("repositories/{0}/collaborators", repositoryId);
@@ -176,6 +225,55 @@ namespace Octokit.Tests.Reactive
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                         Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1 && dictionary["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestApiOptionsAndRepositoryId()
+            {
+                var expectedUrl = string.Format("repositories/{0}/collaborators", repositoryId);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                // all properties are setted => only 2 options (StartPage, PageSize) in dictionary
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                _client.GetAll(repositoryId, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3 && dictionary["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json");
+
+                // StartPage is setted => only 1 option (StartPage) in dictionary
+                options = new ApiOptions
+                {
+                    StartPage = 1
+                };
+
+                _client.GetAll(repositoryId, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2 && dictionary["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json");
+
+                // PageCount is setted => none of options in dictionary
+                options = new ApiOptions
+                {
+                    PageCount = 1
+                };
+
+                _client.GetAll(repositoryId, listCollaboratorRequest, options);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1 && dictionary["affiliation"] == "outside"),
                         "application/vnd.github.korra-preview+json");
             }
         }

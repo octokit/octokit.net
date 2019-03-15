@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -68,7 +69,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAll("owner", "test", new ListCollaboratorRequest(), options);
+                client.GetAll("owner", "test", options);
 
                 connection.Received()
                     .GetAll<User>(
@@ -76,6 +77,64 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         "application/vnd.github.korra-preview+json",
                         options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                client.GetAll("owner", "test", listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestAndApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("owner", "test", listCollaboratorRequest, options);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
+
+                client.GetAll("owner", "test", listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -97,6 +156,55 @@ namespace Octokit.Tests.Clients
                     .GetAll<User>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                client.GetAll(1, listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestApiOptionsAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll(1, listCollaboratorRequest, options);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
                         "application/vnd.github.korra-preview+json",
                         options);
             }
