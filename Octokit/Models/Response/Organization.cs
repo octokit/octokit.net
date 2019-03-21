@@ -27,7 +27,7 @@ namespace Octokit
         /// <summary>
         /// Default permission level members have for organization repositories.
         /// </summary>
-        public string DefaultRepositoryPermission { get; protected set; }
+        public StringEnum<DefaultRepositoryPermission> DefaultRepositoryPermission { get; protected set; }
 
         /// <summary>
         /// Toggles the ability of non-admin organization members to create repositories.
