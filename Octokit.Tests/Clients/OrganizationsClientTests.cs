@@ -30,7 +30,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("orgName");
 
-                connection.Received().Get<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgName"));
+                connection.Received().Get<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/orgName"), 
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
             [Fact]
@@ -54,7 +57,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUser("username");
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), Args.ApiOptions);
+                connection.Received().GetAll<Organization>(Arg.Is<Uri>(
+                    u => u.ToString() == "users/username/orgs"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json", 
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -72,7 +79,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUser("username", options);
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), options);
+                connection.Received().GetAll<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json", 
+                    options);
             }
 
             [Fact]
@@ -100,7 +111,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrent();
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "user/orgs"), Args.ApiOptions);
+                connection.Received().GetAll<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/orgs"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json", 
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -118,7 +133,11 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrent(options);
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "user/orgs"), options);
+                connection.Received().GetAll<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "user/orgs"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json", 
+                    options);
             }
 
             [Fact]
@@ -141,7 +160,10 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll();
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations"));
+                connection.Received().GetAll<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "organizations"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
             [Fact]
@@ -154,7 +176,10 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(request);
 
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "organizations?since=1"));
+                connection.Received().GetAll<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "organizations?since=1"),
+                    null, 
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
             [Fact]
@@ -177,7 +202,10 @@ namespace Octokit.Tests.Clients
 
                 await client.Update("initrode", new OrganizationUpdate());
 
-                connection.Received().Patch<Organization>(Arg.Is<Uri>(u => u.ToString() == "orgs/initrode"), Args.OrganizationUpdate);
+                connection.Received().Patch<Organization>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/initrode"), 
+                    Args.OrganizationUpdate,
+                    "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
             [Fact]
