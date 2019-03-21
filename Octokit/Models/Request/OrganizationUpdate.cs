@@ -52,6 +52,11 @@ namespace Octokit
         /// Toggles the ability of non-admin organization members to create repositories.
         /// </summary>
         public bool MembersCanCreateRepositories { get; set; }
+        
+        /// <summary>
+        /// Specifies which types of repositories non-admin organization members can create. 
+        /// </summary>
+        public MembersAllowedRepositoryCreationType MembersAllowedRepositoryCreationType { get; set; }
 
         internal string DebuggerDisplay
         {

@@ -48,7 +48,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
+            return ApiConnection.Get<Organization>(ApiUrls.Organization(org), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview), options);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview), options);
         }
 
 
@@ -110,7 +110,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll()
         {
-            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations(), AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Octokit
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
-            return ApiConnection.GetAll<Organization>(url);
+            return ApiConnection.GetAll<Organization>(url, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Octokit
 
             var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
 
-            return ApiConnection.Patch<Organization>(updateUri, updateRequest);
+            return ApiConnection.Patch<Organization>(updateUri, updateRequest, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
     }
 }
