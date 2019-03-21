@@ -162,7 +162,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Organization>(
                     Arg.Is<Uri>(u => u.ToString() == "organizations"),
-                    null, 
                     "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
@@ -178,7 +177,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Organization>(
                     Arg.Is<Uri>(u => u.ToString() == "organizations?since=1"),
-                    null, 
                     "application/vnd.github.korra-preview+json,application/vnd.github.surtur-preview+json");
             }
 
