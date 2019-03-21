@@ -29,7 +29,7 @@ namespace Octokit.Tests.Integration
             return new Credentials(githubUsername, githubPassword);
         });
 
-        private static readonly Lazy<Credentials> _credentialsSecondUserThunk = new Lazy<Credentials>(() =>
+        static readonly Lazy<Credentials> _credentialsSecondUserThunk = new Lazy<Credentials>(() =>
         {
             var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME_2");
             UserName2 = githubUsername;

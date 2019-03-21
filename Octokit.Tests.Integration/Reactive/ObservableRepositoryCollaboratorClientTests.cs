@@ -13,7 +13,7 @@ public class ObservableRepositoryCollaboratorClientTests
     static async Task AcceptInvitation(IGitHubClient github, IGitHubClient github2, long repositoryId, string user)
     {
         var invitations = await github.Repository.Invitation.GetAllForRepository(repositoryId);
-        await github2.Repository.Invitation.Accept(invitations.First(i => i.Invitee.Login == user).Id);        
+        await github2.Repository.Invitation.Accept(invitations.First(i => i.Invitee.Login == user).Id);
     }
 
     public class TheGetAllMethod
@@ -203,6 +203,7 @@ public class ObservableRepositoryCollaboratorClientTests
             }
         }
     }
+
     public class TheReviewPermissionMethod
     {
         [IntegrationTest]
@@ -214,7 +215,7 @@ public class ObservableRepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-                
+
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
                 Assert.Equal(PermissionLevel.Read, permission.Permission);
@@ -249,7 +250,7 @@ public class ObservableRepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-                
+
                 // add a collaborator
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
                 await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
@@ -272,7 +273,7 @@ public class ObservableRepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-                
+
                 // add a collaborator
                 await fixture.Add(context.RepositoryOwner, context.RepositoryName, collaborator);
                 await AcceptInvitation(github, github2, context.RepositoryId, collaborator);
