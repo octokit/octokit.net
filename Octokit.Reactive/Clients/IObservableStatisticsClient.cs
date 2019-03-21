@@ -6,16 +6,12 @@ namespace Octokit.Reactive
     /// <summary>
     /// A client for GitHub's Repository Statistics API.
     /// </summary>
+    /// <summary>
+    /// Note that the GitHub API uses caching on these endpoints,
+    /// see <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more details.
+    /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/statistics/">Repository Statistics API documentation</a> for more information.
-    /// </remarks>
-    /// <remarks>
-    /// Computing repository statistics is an expensive operation, so we try to return cached data whenever possible.
-    /// If the data hasn't been cached when you query a repository's statistics, you'll receive a 202 response; a background job is also fired to start compiling these statistics.
-    /// Give the job a few moments to complete, and then submit the request again.
-    /// If the job has completed, that request will receive a 200 response with the statistics in the response body.
-    /// Repository statistics are cached by the SHA of the repository's default branch, which is usually master; pushing to the default branch resets the statistics cache.
-    /// See <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more information.
     /// </remarks>
     public interface IObservableStatisticsClient
     {
