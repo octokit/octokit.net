@@ -223,6 +223,18 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [IntegrationTest]
+            public async Task GetsContentNonMasterWithRootPath()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octocat", "Spoon-Knife", "/", reference: "test-branch");
+                Assert.Equal(4, contents.Count);
+            }
+
+            [IntegrationTest]
             public async Task GetsDirectoryContentWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
