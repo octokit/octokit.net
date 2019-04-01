@@ -148,7 +148,7 @@ namespace Octokit
 
             if (Language != null)
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.ToParameter()));
             }
 
             if (User.IsNotBlank())
@@ -557,7 +557,7 @@ namespace Octokit
         ColdFusion,
         CommonLisp,
         Coq,
-        [Parameter(Value = "C++")]
+        [Parameter(Value = "cpp")]
         CPlusPlus,
         [Parameter(Value = "CSharp")]
         CSharp,
