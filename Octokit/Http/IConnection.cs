@@ -126,8 +126,9 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
+        /// <param name="parameters">Extra parameters for authentication.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters = null);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.

@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="newGist">The new gist to create</param>
         public Task<Gist> Create(NewGist newGist)
         {
-            Ensure.ArgumentNotNull(newGist, "newGist");
+            Ensure.ArgumentNotNull(newGist, nameof(newGist));
 
             //Required to create anonymous object to match signature of files hash.  
             // Allowing the serializer to handle Dictionary<string,NewGistFile> 
@@ -87,7 +87,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Delete(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return ApiConnection.Delete(ApiUrls.Gist(id));
         }
@@ -114,7 +114,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options);
         }
@@ -143,7 +143,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options);
@@ -169,7 +169,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), options);
         }
@@ -196,7 +196,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);
@@ -222,7 +222,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), options);
         }
@@ -249,7 +249,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
@@ -264,7 +264,7 @@ namespace Octokit
         /// <param name="user">The user</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, ApiOptions.None);
         }
@@ -279,8 +279,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options);
         }
@@ -295,7 +295,7 @@ namespace Octokit
         /// <param name="since">Only gists updated at or after this time are returned</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllForUser(user, since, ApiOptions.None);
         }
@@ -311,8 +311,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
             return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
@@ -327,7 +327,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task<IReadOnlyList<GistHistory>> GetAllCommits(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return GetAllCommits(id, ApiOptions.None);
         }
@@ -342,8 +342,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<GistHistory>> GetAllCommits(string id, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(id), options);
         }
@@ -357,7 +357,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task<IReadOnlyList<GistFork>> GetAllForks(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return GetAllForks(id, ApiOptions.None);
         }
@@ -372,8 +372,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<GistFork>> GetAllForks(string id, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(id), options);
         }
@@ -388,8 +388,8 @@ namespace Octokit
         /// <param name="gistUpdate">The update to the gist</param>
         public Task<Gist> Edit(string id, GistUpdate gistUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
-            Ensure.ArgumentNotNull(gistUpdate, "gistUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
+            Ensure.ArgumentNotNull(gistUpdate, nameof(gistUpdate));
 
             var filesAsJsonObject = new JsonObject();
             foreach (var kvp in gistUpdate.Files)
@@ -415,7 +415,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Star(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return ApiConnection.Put(ApiUrls.StarGist(id));
         }
@@ -429,7 +429,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public Task Unstar(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             return ApiConnection.Delete(ApiUrls.StarGist(id));
         }
@@ -443,7 +443,7 @@ namespace Octokit
         /// <param name="id">The id of the gist</param>
         public async Task<bool> IsStarred(string id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(id, "id");
+            Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
 
             try
             {

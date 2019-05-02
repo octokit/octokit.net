@@ -16,6 +16,7 @@ public class PullRequestsClientTests : IDisposable
 
     const string branchName = "my-branch";
     const string otherBranchName = "my-other-branch";
+    const string labelName = "my-label";
 
     public PullRequestsClientTests()
     {
@@ -120,6 +121,52 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
         Assert.Equal(1, pullRequests[0].Assignees.Count);
         Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(Helper.UserName, _context.RepositoryName, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.True(pullRequests[0].Labels.Any(x => x.Name == labelName));
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(_context.Repository.Id, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.True(pullRequests[0].Labels.Any(x => x.Name == labelName));
     }
 
     [IntegrationTest]
@@ -582,7 +629,7 @@ public class PullRequestsClientTests : IDisposable
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Ascending });
         Assert.Equal(pullRequest.Title, pullRequests[0].Title);
 
-        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest());
+        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Descending });
         Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
     }
 
@@ -731,7 +778,7 @@ public class PullRequestsClientTests : IDisposable
         Assert.True(ex.Message.StartsWith("Head branch was modified"));
     }
 
-    [IntegrationTest(Skip = "this PR is actually mergeable - rewrite the test")]
+    [IntegrationTest]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
@@ -749,6 +796,7 @@ public class PullRequestsClientTests : IDisposable
         var updatedPullRequest = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.False(updatedPullRequest.Mergeable);
+        Assert.Equal(updatedPullRequest.MergeableState, MergeableState.Dirty);
 
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
@@ -869,10 +917,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files("octokit", "octokit.net", 288);
@@ -893,10 +941,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files(7528679, 288);

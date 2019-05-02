@@ -1,7 +1,6 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
 using System.Reactive.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -18,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableProjectCardsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Project.Card;
             _connection = client.Connection;
@@ -46,11 +45,43 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<ProjectCard> GetAll(int columnId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAll(columnId, new ProjectCardRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="request">Used to filter the list of project cards returned</param>
+        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            return GetAll(columnId, request, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all cards.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="columnId">The id of the column</param>
+        /// <param name="request">Used to filter the list of project cards returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.ProjectCards(columnId);
 
-            return _connection.GetAndFlattenAllPages<ProjectCard>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<ProjectCard>(url, request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
         }
 
         /// <summary>
@@ -75,7 +106,7 @@ namespace Octokit.Reactive
         /// <param name="newProjectCard">The card to create</param>
         public IObservable<ProjectCard> Create(int columnId, NewProjectCard newProjectCard)
         {
-            Ensure.ArgumentNotNull(newProjectCard, "newProjectCard");
+            Ensure.ArgumentNotNull(newProjectCard, nameof(newProjectCard));
 
             return _client.Create(columnId, newProjectCard).ToObservable();
         }
@@ -90,7 +121,7 @@ namespace Octokit.Reactive
         /// <param name="projectCardUpdate">New values to update the card with</param>
         public IObservable<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
         {
-            Ensure.ArgumentNotNull(projectCardUpdate, "projectCardUpdate");
+            Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
             return _client.Update(id, projectCardUpdate).ToObservable();
         }
@@ -117,7 +148,7 @@ namespace Octokit.Reactive
         /// <param name="position">The position to move the card</param>
         public IObservable<bool> Move(int id, ProjectCardMove position)
         {
-            Ensure.ArgumentNotNull(position, "position");
+            Ensure.ArgumentNotNull(position, nameof(position));
 
             return _client.Move(id, position).ToObservable();
         }

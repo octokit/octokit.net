@@ -29,8 +29,8 @@ namespace Octokit
         /// </remarks>
         public Task<Page> Get(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, name));
         }
@@ -57,8 +57,8 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -86,9 +86,9 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryPageBuilds(owner, name);
             return ApiConnection.GetAll<PagesBuild>(endpoint, options);
@@ -104,7 +104,7 @@ namespace Octokit
         /// </remarks>
         public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryPageBuilds(repositoryId);
             return ApiConnection.GetAll<PagesBuild>(endpoint, options);
@@ -120,8 +120,8 @@ namespace Octokit
         /// </remarks>
         public Task<PagesBuild> GetLatest(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, name));
         }
@@ -148,8 +148,8 @@ namespace Octokit
         /// </remarks>
         public Task<PagesBuild> RequestPageBuild(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), AcceptHeaders.PagesApiPreview);
         }

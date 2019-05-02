@@ -1,3 +1,191 @@
+### New in 0.32.0 (released 09/09/2018)
+
+## Advisories and Breaking Changes
+
+- Due to upstream breaking changes in the CheckRuns API, using check runs against github.com will require using the new/renamed fields on `CheckRunAnnotation` response and `NewCheckRunAnnotation` request models.  However the old fields are maintained in octokit.net (marked as deprecated) to continue supporting GitHub Enterprise 2.14, which will not receive these changes.  Users of GHE 2.14 should use the old fields, whilst users of github.com should update to use the new fields
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Adjust GitHub App Installation Access Token route in line with [announced API changes](https://developer.github.com/changes/2018-08-16-renaming-and-deprecation-of-github-app-installation-access-token-route/) - [#1860](https://github.com/octokit/octokit.net/pull/1860) via [@ryangribble](https://github.com/ryangribble)
+- Implement additional endpoints for GitHub Apps to find installations for a given organization, repository or user - [#1854](https://github.com/octokit/octokit.net/pull/1854) via [@StanleyGoldman](https://github.com/StanleyGoldman), [@ryangribble](https://github.com/ryangribble)
+- Implement GitHub Apps Installation API to allow listing all repositories a GitHub App Installation or GitHub App authenticated user has access to - [#1854](https://github.com/octokit/octokit.net/pull/1854) via [@StanleyGoldman](https://github.com/StanleyGoldman), [@ryangribble](https://github.com/ryangribble)
+- Implement new/changed fields on `CheckRunAnnotation` response and `NewCheckRunAnnotation` request models - replace `Filename` with `Path`, `WarningLevel` with `AnnotationLevel` and add `StartColumn` and `EndColumn` - [#1857](https://github.com/octokit/octokit.net/pull/1857) via [@ryangribble](https://github.com/ryangribble)
+- Add new method `CheckSuitesClient.Rerequest()` and mark the old `CheckSuitesClient.Request()` method as deprecated (this will no longer function on github.com but will continue to be supported on GitHub Enterprise 2.14) - [#1857](https://github.com/octokit/octokit.net/pull/1857) via [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Adjust `StartedAt` and `Status` fields of `NewCheckRun` and `CheckRunUpdate` requests, to allow `null` values, avoiding resetting these to default values when not specified - [#1852](https://github.com/octokit/octokit.net/pull/1852) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Fixed code samples in GitHub Apps sample docs to use the correct sub client property name - [#1853](https://github.com/octokit/octokit.net/pull/1853) via [@d-a-s](https://github.com/d-a-s)
+
+
+### Milestone: None
+
+**Fixes**
+
+- `IssueLabelsClient.RemoveFromIssue()` no longer fails with a HTTP 400 "Bad Request" error from the GitHub Api - [#1868](https://github.com/octokit/octokit.net/pull/1868) via [@ryangribble](https://github.com/ryangribble)
+
+
+### New in 0.31.0 (released 21/07/2018)
+
+## Advisories and Breaking Changes
+
+- None
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Implemented Check Suites component of [New Checks Api (Public Beta)](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/) - [#1846](https://github.com/octokit/octokit.net/pull/1846) via [@ryangribble](https://github.com/ryangribble), [@Cyberboss](https://github.com/Cyberboss)
+- Implemented Check Runs component of [New Checks Api (Public Beta)](https://developer.github.com/changes/2018-05-07-new-checks-api-public-beta/) - [#1847](https://github.com/octokit/octokit.net/pull/1847) via [@ryangribble](https://github.com/ryangribble), [@Cyberboss](https://github.com/Cyberboss)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Add new `EventInfoState` values (`MarkedAsDuplicate`, `UnmarkedAsDuplicate` and `CommentDeleted`) - [#1818](https://github.com/octokit/octokit.net/pull/1818) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Add GraphQL NodeId property to all affected response models - [#1806](https://github.com/octokit/octokit.net/pull/1806) via [@ryangribble](https://github.com/ryangribble)
+- Implemented [New API parameters for Project Card archiving (Preview)](https://developer.github.com/changes/2018-06-27-project-card-archiving/) including `ProjectCard.Archived`, `ProjectCardUpdate.Archived` and new `ProjectCardRequest` request - [#1842](https://github.com/octokit/octokit.net/pull/1842) via [@ryangribble](https://github.com/ryangribble)
+- Implement support for [Archiving repositories](https://developer.github.com/changes/2017-11-08-archiving-repositories/) including adding `Archived` property to `Repository` response model, adding the ability to archive a repository via `UpdateRepository.Archived` request, and filtering repo/issues searches with `SearchRepositoriesRequest.Archived` and `SearchIssuesRequest.Archived` - [#1845](https://github.com/octokit/octokit.net/pull/1845) via [@jguevara](https://github.com/jguevara), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- Fix exception in `RepositoriesClient.GetAllLanguages()` when no languages exist - [#1831](https://github.com/octokit/octokit.net/pull/1831) via [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Remove nuget dependency on `SourceLink.Create.GitHub` package - [#1822](https://github.com/octokit/octokit.net/pull/1822) via [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Clarify the rate limit `Reset` field is in UTC - [#1819](https://github.com/octokit/octokit.net/pull/1819) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Revise GitHub Apps walkthrough documentation to provide more clarity - [#1824](https://github.com/octokit/octokit.net/pull/1824) via [@ryangribble](https://github.com/ryangribble)
+
+
+### New in 0.30.0 (released 17/06/2018)
+
+## Advisories and Breaking Changes
+
+- Note that the `IssuesLabelsClient.RemoveFromIssue()` methods which previously had no return value, will now return an `IReadonlyList<Label>`.  This change is source compatible but not binary compatible.
+- The following `[Obsolete]` items have been removed from octokit, please use the indicated replacements:
+
+Client Methods
+- `OranizationsClient.GetAll()` => `GetAllForUser()`
+- `PullRequestsClient.Comment` => `ReviewComment`
+- `RepositoryBranchesClient.GetRequiredStatusChecksContexts()` => `GetAllRequiredStatusChecksContexts()`
+- `RepositoryBranchesClient.GetProtectedBranchTeamRestrictions()` => `GetAllProtectedBranchTeamRestrictions()`
+- `RepositoryBranchesClient.GetProtectedBranchUserRestrictions()` => `GetAllProtectedBranchUserRestrictions()`
+- `RepositoryTrafficClient.GetReferrers()` => `GetAllReferrers()`
+- `RepositoryTrafficClient.GetPaths()` => `GetAllPaths()`
+- `TeamsClient.GetMembership()` => `GetMembershipDetails()`
+- `TeamsClient.AddMembership()` => `AddOrEditMembership()`
+- `TeamsClient.AddMembership()` => `AddOrEditMembership()`
+
+Request Models
+- Remove unwanted `ctor`'s from `BranchProtectionUpdateSettings` and `UpdateTeam`
+- `NewIssue` `Assignee` => `Assignees`
+- `IssueUpdate` `Assignee` => `Assignees`
+
+Response Models
+- `TeamMembership` => `TeamMembershipDetails`
+
+## Release Notes
+
+### Milestone: GitHub Apps
+
+**Features/Enhancements**
+
+- Add initial support for GitHub Apps, see [the documentation](http://octokitnet.readthedocs.io/en/latest/github-apps/) for further information - [#1738](https://github.com/octokit/octokit.net/pull/1738) via [@itaibh](https://github.com/itaibh), [@adriangodong](https://github.com/adriangodong), [@ryangribble](https://github.com/ryangribble)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Added `PreviousFileName` field to `PullRequestFile` response - [#1770](https://github.com/octokit/octokit.net/pull/1770) via [@Kaneraz](https://github.com/Kaneraz)
+- Support `PullRequestReviewEvent` payloads using new response model `PullRequestReviewEventPayload` - [#1767](https://github.com/octokit/octokit.net/pull/1767) via [@Cyberboss](https://github.com/Cyberboss)
+- Add the ability to search issues by milestones, using `SearchIssuesRequest.Milestone` - [#1788](https://github.com/octokit/octokit.net/pull/1788) via [@mkArtak](https://github.com/mkArtak)
+- Add an overload to `IReleasesClient.Get()` that allows retrieving a `Release` by the associated tag - [#1793](https://github.com/octokit/octokit.net/pull/1793) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+- Add `MaintainerCanModify` field to `PullRequest` response and `NewPullRequest` and `UpdatePullRequest` requests - [#1771](https://github.com/octokit/octokit.net/pull/1771) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+- Enabled additional methods for preview "Nested Teams" support:
+  - `IRepositoriesClient.GetAllTeams()`
+  - `IRepositoryBranchesClient.GetAllProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.UpdateProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.AddProtectedBranchTeamRestrictions()`
+  - `IRepositoryBranchesClient.DeleteProtectedBranchTeamRestrictions()` - [#1795](https://github.com/octokit/octokit.net/pull/1795) via [@MikhailTymchukDX](https://github.com/MikhailTymchukDX), [@ryangribble](https://github.com/ryangribble)
+- Implement [Pre Receive Environments API (Preview)](https://developer.github.com/enterprise/2.13/v3/enterprise/pre_receive_environments/) for GitHub Enterprise - [#1796](https://github.com/octokit/octokit.net/pull/1796) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+- Implement support for [Label API Improvements](https://developer.github.com/changes/2018-02-22-label-description-search-preview/), including additional fields (`Description` and `Default`), emoji support and searching for labels (`SearchClient.SearchLabels()`) - [#1802](https://github.com/octokit/octokit.net/pull/1802) via [@jozefizso](https://github.com/jozefizso), [@ryangribble](https://github.com/ryangribble)
+
+**Housekeeping**
+
+- Correct missing/incorrect XmlDoc entries for parameters on some methods - [#1779](https://github.com/octokit/octokit.net/pull/1779) via [@ryangribble](https://github.com/ryangribble)
+- Parameter names in validation exception messages are now derived from the parameters themselves, rather than a literal string that was hopefully kept up to date - [#1781](https://github.com/octokit/octokit.net/pull/1781) via [@itaibh](https://github.com/itaibh)
+- Update Octokit build tooling to use .NET SDK 2.x (note that this is only an SDK tooling update - `Octokit` and `Octokit.Reactive` libraries are still targeting `netstandard1.1`) - [#1784](https://github.com/octokit/octokit.net/pull/1784) via [@ryangribble](https://github.com/ryangribble)
+- Removed a number of `[Obsolete]` methods, members and constructors inline with our standard deprecation schedule - [#1780](https://github.com/octokit/octokit.net/pull/1780) via [@ryangribble](https://github.com/ryangribble)
+- Ensure all response models have appropriate `ctor`'s to allow mocking, and enforce with a convention test - [#1798](https://github.com/octokit/octokit.net/pull/1798) via [@tasadar2](https://github.com/tasadar2), [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Tidy up code formatting in docs/samples - [#1791](https://github.com/octokit/octokit.net/pull/1791) via [@txdv](https://github.com/txdv)
+- Clarify the usage of `reference` parameter in `IReferencesClient` methods - [#1778](https://github.com/octokit/octokit.net/pull/1778) via [@Cyberboss](https://github.com/Cyberboss), [@ryangribble](https://github.com/ryangribble)
+- Improved the "Upload Release Asset" doc sample - [#1805](https://github.com/octokit/octokit.net/pull/1805) via [@mungojam](https://github.com/mungojam)
+- Fixed error in "Create Release" doc sample - [#1804](https://github.com/octokit/octokit.net/pull/1804) via [@mungojam](https://github.com/mungojam)
+
+
+### New in 0.29.0 (released 19/02/2018)
+
+## Advisories and Breaking Changes
+
+- On February 22, 2018 19:00 UTC, GitHub will [disable permanently the use of weak cryptogrpahic standards](https://developer.github.com/changes/2018-02-01-weak-crypto-removal-notice/).  Applications targeting .NET Framework 4.5.x will be affected, as that framework does not enable the now required protocol (TLS1.2) by default.  This octokit.net release will automatically enable this protocol, when the `GitHubClient` is constructed.  Note that applications targeting .NET Framework 4.6+ or .NET Core should already have TLS1.2 enabled by default, and this release does nothing with enabled protocols on those platforms.
+- Affected clients that are unable to update octokit.net, can include their own [code change](https://github.com/octokit/octokit.net/blob/41b4059c110a60aee86a912dda2987fecc5a3fcb/Octokit/Http/HttpClientAdapter.cs#L31) to enable TLS1.2 as an alternative to updating to this release.
+
+## Release Notes
+
+### Milestone: Missing Pagination Support
+
+**Features/Enhancements**
+
+- Add pagination support to `ReferencesClient` - [#1694](https://github.com/octokit/octokit.net/pull/1694) via [@gdziadkiewicz](https://github.com/gdziadkiewicz)
+- Add pagination support to `RepositoryInvitationsClient` - [#1692](https://github.com/octokit/octokit.net/pull/1692) via [@gdziadkiewicz](https://github.com/gdziadkiewicz)
+
+
+### Milestone: None
+
+**Features/Enhancements**
+
+- Add `InReplyToId` property to `PullRequestReviewComment` response model, to indicate when a comment is in reply to another comment - [#1715](https://github.com/octokit/octokit.net/pull/1715) via [@thedillonb](https://github.com/thedillonb)
+- Ensure the `netstandard1.1` targeted package is compatible with AWS Lambda `netcoreapp1.0` environment, by explicitly specifying the `NetStandard.Library` meta-package version - [#1713](https://github.com/octokit/octokit.net/pull/1713) via [@ryangribble](https://github.com/ryangribble)
+- Add `UpdatedAt` property to `Milestone` response model, to indicate when it was last updated - [#1722](https://github.com/octokit/octokit.net/pull/1722) via [@shaggygi](https://github.com/shaggygi), [@ryangribble](https://github.com/ryangribble)
+- Support `StatusEvent` payloads, using new response model `StatusEventPayload` - [#1732](https://github.com/octokit/octokit.net/pull/1732) via [@itaibh](https://github.com/itaibh)
+- Octokit now handles `DateTime` and `DateTimeOffset` response fields whose API response is in an unexpected Unix epoch time format - [#1735](https://github.com/octokit/octokit.net/pull/1735) via [@itaibh](https://github.com/itaibh)
+- Add `PullRequestReviewId ` property to `PullRequestReviewComment` response model, to indicate which `PullRequestReview` the comment is related to - [#1739](https://github.com/octokit/octokit.net/pull/1739) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Implement support for Repository Licenses, including adding `License` property to `Repository` response model, adding `SpxId` field to `LicenseMetadata` response model and a new `IRepositoriesClient.GetLicenseContents()` call - [#1630](https://github.com/octokit/octokit.net/pull/1630) via [@jozefizso](https://github.com/jozefizso), [@M-Zuber](https://github.com/M-Zuber), [@ryangribble](https://github.com/ryangribble)
+- Add `MergeableState` property to `PullRequest` response model, to indicate additional information about why a pull request can't be merged - [#1764](https://github.com/octokit/octokit.net/pull/1764) via [@ryangribble](https://github.com/ryangribble)
+- Add `Visibility` property to `EmailAddress` response model, to indicate whether a primary email address is `Public` or `Private` - [#1757](https://github.com/octokit/octokit.net/pull/1757) via [@asapferg](https://github.com/asapferg), [@ryangribble](https://github.com/ryangribble)
+
+**Fixes**
+
+- `OAuthClient` now handles GitHub Enterprise instances correctly in `CreateAccessToken()` and `GetGitHubLoginUrl()` methods - [#1726](https://github.com/octokit/octokit.net/pull/1726) via [@ryangribble](https://github.com/ryangribble)
+- Using the same `GitHubClient` instance from multiple threads in parallel will no longer throw occasional exceptions, after making the `GitHubSerializerStrategy` internals thread-safe - [#1748](https://github.com/octokit/octokit.net/pull/1748) via [@daveaglick](https://github.com/daveaglick)
+- Remove deserializer enum cache miss by correcting the case of `AccountType` parameter values - [#1759](https://github.com/octokit/octokit.net/pull/1759) via [@ryangribble](https://github.com/ryangribble)
+- Add TLS1.2 to enabled security protocols (.NET Framework 4.5 only) to avoid SSL connectivity errors when [GitHub deprecates weak algorithms](https://developer.github.com/changes/2018-02-01-weak-crypto-removal-notice/) on February 22 - [#1758](https://github.com/octokit/octokit.net/pull/1758) via [@ryangribble](https://github.com/ryangribble)
+- Deserializer now handles nullable `StringEnum<T>` members - [#1760](https://github.com/octokit/octokit.net/pull/1760) via [@ryangribble](https://github.com/ryangribble)
+
+**Documentation Updates**
+
+- Updated Rate Limits documentation and samples - [#1742](https://github.com/octokit/octokit.net/pull/1742) via [@mirsaeedi](https://github.com/mirsaeedi)
+- Update supported platforms in README.md to include `.NET Standard 1.1` - [#1744](https://github.com/octokit/octokit.net/pull/1744) via [@ShalokShalom](https://github.com/ShalokShalom), [@ryangribble](https://github.com/ryangribble)
+- Clarified `ProductHeaderValue` usage to align with GitHub API Docs - [#1751](https://github.com/octokit/octokit.net/pull/1751) via [@IAmHughes](https://github.com/IAmHughes), [@ryangribble](https://github.com/ryangribble)
+
 ### New in 0.28.0 (released 6/11/2017)
 
 ## Advisories and Breaking Changes
@@ -17,6 +205,7 @@
 **Housekeeping**
 
 - Correct rendering of `HttpClient` documentation page - [#1699](https://github.com/octokit/octokit.net/pull/1699) via [@scovetta](https://github.com/scovetta)
+
 
 ### New in 0.27.0 (released 7/10/2017)
 

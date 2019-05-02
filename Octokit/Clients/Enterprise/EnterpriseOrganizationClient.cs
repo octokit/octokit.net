@@ -24,7 +24,7 @@ namespace Octokit
         /// <returns>The <see cref="Organization"/> created.</returns>
         public Task<Organization> Create(NewOrganization newOrganization)
         {
-            Ensure.ArgumentNotNull(newOrganization, "newOrganization");
+            Ensure.ArgumentNotNull(newOrganization, nameof(newOrganization));
 
             var endpoint = ApiUrls.EnterpriseOrganization();
 

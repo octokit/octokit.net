@@ -14,7 +14,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryBranchesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Branch;
             _connection = client.Connection;
@@ -30,8 +30,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<Branch> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -59,9 +59,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Branch> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepoBranches(owner, name), options);
         }
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Branch> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepoBranches(repositoryId), options);
         }
@@ -93,9 +93,9 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         public IObservable<Branch> Get(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.Get(owner, name, branch).ToObservable();
         }
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         public IObservable<Branch> Get(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.Get(repositoryId, branch).ToObservable();
         }
@@ -127,9 +127,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetBranchProtection(owner, name, branch).ToObservable();
         }
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetBranchProtection(repositoryId, branch).ToObservable();
         }
@@ -161,10 +161,10 @@ namespace Octokit.Reactive
         /// <param name="update">Branch protection settings</param>
         public IObservable<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateBranchProtection(owner, name, branch, update).ToObservable();
         }
@@ -180,8 +180,8 @@ namespace Octokit.Reactive
         /// <param name="update">Branch protection settings</param>
         public IObservable<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateBranchProtection(repositoryId, branch, update).ToObservable();
         }
@@ -197,9 +197,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteBranchProtection(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteBranchProtection(owner, name, branch).ToObservable();
         }
@@ -214,7 +214,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteBranchProtection(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteBranchProtection(repositoryId, branch).ToObservable();
         }
@@ -230,9 +230,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetRequiredStatusChecks(owner, name, branch).ToObservable();
         }
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetRequiredStatusChecks(repositoryId, branch).ToObservable();
         }
@@ -264,10 +264,10 @@ namespace Octokit.Reactive
         /// <param name="update">Required status checks</param>
         public IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateRequiredStatusChecks(owner, name, branch, update).ToObservable();
         }
@@ -283,8 +283,8 @@ namespace Octokit.Reactive
         /// <param name="update">Required status checks</param>
         public IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(update, "update");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateRequiredStatusChecks(repositoryId, branch, update).ToObservable();
         }
@@ -300,9 +300,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>   
         public IObservable<bool> DeleteRequiredStatusChecks(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteRequiredStatusChecks(owner, name, branch).ToObservable();
         }
@@ -317,7 +317,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param> 
         public IObservable<bool> DeleteRequiredStatusChecks(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteRequiredStatusChecks(repositoryId, branch).ToObservable();
         }
@@ -331,40 +331,11 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllRequiredStatusChecksContexts instead")]
-        public IObservable<string> GetRequiredStatusChecksContexts(string owner, string name, string branch)
-        {
-            return GetAllRequiredStatusChecksContexts(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get the required status checks contexts for the specified branch
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllRequiredStatusChecksContexts instead")]
-        public IObservable<string> GetRequiredStatusChecksContexts(long repositoryId, string branch)
-        {
-            return GetAllRequiredStatusChecksContexts(repositoryId, branch);
-        }
-
-        /// <summary>
-        /// Get the required status checks contexts for the specified branch
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-required-status-checks-contexts-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
         public IObservable<string> GetAllRequiredStatusChecksContexts(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllRequiredStatusChecksContexts(owner, name, branch).ToObservable().SelectMany(x => x);
         }
@@ -379,7 +350,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<string> GetAllRequiredStatusChecksContexts(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllRequiredStatusChecksContexts(repositoryId, branch).ToObservable().SelectMany(x => x);
         }
@@ -396,10 +367,10 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to replace</param>
         public IObservable<string> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.UpdateRequiredStatusChecksContexts(owner, name, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -415,8 +386,8 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to replace</param>
         public IObservable<string> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.UpdateRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -433,10 +404,10 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to add</param>
         public IObservable<string> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.AddRequiredStatusChecksContexts(owner, name, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -452,8 +423,8 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to add</param>
         public IObservable<string> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.AddRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -470,10 +441,10 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to remove</param>
         public IObservable<string> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.DeleteRequiredStatusChecksContexts(owner, name, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -489,8 +460,8 @@ namespace Octokit.Reactive
         /// <param name="contexts">The contexts to remove</param>
         public IObservable<string> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(contexts, "contexts");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
             return _client.DeleteRequiredStatusChecksContexts(repositoryId, branch, contexts).ToObservable().SelectMany(x => x);
         }
@@ -506,9 +477,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetReviewEnforcement(owner, name, branch).ToObservable();
         }
@@ -523,7 +494,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetReviewEnforcement(repositoryId, branch).ToObservable();
         }
@@ -537,11 +508,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="update">The required pull request review settings</param>
         public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateReviewEnforcement(owner, name, branch, update).ToObservable();
@@ -555,9 +527,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="update">The required pull request review settings</param>
         public IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
             return _client.UpdateReviewEnforcement(repositoryId, branch, update).ToObservable();
@@ -574,9 +547,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveReviewEnforcement(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.RemoveReviewEnforcement(owner, name, branch).ToObservable();
         }
@@ -591,7 +564,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveReviewEnforcement(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.RemoveReviewEnforcement(repositoryId, branch).ToObservable();
         }
@@ -607,9 +580,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAdminEnforcement(owner, name, branch).ToObservable();
         }
@@ -624,7 +597,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAdminEnforcement(repositoryId, branch).ToObservable();
         }
@@ -640,9 +613,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.AddAdminEnforcement(owner, name, branch).ToObservable();
         }
@@ -657,7 +630,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.AddAdminEnforcement(repositoryId, branch).ToObservable();
         }
@@ -673,9 +646,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveAdminEnforcement(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.RemoveAdminEnforcement(owner, name, branch).ToObservable();
         }
@@ -690,7 +663,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> RemoveAdminEnforcement(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.RemoveAdminEnforcement(repositoryId, branch).ToObservable();
         }
@@ -706,9 +679,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetProtectedBranchRestrictions(owner, name, branch).ToObservable();
         }
@@ -723,7 +696,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetProtectedBranchRestrictions(repositoryId, branch).ToObservable();
         }
@@ -739,9 +712,9 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteProtectedBranchRestrictions(owner, name, branch).ToObservable();
         }
@@ -756,7 +729,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.DeleteProtectedBranchRestrictions(repositoryId, branch).ToObservable();
         }
@@ -770,40 +743,11 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
-        public IObservable<Team> GetProtectedBranchTeamRestrictions(string owner, string name, string branch)
-        {
-            return GetAllProtectedBranchTeamRestrictions(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchTeamRestrictions instead")]
-        public IObservable<Team> GetProtectedBranchTeamRestrictions(long repositoryId, string branch)
-        {
-            return GetAllProtectedBranchTeamRestrictions(repositoryId, branch);
-        }
-
-        /// <summary>
-        /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-team-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
         public IObservable<Team> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllProtectedBranchTeamRestrictions(owner, name, branch).ToObservable().SelectMany(x => x);
         }
@@ -818,7 +762,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<Team> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllProtectedBranchTeamRestrictions(repositoryId, branch).ToObservable().SelectMany(x => x);
         }
@@ -835,10 +779,10 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams with push access</param>
         public IObservable<Team> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.UpdateProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -854,8 +798,8 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams with push access</param>
         public IObservable<Team> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.UpdateProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -872,10 +816,10 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams with push access</param>
         public IObservable<Team> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.AddProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -891,8 +835,8 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams with push access</param>
         public IObservable<Team> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.AddProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -909,10 +853,10 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams to remove</param>
         public IObservable<Team> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.DeleteProtectedBranchTeamRestrictions(owner, name, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -928,8 +872,8 @@ namespace Octokit.Reactive
         /// <param name="teams">List of teams to remove</param>
         public IObservable<Team> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             return _client.DeleteProtectedBranchTeamRestrictions(repositoryId, branch, teams).ToObservable().SelectMany(x => x);
         }
@@ -943,41 +887,11 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
-        public IObservable<User> GetProtectedBranchUserRestrictions(string owner, string name, string branch)
-        {
-            return GetAllProtectedBranchUserRestrictions(owner, name, branch);
-        }
-
-        /// <summary>
-        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param>
-        [Obsolete("Please use GetAllProtectedBranchUserRestrictions instead")]
-
-        public IObservable<User> GetProtectedBranchUserRestrictions(long repositoryId, string branch)
-        {
-            return GetAllProtectedBranchUserRestrictions(repositoryId, branch);
-        }
-
-        /// <summary>
-        /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/repos/branches/#list-user-restrictions-of-protected-branch">API documentation</a> for more details
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>
         public IObservable<User> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllProtectedBranchUserRestrictions(owner, name, branch).ToObservable().SelectMany(x => x);
         }
@@ -992,7 +906,7 @@ namespace Octokit.Reactive
         /// <param name="branch">The name of the branch</param>
         public IObservable<User> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             return _client.GetAllProtectedBranchUserRestrictions(repositoryId, branch).ToObservable().SelectMany(x => x);
         }
@@ -1009,10 +923,10 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access</param>
         public IObservable<User> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.UpdateProtectedBranchUserRestrictions(owner, name, branch, users).ToObservable().SelectMany(x => x);
         }
@@ -1028,8 +942,8 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access</param>
         public IObservable<User> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.UpdateProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
         }
@@ -1046,10 +960,10 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access to add</param>
         public IObservable<User> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.AddProtectedBranchUserRestrictions(owner, name, branch, users).ToObservable().SelectMany(x => x);
         }
@@ -1065,8 +979,8 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access to add</param>
         public IObservable<User> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.AddProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
         }
@@ -1083,10 +997,10 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access to remove</param>
         public IObservable<User> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.DeleteProtectedBranchUserRestrictions(owner, name, branch, users).ToObservable().SelectMany(x => x);
         }
@@ -1102,8 +1016,8 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access to remove</param>
         public IObservable<User> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(branch, "branch");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.DeleteProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
         }

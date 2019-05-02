@@ -55,10 +55,32 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("fake");
 
-                connection.Received().Get<List<Migration>>(
+                connection.Received().GetAll<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    AcceptHeaders.MigrationsApiPreview,
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MigrationsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll("fake", options);
+
+                connection.Received().GetAll<Migration>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
+                    null,
+                    AcceptHeaders.MigrationsApiPreview,
+                    options);
             }
 
             [Fact]
@@ -68,6 +90,7 @@ namespace Octokit.Tests.Clients
                 var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
             }
         }

@@ -1,6 +1,10 @@
 # Octokit - GitHub API Client Library for .NET 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/master) [![Build Status]( https://travis-ci.org/octokit/octokit.net.svg)]( https://travis-ci.org/octokit/octokit.net) [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/master)
+[![Build Status]( https://travis-ci.org/octokit/octokit.net.svg)]( https://travis-ci.org/octokit/octokit.net)
+[![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![NuGet](http://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
+[![NuGet](http://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
 
 ![logo](octokit-dotnet_2.png)
 
@@ -20,9 +24,7 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 ## Supported Platforms
 
 * .NET 4.5 (Desktop / Server)
-* Xamarin.iOS / Xamarin.Android / Xamarin.Mac
-* Mono 3.x
-* Windows 8 / 8.1 Store Apps
+* [.NET Standard 1.1](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
 
 ## Getting Started
 
@@ -75,8 +77,7 @@ for more details. All contributors are expected to follow our
 
 ## Problems?
 
-Octokit is 100% certified to be bug free. If you find an issue with our
-certification, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
+If you find an issue with our library, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
 and report the issue.
 
 Please be kind and search to see if the issue is already logged before creating
@@ -94,7 +95,7 @@ problem.
 
 ## Related Projects
 
- - [ScriptCs.OctoKit](https://github.com/alfhenrik/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs 
+ - [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs 
  - [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
 
 ## Copyright and License

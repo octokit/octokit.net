@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
@@ -46,6 +48,19 @@ namespace Octokit
             if (value.TotalMilliseconds > 0) return;
 
             throw new ArgumentException("Timespan must be greater than zero", name);
+        }
+
+        /// <summary>
+        /// Checks an enumerable argument to ensure it isn't null or empty.
+        /// </summary>
+        /// <param name = "value">The argument value to check</param>
+        /// <param name = "name">The name of the argument</param>
+        public static void ArgumentNotNullOrEmptyEnumerable<T>([ValidatedNotNull]IEnumerable<T> value, string name)
+        {
+            ArgumentNotNull(value, name);
+            if (Enumerable.Any(value)) return;
+
+            throw new ArgumentException("List cannot be empty", name);
         }
     }
 

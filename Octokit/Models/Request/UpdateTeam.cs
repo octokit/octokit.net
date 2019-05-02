@@ -20,18 +20,6 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateTeam"/> class.
-        /// </summary>
-        /// <param name="name">The updated team name.</param>
-        /// <param name="permission">The permission.</param>
-        [Obsolete("This constructor will be removed for housekeeping purposes")]
-        public UpdateTeam(string name, Permission permission)
-        {
-            Name = name;
-            Permission = permission;
-        }
-
-        /// <summary>
         /// The name of the team (required).
         /// </summary>
         public string Name { get; private set; }

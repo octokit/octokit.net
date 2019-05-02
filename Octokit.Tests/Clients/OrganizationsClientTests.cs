@@ -44,52 +44,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetAllMethod
-        {
-            [Fact]
-            public async Task RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new OrganizationsClient(connection);
-
-                await client.GetAll("username");
-
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), Args.ApiOptions);
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithApiOptions()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new OrganizationsClient(connection);
-
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1,
-                    PageSize = 1
-                };
-
-                await client.GetAll("username", options);
-
-                connection.Received().GetAll<Organization>(Arg.Is<Uri>(u => u.ToString() == "users/username/orgs"), options);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new OrganizationsClient(connection);
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll((string)null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("username", null));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", ApiOptions.None));
-            }
-        }
-
         public class TheGetAllForUserMethod
         {
             [Fact]

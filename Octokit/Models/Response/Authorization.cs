@@ -14,7 +14,7 @@ namespace Octokit
         // TODO: I'd love to not need this
         public Authorization() { }
 
-        public Authorization(int id, string url, Application application, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
+        public Authorization(int id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
         {
             Id = id;
             Url = url;
@@ -22,6 +22,9 @@ namespace Octokit
 
             // TODO: testable ctor for new values
             //Token = token;
+            TokenLastEight = tokenLastEight;
+            HashedToken = hashedToken;
+            Fingerprint = fingerprint;
 
             Note = note;
             NoteUrl = noteUrl;

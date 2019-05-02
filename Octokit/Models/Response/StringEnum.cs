@@ -29,7 +29,9 @@ namespace Octokit
 
         public StringEnum(string stringValue)
         {
-            _stringValue = stringValue ?? string.Empty;
+            Ensure.ArgumentNotNullOrEmptyString(stringValue, nameof(stringValue));
+
+            _stringValue = stringValue;
             _parsedValue = null;
         }
 
@@ -64,12 +66,6 @@ namespace Octokit
                 // the value has been parsed already.
                 value = _parsedValue.Value;
                 return true;
-            }
-
-            if (string.IsNullOrEmpty(StringValue))
-            {
-                value = default(TEnum);
-                return false;
             }
 
             try

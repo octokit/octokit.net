@@ -11,8 +11,8 @@ namespace Octokit
     {
         public GitHubCommit() { }
 
-        public GitHubCommit(string url, string label, string @ref, string sha, User user, Repository repository, Author author, string commentsUrl, Commit commit, Author committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
-            : base(url, label, @ref, sha, user, repository)
+        public GitHubCommit(string nodeId, string url, string label, string @ref, string sha, User user, Repository repository, Author author, string commentsUrl, Commit commit, Author committer, string htmlUrl, GitHubCommitStats stats, IReadOnlyList<GitReference> parents, IReadOnlyList<GitHubCommitFile> files)
+            : base(nodeId, url, label, @ref, sha, user, repository)
         {
             Author = author;
             CommentsUrl = commentsUrl;

@@ -18,8 +18,6 @@ namespace Octokit
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
-        static readonly Uri _oauthAuthorize = new Uri("login/oauth/authorize", UriKind.Relative);
-        static readonly Uri _oauthAccessToken = new Uri("login/oauth/access_token", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
@@ -69,27 +67,6 @@ namespace Octokit
         public static Uri OrganizationRepositories(string organization)
         {
             return "orgs/{0}/repos".FormatUri(organization);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
-        public static Uri Organizations()
-        {
-            return _currentUserOrganizationsUrl;
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.
-        /// </summary>
-        /// <param name="login">The login for the user</param>
-        /// <returns></returns>
-        [Obsolete("Please use ApiUrls.UserOrganizations() instead. This method will be removed in a future version")]
-        public static Uri Organizations(string login)
-        {
-            return "users/{0}/orgs".FormatUri(login);
         }
 
         /// <summary>
@@ -218,6 +195,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns></returns>
+        public static Uri Releases(string owner, string name, string tag)
+        {
+            return "repos/{0}/{1}/releases/tags/{2}".FormatUri(owner, name, tag);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the latest release for the specified repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -287,10 +276,110 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        /// <returns></returns>
         public static Uri NotificationSubscription(int id)
         {
             return "notifications/threads/{0}/subscription".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for creating a new installation token.
+        /// </summary>
+        /// <param name="installationId">The Id of the GitHub App installation.</param>
+        public static Uri AccessTokens(long installationId)
+        {
+            return "app/installations/{0}/access_tokens".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App()
+        {
+            return "app".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that creates a github app.
+        /// </summary>
+        public static Uri App(string slug)
+        {
+            return "apps/{0}".FormatUri(slug);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations of the authenticated application.
+        /// </summary>
+        public static Uri Installations()
+        {
+            return "app/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists repositories accessible to the user for an installation..
+        /// </summary>
+        /// <param name="installationId">The id of the installation</param>
+        public static Uri UserInstallationRepositories(long installationId)
+        {
+            return "user/installations/{0}/repositories".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri RepoInstallation(string owner, string repo)
+        {
+            return "repos/{0}/{1}/installation".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the repository's installation information.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri RepoInstallation(long repositoryId)
+        {
+            return "repositories/{0}/installation".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the organization's installation information.
+        /// </summary>
+        public static Uri OrganizationInstallation(string organization)
+        {
+            return "orgs/{0}/installation".FormatUri(organization); ;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the user's installation information.
+        /// </summary>
+        public static Uri UserInstallation(string username)
+        {
+            return "users/{0}/installation".FormatUri(username);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single installation of the authenticated application.
+        /// </summary>
+        public static Uri Installation(long installationId)
+        {
+            return "app/installations/{0}".FormatUri(installationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the installations in repositories the user has explicit permission to access
+        /// </summary>
+        public static Uri UserInstallations()
+        {
+            return "user/installations".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all the repositores
+        /// </summary>
+        /// <returns></returns>
+        public static Uri InstallationRepositories()
+        {
+            return "installation/repositories".FormatUri();
         }
 
         /// <summary>
@@ -1751,6 +1840,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching labels
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchLabels()
+        {
+            return "search/labels".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1806,6 +1904,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository transfer.
+        /// </summary>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTransfer(string owner, string name)
+        {
+            return "repos/{0}/{1}/transfer".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for a repository transfer.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns></returns>
+        public static Uri RepositoryTransfer(long repositoryId)
+        {
+            return "repositories/{0}/transfer".FormatUri(repositoryId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository commits.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -1838,10 +1957,10 @@ namespace Octokit
         /// <returns></returns>
         public static Uri RepoCompare(string owner, string name, string @base, string head)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
             var encodedBase = @base.UriEncode();
             var encodedHead = head.UriEncode();
@@ -2175,7 +2294,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OauthAuthorize()
         {
-            return _oauthAuthorize;
+            return "login/oauth/authorize".FormatUri();
         }
 
         /// <summary>
@@ -2184,7 +2303,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OauthAccessToken()
         {
-            return _oauthAccessToken;
+            return "login/oauth/access_token".FormatUri();
         }
 
         /// <summary>
@@ -2473,6 +2592,42 @@ namespace Octokit
         public static Uri UserAdministrationPublicKeys(int keyId)
         {
             return "admin/keys/{0}".FormatUri(keyId);
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environments.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironments()
+        {
+            return "admin/pre-receive-environments".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environments.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironments(long environmentId)
+        {
+            return "admin/pre-receive-environments/{0}".FormatUri(environmentId);
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environment download status.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironmentDownload(long environmentId)
+        {
+            return "admin/pre-receive-environments/{0}/downloads".FormatUri(environmentId);
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive environment download status.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveEnvironmentDownloadStatus(long environmentId)
+        {
+            return "admin/pre-receive-environments/{0}/downloads/latest".FormatUri(environmentId);
         }
 
         /// <summary>
@@ -3054,6 +3209,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="tag">The tag of the release</param>
+        /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
+        public static Uri Releases(long repositoryId, string tag)
+        {
+            return "repositories/{0}/releases/tags/{1}".FormatUri(repositoryId, tag);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for a repository branch.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -3093,8 +3259,8 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for comparing two commits.</returns>
         public static Uri RepoCompare(long repositoryId, string @base, string head)
         {
-            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
             var encodedBase = @base.UriEncode();
             var encodedHead = head.UriEncode();
             return "repositories/{0}/compare/{1}...{2}".FormatUri(repositoryId, encodedBase, encodedHead);
@@ -3719,6 +3885,274 @@ namespace Octokit
         public static Uri ProjectCardMove(int id)
         {
             return "projects/columns/cards/{0}/moves".FormatUri(id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository's license requests.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> for repository's license requests.</returns>
+        public static Uri RepositoryLicense(string owner, string repo)
+        {
+            return "repos/{0}/{1}/license".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository's license requests.
+        /// </summary>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for repository's license requests.</returns>
+        public static Uri RepositoryLicense(long repositoryId)
+        {
+            return "repositories/{0}/license".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check run.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
+        public static Uri CheckRun(long repositoryId, long id)
+        {
+            return "repositories/{0}/check-runs/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check run.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
+        public static Uri CheckRun(string owner, string repo, long id)
+        {
+            return "repos/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check runs for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that handles the check runs for the repository.</returns>
+        public static Uri CheckRuns(long repositoryId)
+        {
+            return "repositories/{0}/check-runs".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check runs for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the check runs for the repository.</returns>
+        public static Uri CheckRuns(string owner, string repo)
+        {
+            return "repos/{0}/{1}/check-runs".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForReference(long repositoryId, string reference)
+        {
+            return "repositories/{0}/commits/{1}/check-runs".FormatUri(repositoryId, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForReference(string owner, string repo, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/check-runs".FormatUri(owner, repo, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(long repositoryId, long checkSuiteId)
+        {
+            return "repositories/{0}/check-suites/{1}/check-runs".FormatUri(repositoryId, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check runs for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that returns the check runs for the specified reference.</returns>
+        public static Uri CheckRunsForCheckSuite(string owner, string repo, long checkSuiteId)
+        {
+            return "repos/{0}/{1}/check-suites/{2}/check-runs".FormatUri(owner, repo, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(long repositoryId, long checkRunId)
+        {
+            return "repositories/{0}/check-runs/{1}/annotations".FormatUri(repositoryId, checkRunId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the annotations for the specified check run.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkRunId">The Id of the check run</param>
+        /// <returns>The <see cref="Uri"/> that returns the annotations for the specified check run.</returns>
+        public static Uri CheckRunAnnotations(string owner, string repo, long checkRunId)
+        {
+            return "repos/{0}/{1}/check-runs/{2}/annotations".FormatUri(owner, repo, checkRunId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check suite.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check suite.</returns>
+        public static Uri CheckSuite(long repositoryId, long id)
+        {
+            return "repositories/{0}/check-suites/{1}".FormatUri(repositoryId, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified check suite.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="id">The check run Id</param>
+        /// <returns>The <see cref="Uri"/> that returns the specified check suite.</returns>
+        public static Uri CheckSuite(string owner, string repo, long id)
+        {
+            return "repos/{0}/{1}/check-suites/{2}".FormatUri(owner, repo, id);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check suites for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check suites for the specified reference.</returns>
+        public static Uri CheckSuitesForReference(long repositoryId, string reference)
+        {
+            return "repositories/{0}/commits/{1}/check-suites".FormatUri(repositoryId, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check suites for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="reference">The git reference</param>
+        /// <returns>The <see cref="Uri"/> that returns the check suites for the specified reference.</returns>
+        public static Uri CheckSuitesForReference(string owner, string repo, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/check-suites".FormatUri(owner, repo, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suites for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suites for the repository.</returns>
+        public static Uri CheckSuites(long repositoryId)
+        {
+            return "repositories/{0}/check-suites".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suites for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suites for the repository.</returns>
+        public static Uri CheckSuites(string owner, string repo)
+        {
+            return "repos/{0}/{1}/check-suites".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
+        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
+        public static Uri CheckSuiteRequests(long repositoryId)
+        {
+            return "repositories/{0}/check-suite-requests".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
+        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
+        public static Uri CheckSuiteRequests(string owner, string repo)
+        {
+            return "repos/{0}/{1}/check-suite-requests".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
+        public static Uri CheckSuiteRerequest(long repositoryId, long checkSuiteId)
+        {
+            return "repositories/{0}/check-suites/{1}/rerequest".FormatUri(repositoryId, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="checkSuiteId">The Id of the check suite</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
+        public static Uri CheckSuiteRerequest(string owner, string repo, long checkSuiteId)
+        {
+            return "repos/{0}/{1}/check-suites/{2}/rerequest".FormatUri(owner, repo, checkSuiteId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite preferences for the repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite preferences for the repository.</returns>
+        public static Uri CheckSuitePreferences(long repositoryId)
+        {
+            return "repositories/{0}/check-suites/preferences".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the check suite preferences for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the check suite preferences for the repository.</returns>
+        public static Uri CheckSuitePreferences(string owner, string repo)
+        {
+            return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
         }
     }
 }

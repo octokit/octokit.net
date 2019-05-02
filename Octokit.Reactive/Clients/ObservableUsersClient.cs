@@ -10,7 +10,7 @@ namespace Octokit.Reactive
 
         public ObservableUsersClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.User;
 
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="login">The login name for the user</param>
         public IObservable<User> Get(string login)
         {
-            Ensure.ArgumentNotNull(login, "login");
+            Ensure.ArgumentNotNull(login, nameof(login));
 
             return _client.Get(login).ToObservable();
         }
@@ -50,7 +50,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="User"/></returns>
         public IObservable<User> Update(UserUpdate user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNull(user, nameof(user));
 
             return _client.Update(user).ToObservable();
         }

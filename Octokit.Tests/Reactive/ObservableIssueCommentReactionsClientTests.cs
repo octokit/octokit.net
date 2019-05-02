@@ -26,7 +26,25 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("fake", "repo", 42);
 
-                gitHubClient.Received().Reaction.IssueComment.GetAll("fake", "repo", 42);
+                gitHubClient.Received().Reaction.IssueComment.GetAll("fake", "repo", 42, Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentReactionsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll("fake", "repo", 42, options);
+
+                gitHubClient.Received().Reaction.IssueComment.GetAll("fake", "repo", 42, options);
             }
 
             [Fact]
@@ -37,7 +55,25 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1, 42);
 
-                gitHubClient.Received().Reaction.IssueComment.GetAll(1, 42);
+                gitHubClient.Received().Reaction.IssueComment.GetAll(1, 42, Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryIdApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentReactionsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll(1, 42, options);
+
+                gitHubClient.Received().Reaction.IssueComment.GetAll(1, 42, options);
             }
 
             [Fact]
@@ -48,9 +84,19 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
+            }
+
+            [Fact]
+            public void EnsuresArgumentsNotNullWithRepositoryId()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentReactionsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAll(1, 1, null));
             }
         }
 

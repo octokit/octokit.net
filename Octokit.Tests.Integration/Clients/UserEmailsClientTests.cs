@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration.Clients
 
         const string testEmailAddress = "hahaha-not-a-real-email@foo.com";
 
-        [IntegrationTest(Skip = "this isn't passing in CI - i hate past me right now")]
+        [IntegrationTest]
         public async Task CanAddAndDeleteEmail()
         {
             var github = Helper.GetAuthenticatedClient();

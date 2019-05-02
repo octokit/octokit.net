@@ -10,21 +10,29 @@ namespace Octokit
     {
         public IssueComment() { }
 
-        public IssueComment(int id, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user)
+        public IssueComment(int id, string nodeId, string url, string htmlUrl, string body, DateTimeOffset createdAt, DateTimeOffset? updatedAt, User user, ReactionSummary reactions, AuthorAssociation authorAssociation)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             HtmlUrl = htmlUrl;
             Body = body;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             User = user;
+            Reactions = reactions;
+            AuthorAssociation = authorAssociation;
         }
 
         /// <summary>
         /// The issue comment Id.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL for this issue comment.
@@ -56,6 +64,14 @@ namespace Octokit
         /// </summary>
         public User User { get; protected set; }
 
+        /// <summary>
+        /// The comment author association with repository.
+        /// </summary>
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
+
+        /// <summary>
+        /// The reaction summary for this comment.
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
 
         internal string DebuggerDisplay

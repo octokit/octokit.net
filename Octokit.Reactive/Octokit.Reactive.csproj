@@ -6,7 +6,9 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
+    <TargetFrameworks>netstandard1.1</TargetFrameworks>
+    <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net45</TargetFrameworks>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
@@ -16,6 +18,10 @@
     <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
     <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
     <Copyright>Copyright GitHub 2017</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,17 +35,14 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="3.1.0" />
+    <PackageReference Include="SourceLink.Create.GitHub" Version="2.8.2" PrivateAssets="all" />
+    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.8.2" />
+    <DotNetCliToolReference Include="dotnet-sourcelink" Version="2.8.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="SourceLink.Create.GitHub" Version="2.1.0" PrivateAssets="All" />
-    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.1.0" />
-    <DotNetCliToolReference Include="dotnet-sourcelink" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

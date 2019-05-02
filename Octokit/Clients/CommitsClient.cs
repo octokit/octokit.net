@@ -30,9 +30,9 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the commit</param>
         public Task<Commit> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Commit>(ApiUrls.Commit(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
         }
@@ -47,7 +47,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the commit</param>
         public Task<Commit> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Commit>(ApiUrls.Commit(repositoryId, reference));
         }
@@ -63,9 +63,9 @@ namespace Octokit
         /// <param name="commit">The commit to create</param>
         public Task<Commit> Create(string owner, string name, NewCommit commit)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commit, "commit");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(commit, nameof(commit));
 
             return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(owner, name), commit);
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="commit">The commit to create</param>
         public Task<Commit> Create(long repositoryId, NewCommit commit)
         {
-            Ensure.ArgumentNotNull(commit, "commit");
+            Ensure.ArgumentNotNull(commit, nameof(commit));
 
             return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(repositoryId), commit);
         }

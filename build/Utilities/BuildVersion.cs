@@ -29,10 +29,13 @@ public class BuildVersion
 
     public static BuildVersion Calculate(Context context)
     {
-        string version = null;
-        string semVersion = null;
-
         context.Information("Calculating semantic version...");
+        if (context.CoreOnly)
+        {
+            context.Information("Skipping GitVersion query for local build");
+            return new BuildVersion("0.0.0", "dev");
+        }
+
         if (!context.IsLocalBuild)
         {
             // Run to set the version properties inside the CI server
@@ -42,8 +45,8 @@ public class BuildVersion
         // Run in interactive mode to get the properties for the rest of the script
         var assertedversions = GitVersionRunner.Run(context, GitVersionOutput.Json);
         
-        version = assertedversions.MajorMinorPatch;
-        semVersion = assertedversions.LegacySemVerPadded;
+        var version = assertedversions.MajorMinorPatch;
+        var semVersion = assertedversions.LegacySemVerPadded;
 
         if (string.IsNullOrWhiteSpace(version))
         {

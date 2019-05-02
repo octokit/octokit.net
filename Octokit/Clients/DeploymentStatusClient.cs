@@ -29,8 +29,8 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, deploymentId, ApiOptions.None);
         }
@@ -62,9 +62,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                           null,
@@ -84,7 +84,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
         }
@@ -102,9 +102,9 @@ namespace Octokit
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                         newDeploymentStatus,
@@ -123,7 +123,7 @@ namespace Octokit
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public Task<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
-            Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
+            Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
                                                         newDeploymentStatus);

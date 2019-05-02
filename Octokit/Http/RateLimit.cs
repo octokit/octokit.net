@@ -25,22 +25,22 @@ namespace Octokit
 
         public RateLimit(IDictionary<string, string> responseHeaders)
         {
-            Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
+            Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
 
             Limit = (int)GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Limit");
             Remaining = (int)GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Remaining");
             ResetAsUtcEpochSeconds = GetHeaderValueAsInt32Safe(responseHeaders, "X-RateLimit-Reset");
         }
 
-        public RateLimit(int limit, int remaining, long reset)
+        public RateLimit(int limit, int remaining, long resetAsUtcEpochSeconds)
         {
-            Ensure.ArgumentNotNull(limit, "limit");
-            Ensure.ArgumentNotNull(remaining, "remaining");
-            Ensure.ArgumentNotNull(reset, "reset");
+            Ensure.ArgumentNotNull(limit, nameof(limit));
+            Ensure.ArgumentNotNull(remaining, nameof(remaining));
+            Ensure.ArgumentNotNull(resetAsUtcEpochSeconds, nameof(resetAsUtcEpochSeconds));
 
             Limit = limit;
             Remaining = remaining;
-            ResetAsUtcEpochSeconds = reset;
+            ResetAsUtcEpochSeconds = resetAsUtcEpochSeconds;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Octokit
 #if !NO_SERIALIZABLE
         protected RateLimit(SerializationInfo info, StreamingContext context)
         {
-            Ensure.ArgumentNotNull(info, "info");
+            Ensure.ArgumentNotNull(info, nameof(info));
 
             Limit = info.GetInt32("Limit");
             Remaining = info.GetInt32("Remaining");
@@ -88,7 +88,7 @@ namespace Octokit
         [SecurityCritical]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Ensure.ArgumentNotNull(info, "info");
+            Ensure.ArgumentNotNull(info, nameof(info));
 
             info.AddValue("Limit", Limit);
             info.AddValue("Remaining", Remaining);

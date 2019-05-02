@@ -39,6 +39,29 @@ namespace Octokit.Reactive
         IObservable<Unit> Delete(long repositoryId);
 
         /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
+        IObservable<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer);
+
+        /// <summary>
+        /// Transfers the ownership of the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/#transfer-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <returns>A <see cref="Repository"/></returns>
+        IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer);
+
+        /// <summary>
         /// Retrieves the <see cref="Repository"/> for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -465,6 +488,27 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
         IObservable<RepositoryTag> GetAllTags(long repositoryId, ApiOptions options);
+
+        /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        IObservable<RepositoryContentLicense> GetLicenseContents(string owner, string name);
+
+        /// <summary>
+        /// Get the contents of a repository's license
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
+        IObservable<RepositoryContentLicense> GetLicenseContents(long repositoryId);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>

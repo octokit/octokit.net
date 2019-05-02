@@ -41,8 +41,8 @@ namespace Octokit
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             Repos.Add(owner, name);
         }

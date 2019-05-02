@@ -1,3 +1,24 @@
+### Creating new pull request from a fork
+**Scenario:**  
+Creating a pull request from a fork/branch (head) and pulling into octokit.net/master (base)  
+When you are opening a PR against a repository within an organization, owner is the name of the organization
+In this scenario as we are merging to octokit/octokit.net:master, owner=octokit
+
+```csharp
+public async Task CreatePullRequestFromFork()
+{   
+    GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MyLib", "v2.0.0"));
+    ghClient.Credentials = new Credentials("apiToken");
+
+    NewPullRequest newPr = new NewPullRequest("PrTitle", "forkName:branchName", "master");
+    var octokitRepo = await ghClient.Repository.Get("octokit", "ocktokit.net");
+
+    var pullRequest = await ghClient.PullRequest.Create("octokit", "octokit.net", newPr);
+    // Or
+    var alternatePr = await ghClient.PullRequest.Create(octokitRepo.Id, newPr);
+}
+```
+
 **Scenario:** I have a lot of small pull requests to review, but things are a mess
 - old pull requests which might be superseded by new ones, and it's hard to see from
 the descriptions what the changes actually represent.

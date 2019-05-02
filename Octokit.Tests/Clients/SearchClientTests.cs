@@ -463,7 +463,7 @@ namespace Octokit.Tests.Clients
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
             }
 
             [Fact]
@@ -983,6 +983,8 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
+            #region The following tests do not support the time component or timezone and will be removed in a future release
+
             [Fact]
             public void TestingTheCreatedQualifier_GreaterThan()
             {
@@ -1192,6 +1194,222 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01"));
             }
+
+            #endregion
+
+            #region The following tests include support the time component and timezone
+
+            [Fact]
+            public void TestingTheCreatedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_BetweenDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.Between(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T02:04:06 +10:00..2014-02-02T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_BetweenDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.Between(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)), new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T02:04:06 +10:00..2014-02-02T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T02:04:06 +10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T02:04:06 +10:00"));
+            }
+
+            #endregion 
+
 
             [Fact]
             public void TestingTheCommentsQualifier_GreaterThan()
@@ -1673,6 +1891,112 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<RepositoryFormatException>(
                     async () => await client.SearchCode(request));
+            }
+        }
+
+        public class TheSearchLabelsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                client.SearchLabels(new SearchLabelsRequest("something", 1));
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchLabels(null));
+            }
+
+            [Fact]
+            public void TestingTheTermParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "created" &&
+                        d["order"] == "asc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheRepositoryIdParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
             }
         }
     }

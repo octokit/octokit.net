@@ -9,12 +9,18 @@ namespace Octokit
     {
         public GistFork() { }
 
-        public GistFork(User user, string url, DateTimeOffset createdAt)
+        public GistFork(string nodeId, User user, string url, DateTimeOffset createdAt)
         {
+            NodeId = nodeId;
             User = user;
             Url = url;
             CreatedAt = createdAt;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The <see cref="User"/> that created this <see cref="GistFork"/>

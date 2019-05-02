@@ -26,8 +26,8 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
         }
@@ -42,9 +42,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<User>> GetAll(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
         }
@@ -69,7 +69,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<User>> GetAll(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
         }
@@ -84,9 +84,9 @@ namespace Octokit
         /// <param name="users">List of logins of user will be requested for review</param>
         public async Task<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(owner, name, number);
             var response = await ApiConnection.Connection.Post<PullRequest>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
@@ -108,7 +108,7 @@ namespace Octokit
         /// <param name="users">List of logins of user will be requested for review</param>
         public async Task<PullRequest> Create(long repositoryId, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(repositoryId, number);
             var response = await ApiConnection.Connection.Post<PullRequest>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
@@ -131,9 +131,9 @@ namespace Octokit
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         public Task Delete(string owner, string name, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(owner, name, number), users, AcceptHeaders.PullRequestReviewsApiPreview);
         }
@@ -147,7 +147,7 @@ namespace Octokit
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         public Task Delete(long repositoryId, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(repositoryId, number), users, AcceptHeaders.PullRequestReviewsApiPreview);
         }

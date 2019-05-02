@@ -6,6 +6,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SourceInfo
     {
+        public SourceInfo() { }
+
+        public SourceInfo(User actor, int id, Issue issue, string url)
+        {
+            Actor = actor;
+            Id = id;
+            Issue = issue;
+            Url = url;
+        }
+
         public User Actor { get; protected set; }
         public int Id { get; protected set; }
         public Issue Issue { get; protected set; }

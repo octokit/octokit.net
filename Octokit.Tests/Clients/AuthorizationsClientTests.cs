@@ -172,7 +172,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("xyz")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("OAUTHSECRET")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",

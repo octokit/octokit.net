@@ -16,8 +16,8 @@ namespace Octokit
 
         public Participation(IEnumerable<int> all, IEnumerable<int> owner)
         {
-            Ensure.ArgumentNotNull(all, "all");
-            Ensure.ArgumentNotNull(owner, "owner");
+            Ensure.ArgumentNotNull(all, nameof(all));
+            Ensure.ArgumentNotNull(owner, nameof(owner));
 
             All = new ReadOnlyCollection<int>(all.ToList());
             Owner = new ReadOnlyCollection<int>(owner.ToList());

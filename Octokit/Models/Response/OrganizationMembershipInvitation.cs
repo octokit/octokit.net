@@ -12,9 +12,10 @@ namespace Octokit
         {
         }
 
-        public OrganizationMembershipInvitation(int id, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter)
+        public OrganizationMembershipInvitation(int id, string nodeId, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter)
         {
             Id = id;
+            NodeId = nodeId;
             Login = login;
             Email = email;
             Role = role;
@@ -23,6 +24,12 @@ namespace Octokit
         }
 
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
+
         public string Login { get; protected set; }
         public string Email { get; protected set; }
         public StringEnum<OrganizationMembershipRole> Role { get; protected set; }

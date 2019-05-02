@@ -17,7 +17,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, IEnumerable<string> topics)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, IEnumerable<string> topics)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -27,6 +27,7 @@ namespace Octokit
             SvnUrl = svnUrl;
             MirrorUrl = mirrorUrl;
             Id = id;
+            NodeId = nodeId;
             Owner = owner;
             Name = name;
             FullName = fullName;
@@ -45,6 +46,7 @@ namespace Octokit
             Permissions = permissions;
             Parent = parent;
             Source = source;
+            License = license;
             HasIssues = hasIssues;
             HasWiki = hasWiki;
             HasDownloads = hasDownloads;
@@ -54,6 +56,7 @@ namespace Octokit
             AllowRebaseMerge = allowRebaseMerge;
             AllowSquashMerge = allowSquashMerge;
             AllowMergeCommit = allowMergeCommit;
+            Archived = archived;
             Topics = new ReadOnlyCollection<string>(topics.ToList());
         }
 
@@ -72,6 +75,11 @@ namespace Octokit
         public string MirrorUrl { get; protected set; }
 
         public long Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         public User Owner { get; protected set; }
 
@@ -109,6 +117,8 @@ namespace Octokit
 
         public Repository Source { get; protected set; }
 
+        public LicenseMetadata License { get; protected set; }
+
         public bool HasIssues { get; protected set; }
 
         public bool HasWiki { get; protected set; }
@@ -126,6 +136,8 @@ namespace Octokit
         public int SubscribersCount { get; protected set; }
 
         public long Size { get; protected set; }
+
+        public bool Archived { get; protected set; }
 
         public IReadOnlyList<string> Topics { get; protected set; }
 

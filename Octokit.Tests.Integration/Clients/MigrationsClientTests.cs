@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
@@ -66,6 +65,61 @@ public class MigrationsClientTests : IDisposable
 
         Assert.NotNull(migrations);
         Assert.NotEqual(0, migrations.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMigrationsWithoutStart()
+    {
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1
+        };
+        
+        var migrations = await _gitHub.Migration.Migrations.GetAll(_orgName, options);
+
+        Assert.Equal(1, migrations.Count);
+    }
+    
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfMigrationsWithStart()
+    {
+        var options = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 2
+        };
+        
+        var migrations = await _gitHub.Migration.Migrations.GetAll(_orgName, options);
+
+        Assert.Equal(1, migrations.Count);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctMigrationsBasedOnStartPage()
+    {
+        var startOptions = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 1
+        };
+        
+        var firstPage = await _gitHub.Migration.Migrations.GetAll(_orgName, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageCount = 1,
+            PageSize = 1,
+            StartPage = 2
+        };
+        var secondPage = await _gitHub.Migration.Migrations.GetAll(_orgName, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+        Assert.NotEqual(firstPage[0].Repositories, secondPage[0].Repositories);
     }
 
     [IntegrationTest]

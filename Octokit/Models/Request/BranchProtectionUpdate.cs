@@ -68,21 +68,6 @@ namespace Octokit
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
-        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
-        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        [Obsolete("This constructor will be removed for housekeeping purposes, please use another ctor")]
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
-        {
-            RequiredStatusChecks = requiredStatusChecks;
-            RequiredPullRequestReviews = null;
-            Restrictions = restrictions;
-            EnforceAdmins = enforceAdmins;
-        }
-
-        /// <summary>
-        /// Create a BranchProtection update request
-        /// </summary>
-        /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, bool enforceAdmins)
@@ -199,10 +184,10 @@ namespace Octokit
         /// <summary>
         /// Specify teams (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
         /// </summary>
-        /// <param name="teams">Teams allowed to push to this branch</param>
+        /// <param name="teams">List of Team slugs allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             Teams = teams;
             Users = new BranchProtectionUserCollection();
@@ -211,10 +196,10 @@ namespace Octokit
         /// <summary>
         /// Specify people (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
         /// </summary>
-        /// <param name="users">Users allowed to push to this branch</param>
+        /// <param name="users">List of User logins allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = new BranchProtectionTeamCollection();
             Users = users;
@@ -223,24 +208,24 @@ namespace Octokit
         /// <summary>
         /// Specify teams and/or people (in addition to Administrators) allowed to push to this branch. Required status checks will still prevent these people from merging if the checks fail
         /// </summary>
-        /// <param name="teams">Teams allowed to push to this branch</param>
-        /// <param name="users">Users allowed to push to this branch</param>
+        /// <param name="teams">List of Team slugs allowed to push to this branch</param>
+        /// <param name="users">List of User logins allowed to push to this branch</param>
         public BranchProtectionPushRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = teams;
             Users = users;
         }
 
         /// <summary>
-        /// Teams allowed to push to this branch
+        /// List of Team slugs allowed to push to this branch
         /// </summary>
         public BranchProtectionTeamCollection Teams { get; private set; }
 
         /// <summary>
-        /// Users allowed to push to this branch
+        /// List of User logins allowed to push to this branch
         /// </summary>
         public BranchProtectionUserCollection Users { get; private set; }
 
@@ -303,10 +288,12 @@ namespace Octokit
         /// </summary>
         /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
         /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
-        public BranchProtectionRequiredReviewsUpdate(bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        /// <param name="requiredApprovingReviewCount">Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.</param>
+        public BranchProtectionRequiredReviewsUpdate(bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount)
         {
             DismissStaleReviews = dismissStaleReviews;
             RequireCodeOwnerReviews = requireCodeOwnerReviews;
+            RequiredApprovingReviewCount = requiredApprovingReviewCount;
         }
 
         /// <summary>
@@ -315,13 +302,15 @@ namespace Octokit
         /// <param name="dismissalRestrictions">Specify which users and teams can dismiss pull request reviews (applies only to Organization owned repositories).</param>
         /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
         /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
-        public BranchProtectionRequiredReviewsUpdate(BranchProtectionRequiredReviewsDismissalRestrictionsUpdate dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        /// <param name="requiredApprovingReviewCount">Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.</param>
+        public BranchProtectionRequiredReviewsUpdate(BranchProtectionRequiredReviewsDismissalRestrictionsUpdate dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount)
         {
             Ensure.ArgumentNotNull(dismissalRestrictions, nameof(dismissalRestrictions));
 
             DismissalRestrictions = dismissalRestrictions;
             DismissStaleReviews = dismissStaleReviews;
             RequireCodeOwnerReviews = requireCodeOwnerReviews;
+            RequiredApprovingReviewCount = requiredApprovingReviewCount;
         }
 
         /// <summary>
@@ -339,14 +328,20 @@ namespace Octokit
         /// </summary>
         public bool RequireCodeOwnerReviews { get; protected set; }
 
+        /// <summary>
+        /// Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.
+        /// </summary>
+        public int RequiredApprovingReviewCount { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2}",
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2} RequiredApprovingReviewCount: {3}",
                     DismissalRestrictions?.DebuggerDisplay ?? "disabled",
                     DismissStaleReviews,
-                    RequireCodeOwnerReviews);
+                    RequireCodeOwnerReviews,
+                    RequiredApprovingReviewCount);
             }
         }
     }
@@ -380,10 +375,10 @@ namespace Octokit
         /// <summary>
         /// Restrict dismissing reviews to the specified teams (in addition to Administrators).
         /// </summary>
-        /// <param name="teams">Teams allowed to dismiss reviews</param>
+        /// <param name="teams">List of Team slugs allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
 
             Teams = teams;
             Users = new BranchProtectionUserCollection();
@@ -392,10 +387,10 @@ namespace Octokit
         /// <summary>
         /// Restrict dismissing reviews to the specified people (in addition to Administrators).
         /// </summary>
-        /// <param name="users">Users allowed to dismiss reviews</param>
+        /// <param name="users">List of User logins allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = new BranchProtectionTeamCollection();
             Users = users;
@@ -404,24 +399,24 @@ namespace Octokit
         /// <summary>
         /// Restrict dismissing reviews to the specified teams and people (in addition to Administrators).
         /// </summary>
-        /// <param name="teams">Teams allowed to dismiss reviews</param>
-        /// <param name="users">Users allowed to dismiss reviews</param>
+        /// <param name="teams">List of Team slugs allowed to dismiss reviews</param>
+        /// <param name="users">List of User logins allowed to dismiss reviews</param>
         public BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(BranchProtectionTeamCollection teams, BranchProtectionUserCollection users)
         {
-            Ensure.ArgumentNotNull(teams, "teams");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(teams, nameof(teams));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             Teams = teams;
             Users = users;
         }
 
         /// <summary>
-        /// Teams allowed to dismiss reviews
+        /// List of Team slugs allowed to dismiss reviews
         /// </summary>
         public BranchProtectionTeamCollection Teams { get; private set; }
 
         /// <summary>
-        /// Users allowed to dismiss reviews
+        /// List of User logins allowed to dismiss reviews
         /// </summary>
         public BranchProtectionUserCollection Users { get; private set; }
 

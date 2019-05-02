@@ -211,6 +211,158 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheTransferMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(null, "name", transfer));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", null, transfer));
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer("owner", "name", null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArgumentsById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+                var repositoryId = 1;
+
+                await Assert.ThrowsAsync<ArgumentNullException>(
+                    () => client.Transfer(repositoryId, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var transfer = new RepositoryTransfer("newOwner");
+
+                await Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("", "name", transfer));
+                await Assert.ThrowsAsync<ArgumentException>(
+                    () => client.Transfer("owner", "", transfer));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/transfer"),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+                var repositoryId = 1;
+
+                await client.Transfer(repositoryId, transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/transfer"),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task SendsCorrectRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<RepositoryTransfer>(
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamIds)),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task SendsCorrectRequestById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+                var repositoryId = 1;
+
+                await client.Transfer(repositoryId, transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Is<RepositoryTransfer>(
+                            t => t.NewOwner == "newOwner" && object.Equals(teamId, t.TeamIds)),
+                        Arg.Any<string>());
+            }
+
+            [Fact]
+            public async Task SendsPreviewHeader()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+
+                await client.Transfer("owner", "name", transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Is<string>(
+                            s => s.Contains(AcceptHeaders.RepositoryTransferPreview)));
+            }
+
+            [Fact]
+            public async Task SendsPreviewHeaderById()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var teamId = new int[2] { 35, 42 };
+                var transfer = new RepositoryTransfer("newOwner", teamId);
+                var repositoryId = 1;
+
+                await client.Transfer(repositoryId, transfer);
+
+                connection.Received()
+                    .Post<Repository>(
+                        Arg.Any<Uri>(),
+                        Arg.Any<RepositoryTransfer>(),
+                        Arg.Is<string>(
+                            s => s.Contains(AcceptHeaders.RepositoryTransferPreview)));
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
@@ -261,7 +413,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
                     null,
-                    "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -275,7 +427,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1"),
                     null,
-                    "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
+                    "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -302,10 +454,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(
-                        u => u.ToString() == "repositories"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories"), null, "application/vnd.github.drax-preview+json");
             }
         }
 
@@ -320,10 +469,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic(new PublicRepositoryRequest(364L));
 
                 connection.Received()
-                    .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"), null, "application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -335,10 +481,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllPublic(new PublicRepositoryRequest(364L));
 
                 connection.Received()
-                    .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json");
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories?since=364"), null, "application/vnd.github.drax-preview+json");
             }
         }
 
@@ -353,11 +496,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "user/repos"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
-                        Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -377,7 +516,7 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"),
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        "application/vnd.github.drax-preview+json",
                         Args.ApiOptions);
             }
 
@@ -400,7 +539,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "private" && d["sort"] == "full_name"),
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        "application/vnd.github.drax-preview+json",
                         Args.ApiOptions);
             }
 
@@ -424,7 +563,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"),
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        "application/vnd.github.drax-preview+json",
                         Args.ApiOptions);
             }
 
@@ -446,7 +585,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["visibility"] == "private"),
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        "application/vnd.github.drax-preview+json",
                         Args.ApiOptions);
             }
 
@@ -469,7 +608,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d =>
                             d["affiliation"] == "owner" && d["sort"] == "full_name"),
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
+                        "application/vnd.github.drax-preview+json",
                         Args.ApiOptions);
             }
         }
@@ -485,11 +624,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForUser("username");
 
                 connection.Received()
-                    .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "users/username/repos"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
-                        Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "users/username/repos"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -518,11 +653,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(
-                        Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"),
-                        null,
-                        "application/vnd.github.polaris-preview+json, application/vnd.github.mercy-preview+json",
-                        Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -788,6 +919,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        "application/vnd.github.hellcat-preview+json",
                         Args.ApiOptions);
             }
 
@@ -823,6 +956,8 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Team>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/teams"),
+                        null,
+                        "application/vnd.github.hellcat-preview+json",
                         options);
             }
 
@@ -864,6 +999,42 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("", "repo", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllTeams("owner", "", ApiOptions.None));
+            }
+        }
+
+        public class TheGetLicenseContentsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetLicenseContents("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryContentLicense>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/license"), null, "application/vnd.github.drax-preview+json");
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetLicenseContents(1);
+
+                connection.Received()
+                    .Get<RepositoryContentLicense>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/license"), null, "application/vnd.github.drax-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLicenseContents(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetLicenseContents("owner", null));
             }
         }
 
@@ -963,7 +1134,7 @@ namespace Octokit.Tests.Clients
                 client.Edit("owner", "repo", update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json");
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]
@@ -976,7 +1147,7 @@ namespace Octokit.Tests.Clients
                 client.Edit(1, update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json");
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repositories/1"), Arg.Any<RepositoryUpdate>(), "application/vnd.github.polaris-preview+json,application/vnd.github.drax-preview+json");
             }
 
             [Fact]

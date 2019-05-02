@@ -18,7 +18,7 @@ namespace Octokit
                     Position = "bottom";
                     break;
                 case ProjectCardPosition.After:
-                    Ensure.ArgumentNotNull(cardId, "cardId");
+                    Ensure.ArgumentNotNull(cardId, nameof(cardId));
                     Position = string.Format(CultureInfo.InvariantCulture, "after:{0}", cardId);
                     break;
             }
