@@ -13,7 +13,7 @@ The general design principle for request models are:
 
 1. They represent the body of a request.
 2. Properties that are _required_ by the API should be required by the model and passed in via the constructor.
-3. Required porperties should not have a setter since they will be set by the constructor.
+3. Required properties should not have a setter since they will be set by the constructor.
 4. All other properties should have both a getter and setter.
 
 Note that Octokit.net automatically converts property name to the Ruby casing required by the GitHub API. Thus a
