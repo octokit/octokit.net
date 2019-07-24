@@ -24,9 +24,94 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Clients\ReleasesClientTests.cs" />
+    <Compile Remove="HttpClientAdapterTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterprisePreReceiveEnvironmentsClientTests.cs" />
+    <Compile Remove="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
+    <Compile Remove="Reactive\ObservableAssigneesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableAuthorizationsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableCheckRunsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableCheckSuitesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableCommitStatusClientTests.cs" />
+    <Compile Remove="Reactive\ObservableEventsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableFollowersClientTests.cs" />
+    <Compile Remove="Reactive\ObservableGistClientTests.cs" />
+    <Compile Remove="Reactive\ObservableGistCommentsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableGitHubAppInstallationsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableGitHubAppsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableIssuesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableIssueTimelineClientTests.cs" />
+    <Compile Remove="Reactive\ObservableMilestonesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableNotificationsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableOrganizationMembersClientTests.cs" />
+    <Compile Remove="Reactive\ObservableOrganizationOutsideCollaboratorsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableProjectCardsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableProjectColumnsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableProjectsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableReleaseClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoriesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryBranchesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryCollaboratorClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryCommitsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryHooksClientTests.cs" />
+    <Compile Remove="Reactive\ObservableRepositoryPagesClientTests.cs" />
+    <Compile Remove="Reactive\ObservableTeamsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableUserAdministrationClientTests.cs" />
+    <Compile Remove="Reactive\ObservableUserEmailsClientTests.cs" />
+    <Compile Remove="Reactive\ObservableUserGpgKeysClientTests.cs" />
+    <Compile Remove="Reactive\ObservableUserKeysClientTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
+    <None Include="Clients\ReleasesClientTests.cs" />
+    <None Include="HttpClientAdapterTests.cs" />
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
     <None Include="app.config" />
+    <None Include="Reactive\Enterprise\ObservableEnterpriseAdminStatsClientTests.cs" />
+    <None Include="Reactive\Enterprise\ObservableEnterpriseLdapClientTests.cs" />
+    <None Include="Reactive\Enterprise\ObservableEnterpriseLicenseClientTests.cs" />
+    <None Include="Reactive\Enterprise\ObservableEnterpriseOrganizationClientTests.cs" />
+    <None Include="Reactive\Enterprise\ObservableEnterprisePreReceiveEnvironmentsClientTests.cs" />
+    <None Include="Reactive\Enterprise\ObservableEnterpriseSearchIndexingClientTests.cs" />
+    <None Include="Reactive\ObservableAssigneesClientTests.cs" />
+    <None Include="Reactive\ObservableAuthorizationsClientTests.cs" />
+    <None Include="Reactive\ObservableCheckRunsClientTests.cs" />
+    <None Include="Reactive\ObservableCheckSuitesClientTests.cs" />
+    <None Include="Reactive\ObservableCommitStatusClientTests.cs" />
+    <None Include="Reactive\ObservableEventsClientTests.cs" />
+    <None Include="Reactive\ObservableFollowersClientTests.cs" />
+    <None Include="Reactive\ObservableGistClientTests.cs" />
+    <None Include="Reactive\ObservableGistCommentsClientTests.cs" />
+    <None Include="Reactive\ObservableGitHubAppInstallationsClientTests.cs" />
+    <None Include="Reactive\ObservableGitHubAppsClientTests.cs" />
+    <None Include="Reactive\ObservableIssuesClientTests.cs" />
+    <None Include="Reactive\ObservableIssueTimelineClientTests.cs" />
+    <None Include="Reactive\ObservableMilestonesClientTests.cs" />
+    <None Include="Reactive\ObservableNotificationsClientTests.cs" />
+    <None Include="Reactive\ObservableOrganizationMembersClientTests.cs" />
+    <None Include="Reactive\ObservableOrganizationOutsideCollaboratorsClientTests.cs" />
+    <None Include="Reactive\ObservableProjectCardsClientTests.cs" />
+    <None Include="Reactive\ObservableProjectColumnsClientTests.cs" />
+    <None Include="Reactive\ObservableProjectsClientTests.cs" />
+    <None Include="Reactive\ObservableReleaseClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoriesClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryBranchesClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryCollaboratorClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryCommitsClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryDeployKeysClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryHooksClientTests.cs" />
+    <None Include="Reactive\ObservableRepositoryPagesClientTests.cs" />
+    <None Include="Reactive\ObservableTeamsClientTests.cs" />
+    <None Include="Reactive\ObservableUserAdministrationClientTests.cs" />
+    <None Include="Reactive\ObservableUserEmailsClientTests.cs" />
+    <None Include="Reactive\ObservableUserGpgKeysClientTests.cs" />
+    <None Include="Reactive\ObservableUserKeysClientTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
