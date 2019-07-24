@@ -4,9 +4,7 @@ using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
 using Cake.Frosting;
 
-[Dependency(typeof(UnitTests))]
-[Dependency(typeof(ConventionTests))]
-[Dependency(typeof(ValidateLINQPadSamples))]
+[Dependency(typeof(Build))]
 public sealed class Package : FrostingTask<Context>
 {
     public override void Run(Context context)
