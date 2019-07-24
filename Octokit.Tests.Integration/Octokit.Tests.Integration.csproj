@@ -4,7 +4,7 @@
     <Description>Integration tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <TargetFramework>net46</TargetFramework>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
