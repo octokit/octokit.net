@@ -1,11 +1,13 @@
+mode: ContinuousDeployment
 branches:
   master:
     mode: ContinuousDeployment
     increment: Minor
     tag: beta
-  dotnetcore:
+  develop:
     mode: ContinuousDeployment
     increment: Minor
     tag: alpha
+    source-branches: ['dotnetcore']
 ignore:
   sha: []
