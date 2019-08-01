@@ -63,9 +63,11 @@ public class Lifetime : FrostingLifetime<Context>
         else
         {
             context.Information("Installing tools...");
-            ToolInstaller.Install(context, "GitVersion.CommandLine", "3.6.2");
             ToolInstaller.Install(context, "Octokit.CodeFormatter", "1.0.0-preview");
         }
+
+
+        context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.0.0", "dotnet-gitversion");
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
