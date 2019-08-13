@@ -20,12 +20,12 @@ There are two options supported by the API - basic and OAuth authentication.
 
 ```csharp
 var basicAuth = new Credentials("username", "password"); // NOTE: not real credentials
-client.Credentials = basicAuth;
+client.Connection.Credentials = basicAuth;
 ```
 
 ```csharp
 var tokenAuth = new Credentials("token"); // NOTE: not real token
-client.Credentials = tokenAuth;
+client.Connection.Credentials = tokenAuth;
 ```
 
 It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
