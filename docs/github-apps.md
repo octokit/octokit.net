@@ -35,7 +35,7 @@ Each GitHub App has a private certificate (PEM file) which is [generated via the
 
 The first step in the authentication process, is to generate a temporary JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's unique Id, which is obtainable from the GitHub website.
 
-:bulb: There are several ways to generate JWT tokens in .NET and this library aims to have minimal depdendencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
+:bulb: There are several ways to generate JWT tokens in .NET and this library aims to have minimal dependencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
 
 :warning: GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
 
