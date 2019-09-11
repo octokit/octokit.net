@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit", "Octokit\Octokit.csproj", "{104E8324-C2B9-43BE-8040-36B736A64D45}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.Tests.Integration", "Octokit.Tests.Integration\Octokit.Tests.Integration.csproj", "{EF19E577-D810-4357-BF95-9029A359CB4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Migration", "Octokit.Migration\Octokit.Migration.csproj", "{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{E58EC0EA-B6E5-43AA-A7D2-AD0A6D4BB0D2} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
 		{A04124DC-D057-4DB0-8E5F-ECD114FA371A} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
 		{EF19E577-D810-4357-BF95-9029A359CB4E} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
+		{12C1E05D-740E-40C3-A4A9-69C4AB4F9D03} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3ABF5A09-BE91-46DF-93C1-BE3932581DF5}
