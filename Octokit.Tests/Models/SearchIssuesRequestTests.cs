@@ -79,7 +79,7 @@ public class SearchIssuesRequestTests
                 Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
 
                 // Set the parameter
-                property.Value(request, DateRange.GreaterThan(DateTime.Today.AddDays(-7)));
+                property.Value(request, DateRange.GreaterThan(new DateTimeOffset(DateTime.Today.AddDays(-7))));
 
                 // Ensure the specified parameter now exists
                 Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
