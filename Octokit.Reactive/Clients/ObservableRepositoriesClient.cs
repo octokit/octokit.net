@@ -315,8 +315,6 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API
-        /// </summary>
-        /// <summary>
         /// Note that the GitHub API uses caching on these endpoints,
         /// see <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more details.
         /// </summary>
