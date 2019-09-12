@@ -146,6 +146,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        [Obsolete("No longer part of the documented API surface")]
         Task<Repository> Get(long repositoryId);
 
         /// <summary>
