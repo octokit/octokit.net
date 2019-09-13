@@ -6,6 +6,7 @@ using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
 [Dependency(typeof(ConventionTests))]
+[Dependency(typeof(CodeCoverage))]
 [Dependency(typeof(ValidateLINQPadSamples))]
 public sealed class Package : FrostingTask<Context>
 {

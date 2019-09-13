@@ -2,6 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/master)
 [![Build Status]( https://travis-ci.org/octokit/octokit.net.svg)]( https://travis-ci.org/octokit/octokit.net)
+[![codecov](https://codecov.io/gh/octokit/octokit.net/branch/master/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
 [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NuGet](http://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
 [![NuGet](http://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
