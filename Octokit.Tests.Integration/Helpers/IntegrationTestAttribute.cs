@@ -19,7 +19,7 @@ namespace Octokit.Tests.Integration
         {
             return Helper.Credentials == null
                 ? Enumerable.Empty<IXunitTestCase>()
-                : new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
+                : new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.None, testMethod) };
         }
     }
 

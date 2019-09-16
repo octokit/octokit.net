@@ -131,7 +131,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     Assert.Equal(repoContext.RepositoryId, result.Repository.Id);
                     Assert.Equal(Helper.GitHubAppId, result.Preferences.AutoTriggerChecks[0].AppId);
-                    Assert.Equal(false, result.Preferences.AutoTriggerChecks[0].Setting);
+                    Assert.False(result.Preferences.AutoTriggerChecks[0].Setting);
                 }
             }
 
@@ -148,7 +148,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     Assert.Equal(repoContext.RepositoryId, result.Repository.Id);
                     Assert.Equal(Helper.GitHubAppId, result.Preferences.AutoTriggerChecks[0].AppId);
-                    Assert.Equal(false, result.Preferences.AutoTriggerChecks[0].Setting);
+                    Assert.False(result.Preferences.AutoTriggerChecks[0].Setting);
                 }
             }
         }

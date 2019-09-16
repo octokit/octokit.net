@@ -553,7 +553,7 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.Contexts.Contains("new"));
+            Assert.Contains("new", requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
@@ -567,7 +567,7 @@ public class RepositoryBranchesClientTests
 
             Assert.NotNull(requiredStatusChecks);
             Assert.NotNull(requiredStatusChecks.Contexts);
-            Assert.True(requiredStatusChecks.Contexts.Contains("new"));
+            Assert.Contains("new", requiredStatusChecks.Contexts);
             Assert.True(requiredStatusChecks.Strict);
             Assert.Equal(1, requiredStatusChecks.Contexts.Count);
         }
@@ -720,7 +720,6 @@ public class RepositoryBranchesClientTests
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoOwner, repoName, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
             Assert.Equal(4, requiredStatusChecksContexts.Count);
         }
 
@@ -732,7 +731,6 @@ public class RepositoryBranchesClientTests
             var requiredStatusChecksContexts = await _client.AddRequiredStatusChecksContexts(repoId, "master", update);
 
             Assert.NotNull(requiredStatusChecksContexts);
-            Assert.NotNull(requiredStatusChecksContexts.Count);
             Assert.Equal(4, requiredStatusChecksContexts.Count);
         }
 
@@ -765,7 +763,7 @@ public class RepositoryBranchesClientTests
                 var deleted = await _client.DeleteRequiredStatusChecksContexts(repoOwner, repoName, "master", contextsToRemove);
 
                 Assert.NotNull(deleted);
-                Assert.True(deleted.Contains("test"));
+                Assert.Contains("test", deleted);
             }
         }
 
@@ -779,7 +777,7 @@ public class RepositoryBranchesClientTests
                 var deleted = await _client.DeleteRequiredStatusChecksContexts(repoId, "master", contextsToRemove);
 
                 Assert.NotNull(deleted);
-                Assert.True(deleted.Contains("test"));
+                Assert.Contains("test", deleted);
             }
         }
     }

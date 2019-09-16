@@ -32,7 +32,7 @@ public class SearchClientTests
         };
         var repos = await _gitHubClient.Search.SearchRepo(request);
 
-        Assert.True(repos.Items.Any(x => x.Fork));
+        Assert.Contains(repos.Items, x => x.Fork);
     }
 
     [IntegrationTest]
@@ -112,7 +112,7 @@ public class SearchClientTests
 
         foreach (var code in searchResults.Items)
         {
-            Assert.True(code.Name.EndsWith(".cs"));
+            Assert.EndsWith(".cs", code.Name);
         }
     }
 

@@ -101,9 +101,9 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var releaseByTag = await _releaseClient.Get("octokit", "octokit.net", "v0.28.0");
 
-                Assert.Equal(releaseByTag.Id, 8396883);
-                Assert.Equal(releaseByTag.Name, "v0.28 - Get to the Chopper!!!");
-                Assert.Equal(releaseByTag.TagName, "v0.28.0");
+                Assert.Equal(8396883, releaseByTag.Id);
+                Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+                Assert.Equal("v0.28.0", releaseByTag.TagName);
             }
 
             [IntegrationTest]
@@ -111,9 +111,9 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var releaseByTag = await _releaseClient.Get(7528679, "v0.28.0");
 
-                Assert.Equal(releaseByTag.Id, 8396883);
-                Assert.Equal(releaseByTag.Name, "v0.28 - Get to the Chopper!!!");
-                Assert.Equal(releaseByTag.TagName, "v0.28.0");
+                Assert.Equal(8396883, releaseByTag.Id);
+                Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+                Assert.Equal("v0.28.0", releaseByTag.TagName);
             }
 
             [IntegrationTest]

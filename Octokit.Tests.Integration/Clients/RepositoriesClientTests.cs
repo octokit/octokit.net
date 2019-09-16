@@ -460,7 +460,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(true, _repository.Private);
+            Assert.True(_repository.Private);
         }
 
         [PaidAccountTest]
@@ -480,7 +480,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(true, _repository.Private);
+            Assert.True(_repository.Private);
         }
 
         [IntegrationTest]
@@ -493,7 +493,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasDownloads);
+            Assert.False(_repository.HasDownloads);
         }
 
         [IntegrationTest]
@@ -506,7 +506,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasDownloads);
+            Assert.False(_repository.HasDownloads);
         }
 
         [IntegrationTest]
@@ -519,7 +519,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasIssues);
+            Assert.False(_repository.HasIssues);
         }
 
         [IntegrationTest]
@@ -532,7 +532,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasIssues);
+            Assert.False(_repository.HasIssues);
         }
 
         [IntegrationTest]
@@ -545,7 +545,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasWiki);
+            Assert.False(_repository.HasWiki);
         }
 
         [IntegrationTest]
@@ -558,7 +558,7 @@ public class RepositoriesClientTests
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasWiki);
+            Assert.False(_repository.HasWiki);
         }
 
         [IntegrationTest]
@@ -933,7 +933,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors("octokit", "octokit.net");
 
-            Assert.True(contributors.Any(c => c.Login == "pmacn"));
+            Assert.Contains(contributors, c => c.Login == "pmacn");
         }
 
         [IntegrationTest]
@@ -943,7 +943,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors(7528679);
 
-            Assert.True(contributors.Any(c => c.Login == "pmacn"));
+            Assert.Contains(contributors, c => c.Login == "pmacn");
         }
 
         [IntegrationTest]
@@ -1085,7 +1085,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors("ruby", "ruby", true);
 
-            Assert.True(contributors.Any(c => c.Type == "Anonymous"));
+            Assert.Contains(contributors, c => c.Type == "Anonymous");
         }
 
         [IntegrationTest]
@@ -1095,7 +1095,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors(538746, true);
 
-            Assert.True(contributors.Any(c => c.Type == "Anonymous"));
+            Assert.Contains(contributors, c => c.Type == "Anonymous");
         }
 
         [IntegrationTest]
@@ -1330,7 +1330,7 @@ public class RepositoriesClientTests
             var languages = await github.Repository.GetAllLanguages("octokit", "octokit.net");
 
             Assert.NotEmpty(languages);
-            Assert.True(languages.Any(l => l.Name == "C#"));
+            Assert.Contains(languages, l => l.Name == "C#");
         }
 
         [IntegrationTest]
@@ -1341,7 +1341,7 @@ public class RepositoriesClientTests
             var languages = await github.Repository.GetAllLanguages(7528679);
 
             Assert.NotEmpty(languages);
-            Assert.True(languages.Any(l => l.Name == "C#"));
+            Assert.Contains(languages, l => l.Name == "C#");
         }
 
         [IntegrationTest]
@@ -1378,7 +1378,7 @@ public class RepositoriesClientTests
 
             var tags = await github.Repository.GetAllTags("octokit", "octokit.net");
 
-            Assert.True(tags.Any(t => t.Name == "v0.1.0"));
+            Assert.Contains(tags, t => t.Name == "v0.1.0");
         }
 
         [IntegrationTest]
@@ -1388,7 +1388,7 @@ public class RepositoriesClientTests
 
             var tags = await github.Repository.GetAllTags(7528679);
 
-            Assert.True(tags.Any(t => t.Name == "v0.1.0"));
+            Assert.Contains(tags, t => t.Name == "v0.1.0");
         }
 
         [IntegrationTest]

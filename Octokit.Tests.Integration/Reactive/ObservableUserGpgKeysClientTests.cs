@@ -33,7 +33,7 @@ namespace Octokit.Tests.Integration.Reactive
                 Assert.NotEmpty(keys);
 
                 var first = keys[0];
-                Assert.NotNull(first.Id);
+                Assert.NotEqual(default, first.Id);
                 Assert.Null(first.PrimaryKeyId);
                 Assert.NotNull(first.KeyId);
                 Assert.NotNull(first.PublicKey);
@@ -89,7 +89,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             // Verify key no longer exists
             var keys = await _gitHubClient.User.GpgKey.GetAllForCurrent().ToList();
-            Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
+            Assert.DoesNotContain(keys, k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey);
         }
     }
 }

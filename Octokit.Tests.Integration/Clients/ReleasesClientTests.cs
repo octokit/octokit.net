@@ -124,7 +124,7 @@ public class ReleasesClientTests
             var releases = await _releaseClient.GetAll("git-tfs", "git-tfs");
 
             Assert.True(releases.Count > 5);
-            Assert.True(releases.Any(release => release.TagName == "v0.18.0"));
+            Assert.Contains(releases, release => release.TagName == "v0.18.0");
         }
 
         [IntegrationTest]
@@ -133,7 +133,7 @@ public class ReleasesClientTests
             var releases = await _releaseClient.GetAll(252774);
 
             Assert.True(releases.Count > 5);
-            Assert.True(releases.Any(release => release.TagName == "v0.18.0"));
+            Assert.Contains(releases, release => release.TagName == "v0.18.0");
         }
 
         [IntegrationTest]
@@ -184,9 +184,9 @@ public class ReleasesClientTests
         {
             var releaseByTag = await _releaseClient.Get("octokit", "octokit.net", "v0.28.0");
 
-            Assert.Equal(releaseByTag.Id, 8396883);
-            Assert.Equal(releaseByTag.Name, "v0.28 - Get to the Chopper!!!");
-            Assert.Equal(releaseByTag.TagName, "v0.28.0");
+            Assert.Equal(8396883, releaseByTag.Id);
+            Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+            Assert.Equal("v0.28.0", releaseByTag.TagName);
         }
 
         [IntegrationTest]
@@ -194,9 +194,9 @@ public class ReleasesClientTests
         {
             var releaseByTag = await _releaseClient.Get(7528679, "v0.28.0");
 
-            Assert.Equal(releaseByTag.Id, 8396883);
-            Assert.Equal(releaseByTag.Name, "v0.28 - Get to the Chopper!!!");
-            Assert.Equal(releaseByTag.TagName, "v0.28.0");
+            Assert.Equal(8396883, releaseByTag.Id);
+            Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+            Assert.Equal("v0.28.0", releaseByTag.TagName);
         }
 
         [IntegrationTest]

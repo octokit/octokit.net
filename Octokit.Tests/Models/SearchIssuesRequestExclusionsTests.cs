@@ -28,7 +28,7 @@ public class SearchIssuesRequestExclusionsTests
                 var request = new SearchIssuesRequestExclusions();
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
+                Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains(property.Key));
 
                 // Set the parameter
                 property.Value(request, "blah");
@@ -42,61 +42,61 @@ public class SearchIssuesRequestExclusionsTests
         public void HandlesStateAttributeCorrectly()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-state:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-state:"));
 
             request.State = ItemState.Closed;
-            Assert.True(request.MergedQualifiers().Contains("-state:closed"));
+            Assert.Contains("-state:closed", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesExcludeLabelsAttributeCorrectly()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-label:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-label:"));
 
             request.Labels = new[] { "label1", "label2" };
 
-            Assert.True(request.MergedQualifiers().Contains("-label:label1"));
-            Assert.True(request.MergedQualifiers().Contains("-label:label2"));
+            Assert.Contains("-label:label1", request.MergedQualifiers());
+            Assert.Contains("-label:label2", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesLanguageAttributeCorrectly()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-language:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-language:"));
 
             request.Language = Language.CSharp;
 
-            Assert.True(request.MergedQualifiers().Contains("-language:CSharp"));
+            Assert.Contains("-language:CSharp", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesStatusAttributeCorrectly()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-status:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-status:"));
 
             request.Status = CommitState.Error;
 
-            Assert.True(request.MergedQualifiers().Contains("-status:error"));
+            Assert.Contains("-status:error", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesMilestoneAttributeWithoutQuotes()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-milestone:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-milestone:"));
 
             request.Milestone = "testMilestone";
-            Assert.True(request.MergedQualifiers().Contains("-milestone:\"testMilestone\""));
+            Assert.Contains("-milestone:\"testMilestone\"", request.MergedQualifiers());
         }
 
         [Fact]
         public void DoesntWrapMilestoneWithDoubleQuotesForQuotedMilestone()
         {
             var request = new SearchIssuesRequestExclusions();
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("-milestone:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("-milestone:"));
 
             request.Milestone = "\"testMilestone\"";
             Assert.Contains<string>("-milestone:\"\\\"testMilestone\\\"\"", request.MergedQualifiers());
