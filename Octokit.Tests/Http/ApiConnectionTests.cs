@@ -342,7 +342,7 @@ namespace Octokit.Tests.Http
                     .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
                 Assert.Same(actualResult, result);
             }
 
@@ -361,7 +361,7 @@ namespace Octokit.Tests.Http
                     .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
                 Assert.Empty(actualResult);
             }
 
