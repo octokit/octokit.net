@@ -298,7 +298,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DateRange
     {
-        public const string DateTimePattern = "yyyy-MM-dd'T'HH:mm:ss zzz";
+        public const string DateTimePattern = "yyyy-MM-dd'T'HH:mm:sszzz";
         public const string DatePattern = "yyyy-MM-dd";
 
         private readonly string query = string.Empty;
