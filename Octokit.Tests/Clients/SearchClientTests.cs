@@ -995,8 +995,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
             }
 
-            #region The following tests do not support the time component or timezone and will be removed in a future release
-
             [Fact]
             public void TestingTheCreatedQualifier_GreaterThan()
             {
@@ -1211,10 +1209,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T00:00:00+00:00"));
             }
 
-            #endregion
-
-            #region The following tests include support the time component and timezone
-
             [Fact]
             public void TestingTheCreatedQualifier_GreaterThanDateTime()
             {
@@ -1427,9 +1421,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T02:04:06+10:00"));
             }
-
-            #endregion 
-
 
             [Fact]
             public void TestingTheCommentsQualifier_GreaterThan()
