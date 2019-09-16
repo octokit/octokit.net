@@ -70,7 +70,7 @@ namespace Octokit.Tests.Helpers
             [Fact]
             public void EscapeDoubleQuotesReturnsNullForNullInput()
             {
-                Assert.Equal(null, (null as string).EscapeDoubleQuotes());
+                Assert.Null((null as string).EscapeDoubleQuotes());
             }
 
             [Fact]

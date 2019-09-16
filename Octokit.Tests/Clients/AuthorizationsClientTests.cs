@@ -271,7 +271,7 @@ namespace Octokit.Tests.Clients
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
                 Assert.NotNull(calledUri);
-                Assert.Equal(calledUri.ToString(), "authorizations/clients/clientId");
+                Assert.Equal("authorizations/clients/clientId", calledUri.ToString());
 
                 Assert.NotNull(calledBody);
                 var fingerprintProperty = ((IEnumerable<PropertyInfo>)calledBody.GetType().DeclaredProperties).FirstOrDefault(x => x.Name == "fingerprint");

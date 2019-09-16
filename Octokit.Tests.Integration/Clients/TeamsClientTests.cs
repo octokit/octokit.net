@@ -72,8 +72,8 @@ public class TeamsClientTests
                 var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId);
 
                 Assert.Equal(2, teams.Count);
-                Assert.True(teams.Any(x => x.Id == team1.Id));
-                Assert.True(teams.Any(x => x.Id == team2.Id));
+                Assert.Contains(teams, x => x.Id == team1.Id);
+                Assert.Contains(teams, x => x.Id == team2.Id);
             }
         }
 

@@ -152,7 +152,7 @@ namespace Octokit.Tests.Models
 
             Assert.Equal("octocat/Hello-World", _migrationReuqest.Repositories[0]);
             Assert.Equal(1, _migrationReuqest.Repositories.Count);
-            Assert.Equal(true, _migrationReuqest.LockRepositories);
+            Assert.True(_migrationReuqest.LockRepositories);
         }
     }
 }

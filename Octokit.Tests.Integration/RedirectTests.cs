@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration
             var issue = await client.Issue.Create(owner, oldRepoName, newIssue);
             Assert.NotNull(issue);
 
-            Assert.True(issue.Url.Contains("repository-after-rename"));
+            Assert.Contains("repository-after-rename", issue.Url);
 
             var resolvedIssue = await client.Issue.Get(owner, newRepoName, issue.Number);
 

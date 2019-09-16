@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Clients
                 var readme = await github.Repository.Content.GetReadme("octokit", "octokit.net");
                 Assert.Equal("README.md", readme.Name);
                 string readmeHtml = await readme.GetHtmlContent();
-                Assert.True(readmeHtml.StartsWith("<div id="));
+                Assert.StartsWith("<div id=", readmeHtml);
                 Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Clients
                 var readme = await github.Repository.Content.GetReadme(7528679);
                 Assert.Equal("README.md", readme.Name);
                 string readmeHtml = await readme.GetHtmlContent();
-                Assert.True(readmeHtml.StartsWith("<div id="));
+                Assert.StartsWith("<div id=", readmeHtml);
                 Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
@@ -42,7 +42,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 var readmeHtml = await github.Repository.Content.GetReadmeHtml("octokit", "octokit.net");
-                Assert.True(readmeHtml.StartsWith("<div id="));
+                Assert.StartsWith("<div id=", readmeHtml);
                 Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 var readmeHtml = await github.Repository.Content.GetReadmeHtml(7528679);
-                Assert.True(readmeHtml.StartsWith("<div id="));
+                Assert.StartsWith("<div id=", readmeHtml);
                 Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }

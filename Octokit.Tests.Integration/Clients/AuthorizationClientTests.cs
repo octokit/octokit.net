@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Clients
                 new[] { "user" });
 
             var error = await Assert.ThrowsAsync<ForbiddenException>(() => github.Authorization.Create(newAuthorization));
-            Assert.True(error.Message.Contains("username and password Basic Auth"));
+            Assert.Contains("username and password Basic Auth", error.Message);
         }
 
         [BasicAuthenticationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1000 for issue to investigate this further")]

@@ -11,23 +11,23 @@ namespace Octokit.Tests.Models
             public void UsesDefaultValuesForDefaultConfig()
             {
                 var create = new NewRepositoryWebHook("windowsazure", new Dictionary<string, string>(), "http://test.com/example");
-                Assert.Equal(create.Url, "http://test.com/example");
-                Assert.Equal(create.ContentType, WebHookContentType.Form);
+                Assert.Equal("http://test.com/example", create.Url);
+                Assert.Equal(WebHookContentType.Form, create.ContentType);
                 Assert.Empty(create.Secret);
                 Assert.False(create.InsecureSsl);
 
                 var request = create.ToRequest();
-                Assert.Equal(request.Config.Count, 4);
+                Assert.Equal(4, request.Config.Count);
 
                 Assert.True(request.Config.ContainsKey("url"));
                 Assert.True(request.Config.ContainsKey("content_type"));
                 Assert.True(request.Config.ContainsKey("secret"));
                 Assert.True(request.Config.ContainsKey("insecure_ssl"));
 
-                Assert.Equal(request.Config["url"], "http://test.com/example");
+                Assert.Equal("http://test.com/example", request.Config["url"]);
                 Assert.Equal(request.Config["content_type"], WebHookContentType.Form.ToParameter());
-                Assert.Equal(request.Config["secret"], "");
-                Assert.Equal(request.Config["insecure_ssl"], "False");
+                Assert.Equal("", request.Config["secret"]);
+                Assert.Equal("False", request.Config["insecure_ssl"]);
             }
 
             [Fact]
@@ -47,23 +47,23 @@ namespace Octokit.Tests.Models
                     InsecureSsl = true
                 };
 
-                Assert.Equal(create.Url, "http://test.com/example");
-                Assert.Equal(create.ContentType, WebHookContentType.Json);
+                Assert.Equal("http://test.com/example", create.Url);
+                Assert.Equal(WebHookContentType.Json, create.ContentType);
                 Assert.Empty(create.Secret);
                 Assert.True(create.InsecureSsl);
 
                 var request = create.ToRequest();
 
-                Assert.Equal(request.Config.Count, 7);
+                Assert.Equal(7, request.Config.Count);
 
                 Assert.True(request.Config.ContainsKey("url"));
                 Assert.True(request.Config.ContainsKey("content_type"));
                 Assert.True(request.Config.ContainsKey("secret"));
                 Assert.True(request.Config.ContainsKey("insecure_ssl"));
 
-                Assert.Equal(request.Config["url"], "http://test.com/example");
+                Assert.Equal("http://test.com/example", request.Config["url"]);
                 Assert.Equal(request.Config["content_type"], WebHookContentType.Json.ToParameter());
-                Assert.Equal(request.Config["secret"], "");
+                Assert.Equal("", request.Config["secret"]);
                 Assert.Equal(request.Config["insecure_ssl"], true.ToString());
 
                 Assert.True(request.Config.ContainsKey("hostname"));
@@ -130,8 +130,8 @@ namespace Octokit.Tests.Models
                 var request = create.ToRequest();
                 var requestRepeated = create.ToRequest();
 
-                Assert.Equal(request.Config.Count, 4);
-                Assert.Equal(requestRepeated.Config.Count, 4);
+                Assert.Equal(4, request.Config.Count);
+                Assert.Equal(4, requestRepeated.Config.Count);
             }
 
             [Fact]
@@ -151,8 +151,8 @@ namespace Octokit.Tests.Models
                 var requestRepeated = create.ToRequest();
 
                 //This is not 8, because `url` used in config, is already part of the base config
-                Assert.Equal(request.Config.Count, 7);
-                Assert.Equal(requestRepeated.Config.Count, 7);
+                Assert.Equal(7, request.Config.Count);
+                Assert.Equal(7, requestRepeated.Config.Count);
             }
 
             [Fact]
@@ -167,10 +167,10 @@ namespace Octokit.Tests.Models
 
                 var request = create.ToRequest();
 
-                Assert.Equal(request.Config["url"], "http://test.com/example");
+                Assert.Equal("http://test.com/example", request.Config["url"]);
 
                 var subsequentRequest = create.ToRequest();
-                Assert.Equal(subsequentRequest.Config["url"], "http://test.com/example");
+                Assert.Equal("http://test.com/example", subsequentRequest.Config["url"]);
             }
         }
     }

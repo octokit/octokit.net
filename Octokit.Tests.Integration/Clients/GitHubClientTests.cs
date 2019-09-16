@@ -32,7 +32,7 @@ public class GitHubClientTests
                 Assert.False(string.IsNullOrEmpty(result.Etag));
                 Assert.True(result.RateLimit.Limit > 0);
                 Assert.True(result.RateLimit.Remaining > -1);
-                Assert.NotNull(result.RateLimit.Reset);
+                Assert.NotEqual(default, result.RateLimit.Reset);
             }
         }
 
@@ -53,7 +53,7 @@ public class GitHubClientTests
             Assert.False(string.IsNullOrEmpty(result.Etag));
             Assert.True(result.RateLimit.Limit > 0);
             Assert.True(result.RateLimit.Remaining > -1);
-            Assert.NotNull(result.RateLimit.Reset);
+            Assert.NotEqual(default, result.RateLimit.Reset);
         }
 
         [PersonalAccessTokenTest]
@@ -73,7 +73,7 @@ public class GitHubClientTests
             Assert.False(string.IsNullOrEmpty(result.Etag));
             Assert.True(result.RateLimit.Limit > 0);
             Assert.True(result.RateLimit.Remaining > -1);
-            Assert.NotNull(result.RateLimit.Reset);
+            Assert.NotEqual(default, result.RateLimit.Reset);
         }
     }
 }
