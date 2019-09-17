@@ -15,6 +15,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.CoreOnly = context.Argument("CoreOnly", !context.IsRunningOnWindows());
 
         context.Artifacts = "./packaging/";
+        context.CodeCoverage = "./coverage-results/";
 
         // Build system information.
         var buildSystem = context.BuildSystem();
