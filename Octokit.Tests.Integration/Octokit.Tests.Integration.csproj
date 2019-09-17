@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-    <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net452</TargetFrameworks>
+    <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net452;net46</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
