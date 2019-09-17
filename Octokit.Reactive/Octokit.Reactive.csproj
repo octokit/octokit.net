@@ -12,7 +12,7 @@
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
-    <DebugType>portable</DebugType>
+    <DebugType>embedded</DebugType>
     <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
     <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
     <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
