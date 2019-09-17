@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotEmpty(keys);
 
                 var first = keys[0];
-                Assert.NotNull(first.Id);
+                Assert.True(first.Id > 0);
                 Assert.NotNull(first.Key);
                 Assert.NotNull(first.Title);
                 Assert.NotNull(first.Url);
@@ -43,7 +43,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotEmpty(keys);
 
             var first = keys[0];
-            Assert.NotNull(first.Id);
+            Assert.True(first.Id > 0);
             Assert.NotNull(first.Key);
             Assert.Null(first.Title);
             Assert.Null(first.Url);
@@ -81,7 +81,7 @@ namespace Octokit.Tests.Integration.Clients
 
             // Verify key no longer exists
             var keys = await _github.User.GitSshKey.GetAllForCurrent().ToList();
-            Assert.False(keys.Any(k => k.Title == keyTitle && k.Key == keyData));
+            Assert.DoesNotContain(keys, k => k.Title == keyTitle && k.Key == keyData);
         }
     }
 }

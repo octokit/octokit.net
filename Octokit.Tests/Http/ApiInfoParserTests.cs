@@ -86,7 +86,7 @@ namespace Octokit.Tests
         public class ThePageUrlMethods
         {
             [Theory]
-            [MemberData("PagingMethods")]
+            [MemberData(nameof(PagingMethods))]
             public void RetrievesTheCorrectPagePage(string linkName, Func<ApiInfo, Uri> pagingMethod)
             {
                 var pageUri = new Uri("https://api.github.com/user/repos?page=2");

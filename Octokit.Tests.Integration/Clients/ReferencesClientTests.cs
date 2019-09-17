@@ -111,7 +111,7 @@ public class ReferencesClientTests : IDisposable
         var firstRefsPage = await _fixture.GetAll("octokit", "octokit.net", startOptions);
         var secondRefsPage = await _fixture.GetAll("octokit", "octokit.net", skipStartOptions);
 
-        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+        Assert.DoesNotContain(firstRefsPage, x => secondRefsPage.Contains(x));
     }
 
     [IntegrationTest(Skip = "This is paging for a long long time")]
@@ -169,7 +169,7 @@ public class ReferencesClientTests : IDisposable
         var firstRefsPage = await _fixture.GetAll(7528679, startOptions);
         var secondRefsPage = await _fixture.GetAll(7528679, skipStartOptions);
 
-        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+        Assert.DoesNotContain(firstRefsPage, x => secondRefsPage.Contains(x));
     }
 
     [IntegrationTest]
@@ -227,7 +227,7 @@ public class ReferencesClientTests : IDisposable
         var firstRefsPage = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", startOptions);
         var secondRefsPage = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "heads", skipStartOptions);
 
-        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+        Assert.DoesNotContain(firstRefsPage, x => secondRefsPage.Contains(x));
     }
 
     [IntegrationTest]
@@ -285,7 +285,7 @@ public class ReferencesClientTests : IDisposable
         var firstRefsPage = await _fixture.GetAllForSubNamespace(7528679, "heads", startOptions);
         var secondRefsPage = await _fixture.GetAllForSubNamespace(7528679, "heads", skipStartOptions);
 
-        Assert.False(firstRefsPage.Any(x => secondRefsPage.Contains(x)));
+        Assert.DoesNotContain(firstRefsPage, x => secondRefsPage.Contains(x));
     }
 
     [IntegrationTest]

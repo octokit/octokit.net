@@ -91,7 +91,7 @@ namespace Octokit.Tests
 
                 var deserializeData = new SimpleJsonSerializer().Deserialize<string>(json);
 
-                Assert.True(lastTabCharacter.ToString().Equals("\\t"));
+                Assert.Equal("\\t", lastTabCharacter.ToString());
                 Assert.Equal(data, deserializeData);
             }
 
@@ -313,7 +313,7 @@ namespace Octokit.Tests
                 var sample = new SimpleJsonSerializer().Deserialize<Sample>(json);
 
                 Assert.Equal(0, sample.Id);
-                Assert.Equal(null, sample.FirstName);
+                Assert.Null(sample.FirstName);
                 Assert.False(sample.IsSomething);
                 Assert.True(sample.Private);
             }

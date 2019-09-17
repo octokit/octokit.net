@@ -52,13 +52,13 @@ public class CommitsClientTests
         var commit = await github.Git.Commit.Get("noonari", "Signature-Verification", "1965d149ce1151cf411300d15f8d890d9259bd21");
 
         Assert.False(commit.Verification.Verified);
-        Assert.Equal(commit.Verification.Signature,
- "-----BEGIN PGP SIGNATURE-----\nVersion: GnuPG v1\n\niQEcBAABAgAGBQJXYT2BAAoJEJyZ1vxIV0+N9ZwIAKlf3dk9n1q1mD5AT3Ahtj9o\nF4H25zsHynJk2lnH4YxVvDBEc/uMCXzX6orihZiSdA5UXE7tPyEEZddQdp8pxulX\ncIsFKcrfQqHJnTbT90z5PhAk94lyN9fFngzPW1tgZZVjp2YiiqgXduBWWm6EREOh\nS1Iu9wBqScQomhTXoksmNZyGTZ0LviSi0pkqRY64pQhKnpLlu1OFXaeDvhYocB+E\nY5URZsXodvIkBuzCkWCu8ra4eaXIIARkas4+jIvn0FIx9CzEVz0Zau/5Fk+BR+Te\n7a3/7JH7yuObPB0hqPSuFYyxtvPfxtayvhkGD3YkQqDAkWCpISGyVFzxrrC7z0Y=\n=kbih\n-----END PGP SIGNATURE-----");
+        Assert.Equal("-----BEGIN PGP SIGNATURE-----\nVersion: GnuPG v1\n\niQEcBAABAgAGBQJXYT2BAAoJEJyZ1vxIV0+N9ZwIAKlf3dk9n1q1mD5AT3Ahtj9o\nF4H25zsHynJk2lnH4YxVvDBEc/uMCXzX6orihZiSdA5UXE7tPyEEZddQdp8pxulX\ncIsFKcrfQqHJnTbT90z5PhAk94lyN9fFngzPW1tgZZVjp2YiiqgXduBWWm6EREOh\nS1Iu9wBqScQomhTXoksmNZyGTZ0LviSi0pkqRY64pQhKnpLlu1OFXaeDvhYocB+E\nY5URZsXodvIkBuzCkWCu8ra4eaXIIARkas4+jIvn0FIx9CzEVz0Zau/5Fk+BR+Te\n7a3/7JH7yuObPB0hqPSuFYyxtvPfxtayvhkGD3YkQqDAkWCpISGyVFzxrrC7z0Y=\n=kbih\n-----END PGP SIGNATURE-----",
+            commit.Verification.Signature);
 
-        Assert.Equal(commit.Verification.Payload,
-            "tree c91c844f37974093a3f0a864755441b577e7663a\nparent 6eb645f6badd46de65700b4d7b6fcdb97684ce5a\nauthor noonari <SarmadSattar1@gmail.com> 1465990529 +0500\ncommitter noonari <SarmadSattar1@gmail.com> 1465990529 +0500\n\ngpg stuff\n");
+        Assert.Equal("tree c91c844f37974093a3f0a864755441b577e7663a\nparent 6eb645f6badd46de65700b4d7b6fcdb97684ce5a\nauthor noonari <SarmadSattar1@gmail.com> 1465990529 +0500\ncommitter noonari <SarmadSattar1@gmail.com> 1465990529 +0500\n\ngpg stuff\n",
+            commit.Verification.Payload);
 
-        Assert.Equal(commit.Verification.Reason, VerificationReason.UnknownKey);
+        Assert.Equal(VerificationReason.UnknownKey, commit.Verification.Reason);
     }
 
     [IntegrationTest]

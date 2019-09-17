@@ -140,10 +140,10 @@ public class OauthClientTests
 
             var token = strategy.Deserialize<OauthToken>(responseText);
 
-            Assert.Equal(token.AccessToken, "token-goes-here");
-            Assert.Equal(token.TokenType, "bearer");
-            Assert.True(token.Scope.Contains("notifications"));
-            Assert.True(token.Scope.Contains("user:email"));
+            Assert.Equal("token-goes-here", token.AccessToken);
+            Assert.Equal("bearer", token.TokenType);
+            Assert.Contains("notifications", token.Scope);
+            Assert.Contains("user:email", token.Scope);
         }
     }
 }

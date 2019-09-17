@@ -109,11 +109,11 @@ public class GistsClientTests
         var starredGists = await _fixture.GetAllStarred();
 
         Assert.NotNull(starredGists);
-        Assert.True(starredGists.Any(x => x.Id == createdGist.Id));
+        Assert.Contains(starredGists, x => x.Id == createdGist.Id);
 
         var starredGistsSinceStartTime = await _fixture.GetAllStarred(startTime);
         Assert.NotNull(starredGistsSinceStartTime);
-        Assert.True(starredGistsSinceStartTime.Any(x => x.Id == createdGist.Id));
+        Assert.Contains(starredGistsSinceStartTime, x => x.Id == createdGist.Id);
 
         await _fixture.Delete(createdGist.Id);
     }

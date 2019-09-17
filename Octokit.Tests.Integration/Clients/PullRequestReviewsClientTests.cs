@@ -398,7 +398,7 @@ public class PullRequestReviewsClientTests
 
                 var retrievedReviews = await _client.GetAll(context.RepositoryOwner, context.RepositoryName, pullRequest.Number);
 
-                Assert.False(retrievedReviews.Any(x => x.Id == createdReview.Id));
+                Assert.DoesNotContain(retrievedReviews, x => x.Id == createdReview.Id);
             }
         }
 
@@ -415,7 +415,7 @@ public class PullRequestReviewsClientTests
 
                 var retrievedReviews = await _client.GetAll(context.RepositoryId, pullRequest.Number);
 
-                Assert.False(retrievedReviews.Any(x => x.Id == createdReview.Id));
+                Assert.DoesNotContain(retrievedReviews, x => x.Id == createdReview.Id);
             }
         }
     }

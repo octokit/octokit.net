@@ -59,7 +59,7 @@ public class RepositoryCommitsClientTests
         {
             var commit = await _fixture.Get(octokitNetRepositoryOwner, octokitNetRepositorName, "65a22f4d2cff94a286ac3e96440c810c5509196f");
 
-            Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
+            Assert.Contains(commit.Files, file => file.Filename.EndsWith("IConnection.cs"));
         }
 
         [IntegrationTest]
@@ -67,7 +67,7 @@ public class RepositoryCommitsClientTests
         {
             var commit = await _fixture.Get(octokitNetRepositoryId, "65a22f4d2cff94a286ac3e96440c810c5509196f");
 
-            Assert.True(commit.Files.Any(file => file.Filename.EndsWith("IConnection.cs")));
+            Assert.Contains(commit.Files, file => file.Filename.EndsWith("IConnection.cs"));
         }
 
         [IntegrationTest]
