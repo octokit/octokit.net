@@ -45,7 +45,7 @@ public class MigrationsClientTests : IDisposable
         }));
     }
 
-    public async Task StartNewMigration()
+    private async Task StartNewMigration()
     {
         var repoNames = _repos.Select(repo => repo.Repository.FullName).ToList();
         var migrationRequest = new StartMigrationRequest(repoNames);

@@ -149,7 +149,7 @@ namespace Octokit.Tests.Http
 
                 var response = jsonPipeline.DeserializeResponse<List<SomeObject>>(httpResponse);
 
-                Assert.Equal(1, response.Body.Count);
+                Assert.Single(response.Body);
                 Assert.Equal("Haack", response.Body.First().Name);
             }
 

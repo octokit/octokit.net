@@ -86,13 +86,9 @@ namespace Octokit.Tests.Http
 
                 Assert.NotSame(original.RateLimit, clone.RateLimit);
                 Assert.Equal(original.RateLimit.Limit, clone.RateLimit.Limit);
-                Assert.NotSame(original.RateLimit.Limit, clone.RateLimit.Limit);
                 Assert.Equal(original.RateLimit.Remaining, clone.RateLimit.Remaining);
-                Assert.NotSame(original.RateLimit.Remaining, clone.RateLimit.Remaining);
                 Assert.Equal(original.RateLimit.ResetAsUtcEpochSeconds, clone.RateLimit.ResetAsUtcEpochSeconds);
-                Assert.NotSame(original.RateLimit.ResetAsUtcEpochSeconds, clone.RateLimit.ResetAsUtcEpochSeconds);
                 Assert.Equal(original.RateLimit.Reset, clone.RateLimit.Reset);
-                Assert.NotSame(original.RateLimit.Reset, clone.RateLimit.Reset);
             }
 
             [Fact]
