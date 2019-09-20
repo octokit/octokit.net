@@ -117,17 +117,13 @@ namespace Octokit.Tests.Http
 
                 var clone = original.Clone();
 
-                // Note the use of Assert.NotSame tests for value types - this should continue to test should the underlying 
-                // model are changed to Object types
+                // We want to ensure the original and clone are different objects but with
+                // the same values populated
                 Assert.NotSame(original, clone);
                 Assert.Equal(original.Limit, clone.Limit);
-                Assert.NotSame(original.Limit, clone.Limit);
                 Assert.Equal(original.Remaining, clone.Remaining);
-                Assert.NotSame(original.Remaining, clone.Remaining);
                 Assert.Equal(original.ResetAsUtcEpochSeconds, clone.ResetAsUtcEpochSeconds);
-                Assert.NotSame(original.ResetAsUtcEpochSeconds, clone.ResetAsUtcEpochSeconds);
                 Assert.Equal(original.Reset, clone.Reset);
-                Assert.NotSame(original.Reset, clone.Reset);
             }
         }
     }

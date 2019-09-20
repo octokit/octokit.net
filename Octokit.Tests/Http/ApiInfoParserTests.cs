@@ -100,8 +100,10 @@ namespace Octokit.Tests
             }
 
             [Theory]
-            [MemberData("PagingMethods")]
+            [MemberData(nameof(PagingMethods))]
+#pragma warning disable xUnit1026 // Theory methods should use all of their parameters
             public void ReturnsNullIfThereIsNoMatchingPagingLink(string ignored, Func<ApiInfo, Uri> pagingMethod)
+#pragma warning restore xUnit1026 // Theory methods should use all of their parameters
             {
                 var links = new Dictionary<string, Uri>();
                 var info = BuildApiInfo(links);

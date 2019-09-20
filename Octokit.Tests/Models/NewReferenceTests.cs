@@ -11,7 +11,7 @@ public class NewReferenceTests
         {
             var create = new NewReference("heads/develop", "sha");
 
-            Assert.Equal(create.Ref, "refs/heads/develop");
+            Assert.Equal("refs/heads/develop", create.Ref);
         }
 
         [Fact]

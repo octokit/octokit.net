@@ -753,7 +753,7 @@ namespace Octokit.Tests.Http
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"), new Uri("https://github.com/"));
 
                 Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
-                Assert.True(connection.UserAgent.StartsWith("OctokitTests ("));
+                Assert.StartsWith("OctokitTests (", connection.UserAgent);
             }
         }
 

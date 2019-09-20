@@ -125,12 +125,12 @@ namespace Octokit.Tests.Reactive
             readonly IGitHubClient _githubClient = Substitute.For<IGitHubClient>();
             ObservableDeploymentStatusClient _client;
 
-            public void SetupWithoutNonReactiveClient()
+            private void SetupWithoutNonReactiveClient()
             {
                 _client = new ObservableDeploymentStatusClient(_githubClient);
             }
 
-            public void SetupWithNonReactiveClient()
+            private void SetupWithNonReactiveClient()
             {
                 var deploymentStatusClient = new DeploymentStatusClient(Substitute.For<IApiConnection>());
                 _githubClient.Repository.Deployment.Status.Returns(deploymentStatusClient);
