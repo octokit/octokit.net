@@ -7,9 +7,8 @@
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CoreOnly Condition="$(CoreOnly) == '' and $([MSBuild]::IsOsPlatform('Windows'))">False</CoreOnly>
-    <TargetFrameworks>netstandard1.1</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
     <TargetFrameworks Condition="$(CoreOnly) != '' and !$(CoreOnly)">$(TargetFrameworks);net45;net46</TargetFrameworks>
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Octokit</AssemblyName>
     <PackageId>Octokit</PackageId>
     <DebugType>embedded</DebugType>
@@ -21,8 +20,16 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard2.0'  ">
     <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO;NO_SERIALIZABLE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net46' ">
