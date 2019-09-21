@@ -39,6 +39,17 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateDraft()
+    {
+        await CreateTheWorld();
+        
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+        Assert.Equal("a draft pull request", result.Title);
+        Assert.True(result.Draft);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateWithRepositoryId()
     {
         await CreateTheWorld();
@@ -48,6 +59,17 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal("a pull request", result.Title);
     }
 
+    [IntegrationTest]
+    public async Task CanCreateDraftWithRepositoryId()
+    {
+        await CreateTheWorld();
+        
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+        Assert.Equal("a draft pull request", result.Title);
+        Assert.True(result.Draft);
+    }
+    
     [IntegrationTest]
     public async Task CanGetForRepository()
     {
@@ -64,6 +86,22 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetDraftForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(result.Draft, pullRequests[0].Draft);
+        Assert.True(pullRequests[0].Id > 0);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForRepositoryWithRepositoryId()
     {
         await CreateTheWorld();
@@ -75,6 +113,22 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetDraftForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(result.Draft, pullRequests[0].Draft);
+        Assert.True(pullRequests[0].Id > 0);
     }
 
     [IntegrationTest]
