@@ -103,3 +103,6 @@ tools/*
 !tools/gitversion_wrapper.sh
 !tools/LINQPad
 coverage-results/*
+
+# Rider
+**/.idea/*
