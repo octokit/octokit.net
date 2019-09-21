@@ -233,9 +233,11 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null, ApiOptions.None));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(1, 1, options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null, ApiOptions.None));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 1));
