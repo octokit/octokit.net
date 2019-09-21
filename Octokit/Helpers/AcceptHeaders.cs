@@ -49,6 +49,8 @@ namespace Octokit
 
         public const string PullRequestReviewsApiPreview = "application/vnd.github.black-cat-preview+json";
 
+        public const string DraftPullRequestApiPreview = "application/vnd.github.shadow-cat-preview+json";
+
         public const string ProjectsApiPreview = "application/vnd.github.inertia-preview+json";
 
         public const string OrganizationMembershipPreview = "application/vnd.github.korra-preview+json";
