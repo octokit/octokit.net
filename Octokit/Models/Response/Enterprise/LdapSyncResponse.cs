@@ -24,7 +24,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Status: {0}", Status);
+                return string.Format(CultureInfo.InvariantCulture, "Status: {0}", Status);
             }
         }
     }

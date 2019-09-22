@@ -45,7 +45,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalCommitComments: {0} TotalGistComments: {1} TotalIssueComments: {2} TotalPullRequestComments: {3}", TotalCommitComments, TotalGistComments, TotalIssueComments, TotalPullRequestComments);
+                return string.Format(CultureInfo.InvariantCulture, "TotalCommitComments: {0} TotalGistComments: {1} TotalIssueComments: {2} TotalPullRequestComments: {3}", TotalCommitComments, TotalGistComments, TotalIssueComments, TotalPullRequestComments);
             }
         }
     }

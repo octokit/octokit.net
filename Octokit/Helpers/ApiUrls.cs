@@ -2548,6 +2548,18 @@ namespace Octokit
             return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
         }
 
+        public static Uri EnterpriseManagementConsoleMaintenance(string managementConsolePassword, Uri baseAddress)
+        {
+            if (baseAddress != null
+                && baseAddress.ToString().EndsWith("/api/v3/", StringComparison.OrdinalIgnoreCase))
+            {
+                // note: leading slash here means the /api/v3/ prefix inherited from baseAddress is ignored
+                return "/setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
+            }
+
+            return "setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
+        }
+
         public static Uri EnterpriseOrganization()
         {
             return "admin/organizations".FormatUri();

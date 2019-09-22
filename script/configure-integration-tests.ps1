@@ -109,6 +109,7 @@ if (AskYesNoQuestion "Do you wish to enable GitHub Enterprise (GHE) Integration 
 {
     VerifyEnvironmentVariable "GitHub Enterprise account name" "OCTOKIT_GHE_USERNAME"
     VerifyEnvironmentVariable "GitHub Enterprise account password" "OCTOKIT_GHE_PASSWORD" $true
+    VerifyEnvironmentVariable "GitHub Enterprise Management Console password" "OCTOKIT_GHE_CONSOLEPASSWORD" $true
     VerifyEnvironmentVariable "GitHub Enterprise OAuth token" "OCTOKIT_GHE_OAUTHTOKEN"
 
     VerifyEnvironmentVariable "GitHub Enterprise organization name" "OCTOKIT_GHE_ORGANIZATION" $true

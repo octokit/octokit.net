@@ -59,7 +59,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalRepos: {0} RootRepos: {1} ForkRepos: {2} OrgRepos: {3} TotalPushes: {4} TotalWikis: {5}", TotalRepos, RootRepos, ForkRepos, OrgRepos, TotalPushes, TotalWikis);
+                return string.Format(CultureInfo.InvariantCulture, "TotalRepos: {0} RootRepos: {1} ForkRepos: {2} OrgRepos: {3} TotalPushes: {4} TotalWikis: {5}", TotalRepos, RootRepos, ForkRepos, OrgRepos, TotalPushes, TotalWikis);
             }
         }
     }

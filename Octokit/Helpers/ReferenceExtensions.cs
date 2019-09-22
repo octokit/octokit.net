@@ -26,7 +26,7 @@ namespace Octokit.Helpers
 
             if (branchName.StartsWith("refs/heads"))
             {
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
             }
 
             var newReference = new NewReference("refs/heads/" + branchName, baseReference.Object.Sha);
@@ -48,7 +48,7 @@ namespace Octokit.Helpers
 
             if (branchName.StartsWith("refs/heads"))
             {
-                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The specified branch name '{0}' appears to be a ref name and not a branch name because it starts with the string 'refs/heads'. Either specify just the branch name or use the Create method if you need to specify the full ref name", branchName), "branchName");
             }
 
             var baseBranch = await referencesClient.Get(owner, name, "heads/master").ConfigureAwait(false);
