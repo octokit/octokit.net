@@ -51,10 +51,6 @@ namespace Octokit
 
             var hasQueryString = uri.OriginalString.IndexOf("?", StringComparison.Ordinal);
 
-            string uriWithoutQuery = hasQueryString == -1
-                    ? uri.ToString()
-                    : uri.OriginalString.Substring(0, hasQueryString);
-
             string queryString;
             string uriWithoutQuery;
             if (uri.IsAbsoluteUri)

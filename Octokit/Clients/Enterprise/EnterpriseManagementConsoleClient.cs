@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,7 +28,6 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseManagementConsoleMaintenance(managementConsolePassword, ApiConnection.Connection.BaseAddress);
 
-            endpoint = CorrectEndpointForManagementConsole(endpoint);
             return ApiConnection.Get<MaintenanceModeResponse>(endpoint);
         }
 

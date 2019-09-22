@@ -573,6 +573,7 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None);
         }
 
+        /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>

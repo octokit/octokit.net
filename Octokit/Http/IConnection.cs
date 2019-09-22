@@ -273,6 +273,7 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
 
+        /// <summary>
         /// Performs an asynchronous HTTP DELETE request that returns a response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
