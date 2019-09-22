@@ -27,10 +27,17 @@ You can read more about this support [on the GitHub website](https://developer.g
 
 ## Management console
 
+To view the maintenance mode status of a GitHub Enteprise installation:
+
+```C#
+var maintenance = await github.Enterprise.ManagementConsole.GetMaintenanceMode("management-console-password");
+
+```
+
 To put the GitHub Enterprise installation into maintenance mode immediately:
 
 ```C#
-var request = new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true))
+var request = new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true));
 var maintenance = await github.Enterprise.ManagementConsole.EditMaintenanceMode(
   request,
   "management-console-password");
@@ -57,7 +64,7 @@ var maintenance = await github.Enterprise.ManagementConsole.EditMaintenanceMode(
   "management-console-password");
 ```
 
-To disable maintenance mode, simple pass in `false` or leave the `request` 
+To disable maintenance mode, simple pass in `false` or leave the `request`
 constructor empty:
 
 ```c#
