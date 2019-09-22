@@ -87,6 +87,21 @@ public class EnterpriseManagementConsoleClientTests
         }
     }
 
+    private async Task DeleteManagementAuthorizedKeyIfExists(string keyData)
+    {
+        // Check if key already exists
+        var keys = await _github.Enterprise.ManagementConsole.GetAllAuthorizedKeys(
+            EnterpriseHelper.ManagementConsolePassword);
+
+        // Delete it if so
+        if (keys.Any(x => x.Key == keyData))
+        {
+            await _github.Enterprise.ManagementConsole.DeleteAuthorizedKey(
+                new AuthorizedKeyRequest(keyData),
+                EnterpriseHelper.ManagementConsolePassword).ConfigureAwait(false);
+        }
+    }
+
     [GitHubEnterpriseManagementConsoleTest]
     public async Task CanGetAllAuthorizedKeys()
     {
