@@ -31,7 +31,6 @@ To view the maintenance mode status of a GitHub Enteprise installation:
 
 ```C#
 var maintenance = await github.Enterprise.ManagementConsole.GetMaintenanceMode("management-console-password");
-
 ```
 
 To put the GitHub Enterprise installation into maintenance mode immediately:
@@ -58,7 +57,7 @@ of time:
 
 ```C#
 var scheduledTime = DateTimeOffset.Now.AddMinutes(10);
-var request = new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true, scheduledTime)),
+var request = new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(true, scheduledTime));
 var maintenance = await github.Enterprise.ManagementConsole.EditMaintenanceMode(
   request,
   "management-console-password");
