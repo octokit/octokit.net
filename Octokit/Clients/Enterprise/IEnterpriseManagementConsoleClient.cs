@@ -33,6 +33,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
         /// </remarks>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination is not supported by this endpoint")]
         Task<IReadOnlyList<AuthorizedKey>> GetAllAuthorizedKeys(string managementConsolePassword);
 
         /// <summary>
