@@ -11,14 +11,14 @@ namespace Octokit
     {
         public MaintenanceModeResponse() { }
 
-        public MaintenanceModeResponse(MaintenanceModeStatus status, string scheduledTime, IReadOnlyList<MaintenanceModeActiveProcesses> connectionServices)
+        public MaintenanceModeResponse(MaintenanceModeStatus status, string scheduledTime, IReadOnlyList<MaintenanceModeActiveProcesses> activeProcesses)
         {
             Status = status;
             ScheduledTime = scheduledTime;
-            ActiveProcesses = connectionServices;
+            ActiveProcesses = activeProcesses;
         }
 
-        public MaintenanceModeStatus Status
+        public StringEnum<MaintenanceModeStatus> Status
         {
             get;
             private set;
@@ -52,8 +52,11 @@ namespace Octokit
 
     public enum MaintenanceModeStatus
     {
+        [Parameter(Value = "off")]
         Off,
+        [Parameter(Value = "on")]
         On,
+        [Parameter(Value = "scheduled")]
         Scheduled
     }
 }
