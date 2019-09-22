@@ -33,7 +33,7 @@ public class EnterpriseManagementConsoleClientTests
                     new UpdateMaintenanceRequest(),
                     EnterpriseHelper.ManagementConsolePassword);
 
-            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Off);
+            Assert.Equal(MaintenanceModeStatus.Off, maintenance.Status);
         }
     }
 
@@ -49,7 +49,7 @@ public class EnterpriseManagementConsoleClientTests
                     new UpdateMaintenanceRequestDetails(true)),
                 EnterpriseHelper.ManagementConsolePassword);
 
-            Assert.Equal(maintenance.Status, MaintenanceModeStatus.On);
+            Assert.Equal(MaintenanceModeStatus.On, maintenance.Status);
         }
     }
 
@@ -66,7 +66,7 @@ public class EnterpriseManagementConsoleClientTests
                         new UpdateMaintenanceRequestDetails(true, scheduledTime)),
                     EnterpriseHelper.ManagementConsolePassword);
 
-            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
+            Assert.Equal(MaintenanceModeStatus.Scheduled, maintenance.Status);
         }
     }
 
@@ -82,7 +82,7 @@ public class EnterpriseManagementConsoleClientTests
                     new UpdateMaintenanceRequestDetails(true, "tomorrow at 5pm")),
                 EnterpriseHelper.ManagementConsolePassword);
 
-            Assert.Equal(maintenance.Status, MaintenanceModeStatus.Scheduled);
+            Assert.Equal(MaintenanceModeStatus.Scheduled, maintenance.Status);
         }
     }
 }
