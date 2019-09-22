@@ -111,7 +111,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name), options);
+            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name), null, AcceptHeaders.DraftPullRequestApiPreview, options);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId), null, AcceptHeaders.DraftPullRequestApiPreview, options);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name),
-                request.ToParametersDictionary(), options);
+                request.ToParametersDictionary(), AcceptHeaders.DraftPullRequestApiPreview, options);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId),
-                request.ToParametersDictionary(), options);
+                request.ToParametersDictionary(), AcceptHeaders.DraftPullRequestApiPreview, options);
         }
 
         /// <summary>
