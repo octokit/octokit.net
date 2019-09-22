@@ -113,12 +113,6 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
         }
 
-        public static void DeleteRepo(Repository repository)
-        {
-            if (user != null)
-                DeleteUser(connection, user.Login);
-        }
-
         public static void DeleteUser(IConnection connection, string username)
         {
             try
