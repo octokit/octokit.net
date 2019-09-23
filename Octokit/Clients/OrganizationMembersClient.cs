@@ -444,7 +444,7 @@ namespace Octokit
         /// Make the authenticated user's organization membership private.
         /// </summary>
         /// <remarks>
-        /// This method requries authentication.
+        /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
