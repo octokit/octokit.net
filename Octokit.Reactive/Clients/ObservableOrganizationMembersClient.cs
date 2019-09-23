@@ -377,6 +377,69 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization member.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#get-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembership> GetOrganizationMembership(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.GetOrganizationMembership(org, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Add a user to the organization or update the user's role withing the organization. 
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <param name="addOrUpdateRequest">An <see cref="OrganizationMembershipUpdate"/> instance describing the
+        /// changes to make to the user's organization membership</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(addOrUpdateRequest, nameof(addOrUpdateRequest));
+
+            return _client.AddOrUpdateOrganizationMembership(org, user, addOrUpdateRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// Remove a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#remove-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        public IObservable<Unit> RemoveOrganizationMembership(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.RemoveOrganizationMembership(org, user).ToObservable();
+        }
+
+        /// <summary>
         /// List all pending invitations for the organization.
         /// </summary>
         /// <remarks>
