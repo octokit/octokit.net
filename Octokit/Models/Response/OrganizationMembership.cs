@@ -10,7 +10,7 @@ namespace Octokit
             
         }
 
-        public OrganizationMembership(string url, OrganizationMembershipsState state, OrganizationMembershipsRole role, string organizationUrl, Organization organization, User user)
+        public OrganizationMembership(string url, StringEnum<OrganizationMembershipsState> state, StringEnum<OrganizationMembershipsRole> role, string organizationUrl, Organization organization, User user)
         {
             Url = url;
             State = state;
@@ -21,8 +21,8 @@ namespace Octokit
         }
         
         public string Url { get; protected set; }
-        public OrganizationMembershipsState State { get; protected set; }
-        public OrganizationMembershipsRole Role { get; protected set; }
+        public StringEnum<OrganizationMembershipsState> State { get; protected set; }
+        public StringEnum<OrganizationMembershipsRole> Role { get; protected set; }
         public string OrganizationUrl { get; protected set; }
         public Organization Organization { get; protected set; }
         public User User { get; protected set; }
