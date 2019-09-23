@@ -37,6 +37,22 @@ namespace Octokit
         Member
     }
 
+    public enum OrganizationMembershipsState
+    {
+        [Parameter(Value = "active")]
+        Active,
+        [Parameter(Value = "pending")]
+        Pending
+    }
+    
+    public enum OrganizationMembershipsRole
+    {
+        [Parameter(Value = "admin")]
+        Admin,
+        [Parameter(Value = "member")]
+        Member
+    }
+
     /// <summary>
     /// A client for GitHub's Organization Members API.
     /// </summary>
