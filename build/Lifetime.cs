@@ -17,9 +17,11 @@ public class Lifetime : FrostingLifetime<Context>
         context.Artifacts = "./packaging/";
         context.CodeCoverage = "./coverage-results/";
 
+        var isGitHubAction = context.EnvironmentVariable("GITHUB_WORKFLOW") != null && context.EnvironmentVariable("GITHUB_ACTION") != null;
+
         // Build system information.
         var buildSystem = context.BuildSystem();
-        context.IsLocalBuild = buildSystem.IsLocalBuild;
+        context.IsLocalBuild = buildSystem.IsLocalBuild && !isGitHubAction;
 
         if (context.CoreOnly && !context.IsLocalBuild)
         {
