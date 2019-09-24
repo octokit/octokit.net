@@ -4,6 +4,8 @@ using System.Linq;
 using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
+// hack because Travis on LInux is somehow upgraded to a version of .NET (Core?) that also has System.Range
+using Range = Octokit.Range;
 
 public class SearchIssuesRequestTests
 {
