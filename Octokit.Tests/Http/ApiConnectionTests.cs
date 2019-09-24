@@ -388,6 +388,7 @@ namespace Octokit.Tests.Http
                 connection.Received(3).GetResponse<IReadOnlyList<object>>(queuedOperationUrl, Args.CancellationToken);
             }
 
+            [Fact(Skip = "Test triggers deadlock when run, needs to be investigated")]
             public async Task CanCancelQueuedOperation()
             {
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);
