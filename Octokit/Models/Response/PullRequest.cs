@@ -170,7 +170,7 @@ namespace Octokit
         /// Whether or not the pull request is in a draft state, and cannot be merged.
         /// </summary>
         public bool Draft { get; protected set; }
-        
+
         /// <summary>
         /// Whether or not the pull request has been merged.
         /// </summary>

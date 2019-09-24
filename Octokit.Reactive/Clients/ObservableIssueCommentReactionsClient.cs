@@ -107,7 +107,7 @@ namespace Octokit.Reactive
         public IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
     }

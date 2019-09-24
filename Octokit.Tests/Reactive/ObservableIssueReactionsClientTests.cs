@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));                
+                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
 
                 Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));

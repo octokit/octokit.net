@@ -93,7 +93,7 @@ public class CommitCommentReactionsClientTests
             var reactions = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, options);
 
             Assert.Equal(1, reactions.Count);
-            
+
             Assert.Equal(reaction.Id, reactions[0].Id);
             Assert.Equal(reaction.Content, reactions[0].Content);
         }
@@ -111,7 +111,7 @@ public class CommitCommentReactionsClientTests
             Assert.NotNull(result);
 
             var reactions = new List<Reaction>();
-            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            var reactionsContent = new[] { ReactionType.Confused, ReactionType.Hooray };
             for (var i = 0; i < 2; i++)
             {
                 var newReaction = new NewReaction(reactionsContent[i]);
@@ -128,7 +128,7 @@ public class CommitCommentReactionsClientTests
             var reactionsInfo = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, options);
 
             Assert.Equal(1, reactionsInfo.Count);
-            
+
             Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
             Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
         }
@@ -145,7 +145,7 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotNull(result);
 
-            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            var reactionsContent = new[] { ReactionType.Confused, ReactionType.Hooray };
             for (var i = 0; i < 2; i++)
             {
                 var newReaction = new NewReaction(reactionsContent[i]);
@@ -159,7 +159,7 @@ public class CommitCommentReactionsClientTests
                 StartPage = 1
             };
             var firstPage = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, startOptions);
-            
+
             var skipStartOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -221,7 +221,7 @@ public class CommitCommentReactionsClientTests
             var reactions = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, options);
 
             Assert.Equal(1, reactions.Count);
-            
+
             Assert.Equal(reaction.Id, reactions[0].Id);
             Assert.Equal(reaction.Content, reactions[0].Content);
         }
@@ -239,7 +239,7 @@ public class CommitCommentReactionsClientTests
             Assert.NotNull(result);
 
             var reactions = new List<Reaction>();
-            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            var reactionsContent = new[] { ReactionType.Confused, ReactionType.Hooray };
             for (var i = 0; i < 2; i++)
             {
                 var newReaction = new NewReaction(reactionsContent[i]);
@@ -256,7 +256,7 @@ public class CommitCommentReactionsClientTests
             var reactionsInfo = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, options);
 
             Assert.Equal(1, reactionsInfo.Count);
-            
+
             Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
             Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
         }
@@ -273,7 +273,7 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotNull(result);
 
-            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            var reactionsContent = new[] { ReactionType.Confused, ReactionType.Hooray };
             for (var i = 0; i < 2; i++)
             {
                 var newReaction = new NewReaction(reactionsContent[i]);
@@ -287,7 +287,7 @@ public class CommitCommentReactionsClientTests
                 StartPage = 1
             };
             var firstPage = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, startOptions);
-            
+
             var skipStartOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -300,7 +300,7 @@ public class CommitCommentReactionsClientTests
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
-        }        
+        }
         [IntegrationTest]
         public async Task CanCreateReaction()
         {

@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private IConnection _connection;
-        
+
         public void Dispose()
         {
             // Ensure maintenance mode is OFF

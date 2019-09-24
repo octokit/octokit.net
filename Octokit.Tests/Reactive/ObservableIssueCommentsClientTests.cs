@@ -201,7 +201,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3, request);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 3
                          && d["since"] == "2016-11-23T11:11:11Z"),
                     "application/vnd.github.squirrel-girl-preview");
@@ -243,7 +243,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 4),
                     "application/vnd.github.squirrel-girl-preview");
             }

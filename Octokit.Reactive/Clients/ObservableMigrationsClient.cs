@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         public IObservable<Migration> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, AcceptHeaders.MigrationsApiPreview, options);
         }
 

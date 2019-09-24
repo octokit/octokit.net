@@ -29,6 +29,7 @@ public class Context : FrostingContext
 
     public Project[] Projects { get; set; }
 
+    public FilePath DotNetFormatToolPath { get; set; }
     public FilePath GitVersionToolPath { get; set; }
 
     public DotNetCoreTestSettings GetTestSettings()

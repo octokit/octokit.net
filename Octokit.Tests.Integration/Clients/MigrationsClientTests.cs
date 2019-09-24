@@ -75,12 +75,12 @@ public class MigrationsClientTests : IDisposable
             PageCount = 1,
             PageSize = 1
         };
-        
+
         var migrations = await _gitHub.Migration.Migrations.GetAll(_orgName, options);
 
         Assert.Equal(1, migrations.Count);
     }
-    
+
     [IntegrationTest]
     public async Task ReturnsCorrectCountOfMigrationsWithStart()
     {
@@ -90,7 +90,7 @@ public class MigrationsClientTests : IDisposable
             PageSize = 1,
             StartPage = 2
         };
-        
+
         var migrations = await _gitHub.Migration.Migrations.GetAll(_orgName, options);
 
         Assert.Equal(1, migrations.Count);
@@ -105,7 +105,7 @@ public class MigrationsClientTests : IDisposable
             PageSize = 1,
             StartPage = 1
         };
-        
+
         var firstPage = await _gitHub.Migration.Migrations.GetAll(_orgName, startOptions);
 
         var skipStartOptions = new ApiOptions

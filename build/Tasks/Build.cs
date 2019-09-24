@@ -4,6 +4,7 @@ using Cake.Core;
 using Cake.Frosting;
 
 [Dependency(typeof(Restore))]
+[Dependency(typeof(FormatCode))]
 public class Build : FrostingTask<Context>
 {
     public override void Run(Context context)
