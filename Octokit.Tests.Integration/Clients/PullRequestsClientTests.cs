@@ -42,7 +42,7 @@ public class PullRequestsClientTests : IDisposable
     public async Task CanCreateDraft()
     {
         await CreateTheWorld();
-        
+
         var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
         var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
         Assert.Equal("a draft pull request", result.Title);
@@ -63,13 +63,13 @@ public class PullRequestsClientTests : IDisposable
     public async Task CanCreateDraftWithRepositoryId()
     {
         await CreateTheWorld();
-        
+
         var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
         var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
         Assert.Equal("a draft pull request", result.Title);
         Assert.True(result.Draft);
     }
-    
+
     [IntegrationTest]
     public async Task CanGetForRepository()
     {

@@ -42,7 +42,7 @@ namespace Octokit
         /// The Html page for this milestone.
         /// </summary>
         public string HtmlUrl { get; protected set; }
-        
+
         /// <summary>
         /// The ID for this milestone.
         /// </summary>

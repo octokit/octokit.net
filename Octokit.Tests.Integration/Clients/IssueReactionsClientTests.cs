@@ -58,7 +58,7 @@ public class IssueReactionsClientTests
                 PageSize = 1,
                 PageCount = 1
             };
-            
+
             var issueReactions = await _github.Reaction.Issue.GetAll(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
 
             Assert.Equal(1, issueReactions.Count);
@@ -89,7 +89,7 @@ public class IssueReactionsClientTests
                 PageCount = 1,
                 StartPage = 2
             };
-            
+
             var issueReactions = await _github.Reaction.Issue.GetAll(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
 
             Assert.Equal(1, issueReactions.Count);
@@ -121,7 +121,7 @@ public class IssueReactionsClientTests
                 StartPage = 1
             };
             var firstPage = await _github.Reaction.Issue.GetAll(_context.RepositoryOwner, _context.RepositoryName, issue.Number, startOptions);
-            
+
             var skipStartOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -129,7 +129,7 @@ public class IssueReactionsClientTests
                 StartPage = 2
             };
             var secondPage = await _github.Reaction.Issue.GetAll(_context.RepositoryOwner, _context.RepositoryName, issue.Number, skipStartOptions);
-            
+
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
@@ -169,7 +169,7 @@ public class IssueReactionsClientTests
                 PageSize = 1,
                 PageCount = 1
             };
-            
+
             var issueReactions = await _github.Reaction.Issue.GetAll(_context.Repository.Id, issue.Number, options);
 
             Assert.Equal(1, issueReactions.Count);
@@ -200,7 +200,7 @@ public class IssueReactionsClientTests
                 PageCount = 1,
                 StartPage = 2
             };
-            
+
             var issueReactions = await _github.Reaction.Issue.GetAll(_context.Repository.Id, issue.Number, options);
 
             Assert.Equal(1, issueReactions.Count);
@@ -232,7 +232,7 @@ public class IssueReactionsClientTests
                 StartPage = 1
             };
             var firstPage = await _github.Reaction.Issue.GetAll(_context.Repository.Id, issue.Number, startOptions);
-            
+
             var skipStartOptions = new ApiOptions
             {
                 PageSize = 1,
@@ -240,7 +240,7 @@ public class IssueReactionsClientTests
                 StartPage = 2
             };
             var secondPage = await _github.Reaction.Issue.GetAll(_context.Repository.Id, issue.Number, skipStartOptions);
-            
+
             Assert.Equal(1, firstPage.Count);
             Assert.Equal(1, secondPage.Count);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);

@@ -190,7 +190,7 @@ namespace Octokit.Tests.Clients
                 {
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
                 };
-                
+
                 await client.GetAllForIssue("fake", "repo", 3, request);
 
                 connection.Received().GetAll<IssueComment>(

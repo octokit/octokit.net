@@ -46,7 +46,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(owner, name, number), null,AcceptHeaders.DraftPullRequestApiPreview);
+            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(owner, name, number), null, AcceptHeaders.DraftPullRequestApiPreview);
         }
 
         /// <summary>

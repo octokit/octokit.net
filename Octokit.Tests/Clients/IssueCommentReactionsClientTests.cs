@@ -70,7 +70,7 @@ namespace Octokit.Tests.Clients
                     StartPage = 1,
                     PageSize = 1
                 };
-                
+
                 await client.GetAll(1, 42, options);
 
                 connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments/42/reactions"), null, "application/vnd.github.squirrel-girl-preview", options);

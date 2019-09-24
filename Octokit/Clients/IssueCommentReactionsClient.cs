@@ -97,7 +97,7 @@ namespace Octokit
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
     }

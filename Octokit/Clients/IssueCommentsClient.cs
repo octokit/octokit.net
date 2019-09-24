@@ -263,7 +263,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(owner, name, number), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 
@@ -279,7 +279,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return ApiConnection.GetAll<IssueComment>(ApiUrls.IssueComments(repositoryId, number), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
 

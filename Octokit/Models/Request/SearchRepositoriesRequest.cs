@@ -331,7 +331,7 @@ namespace Octokit
         /// Matches repositories with regards to both the <param name="from"/> and <param name="to"/> dates.
         /// </summary>
         [Obsolete("This ctor does not support the time component or timezone and will be removed in a future release. Please use the DateTimeOffset overload instead")]
-        public DateRange(DateTime from, DateTime to) 
+        public DateRange(DateTime from, DateTime to)
         {
             query = $"{from.ToString(DatePattern, CultureInfo.InvariantCulture)}..{to.ToString(DatePattern, CultureInfo.InvariantCulture)}";
         }
