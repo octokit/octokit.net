@@ -6,14 +6,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v1.0.2
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
       run: ./build.sh --coreonly=false --linksources=true --verbosity=verbose
-      env:
-         DOTNET_ROOT: /home/runner/.dotnet
