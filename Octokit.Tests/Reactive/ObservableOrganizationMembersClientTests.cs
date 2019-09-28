@@ -308,6 +308,85 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetOrganizationMembershipMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.GetOrganizationMembership("org", "username");
+
+                gitHubClient.Organization.Member.Received().GetOrganizationMembership("org", "username");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("org", "").ToTask());
+            }
+        }
+
+        public class TheAddOrUpdateOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+                
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.AddOrUpdateOrganizationMembership("org", "username", orgMembershipUpdate);
+
+                gitHubClient.Organization.Member.Received().AddOrUpdateOrganizationMembership("org", "username", orgMembershipUpdate);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership(null, "username", orgMembershipUpdate).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("", "username", orgMembershipUpdate).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", null, orgMembershipUpdate).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("org", "", orgMembershipUpdate).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null).ToTask());
+            }
+        }
+
+        public class TheDeleteOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.RemoveOrganizationMembership("org", "username");
+
+                gitHubClient.Organization.Member.Received().RemoveOrganizationMembership("org", "username");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership(null, "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("", "username").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership("org", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("org", "").ToTask());
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             [Fact]
