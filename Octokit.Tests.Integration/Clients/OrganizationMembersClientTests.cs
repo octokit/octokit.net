@@ -121,6 +121,75 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+        public class TheGetOrganizationMembershipMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheGetOrganizationMembershipMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsUsersMembershipOrganizationMembership()
+            {
+                using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+                {
+                    teamContext.InviteMember("alfhenrik-test-2");
+                    
+                    var organizationMemberhip = await _gitHub.Organization.Member.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+                    Assert.Equal(OrganizationMembershipsState.Pending, organizationMemberhip.State);
+                    Assert.Equal(OrganizationMembershipsRole.Member, organizationMemberhip.Role);
+                }
+            }
+        }
+        
+        public class TheAddOrUpdateOrganizationMembershipMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheAddOrUpdateOrganizationMembershipMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsUsersPendingMemberOrganizationMembership()
+            {
+                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate());
+                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
+                Assert.Equal(OrganizationMembershipsRole.Member, organizationMembership.Role);
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsUsersPendingAdminOrganizationMembership()
+            {
+                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = OrganizationMembershipsRole.Admin});
+                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
+                Assert.Equal(OrganizationMembershipsRole.Admin, organizationMembership.Role);
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+            }
+        }
+
+        public class TheRemoveOrganizationMembershipMethod
+        {
+            readonly IGitHubClient _gitHub;
+            
+            public TheRemoveOrganizationMembershipMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+            
+            [OrganizationTest]
+            public async Task RemovesOrganizationMembership()
+            {
+                await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate());
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+                await Assert.ThrowsAsync<NotFoundException>(() => _gitHub.Organization.Member.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2"));
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             readonly IGitHubClient _gitHub;
