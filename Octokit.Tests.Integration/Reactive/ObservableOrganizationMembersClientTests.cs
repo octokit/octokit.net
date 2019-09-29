@@ -28,8 +28,8 @@ namespace Octokit.Tests.Integration.Reactive
                     teamContext.InviteMember("alfhenrik-test-2");
                     
                     var organizationMemberhip = await _client.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
-                    Assert.Equal(OrganizationMembershipsState.Pending, organizationMemberhip.State);
-                    Assert.Equal(OrganizationMembershipsRole.Member, organizationMemberhip.Role);
+                    Assert.Equal(MembershipState.Pending, organizationMemberhip.State);
+                    Assert.Equal(MembershipRole.Member, organizationMemberhip.Role);
                     await _client.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
                 }
             }
@@ -48,17 +48,17 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsUsersPendingMemberOrganizationMembership()
             {
                 var organizationMembership = await _client.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate());
-                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
-                Assert.Equal(OrganizationMembershipsRole.Member, organizationMembership.Role);
+                Assert.Equal(MembershipState.Pending, organizationMembership.State);
+                Assert.Equal(MembershipRole.Member, organizationMembership.Role);
                 await _client.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
             }
 
             [OrganizationTest]
             public async Task ReturnsUsersPendingAdminOrganizationMembership()
             {
-                var organizationMembership = await _client.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = OrganizationMembershipsRole.Admin});
-                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
-                Assert.Equal(OrganizationMembershipsRole.Admin, organizationMembership.Role);
+                var organizationMembership = await _client.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin});
+                Assert.Equal(MembershipState.Pending, organizationMembership.State);
+                Assert.Equal(MembershipRole.Admin, organizationMembership.Role);
                 await _client.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
             }
         }

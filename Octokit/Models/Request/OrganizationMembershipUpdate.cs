@@ -7,13 +7,13 @@ namespace Octokit
     {
         public OrganizationMembershipUpdate()
         {
-            Role = OrganizationMembershipsRole.Member;
+            Role = MembershipRole.Member;
         }
         
         /// <summary>
-        /// The role to give the user in the organization. The default is <see cref="OrganizationMembershipsRole.Member"/>.
+        /// The role to give the user in the organization. The default is <see cref="MembershipRole.Member"/>.
         /// </summary>
-        public OrganizationMembershipsRole Role { get; set; }
+        public MembershipRole Role { get; set; }
 
         internal string DebuggerDisplay => $"{Role}";
     }

@@ -36,16 +36,8 @@ namespace Octokit
         [Parameter(Value = "member")]
         Member
     }
-
-    public enum OrganizationMembershipsState
-    {
-        [Parameter(Value = "active")]
-        Active,
-        [Parameter(Value = "pending")]
-        Pending
-    }
     
-    public enum OrganizationMembershipsRole
+    public enum MembershipRole
     {
         [Parameter(Value = "admin")]
         Admin,

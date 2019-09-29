@@ -138,8 +138,8 @@ namespace Octokit.Tests.Integration.Clients
                     teamContext.InviteMember("alfhenrik-test-2");
                     
                     var organizationMemberhip = await _gitHub.Organization.Member.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
-                    Assert.Equal(OrganizationMembershipsState.Pending, organizationMemberhip.State);
-                    Assert.Equal(OrganizationMembershipsRole.Member, organizationMemberhip.Role);
+                    Assert.Equal(MembershipState.Pending, organizationMemberhip.State);
+                    Assert.Equal(MembershipRole.Member, organizationMemberhip.Role);
                 }
             }
         }
@@ -157,17 +157,17 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsUsersPendingMemberOrganizationMembership()
             {
                 var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate());
-                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
-                Assert.Equal(OrganizationMembershipsRole.Member, organizationMembership.Role);
+                Assert.Equal(MembershipState.Pending, organizationMembership.State);
+                Assert.Equal(MembershipRole.Member, organizationMembership.Role);
                 await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
             }
 
             [OrganizationTest]
             public async Task ReturnsUsersPendingAdminOrganizationMembership()
             {
-                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = OrganizationMembershipsRole.Admin});
-                Assert.Equal(OrganizationMembershipsState.Pending, organizationMembership.State);
-                Assert.Equal(OrganizationMembershipsRole.Admin, organizationMembership.Role);
+                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin});
+                Assert.Equal(MembershipState.Pending, organizationMembership.State);
+                Assert.Equal(MembershipRole.Admin, organizationMembership.Role);
                 await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
             }
         }
