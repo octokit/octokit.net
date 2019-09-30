@@ -1802,13 +1802,29 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchCodeRequest("something");
-                request.Extension = "cs";
+                request.Extensions.Add("cs");
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
+            }
+
+            [Fact]
+            public void TestingTheExtensionQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Extensions.Add("cs");
+                request.Extensions.Add("lol");
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs+extension:lol"));
             }
 
             [Fact]
@@ -1877,14 +1893,15 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 var request = new SearchCodeRequest("something", "octokit", "octokit.net");
                 request.Path = "tools/FAKE.core";
-                request.Extension = "fs";
+                request.Extensions.Add("fs");
+                request.Extensions.Add("cs");
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit/octokit.net"));
+                        d["q"] == "something+path:tools/FAKE.core+extension:fs+extension:cs+repo:octokit/octokit.net"));
             }
 
             [Fact]
