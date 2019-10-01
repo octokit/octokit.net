@@ -121,7 +121,7 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-code#extension
         /// </remarks>
-        public IList<string> Extensions { get; set; } = new List<string>();
+        public IEnumerable<string> Extensions { get; set; } = new List<string>();
 
         /// <summary>
         /// Matches specific file names

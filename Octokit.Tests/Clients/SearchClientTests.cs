@@ -1801,14 +1801,16 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Extensions.Add("cs");
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "txt" }
+                };
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:txt"));
             }
 
             [Fact]
@@ -1816,9 +1818,10 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Extensions.Add("cs");
-                request.Extensions.Add("lol");
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "cs", "lol" }
+                };
 
                 client.SearchCode(request);
 
@@ -1891,10 +1894,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net")
+                {
+                    Extensions = new[] { "fs", "cs" }
+                };
                 request.Path = "tools/FAKE.core";
-                request.Extensions.Add("fs");
-                request.Extensions.Add("cs");
 
                 client.SearchCode(request);
 
