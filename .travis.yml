@@ -8,10 +8,10 @@ matrix:
     - os: linux
       dist: xenial
       sudo: required
-      dotnet: 2.2
+      dotnet: 3.0
     - os: osx
       osx_image: xcode8.3
-      dotnet: 2.2.402
+      dotnet: 3.0
 
 branches:
   only:
