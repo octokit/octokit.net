@@ -116,12 +116,12 @@ namespace Octokit
         public string Path { get; set; }
 
         /// <summary>
-        /// Matches files with a certain extension.
+        /// Matches files with a certain extensions.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-code#extension
         /// </remarks>
-        public string Extension { get; set; }
+        public IEnumerable<string> Extensions { get; set; } = new List<string>();
 
         /// <summary>
         /// Matches specific file names
@@ -189,9 +189,12 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "path:{0}", Path));
             }
 
-            if (Extension.IsNotBlank())
+            if (Extensions.Any())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "extension:{0}", Extension));
+                foreach (var extension in Extensions)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "extension:{0}", extension));
+                }
             }
 
             if (FileName.IsNotBlank())

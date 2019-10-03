@@ -1801,14 +1801,33 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Extension = "cs";
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "txt" }
+                };
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:txt"));
+            }
+
+            [Fact]
+            public void TestingTheExtensionQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "cs", "lol" }
+                };
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs+extension:lol"));
             }
 
             [Fact]
@@ -1875,16 +1894,18 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net")
+                {
+                    Extensions = new[] { "fs", "cs" }
+                };
                 request.Path = "tools/FAKE.core";
-                request.Extension = "fs";
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit/octokit.net"));
+                        d["q"] == "something+path:tools/FAKE.core+extension:fs+extension:cs+repo:octokit/octokit.net"));
             }
 
             [Fact]
