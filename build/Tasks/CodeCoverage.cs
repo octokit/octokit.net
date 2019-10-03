@@ -27,7 +27,7 @@ public sealed class CodeCoverage : FrostingTask<Context>
                 context.Coverlet(project, new CoverletToolSettings()
                 {
                     Configuration = context.Configuration,
-                    Framework = "netcoreapp2.0",
+                    Framework = "netcoreapp3.0",
                     Output = dotNetCoreCoverage.FullPath
                 });
 
