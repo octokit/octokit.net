@@ -11,7 +11,7 @@ matrix:
       dotnet: 3.0
     - os: osx
       osx_image: xcode8.3
-      dotnet: 3.0
+      dotnet: 3.0.100
 
 branches:
   only:
