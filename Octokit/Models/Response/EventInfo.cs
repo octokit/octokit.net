@@ -296,6 +296,12 @@ namespace Octokit
         /// An issue comment was deleted.
         /// </summary>
         [Parameter(Value = "comment_deleted")]
-        CommentDeleted
+        CommentDeleted,
+        
+        /// <summary>
+        /// An issue was transferred.
+        /// </summary>
+        [Parameter(Value = "transferred")]
+        Transferred
     }
 }
