@@ -41,8 +41,8 @@ namespace Octokit
         public SearchCodeRequest(string term, string owner, string name)
             : this(term)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             Repos.Add(owner, name);
         }
@@ -116,12 +116,12 @@ namespace Octokit
         public string Path { get; set; }
 
         /// <summary>
-        /// Matches files with a certain extension.
+        /// Matches files with a certain extensions.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-code#extension
         /// </remarks>
-        public string Extension { get; set; }
+        public IEnumerable<string> Extensions { get; set; } = new List<string>();
 
         /// <summary>
         /// Matches specific file names
@@ -138,6 +138,14 @@ namespace Octokit
         /// https://help.github.com/articles/searching-code#users-organizations-and-repositories
         /// </remarks>
         public string User { get; set; }
+
+        /// <summary>
+        /// Limits searches to a specific organization.
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-code/#search-within-a-users-or-organizations-repositories
+        /// </remarks>
+        public string Organization { get; set; }
 
         /// <summary>
         /// Limits searches to a specific repository.
@@ -181,9 +189,12 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "path:{0}", Path));
             }
 
-            if (Extension.IsNotBlank())
+            if (Extensions.Any())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "extension:{0}", Extension));
+                foreach (var extension in Extensions)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "extension:{0}", extension));
+                }
             }
 
             if (FileName.IsNotBlank())
@@ -206,6 +217,11 @@ namespace Octokit
 
                 parameters.Add(
                     string.Join("+", Repos.Select(x => "repo:" + x)));
+            }
+
+            if (Organization.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "org:{0}", Organization));
             }
 
             return new ReadOnlyCollection<string>(parameters);

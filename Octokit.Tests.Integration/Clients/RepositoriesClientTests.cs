@@ -35,6 +35,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.HasWiki);
                 Assert.Null(repository.Homepage);
                 Assert.NotNull(repository.DefaultBranch);
+                Assert.Null(repository.License);
             }
         }
 
@@ -189,6 +190,35 @@ public class RepositoriesClientTests
             }
         }
 
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithALicenseTemplate()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-with-license");
+
+            var newRepository = new NewRepository(repoName)
+            {
+                AutoInit = true,
+                LicenseTemplate = "mit"
+            };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // NOTE: the License attribute is empty for newly created repositories
+                Assert.Null(createdRepository.License);
+
+                // license information is not immediatelly available after the repository is created
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
+                // check for actual license by reloading repository info
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.NotNull(repository.License);
+                Assert.Equal("mit", repository.License.Key);
+            }
+        }
+
 
         [IntegrationTest]
         public async Task ThrowsInvalidGitIgnoreExceptionForInvalidTemplateNames()
@@ -231,7 +261,7 @@ public class RepositoriesClientTests
             }
         }
 
-        [PaidAccountTest(Skip="Paid plans now have unlimited repositories. We shouldn't test this now.")]
+        [PaidAccountTest(Skip = "Paid plans now have unlimited repositories. We shouldn't test this now.")]
         public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -340,7 +370,7 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-            var update = new RepositoryUpdate { Name = updatedName };
+            var update = new RepositoryUpdate(updatedName);
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
@@ -354,7 +384,7 @@ public class RepositoriesClientTests
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
             var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-            var update = new RepositoryUpdate { Name = updatedName };
+            var update = new RepositoryUpdate(updatedName);
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
@@ -367,7 +397,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
+            var update = new RepositoryUpdate(repoName) { Description = "Updated description" };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
@@ -380,7 +410,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Description = "Updated description" };
+            var update = new RepositoryUpdate(repoName) { Description = "Updated description" };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
@@ -393,7 +423,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
+            var update = new RepositoryUpdate(repoName) { Homepage = "http://aUrl.to/nowhere" };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
@@ -406,7 +436,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Homepage = "http://aUrl.to/nowhere" };
+            var update = new RepositoryUpdate(repoName) { Homepage = "http://aUrl.to/nowhere" };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
@@ -426,11 +456,11 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Private = true };
+            var update = new RepositoryUpdate(repoName) { Private = true };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(true, _repository.Private);
+            Assert.True(_repository.Private);
         }
 
         [PaidAccountTest]
@@ -446,11 +476,11 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, Private = true };
+            var update = new RepositoryUpdate(repoName) { Private = true };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(true, _repository.Private);
+            Assert.True(_repository.Private);
         }
 
         [IntegrationTest]
@@ -459,11 +489,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
+            var update = new RepositoryUpdate(repoName) { HasDownloads = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasDownloads);
+            Assert.False(_repository.HasDownloads);
         }
 
         [IntegrationTest]
@@ -472,11 +502,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasDownloads = false };
+            var update = new RepositoryUpdate(repoName) { HasDownloads = false };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasDownloads);
+            Assert.False(_repository.HasDownloads);
         }
 
         [IntegrationTest]
@@ -485,11 +515,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
+            var update = new RepositoryUpdate(repoName) { HasIssues = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasIssues);
+            Assert.False(_repository.HasIssues);
         }
 
         [IntegrationTest]
@@ -498,11 +528,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasIssues = false };
+            var update = new RepositoryUpdate(repoName) { HasIssues = false };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasIssues);
+            Assert.False(_repository.HasIssues);
         }
 
         [IntegrationTest]
@@ -511,11 +541,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
+            var update = new RepositoryUpdate(repoName) { HasWiki = false };
 
             _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
 
-            Assert.Equal(false, _repository.HasWiki);
+            Assert.False(_repository.HasWiki);
         }
 
         [IntegrationTest]
@@ -524,11 +554,11 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
             _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate { Name = repoName, HasWiki = false };
+            var update = new RepositoryUpdate(repoName) { HasWiki = false };
 
             _repository = await github.Repository.Edit(_repository.Id, update);
 
-            Assert.Equal(false, _repository.HasWiki);
+            Assert.False(_repository.HasWiki);
         }
 
         [IntegrationTest]
@@ -700,9 +730,9 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var repository = await github.Repository.Get("haacked", "libgit2sharp");
+            var repository = await github.Repository.Get("octokitnet-test1", "octokit.net");
 
-            Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/octokitnet-test1/octokit.net.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
 
@@ -711,9 +741,9 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var repository = await github.Repository.Get(4550038);
+            var repository = await github.Repository.Get(100559458);
 
-            Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/octokitnet-test1/octokit.net.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
 
@@ -745,6 +775,18 @@ public class RepositoriesClientTests
                 Assert.NotNull(repository.AllowSquashMerge);
                 Assert.NotNull(repository.AllowMergeCommit);
             }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsSpecifiedRepositoryWithLicenseInformation()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("github", "choosealicense.com");
+
+            Assert.NotNull(repository.License);
+            Assert.Equal("mit", repository.License.Key);
+            Assert.Equal("MIT License", repository.License.Name);
         }
     }
 
@@ -782,7 +824,7 @@ public class RepositoriesClientTests
         public async Task ReturnsRepositoriesForOrganization()
         {
             var github = Helper.GetAuthenticatedClient();
-            
+
             var options = new ApiOptions
             {
                 PageSize = 20,
@@ -891,7 +933,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors("octokit", "octokit.net");
 
-            Assert.True(contributors.Any(c => c.Login == "pmacn"));
+            Assert.Contains(contributors, c => c.Login == "pmacn");
         }
 
         [IntegrationTest]
@@ -901,7 +943,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors(7528679);
 
-            Assert.True(contributors.Any(c => c.Login == "pmacn"));
+            Assert.Contains(contributors, c => c.Login == "pmacn");
         }
 
         [IntegrationTest]
@@ -1043,7 +1085,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors("ruby", "ruby", true);
 
-            Assert.True(contributors.Any(c => c.Type == "Anonymous"));
+            Assert.Contains(contributors, c => c.Type == "Anonymous");
         }
 
         [IntegrationTest]
@@ -1053,7 +1095,7 @@ public class RepositoriesClientTests
 
             var contributors = await github.Repository.GetAllContributors(538746, true);
 
-            Assert.True(contributors.Any(c => c.Type == "Anonymous"));
+            Assert.Contains(contributors, c => c.Type == "Anonymous");
         }
 
         [IntegrationTest]
@@ -1134,7 +1176,7 @@ public class RepositoriesClientTests
                 PageCount = 1
             };
 
-            var firstPage = await github.Repository.GetAllContributors("ruby", "ruby",  true, firstPageOptions);
+            var firstPage = await github.Repository.GetAllContributors("ruby", "ruby", true, firstPageOptions);
 
             var secondPageOptions = new ApiOptions
             {
@@ -1288,7 +1330,7 @@ public class RepositoriesClientTests
             var languages = await github.Repository.GetAllLanguages("octokit", "octokit.net");
 
             Assert.NotEmpty(languages);
-            Assert.True(languages.Any(l => l.Name == "C#"));
+            Assert.Contains(languages, l => l.Name == "C#");
         }
 
         [IntegrationTest]
@@ -1299,7 +1341,31 @@ public class RepositoriesClientTests
             var languages = await github.Repository.GetAllLanguages(7528679);
 
             Assert.NotEmpty(languages);
-            Assert.True(languages.Any(l => l.Name == "C#"));
+            Assert.Contains(languages, l => l.Name == "C#");
+        }
+
+        [IntegrationTest]
+        public async Task GetsEmptyLanguagesWhenNone()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var languages = await github.Repository.GetAllLanguages(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.Empty(languages);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task GetsEmptyLanguagesWhenNoneWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var languages = await github.Repository.GetAllLanguages(context.RepositoryId);
+
+                Assert.Empty(languages);
+            }
         }
     }
 
@@ -1312,7 +1378,7 @@ public class RepositoriesClientTests
 
             var tags = await github.Repository.GetAllTags("octokit", "octokit.net");
 
-            Assert.True(tags.Any(t => t.Name == "v0.1.0"));
+            Assert.Contains(tags, t => t.Name == "v0.1.0");
         }
 
         [IntegrationTest]
@@ -1322,7 +1388,7 @@ public class RepositoriesClientTests
 
             var tags = await github.Repository.GetAllTags(7528679);
 
-            Assert.True(tags.Any(t => t.Name == "v0.1.0"));
+            Assert.Contains(tags, t => t.Name == "v0.1.0");
         }
 
         [IntegrationTest]
@@ -1458,195 +1524,9 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAllBranchesMethod
-    {
-        [IntegrationTest]
-        public async Task GetsAllBranches()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net");
-
-            Assert.NotEmpty(branches);
-        }
-
-        [IntegrationTest]
-        public async Task GetsAllBranchesWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var branches = await github.Repository.GetAllBranches(7528679);
-
-            Assert.NotEmpty(branches);
-
-            // Ensure Protection attribute is deserialized
-            foreach (var branch in branches)
-            {
-                Assert.NotNull(branch.Protection);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfBranchesWithoutStart()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1
-            };
-
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net", options);
-
-            Assert.Equal(5, branches.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfBranchesWithoutStartWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1
-            };
-
-            var branches = await github.Repository.GetAllBranches(7528679, options);
-
-            Assert.Equal(5, branches.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfBranchesWithStart()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1,
-                StartPage = 2
-            };
-
-            var branches = await github.Repository.GetAllBranches("octokit", "octokit.net", options);
-
-            Assert.Equal(5, branches.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfBranchesWithStartWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var options = new ApiOptions
-            {
-                PageSize = 5,
-                PageCount = 1,
-                StartPage = 2
-            };
-
-            var branches = await github.Repository.GetAllBranches(7528679, options);
-
-            Assert.Equal(5, branches.Count);
-        }
-
-        [IntegrationTest]
-        public async Task GetsPagesOfBranches()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var firstPageOptions = new ApiOptions
-            {
-                PageSize = 5,
-                StartPage = 1,
-                PageCount = 1
-            };
-
-            var firstPage = await github.Repository.GetAllBranches("octokit", "octokit.net", firstPageOptions);
-
-            var secondPageOptions = new ApiOptions
-            {
-                PageSize = 5,
-                StartPage = 2,
-                PageCount = 1
-            };
-
-            var secondPage = await github.Repository.GetAllBranches("octokit", "octokit.net", secondPageOptions);
-
-            Assert.Equal(5, firstPage.Count);
-            Assert.Equal(5, secondPage.Count);
-
-            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
-            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
-            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
-            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
-            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
-        }
-
-        [IntegrationTest]
-        public async Task GetsPagesOfBranchesWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var firstPageOptions = new ApiOptions
-            {
-                PageSize = 5,
-                StartPage = 1,
-                PageCount = 1
-            };
-
-            var firstPage = await github.Repository.GetAllBranches(7528679, firstPageOptions);
-
-            var secondPageOptions = new ApiOptions
-            {
-                PageSize = 5,
-                StartPage = 2,
-                PageCount = 1
-            };
-
-            var secondPage = await github.Repository.GetAllBranches(7528679, secondPageOptions);
-
-            Assert.Equal(5, firstPage.Count);
-            Assert.Equal(5, secondPage.Count);
-
-            Assert.NotEqual(firstPage[0].Name, secondPage[0].Name);
-            Assert.NotEqual(firstPage[1].Name, secondPage[1].Name);
-            Assert.NotEqual(firstPage[2].Name, secondPage[2].Name);
-            Assert.NotEqual(firstPage[3].Name, secondPage[3].Name);
-            Assert.NotEqual(firstPage[4].Name, secondPage[4].Name);
-        }
-    }
-
-    public class TheGetBranchMethod
-    {
-        [IntegrationTest]
-        public async Task GetsABranch()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var branch = await github.Repository.GetBranch("octokit", "octokit.net", "master");
-
-            Assert.NotNull(branch);
-            Assert.Equal("master", branch.Name);
-        }
-
-        [IntegrationTest]
-        public async Task GetsABranchWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var branch = await github.Repository.GetBranch(7528679, "master");
-
-            Assert.NotNull(branch);
-            Assert.Equal("master", branch.Name);
-        }
-    }
-
     public class TheGetAllTeamsMethod
     {
-        [IntegrationTest(Skip="Test requires administration rights to access this endpoint")]
+        [IntegrationTest(Skip = "Test requires administration rights to access this endpoint")]
         public async Task GetsAllTeams()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1656,7 +1536,7 @@ public class RepositoriesClientTests
             Assert.NotEmpty(branches);
         }
 
-        [IntegrationTest(Skip="Test requires administration rights to access this endpoint")]
+        [IntegrationTest(Skip = "Test requires administration rights to access this endpoint")]
         public async Task GetsAllTeamsWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1799,101 +1679,154 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheEditBranchMethod
+    public class TheGetLicenseContentsMethod
     {
-        private readonly IRepositoriesClient _fixture;
-        private readonly RepositoryContext _context;
-
-        public TheEditBranchMethod()
+        [IntegrationTest]
+        public async Task ReturnsLicenseContent()
         {
             var github = Helper.GetAuthenticatedClient();
-            _context = github.CreateRepositoryContext("source-repo").Result;
-            _fixture = github.Repository;
-        }
 
-        public async Task CreateTheWorld()
-        {
-            // Set master branch to be protected, with some status checks
-            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1", "check2" });
-
-            var update = new BranchUpdate();
-            update.Protection = new BranchProtection(true, requiredStatusChecks);
-
-            var newBranch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+            var license = await github.Repository.GetLicenseContents("octokit", "octokit.net");
+            Assert.Equal("LICENSE.txt", license.Name);
+            Assert.NotNull(license.License);
+            Assert.Equal("mit", license.License.Key);
+            Assert.Equal("MIT License", license.License.Name);
         }
 
         [IntegrationTest]
-        public async Task ProtectsBranch()
+        public async Task ReturnsLicenseContentWithRepositoryId()
         {
-            // Set master branch to be protected, with some status checks
-            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1", "check2", "check3" });
+            var github = Helper.GetAuthenticatedClient();
 
-            var update = new BranchUpdate();
-            update.Protection = new BranchProtection(true, requiredStatusChecks);
+            var license = await github.Repository.GetLicenseContents(7528679);
+            Assert.Equal("LICENSE.txt", license.Name);
+            Assert.NotNull(license.License);
+            Assert.Equal("mit", license.License.Key);
+            Assert.Equal("MIT License", license.License.Name);
+        }
+    }
 
-            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+    public class TheTransferMethod
+    {
+        [IntegrationTest]
+        public async Task TransfersFromOrgToUser()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.UserName;
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
 
-            // Ensure a branch object was returned
-            Assert.NotNull(branch);
-
-            // Retrieve master branch
-            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
-
-            // Assert the changes were made
-            Assert.Equal(branch.Protection.Enabled, true);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Everyone);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 3);
+                Assert.Equal(newOwner, transferred.Owner.Login);
+            }
         }
 
         [IntegrationTest]
-        public async Task RemoveStatusCheckEnforcement()
+        public async Task TransfersFromOrgToUserById()
         {
-            await CreateTheWorld();
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.UserName;
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryId, transfer);
+                var transferred = await github.Repository.Get(context.RepositoryId);
 
-            // Remove status check enforcement
-            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Off, new List<string> { "check1" });
-
-            var update = new BranchUpdate();
-            update.Protection = new BranchProtection(true, requiredStatusChecks);
-
-            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
-
-            // Ensure a branch object was returned
-            Assert.NotNull(branch);
-
-            // Retrieve master branch
-            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
-
-            // Assert the changes were made
-            Assert.Equal(branch.Protection.Enabled, true);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Off);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 1);
+                Assert.Equal(newOwner, transferred.Owner.Login);
+            }
         }
 
         [IntegrationTest]
-        public async Task UnprotectsBranch()
+        public async Task TransfersFromUserToOrg()
         {
-            await CreateTheWorld();
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
+                var transferred = await github.Repository.Get(newOwner, context.RepositoryName);
 
-            // Unprotect branch
-            // Deliberately set Enforcement and Contexts to some values (these should be ignored)
-            var requiredStatusChecks = new RequiredStatusChecks(EnforcementLevel.Everyone, new List<string> { "check1" });
+                Assert.Equal(newOwner, transferred.Owner.Login);
+            }
+        }
 
-            var update = new BranchUpdate();
-            update.Protection = new BranchProtection(false, requiredStatusChecks);
+        [IntegrationTest]
+        public async Task TransfersFromUserToOrgById()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+            using (var context = await github.CreateRepositoryContext(newRepo))
+            {
+                var transfer = new RepositoryTransfer(newOwner);
+                await github.Repository.Transfer(context.RepositoryId, transfer);
+                var transferred = await github.Repository.Get(context.RepositoryId);
 
-            var branch = await _fixture.EditBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master", update);
+                Assert.Equal(newOwner, transferred.Owner.Login);
+            }
+        }
 
-            // Ensure a branch object was returned
-            Assert.NotNull(branch);
+        [IntegrationTest]
+        public async Task TransfersFromUserToOrgWithTeams()
+        {
+            // FIXME API doesn't add teams when transferring to an organization
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
 
-            // Retrieve master branch
-            branch = await _fixture.GetBranch(_context.Repository.Owner.Login, _context.Repository.Name, "master");
+            using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
+            {
+                NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
+                {
+                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                    await github.Repository.Transfer(
+                        repositoryContext.RepositoryOwner, repositoryContext.RepositoryName, transfer);
+                    var transferred = await github.Repository.Get(repositoryContext.RepositoryId);
+                    var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
 
-            // Assert the branch is unprotected, and enforcement/contexts are cleared
-            Assert.Equal(branch.Protection.Enabled, false);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.EnforcementLevel, EnforcementLevel.Off);
-            Assert.Equal(branch.Protection.RequiredStatusChecks.Contexts.Count, 0);
+                    Assert.Equal(newOwner, transferred.Owner.Login);
+                    // transferTeamIds is a subset of repoTeams
+                    Assert.Empty(
+                        transferTeamIds.Except(
+                            repoTeams.Select(t => t.Id)));
+                }
+            }
+        }
+
+        [IntegrationTest]
+        public async Task TransfersFromUserToOrgWithTeamsById()
+        {
+            // FIXME API doesn't add teams when transferring to an organization
+            var github = Helper.GetAuthenticatedClient();
+            var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
+            var newOwner = Helper.Organization;
+
+            using (var repositoryContext = await github.CreateRepositoryContext(newRepo))
+            {
+                NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
+                using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
+                {
+                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
+                    await github.Repository.Transfer(repositoryContext.RepositoryId, transfer);
+                    var transferred = await github.Repository.Get(repositoryContext.RepositoryId);
+                    var repoTeams = await github.Repository.GetAllTeams(repositoryContext.RepositoryId);
+
+                    Assert.Equal(newOwner, transferred.Owner.Login);
+                    // transferTeamIds is a subset of repoTeams
+                    Assert.Empty(
+                        transferTeamIds.Except(
+                            repoTeams.Select(t => t.Id)));
+                }
+            }
         }
     }
 }

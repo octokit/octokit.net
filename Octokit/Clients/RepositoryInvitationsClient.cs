@@ -29,7 +29,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Patch(endpoint, AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
@@ -52,7 +52,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
@@ -76,7 +76,7 @@ namespace Octokit
                 var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return false;
             }
@@ -91,7 +91,21 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
         {
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), AcceptHeaders.InvitationsApiPreview);
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all invitations for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
         /// <summary>
@@ -104,7 +118,22 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId)
         {
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), AcceptHeaders.InvitationsApiPreview);
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the invitations on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
+        /// </remarks>        
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
         /// <summary>
@@ -119,7 +148,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
-            Ensure.ArgumentNotNull(permissions, "permissions");
+            Ensure.ArgumentNotNull(permissions, nameof(permissions));
 
             return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions, AcceptHeaders.InvitationsApiPreview);
         }

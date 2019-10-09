@@ -15,10 +15,10 @@ namespace Octokit.Reactive
     {
         readonly IRepositoryCommentsClient _client;
         readonly IConnection _connection;
-        
+
         public ObservableRepositoryCommentsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Comment;
             _connection = client.Connection;
@@ -33,8 +33,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         public IObservable<CommitComment> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name, number).ToObservable();
         }
@@ -58,8 +58,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public IObservable<CommitComment> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -83,9 +83,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public IObservable<CommitComment> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -98,7 +98,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         public IObservable<CommitComment> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -112,9 +112,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             return GetAllForCommit(owner, name, sha, ApiOptions.None);
         }
@@ -127,7 +127,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
             return GetAllForCommit(repositoryId, sha, ApiOptions.None);
         }
@@ -142,10 +142,10 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -159,8 +159,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         public IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -175,10 +175,10 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         public IObservable<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(newCommitComment, nameof(newCommitComment));
 
             return _client.Create(owner, name, sha, newCommitComment).ToObservable();
         }
@@ -192,8 +192,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         public IObservable<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(sha, "sha");
-            Ensure.ArgumentNotNull(newCommitComment, "newCommitComment");
+            Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
+            Ensure.ArgumentNotNull(newCommitComment, nameof(newCommitComment));
 
             return _client.Create(repositoryId, sha, newCommitComment).ToObservable();
         }
@@ -208,9 +208,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         public IObservable<CommitComment> Update(string owner, string name, int number, string commentUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return _client.Update(owner, name, number, commentUpdate).ToObservable();
         }
@@ -224,7 +224,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         public IObservable<CommitComment> Update(long repositoryId, int number, string commentUpdate)
         {
-            Ensure.ArgumentNotNull(commentUpdate, "commentUpdate");
+            Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
             return _client.Update(repositoryId, number, commentUpdate).ToObservable();
         }
@@ -238,8 +238,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         public IObservable<Unit> Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, number).ToObservable();
         }

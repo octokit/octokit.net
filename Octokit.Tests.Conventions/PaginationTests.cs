@@ -8,14 +8,17 @@ namespace Octokit.Tests.Conventions
 {
     public class PaginationTests
     {
-        [Theory(Skip = "Enable this to run it and find all the places where things break")]
-        [MemberData("GetClientInterfaces")]
-        public void CheckObservableClients(Type clientInterface)
+        [Theory]
+        [MemberData(nameof(GetClientInterfaces))]
+        public void CheckPaginationApiOptionsOverloads(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
             var methodsWhichCanPaginate = methodsOrdered
-                .Where(x => x.Name.StartsWith("GetAll") && !x.HasAttribute<ExcludeFromPaginationConventionTestAttribute>());
+                .Where(x => x.ReturnType.GetCustomTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.Name.StartsWith("Get"))
+                .Where(x => !x.HasAttribute<ExcludeFromPaginationApiOptionsConventionTestAttribute>())
+                .Where(x => !x.HasAttribute<ObsoleteAttribute>());
 
             var invalidMethods = methodsWhichCanPaginate
                 .Where(method => MethodHasAppropriateOverload(method, methodsOrdered) == null)
@@ -28,14 +31,16 @@ namespace Octokit.Tests.Conventions
         }
 
         [Theory]
-        [MemberData("GetClientInterfaces")]
+        [MemberData(nameof(GetClientInterfaces))]
         public void CheckPaginationGetAllMethodNames(Type clientInterface)
         {
             var methodsOrdered = clientInterface.GetMethodsOrdered();
 
             var methodsThatCanPaginate = methodsOrdered
-                .Where(x => x.ReturnType.GetTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
-                .Where(x => x.Name.StartsWith("Get") && !x.HasAttribute<ExcludeFromPaginationConventionTestAttribute>());
+                .Where(x => x.ReturnType.GetCustomTypeInfo().TypeCategory == TypeCategory.ReadOnlyList)
+                .Where(x => x.Name.StartsWith("Get"))
+                .Where(x => !x.HasAttribute<ExcludeFromPaginationNamingConventionTestAttribute>())
+                .Where(x => !x.HasAttribute<ObsoleteAttribute>());
 
             var invalidMethods = methodsThatCanPaginate
                 .Where(x => !x.Name.StartsWith("GetAll"))
@@ -49,7 +54,7 @@ namespace Octokit.Tests.Conventions
 
         static MethodInfo MethodHasAppropriateOverload(MethodInfo method, MethodInfo[] methodsOrdered)
         {
-            var parameters = method.GetParametersOrdered();
+            var parameters = method.GetParameters();
             var name = method.Name;
             return methodsOrdered
                 .Where(x => x.Name == name)
@@ -60,7 +65,7 @@ namespace Octokit.Tests.Conventions
         {
             var actual = methodInfo.GetParameters();
 
-            if (actual.Length != expected.Length + 1)
+            if ((actual.Length != expected.Length) && (actual.Length != expected.Length + 1))
             {
                 return false;
             }
@@ -81,15 +86,19 @@ namespace Octokit.Tests.Conventions
                 }
             }
 
-            var lastParameter = actual.Last();
+            var lastParameter = actual.LastOrDefault();
 
-            return lastParameter.Name == "options"
+            return lastParameter != null
+                   && lastParameter.Name == "options"
                    && lastParameter.ParameterType == typeof(ApiOptions);
         }
 
         public static IEnumerable<object[]> GetClientInterfaces()
         {
-            return typeof(IGitHubClient).Assembly.ExportedTypes
+            return typeof(IGitHubClient)
+                .GetTypeInfo()
+                .Assembly
+                .ExportedTypes
                 .Where(TypeExtensions.IsClientInterface)
                 .Where(type => type != typeof(IStatisticsClient))
                 .Select(type => new[] { type });

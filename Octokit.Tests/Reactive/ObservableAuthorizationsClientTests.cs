@@ -29,7 +29,7 @@ namespace Octokit.Tests.Reactive
             {
                 var client = Substitute.For<IGitHubClient>();
                 var authEndpoint = new ObservableAuthorizationsClient(client);
-                
+
                 authEndpoint.GetAll(ApiOptions.None);
 
                 client.Connection.Received(1).Get<List<Authorization>>(Arg.Is<Uri>(u => u.ToString() == "authorizations"),

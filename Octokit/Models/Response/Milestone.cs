@@ -14,11 +14,13 @@ namespace Octokit
             Number = number;
         }
 
-        public Milestone(Uri url, Uri htmlUrl, int number, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt)
+        public Milestone(string url, string htmlUrl, long id, int number, string nodeId, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt, DateTimeOffset? updatedAt)
         {
             Url = url;
             HtmlUrl = htmlUrl;
+            Id = id;
             Number = number;
+            NodeId = nodeId;
             State = state;
             Title = title;
             Description = description;
@@ -28,17 +30,23 @@ namespace Octokit
             CreatedAt = createdAt;
             DueOn = dueOn;
             ClosedAt = closedAt;
+            UpdatedAt = updatedAt;
         }
 
         /// <summary>
         /// The URL for this milestone.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The Html page for this milestone.
         /// </summary>
-        public Uri HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; protected set; }
+
+        /// <summary>
+        /// The ID for this milestone.
+        /// </summary>
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The milestone number.
@@ -46,12 +54,17 @@ namespace Octokit
         public int Number { get; protected set; }
 
         /// <summary>
-        /// Whether the milestone is open or closed.
+        /// GraphQL Node Id
         /// </summary>
-        public ItemState State { get; protected set; }
+        public string NodeId { get; protected set; }
 
         /// <summary>
-        /// Title of the milestone
+        /// Whether the milestone is open or closed.
+        /// </summary>
+        public StringEnum<ItemState> State { get; protected set; }
+
+        /// <summary>
+        /// Title of the milestone.
         /// </summary>
         public string Title { get; protected set; }
 
@@ -76,7 +89,7 @@ namespace Octokit
         public int ClosedIssues { get; protected set; }
 
         /// <summary>
-        /// The date this milestone was created
+        /// The date this milestone was created.
         /// </summary>
         public DateTimeOffset CreatedAt { get; protected set; }
 
@@ -89,6 +102,11 @@ namespace Octokit
         /// The date, if any, when this milestone was closed.
         /// </summary>
         public DateTimeOffset? ClosedAt { get; protected set; }
+
+        /// <summary>
+        /// The date, if any, when this milestone was updated.
+        /// </summary>
+        public DateTimeOffset? UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay
         {

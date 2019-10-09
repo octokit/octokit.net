@@ -124,7 +124,7 @@ public class ReleasesClientTests
             var releases = await _releaseClient.GetAll("git-tfs", "git-tfs");
 
             Assert.True(releases.Count > 5);
-            Assert.True(releases.Any(release => release.TagName == "v0.18.0"));
+            Assert.Contains(releases, release => release.TagName == "v0.18.0");
         }
 
         [IntegrationTest]
@@ -133,7 +133,7 @@ public class ReleasesClientTests
             var releases = await _releaseClient.GetAll(252774);
 
             Assert.True(releases.Count > 5);
-            Assert.True(releases.Any(release => release.TagName == "v0.18.0"));
+            Assert.Contains(releases, release => release.TagName == "v0.18.0");
         }
 
         [IntegrationTest]
@@ -165,6 +165,50 @@ public class ReleasesClientTests
         public void Dispose()
         {
             _context.Dispose();
+        }
+    }
+
+    public class TheGetMethod
+    {
+        private readonly IReleasesClient _releaseClient;
+        private readonly IGitHubClient _client;
+
+        public TheGetMethod()
+        {
+            _client = Helper.GetAuthenticatedClient();
+            _releaseClient = _client.Repository.Release;
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsReleaseByTag()
+        {
+            var releaseByTag = await _releaseClient.Get("octokit", "octokit.net", "v0.28.0");
+
+            Assert.Equal(8396883, releaseByTag.Id);
+            Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+            Assert.Equal("v0.28.0", releaseByTag.TagName);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsReleaseWithRepositoryIdByTag()
+        {
+            var releaseByTag = await _releaseClient.Get(7528679, "v0.28.0");
+
+            Assert.Equal(8396883, releaseByTag.Id);
+            Assert.Equal("v0.28 - Get to the Chopper!!!", releaseByTag.Name);
+            Assert.Equal("v0.28.0", releaseByTag.TagName);
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsWhenTagNotFound()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get("octokit", "octokit.net", "0.0"));
+        }
+
+        [IntegrationTest]
+        public async Task ThrowsWhenTagNotFoundWithRepositoryId()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _releaseClient.Get(7528679, "0.0"));
         }
     }
 
@@ -788,7 +832,7 @@ public class ReleasesClientTests
 
             await _releaseClient.DeleteAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.DeleteAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.GetAsset(_context.RepositoryOwner, _context.RepositoryName, result.Id));
         }
 
         [IntegrationTest]
@@ -806,7 +850,9 @@ public class ReleasesClientTests
 
             Assert.NotNull(asset);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.DeleteAsset(_context.Repository.Id, result.Id));
+            await _releaseClient.DeleteAsset(_context.Repository.Id, result.Id);
+
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.GetAsset(_context.Repository.Id, result.Id));
         }
     }
 
@@ -836,7 +882,7 @@ public class ReleasesClientTests
 
             await _releaseClient.Delete(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id);
 
-            Assert.ThrowsAsync<NotFoundException>(async ()=> await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.Get(_context.RepositoryOwner, _context.RepositoryName, createdRelease.Id));
         }
 
         [IntegrationTest]
@@ -851,7 +897,7 @@ public class ReleasesClientTests
 
             await _releaseClient.Delete(_context.Repository.Id, createdRelease.Id);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.Get(_context.Repository.Id, createdRelease.Id));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.Get(_context.Repository.Id, createdRelease.Id));
         }
     }
 }

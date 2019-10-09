@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservableGistCommentsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Gist.Comment;
             _connection = client.Connection;
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetAllForGist(string gistId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");             
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
             return GetAllForGist(gistId, ApiOptions.None);
         }
@@ -52,8 +52,8 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId), options);
         }
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Create(string gistId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return _client.Create(gistId, comment).ToObservable();
         }
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         public IObservable<GistComment> Update(string gistId, int commentId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return _client.Update(gistId, commentId, comment).ToObservable();
         }

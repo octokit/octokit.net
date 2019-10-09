@@ -10,7 +10,6 @@ namespace Octokit.Tests.Clients
 {
     public class UserGpgKeysClientTests
     {
-
         public class TheCtor
         {
             [Fact]

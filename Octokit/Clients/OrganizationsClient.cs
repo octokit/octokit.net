@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.Generic;
-#endif
 
 namespace Octokit
 {
@@ -22,6 +20,7 @@ namespace Octokit
         {
             Member = new OrganizationMembersClient(apiConnection);
             Team = new TeamsClient(apiConnection);
+            OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
         }
 
         /// <summary>
@@ -35,6 +34,11 @@ namespace Octokit
         public ITeamsClient Team { get; private set; }
 
         /// <summary>
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        public IOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; private set; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>
@@ -42,7 +46,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Organization"/>.</returns>
         public Task<Organization> Get(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
         }
@@ -65,7 +69,7 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
         }
@@ -76,41 +80,11 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
-        [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public Task<IReadOnlyList<Organization>> GetAll(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-            return GetAll(user, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
-        /// </summary>
-        /// <param name="user">The login of the user</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
-        [Obsolete("Please use OrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public Task<IReadOnlyList<Organization>> GetAll(string user, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
-
-            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
-        }
-
-        /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
-        /// </summary>
-        /// <param name="user">The login of the user</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-          return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None);
         }
 
         /// <summary>
@@ -122,10 +96,10 @@ namespace Octokit
         /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
-          Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-          return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
 
@@ -136,7 +110,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll()
         {
-          return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
         }
 
         /// <summary>
@@ -147,7 +121,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         public Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
@@ -163,8 +137,8 @@ namespace Octokit
         /// <returns>A <see cref="Organization"/></returns>
         public Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
-            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
             var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
 

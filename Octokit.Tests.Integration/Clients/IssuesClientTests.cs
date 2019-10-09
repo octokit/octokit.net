@@ -200,9 +200,9 @@ public class IssuesClientTests : IDisposable
             Assert.True(retrieved.Assignees.Count == 1);
             Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
             var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
-            Assert.True(all.Any(i => i.Number == retrieved.Number));
-            Assert.True(all.Any(i => i.Assignees.Count == 1));
-            Assert.True(all.Any(i => i.Assignees[0].Login == _context.RepositoryOwner));
+            Assert.Contains(all, i => i.Number == retrieved.Number);
+            Assert.Contains(all, i => i.Assignees.Count == 1);
+            Assert.Contains(all, i => i.Assignees[0].Login == _context.RepositoryOwner);
         }
         finally
         {
@@ -225,7 +225,7 @@ public class IssuesClientTests : IDisposable
             var retrieved = await _issuesClient.Get(_context.Repository.Id, issue.Number);
             var all = await _issuesClient.GetAllForRepository(_context.Repository.Id);
             Assert.NotNull(retrieved);
-            Assert.True(all.Any(i => i.Number == retrieved.Number));
+            Assert.Contains(all, i => i.Number == retrieved.Number);
         }
         finally
         {
@@ -462,10 +462,10 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request, options);
 
         Assert.Equal(4, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue1.Number);
+        Assert.Contains(retrieved, i => i.Number == issue2.Number);
+        Assert.Contains(retrieved, i => i.Number == issue3.Number);
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
@@ -492,10 +492,10 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.Repository.Id, request, options);
 
         Assert.Equal(4, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue1.Number);
+        Assert.Contains(retrieved, i => i.Number == issue2.Number);
+        Assert.Contains(retrieved, i => i.Number == issue3.Number);
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
@@ -523,7 +523,7 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request, options);
 
         Assert.Equal(1, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
@@ -551,7 +551,7 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.Repository.Id, request, options);
 
         Assert.Equal(1, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
@@ -572,10 +572,10 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
 
         Assert.Equal(4, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue1.Number);
+        Assert.Contains(retrieved, i => i.Number == issue2.Number);
+        Assert.Contains(retrieved, i => i.Number == issue3.Number);
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
@@ -597,7 +597,7 @@ public class IssuesClientTests : IDisposable
         var request = new RepositoryIssueRequest { State = ItemStateFilter.All };
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request);
 
-        Assert.True(issues.Any(x => x.Assignees.Count > 0));
+        Assert.Contains(issues, x => x.Assignees.Count > 0);
     }
 
     [IntegrationTest]
@@ -657,18 +657,20 @@ public class IssuesClientTests : IDisposable
         var retrieved = await _issuesClient.GetAllForRepository(_context.Repository.Id, request);
 
         Assert.Equal(4, retrieved.Count);
-        Assert.True(retrieved.Any(i => i.Number == issue1.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue2.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue3.Number));
-        Assert.True(retrieved.Any(i => i.Number == issue4.Number));
+        Assert.Contains(retrieved, i => i.Number == issue1.Number);
+        Assert.Contains(retrieved, i => i.Number == issue2.Number);
+        Assert.Contains(retrieved, i => i.Number == issue3.Number);
+        Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
     [IntegrationTest]
     public async Task CanFilterByAssigned()
     {
-        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = _context.RepositoryOwner };
-        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself" };
+        newIssue1.Assignees.Add(_context.RepositoryOwner);
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue1);
+
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue2);
 
         var allIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
@@ -692,9 +694,11 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanFilterByAssignedWithRepositoryId()
     {
-        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself", Assignee = _context.RepositoryOwner };
-        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
+        var newIssue1 = new NewIssue("An assigned issue") { Body = "Assigning this to myself" };
+        newIssue1.Assignees.Add(_context.RepositoryOwner);
         await _issuesClient.Create(_context.Repository.Id, newIssue1);
+
+        var newIssue2 = new NewIssue("An unassigned issue") { Body = "A new unassigned issue" };
         await _issuesClient.Create(_context.Repository.Id, newIssue2);
 
         var allIssues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
@@ -1108,7 +1112,6 @@ public class IssuesClientTests : IDisposable
         var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
         Assert.Empty(updatedIssue.Assignees);
-
     }
 
     [IntegrationTest]
@@ -1225,9 +1228,9 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments"), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events"), issue.EventsUrl);
     }
 
     [IntegrationTest]
@@ -1243,9 +1246,9 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
 
         Assert.NotNull(issue.CommentsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments")), issue.CommentsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "comments"), issue.CommentsUrl);
         Assert.NotNull(issue.EventsUrl);
-        Assert.Equal(new Uri(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events")), issue.EventsUrl);
+        Assert.Equal(string.Format(expectedUri, _context.RepositoryOwner, _context.RepositoryName, issue.Number, "events"), issue.EventsUrl);
     }
 
     [IntegrationTest]

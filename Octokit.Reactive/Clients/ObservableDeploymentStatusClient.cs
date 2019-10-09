@@ -18,7 +18,7 @@ namespace Octokit.Reactive.Clients
 
         public ObservableDeploymentStatusClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Deployment.Status;
             _connection = client.Connection;
@@ -36,8 +36,8 @@ namespace Octokit.Reactive.Clients
         /// <param name="deploymentId">The id of the deployment.</param>
         public IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, deploymentId, ApiOptions.None);
         }
@@ -69,9 +69,9 @@ namespace Octokit.Reactive.Clients
         /// <param name="options">Options for changing the API response</param>
         public IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeploymentStatus>(
                 ApiUrls.DeploymentStatuses(owner, name, deploymentId), options);
@@ -89,7 +89,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="options">Options for changing the API response</param>
         public IObservable<DeploymentStatus> GetAll(long repositoryId, int deploymentId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeploymentStatus>(
                 ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
@@ -108,9 +108,9 @@ namespace Octokit.Reactive.Clients
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public IObservable<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return _client.Create(owner, name, deploymentId, newDeploymentStatus).ToObservable();
         }
@@ -127,7 +127,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         public IObservable<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
-            Ensure.ArgumentNotNull(newDeploymentStatus, "newDeploymentStatus");
+            Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return _client.Create(repositoryId, deploymentId, newDeploymentStatus).ToObservable();
         }

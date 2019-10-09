@@ -3,7 +3,6 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit;
 
-
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -18,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableEnterpriseLdapClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Enterprise.Ldap;
         }

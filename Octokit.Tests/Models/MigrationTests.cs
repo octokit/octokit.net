@@ -110,20 +110,6 @@ namespace Octokit.Tests.Models
               ]
             }";
 
-        private static readonly Migration migration = new Migration(
-            id: 79,
-            guid: "0b989ba4-242f-11e5-81e1-c7b6966d2516",
-            state: Migration.MigrationState.Exported, 
-            lockRepositories: true,
-            excludeAttachments: false,
-            url: "https://api.github.com/orgs/octo-org/migrations/79",
-            createdAt: "2015-07-06T15:33:38-07:00",
-            updatedAt: "2015-07-06T15:33:38-07:00",
-            repositories: new List<Repository>
-            {
-                new Repository(1296269)
-            });
-
         [Fact]
         public void CanBeDeserialized()
         {
@@ -166,8 +152,7 @@ namespace Octokit.Tests.Models
 
             Assert.Equal("octocat/Hello-World", _migrationReuqest.Repositories[0]);
             Assert.Equal(1, _migrationReuqest.Repositories.Count);
-            Assert.Equal(true, _migrationReuqest.LockRepositories);
+            Assert.True(_migrationReuqest.LockRepositories);
         }
-
     }
 }

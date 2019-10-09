@@ -24,7 +24,7 @@ public class FollowersClientTests : IDisposable
         var following = await _github.User.Followers.GetAllFollowingForCurrent();
 
         Assert.NotNull(following);
-        Assert.True(following.Any(f => f.Login == "alfhenrik"));
+        Assert.Contains(following, f => f.Login == "alfhenrik");
     }
 
     [IntegrationTest]
@@ -44,7 +44,7 @@ public class FollowersClientTests : IDisposable
         var followers = await _github.User.Followers.GetAll("alfhenrik");
 
         Assert.NotEmpty(followers);
-        Assert.True(followers.Any(f => f.Login == _currentUser.Login));
+        Assert.Contains(followers, f => f.Login == _currentUser.Login);
     }
 
     [IntegrationTest]
@@ -73,7 +73,7 @@ public class FollowersClientTests : IDisposable
 
         Assert.True(result);
         Assert.NotEmpty(following);
-        Assert.True(following.Any(f => f.Login == "alfhenrik"));
+        Assert.Contains(following, f => f.Login == "alfhenrik");
     }
 
     [IntegrationTest]
@@ -81,18 +81,18 @@ public class FollowersClientTests : IDisposable
     {
         await _github.User.Followers.Follow("alfhenrik");
         var followers = await _github.User.Followers.GetAll("alfhenrik");
-        Assert.True(followers.Any(f => f.Login == _currentUser.Login));
+        Assert.Contains(followers, f => f.Login == _currentUser.Login);
 
         await _github.User.Followers.Unfollow("alfhenrik");
         followers = await _github.User.Followers.GetAll("alfhenrik");
-        Assert.False(followers.Any(f => f.Login == _currentUser.Login));
+        Assert.DoesNotContain(followers, f => f.Login == _currentUser.Login);
     }
 
     [IntegrationTest]
     public async Task UnfollowUserNotBeingFollowedTheUser()
     {
         var followers = await _github.User.Followers.GetAll("alfhenrik");
-        Assert.False(followers.Any(f => f.Login == _currentUser.Login));
+        Assert.DoesNotContain(followers, f => f.Login == _currentUser.Login);
 
         await _github.User.Followers.Unfollow("alfhenrik");
     }

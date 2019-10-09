@@ -59,14 +59,31 @@ namespace Octokit.Reactive
         IObservable<Team> GetAllForCurrent(ApiOptions options);
 
         /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        IObservable<Team> GetAllChildTeams(int id);
+
+        /// <summary>
+        /// Returns all child teams of the given team.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-child-teams
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Team> GetAllChildTeams(int id, ApiOptions options);
+
+        /// <summary>
         /// Returns all members of the given team. 
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <param name="id">The team identifier</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         IObservable<User> GetAllMembers(int id);
 
         /// <summary>
@@ -77,9 +94,28 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the team's member <see cref="User"/>s.</returns>
         IObservable<User> GetAllMembers(int id, ApiOptions options);
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        IObservable<User> GetAllMembers(int id, TeamMembersRequest request);
+
+        /// <summary>
+        /// Returns all members with the specified role in the given team of the given role.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/orgs/teams/#list-team-members
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="request">The request filter</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        IObservable<User> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -106,13 +142,12 @@ namespace Octokit.Reactive
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-member">API documentation</a> for more information.
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-or-update-team-membership">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
-        /// <exception cref="ApiValidationException">Thrown if you attempt to add an organization to a team.</exception>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
-        IObservable<TeamMembership> AddMembership(int id, string login);
+        /// <param name="request">Additional parameters for the request</param>
+        IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.
@@ -128,11 +163,14 @@ namespace Octokit.Reactive
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
         /// is a member of the team with the given <paramref name="id"/>.
+        /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-membership">API documentation</a> for more information.
+        /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        /// <returns>A <see cref="TeamMembership"/> result indicating the membership status</returns>
-        IObservable<TeamMembership> GetMembership(int id, string login);
+        IObservable<TeamMembershipDetails> GetMembershipDetails(int id, string login);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -196,5 +234,28 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
         IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
+
+        /// <summary>
+        /// List all pending invitations for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <returns></returns>
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id);
+
+        /// <summary>
+        /// List all pending invitations for the given team.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/teams/#list-pending-team-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="id">The team identifier</param>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <returns></returns>
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id, ApiOptions options);
     }
 }

@@ -6,6 +6,8 @@ namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Repository Statistics API.
+    /// Note that the GitHub API uses caching on these endpoints,
+    /// see <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more details.
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/statistics/">Repository Statistics API documentation</a> for more information.
@@ -16,7 +18,7 @@ namespace Octokit.Reactive
 
         public ObservableStatisticsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client;
         }
@@ -28,8 +30,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<IEnumerable<Contributor>> GetContributors(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Repository.Statistics.GetContributors(owner, name).ToObservable();
         }
@@ -50,8 +52,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<CommitActivity> GetCommitActivity(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Repository.Statistics.GetCommitActivity(owner, name).ToObservable();
         }
@@ -72,8 +74,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<CodeFrequency> GetCodeFrequency(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Repository.Statistics.GetCodeFrequency(owner, name).ToObservable();
         }
@@ -94,8 +96,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<Participation> GetParticipation(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Repository.Statistics.GetParticipation(owner, name).ToObservable();
         }
@@ -116,8 +118,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         public IObservable<PunchCard> GetPunchCard(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Repository.Statistics.GetPunchCard(owner, name).ToObservable();
         }

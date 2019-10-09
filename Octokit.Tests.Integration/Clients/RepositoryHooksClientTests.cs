@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsCorrectCountOfHooksWithoutStart()
             {
                 var github = Helper.GetAuthenticatedClient();
-                
+
                 var options = new ApiOptions
                 {
                     PageSize = 5,
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task ReturnsCorrectCountOfHooksWithoutStartWithRepositoryId()
             {
                 var github = Helper.GetAuthenticatedClient();
-                
+
                 var options = new ApiOptions
                 {
                     PageSize = 5,
@@ -83,9 +83,9 @@ namespace Octokit.Tests.Integration.Clients
 
                 var options = new ApiOptions
                 {
-                    PageSize = 2,
+                    PageSize = 3,
                     PageCount = 1,
-                    StartPage = 3
+                    StartPage = 2
                 };
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName, options);
@@ -100,9 +100,9 @@ namespace Octokit.Tests.Integration.Clients
 
                 var options = new ApiOptions
                 {
-                    PageSize = 2,
+                    PageSize = 3,
                     PageCount = 1,
-                    StartPage = 3
+                    StartPage = 2
                 };
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryId, options);
@@ -233,11 +233,11 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl, hook.Url);
                 Assert.Equal(baseHookUrl + "/test", hook.TestUrl);
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
-                Assert.NotNull(hook.CreatedAt);
-                Assert.NotNull(hook.UpdatedAt);
-                Assert.Equal(webHookConfig.Keys, hook.Config.Keys);
-                Assert.Equal(webHookConfig.Values, hook.Config.Values);
-                Assert.Equal(false, hook.Active);
+                Assert.NotEqual(default, hook.CreatedAt);
+                Assert.NotEqual(default, hook.UpdatedAt);
+                Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
+                Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
+                Assert.False(hook.Active);
             }
 
             [IntegrationTest]
@@ -277,11 +277,11 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl, hook.Url);
                 Assert.Equal(baseHookUrl + "/test", hook.TestUrl);
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
-                Assert.NotNull(hook.CreatedAt);
-                Assert.NotNull(hook.UpdatedAt);
-                Assert.Equal(webHookConfig.Keys, hook.Config.Keys);
-                Assert.Equal(webHookConfig.Values, hook.Config.Values);
-                Assert.Equal(false, hook.Active);
+                Assert.NotEqual(default, hook.CreatedAt);
+                Assert.NotEqual(default, hook.UpdatedAt);
+                Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
+                Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
+                Assert.False(hook.Active);
             }
 
             Dictionary<string, string> CreateExpectedConfigDictionary(Dictionary<string, string> config, string url, WebHookContentType contentType, string secret)

@@ -11,7 +11,7 @@ public class PunchCardTests
         [Fact]
         public void ThrowsExceptionWithNullPunchCardPoints()
         {
-            Assert.Throws<ArgumentNullException>(() => new PunchCard(null));
+            Assert.Throws<ArgumentNullException>(() => new PunchCard((IEnumerable<IList<int>>)null));
         }
 
         [Fact]

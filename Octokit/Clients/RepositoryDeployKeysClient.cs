@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.Generic;
-#endif
 
 namespace Octokit
 {
@@ -34,8 +32,8 @@ namespace Octokit
         /// <param name="number">The id of the deploy key.</param>
         public Task<DeployKey> Get(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, number));
         }
@@ -63,8 +61,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -92,9 +90,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
         }
@@ -109,7 +107,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
         }
@@ -125,9 +123,9 @@ namespace Octokit
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         public Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
             if (string.IsNullOrWhiteSpace(newDeployKey.Title))
                 throw new ArgumentException("The new deploy key's title must not be null.");
@@ -148,7 +146,7 @@ namespace Octokit
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         public Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey)
         {
-            Ensure.ArgumentNotNull(newDeployKey, "newDeployKey");
+            Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
             if (string.IsNullOrWhiteSpace(newDeployKey.Title))
                 throw new ArgumentException("The new deploy key's title must not be null.");
@@ -170,8 +168,8 @@ namespace Octokit
         /// <param name="number">The id of the deploy key to delete.</param>
         public Task Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(owner, name, number));
         }

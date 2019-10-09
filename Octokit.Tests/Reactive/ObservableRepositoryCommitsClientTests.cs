@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Reactive.Linq;
 
 namespace Octokit.Tests.Reactive
 {
@@ -21,30 +22,29 @@ namespace Octokit.Tests.Reactive
         public class TheGetAllMethod
         {
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(githubClient);
                 var options = new ApiOptions();
                 var request = new CommitRequest();
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", request, options).ToTask());
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", request, options).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", request, options).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", request, options).ToTask());
             }
 
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(githubClient);
                 var options = new ApiOptions();
                 var request = new CommitRequest();
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", request, options).ToTask());
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, request, options).ToTask());
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null, options).ToTask());
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", request, null).ToTask());
-
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", request, options).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, request, options).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null, options).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", request, null).ToTask());
             }
 
             [Fact]
@@ -63,13 +63,13 @@ namespace Octokit.Tests.Reactive
         public class TheGetSha1Method
         {
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
 
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference").ToTask());
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference").ToTask());
-                Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", "").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("", "name", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1("owner", "name", "").ToTask());
             }
 
             [Fact]
@@ -83,18 +83,19 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public void GetsCorrectUrl()
+            public async Task GetsCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryCommitsClient(gitHubClient);
 
-                client.GetSha1("owner", "name", "reference");
+                await client.GetSha1("owner", "name", "reference");
 
                 gitHubClient
-                    .Received()
+                    .Received(1)
                     .Repository
                     .Commit
-                    .GetSha1("owner", "name", "reference");
+                    //.GetSha1("owner1", "name", "reference");
+                    .GetAll(1);
             }
         }
     }

@@ -24,9 +24,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryTrafficClient(gitHubClient);
 
-                client.GetReferrers("fake", "repo");
+                client.GetAllReferrers("fake", "repo");
 
-                gitHubClient.Received().Repository.Traffic.GetReferrers("fake", "repo");
+                gitHubClient.Received().Repository.Traffic.GetAllReferrers("fake", "repo");
             }
 
             [Fact]
@@ -35,9 +35,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryTrafficClient(gitHubClient);
 
-                client.GetReferrers(1);
+                client.GetAllReferrers(1);
 
-                gitHubClient.Received().Repository.Traffic.GetReferrers(1);
+                gitHubClient.Received().Repository.Traffic.GetAllReferrers(1);
             }
 
             [Fact]
@@ -45,11 +45,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableRepositoryTrafficClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetReferrers(null, "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetReferrers("owner", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllReferrers(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllReferrers("owner", null));
 
-                Assert.Throws<ArgumentException>(() => client.GetReferrers("", "name"));
-                Assert.Throws<ArgumentException>(() => client.GetReferrers("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllReferrers("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllReferrers("owner", ""));
             }
         }
 
@@ -61,9 +61,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryTrafficClient(gitHubClient);
 
-                client.GetPaths("fake", "repo");
+                client.GetAllPaths("fake", "repo");
 
-                gitHubClient.Received().Repository.Traffic.GetPaths("fake", "repo");
+                gitHubClient.Received().Repository.Traffic.GetAllPaths("fake", "repo");
             }
 
             [Fact]
@@ -72,9 +72,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoryTrafficClient(gitHubClient);
 
-                client.GetPaths(1);
+                client.GetAllPaths(1);
 
-                gitHubClient.Received().Repository.Traffic.GetPaths(1);
+                gitHubClient.Received().Repository.Traffic.GetAllPaths(1);
             }
 
             [Fact]
@@ -82,11 +82,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableRepositoryTrafficClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetPaths(null, "name"));
-                Assert.Throws<ArgumentNullException>(() => client.GetPaths("owner", null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllPaths(null, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllPaths("owner", null));
 
-                Assert.Throws<ArgumentException>(() => client.GetPaths("", "name"));
-                Assert.Throws<ArgumentException>(() => client.GetPaths("owner", ""));
+                Assert.Throws<ArgumentException>(() => client.GetAllPaths("", "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllPaths("owner", ""));
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -9,17 +8,17 @@ namespace Octokit
     {
         public Emoji() { }
 
-        public Emoji(string name, Uri url)
+        public Emoji(string name, string url)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(url, "url");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(url, nameof(url));
 
             Name = name;
             Url = url;
         }
 
         public string Name { get; private set; }
-        public Uri Url { get; private set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

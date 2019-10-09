@@ -10,7 +10,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryTrafficClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Traffic;
         }
@@ -20,9 +20,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        public IObservable<RepositoryTrafficPath> GetPaths(long repositoryId)
+        public IObservable<RepositoryTrafficPath> GetAllPaths(long repositoryId)
         {
-            return _client.GetPaths(repositoryId).ToObservable().SelectMany(x => x);
+            return _client.GetAllPaths(repositoryId).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -31,12 +31,12 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<RepositoryTrafficPath> GetPaths(string owner, string name)
+        public IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetPaths(owner, name).ToObservable().SelectMany(x => x);
+            return _client.GetAllPaths(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        public IObservable<RepositoryTrafficReferrer> GetReferrers(long repositoryId)
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(long repositoryId)
         {
-            return _client.GetReferrers(repositoryId).ToObservable().SelectMany(x => x);
+            return _client.GetAllReferrers(repositoryId).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -55,12 +55,12 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<RepositoryTrafficReferrer> GetReferrers(string owner, string name)
+        public IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetReferrers(owner, name).ToObservable().SelectMany(x => x);
+            return _client.GetAllReferrers(owner, name).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return _client.GetClones(repositoryId, per).ToObservable();
         }
@@ -85,9 +85,9 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return _client.GetClones(owner, name, per).ToObservable();
         }
@@ -100,7 +100,7 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return _client.GetViews(repositoryId, per).ToObservable();
         }
@@ -114,9 +114,9 @@ namespace Octokit.Reactive
         /// <param name="per">Breakdown per day or week</param>
         public IObservable<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(per, "per");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(per, nameof(per));
 
             return _client.GetViews(owner, name, per).ToObservable();
         }

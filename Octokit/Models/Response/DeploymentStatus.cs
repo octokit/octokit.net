@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -10,14 +11,17 @@ namespace Octokit
     {
         public DeploymentStatus() { }
 
-        public DeploymentStatus(int id, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
+        public DeploymentStatus(int id, string nodeId, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, string logUrl, string environmentUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
         {
             Id = id;
+            NodeId = nodeId;
             Url = url;
             State = state;
             Creator = creator;
             Payload = payload;
             TargetUrl = targetUrl;
+            LogUrl = logUrl;
+            EnvironmentUrl = environmentUrl;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Description = description;
@@ -29,6 +33,11 @@ namespace Octokit
         public int Id { get; protected set; }
 
         /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
+
+        /// <summary>
         /// The API URL for this deployment status.
         /// </summary>
         public string Url { get; protected set; }
@@ -36,7 +45,7 @@ namespace Octokit
         /// <summary>
         /// The state of this deployment status.
         /// </summary>
-        public DeploymentState State { get; protected set; }
+        public StringEnum<DeploymentState> State { get; protected set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created this deployment status.
@@ -93,10 +102,19 @@ namespace Octokit
 
     public enum DeploymentState
     {
+        [Parameter(Value = "pending")]
         Pending,
+
+        [Parameter(Value = "success")]
         Success,
+
+        [Parameter(Value = "error")]
         Error,
+
+        [Parameter(Value = "failure")]
         Failure,
+
+        [Parameter(Value = "inactive")]
         Inactive
     }
 }

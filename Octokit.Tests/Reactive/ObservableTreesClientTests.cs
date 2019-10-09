@@ -52,7 +52,7 @@ namespace Octokit.Tests
                 Assert.Throws<ArgumentNullException>(() => client.Get("owner", "name", null));
 
                 Assert.Throws<ArgumentNullException>(() => client.Get(1, null));
-                
+
                 Assert.Throws<ArgumentException>(() => client.Get("", "name", "123456ABCD"));
                 Assert.Throws<ArgumentException>(() => client.Get("owner", "", "123456ABCD"));
                 Assert.Throws<ArgumentException>(() => client.Get("owner", "name", ""));

@@ -26,7 +26,7 @@ namespace Octokit
         /// <param name="term">The term.</param>
         protected BaseSearchRequest(string term) : this()
         {
-            Ensure.ArgumentNotNullOrEmptyString(term, "term");
+            Ensure.ArgumentNotNullOrEmptyString(term, nameof(term));
             Term = term;
         }
 
@@ -75,7 +75,10 @@ namespace Octokit
         /// <summary>
         /// All qualifiers that are used for this search
         /// </summary>
-        public abstract IReadOnlyList<string> MergedQualifiers();
+        public virtual IReadOnlyList<string> MergedQualifiers()
+        {
+            return new List<string>();
+        }
 
         /// <summary>
         /// Add qualifiers onto the search term
@@ -97,6 +100,14 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Any additional parameters required by the derived class
+        /// </summary>
+        public virtual IDictionary<string, string> AdditionalParameters()
+        {
+            return new Dictionary<string, string>();
+        }
+
+        /// <summary>
         /// Get the query parameters that will be appending onto the search
         /// </summary>
         public IDictionary<string, string> Parameters
@@ -113,6 +124,10 @@ namespace Octokit
                 if (!string.IsNullOrWhiteSpace(Sort))
                 {
                     d.Add("sort", Sort);
+                }
+                foreach (var parameter in AdditionalParameters())
+                {
+                    d.Add(parameter.Key, parameter.Value);
                 }
                 return d;
             }

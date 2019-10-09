@@ -14,15 +14,19 @@ namespace Octokit
     public interface IPullRequestsClient
     {
         /// <summary>
-        /// Client for managing review comments.
+        /// Client for managing reviews.
         /// </summary>
-        [Obsolete("Please use IPullRequestsClient.ReviewComment instead. This method will be removed in a future version")]
-        IPullRequestReviewCommentsClient Comment { get; }
+        IPullRequestReviewsClient Review { get; }
 
         /// <summary>
         /// Client for managing review comments.
         /// </summary>
         IPullRequestReviewCommentsClient ReviewComment { get; }
+
+        /// <summary>
+        /// Client for managing review requests.
+        /// </summary>
+        IPullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
         /// Get a pull request by number.

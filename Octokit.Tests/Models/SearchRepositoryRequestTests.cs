@@ -25,5 +25,13 @@ public class SearchRepositoryRequestTests
             Assert.True(string.IsNullOrWhiteSpace(request.Sort));
             Assert.False(request.Parameters.ContainsKey("sort"));
         }
+
+        [Fact]
+        public void LanguageUsesParameterTranslation()
+        {
+            var request = new SearchRepositoriesRequest() { Language = Language.CPlusPlus };
+            var result = request.MergedQualifiers();
+            Assert.Contains(result, x => string.Equals(x, "language:cpp"));
+        }
     }
 }

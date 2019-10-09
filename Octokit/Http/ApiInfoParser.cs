@@ -8,18 +8,17 @@ namespace Octokit.Internal
     internal static class ApiInfoParser
     {
         const RegexOptions regexOptions =
-#if NETFX_CORE
-            RegexOptions.IgnoreCase;
-#else
-            RegexOptions.Compiled | RegexOptions.IgnoreCase;
-
+#if HAS_REGEX_COMPILED_OPTIONS
+            RegexOptions.Compiled |
 #endif
+             RegexOptions.IgnoreCase;
+
         static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
         public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
         {
-            Ensure.ArgumentNotNull(responseHeaders, "responseHeaders");
+            Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
 
             var httpLinks = new Dictionary<string, Uri>();
             var oauthScopes = new List<string>();

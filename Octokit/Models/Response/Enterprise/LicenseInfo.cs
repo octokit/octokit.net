@@ -59,7 +59,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "Seats: {0} SeatsUsed: {1} DaysUntilExpiration: {2}", Seats, SeatsUsed, DaysUntilExpiration);
+                return string.Format(CultureInfo.InvariantCulture, "Seats: {0} SeatsUsed: {1} DaysUntilExpiration: {2}", Seats, SeatsUsed, DaysUntilExpiration);
             }
         }
     }

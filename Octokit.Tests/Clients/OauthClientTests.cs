@@ -24,12 +24,13 @@ public class OauthClientTests
         [Theory]
         [InlineData("https://api.github.com", "https://github.com/login/oauth/authorize?client_id=secret")]
         [InlineData("https://github.com", "https://github.com/login/oauth/authorize?client_id=secret")]
-        [InlineData("https://example.com", "https://example.com/login/oauth/authorize?client_id=secret")]
-        [InlineData("https://api.example.com", "https://api.example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData("https://example.com/api/v3", "https://example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData("https://api.example.com/any/path/really", "https://api.example.com/login/oauth/authorize?client_id=secret")]
+        [InlineData(null, "https://github.com/login/oauth/authorize?client_id=secret")]
         public void ReturnsProperAuthorizeUrl(string baseAddress, string expectedUrl)
         {
             var connection = Substitute.For<IConnection>();
-            connection.BaseAddress.Returns(new Uri(baseAddress));
+            connection.BaseAddress.Returns(baseAddress == null ? null : new Uri(baseAddress));
             var client = new OauthClient(connection);
 
             var result = client.GetGitHubLoginUrl(new OauthLoginRequest("secret"));
@@ -43,8 +44,10 @@ public class OauthClientTests
             var request = new OauthLoginRequest("secret")
             {
                 RedirectUri = new Uri("https://example.com/foo?foo=bar"),
+                Login = "johnDOE",
                 Scopes = { "foo", "bar" },
-                State = "canARY"
+                State = "canARY",
+                AllowSignup = false
             };
             var connection = Substitute.For<IConnection>();
             connection.BaseAddress.Returns(new Uri("https://api.github.com"));
@@ -53,7 +56,7 @@ public class OauthClientTests
             var result = client.GetGitHubLoginUrl(request);
 
             Assert.Equal("/login/oauth/authorize", result.AbsolutePath);
-            Assert.Equal("?client_id=secret&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo%3Ffoo%3Dbar&scope=foo%2Cbar&state=canARY", result.Query);
+            Assert.Equal("?client_id=secret&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo%3Ffoo%3Dbar&login=johnDOE&scope=foo%2Cbar&state=canARY&allow_signup=false", result.Query);
         }
     }
 
@@ -94,6 +97,40 @@ public class OauthClientTests
         }
 
         [Fact]
+        public async Task PostsWithCorrectBodyAndContentTypeForGHE()
+        {
+            var responseToken = new OauthToken(null, null, null);
+            var response = Substitute.For<IApiResponse<OauthToken>>();
+            response.Body.Returns(responseToken);
+            var connection = Substitute.For<IConnection>();
+            connection.BaseAddress.Returns(new Uri("https://example.com/api/v3"));
+            Uri calledUri = null;
+            FormUrlEncodedContent calledBody = null;
+            Uri calledHostAddress = null;
+            connection.Post<OauthToken>(
+                Arg.Do<Uri>(uri => calledUri = uri),
+                Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
+                "application/json",
+                null,
+                Arg.Do<Uri>(uri => calledHostAddress = uri))
+                .Returns(_ => Task.FromResult(response));
+            var client = new OauthClient(connection);
+
+            var token = await client.CreateAccessToken(new OauthTokenRequest("secretid", "secretsecret", "code")
+            {
+                RedirectUri = new Uri("https://example.com/foo")
+            });
+
+            Assert.Same(responseToken, token);
+            Assert.Equal("login/oauth/access_token", calledUri.ToString());
+            Assert.NotNull(calledBody);
+            Assert.Equal("https://example.com/", calledHostAddress.ToString());
+            Assert.Equal(
+                "client_id=secretid&client_secret=secretsecret&code=code&redirect_uri=https%3A%2F%2Fexample.com%2Ffoo",
+                await calledBody.ReadAsStringAsync());
+        }
+
+        [Fact]
         public async Task DeserializesOAuthScopeFormat()
         {
             var responseText =
@@ -103,10 +140,10 @@ public class OauthClientTests
 
             var token = strategy.Deserialize<OauthToken>(responseText);
 
-            Assert.Equal(token.AccessToken, "token-goes-here");
-            Assert.Equal(token.TokenType, "bearer");
-            Assert.True(token.Scope.Contains("notifications"));
-            Assert.True(token.Scope.Contains("user:email"));
+            Assert.Equal("token-goes-here", token.AccessToken);
+            Assert.Equal("bearer", token.TokenType);
+            Assert.Contains("notifications", token.Scope);
+            Assert.Contains("user:email", token.Scope);
         }
     }
 }

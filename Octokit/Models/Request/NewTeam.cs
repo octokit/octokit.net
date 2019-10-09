@@ -23,8 +23,8 @@ namespace Octokit
         public NewTeam(string name)
         {
             Name = name;
+            Maintainers = new Collection<string>();
             RepoNames = new Collection<string>();
-            Permission = Permission.Pull;
         }
 
         /// <summary>
@@ -33,28 +33,40 @@ namespace Octokit
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the description of the team
+        /// The description of the team.
         /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
         public string Description { get; set; }
 
         /// <summary>
-        /// permission associated to this team
+        /// The logins of organization members to add as maintainers of the team
         /// </summary>
-        public Permission Permission { get; set; }
+        public Collection<string> Maintainers { get; protected set; }
 
         /// <summary>
-        /// array of repo_names this team has permissions to
+        /// The full name (e.g., "organization-name/repository-name") of repositories to add the team to
         /// </summary>
-        public Collection<string> RepoNames { get; private set; }
+        public Collection<string> RepoNames { get; protected set; }
+
+        /// <summary>
+        /// The level of privacy this team should have (default: Secret)
+        /// </summary>
+        public TeamPrivacy? Privacy { get; set; }
+
+        /// <summary>
+        /// The permission that new repositories will be added to the team with when none is specified (default: Pull)
+        /// </summary>
+        public Permission? Permission { get; set; }
+
+        /// <summary>
+        /// Id of a team to set as the parent team
+        /// </summary>
+        public int? ParentTeamId { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Name: {0} Permission: {1}", Name, Permission);
+                return string.Format(CultureInfo.InvariantCulture, "Name: {0} Privacy: {1} Permission: {2}", Name, Privacy?.ToString() ?? "Default", Permission?.ToString() ?? "Default");
             }
         }
     }

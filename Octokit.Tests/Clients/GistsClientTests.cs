@@ -74,7 +74,6 @@ public class GistsClientTests
             client.GetAll(options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"), options);
-
         }
 
         [Fact]
@@ -107,7 +106,6 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists"),
                 DictionaryWithSince, options);
-
         }
 
         [Fact]
@@ -149,7 +147,6 @@ public class GistsClientTests
             client.GetAllPublic(options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), options);
-
         }
 
         [Fact]
@@ -192,9 +189,7 @@ public class GistsClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(DateTimeOffset.Now, null));
-
         }
-
     }
 
     public class TheGetAllStarredMethod
@@ -225,7 +220,6 @@ public class GistsClientTests
             client.GetAllStarred(options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), options);
-
         }
 
         [Fact]
@@ -267,7 +261,6 @@ public class GistsClientTests
 
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStarred(null));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllStarred(DateTimeOffset.Now, null));
-
         }
     }
 
@@ -299,7 +292,6 @@ public class GistsClientTests
             client.GetAllForUser("octokit", options);
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"), options);
-
         }
 
         [Fact]
@@ -313,7 +305,6 @@ public class GistsClientTests
 
             connection.Received().GetAll<Gist>(Arg.Is<Uri>(u => u.ToString() == "users/octokit/gists"),
         DictionaryWithSince, Args.ApiOptions);
-
         }
 
         [Fact]
@@ -348,7 +339,6 @@ public class GistsClientTests
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForUser("", DateTimeOffset.Now, ApiOptions.None));
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllForUser("user", DateTimeOffset.Now, null));
         }
-
     }
 
     public class TheGetAllCommitsMethod
@@ -392,7 +382,6 @@ public class GistsClientTests
             await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCommits("id", null));
             await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllCommits("", ApiOptions.None));
         }
-
     }
 
     public class TheGetAllForksMethod
@@ -553,7 +542,6 @@ public class GistsClientTests
 
             connection.Received().Post<Gist>(Arg.Is<Uri>(u => u.ToString() == "gists/1/forks"),
     Arg.Any<object>());
-
         }
     }
 

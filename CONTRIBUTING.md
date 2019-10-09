@@ -24,7 +24,7 @@ easiest way to do this. You can then clone down your fork instead:
 
 `git clone https://github.com/MY-USERNAME-HERE/Octokit.net.git Octokit`
 
-After doing that, run the `.\build` script at the root of the repository
+After doing that, run the `.\build.ps1` or `./build.sh` script at the root of the repository
 to ensure everything builds and the tests pass.
 
 ## How can I get involved?
@@ -56,23 +56,31 @@ potential conflicts that may occur in the future.
 If you make focused commits (instead of one monolithic commit) and have descriptive
 commit messages, this will help speed up the review process.
 
-### Adding New files
+At any time you can build the project with
 
-To ensure new files are available in the various projects, we have a helper script
-to synchronize these changes across all the projects in the solution.
+`.\build.ps1 -Target Build`
+or
+`./build.sh --target=build`
 
-If you need to create new files:
+this will also run code analysis rules.
 
-  - add the file to the main `Octokit` project
-  - build the project (to ensure the `csproj` change is saved)
-  - run this command: `.\build FixProjects`
+### Running builds cross platform
 
-At any time you can build the project with `.\build BuildApp` - this will also
-run FxCop analysis.
+Octokit.net uses a CAKE build script and can be built on multiple platforms.
+
+To install dependencies and run the CAKE build script use the following wrapper scripts and parameter syntax:
+
+- Windows (Powershell)
+
+`.\build.ps1 -Target <target> -Configuration Release -LinkSources [Additional Parameters]`
+
+- Linux/OSX (bash)
+
+`./build.sh --target=<target> --configuration==Release --linksources=true [Additional Parameters]`
 
 ### Running Tests
 
-Octokit.net also has a suite of tests which you can run to ensure existing
+Octokit.net has a suite of tests which you can run to ensure existing
 behaviour is not affected. If you're adding new features, please add some
 tests alongside so the maintainers can sleep at night, knowing their
 safety blanket is nice and green!
@@ -81,13 +89,21 @@ The test suite is arranged into fast and slow tests.
 
 #### Fast Tests
 
-**Unit Tests:** `.\build UnitTests`
+**Unit Tests:**
+
+`.\build.ps1 -Target UnitTests` or `./build.sh --target=UnitTests`
+
+Alternatively, you can run the `Octokit.Tests` assembly in the Visual Studio test runner.
 
 These tests verify specific behaviour while being isolated from the rest of the
 library. If you are not familiar with unit testing, have a look at the existing
 examples - they should be easy to apply to your work.
 
-**Convention Tests:** `.\build ConventionTests`
+**Convention Tests:**
+
+`.\build.ps1 -Target ConventionTests` or `./build.sh --target=ConventionTests`
+
+Alternatively, you can run the `Octokit.Tests.Conventions` assembly in the Visual Studio test runner.
 
 These tests verify conventions and structure across the entire codebase -
 ensuring everything is consistent and predictable. When writing new features,
@@ -108,17 +124,21 @@ variables:
 
 `.\script\configure-integration-tests.ps1`
 
+NOTE: On Linux/OSX the environment variables currently need to be configured manually.
+
 After running this, ensure any existing instances of Visual Studio are restarted
 so they pick up the new environment variables are detected.
 
 With these variables set, you can run the integration tests locally using
-`.\build IntegrationTests` or by running the `Octokit.Tests.Integration`
-assembly in the Visual Studio test runner.
 
-**Note:** as the integration tests rely on using the actual GitHub API, you may
-encounter issues if running the tests too frequently. Please use a test account
-so that you're not impacted in the unlikely scenario of your account being
-flagged as a spammer.
+`.\build.ps1 -Target IntegrationTests` or `./build.sh --target=IntegrationTests`
+
+Alternatively, you can run the `Octokit.Tests.Integration` assembly in the Visual Studio test runner.
+
+**Note:** as the integration tests rely on using the actual GitHub API, you will encounter
+API rate limit/abuse detection issues if running the tests too frequently. Please use a test account
+so that your main account is not impacted in the event that the tests trigger the GitHub abuse
+detection mechanism.
 
 ### Testing Documentation
 

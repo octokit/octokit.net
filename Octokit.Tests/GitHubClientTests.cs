@@ -23,7 +23,7 @@ namespace Octokit.Tests
 
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (ICredentialStore)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore));
-                
+
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, (Uri)null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, baseAddress));
 
@@ -33,7 +33,7 @@ namespace Octokit.Tests
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, null));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, null, baseAddress));
-                
+
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(null, credentialStore, baseAddress));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, null, baseAddress));
                 Assert.Throws<ArgumentNullException>(() => new GitHubClient(productInformation, credentialStore, null));
@@ -194,6 +194,21 @@ namespace Octokit.Tests
                 Assert.NotNull(result);
 
                 var temp = connection.Received(1).GetLastApiInfo();
+            }
+        }
+
+        public class TheSetRequestTimeoutMethod
+        {
+            [Fact]
+            public void SetsTheTimeoutOnTheUnderlyingHttpClient()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var client = new GitHubClient(new Connection(new ProductHeaderValue("OctokitTests"), httpClient));
+
+                client.SetRequestTimeout(TimeSpan.FromSeconds(15));
+
+
+                httpClient.Received(1).SetRequestTimeout(TimeSpan.FromSeconds(15));
             }
         }
     }

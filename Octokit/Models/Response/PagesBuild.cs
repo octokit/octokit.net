@@ -31,7 +31,7 @@ namespace Octokit
         /// <summary>
         /// The status of the build.
         /// </summary>
-        public PagesBuildStatus Status { get; protected set; }
+        public StringEnum<PagesBuildStatus> Status { get; protected set; }
         /// <summary>
         /// Error details - if there was one.
         /// </summary>

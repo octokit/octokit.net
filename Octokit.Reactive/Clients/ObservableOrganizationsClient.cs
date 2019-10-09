@@ -15,10 +15,11 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableOrganizationsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
+            OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
 
             _client = client.Organization;
             _connection = client.Connection;
@@ -35,13 +36,18 @@ namespace Octokit.Reactive
         public IObservableTeamsClient Team { get; private set; }
 
         /// <summary>
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        public IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; private set; }
+
+        /// <summary>
         /// Returns the specified organization.
         /// </summary>
         /// <param name="org">The login of the specified organization,</param>
         /// <returns></returns>
         public IObservable<Organization> Get(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return _client.Get(org).ToObservable();
         }
@@ -62,7 +68,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations());
         }
@@ -72,10 +78,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        [Obsolete("Please use ObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public IObservable<Organization> GetAll(string user)
+        public IObservable<Organization> GetAllForUser(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
         }
@@ -86,39 +91,12 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        [Obsolete("Please use ObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        public IObservable<Organization> GetAll(string user, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
-
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
-        }
-
-        /// <summary>
-        /// Returns all the organizations for the specified user
-        /// </summary>
-        /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        public IObservable<Organization> GetAllForUser(string user)
-        {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
-
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
-        }
-
-        /// <summary>
-        /// Returns all the organizations for the specified user
-        /// </summary>
-        /// <param name="user">The login for the user</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
         public IObservable<Organization> GetAllForUser(string user, ApiOptions options)
         {
-          Ensure.ArgumentNotNullOrEmptyString(user, "user");
-          Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-          return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
         }
 
         /// <summary>
@@ -137,7 +115,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAll(OrganizationRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
@@ -153,8 +131,8 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="Organization"/></returns>
         public IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, "organizationName");
-            Ensure.ArgumentNotNull(updateRequest, "updateRequest");
+            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
             return _client.Update(organizationName, updateRequest).ToObservable();
         }

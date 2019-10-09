@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -30,14 +31,6 @@ namespace Octokit
         /// Details about the issue.
         /// </summary>
         public string Body { get; set; }
-
-        /// <summary>
-        /// Login for the user that this issue should be assigned to.
-        /// </summary>
-        /// <remarks>
-        /// Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise.
-        /// </remarks>
-        public string Assignee { get; set; }
 
         /// <summary>
         /// List of logins for the multiple users that this issue should be assigned to

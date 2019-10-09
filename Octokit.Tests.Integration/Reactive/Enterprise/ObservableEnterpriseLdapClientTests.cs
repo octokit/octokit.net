@@ -23,7 +23,7 @@ namespace Octokit.Tests.Integration
             _github = new ObservableGitHubClient(EnterpriseHelper.GetAuthenticatedClient());
 
             NewTeam newTeam = new NewTeam(Helper.MakeNameWithTimestamp("test-team")) { Description = "Test Team" };
-            _context = _github.CreateEnterpriseTeamContext(EnterpriseHelper.Organization, newTeam).Result;
+            _context = _github.CreateTeamContext(EnterpriseHelper.Organization, newTeam).Result;
         }
 
         [GitHubEnterpriseTest]

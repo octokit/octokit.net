@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-#endif
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
@@ -20,6 +18,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<Emoji>> GetAllEmojis();
 
         /// <summary>
@@ -43,6 +42,7 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
 
         /// <summary>
@@ -59,6 +59,7 @@ namespace Octokit
         /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ExcludeFromPaginationApiOptionsConventionTest("TODO: Implement pagination for this method")]
         Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses();
 
         /// <summary>

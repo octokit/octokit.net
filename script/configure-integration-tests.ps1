@@ -74,14 +74,20 @@ function VerifyEnvironmentVariable([string]$friendlyName, [string]$key, [bool]$o
 }
 
 Write-Host
-Write-Host "BIG FREAKING WARNING!!!!!" 
-Write-Host "You should use a test account when running the Octokit integration tests!"
+Write-Warning "BIG FREAKING WARNING!!!!!" 
+Write-Warning "You should use a test account when running the Octokit integration tests!"
 Write-Host
 Write-Host
 
-VerifyEnvironmentVariable "account name" "OCTOKIT_GITHUBUSERNAME"
-VerifyEnvironmentVariable "account password" "OCTOKIT_GITHUBPASSWORD" $true
-VerifyEnvironmentVariable "OAuth token" "OCTOKIT_OAUTHTOKEN"
+VerifyEnvironmentVariable "test account name" "OCTOKIT_GITHUBUSERNAME"
+VerifyEnvironmentVariable "test account password" "OCTOKIT_GITHUBPASSWORD" $true
+VerifyEnvironmentVariable "test account OAuth token" "OCTOKIT_OAUTHTOKEN"
+
+if (AskYesNoQuestion "Some tests require a second test account, do you want to set one up?" "OCTOKIT_PRIVATEREPOSITORIES")
+{
+	VerifyEnvironmentVariable "Second test account name" "OCTOKIT_GITHUBUSERNAME_2"
+	VerifyEnvironmentVariable "Second account password" "OCTOKIT_GITHUBPASSWORD_2"
+}
 
 AskYesNoQuestion "Do you have private repositories associated with your test account?" "OCTOKIT_PRIVATEREPOSITORIES" | Out-Null
 
@@ -92,11 +98,18 @@ VerifyEnvironmentVariable "Override GitHub URL" "OCTOKIT_CUSTOMURL" $true
 VerifyEnvironmentVariable "application ClientID" "OCTOKIT_CLIENTID" $true
 VerifyEnvironmentVariable "application Secret" "OCTOKIT_CLIENTSECRET" $true
 
+if (AskYesNoQuestion "Do you wish to setup GitHubApps integration test settings?" "OCTOKIT_GITHUBAPP_ENABLED")
+{
+	VerifyEnvironmentVariable "GitHub App ID" "OCTOKIT_GITHUBAPP_ID"
+	VerifyEnvironmentVariable "GitHub App SLUG" "OCTOKIT_GITHUBAPP_SLUG"
+	VerifyEnvironmentVariable "GitHub App Pem File" "OCTOKIT_GITHUBAPP_PEMFILE"
+}
 
 if (AskYesNoQuestion "Do you wish to enable GitHub Enterprise (GHE) Integration Tests?" "OCTOKIT_GHE_ENABLED")
 {
     VerifyEnvironmentVariable "GitHub Enterprise account name" "OCTOKIT_GHE_USERNAME"
     VerifyEnvironmentVariable "GitHub Enterprise account password" "OCTOKIT_GHE_PASSWORD" $true
+    VerifyEnvironmentVariable "GitHub Enterprise Management Console password" "OCTOKIT_GHE_CONSOLEPASSWORD" $true
     VerifyEnvironmentVariable "GitHub Enterprise OAuth token" "OCTOKIT_GHE_OAUTHTOKEN"
 
     VerifyEnvironmentVariable "GitHub Enterprise organization name" "OCTOKIT_GHE_ORGANIZATION" $true

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
+#endif
 using System.Security;
 using Octokit.Internal;
 
@@ -10,7 +12,7 @@ namespace Octokit
     /// <summary>
     /// Represents errors that occur from the GitHub API.
     /// </summary>
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
     [Serializable]
 #endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
@@ -64,7 +66,7 @@ namespace Octokit
         public ApiException(IResponse response, Exception innerException)
             : base(null, innerException)
         {
-            Ensure.ArgumentNotNull(response, "response");
+            Ensure.ArgumentNotNull(response, nameof(response));
 
             StatusCode = response.StatusCode;
             ApiError = GetApiErrorFromExceptionMessage(response);
@@ -77,7 +79,7 @@ namespace Octokit
         /// <param name="innerException">The inner exception</param>
         protected ApiException(ApiException innerException)
         {
-            Ensure.ArgumentNotNull(innerException, "innerException");
+            Ensure.ArgumentNotNull(innerException, nameof(innerException));
 
             StatusCode = innerException.StatusCode;
             ApiError = innerException.ApiError;
@@ -93,7 +95,7 @@ namespace Octokit
         protected ApiException(ApiError apiError, HttpStatusCode statusCode, Exception innerException)
             : base(null, innerException)
         {
-            Ensure.ArgumentNotNull(apiError, "apiError");
+            Ensure.ArgumentNotNull(apiError, nameof(apiError));
 
             ApiError = apiError;
             StatusCode = statusCode;
@@ -139,7 +141,7 @@ namespace Octokit
             return new ApiError(responseContent);
         }
 
-#if !NETFX_CORE
+#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of ApiException.
         /// </summary>
@@ -155,8 +157,8 @@ namespace Octokit
             : base(info, context)
         {
             if (info == null) return;
-            StatusCode = (HttpStatusCode) info.GetInt32("HttpStatusCode");
-            ApiError = (ApiError) info.GetValue("ApiError", typeof(ApiError));
+            StatusCode = (HttpStatusCode)info.GetInt32("HttpStatusCode");
+            ApiError = (ApiError)info.GetValue("ApiError", typeof(ApiError));
         }
 
         [SecurityCritical]
@@ -178,7 +180,12 @@ namespace Octokit
         {
             get
             {
-                return ApiError != null ? ApiError.Message : null;
+                if (ApiError != null && !string.IsNullOrWhiteSpace(ApiError.Message))
+                {
+                    return ApiError.Message;
+                }
+
+                return null;
             }
         }
 

@@ -1,7 +1,5 @@
-﻿#if NET_45
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-#endif
 
 namespace Octokit
 {
@@ -11,7 +9,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/issues/timeline/">Issue Timeline API documentation</a> for more information.
     /// </remarks>
-    public class IssueTimelineClient: ApiClient, IIssueTimelineClient
+    public class IssueTimelineClient : ApiClient, IIssueTimelineClient
     {
         public IssueTimelineClient(IApiConnection apiConnection) : base(apiConnection)
         {
@@ -28,8 +26,8 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
             return GetAllForIssue(owner, repo, number, ApiOptions.None);
         }
@@ -46,9 +44,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API repsonse</param>
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
         }
@@ -77,7 +75,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
         }

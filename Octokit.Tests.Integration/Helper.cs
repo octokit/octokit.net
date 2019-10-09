@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Octokit.Reactive;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration
 {
@@ -19,6 +22,18 @@ namespace Octokit.Tests.Integration
                 return new Credentials(githubToken);
 
             var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD");
+
+            if (githubUsername == null || githubPassword == null)
+                return null;
+
+            return new Credentials(githubUsername, githubPassword);
+        });
+
+        static readonly Lazy<Credentials> _credentialsSecondUserThunk = new Lazy<Credentials>(() =>
+        {
+            var githubUsername = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBUSERNAME_2");
+
+            var githubPassword = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBPASSWORD_2");
 
             if (githubUsername == null || githubPassword == null)
                 return null;
@@ -51,6 +66,34 @@ namespace Octokit.Tests.Integration
             return new Credentials(githubUsername, githubPassword);
         });
 
+        static readonly Lazy<bool> _gitHubAppsEnabled = new Lazy<bool>(() =>
+        {
+            string enabled = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_ENABLED");
+            return !String.IsNullOrWhiteSpace(enabled);
+        });
+
+        static readonly Lazy<Credentials> _githubAppCredentials = new Lazy<Credentials>(() =>
+        {
+            // GitHubJwt nuget package only available for netstandard2.0+
+#if GITHUBJWT_HELPER_AVAILABLE
+            var generator = new GitHubJwt.GitHubJwtFactory(
+                new GitHubJwt.FilePrivateKeySource(GitHubAppPemFile),
+                new GitHubJwt.GitHubJwtFactoryOptions
+                {
+                    AppIntegrationId = Convert.ToInt32(GitHubAppId),
+                    ExpirationSeconds = 500
+                }
+            );
+
+            var jwtToken = generator.CreateEncodedJwtToken();
+            return new Credentials(jwtToken, AuthenticationType.Bearer);
+#else
+            // return null, which will cause the [GitHubAppTest]'s to not be discovered
+            return null;
+#endif
+
+        });
+
         static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>
         {
             string uri = Environment.GetEnvironmentVariable("OCTOKIT_CUSTOMURL");
@@ -77,9 +120,13 @@ namespace Octokit.Tests.Integration
         /// </summary>
         public static Credentials Credentials { get { return _credentialsThunk.Value; } }
 
+        public static Credentials CredentialsSecondUser { get { return _credentialsSecondUserThunk.Value; } }
+
         public static Credentials ApplicationCredentials { get { return _oauthApplicationCredentials.Value; } }
 
         public static Credentials BasicAuthCredentials { get { return _basicAuthCredentials.Value; } }
+
+        public static Credentials GitHubAppCredentials { get { return _githubAppCredentials.Value; } }
 
         public static Uri CustomUrl { get { return _customUrl.Value; } }
 
@@ -109,6 +156,21 @@ namespace Octokit.Tests.Integration
         public static string ClientSecret
         {
             get { return Environment.GetEnvironmentVariable("OCTOKIT_CLIENTSECRET"); }
+        }
+
+        public static long GitHubAppId
+        {
+            get { return Convert.ToInt64(Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_ID")); }
+        }
+
+        public static string GitHubAppPemFile
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_PEMFILE"); }
+        }
+
+        public static string GitHubAppSlug
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_SLUG"); }
         }
 
         public static void DeleteRepo(IConnection connection, Repository repository)
@@ -183,7 +245,7 @@ namespace Octokit.Tests.Integration
         public static Stream LoadFixture(string fileName)
         {
             var key = "Octokit.Tests.Integration.fixtures." + fileName;
-            var stream = typeof(Helper).Assembly.GetManifestResourceStream(key);
+            var stream = typeof(Helper).GetTypeInfo().Assembly.GetManifestResourceStream(key);
             if (stream == null)
             {
                 throw new InvalidOperationException(
@@ -192,11 +254,11 @@ namespace Octokit.Tests.Integration
             return stream;
         }
 
-        public static IGitHubClient GetAuthenticatedClient()
+        public static IGitHubClient GetAuthenticatedClient(bool useSecondUser = false)
         {
             return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
             {
-                Credentials = Credentials
+                Credentials = useSecondUser ? CredentialsSecondUser : Credentials
             };
         }
 
@@ -227,6 +289,99 @@ namespace Octokit.Tests.Integration
             {
                 Credentials = new Credentials(Guid.NewGuid().ToString(), "bad-password")
             };
+        }
+
+        public static bool IsGitHubAppsEnabled { get { return _gitHubAppsEnabled.Value; } }
+
+        public static GitHubClient GetAuthenticatedGitHubAppsClient()
+        {
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            {
+                Credentials = GitHubAppCredentials
+            };
+        }
+
+        public static Installation GetGitHubAppInstallationForOwner(string owner)
+        {
+            var client = GetAuthenticatedGitHubAppsClient();
+            var installations = client.GitHubApps.GetAllInstallationsForCurrent().Result;
+            var installation = installations.First(x => x.Account.Login == owner);
+
+            return installation;
+        }
+
+        public static GitHubClient GetAuthenticatedGitHubAppInstallationForOwner(string owner)
+        {
+            var client = GetAuthenticatedGitHubAppsClient();
+            var installation = GetGitHubAppInstallationForOwner(owner);
+
+            var token = client.GitHubApps.CreateInstallationToken(installation.Id).Result.Token;
+
+            return new GitHubClient(new ProductHeaderValue("OctokitTests"), TargetUrl)
+            {
+                Credentials = new Credentials(token)
+            };
+        }
+
+        public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
+        {
+            try
+            {
+                foreach (var invitee in invitees)
+                {
+                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative), null, AcceptHeaders.OrganizationMembershipPreview).Wait(TimeSpan.FromSeconds(15));
+                }
+            }
+            catch { }
+        }
+
+        public static string InviteMemberToTeam(IConnection connection, int teamId, string login)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.Organization.Team.AddOrEditMembership(teamId, login, new UpdateTeamMembership(TeamRole.Member)).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+
+            return login;
+        }
+
+        public async static Task<Reference> CreateFeatureBranch(string owner, string repo, string parentSha, string branchName)
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            // Create content blob
+            var baselineBlob = new NewBlob
+            {
+                Content = "I am overwriting this blob with something new",
+                Encoding = EncodingType.Utf8
+            };
+            var baselineBlobResult = await github.Git.Blob.Create(owner, repo, baselineBlob);
+
+            // Create tree item
+            var treeItem = new NewTreeItem
+            {
+                Type = TreeType.Blob,
+                Mode = FileMode.File,
+                Path = "README.md",
+                Sha = baselineBlobResult.Sha
+            };
+
+            // Create tree
+            var newTree = new NewTree();
+            newTree.Tree.Add(treeItem);
+            var tree = await github.Git.Tree.Create(owner, repo, newTree);
+
+            // Create commit
+            var newCommit = new NewCommit("this is the new commit", tree.Sha, parentSha);
+            var commit = await github.Git.Commit.Create(owner, repo, newCommit);
+
+            // Create branch
+            var branch = await github.Git.Reference.Create(owner, repo, new NewReference($"refs/heads/{branchName}", commit.Sha));
+
+            // Return commit
+            return branch;
         }
     }
 }

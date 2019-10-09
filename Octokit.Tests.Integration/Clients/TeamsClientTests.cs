@@ -12,43 +12,38 @@ public class TeamsClientTests
     public class TheCreateMethod
     {
         [OrganizationTest]
-        public async Task FailsWhenNotAuthenticated()
-        {
-            var github = Helper.GetAnonymousClient();
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
-        public async Task FailsWhenAuthenticatedWithBadCredentials()
-        {
-            var github = Helper.GetBadCredentialsClient();
-
-            var newTeam = new NewTeam("Test");
-
-            var e = await Assert.ThrowsAsync<AuthorizationException>(() => github.Organization.Team.Create(Helper.Organization, newTeam));
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
-        }
-
-        [OrganizationTest]
-        public async Task SucceedsWhenAuthenticated()
+        public async Task CreatesTeam()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            var newTeam = new NewTeam(Guid.NewGuid().ToString());
+            var teamName = Helper.MakeNameWithTimestamp("new-team");
+            var teamDescription = Helper.MakeNameWithTimestamp("team description");
+            using (var context = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("org-repo"))))
+            {
+                var newTeam = new NewTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed
+                };
+                newTeam.Maintainers.Add(Helper.UserName);
+                newTeam.RepoNames.Add(context.Repository.FullName);
 
-            var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
+                var team = await github.Organization.Team.Create(Helper.Organization, newTeam);
 
-            Assert.Equal(newTeam.Name, team.Name);
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(1, team.MembersCount);
+                Assert.Equal(1, team.ReposCount);
+
+                await github.Organization.Team.Delete(team.Id);
+            }
         }
     }
 
     public class TheGetAllForCurrentMethod
     {
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task GetsAllForCurrentWhenAuthenticated()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -57,67 +52,230 @@ public class TeamsClientTests
         }
     }
 
-    public class TheGetMembershipMethod
+    public class TheGetAllChildTeamsMethod
     {
-        readonly Team team;
+        private readonly IGitHubClient _github;
 
-        public TheGetMembershipMethod()
+        public TheGetAllChildTeamsMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            _github = Helper.GetAuthenticatedClient();
         }
 
         [OrganizationTest]
-        public async Task FailsWhenAuthenticatedWithBadCredentials()
+        public async Task GetsAllChildTeams()
         {
-            var github = Helper.GetBadCredentialsClient();
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
 
-            var e = await Assert.ThrowsAsync<AuthorizationException>(
-                () => github.Organization.Team.GetMembership(team.Id, Helper.UserName));
-            Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId);
+
+                Assert.Equal(2, teams.Count);
+                Assert.Contains(teams, x => x.Id == team1.Id);
+                Assert.Contains(teams, x => x.Id == team2.Id);
+            }
         }
 
         [OrganizationTest]
-        public async Task GetsIsMemberWhenAuthenticated()
+        public async Task ReturnsCorrectCountOfChildTeamsWithoutStart()
         {
-            var github = Helper.GetAuthenticatedClient();
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
 
-            var membership = await github.Organization.Team.GetMembership(team.Id, Helper.UserName);
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
 
-            Assert.Equal(TeamMembership.Active, membership);
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team1.Id, teams[0].Id);
+            }
         }
 
         [OrganizationTest]
-        public async Task GetsIsMemberFalseForNonMemberWhenAuthenticated()
+        public async Task ReturnsCorrectCountOfChildTeamsWithStart()
         {
-            var github = Helper.GetAuthenticatedClient();
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
 
-            var membership = await github.Organization.Team.GetMembership(team.Id, "foo");
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
 
-            Assert.Equal(TeamMembership.NotFound, membership);
+                var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
+
+                Assert.Equal(1, teams.Count);
+                Assert.Equal(team2.Id, teams[0].Id);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsDistinctChildTeamsBasedOnStartPage()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            {
+                var team1 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+                var team2 = await _github.Organization.Team.Create(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("child-team")) { Privacy = TeamPrivacy.Closed, ParentTeamId = parentTeamContext.TeamId });
+
+                var startOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var firstPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, startOptions);
+
+                var skipStartOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPage = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, skipStartOptions);
+
+                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            }
         }
     }
 
-    public class TheGetAllMembersMethod
+    public class TheAddOrEditMembershipMethod : IDisposable
     {
-        readonly Team team;
+        private readonly IGitHubClient _github;
+        private readonly TeamContext _teamContext;
 
-        public TheGetAllMembersMethod()
+        public TheAddOrEditMembershipMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
+            _github = Helper.GetAuthenticatedClient();
 
-            team = github.Organization.Team.GetAll(Helper.Organization).Result.First();
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
         }
 
         [OrganizationTest]
-        public async Task GetsAllMembersWhenAuthenticated()
+        public async Task AddsMembership()
         {
-            var github = Helper.GetAuthenticatedClient();
+            var login = "octokitnet-test1";
 
-            var members = await github.Organization.Team.GetAllMembers(team.Id);
+            var membership = await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Member));
+
+            Assert.Equal(TeamRole.Member, membership.Role);
+            Assert.Equal(MembershipState.Pending, membership.State);
+        }
+
+        [OrganizationTest]
+        public async Task EditsMembership()
+        {
+            var login = "octokitnet-test1";
+
+            // Add as member
+            await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Member));
+
+            // Update to maintainer
+            var membership = await _github.Organization.Team.AddOrEditMembership(_teamContext.TeamId, login, new UpdateTeamMembership(TeamRole.Maintainer));
+
+            Assert.Equal(TeamRole.Maintainer, membership.Role);
+            Assert.Equal(MembershipState.Pending, membership.State);
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
+        }
+    }
+
+    public class TheGetMembershipDetailsMethod : IDisposable
+    {
+        private readonly IGitHubClient _github;
+        private readonly TeamContext _teamContext;
+
+        public TheGetMembershipDetailsMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
+        }
+
+        [OrganizationTest]
+        public async Task GetsMembershipDetails()
+        {
+            var membership = await _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, Helper.UserName);
+
+            Assert.Equal(TeamRole.Maintainer, membership.Role);
+            Assert.Equal(MembershipState.Active, membership.State);
+        }
+
+        [OrganizationTest]
+        public async Task ThrowsWhenNotAMember()
+        {
+            await Assert.ThrowsAsync<NotFoundException>(() => _github.Organization.Team.GetMembershipDetails(_teamContext.TeamId, "foo"));
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
+        }
+    }
+
+    public class TheGetAllMembersMethod : IDisposable
+    {
+        private readonly IGitHubClient _github;
+        private readonly TeamContext _teamContext;
+
+        public TheGetAllMembersMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+
+            var newTeam = new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"));
+            newTeam.Maintainers.Add(Helper.UserName);
+
+            _teamContext = _github.CreateTeamContext(Helper.Organization, newTeam).Result;
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllMembers()
+        {
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId);
 
             Assert.Contains(Helper.UserName, members.Select(u => u.Login));
+        }
+
+        [OrganizationTest]
+        public async Task GetsAllMembersWithRoleFilter()
+        {
+            var members = await _github.Organization.Team.GetAllMembers(_teamContext.TeamId, new TeamMembersRequest(TeamRoleFilter.Member));
+
+            Assert.Empty(members);
+        }
+
+        public void Dispose()
+        {
+            if (_teamContext != null)
+            {
+                _teamContext.Dispose();
+            }
         }
     }
 
@@ -175,6 +333,131 @@ public class TeamsClientTests
 
                 //Check if permission was correctly applied
                 Assert.True(addedRepo.First(x => x.Id == repo.Id).Permissions.Admin == true);
+            }
+        }
+    }
+
+    public class TheGetAllPendingInvitationsMethod
+    {
+        private readonly IGitHubClient _gitHub;
+
+        public TheGetAllPendingInvitationsMethod()
+        {
+            _gitHub = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsNoPendingInvitations()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                var team = teamContext.Team;
+
+                var pendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(team.Id);
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsPendingInvitations()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var pendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId);
+                Assert.NotEmpty(pendingInvitations);
+                Assert.Equal(2, pendingInvitations.Count);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfPendingInvitationsWithoutStart()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+
+                var pendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, options);
+                Assert.NotEmpty(pendingInvitations);
+                Assert.Equal(1, pendingInvitations.Count);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ReturnsCorrectCountOfPendingInvitationsWithStart()
+        {
+            using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                teamContext.InviteMember("octokitnet-test1");
+                teamContext.InviteMember("octokitnet-test2");
+
+                var firstPageOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                var firstPagePendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
+                Assert.NotEmpty(firstPagePendingInvitations);
+                Assert.Equal(1, firstPagePendingInvitations.Count);
+
+                var secondPageOptions = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 2
+                };
+
+                var secondPagePendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
+                Assert.NotEmpty(secondPagePendingInvitations);
+                Assert.Equal(1, secondPagePendingInvitations.Count);
+
+                Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
+            }
+        }
+    }
+
+    public class TheUpdateMethod
+    {
+        private readonly IGitHubClient _github;
+
+        public TheUpdateMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeam()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
+            {
+                var teamName = Helper.MakeNameWithTimestamp("updated-team");
+                var teamDescription = Helper.MakeNameWithTimestamp("updated description");
+                var update = new UpdateTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed,
+                    ParentTeamId = parentTeamContext.TeamId
+                };
+
+                var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
+
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Octokit.Reactive
         /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
         public ObservableOrganizationMembersClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Organization.Member;
             _connection = client.Connection;
@@ -44,7 +44,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, ApiOptions.None);
         }
@@ -72,8 +72,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org), options);
         }
@@ -101,7 +101,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, filter, ApiOptions.None);
         }
@@ -130,8 +130,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter), options);
         }
@@ -159,7 +159,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, role, ApiOptions.None);
         }
@@ -188,8 +188,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersRole role, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, role), options);
         }
@@ -218,7 +218,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, filter, role, ApiOptions.None);
         }
@@ -248,8 +248,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.Members(org, filter, role), options);
         }
@@ -262,7 +262,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAllPublic(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAllPublic(org, ApiOptions.None);
         }
@@ -276,8 +276,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<User> GetAllPublic(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.PublicMembers(org), options);
         }
@@ -294,8 +294,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<bool> CheckMember(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.CheckMember(org, user).ToObservable();
         }
@@ -312,8 +312,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<bool> CheckMemberPublic(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.CheckMemberPublic(org, user).ToObservable();
         }
@@ -332,8 +332,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Delete(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Delete(org, user).ToObservable();
         }
@@ -351,8 +351,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<bool> Publicize(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Publicize(org, user).ToObservable();
         }
@@ -370,10 +370,44 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Unit> Conceal(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Conceal(org, user).ToObservable();
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllPendingInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all pending invitations for the organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
         }
     }
 }

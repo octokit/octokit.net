@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
@@ -256,6 +257,153 @@ public class RepositoryCollaboratorClientTests
                 var isCollab = await fixture.IsCollaborator(context.Repository.Id, "m-zuber-octokit-integration-tests");
 
                 Assert.True(isCollab);
+            }
+        }
+    }
+
+    public class TheReviewPermissionMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsReadPermissionForNonCollaborator()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.Read, permission.Permission);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsReadPermissionForNonCollaboratorWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.Read, permission.Permission);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsWritePermissionForCollaborator()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                // add a collaborator
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.Write, permission.Permission);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsWritePermissionForCollaboratorWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                // add a collaborator
+                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.Write, permission.Permission);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsAdminPermissionForOwner()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
+
+                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsAdminPermissionForOwnerWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryId, context.RepositoryOwner);
+
+                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+            }
+        }
+
+        [PaidAccountTest]
+        public async Task ReturnsNonePermissionForPrivateRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
+            var repoName = Helper.MakeNameWithTimestamp("private-repo");
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { Private = true }))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.None, permission.Permission);
+            }
+        }
+
+        [PaidAccountTest]
+        public async Task ReturnsNonePermissionForPrivateRepositoryWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var userDetails = await github.User.Current();
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                throw new Exception("Test cannot complete, account is on free plan");
+            }
+
+            var repoName = Helper.MakeNameWithTimestamp("private-repo");
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { Private = true }))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
+
+                Assert.Equal(PermissionLevel.None, permission.Permission);
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Octokit
         /// <summary>
         /// The combined state of the commits.
         /// </summary>
-        public CommitState State { get; protected set; }
+        public StringEnum<CommitState> State { get; protected set; }
 
         /// <summary>
         /// The SHA of the reference.

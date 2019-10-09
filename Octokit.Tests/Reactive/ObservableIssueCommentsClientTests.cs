@@ -58,7 +58,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
-                    Arg.Any<IDictionary<string, string>>(), 
+                    Arg.Any<IDictionary<string, string>>(),
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Direction = SortDirection.Descending,
                     Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
-                    Sort = PullRequestReviewCommentSort.Updated
+                    Sort = IssueCommentSort.Updated
                 };
                 var options = new ApiOptions
                 {
@@ -170,8 +170,8 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), 
-                    Args.EmptyDictionary,
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
+                    Arg.Any<IDictionary<string, string>>(),
                     "application/vnd.github.squirrel-girl-preview");
             }
 
@@ -184,7 +184,47 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue(1, 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Args.EmptyDictionary, null);
+                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithIssueCommentRequest()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                var request = new IssueCommentRequest()
+                {
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                };
+
+                client.GetAllForIssue("fake", "repo", 3, request);
+
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 3
+                         && d["since"] == "2016-11-23T11:11:11Z"),
+                    "application/vnd.github.squirrel-girl-preview");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryIdWithIssueCommentRequest()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableIssueCommentsClient(gitHubClient);
+
+                var request = new IssueCommentRequest()
+                {
+                    Since = new DateTimeOffset(2016, 11, 23, 11, 11, 11, 00, new TimeSpan()),
+                };
+
+                client.GetAllForIssue(1, 3, request);
+
+                gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
+                    new Uri("repositories/1/issues/3/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 3
+                                && d["since"] == "2016-11-23T11:11:11Z"),
+                            "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -203,7 +243,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue("fake", "repo", 3, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), "application/vnd.github.squirrel-girl-preview");
+                    new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4),
+                    "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -222,7 +264,9 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue(1, 3, options);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), null);
+                    new Uri("repositories/1/issues/3/comments", UriKind.Relative),
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4),
+                            "application/vnd.github.squirrel-girl-preview");
             }
 
             [Fact]
@@ -235,9 +279,13 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(null, "name", 1, ApiOptions.None));
                 Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", null, 1, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, options: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, request: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue("owner", "name", 1, null, ApiOptions.None));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(1, 1, options: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(1, 1, request: null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForIssue(1, 1, null, ApiOptions.None));
 
                 Assert.Throws<ArgumentException>(() => client.GetAllForIssue("", "name", 1));
                 Assert.Throws<ArgumentException>(() => client.GetAllForIssue("owner", "", 1));

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -12,38 +13,42 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateTeam"/> class.
         /// </summary>
-        /// <param name="team">The team.</param>
-        public UpdateTeam(string team)
+        /// <param name="name">The updated team name.</param>
+        public UpdateTeam(string name)
         {
-            Name = team;
+            Name = name;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateTeam"/> class.
+        /// The name of the team (required).
         /// </summary>
-        /// <param name="team">The team.</param>
-        /// <param name="permission">The permission.</param>
-        public UpdateTeam(string team, Permission permission)
-        {
-            Name = team;
-            Permission = permission;
-        }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// team name
+        /// The description of the team.
         /// </summary>
-        public string Name { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
-        /// permission for this team
+        /// The level of privacy this team should have (default: Secret)
+        /// </summary>
+        public TeamPrivacy? Privacy { get; set; }
+
+        /// <summary>
+        /// The permission that new repositories will be added to the team with when none is specified (default: Pull)
         /// </summary>
         public Permission? Permission { get; set; }
+
+        /// <summary>
+        /// Id of a team to set as the parent team
+        /// </summary>
+        public long? ParentTeamId { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "Team: {0} Permission: {1}", Name, Permission.GetValueOrDefault());
+                return string.Format(CultureInfo.InvariantCulture, "Team: {0} Privacy: {1} Permission: {2}", Name, Privacy?.ToString() ?? "Default", Permission?.ToString() ?? "Default");
             }
         }
     }

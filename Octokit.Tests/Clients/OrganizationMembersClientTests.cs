@@ -295,7 +295,7 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic(null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPublic("org", null));
-                
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic(""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPublic("", ApiOptions.None));
             }
@@ -492,6 +492,48 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("", "username"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.Conceal("org", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("org", ""));
+            }
+        }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.GetAllPendingInvitations("org");
+
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1
+                };
+                client.GetAllPendingInvitations("org", options);
+
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", options);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations(""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null));
             }
         }
     }

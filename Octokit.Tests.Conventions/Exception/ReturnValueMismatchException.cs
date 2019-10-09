@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Octokit.Tests.Conventions
 {
@@ -12,10 +11,6 @@ namespace Octokit.Tests.Conventions
 
         public ReturnValueMismatchException(MethodInfo method, Type expected, Type actual, Exception innerException)
             : base(CreateMessage(method, expected, actual), innerException)
-        { }
-
-        protected ReturnValueMismatchException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         static string CreateMessage(MethodInfo method, Type expected, Type actual)

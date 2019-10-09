@@ -32,7 +32,7 @@ namespace Octokit
         {
             return GetAll(ApiOptions.None);
         }
-        
+
         /// <summary>
         /// Gets all email addresses for the authenticated user.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Octokit
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), options);
         }
@@ -57,7 +57,7 @@ namespace Octokit
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
         public Task<IReadOnlyList<EmailAddress>> Add(params string[] emailAddresses)
         {
-            Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
+            Ensure.ArgumentNotNull(emailAddresses, nameof(emailAddresses));
             if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 
@@ -74,7 +74,7 @@ namespace Octokit
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
         public Task Delete(params string[] emailAddresses)
         {
-            Ensure.ArgumentNotNull(emailAddresses, "emailAddresses");
+            Ensure.ArgumentNotNull(emailAddresses, nameof(emailAddresses));
             if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 

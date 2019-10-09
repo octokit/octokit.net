@@ -41,9 +41,9 @@ namespace Octokit
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>        
         public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events(),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(), options);
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -85,9 +85,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.Events(owner, name), options);
         }
@@ -102,7 +102,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.Events(repositoryId), options);
         }
@@ -117,8 +117,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllIssuesForRepository(owner, name, ApiOptions.None);
         }
@@ -146,9 +146,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options);
         }
@@ -163,7 +163,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options);
         }
@@ -178,8 +178,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepositoryNetwork(owner, name, ApiOptions.None);
         }
@@ -195,9 +195,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name), options);
         }
@@ -211,7 +211,7 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
             return GetAllForOrganization(organization, ApiOptions.None);
         }
@@ -226,8 +226,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization), options);
         }
@@ -241,7 +241,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllUserReceived(user, ApiOptions.None);
         }
@@ -256,8 +256,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), options);
         }
@@ -271,7 +271,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllUserReceivedPublic(user, ApiOptions.None);
         }
@@ -286,10 +286,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true), options);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllUserPerformed(user, ApiOptions.None);
         }
@@ -316,10 +316,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), options);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return GetAllUserPerformedPublic(user, ApiOptions.None);
         }
@@ -346,8 +346,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true), options);
         }
@@ -362,8 +362,8 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
             return GetAllForAnOrganization(user, organization, ApiOptions.None);
         }
@@ -379,11 +379,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNullOrEmptyString(organization, "organization");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization),options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization), options);
         }
     }
 }

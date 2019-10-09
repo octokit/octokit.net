@@ -23,7 +23,7 @@ namespace Octokit.Tests.Integration
             if (!Helper.IsPaidAccount)
                 return Enumerable.Empty<IXunitTestCase>();
 
-            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
+            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.None, testMethod) };
         }
     }
 

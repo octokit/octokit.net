@@ -16,6 +16,11 @@ namespace Octokit.Reactive
         IObservableTeamsClient Team { get; }
 
         /// <summary>
+        /// Returns a client to manage outside collaborators of an organization.
+        /// </summary>
+        IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
+
+        /// <summary>
         /// Returns the specified organization.
         /// </summary>
         /// <param name="org">The login of the specified organization,</param>
@@ -40,23 +45,6 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
         IObservable<Organization> GetAllForCurrent(ApiOptions options);
-
-        /// <summary>
-        /// Returns all the organizations for the specified user
-        /// </summary>
-        /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]
-        IObservable<Organization> GetAll(string user);
-
-        /// <summary>
-        /// Returns all the organizations for the specified user
-        /// </summary>
-        /// <param name="user">The login for the user</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
-        [Obsolete("Please use IObservableOrganizationsClient.GetAllForUser() instead. This method will be removed in a future version")]  
-        IObservable<Organization> GetAll(string user, ApiOptions options);
 
         /// <summary>
         /// Returns all the organizations for the specified user

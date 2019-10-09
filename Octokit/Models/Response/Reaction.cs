@@ -1,7 +1,6 @@
-﻿using Octokit.Internal;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,11 +8,20 @@ namespace Octokit
     {
         [Parameter(Value = "+1")]
         Plus1,
+
         [Parameter(Value = "-1")]
         Minus1,
+
+        [Parameter(Value = "laugh")]
         Laugh,
+
+        [Parameter(Value = "confused")]
         Confused,
+
+        [Parameter(Value = "heart")]
         Heart,
+
+        [Parameter(Value = "hooray")]
         Hooray
     }
 
@@ -22,9 +30,10 @@ namespace Octokit
     {
         public Reaction() { }
 
-        public Reaction(int id, User user, ReactionType content)
+        public Reaction(int id, string nodeId, User user, ReactionType content)
         {
             Id = id;
+            NodeId = nodeId;
             User = user;
             Content = content;
         }
@@ -35,6 +44,11 @@ namespace Octokit
         public int Id { get; protected set; }
 
         /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
+
+        /// <summary>
         /// Information about the user.
         /// </summary>
         public User User { get; protected set; }
@@ -43,7 +57,7 @@ namespace Octokit
         /// The reaction type for this commit comment.
         /// </summary>
         [Parameter(Key = "content")]
-        public ReactionType Content { get; protected set; }
+        public StringEnum<ReactionType> Content { get; protected set; }
 
         internal string DebuggerDisplay
         {

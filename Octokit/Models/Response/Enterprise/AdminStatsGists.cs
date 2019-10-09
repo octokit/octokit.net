@@ -38,7 +38,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalGists: {0} PrivateGists: {1} PublicGists: {2}", TotalGists, PrivateGists, PublicGists);
+                return string.Format(CultureInfo.InvariantCulture, "TotalGists: {0} PrivateGists: {1} PublicGists: {2}", TotalGists, PrivateGists, PublicGists);
             }
         }
     }

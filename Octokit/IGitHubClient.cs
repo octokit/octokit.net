@@ -8,6 +8,16 @@ namespace Octokit
     public interface IGitHubClient : IApiInfoProvider
     {
         /// <summary>
+        /// Set the GitHub Api request timeout.
+        /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
+        /// </summary>
+        /// <remarks>
+        /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
+        /// </remarks>
+        /// <param name="timeout">The Timeout value</param>
+        void SetRequestTimeout(TimeSpan timeout);
+
+        /// <summary>
         /// Provides a client connection to make rest requests to HTTP endpoints.
         /// </summary>
         IConnection Connection { get; }
@@ -27,6 +37,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/
         /// </remarks>
         IActivitiesClient Activity { get; }
+
+        /// <summary>
+        /// Access GitHub's Application API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/
+        /// </remarks>
+        IGitHubAppsClient GitHubApps { get; }
 
         /// <summary>
         /// Access GitHub's Issue API.
@@ -131,5 +149,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IReactionsClient Reaction { get; }
+
+        /// <summary>
+        /// Access GitHub's Checks API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
+        /// </remarks>
+        IChecksClient Check { get; }
     }
 }

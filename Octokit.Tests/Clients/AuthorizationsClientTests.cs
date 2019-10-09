@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -170,7 +172,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("xyz")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -202,7 +204,7 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization("OAUTHSECRET")));
+                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -264,15 +266,17 @@ namespace Octokit.Tests.Clients
                 Uri calledUri = null;
                 dynamic calledBody = null;
 
-                client.Put<ApplicationAuthorization>(Arg.Do<Uri>(u => calledUri = u), Arg.Do<object>(body => calledBody = body));
+                client.Put<ApplicationAuthorization>(Arg.Do<Uri>(u => calledUri = u), Arg.Do<dynamic>(body => calledBody = body));
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
                 Assert.NotNull(calledUri);
-                Assert.Equal(calledUri.ToString(), "authorizations/clients/clientId");
+                Assert.Equal("authorizations/clients/clientId", calledUri.ToString());
 
                 Assert.NotNull(calledBody);
-                Assert.Equal(calledBody.fingerprint, "ha-ha-fingerprint");
+                var fingerprintProperty = ((IEnumerable<PropertyInfo>)calledBody.GetType().DeclaredProperties).FirstOrDefault(x => x.Name == "fingerprint");
+                Assert.NotNull(fingerprintProperty);
+                Assert.Equal(fingerprintProperty.GetValue(calledBody), "ha-ha-fingerprint");
             }
         }
 

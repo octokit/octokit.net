@@ -64,5 +64,30 @@ namespace Octokit.Tests.Helpers
                 Assert.Equal(expected, template.ExpandUriTemplate(new { name = "example name.txt", label = "labeltext" }).ToString());
             }
         }
+
+        public class EscapeDoubleQuotesMethod
+        {
+            [Fact]
+            public void EscapeDoubleQuotesReturnsNullForNullInput()
+            {
+                Assert.Null((null as string).EscapeDoubleQuotes());
+            }
+
+            [Fact]
+            public void EscapeDoubleQuotesReturnsInputWithoutDoubleQuotes()
+            {
+                string input = "some test input without double quotes in it";
+
+                Assert.Equal(input, input.EscapeDoubleQuotes());
+            }
+
+            [Fact]
+            public void EscapeDoubleQuotesEscapesAllDoubleQuotes()
+            {
+                string input = "\"test milestone\"";
+
+                Assert.Equal("\\\"test milestone\\\"", input.EscapeDoubleQuotes());
+            }
+        }
     }
 }

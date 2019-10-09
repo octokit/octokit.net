@@ -342,7 +342,7 @@ namespace Octokit.Tests.Http
                     .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
                 Assert.Same(actualResult, result);
             }
 
@@ -361,7 +361,7 @@ namespace Octokit.Tests.Http
                     .Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
-                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, Args.CancellationToken);
+                var actualResult = await apiConnection.GetQueuedOperation<object>(queuedOperationUrl, CancellationToken.None);
                 Assert.Empty(actualResult);
             }
 
@@ -388,6 +388,7 @@ namespace Octokit.Tests.Http
                 connection.Received(3).GetResponse<IReadOnlyList<object>>(queuedOperationUrl, Args.CancellationToken);
             }
 
+            [Fact(Skip = "Test triggers deadlock when run, needs to be investigated")]
             public async Task CanCancelQueuedOperation()
             {
                 var queuedOperationUrl = new Uri("anything", UriKind.Relative);

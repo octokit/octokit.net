@@ -190,6 +190,51 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheReviewPermissionMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                client.ReviewPermission("owner", "test", "user1");
+                connection.Received().Get<CollaboratorPermission>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1/permission"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                client.ReviewPermission(1L, "user1");
+                connection.Received().Get<CollaboratorPermission>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1/permission"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.korra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission(null, "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("", "test", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission("owner", null, "user1"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("owner", "", "user1"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission("owner", "test", ""));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPermission(1L, null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPermission(1L, ""));
+            }
+        }
+
         public class TheAddMethod
         {
             [Fact]
@@ -226,6 +271,30 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "", "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add("owner", "test", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Add(1, ""));
+            }
+
+            [Fact]
+            public async Task SurfacesAuthorizationException()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                connection.Put(Arg.Any<Uri>()).Returns(x => { throw new AuthorizationException(); });
+
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1"));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1"));
+            }
+
+            [Fact]
+            public async Task SurfacesAuthorizationExceptionWhenSpecifyingCollaboratorRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                connection.Connection.Put<object>(Arg.Any<Uri>(), Arg.Any<object>()).ThrowsAsync(new AuthorizationException());
+
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest(Permission.Pull)));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest(Permission.Pull)));
             }
         }
 

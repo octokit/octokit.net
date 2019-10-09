@@ -36,8 +36,21 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        IObservable<List<Migration>> GetAll(
+        IObservable<Migration> GetAll(
             string org);
+
+        /// <summary>
+        /// Gets the list of the most recent migrations of the the organization.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
+        /// </remarks>
+        /// <param name="org">The organization of which to list migrations.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        IObservable<Migration> GetAll(
+            string org,
+            ApiOptions options);
 
         /// <summary>
         /// Get the status of a migration.

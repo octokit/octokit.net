@@ -17,10 +17,10 @@ namespace Octokit.Tests.Integration.Clients
 
                 var readme = await github.Repository.Content.GetReadme("octokit", "octokit.net");
                 Assert.Equal("README.md", readme.Name);
-                string readMeHtml = await readme.GetHtmlContent();
-                Assert.True(readMeHtml.StartsWith("<div class="));
-                Assert.Contains(@"data-path=""README.md"" id=""file""", readMeHtml);
-                Assert.Contains("Octokit - GitHub API Client Library for .NET", readMeHtml);
+                string readmeHtml = await readme.GetHtmlContent();
+                Assert.StartsWith("<div id=", readmeHtml);
+                Assert.Contains("data-path=\"README.md\"", readmeHtml);
+                Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
 
             [IntegrationTest]
@@ -30,10 +30,10 @@ namespace Octokit.Tests.Integration.Clients
 
                 var readme = await github.Repository.Content.GetReadme(7528679);
                 Assert.Equal("README.md", readme.Name);
-                string readMeHtml = await readme.GetHtmlContent();
-                Assert.True(readMeHtml.StartsWith("<div class="));
-                Assert.Contains(@"data-path=""README.md"" id=""file""", readMeHtml);
-                Assert.Contains("Octokit - GitHub API Client Library for .NET", readMeHtml);
+                string readmeHtml = await readme.GetHtmlContent();
+                Assert.StartsWith("<div id=", readmeHtml);
+                Assert.Contains("data-path=\"README.md\"", readmeHtml);
+                Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
 
             [IntegrationTest]
@@ -42,8 +42,8 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 var readmeHtml = await github.Repository.Content.GetReadmeHtml("octokit", "octokit.net");
-                Assert.True(readmeHtml.StartsWith("<div class="));
-                Assert.Contains(@"data-path=""README.md"" id=""readme""", readmeHtml);
+                Assert.StartsWith("<div id=", readmeHtml);
+                Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
 
@@ -53,8 +53,8 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 var readmeHtml = await github.Repository.Content.GetReadmeHtml(7528679);
-                Assert.True(readmeHtml.StartsWith("<div class="));
-                Assert.Contains(@"data-path=""README.md"" id=""readme""", readmeHtml);
+                Assert.StartsWith("<div id=", readmeHtml);
+                Assert.Contains("data-path=\"README.md\"", readmeHtml);
                 Assert.Contains("Octokit - GitHub API Client Library for .NET", readmeHtml);
             }
         }
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -146,7 +146,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -190,7 +190,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -263,7 +263,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal(new Uri("https://github.com/octocat/Spoon-Knife/blob/master/README.md"), contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]

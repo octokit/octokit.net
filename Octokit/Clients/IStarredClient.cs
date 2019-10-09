@@ -202,14 +202,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         Task<bool> CheckStarred(string owner, string name);
-        
+
         /// <summary>
         /// Stars a repository for the authenticated user.
         /// </summary>
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         Task<bool> StarRepo(string owner, string name);
-        
+
         /// <summary>
         /// Unstars a repository for the authenticated user.
         /// </summary>

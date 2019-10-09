@@ -21,8 +21,8 @@ namespace Octokit.Tests.Http
 
             var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
-            Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-            Assert.Same(response.RequestMessage, httpRequestMessage);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Same(httpRequestMessage, response.RequestMessage);
         }
 
         [Theory]
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Http
             httpRequestMessage.Content = new StringContent("Hello World");
 
             var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
-            
+
             Assert.Equal(response.RequestMessage.Method, httpRequestMessage.Method);
             Assert.NotSame(response.RequestMessage, httpRequestMessage);
         }
@@ -136,7 +136,7 @@ namespace Octokit.Tests.Http
 
             var httpRequestMessage = CreateRequest(HttpMethod.Post);
             httpRequestMessage.Content = new StringContent("Hello World");
-            
+
             var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
             Assert.Equal(HttpMethod.Get, response.RequestMessage.Method);
@@ -152,13 +152,13 @@ namespace Octokit.Tests.Http
 
             var redirectResponse2 = new HttpResponseMessage(HttpStatusCode.Found);
             redirectResponse2.Headers.Location = new Uri("http://example.org/foo");
-            
+
             var handler = CreateMockHttpHandler(redirectResponse, redirectResponse2);
             var adapter = new HttpClientAdapter(handler);
 
             var httpRequestMessage = CreateRequest(HttpMethod.Get);
 
-            Assert.ThrowsAsync<InvalidOperationException>(
+            await Assert.ThrowsAsync<InvalidOperationException>(
                 () => adapter.SendAsync(httpRequestMessage, new CancellationToken()));
         }
 

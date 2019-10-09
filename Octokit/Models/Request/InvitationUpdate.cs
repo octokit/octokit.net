@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 
-
 namespace Octokit
 {
     /// <summary>

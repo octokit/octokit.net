@@ -130,7 +130,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options);
-        
+
         /// <summary>
         /// Gets all the events for a given organization
         /// </summary>

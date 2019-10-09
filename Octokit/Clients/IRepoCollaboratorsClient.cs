@@ -1,7 +1,5 @@
-#if NET_45
 using System.Collections.Generic;
 using System.Threading.Tasks;
-#endif
 
 namespace Octokit
 {
@@ -79,6 +77,29 @@ namespace Octokit
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task<bool> IsCollaborator(long repositoryId, string user);
+
+        /// <summary>
+        /// Review a user's permission level in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">Username of the collaborator to check permission for</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<CollaboratorPermission> ReviewPermission(string owner, string name, string user);
+
+        /// <summary>
+        /// Review a user's permission level in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the collaborator to check permission for</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<CollaboratorPermission> ReviewPermission(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.

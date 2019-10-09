@@ -15,10 +15,10 @@ namespace Octokit.Reactive
     {
         readonly IRepositoryHooksClient _client;
         readonly IConnection _connection;
-        
+
         public ObservableRepositoryHooksClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Hooks;
             _connection = client.Connection;
@@ -32,8 +32,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -57,9 +57,9 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryHook>(ApiUrls.RepositoryHooks(owner, name), options);
         }
@@ -72,7 +72,7 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options);
         }
@@ -86,8 +86,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> Get(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Get(owner, name, hookId).ToObservable();
         }
@@ -112,9 +112,9 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Create(owner, name, hook).ToObservable();
         }
@@ -127,7 +127,7 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> Create(long repositoryId, NewRepositoryHook hook)
         {
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Create(repositoryId, hook).ToObservable();
         }
@@ -142,9 +142,9 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Edit(owner, name, hookId, hook).ToObservable();
         }
@@ -158,7 +158,7 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook)
         {
-            Ensure.ArgumentNotNull(hook, "hook");
+            Ensure.ArgumentNotNull(hook, nameof(hook));
 
             return _client.Edit(repositoryId, hookId, hook).ToObservable();
         }
@@ -174,8 +174,8 @@ namespace Octokit.Reactive
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
         public IObservable<Unit> Test(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Test(owner, name, hookId).ToObservable();
         }
@@ -202,8 +202,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<Unit> Ping(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Ping(owner, name, hookId).ToObservable();
         }
@@ -228,8 +228,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         public IObservable<Unit> Delete(string owner, string name, int hookId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, hookId).ToObservable();
         }

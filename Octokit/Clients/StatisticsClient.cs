@@ -7,6 +7,8 @@ namespace Octokit
 {
     /// <summary>
     /// A client for GitHub's Repository Statistics API.
+    /// Note that the GitHub API uses caching on these endpoints,
+    /// see <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more details.
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/repos/statistics/">Repository Statistics API documentation</a> for more information.
@@ -28,8 +30,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<Contributor>> GetContributors(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetContributors(owner, name, CancellationToken.None);
         }
@@ -51,8 +53,8 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public Task<IReadOnlyList<Contributor>> GetContributors(string owner, string name, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.GetQueuedOperation<Contributor>(ApiUrls.StatsContributors(owner, name), cancellationToken);
         }
@@ -74,8 +76,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<CommitActivity> GetCommitActivity(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetCommitActivity(owner, name, CancellationToken.None);
         }
@@ -97,8 +99,8 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<CommitActivity> GetCommitActivity(string owner, string name, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var activity = await ApiConnection.GetQueuedOperation<WeeklyCommitActivity>(ApiUrls.StatsCommitActivity(owner, name), cancellationToken).ConfigureAwait(false);
             return new CommitActivity(activity);
@@ -122,8 +124,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<CodeFrequency> GetCodeFrequency(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetCodeFrequency(owner, name, CancellationToken.None);
         }
@@ -145,8 +147,8 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<CodeFrequency> GetCodeFrequency(string owner, string name, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var rawFrequencies = await ApiConnection.GetQueuedOperation<long[]>(ApiUrls.StatsCodeFrequency(owner, name), cancellationToken).ConfigureAwait(false);
             return new CodeFrequency(rawFrequencies);
@@ -170,8 +172,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<Participation> GetParticipation(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetParticipation(owner, name, CancellationToken.None);
         }
@@ -193,8 +195,8 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<Participation> GetParticipation(string owner, string name, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var result = await ApiConnection.GetQueuedOperation<Participation>(ApiUrls.StatsParticipation(owner, name), cancellationToken).ConfigureAwait(false);
             return result.FirstOrDefault();
@@ -218,8 +220,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<PunchCard> GetPunchCard(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetPunchCard(owner, name, CancellationToken.None);
         }
@@ -241,8 +243,8 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
         public async Task<PunchCard> GetPunchCard(string owner, string name, CancellationToken cancellationToken)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(ApiUrls.StatsPunchCard(owner, name), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);

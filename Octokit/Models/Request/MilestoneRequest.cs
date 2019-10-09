@@ -41,6 +41,8 @@ namespace Octokit
     {
         [Parameter(Value = "due_date")]
         DueDate,
+
+        [Parameter(Value = "completeness")]
         Completeness
     }
 }

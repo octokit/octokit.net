@@ -16,6 +16,7 @@ public class PullRequestsClientTests : IDisposable
 
     const string branchName = "my-branch";
     const string otherBranchName = "my-other-branch";
+    const string labelName = "my-label";
 
     public PullRequestsClientTests()
     {
@@ -38,6 +39,17 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateDraft()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+        Assert.Equal("a draft pull request", result.Title);
+        Assert.True(result.Draft);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateWithRepositoryId()
     {
         await CreateTheWorld();
@@ -45,6 +57,17 @@ public class PullRequestsClientTests : IDisposable
         var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
         var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
         Assert.Equal("a pull request", result.Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateDraftWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+        Assert.Equal("a draft pull request", result.Title);
+        Assert.True(result.Draft);
     }
 
     [IntegrationTest]
@@ -63,6 +86,22 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetDraftForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(result.Draft, pullRequests[0].Draft);
+        Assert.True(pullRequests[0].Id > 0);
+    }
+
+    [IntegrationTest]
     public async Task CanGetForRepositoryWithRepositoryId()
     {
         await CreateTheWorld();
@@ -74,6 +113,22 @@ public class PullRequestsClientTests : IDisposable
 
         Assert.Equal(1, pullRequests.Count);
         Assert.Equal(result.Title, pullRequests[0].Title);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetDraftForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a draft pull request", branchName, "master") { Draft = true };
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(result.Draft, pullRequests[0].Draft);
+        Assert.True(pullRequests[0].Id > 0);
     }
 
     [IntegrationTest]
@@ -96,7 +151,7 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
         Assert.Equal(1, pullRequests[0].Assignees.Count);
-        Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+        Assert.Contains(pullRequests[0].Assignees, x => x.Login == Helper.UserName);
     }
 
     [IntegrationTest]
@@ -119,7 +174,53 @@ public class PullRequestsClientTests : IDisposable
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
         Assert.Equal(1, pullRequests[0].Assignees.Count);
-        Assert.True(pullRequests[0].Assignees.Any(x => x.Login == Helper.UserName));
+        Assert.Contains(pullRequests[0].Assignees, x => x.Login == Helper.UserName);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepository()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(Helper.UserName, _context.RepositoryName, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.Contains(pullRequests[0].Labels, x => x.Name == labelName);
+    }
+
+    [IntegrationTest]
+    public async Task CanGetWithLabelsForRepositoryWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request", branchName, "master");
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+
+        // Add a label
+        var issueUpdate = new IssueUpdate();
+        issueUpdate.AddLabel(labelName);
+        await _github.Issue.Update(_context.Repository.Id, result.Number, issueUpdate);
+
+        // Retrieve the Pull Requests
+        var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
+
+        Assert.Equal(1, pullRequests.Count);
+        Assert.Equal(result.Title, pullRequests[0].Title);
+        Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
+        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.Contains(pullRequests[0].Labels, x => x.Name == labelName);
     }
 
     [IntegrationTest]
@@ -582,7 +683,7 @@ public class PullRequestsClientTests : IDisposable
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Ascending });
         Assert.Equal(pullRequest.Title, pullRequests[0].Title);
 
-        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest());
+        var pullRequestsDescending = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, new PullRequestRequest { SortDirection = SortDirection.Descending });
         Assert.Equal(anotherPullRequest.Title, pullRequestsDescending[0].Title);
     }
 
@@ -669,22 +770,6 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
-    public async Task CanBeMergedWithSquashCommit()
-    {
-        await CreateTheWorld();
-
-        var newPullRequest = new NewPullRequest("squash commit pull request", branchName, "master");
-        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
-
-        var merge = new MergePullRequest { CommitMessage = "fake commit message", CommitTitle = "fake title", Squash = true };
-        var result = await _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge);
-        var commit = await _github.Repository.Commit.Get(_context.RepositoryOwner, _context.RepositoryName, result.Sha);
-
-        Assert.True(result.Merged);
-        Assert.Equal("fake title\n\nfake commit message", commit.Commit.Message);
-    }
-
-    [IntegrationTest]
     public async Task CanBeMergedWithMergeMethod()
     {
         await CreateTheWorld();
@@ -744,10 +829,10 @@ public class PullRequestsClientTests : IDisposable
         var merge = new MergePullRequest { Sha = fakeSha };
         var ex = await Assert.ThrowsAsync<PullRequestMismatchException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
-        Assert.True(ex.Message.StartsWith("Head branch was modified"));
+        Assert.StartsWith("Head branch was modified", ex.Message);
     }
 
-    [IntegrationTest(Skip = "this PR is actually mergeable - rewrite the test")]
+    [IntegrationTest]
     public async Task CannotBeMergedDueNotInMergeableState()
     {
         await CreateTheWorld();
@@ -765,11 +850,12 @@ public class PullRequestsClientTests : IDisposable
         var updatedPullRequest = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
         Assert.False(updatedPullRequest.Mergeable);
+        Assert.Equal(MergeableState.Dirty, updatedPullRequest.MergeableState);
 
         var merge = new MergePullRequest { Sha = pullRequest.Head.Sha };
         var ex = await Assert.ThrowsAsync<PullRequestNotMergeableException>(() => _fixture.Merge(Helper.UserName, _context.RepositoryName, pullRequest.Number, merge));
 
-        Assert.True(ex.Message.Equals("Pull Request is not mergeable"));
+        Assert.Equal("Pull Request is not mergeable", ex.Message);
     }
 
     [IntegrationTest]
@@ -885,10 +971,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files("octokit", "octokit.net", 288);
@@ -909,10 +995,10 @@ public class PullRequestsClientTests : IDisposable
     {
         var expectedFiles = new List<PullRequestFile>
         {
-            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null),
-            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null)
+            new PullRequestFile(null, "Octokit.Tests.Integration/Clients/ReferencesClientTests.cs", null, 8, 3, 11, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Clients/ApiPagination.cs", null, 21, 6, 27, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Helpers/IApiPagination.cs", null, 1, 1, 2, null, null, null, null, null),
+            new PullRequestFile(null, "Octokit/Http/ApiConnection.cs", null, 1, 1, 2, null, null, null, null, null)
         };
 
         var result = await _fixture.Files(7528679, 288);

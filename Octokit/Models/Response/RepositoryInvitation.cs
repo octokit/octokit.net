@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
     public enum InvitationPermissionType
     {
+        [Parameter(Value = "read")]
         Read,
+
+        [Parameter(Value = "write")]
         Write,
+
+        [Parameter(Value = "admin")]
         Admin
     }
 
@@ -16,9 +22,10 @@ namespace Octokit
     {
         public RepositoryInvitation() { }
 
-        public RepositoryInvitation(int id, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, string url, string htmlUrl)
+        public RepositoryInvitation(int id, string nodeId, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, string url, string htmlUrl)
         {
             Id = id;
+            NodeId = nodeId;
             Repository = repository;
             Invitee = invitee;
             Inviter = inviter;
@@ -30,13 +37,18 @@ namespace Octokit
 
         public int Id { get; protected set; }
 
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
+
         public Repository Repository { get; protected set; }
 
         public User Invitee { get; protected set; }
 
         public User Inviter { get; protected set; }
 
-        public InvitationPermissionType Permissions { get; protected set; }
+        public StringEnum<InvitationPermissionType> Permissions { get; protected set; }
 
         public DateTimeOffset CreatedAt { get; protected set; }
 

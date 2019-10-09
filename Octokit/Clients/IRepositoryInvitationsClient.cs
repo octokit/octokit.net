@@ -54,6 +54,17 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent();
 
         /// <summary>
+        /// Gets all invitations for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options);
+
+        /// <summary>
         /// Gets all the invitations on a repository.
         /// </summary>
         /// <remarks>
@@ -62,6 +73,17 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId);
+
+        /// <summary>
+        /// Gets all the invitations on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
+        /// </remarks>        
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Updates a repository invitation.

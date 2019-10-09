@@ -17,7 +17,7 @@ namespace Octokit
         /// <param name="login">The new login for the user.</param>
         public UserRename(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             Login = login;
         }

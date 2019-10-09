@@ -17,7 +17,7 @@ namespace Octokit.Reactive
 
         public ObservableIssueReactionsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Reaction.Issue;
             _connection = client.Connection;
@@ -32,10 +32,24 @@ namespace Octokit.Reactive
         /// <param name="number">The issue id</param>        
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            return GetAll(owner, name, number, ApiOptions.None);
+        }
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+        /// <summary>
+        /// List reactions for a specified Issue
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        public IObservable<Reaction> GetAll(string owner, string name, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -46,7 +60,21 @@ namespace Octokit.Reactive
         /// <param name="number">The issue id</param>        
         public IObservable<Reaction> GetAll(long repositoryId, int number)
         {
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+            return GetAll(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List reactions for a specified Issue.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        public IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -59,9 +87,9 @@ namespace Octokit.Reactive
         /// <param name="reaction">The reaction to create</param>
         public IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return _client.Create(owner, name, number, reaction).ToObservable();
         }
@@ -75,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="reaction">The reaction to create </param>
         public IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
-            Ensure.ArgumentNotNull(reaction, "reaction");
+            Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
             return _client.Create(repositoryId, number, reaction).ToObservable();
         }

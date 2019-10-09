@@ -42,8 +42,27 @@ namespace Octokit.Reactive
         /// List reactions for a specified Issue Comment
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        IObservable<Reaction> GetAll(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
+        /// List reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>        
         IObservable<Reaction> GetAll(long repositoryId, int number);
+
+        /// <summary>
+        /// List reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="options">Options for changing the API response</param>        
+        IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options);
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
+// hack because Travis on LInux is somehow upgraded to a version of .NET (Core?) that also has System.Range
+using Range = Octokit.Range;
 
 public class SearchIssuesRequestTests
 {
@@ -41,7 +43,8 @@ public class SearchIssuesRequestTests
                 { "team:", (x,value) => x.Team = value },
                 { "head:", (x,value) => x.Head = value },
                 { "base:", (x,value) => x.Base = value },
-                { "user:", (x,value) => x.User = value }
+                { "user:", (x,value) => x.User = value },
+                { "milestone:", (x,value) => x.Milestone = value }
             };
 
             foreach (var property in stringProperties)
@@ -49,7 +52,7 @@ public class SearchIssuesRequestTests
                 var request = new SearchIssuesRequest("query");
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
+                Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains(property.Key));
 
                 // Set the parameter
                 property.Value(request, "blah");
@@ -75,10 +78,10 @@ public class SearchIssuesRequestTests
                 var request = new SearchIssuesRequest("query");
 
                 // Ensure the specified parameter does not exist when not set
-                Assert.False(request.MergedQualifiers().Any(x => x.Contains(property.Key)));
+                Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains(property.Key));
 
                 // Set the parameter
-                property.Value(request, DateRange.GreaterThan(DateTime.Today.AddDays(-7)));
+                property.Value(request, DateRange.GreaterThan(new DateTimeOffset(DateTime.Today.AddDays(-7))));
 
                 // Ensure the specified parameter now exists
                 Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
@@ -89,94 +92,114 @@ public class SearchIssuesRequestTests
         public void HandlesInAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("in:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("in:"));
 
             request.In = new List<IssueInQualifier> { IssueInQualifier.Body, IssueInQualifier.Comment };
-            Assert.True(request.MergedQualifiers().Contains("in:body,comment"));
+            Assert.Contains("in:body,comment", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesStateAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("state:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("state:"));
 
             request.State = ItemState.Closed;
-            Assert.True(request.MergedQualifiers().Contains("state:closed"));
+            Assert.Contains("state:closed", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesLabelsAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("label:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("label:"));
 
             request.Labels = new[] { "label1", "label2" };
-            Assert.True(request.MergedQualifiers().Contains("label:label1"));
-            Assert.True(request.MergedQualifiers().Contains("label:label2"));
+            Assert.Contains("label:label1", request.MergedQualifiers());
+            Assert.Contains("label:label2", request.MergedQualifiers());
+        }
+
+        [Fact]
+        public void HandlesMilestoneAttributeWithoutQuotes()
+        {
+            var request = new SearchIssuesRequest("text");
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("milestone:"));
+
+            request.Milestone = "testMilestone";
+            Assert.Contains("milestone:\"testMilestone\"", request.MergedQualifiers());
+        }
+
+        [Fact]
+        public void DoesntWrapMilestoneWithDoubleQuotesForQuotedMilestone()
+        {
+            var request = new SearchIssuesRequest("text");
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("milestone:"));
+
+            request.Milestone = "\"testMilestone\"";
+            Assert.Contains<string>("milestone:\"\\\"testMilestone\\\"\"", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesNoMetadataAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("no:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("no:"));
 
             request.No = IssueNoMetadataQualifier.Milestone;
-            Assert.True(request.MergedQualifiers().Contains("no:milestone"));
+            Assert.Contains("no:milestone", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesLanguageAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("language:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("language:"));
 
             request.Language = Language.CSharp;
-            Assert.True(request.MergedQualifiers().Contains("language:CSharp"));
+            Assert.Contains("language:CSharp", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesIsAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("is:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("is:"));
 
             request.Is = new List<IssueIsQualifier> { IssueIsQualifier.Merged, IssueIsQualifier.PullRequest };
-            Assert.True(request.MergedQualifiers().Contains("is:merged"));
-            Assert.True(request.MergedQualifiers().Contains("is:pr"));
+            Assert.Contains("is:merged", request.MergedQualifiers());
+            Assert.Contains("is:pr", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesStatusAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("status:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("status:"));
 
             request.Status = CommitState.Error;
-            Assert.True(request.MergedQualifiers().Contains("status:error"));
+            Assert.Contains("status:error", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesCommentsAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("comments:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("comments:"));
 
             request.Comments = Range.GreaterThan(5);
-            Assert.True(request.MergedQualifiers().Contains("comments:>5"));
+            Assert.Contains("comments:>5", request.MergedQualifiers());
         }
 
         [Fact]
         public void HandlesRepoAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
-            Assert.False(request.MergedQualifiers().Any(x => x.Contains("repo:")));
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("repo:"));
 
             request.Repos.Add("myorg", "repo1");
             request.Repos.Add("myorg", "repo2");
-            Assert.True(request.MergedQualifiers().Contains("repo:myorg/repo1"));
-            Assert.True(request.MergedQualifiers().Contains("repo:myorg/repo2"));
+            Assert.Contains("repo:myorg/repo1", request.MergedQualifiers());
+            Assert.Contains("repo:myorg/repo2", request.MergedQualifiers());
         }
     }
 }

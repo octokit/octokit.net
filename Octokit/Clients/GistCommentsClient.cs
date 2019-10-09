@@ -39,7 +39,7 @@ namespace Octokit
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
             return GetAllForGist(gistId, ApiOptions.None);
         }
@@ -53,8 +53,8 @@ namespace Octokit
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(gistId, "gistId");            
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options);
         }
@@ -68,7 +68,7 @@ namespace Octokit
         /// <returns>Task{GistComment}.</returns>
         public Task<GistComment> Create(string gistId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), new BodyWrapper(comment));
         }
@@ -83,7 +83,7 @@ namespace Octokit
         /// <returns>Task{GistComment}.</returns>
         public Task<GistComment> Update(string gistId, int commentId, string comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
             return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), new BodyWrapper(comment));
         }

@@ -29,7 +29,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForIssue("fake", "repo", 42);
 
                 connection.Received().GetAll<TimelineEventInfo>(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"), 
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
                     "application/vnd.github.mockingbird-preview",
                     Arg.Any<ApiOptions>());
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueTimelineClient(connection);
 
-                await client.GetAllForIssue("fake", "repo", 42, new ApiOptions {PageSize = 30});
+                await client.GetAllForIssue("fake", "repo", 42, new ApiOptions { PageSize = 30 });
 
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new IssueTimelineClient(connection);
 
-                await client.GetAllForIssue(1, 42, new ApiOptions {PageSize = 30});
+                await client.GetAllForIssue(1, 42, new ApiOptions { PageSize = 30 });
 
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
@@ -92,7 +92,6 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("", "repo", 42));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllForIssue("owner", "", 42));
-
             }
         }
     }

@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration
         static EnterpriseHelper()
         {
             // Force reading of environment variables.
-            // This wasn't happening if UserName/Organization were 
+            // This wasn't happening if UserName/Organization were
             // retrieved before Credentials.
             Debug.WriteIf(Credentials == null, "No credentials specified.");
         }
@@ -108,10 +108,9 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CLIENTSECRET"); }
         }
 
-        public static void DeleteUser(IConnection connection, User user)
+        public static string ManagementConsolePassword
         {
-            if (user != null)
-                DeleteUser(connection, user.Login);
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_GHE_CONSOLEPASSWORD"); }
         }
 
         public static void DeleteUser(IConnection connection, string username)
@@ -120,6 +119,57 @@ namespace Octokit.Tests.Integration
             {
                 var client = new GitHubClient(connection);
                 client.User.Administration.Delete(username).Wait(TimeSpan.FromSeconds(15));
+            }
+            catch { }
+        }
+
+        public static void WaitForPreReceiveEnvironmentToComplete(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    var downloadStatus = preReceiveEnvironment.Download;
+
+                    var sw = Stopwatch.StartNew();
+                    while (sw.Elapsed < TimeSpan.FromSeconds(15) && (downloadStatus.State == PreReceiveEnvironmentDownloadState.NotStarted || downloadStatus.State == PreReceiveEnvironmentDownloadState.InProgress))
+                    {
+                        downloadStatus = client.Enterprise.PreReceiveEnvironment.DownloadStatus(preReceiveEnvironment.Id).Result;
+                    }
+
+                    sw.Stop();
+                }
+                catch
+                { }
+            }
+        }
+
+        public static void DeletePreReceiveEnvironment(IConnection connection, PreReceiveEnvironment preReceiveEnvironment)
+        {
+            if (preReceiveEnvironment != null)
+            {
+                WaitForPreReceiveEnvironmentToComplete(connection, preReceiveEnvironment);
+
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    client.Enterprise.PreReceiveEnvironment.Delete(preReceiveEnvironment.Id).Wait(TimeSpan.FromSeconds(15));
+                }
+                catch
+                { }
+            }
+        }
+
+        public static void SetMaintenanceMode(IConnection connection, bool enabled)
+        {
+            try
+            {
+                var client = new GitHubClient(connection);
+                client.Enterprise.ManagementConsole.EditMaintenanceMode(
+                    new UpdateMaintenanceRequest(new UpdateMaintenanceRequestDetails(enabled)),
+                    EnterpriseHelper.ManagementConsolePassword)
+                    .Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }

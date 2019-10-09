@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Octokit.Internal;
 
 namespace Octokit
@@ -13,6 +10,24 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GpgKey
     {
+        public GpgKey() { }
+
+        public GpgKey(int id, int? primaryKeyId, string keyId, string publicKey, IReadOnlyList<EmailAddress> emails, IReadOnlyList<GpgKey> subkeys, bool canSign, bool canEncryptCommunications, bool canEncryptStorage, bool canCertify, DateTimeOffset createdAt, DateTimeOffset? expiresAt)
+        {
+            Id = id;
+            PrimaryKeyId = primaryKeyId;
+            KeyId = keyId;
+            PublicKey = publicKey;
+            Emails = emails;
+            Subkeys = subkeys;
+            CanSign = canSign;
+            CanEncryptCommunications = canEncryptCommunications;
+            CanEncryptStorage = canEncryptStorage;
+            CanCertify = canCertify;
+            CreatedAt = createdAt;
+            ExpiresAt = expiresAt;
+        }
+
         public int Id { get; protected set; }
         public int? PrimaryKeyId { get; protected set; }
         public string KeyId { get; protected set; }

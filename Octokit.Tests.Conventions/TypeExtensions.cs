@@ -32,52 +32,53 @@ namespace Octokit.Tests.Conventions
                 .ToArray();
         }
 
-        public static TypeInfo GetTypeInfo(this Type type)
+        public static CustomTypeInfo GetCustomTypeInfo(this Type type)
         {
-            var typeInfo = new TypeInfo { Type = type, TypeCategory = TypeCategory.Other };
+            var customTypeInfo = new CustomTypeInfo { Type = type, TypeCategory = TypeCategory.Other };
             if (type.IsClientInterface())
             {
-                typeInfo.TypeCategory = TypeCategory.ClientInterface;
+                customTypeInfo.TypeCategory = TypeCategory.ClientInterface;
             }
             else if (type.IsTask())
             {
-                if (!type.IsGenericType)
+                if (!type.GetTypeInfo().IsGenericType)
                 {
-                    typeInfo.TypeCategory = TypeCategory.Task;
+                    customTypeInfo.TypeCategory = TypeCategory.Task;
                 }
                 else
                 {
                     var taskResultType = type.GetGenericArgument();
                     if (taskResultType.IsList())
                     {
-                        typeInfo.TypeCategory = TypeCategory.ReadOnlyList;
-                        typeInfo.Type = taskResultType.GetGenericArgument();
+                        customTypeInfo.TypeCategory = TypeCategory.ReadOnlyList;
+                        customTypeInfo.Type = taskResultType.GetGenericArgument();
                     }
                     else
                     {
-                        typeInfo.TypeCategory = TypeCategory.GenericTask;
-                        typeInfo.Type = taskResultType;
+                        customTypeInfo.TypeCategory = TypeCategory.GenericTask;
+                        customTypeInfo.Type = taskResultType;
                     }
                 }
             }
-            return typeInfo;
+            return customTypeInfo;
         }
 
         public static bool IsModel(this Type type)
         {
-            return !type.IsInterface && !type.IsEnum && type.Assembly == typeof(AuthorizationUpdate).Assembly;
+            var typeInfo = type.GetTypeInfo();
+            return !typeInfo.IsGenericType && !typeInfo.IsInterface && !typeInfo.IsEnum && typeInfo.Assembly == typeof(AuthorizationUpdate).GetTypeInfo().Assembly;
         }
 
         public static bool IsClientInterface(this Type type)
         {
-            return type.IsInterface && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IGitHubClient).Namespace;
+            return type.GetTypeInfo().IsInterface && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IGitHubClient).Namespace;
         }
 
         public static Type GetObservableClientInterface(this Type type)
         {
             var observableClient = typeof(IObservableEventsClient);
             var observableClientName = observableClient.Namespace + "." + ObservablePrefix + type.Name.Substring(RealNameIndex);
-            var observableInterface = observableClient.Assembly.GetType(observableClientName);
+            var observableInterface = observableClient.GetTypeInfo().Assembly.GetType(observableClientName);
             if (observableInterface == null)
             {
                 throw new InterfaceNotFoundException(observableClientName);
@@ -92,7 +93,7 @@ namespace Octokit.Tests.Conventions
 
         public static bool IsList(this Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
+            return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
         }
 
         public static Type GetGenericArgument(this Type type)
@@ -102,14 +103,15 @@ namespace Octokit.Tests.Conventions
 
         public static bool IsReadOnlyCollection(this Type type)
         {
-            var isReadOnlyList = type.HasGenericTypeDefinition(typeof(IReadOnlyList<>));
+            var typeInfo = type.GetTypeInfo();
 
-            var isReadOnlyDictionary = type.HasGenericTypeDefinition(typeof(IReadOnlyDictionary<,>));
+            var isReadOnlyList = typeInfo.HasGenericTypeDefinition(typeof(IReadOnlyList<>));
+            var isReadOnlyDictionary = typeInfo.HasGenericTypeDefinition(typeof(IReadOnlyDictionary<,>));
 
             return isReadOnlyList || isReadOnlyDictionary;
         }
 
-        private static bool HasGenericTypeDefinition(this Type type, Type genericTypeDefinition)
+        private static bool HasGenericTypeDefinition(this TypeInfo type, Type genericTypeDefinition)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
         }
@@ -117,7 +119,7 @@ namespace Octokit.Tests.Conventions
 
     public enum TypeCategory { Other, Task, GenericTask, ReadOnlyList, ClientInterface }
 
-    public struct TypeInfo
+    public struct CustomTypeInfo
     {
         public Type Type { get; set; }
         public TypeCategory TypeCategory { get; set; }

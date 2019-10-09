@@ -13,7 +13,7 @@ namespace Octokit.Reactive
 
         public ObservableRepositoryInvitationsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Invitation;
             _connection = client.Connection;
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="permissions">The permission to set.</param>
         public IObservable<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
-            Ensure.ArgumentNotNull(permissions, "persmissions");
+            Ensure.ArgumentNotNull(permissions, nameof(permissions));
 
             return _client.Edit(repositoryId, invitationId, permissions).ToObservable();
         }
@@ -80,7 +80,20 @@ namespace Octokit.Reactive
         /// </remarks>        
         public IObservable<RepositoryInvitation> GetAllForCurrent()
         {
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all invitations for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="options">Options for changing the API response</param>        
+        public IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
         }
 
         /// <summary>
@@ -92,7 +105,21 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>  
         public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId)
         {
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the invitations on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
+        /// </remarks>        
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
         }
     }
 }

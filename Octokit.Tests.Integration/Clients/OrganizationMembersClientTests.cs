@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
@@ -17,15 +18,15 @@ namespace Octokit.Tests.Integration.Clients
                 _organizationFixture = "octokit";
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsMembers()
             {
-                var members = await 
+                var members = await
                     _gitHub.Organization.Member.GetAll(_organizationFixture);
                 Assert.NotEmpty(members);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfMembersWithoutStart()
             {
                 var options = new ApiOptions
@@ -35,11 +36,11 @@ namespace Octokit.Tests.Integration.Clients
                 };
 
                 var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
-                
+
                 Assert.Equal(1, members.Count);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsCorrectCountOfMembersWithStart()
             {
                 var options = new ApiOptions
@@ -54,7 +55,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(1, members.Count);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task ReturnsDistinctMembersBasedOnStartPage()
             {
                 var startOptions = new ApiOptions
@@ -117,6 +118,92 @@ namespace Octokit.Tests.Integration.Clients
                 var membersWithNo2FA = await _gitHub.Organization.Member.GetAll(_organizationFixture, OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Member);
                 Assert.NotNull(membersWithNo2FA);
                 Assert.True(membersWithNo2FA.Count <= memberCount);
+            }
+        }
+
+        public class TheGetAllPendingInvitationsMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheGetAllPendingInvitationsMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsNoPendingInvitations()
+            {
+                var pendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization);
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsPendingInvitations()
+            {
+                using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+                {
+                    teamContext.InviteMember("octokitnet-test1");
+                    teamContext.InviteMember("octokitnet-test2");
+
+                    var pendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization);
+                    Assert.NotEmpty(pendingInvitations);
+                    Assert.Equal(2, pendingInvitations.Count);
+                }
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsCorrectCountOfPendingInvitationsWithoutStart()
+            {
+                using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+                {
+                    teamContext.InviteMember("octokitnet-test1");
+                    teamContext.InviteMember("octokitnet-test2");
+
+                    var options = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 1
+                    };
+
+                    var pendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, options);
+                    Assert.NotEmpty(pendingInvitations);
+                    Assert.Equal(1, pendingInvitations.Count);
+                }
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsCorrectCountOfPendingInvitationsWithStart()
+            {
+                using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+                {
+                    teamContext.InviteMember("octokitnet-test1");
+                    teamContext.InviteMember("octokitnet-test2");
+
+                    var firstPageOptions = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 1,
+                        StartPage = 1
+                    };
+
+                    var firstPagePendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, firstPageOptions);
+                    Assert.NotEmpty(firstPagePendingInvitations);
+                    Assert.Equal(1, firstPagePendingInvitations.Count);
+
+                    var secondPageOptions = new ApiOptions
+                    {
+                        PageCount = 1,
+                        PageSize = 1,
+                        StartPage = 2
+                    };
+
+                    var secondPagePendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, secondPageOptions);
+                    Assert.NotEmpty(secondPagePendingInvitations);
+                    Assert.Equal(1, secondPagePendingInvitations.Count);
+
+                    Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
+                }
             }
         }
     }

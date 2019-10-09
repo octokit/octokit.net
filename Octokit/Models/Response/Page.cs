@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -9,22 +10,32 @@ namespace Octokit
         /// <summary>
         ///  The site has yet to be built
         /// </summary>
+        [Parameter(Value = "null")]
         Null,
+
+        /// <summary>
+        /// The build has been requested but not yet begun
+        /// </summary>
+        [Parameter(Value = "queued")]
+        Queued,
 
         /// <summary>
         /// The build is in progress
         /// </summary>
+        [Parameter(Value = "building")]
         Building,
 
         /// <summary>
         /// The site has been built
         /// </summary>
+        [Parameter(Value = "built")]
         Built,
 
         /// <summary>
         /// An error occurred during the build
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Errored")]
+        [Parameter(Value = "errored")]
         Errored
     }
 
@@ -37,9 +48,10 @@ namespace Octokit
         public Page() { }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "cname")]
-        public Page(string url, PagesBuildStatus status, string cname, bool custom404)
+        public Page(string url, string htmlUrl, PagesBuildStatus status, string cname, bool custom404)
         {
             Url = url;
+            HtmlUrl = htmlUrl;
             Status = status;
             CName = cname;
             Custom404 = custom404;
@@ -58,7 +70,7 @@ namespace Octokit
         /// <summary>
         /// Build status of the pages site.
         /// </summary>
-        public PagesBuildStatus Status { get; protected set; }
+        public StringEnum<PagesBuildStatus> Status { get; protected set; }
 
         /// <summary>
         /// CName of the pages site. Will be null if no CName was provided by the user.

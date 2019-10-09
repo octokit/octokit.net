@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="client">An IGitHubClient client.</param>
         public ObservableRepoCollaboratorsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Collaborator;
             _connection = client.Connection;
@@ -39,8 +39,8 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<User> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -70,9 +70,9 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<User> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), options);
         }
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<User> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), options);
         }
@@ -105,9 +105,9 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<bool> IsCollaborator(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.IsCollaborator(owner, name, user).ToObservable();
         }
@@ -123,9 +123,44 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<bool> IsCollaborator(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.IsCollaborator(repositoryId, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Review a user's permission level in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="user">Username of the collaborator to check permission for</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<CollaboratorPermission> ReviewPermission(string owner, string name, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.ReviewPermission(owner, name, user).ToObservable();
+        }
+
+        /// <summary>
+        /// Review a user's permission level in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="user">Username of the collaborator to check permission for</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<CollaboratorPermission> ReviewPermission(long repositoryId, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return _client.ReviewPermission(repositoryId, user).ToObservable();
         }
 
         /// <summary>
@@ -140,9 +175,9 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<Unit> Add(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Add(owner, name, user).ToObservable();
         }
@@ -160,10 +195,10 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<bool> Add(string owner, string name, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "permission");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return _client.Add(owner, name, user, permission).ToObservable();
         }
@@ -179,7 +214,7 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<Unit> Add(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Add(repositoryId, user).ToObservable();
         }
@@ -196,8 +231,8 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<bool> Add(long repositoryId, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "permission");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return _client.Add(repositoryId, user, permission).ToObservable();
         }
@@ -213,9 +248,9 @@ namespace Octokit.Reactive
         /// <param name="user">The username of the prospective collaborator</param>        
         public IObservable<RepositoryInvitation> Invite(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Invite(owner, name, user).ToObservable();
         }
@@ -232,10 +267,10 @@ namespace Octokit.Reactive
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         public IObservable<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "psermission");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return _client.Invite(owner, name, user, permission).ToObservable();
         }
@@ -251,7 +286,7 @@ namespace Octokit.Reactive
 
         public IObservable<RepositoryInvitation> Invite(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Invite(repositoryId, user).ToObservable();
         }
@@ -267,8 +302,8 @@ namespace Octokit.Reactive
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         public IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
-            Ensure.ArgumentNotNull(permission, "psermission");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(permission, nameof(permission));
 
             return _client.Invite(repositoryId, user, permission).ToObservable();
         }
@@ -285,9 +320,9 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<Unit> Delete(string owner, string name, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Delete(owner, name, user).ToObservable();
         }
@@ -303,7 +338,7 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         public IObservable<Unit> Delete(long repositoryId, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return _client.Delete(repositoryId, user).ToObservable();
         }

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-#if NET_45
 using System.Collections.ObjectModel;
-#endif
 
 namespace Octokit
 {
@@ -25,7 +23,7 @@ namespace Octokit
         /// <param name="connection">An API connection</param>
         public MiscellaneousClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             _connection = connection;
         }
@@ -40,7 +38,7 @@ namespace Octokit
             var endpoint = new Uri("emojis", UriKind.Relative);
             var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null).ConfigureAwait(false);
             return new ReadOnlyCollection<Emoji>(
-                response.Body.Select(kvp => new Emoji(kvp.Key, new Uri(kvp.Value))).ToArray());
+                response.Body.Select(kvp => new Emoji(kvp.Key, kvp.Value)).ToArray());
         }
 
         /// <summary>
@@ -88,7 +86,7 @@ namespace Octokit
         /// <returns>A template and its source</returns>
         public async Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(templateName, "templateName");
+            Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
             var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
 

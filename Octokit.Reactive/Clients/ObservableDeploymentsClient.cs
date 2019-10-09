@@ -18,7 +18,7 @@ namespace Octokit.Reactive.Clients
 
         public ObservableDeploymentsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Repository.Deployment;
             _connection = client.Connection;
@@ -37,8 +37,8 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository</param>
         public IObservable<Deployment> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, ApiOptions.None);
         }
@@ -68,9 +68,9 @@ namespace Octokit.Reactive.Clients
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Deployment> GetAll(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Deployment>(
                 ApiUrls.Deployments(owner, name), options);
@@ -87,7 +87,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="options">Options for changing the API response</param>
         public IObservable<Deployment> GetAll(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<Deployment>(
                 ApiUrls.Deployments(repositoryId), options);
@@ -105,7 +105,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         public IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment)
         {
-            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+            Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
             return _client.Create(owner, name, newDeployment).ToObservable();
         }
@@ -121,7 +121,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         public IObservable<Deployment> Create(long repositoryId, NewDeployment newDeployment)
         {
-            Ensure.ArgumentNotNull(newDeployment, "newDeployment");
+            Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
             return _client.Create(repositoryId, newDeployment).ToObservable();
         }

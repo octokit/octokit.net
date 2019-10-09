@@ -215,11 +215,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -228,11 +228,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -241,11 +241,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -254,11 +254,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -267,11 +267,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchUsersRequest("github");
-                request.Created = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 1));
+                request.Created = DateRange.Between(
+                    new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero),
+                    new DateTimeOffset(new DateTime(2014, 2, 1), TimeSpan.Zero));
+
                 client.SearchUsers(request);
+
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2014-01-01..2014-02-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2014-01-01T00:00:00+00:00..2014-02-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -428,7 +432,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheForkQualifier()
+            public void TestingTheIncludeForkQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -437,7 +441,20 @@ namespace Octokit.Tests.Clients
                 request.Fork = ForkQualifier.IncludeForks;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:IncludeForks"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:true"));
+            }
+
+            [Fact]
+            public void TestingTheOnlyForkQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                //search repos that contains rails and forks are included in the search
+                var request = new SearchRepositoriesRequest("github");
+                request.Fork = ForkQualifier.OnlyForks;
+                client.SearchRepo(request);
+                connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+fork:only"));
             }
 
             [Fact]
@@ -450,7 +467,7 @@ namespace Octokit.Tests.Clients
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
             }
 
             [Fact]
@@ -512,10 +529,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.GreaterThan(new DateTime(2011, 1, 1));
+                request.Created = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2011-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2011-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -525,10 +542,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2011, 1, 1));
+                request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2011-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2011-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -538,10 +555,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.LessThan(new DateTime(2011, 1, 1));
+                request.Created = DateRange.LessThan(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2011-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2011-01-01T00:00:00+00:00"));
             }
 
 
@@ -552,10 +569,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been created after year jan 1 2011
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2011, 1, 1));
+                request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2011-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2011-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -564,10 +581,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
-                request.Created = DateRange.Between(new DateTime(2011, 1, 1), new DateTime(2012, 11, 11));
+                request.Created = DateRange.Between(
+                    new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero),
+                    new DateTimeOffset(new DateTime(2012, 11, 11), TimeSpan.Zero));
+
                 client.SearchRepo(request);
+
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2011-01-01..2012-11-11"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2011-01-01T00:00:00+00:00..2012-11-11T00:00:00+00:00"));
             }
 
             [Fact]
@@ -577,10 +598,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.GreaterThan(new DateTime(2013, 1, 1));
+                request.Updated = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>2013-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>2013-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -590,10 +611,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.GreaterThanOrEquals(new DateTime(2013, 1, 1));
+                request.Updated = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>=2013-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>=2013-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -603,10 +624,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.LessThan(new DateTime(2013, 1, 1));
+                request.Updated = DateRange.LessThan(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<2013-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<2013-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -616,10 +637,10 @@ namespace Octokit.Tests.Clients
                 var client = new SearchClient(connection);
                 //get repos where the search contains 'github' and has been pushed before year jan 1 2013
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.LessThanOrEquals(new DateTime(2013, 1, 1));
+                request.Updated = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<=2013-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<=2013-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -628,10 +649,14 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchRepositoriesRequest("github");
-                request.Updated = DateRange.Between(new DateTime(2012, 4, 30), new DateTime(2012, 7, 4));
+                request.Updated = DateRange.Between(
+                    new DateTimeOffset(new DateTime(2012, 4, 30), TimeSpan.Zero),
+                    new DateTimeOffset(new DateTime(2012, 7, 4), TimeSpan.Zero));
+
                 client.SearchRepo(request);
+
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:2012-04-30..2012-07-04"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:2012-04-30T00:00:00+00:00..2012-07-04T00:00:00+00:00"));
             }
 
             [Fact]
@@ -976,13 +1001,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -991,13 +1016,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1006,13 +1031,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1021,13 +1046,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1036,13 +1061,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Created = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2));
+                request.Created = DateRange.Between(
+                    new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero),
+                    new DateTimeOffset(new DateTime(2014, 2, 2), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01..2014-02-02"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T00:00:00+00:00..2014-02-02T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1051,13 +1078,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Merged = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1066,13 +1093,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Merged = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1081,13 +1108,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Merged = DateRange.LessThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1096,13 +1123,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Merged = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1111,13 +1138,15 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Merged = DateRange.Between(new DateTime(2014, 1, 1), new DateTime(2014, 2, 2));
+                request.Merged = DateRange.Between(
+                    new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero),
+                    new DateTimeOffset(new DateTime(2014, 2, 2), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01..2014-02-02"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T00:00:00+00:00..2014-02-02T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1126,13 +1155,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.GreaterThan(new DateTime(2014, 1, 1));
+                request.Updated = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1141,13 +1170,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.GreaterThanOrEquals(new DateTime(2014, 1, 1));
+                request.Updated = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1156,13 +1185,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.LessThan(new DateTime(2014, 1, 1));
+                request.Updated = DateRange.LessThan(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T00:00:00+00:00"));
             }
 
             [Fact]
@@ -1171,13 +1200,226 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Updated = DateRange.LessThanOrEquals(new DateTime(2014, 1, 1));
+                request.Updated = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2014, 1, 1), TimeSpan.Zero));
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T00:00:00+00:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheCreatedQualifier_BetweenDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Created = DateRange.Between(
+                    new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)),
+                    new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T02:04:06+10:00..2014-02-02T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheMergedQualifier_BetweenDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Merged = DateRange.Between(
+                    new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)),
+                    new DateTimeOffset(2014, 2, 2, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T02:04:06+10:00..2014-02-02T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_GreaterThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.GreaterThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_GreaterThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.GreaterThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThanDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.LessThan(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T02:04:06+10:00"));
+            }
+
+            [Fact]
+            public void TestingTheUpdatedQualifier_LessThanOrEqualsDateTime()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Updated = DateRange.LessThanOrEquals(new DateTimeOffset(2014, 1, 1, 2, 4, 6, new TimeSpan(10, 0, 0)));
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T02:04:06+10:00"));
             }
 
             [Fact]
@@ -1559,14 +1801,33 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Extension = "cs";
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "txt" }
+                };
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:txt"));
+            }
+
+            [Fact]
+            public void TestingTheExtensionQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something")
+                {
+                    Extensions = new[] { "cs", "lol" }
+                };
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+extension:cs+extension:lol"));
             }
 
             [Fact]
@@ -1614,20 +1875,37 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheOrgQualifier()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something");
+                request.Organization = "octokit";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit"));
+            }
+
+            [Fact]
             public void TestingTheRepoAndPathAndExtensionQualifiers()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something", "octokit", "octokit.net");
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net")
+                {
+                    Extensions = new[] { "fs", "cs" }
+                };
                 request.Path = "tools/FAKE.core";
-                request.Extension = "fs";
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+path:tools/FAKE.core+extension:fs+repo:octokit/octokit.net"));
+                        d["q"] == "something+path:tools/FAKE.core+extension:fs+extension:cs+repo:octokit/octokit.net"));
             }
 
             [Fact]
@@ -1645,6 +1923,112 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<RepositoryFormatException>(
                     async () => await client.SearchCode(request));
+            }
+        }
+
+        public class TheSearchLabelsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                client.SearchLabels(new SearchLabelsRequest("something", 1));
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new SearchClient(Substitute.For<IApiConnection>());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.SearchLabels(null));
+            }
+
+            [Fact]
+            public void TestingTheTermParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheSortParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+                request.SortField = LabelSearchSort.Created;
+                request.Order = SortDirection.Ascending;
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["sort"] == "created" &&
+                        d["order"] == "asc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheDefaultOrderParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"),
+                    "application/vnd.github.symmetra-preview+json");
+            }
+
+            [Fact]
+            public void TestingTheRepositoryIdParameter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchLabelsRequest("something", 1);
+
+                client.SearchLabels(request);
+
+                connection.Received().Get<SearchLabelsResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/labels"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something" &&
+                        d["repository_id"] == "1"),
+                    "application/vnd.github.symmetra-preview+json");
             }
         }
     }

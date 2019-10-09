@@ -15,9 +15,9 @@ namespace Octokit.Internal
         ///</remarks>
         public void Authenticate(IRequest request, Credentials credentials)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(credentials, "credentials");
-            Ensure.ArgumentNotNull(credentials.Password, "credentials.Password");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(credentials, nameof(credentials));
+            Ensure.ArgumentNotNull(credentials.Password, nameof(credentials.Password));
 
             var token = credentials.GetToken();
             if (credentials.Login != null)
