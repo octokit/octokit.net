@@ -2278,6 +2278,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="System.Uri"/> for all users since a given user
+        /// </summary>
+        /// <param name="since">The user ID of the last user you've seen</param>
+        /// <returns>the <see cref="System.Uri"/> for all users since a given user</returns>
+        public static Uri Users(string since)
+        {
+            return "users?since={0}".FormatUri(since);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
         /// </summary>
         /// <returns></returns>

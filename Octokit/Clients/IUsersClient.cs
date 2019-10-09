@@ -40,6 +40,12 @@ namespace Octokit
         Task<User> Get(string login);
 
         /// <summary>
+        /// Returns all users after the specified user ID.
+        /// </summary>
+        /// <param name="since">The integer ID of the last user you've seen.</param>
+        Task<User> GetAll(string since);
+
+        /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>

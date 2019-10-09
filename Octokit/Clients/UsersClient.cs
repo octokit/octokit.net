@@ -63,6 +63,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the user specified by the login.
+        /// </summary>
+        /// <param name="since">The integer ID of the last User that you've seen.</param>
+        public Task<User> GetAll(string since)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(since, nameof(since));
+
+            return ApiConnection.GetAll<User>(ApiUrls.Users(since));
+        }
+
+        /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>

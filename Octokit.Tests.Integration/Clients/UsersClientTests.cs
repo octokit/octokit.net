@@ -33,6 +33,17 @@ public class UsersClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsAllUsersAfterCertainId()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"),
+                new ObservableCredentialProvider());
+
+            var user = await github.User.GetAllAfter("tclem");
+
+            Assert.Equal("GitHub", user.Company);
+        }
+
+        [IntegrationTest]
         public async Task ReturnsSpecifiedUserUsingAwaitableCredentialProvider()
         {
             var github = new GitHubClient(new ProductHeaderValue("OctokitTests"),
