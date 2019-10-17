@@ -83,7 +83,7 @@ namespace Octokit
         public Range Size { get; set; }
 
         /// <summary>
-        /// Searches repositories based on the language they�re written in.
+        /// Searches repositories based on the language they're written in.
         /// https://help.github.com/articles/searching-repositories#languages
         /// </summary>
         public Language? Language { get; set; }
