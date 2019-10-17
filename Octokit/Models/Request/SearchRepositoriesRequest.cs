@@ -83,7 +83,7 @@ namespace Octokit
         public Range Size { get; set; }
 
         /// <summary>
-        /// Searches repositories based on the language they’re written in.
+        /// Searches repositories based on the language theyï¿½re written in.
         /// https://help.github.com/articles/searching-repositories#languages
         /// </summary>
         public Language? Language { get; set; }
@@ -665,6 +665,8 @@ namespace Octokit
         JavaScript,
         Json,
         Julia,
+        [Parameter(Value = "Jupyter Notebook")]
+        JupyterNotebook,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Kotlin")]
         Kotlin,
         Lasso,
