@@ -751,6 +751,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization memberships
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="name">The name of the user</param>
+        /// <returns></returns>
+        public static Uri OrganizationMemberships(string org, string name)
+        {
+            return "orgs/{0}/memberships/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the organizations pending invitations
         /// </summary>
         /// <param name="org">The name of the organization</param>

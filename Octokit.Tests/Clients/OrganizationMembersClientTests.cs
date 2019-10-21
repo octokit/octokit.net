@@ -495,6 +495,85 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetOrganizationMembershipMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.GetOrganizationMembership("org", "username");
+
+                connection.Received().Get<OrganizationMembership>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership(null, "username"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("", "username"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership("org", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("org", ""));
+            }
+        }
+
+        public class TheAddOrUpdateOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+                  
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+                
+                client.AddOrUpdateOrganizationMembership("org", "username", orgMembershipUpdate);
+
+                connection.Received().Put<OrganizationMembership>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership(null, "username", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("", "username", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", null, orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("org", "", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null));
+            }
+        }
+
+        public class TheDeleteOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.RemoveOrganizationMembership("org", "username");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership(null, "username"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("", "username"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership("org", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("org", ""));
+            }
+        }
+
         public class TheGetAllPendingInvitationsMethod
         {
             [Fact]

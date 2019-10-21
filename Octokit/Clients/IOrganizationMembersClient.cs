@@ -271,7 +271,7 @@ namespace Octokit
         /// Make the authenticated user's organization membership private.
         /// </summary>
         /// <remarks>
-        /// This method requries authentication.
+        /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
@@ -279,6 +279,50 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         Task Conceal(string org, string user);
+        
+        /// <summary>
+        /// Get a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization member.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#get-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        Task<OrganizationMembership> GetOrganizationMembership(string org, string user);
+
+        /// <summary>
+        /// Add a user to the organization or update the user's role withing the organization. 
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <param name="addOrUpdateRequest">An <see cref="OrganizationMembershipUpdate"/> instance describing the
+        /// changes to make to the user's organization membership</param>
+        /// <returns></returns>
+        Task<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest);
+
+        /// <summary>
+        /// Remove a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#remove-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        Task RemoveOrganizationMembership(string org, string user);
 
         /// <summary>
         /// List all pending invitations for the organization.
