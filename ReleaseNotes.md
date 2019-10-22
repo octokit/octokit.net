@@ -71,7 +71,7 @@
 - Revise GitHub Apps walkthrough documentation to provide more clarity - [#1824](https://github.com/octokit/octokit.net/pull/1824) via [@ryangribble](https://github.com/ryangribble)
 
 
-### New in 0.30.0 (released 17/06/2018)
+### New in 0.30.0 (released 23/10/2019)
 
 ## Advisories and Breaking Changes
 
@@ -145,7 +145,7 @@ Response Models
 
 ## Advisories and Breaking Changes
 
-- On February 22, 2018 19:00 UTC, GitHub will [disable permanently the use of weak cryptogrpahic standards](https://developer.github.com/changes/2018-02-01-weak-crypto-removal-notice/).  Applications targeting .NET Framework 4.5.x will be affected, as that framework does not enable the now required protocol (TLS1.2) by default.  This octokit.net release will automatically enable this protocol, when the `GitHubClient` is constructed.  Note that applications targeting .NET Framework 4.6+ or .NET Core should already have TLS1.2 enabled by default, and this release does nothing with enabled protocols on those platforms.
+- On February 23, 2019 19:00 UTC, GitHub will [disable permanently the use of weak cryptogrpahic standards](https://developer.github.com/changes/2019-10-23-weak-crypto-removal-notice/).  Applications targeting .NET Framework 4.5.x will be affected, as that framework does not enable the now required protocol (TLS1.2) by default.  This octokit.net release will automatically enable this protocol, when the `GitHubClient` is constructed.  Note that applications targeting .NET Framework 4.6+ or .NET Core should already have TLS1.2 enabled by default, and this release does nothing with enabled protocols on those platforms.
 - Affected clients that are unable to update octokit.net, can include their own [code change](https://github.com/octokit/octokit.net/blob/41b4059c110a60aee86a912dda2987fecc5a3fcb/Octokit/Http/HttpClientAdapter.cs#L31) to enable TLS1.2 as an alternative to updating to this release.
 
 ## Release Notes
@@ -993,5 +993,5 @@ who helped out - without their efforts we wouldn't be at this point:
 ### New in 0.1.1 (Released 2013/10/30)
 * Fixed problems with Microsoft.Threading.Tasks
 
-### New in 0.1.0 (Released 2013/10/30)
+### New in 0.1.0 (Released 2019/10/23)
 * Initial release
