@@ -27,7 +27,7 @@ namespace Octokit
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
