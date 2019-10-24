@@ -430,7 +430,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public static Uri Issue(string owner, string name, int number)
+        public static Uri Issue(string owner, string name, long number)
         {
             return "repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
         }
@@ -442,7 +442,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueLock(string owner, string name, int number)
+        public static Uri IssueLock(string owner, string name, long number)
         {
             return "repos/{0}/{1}/issues/{2}/lock".FormatUri(owner, name, number);
         }
@@ -815,7 +815,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns></returns>
-        public static Uri IssuesEvents(string owner, string name, int number)
+        public static Uri IssuesEvents(string owner, string name, long number)
         {
             return "repos/{0}/{1}/issues/{2}/events".FormatUri(owner, name, number);
         }
@@ -838,7 +838,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The event id</param>
         /// <returns></returns>
-        public static Uri IssuesEvent(string owner, string name, int id)
+        public static Uri IssuesEvent(string owner, string name, long id)
         {
             return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, id);
         }
@@ -850,7 +850,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        public static Uri Milestone(string owner, string name, int number)
+        public static Uri Milestone(string owner, string name, long number)
         {
             return "repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, number);
         }
@@ -2884,7 +2884,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue.</returns>
-        public static Uri Issue(long repositoryId, int number)
+        public static Uri Issue(long repositoryId, long number)
         {
             return "repositories/{0}/issues/{1}".FormatUri(repositoryId, number);
         }
@@ -2950,7 +2950,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue to be locked/unlocked.</returns>
-        public static Uri IssueLock(long repositoryId, int number)
+        public static Uri IssueLock(long repositoryId, long number)
         {
             return "repositories/{0}/issues/{1}/lock".FormatUri(repositoryId, number);
         }
@@ -2971,7 +2971,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The event id</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.</returns>
-        public static Uri IssuesEvent(long repositoryId, int id)
+        public static Uri IssuesEvent(long repositoryId, long id)
         {
             return "repositories/{0}/issues/events/{1}".FormatUri(repositoryId, id);
         }
@@ -2982,7 +2982,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.</returns>
-        public static Uri IssuesEvents(long repositoryId, int number)
+        public static Uri IssuesEvents(long repositoryId, long number)
         {
             return "repositories/{0}/issues/{1}/events".FormatUri(repositoryId, number);
         }

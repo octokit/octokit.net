@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Issue> Get(string owner, string name, int number)
+        public IObservable<Issue> Get(string owner, string name, long number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Issue> Get(long repositoryId, int number)
+        public IObservable<Issue> Get(long repositoryId, long number)
         {
             return _client.Get(repositoryId, number).ToObservable();
         }
@@ -448,7 +448,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(string owner, string name, long number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -466,7 +466,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(long repositoryId, long number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
@@ -480,7 +480,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Lock(string owner, string name, int number)
+        public IObservable<Unit> Lock(string owner, string name, long number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -494,7 +494,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Lock(long repositoryId, int number)
+        public IObservable<Unit> Lock(long repositoryId, long number)
         {
             return _client.Lock(repositoryId, number).ToObservable();
         }
@@ -506,7 +506,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Unlock(string owner, string name, int number)
+        public IObservable<Unit> Unlock(string owner, string name, long number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -520,7 +520,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<Unit> Unlock(long repositoryId, int number)
+        public IObservable<Unit> Unlock(long repositoryId, long number)
         {
             return _client.Unlock(repositoryId, number).ToObservable();
         }

@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, int number)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, long number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -40,7 +40,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, long number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(string owner, string name, long number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -73,7 +73,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
+        public Task<IReadOnlyList<EventInfo>> GetAllForIssue(long repositoryId, long number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -150,7 +150,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The event id</param>
-        public Task<IssueEvent> Get(string owner, string name, int number)
+        public Task<IssueEvent> Get(string owner, string name, long number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -166,7 +166,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The event id</param>
-        public Task<IssueEvent> Get(long repositoryId, int number)
+        public Task<IssueEvent> Get(long repositoryId, long number)
         {
             return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(repositoryId, number));
         }
