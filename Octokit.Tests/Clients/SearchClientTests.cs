@@ -206,7 +206,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:\"Ruby\""));
             }
 
             [Fact]
@@ -467,7 +467,7 @@ namespace Octokit.Tests.Clients
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:\"ruby\""));
             }
 
             [Fact]
@@ -992,7 +992,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:\"CSharp\""));
             }
 
             [Fact]
@@ -1688,7 +1688,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:\"CSharp\""));
             }
 
             [Fact]
