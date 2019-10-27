@@ -19,7 +19,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">Tha sha reference of the tag</param>
+        /// <param name="reference">The sha reference of the tag</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<GitTag> Get(string owner, string name, string reference);
@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/tags/#get-a-tag
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">Tha sha reference of the tag</param>
+        /// <param name="reference">The sha reference of the tag</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         IObservable<GitTag> Get(long repositoryId, string reference);

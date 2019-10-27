@@ -4,7 +4,7 @@ using System.Reactive.Threading.Tasks;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// GitHub Search Api Client
+    /// GitHub Search API Client
     /// </summary>
     public class ObservableSearchClient : IObservableSearchClient
     {

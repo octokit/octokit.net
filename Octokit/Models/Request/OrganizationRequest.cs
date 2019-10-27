@@ -10,7 +10,7 @@ namespace Octokit
     public class OrganizationRequest : RequestParameters
     {
         /// <summary>
-        /// Intializes a new instance of the <see cref="OrganizationRequest"/> class.
+        /// Initializes a new instance of the <see cref="OrganizationRequest"/> class.
         /// </summary>
         /// <param name="since">The integer Id of the last Organization that you've seen.</param>
         public OrganizationRequest(int since)

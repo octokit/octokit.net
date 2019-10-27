@@ -71,7 +71,7 @@ namespace Octokit.Internal
                 if (ReflectionUtils.IsStringEnumWrapper(type))
                 {
                     // Handle StringEnum<T> by getting the underlying enum value, then using the enum serializer
-                    // Note this will throw if the StringEnum<T> was initialised using a string that is not a valid enum member
+                    // Note this will throw if the StringEnum<T> was initialized using a string that is not a valid enum member
                     var inputEnum = (getters["value"](input) as Enum);
                     if (inputEnum != null)
                     {

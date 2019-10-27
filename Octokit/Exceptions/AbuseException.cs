@@ -11,7 +11,7 @@ namespace Octokit
 {
     /// <summary>
     /// Represents a subset of the HTTP 403 - Forbidden response returned from the API when the forbidden response is related to an abuse detection mechanism.
-    /// Containts the amount of seconds after which it's safe to retry the request.
+    /// Contains the amount of seconds after which it's safe to retry the request.
     /// </summary>
 #if !NO_SERIALIZABLE
     [Serializable]
