@@ -374,7 +374,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all the repositores
+        /// Returns the <see cref="Uri"/> that returns all the repositories
         /// </summary>
         /// <returns></returns>
         public static Uri InstallationRepositories()
@@ -622,7 +622,7 @@ namespace Octokit
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository.
-        /// Otherwire returns a 404.
+        /// Otherwise returns a 404.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -1277,7 +1277,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a spesific comment for the specified commit.
+        /// Returns the <see cref="Uri"/> for a specific comment for the specified commit.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
@@ -2710,11 +2710,11 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.
+        /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwise returns a 404.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="login">The login for the user</param>
-        /// <returns>The <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.</returns>
+        /// <returns>The <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwise returns a 404.</returns>
         public static Uri CheckAssignee(long repositoryId, string login)
         {
             return "repositories/{0}/assignees/{1}".FormatUri(repositoryId, login);
@@ -3693,7 +3693,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// Returns the <see cref="Uri"/> for repository traffic referrers.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic referrers.</returns>
@@ -3703,7 +3703,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// Returns the <see cref="Uri"/> for repository traffic paths.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3714,7 +3714,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// Returns the <see cref="Uri"/> for repository traffic paths.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic paths.</returns>
@@ -3724,7 +3724,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// Returns the <see cref="Uri"/> for repository traffic views.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3735,7 +3735,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// Returns the <see cref="Uri"/> for repository traffic views.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic views.</returns>
@@ -3745,7 +3745,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// Returns the <see cref="Uri"/> for repository traffic clones.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3756,7 +3756,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// Returns the <see cref="Uri"/> for repository traffic clones.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic clones.</returns>

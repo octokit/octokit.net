@@ -65,7 +65,7 @@ namespace Octokit
         public IReadOnlyList<string> Events { get; private set; }
 
         /// <summary>
-        /// The single file the GitHub App can managem (when Permissions.SingleFile is set to read or write)
+        /// The single file the GitHub App can manage (when Permissions.SingleFile is set to read or write)
         /// </summary>
         public string SingleFileName { get; protected set; }
 

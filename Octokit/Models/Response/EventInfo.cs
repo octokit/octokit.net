@@ -269,7 +269,7 @@ namespace Octokit
         Crossreferenced,
 
         /// <summary>
-        /// The issue was reveiewed.
+        /// The issue was reviewed.
         /// </summary>
         [Parameter(Value = "reviewed")]
         Reviewed,

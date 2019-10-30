@@ -96,7 +96,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// The types of deployments tasks that are availabel.
+    /// The types of deployments tasks that are available.
     /// </summary>
     public enum DeployTask
     {

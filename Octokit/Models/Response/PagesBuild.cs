@@ -37,7 +37,7 @@ namespace Octokit
         /// </summary>
         public ApiError Error { get; protected set; }
         /// <summary>
-        /// The user whose commit intiated the build.
+        /// The user whose commit initiated the build.
         /// </summary>
         public User Pusher { get; protected set; }
         /// <summary>

@@ -79,7 +79,7 @@ namespace Octokit
         public string Email { get; protected set; }
 
         /// <summary>
-        /// Number of follwers the account has.
+        /// Number of followers the account has.
         /// </summary>
         public int Followers { get; protected set; }
 

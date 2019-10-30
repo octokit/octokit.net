@@ -6,7 +6,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Error payload from the API reposnse
+    /// Error payload from the API response
     /// </summary>
 #if !NO_SERIALIZABLE
     [Serializable]
