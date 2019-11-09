@@ -33,7 +33,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -44,7 +48,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -63,7 +71,10 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        "application/vnd.github.hellcat-preview+json",
+                        options);
             }
 
             [Fact]
@@ -82,7 +93,11 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), options);
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        "application/vnd.github.hellcat-preview+json",
+                        options);
             }
 
             [Fact]
