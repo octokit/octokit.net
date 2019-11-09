@@ -42,7 +42,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, new ListCollaboratorRequest(), ApiOptions.None);
         }
 
         /// <summary>
@@ -51,11 +51,17 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(long repositoryId)
+        public IObservable<User> GetAll(string owner, string name, ListCollaboratorRequest listCollaboratorRequest)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
+
+            return GetAll(owner, name, listCollaboratorRequest, ApiOptions.None);
         }
 
         /// <summary>
@@ -74,7 +80,36 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), options);
+            return GetAll(owner, name, new ListCollaboratorRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(long repositoryId)
+        {
+            return GetAll(repositoryId, new ListCollaboratorRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(long repositoryId, ListCollaboratorRequest listCollaboratorRequest)
+        {
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
+            
+            return GetAll(repositoryId, listCollaboratorRequest, ApiOptions.None);
         }
 
         /// <summary>
@@ -90,7 +125,46 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), options);
+            return GetAll(repositoryId, new ListCollaboratorRequest(), options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(string owner, string name, ListCollaboratorRequest listCollaboratorRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), listCollaboratorRequest.ToParametersDictionary(), AcceptHeaders.OrganizationMembershipPreview, options);
+        }
+
+        /// <summary>
+        /// Gets all the collaborators on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="listCollaboratorRequest">Details to filter the request, such as by affiliation.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<User> GetAll(long repositoryId, ListCollaboratorRequest listCollaboratorRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(listCollaboratorRequest, nameof(listCollaboratorRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), listCollaboratorRequest.ToParametersDictionary(), AcceptHeaders.OrganizationMembershipPreview, options);
         }
 
         /// <summary>

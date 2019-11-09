@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -33,7 +34,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                    "application/vnd.github.korra-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -44,7 +49,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                    Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                    "application/vnd.github.korra-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -63,7 +72,69 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                client.GetAll("owner", "test", listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestAndApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll("owner", "test", listCollaboratorRequest, options);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
+
+                client.GetAll("owner", "test", listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -79,10 +150,63 @@ namespace Octokit.Tests.Clients
                     StartPage = 1
                 };
 
-                client.GetAll(1, options);
+                client.GetAll(1, new ListCollaboratorRequest(), options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), options);
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                client.GetAll(1, listCollaboratorRequest);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithListCollaboratorRequestApiOptionsAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var listCollaboratorRequest = new ListCollaboratorRequest
+                {
+                    Affiliation = Affiliation.Outside
+                };
+
+                var options = new ApiOptions
+                {
+                    PageSize = 1,
+                    PageCount = 1,
+                    StartPage = 1
+                };
+
+                client.GetAll(1, listCollaboratorRequest, options);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.korra-preview+json",
+                        options);
             }
 
             [Fact]
@@ -95,11 +219,15 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test", ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test", new ListCollaboratorRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, new ListCollaboratorRequest(), ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", new ListCollaboratorRequest(), null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, listCollaboratorRequest: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null, ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, new ListCollaboratorRequest(), null));
             }
         }
 
@@ -360,7 +488,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", "test", null));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(1, null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1")); ;
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "test", "user1"));
+                ;
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "", "user1"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "test", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete(1, ""));

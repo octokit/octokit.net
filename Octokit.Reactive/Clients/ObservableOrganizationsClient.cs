@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations());
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user));
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), options);
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.UserOrganizations(user), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview), options);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         public IObservable<Organization> GetAll()
         {
-            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.AllOrganizations());
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.AllOrganizations(), null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
-            return _connection.GetAndFlattenAllPages<Organization>(url);
+            return _connection.GetAndFlattenAllPages<Organization>(url, null, AcceptHeaders.Concat(AcceptHeaders.OrganizationMembershipPreview, AcceptHeaders.RepositoryCreationPermissionsApiPreview));
         }
 
         /// <summary>
