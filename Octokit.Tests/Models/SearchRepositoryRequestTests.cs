@@ -31,7 +31,7 @@ public class SearchRepositoryRequestTests
         {
             var request = new SearchRepositoriesRequest() { Language = Language.CPlusPlus };
             var result = request.MergedQualifiers();
-            Assert.Contains(result, x => string.Equals(x, "language:cpp"));
+            Assert.Contains(result, x => string.Equals(x, "language:\"cpp\""));
         }
     }
 }

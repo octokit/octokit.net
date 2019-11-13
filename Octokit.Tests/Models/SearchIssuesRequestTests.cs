@@ -156,7 +156,7 @@ public class SearchIssuesRequestTests
             Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("language:"));
 
             request.Language = Language.CSharp;
-            Assert.Contains("language:CSharp", request.MergedQualifiers());
+            Assert.Contains("language:\"CSharp\"", request.MergedQualifiers());
         }
 
         [Fact]

@@ -68,7 +68,7 @@ public class SearchIssuesRequestExclusionsTests
 
             request.Language = Language.CSharp;
 
-            Assert.Contains("-language:CSharp", request.MergedQualifiers());
+            Assert.Contains("-language:\"CSharp\"", request.MergedQualifiers());
         }
 
         [Fact]

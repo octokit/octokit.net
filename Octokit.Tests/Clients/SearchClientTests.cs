@@ -200,13 +200,13 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get users who have mostly repos where language is Ruby
+                //get users who have mostly repos where language is Literate Haskell
                 var request = new SearchUsersRequest("github");
-                request.Language = Language.Ruby;
+                request.Language = Language.LiterateHaskell;
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:\"Literate Haskell\""));
             }
 
             [Fact]
@@ -462,12 +462,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                //get repos who's language is Ruby
+                //get repos who's language is Literate Haskell
                 var request = new SearchRepositoriesRequest("github");
-                request.Language = Language.Ruby;
+                request.Language = Language.LiterateHaskell;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:\"Literate Haskell\""));
             }
 
             [Fact]
@@ -986,13 +986,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchIssuesRequest("something");
-                request.Language = Language.CSharp;
+                request.Language = Language.LiterateHaskell;
 
                 client.SearchIssues(request);
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:\"Literate Haskell\""));
             }
 
             [Fact]
@@ -1682,13 +1682,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
                 var request = new SearchCodeRequest("something");
-                request.Language = Language.CSharp;
+                request.Language = Language.LiterateHaskell;
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:CSharp"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+language:\"Literate Haskell\""));
             }
 
             [Fact]
