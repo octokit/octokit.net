@@ -40,15 +40,15 @@ namespace Octokit
 
         /// <summary>
         /// Gets a single <see cref="Team"/> by name.
-        /// Note: this is more expensive than using the
-        /// team ID, as first we perform a lookup to determine
-        /// matching teams.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/orgs/teams/#get-team
+        /// this is more expensive than using the team ID, as first we
+        /// perform a lookup to determine matching teams.
         /// </remarks>
         /// <param name="orgName">The organization name.</param>
         /// <param name="teamName">The team name.</param>
+        /// <exception cref="ArgumentNullException">if the list of teams returned from GetAll is null.</exception>
+        /// <exception cref="InvalidOperationException">if no matching team name is found.</exception>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
         public async Task<Team> Get(string orgName, string teamName)
         {
