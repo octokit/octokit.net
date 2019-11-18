@@ -32,21 +32,6 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get(null, "valid teamName"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get("validOrgName", null));
             }
-
-            [Fact]
-            public void UsesTheGetAllMethod()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new TeamsClient(connection);
-
-                client.Get("theOrg", "theTeam");
-
-                connection.Received().GetAll<Team>(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/theOrg/teams"),
-                    null,
-                    "application/vnd.github.hellcat-preview+json",
-                    Args.ApiOptions);
-            }
         }
         public class TheGetMethod
         {
