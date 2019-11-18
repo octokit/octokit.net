@@ -39,8 +39,10 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, name));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, null));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, null));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, options: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, options: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, request: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, request: null));
             }
 
             [Fact]
@@ -67,8 +69,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -79,8 +81,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -99,8 +101,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3),
+                        "application/vnd.github.hellcat-preview+json");
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -111,8 +113,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        "application/vnd.github.hellcat-preview+json");
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -123,8 +125,45 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        "application/vnd.github.hellcat-preview+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilter()
+            {
+                var expectedUrl = string.Format("repos/{0}/{1}/collaborators", owner, name);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.hellcat-preview+json");
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        "application/vnd.github.hellcat-preview+json");
+
+                // PageCount is setted => none of options in dictionary
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.hellcat-preview+json");
             }
 
             [Fact]
@@ -143,8 +182,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3),
+                        "application/vnd.github.hellcat-preview+json");
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -155,8 +194,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        "application/vnd.github.hellcat-preview+json");
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -167,8 +206,44 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        "application/vnd.github.hellcat-preview+json");
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndRepositoryId()
+            {
+                var expectedUrl = string.Format("repositories/{0}/collaborators", repositoryId);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.hellcat-preview+json");
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        "application/vnd.github.hellcat-preview+json");
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.hellcat-preview+json");
             }
         }
 

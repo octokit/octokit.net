@@ -33,7 +33,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -44,7 +48,11 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    "application/vnd.github.hellcat-preview+json",
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -63,7 +71,53 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        "application/vnd.github.hellcat-preview+json",
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
+                
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
+                
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -82,7 +136,57 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), options);
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        "application/vnd.github.hellcat-preview+json",
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+                
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
+                
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        "application/vnd.github.hellcat-preview+json",
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -97,9 +201,11 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", request: null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, request: null));
             }
         }
 
