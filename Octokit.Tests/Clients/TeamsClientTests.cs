@@ -22,6 +22,17 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetMethodForTeamName
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var teams = new TeamsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get(null, "valid teamName"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get("validOrgName", null));
+            }
+        }
         public class TheGetMethod
         {
             [Fact]
