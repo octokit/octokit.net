@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Octokit
 {
@@ -36,28 +35,6 @@ namespace Octokit
             var endpoint = ApiUrls.Teams(id);
 
             return ApiConnection.Get<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview);
-        }
-
-        /// <summary>
-        /// Gets a single <see cref="Team"/> by name.
-        /// Note: this is more expensive than using the
-        /// team ID, as first we perform a lookup to determine
-        /// matching teams.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/orgs/teams/#get-team
-        /// </remarks>
-        /// <param name="orgName">The organization name.</param>
-        /// <param name="teamName">The team name.</param>
-        /// <returns>The <see cref="Team"/> with the given identifier.</returns>
-        public async Task<Team> Get(string orgName, string teamName)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(orgName, nameof(orgName));
-            Ensure.ArgumentNotNullOrEmptyString(teamName, nameof(teamName));
-
-            var allTeams = await this.GetAll(orgName);
-
-            return allTeams.First(x => string.Equals(x.Name, teamName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         /// <summary>
