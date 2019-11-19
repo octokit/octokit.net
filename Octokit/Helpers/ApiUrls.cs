@@ -2544,6 +2544,15 @@ namespace Octokit
             return "orgs/{0}/migrations/{1}".FormatUri(org, id);
         }
 
+        public static Uri TeamByName(string org, string teamName)
+        {
+            var slugifiedTeamName = teamName
+                .Replace(' ', '-')
+                .ToLowerInvariant();
+
+            return "orgs/{0}/teams/{1}".FormatUri(org, slugifiedTeamName);
+        }
+
         public static Uri EnterpriseMigrations(string org)
         {
             return "orgs/{0}/migrations".FormatUri(org);
