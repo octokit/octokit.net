@@ -90,6 +90,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Team" /> for the specified org and team name.
+        /// </summary>
+        /// <param name="options">Options to change API behaviour.</param>
+        /// <param name="orgName">The org name.</param>
+        /// <param name="teamName">The team name.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>The <see cref="Team"/> corresponding to the entered name.</returns>
+        public Task<Team> Get(ApiOptions options, string orgName, string teamName)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            Ensure.ArgumentNotNullOrEmptyString(orgName, nameof(orgName));
+            Ensure.ArgumentNotNullOrEmptyString(teamName, nameof(teamName));
+
+            var endpoint = ApiUrls.TeamByName(orgName, teamName);
+
+            return ApiConnection.Get<Team>(endpoint,null, AcceptHeaders.NestedTeamsPreview);
+        }
+
+        /// <summary>
         /// Returns all child teams of the given team.
         /// </summary>
         /// <param name="id">The team identifier</param>
