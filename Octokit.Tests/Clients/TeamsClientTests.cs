@@ -39,6 +39,45 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetByNameMethod
+        {
+            [Fact]
+            public async Task ThrowsWhenOptionsArentProvided()
+            {
+                var teams = new TeamsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get(null, "validString", "validString"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get(ApiOptions.None, null, "validString"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.Get(ApiOptions.None, "validString", null));
+            }
+
+            [Theory]
+            [InlineData("")]
+            [InlineData("   ")]
+            public async Task ThrowsWhenStringArgumentsAreIncorrect(string inputString)
+            {
+                var teams = new TeamsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => teams.Get(ApiOptions.None, inputString, "validString"));
+                await Assert.ThrowsAsync<ArgumentException>(() => teams.Get(ApiOptions.None, "validString", inputString));
+            }
+
+            [Fact]
+            public void CallsCorrectUrl()
+            {
+                // TODO
+            }
+
+            [Fact]
+            public void SlugifiesTheTeamName()
+            {
+                // TODO
+                //"My Cool Team", "my-cool-team"
+            }
+
+        }
+
+
         public class TheGetAllMethod
         {
             [Fact]
