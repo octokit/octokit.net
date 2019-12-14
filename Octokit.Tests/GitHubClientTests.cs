@@ -205,10 +205,10 @@ namespace Octokit.Tests
                 var httpClient = Substitute.For<IHttpClient>();
                 var client = new GitHubClient(new Connection(new ProductHeaderValue("OctokitTests"), httpClient));
 
-                client.SetRequestTimeout(TimeSpan.FromSeconds(15));
+                client.RequestTimeout = TimeSpan.FromSeconds(15);
 
 
-                httpClient.Received(1).SetRequestTimeout(TimeSpan.FromSeconds(15));
+                httpClient.Received(1).RequestTimeout = TimeSpan.FromSeconds(15);
             }
         }
     }

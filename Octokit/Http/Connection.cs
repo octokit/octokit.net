@@ -207,7 +207,8 @@ namespace Octokit
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
-                Endpoint = uri.ApplyParameters(parameters)
+                Endpoint = uri.ApplyParameters(parameters),
+                Timeout = RequestTimeout,
             });
         }
 
@@ -376,7 +377,8 @@ namespace Octokit
             {
                 Method = method,
                 BaseAddress = baseAddress ?? BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                Timeout = RequestTimeout,
             };
 
             return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
@@ -417,7 +419,8 @@ namespace Octokit
             {
                 Method = HttpVerb.Patch,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                Timeout = RequestTimeout,
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -451,7 +454,8 @@ namespace Octokit
             {
                 Method = HttpMethod.Put,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                Timeout = RequestTimeout,
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -485,7 +489,8 @@ namespace Octokit
             {
                 Method = HttpMethod.Delete,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                Timeout = RequestTimeout,
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -521,7 +526,8 @@ namespace Octokit
                 Method = HttpMethod.Delete,
                 Body = data,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                Timeout = RequestTimeout,
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -780,12 +786,18 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// GitHub Api request timeout.
         /// </summary>
-        /// <param name="timeout">The Timeout value</param>
-        public void SetRequestTimeout(TimeSpan timeout)
+        public TimeSpan RequestTimeout
         {
-            _httpClient.SetRequestTimeout(timeout);
+            get
+            {
+                return _httpClient.RequestTimeout;
+            }
+            set
+            {
+                _httpClient.RequestTimeout = value;
+            }
         }
     }
 }

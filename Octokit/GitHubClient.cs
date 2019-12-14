@@ -114,16 +114,22 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// GitHub Api request timeout.
         /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
         /// </summary>
         /// <remarks>
         /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx
         /// </remarks>
-        /// <param name="timeout">The Timeout value</param>
-        public void SetRequestTimeout(TimeSpan timeout)
+        public TimeSpan RequestTimeout
         {
-            Connection.SetRequestTimeout(timeout);
+            get
+            {
+                return Connection.RequestTimeout;
+            }
+            set
+            {
+                Connection.RequestTimeout = value;
+            }
         }
 
         /// <summary>

@@ -295,9 +295,8 @@ namespace Octokit
         Credentials Credentials { get; set; }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// GitHub Api request timeout.
         /// </summary>
-        /// <param name="timeout">The Timeout value</param>
-        void SetRequestTimeout(TimeSpan timeout);
+        TimeSpan RequestTimeout { get; set; }
     }
 }

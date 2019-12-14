@@ -20,11 +20,9 @@ namespace Octokit.Internal
         /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
         Task<IResponse> Send(IRequest request, CancellationToken cancellationToken);
 
-
         /// <summary>
-        /// Set the GitHub API request timeout.
+        /// GitHub API request timeout.
         /// </summary>
-        /// <param name="timeout">The Timeout value</param>
-        void SetRequestTimeout(TimeSpan timeout);
+        TimeSpan RequestTimeout { get; set; }
     }
 }

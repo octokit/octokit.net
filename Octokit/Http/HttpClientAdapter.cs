@@ -291,12 +291,19 @@ namespace Octokit.Internal
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// GitHub Api request timeout.
         /// </summary>
-        /// <param name="timeout">The Timeout value</param>
-        public void SetRequestTimeout(TimeSpan timeout)
+        public TimeSpan RequestTimeout
         {
-            _http.Timeout = timeout;
+            get
+            {
+                return _http.Timeout;
+            }
+
+            set
+            {
+                _http.Timeout = value;
+            }
         }
     }
 
