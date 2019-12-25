@@ -373,6 +373,33 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal("Request Forbidden - Abuse Detection", exception.Message);
             }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response();
+                var valueNotPropagatedResponse = new Response();
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)).Result;
+                Assert.Equal(valuePropagatedResponse, response.HttpResponse);
+                Assert.NotEqual(valueNotPropagatedResponse, response.HttpResponse);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)).Result;
+                Assert.NotEqual(valuePropagatedResponse, response.HttpResponse);
+                Assert.Equal(valueNotPropagatedResponse, response.HttpResponse);
+            }
         }
 
         public class TheGetHtmlMethod
@@ -398,6 +425,33 @@ namespace Octokit.Tests.Http
                     req.Method == HttpMethod.Get &&
                     req.Headers["Accept"] == "application/vnd.github.html" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response();
+                var valueNotPropagatedResponse = new Response();
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.GetHtml(new Uri("endpoint", UriKind.Relative)).Result;
+                Assert.Equal(valuePropagatedResponse, response.HttpResponse);
+                Assert.NotEqual(valueNotPropagatedResponse, response.HttpResponse);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.GetHtml(new Uri("endpoint", UriKind.Relative)).Result;
+                Assert.NotEqual(valuePropagatedResponse, response.HttpResponse);
+                Assert.Equal(valueNotPropagatedResponse, response.HttpResponse);
             }
         }
 
@@ -450,6 +504,33 @@ namespace Octokit.Tests.Http
                 await connection.Patch<string>(new Uri("endpoint", UriKind.Relative), new object(), "custom/accepts");
 
                 httpClient.Received(1).Send(Arg.Is<IRequest>(req => req.Headers["Accept"] == "custom/accepts"), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response();
+                var valueNotPropagatedResponse = new Response();
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.Patch<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.Equal(valuePropagatedResponse, response.HttpResponse);
+                Assert.NotEqual(valueNotPropagatedResponse, response.HttpResponse);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.Patch<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.NotEqual(valuePropagatedResponse, response.HttpResponse);
+                Assert.Equal(valueNotPropagatedResponse, response.HttpResponse);
             }
         }
 
@@ -575,6 +656,33 @@ namespace Octokit.Tests.Http
                     req.Headers["X-GitHub-OTP"] == "two-factor" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response();
+                var valueNotPropagatedResponse = new Response();
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.Put<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.Equal(valuePropagatedResponse, response.HttpResponse);
+                Assert.NotEqual(valueNotPropagatedResponse, response.HttpResponse);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.Put<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.NotEqual(valuePropagatedResponse, response.HttpResponse);
+                Assert.Equal(valueNotPropagatedResponse, response.HttpResponse);
+            }
         }
 
         public class ThePostMethod
@@ -660,6 +768,33 @@ namespace Octokit.Tests.Http
                     req.Headers["Accept"] == "application/json" &&
                     req.ContentType == "application/x-www-form-urlencoded"), Args.CancellationToken);
             }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response();
+                var valueNotPropagatedResponse = new Response();
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.Post<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty, null).Result;
+                Assert.Equal(valuePropagatedResponse, response.HttpResponse);
+                Assert.NotEqual(valueNotPropagatedResponse, response.HttpResponse);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.Post<string>(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty, null).Result;
+                Assert.NotEqual(valuePropagatedResponse, response.HttpResponse);
+                Assert.Equal(valueNotPropagatedResponse, response.HttpResponse);
+            }
         }
 
         public class TheDeleteMethod
@@ -684,6 +819,33 @@ namespace Octokit.Tests.Http
                     req.ContentType == null &&
                     req.Method == HttpMethod.Delete &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task RequestTimeoutValuePropagatedToRequestClass()
+            {
+                var timeout = TimeSpan.FromSeconds(DateTime.Now.Second + 3);
+                var valuePropagatedResponse = new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), null);
+                var valueNotPropagatedResponse = new Response(HttpStatusCode.Redirect, null, new Dictionary<string, string>(), null);
+                var httpClient = Substitute.For<IHttpClient>();
+                httpClient.Send(Arg.Any<IRequest>(), Args.CancellationToken).Returns(valueNotPropagatedResponse);
+                httpClient.Send(Arg.Is<IRequest>(x => x.Timeout == timeout), Args.CancellationToken).Returns(valuePropagatedResponse);
+
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                connection.RequestTimeout = timeout;
+                var response = connection.Delete(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.Equal(valuePropagatedResponse.StatusCode, response);
+                Assert.NotEqual(valueNotPropagatedResponse.StatusCode, response);
+
+                connection.RequestTimeout = timeout.Add(TimeSpan.FromSeconds(7));
+                response = connection.Delete(new Uri("endpoint", UriKind.Relative), string.Empty, string.Empty).Result;
+                Assert.NotEqual(valuePropagatedResponse.StatusCode, response);
+                Assert.Equal(valueNotPropagatedResponse.StatusCode, response);
             }
         }
 
