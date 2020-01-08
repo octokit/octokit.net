@@ -157,13 +157,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The event id</param>
-        public IObservable<IssueEvent> Get(string owner, string name, int number)
+        /// <param name="eventId">The event id</param>
+        public IObservable<IssueEvent> Get(string owner, string name, long eventId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, eventId).ToObservable();
         }
 
         /// <summary>
@@ -173,10 +173,10 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#get-a-single-event
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The event id</param>
-        public IObservable<IssueEvent> Get(long repositoryId, int number)
+        /// <param name="eventId">The event id</param>
+        public IObservable<IssueEvent> Get(long repositoryId, long eventId)
         {
-            return _client.Get(repositoryId, number).ToObservable();
+            return _client.Get(repositoryId, eventId).ToObservable();
         }
     }
 }
