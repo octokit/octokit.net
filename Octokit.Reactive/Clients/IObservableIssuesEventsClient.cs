@@ -103,10 +103,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The event id</param>
+        /// <param name="eventId">The event id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<IssueEvent> Get(string owner, string name, int number);
+        IObservable<IssueEvent> Get(string owner, string name, long eventId);
 
         /// <summary>
         /// Gets a single event
@@ -115,9 +115,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#get-a-single-event
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The event id</param>
+        /// <param name="eventId">The event id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<IssueEvent> Get(long repositoryId, int number);
+        IObservable<IssueEvent> Get(long repositoryId, long eventId);
     }
 }

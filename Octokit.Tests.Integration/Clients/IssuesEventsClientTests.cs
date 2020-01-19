@@ -402,7 +402,7 @@ public class IssuesEventsClientTests : IDisposable
         var closed = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed });
         Assert.NotNull(closed);
         var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
-        int issueEventId = issueEvents[0].Id;
+        var issueEventId = issueEvents[0].Id;
 
         var issueEventLookupById = await _issuesEventsClient.Get(_context.RepositoryOwner, _context.RepositoryName, issueEventId);
 
@@ -418,7 +418,7 @@ public class IssuesEventsClientTests : IDisposable
         var closed = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed });
         Assert.NotNull(closed);
         var issueEvents = await _issuesEventsClient.GetAllForRepository(_context.Repository.Id);
-        int issueEventId = issueEvents[0].Id;
+        var issueEventId = issueEvents[0].Id;
 
         var issueEventLookupById = await _issuesEventsClient.Get(_context.Repository.Id, issueEventId);
 
