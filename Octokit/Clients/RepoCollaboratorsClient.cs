@@ -81,7 +81,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            
+
             return GetAll(repositoryId, new RepositoryCollaboratorListRequest(), options);
         }
 
@@ -100,7 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
-            
+
             return GetAll(owner, name, request, ApiOptions.None);
         }
 
@@ -116,7 +116,7 @@ namespace Octokit
         public Task<IReadOnlyList<User>> GetAll(long repositoryId, RepositoryCollaboratorListRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
-            
+
             return GetAll(repositoryId, request, ApiOptions.None);
         }
 

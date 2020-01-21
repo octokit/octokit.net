@@ -36,7 +36,7 @@ namespace Octokit
         [Parameter(Value = "member")]
         Member
     }
-    
+
     public enum MembershipRole
     {
         [Parameter(Value = "admin")]

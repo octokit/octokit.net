@@ -7,7 +7,7 @@ namespace Octokit
     {
         public OrganizationMembership()
         {
-            
+
         }
 
         public OrganizationMembership(string url, StringEnum<MembershipState> state, StringEnum<MembershipRole> role, string organizationUrl, Organization organization, User user)
@@ -19,7 +19,7 @@ namespace Octokit
             Organization = organization;
             User = user;
         }
-        
+
         public string Url { get; protected set; }
         public StringEnum<MembershipState> State { get; protected set; }
         public StringEnum<MembershipRole> Role { get; protected set; }

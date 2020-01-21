@@ -9,7 +9,7 @@ namespace Octokit
         {
             Role = MembershipRole.Member;
         }
-        
+
         /// <summary>
         /// The role to give the user in the organization. The default is <see cref="MembershipRole.Member"/>.
         /// </summary>
