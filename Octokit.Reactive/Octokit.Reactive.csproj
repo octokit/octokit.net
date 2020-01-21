@@ -15,6 +15,7 @@
     <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
     <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
     <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+    <PackageIcon>octokit.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
     <Copyright>Copyright GitHub 2017</Copyright>
@@ -39,6 +40,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Octokit\Octokit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="images\octokit.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
