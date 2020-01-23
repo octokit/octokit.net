@@ -34,7 +34,7 @@ public sealed class CodeCoverage : FrostingTask<Context>
                 if (context.IsRunningOnWindows())
                 {
                     var dotNetFrameworkCoverage = context.CodeCoverage
-                        .CombineWithFilePath(project.Name + "-net452.xml");
+                        .CombineWithFilePath(project.Name + "-net46.xml");
                     coverageFiles.Add(dotNetFrameworkCoverage);
 
                     context.Coverlet(project, new CoverletToolSettings
