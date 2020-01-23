@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<User> GetAll(long repositoryId, ApiOptions options);
-        
+
         /// <summary>
         /// Gets all the collaborators on a repository.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<User> GetAll(long repositoryId, RepositoryCollaboratorListRequest request);
-        
+
         /// <summary>
         /// Gets all the collaborators on a repository.
         /// </summary>
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         IObservable<User> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options);
-        
+
         /// <summary>
         /// Gets all the collaborators on a repository.
         /// </summary>

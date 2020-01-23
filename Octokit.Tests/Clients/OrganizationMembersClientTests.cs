@@ -526,10 +526,10 @@ namespace Octokit.Tests.Clients
             public void PostsToTheCorrectUrl()
             {
                 var orgMembershipUpdate = new OrganizationMembershipUpdate();
-                  
+
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationMembersClient(connection);
-                
+
                 client.AddOrUpdateOrganizationMembership("org", "username", orgMembershipUpdate);
 
                 connection.Received().Put<OrganizationMembership>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"), Arg.Any<object>());

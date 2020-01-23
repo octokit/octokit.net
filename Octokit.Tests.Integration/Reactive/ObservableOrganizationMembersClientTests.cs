@@ -26,7 +26,7 @@ namespace Octokit.Tests.Integration.Reactive
                 using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
                 {
                     teamContext.InviteMember("alfhenrik-test-2");
-                    
+
                     var organizationMemberhip = await _client.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
                     Assert.Equal(MembershipState.Pending, organizationMemberhip.State);
                     Assert.Equal(MembershipRole.Member, organizationMemberhip.Role);
@@ -34,7 +34,7 @@ namespace Octokit.Tests.Integration.Reactive
                 }
             }
         }
-        
+
         public class TheAddOrUpdateOrganizationMembershipMethod
         {
             readonly ObservableOrganizationMembersClient _client;
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Integration.Reactive
             [OrganizationTest]
             public async Task ReturnsUsersPendingAdminOrganizationMembership()
             {
-                var organizationMembership = await _client.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin});
+                var organizationMembership = await _client.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin });
                 Assert.Equal(MembershipState.Pending, organizationMembership.State);
                 Assert.Equal(MembershipRole.Admin, organizationMembership.Role);
                 await _client.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
@@ -66,12 +66,12 @@ namespace Octokit.Tests.Integration.Reactive
         public class TheRemoveOrganizationMembershipMethod
         {
             readonly ObservableOrganizationMembersClient _client;
-            
+
             public TheRemoveOrganizationMembershipMethod()
             {
                 _client = new ObservableOrganizationMembersClient(Helper.GetAuthenticatedClient());
             }
-            
+
             [OrganizationTest]
             public async Task RemovesOrganizationMembership()
             {

@@ -339,7 +339,7 @@ namespace Octokit.Tests.Reactive
             public void PostsToTheCorrectUrl()
             {
                 var orgMembershipUpdate = new OrganizationMembershipUpdate();
-                
+
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationMembersClient(gitHubClient);
 

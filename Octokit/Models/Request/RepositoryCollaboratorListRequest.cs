@@ -17,7 +17,7 @@ namespace Octokit
         {
             Affiliation = CollaboratorAffiliation.All; // Default in accordance with the documentation
         }
-        
+
         /// <summary>
         /// Gets or sets the collaborator affiliation property.
         /// </summary>

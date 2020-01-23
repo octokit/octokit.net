@@ -136,14 +136,14 @@ namespace Octokit.Tests.Integration.Clients
                 using (var teamContext = await _gitHub.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
                 {
                     teamContext.InviteMember("alfhenrik-test-2");
-                    
+
                     var organizationMemberhip = await _gitHub.Organization.Member.GetOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
                     Assert.Equal(MembershipState.Pending, organizationMemberhip.State);
                     Assert.Equal(MembershipRole.Member, organizationMemberhip.Role);
                 }
             }
         }
-        
+
         public class TheAddOrUpdateOrganizationMembershipMethod
         {
             readonly IGitHubClient _gitHub;
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task ReturnsUsersPendingAdminOrganizationMembership()
             {
-                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin});
+                var organizationMembership = await _gitHub.Organization.Member.AddOrUpdateOrganizationMembership(Helper.Organization, "alfhenrik-test-2", new OrganizationMembershipUpdate { Role = MembershipRole.Admin });
                 Assert.Equal(MembershipState.Pending, organizationMembership.State);
                 Assert.Equal(MembershipRole.Admin, organizationMembership.Role);
                 await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
@@ -175,12 +175,12 @@ namespace Octokit.Tests.Integration.Clients
         public class TheRemoveOrganizationMembershipMethod
         {
             readonly IGitHubClient _gitHub;
-            
+
             public TheRemoveOrganizationMembershipMethod()
             {
                 _gitHub = Helper.GetAuthenticatedClient();
             }
-            
+
             [OrganizationTest]
             public async Task RemovesOrganizationMembership()
             {

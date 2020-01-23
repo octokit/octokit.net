@@ -273,7 +273,7 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         IObservable<Unit> Conceal(string org, string user);
-        
+
         /// <summary>
         /// Get a user's membership with an organization.
         /// </summary>

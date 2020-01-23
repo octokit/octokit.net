@@ -92,7 +92,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         "application/vnd.github.hellcat-preview+json",
                         Args.ApiOptions);
-                
+
                 request = new RepositoryCollaboratorListRequest
                 {
                     Affiliation = CollaboratorAffiliation.Direct
@@ -105,7 +105,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         "application/vnd.github.hellcat-preview+json",
                         Args.ApiOptions);
-                
+
                 request = new RepositoryCollaboratorListRequest
                 {
                     Affiliation = CollaboratorAffiliation.Outside
@@ -150,7 +150,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 var request = new RepositoryCollaboratorListRequest();
-                
+
                 client.GetAll(1, request);
 
                 connection.Received()
@@ -173,7 +173,7 @@ namespace Octokit.Tests.Clients
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         "application/vnd.github.hellcat-preview+json",
                         Args.ApiOptions);
-                
+
                 request = new RepositoryCollaboratorListRequest
                 {
                     Affiliation = CollaboratorAffiliation.Outside
