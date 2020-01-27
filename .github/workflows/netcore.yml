@@ -1,4 +1,4 @@
-name: Build and test with .NET Core
+name: CI Build
 
 on:
   pull_request:
