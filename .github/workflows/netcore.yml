@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+        platform: [ubuntu-latest, macos-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -25,3 +25,4 @@ jobs:
         dotnet-version: 2.1.803
     - name: Build with dotnet
       run: ./build.sh --linksources=true --verbosity=verbose
+      shell: bash
