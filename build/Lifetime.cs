@@ -20,8 +20,8 @@ public class Lifetime : FrostingLifetime<Context>
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;
 
+        context.GitHubActions = buildSystem.GitHubActions.IsRunningOnGitHubActions;
         context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;
-        context.TravisCI = buildSystem.TravisCI.IsRunningOnTravisCI;
         context.IsTagged = IsBuildTagged(buildSystem);
 
         if (context.AppVeyor)
@@ -30,11 +30,11 @@ public class Lifetime : FrostingLifetime<Context>
             context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.AppVeyor.Environment.Repository.Name);
             context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch);
         }
-        else if (context.TravisCI)
+        else if (context.GitHubActions)
         {
-            context.IsPullRequest = !string.IsNullOrEmpty(buildSystem.TravisCI.Environment.Repository.PullRequest);
-            context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.TravisCI.Environment.Repository.Slug);
-            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.TravisCI.Environment.Build.Branch);
+            context.IsPullRequest = buildSystem.GitHubActions.Environment.PullRequest.IsPullRequest;
+            context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.GitHubActions.Environment.Workflow.Repository);
+            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.GitHubActions.Environment.Workflow.Ref);
         }
 
         // Force publish?
@@ -64,7 +64,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("LinkSources:    {0}", context.LinkSources);
         context.Information("Target:         {0}", context.Target);
         context.Information("AppVeyor:       {0}", context.AppVeyor);
-        context.Information("TravisCI:       {0}", context.TravisCI);
+        context.Information("GitHub Actions: {0}", context.GitHubActions);
     }
 
     private static bool IsBuildTagged(BuildSystem buildSystem)

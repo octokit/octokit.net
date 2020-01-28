@@ -23,7 +23,7 @@ public class Context : FrostingContext
     public bool ForcePublish { get; set; }
 
     public bool AppVeyor { get; set; }
-    public bool TravisCI { get; set; }
+    public bool GitHubActions { get; set; }
 
     public Project[] Projects { get; set; }
 
