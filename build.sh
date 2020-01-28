@@ -6,6 +6,9 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
   echo "new limit: `ulimit -n`"
 fi
 
+echo "Restoring tools..."
+dotnet tool restore
+
 cd build
 echo "Preparing Cake.Frosting build runner..."
 dotnet restore
