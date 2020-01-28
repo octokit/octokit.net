@@ -18,7 +18,6 @@ public class TestSourceLink : FrostingTask<Context>
             context.Information("Testing sourcelink info in {0}", context.Environment.WorkingDirectory.GetRelativePath(nugetPackage));
             var exitCode = context.StartProcess("dotnet", new ProcessSettings
             {
-                WorkingDirectory = "Octokit",
                 Arguments = $"sourcelink test {nugetPackage.FullPath}"
             });
 

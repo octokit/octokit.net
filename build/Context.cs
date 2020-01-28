@@ -27,9 +27,6 @@ public class Context : FrostingContext
 
     public Project[] Projects { get; set; }
 
-    public FilePath DotNetFormatToolPath { get; set; }
-    public FilePath GitVersionToolPath { get; set; }
-
     public DotNetCoreTestSettings GetTestSettings()
     {
         var settings = new DotNetCoreTestSettings
@@ -40,7 +37,7 @@ public class Context : FrostingContext
 
         if (!this.IsRunningOnWindows())
         {
-            var testFramework = "netcoreapp2.1";
+            var testFramework = "netcoreapp3.1";
 
             this.Information($"Running tests against {testFramework} only as we're not on Windows.");
             settings.Framework = testFramework;

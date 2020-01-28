@@ -6,8 +6,7 @@ public static class GitVersionRunner
     {
         return context.GitVersion(new GitVersionSettings
         {
-            OutputType = outputType,
-            ToolPath = context.GitVersionToolPath
+            OutputType = outputType
         });
     }
 }
