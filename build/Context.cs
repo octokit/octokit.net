@@ -8,7 +8,7 @@ using Cake.Frosting;
 public class Context : FrostingContext
 {
     public string Target { get; set; }
-    public string Configuration { get; set; }
+    public new string Configuration { get; set; }
     public bool LinkSources { get; set; }
     public BuildVersion Version { get; set; }
 
