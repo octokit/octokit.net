@@ -19,6 +19,12 @@
       "commands": [
         "dotnet-gitversion"
       ]
+    },
+    "coverlet.console": {
+      "version": "1.7.0",
+      "commands": [
+        "coverlet"
+      ]
     }
   }
 }
