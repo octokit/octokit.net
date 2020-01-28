@@ -25,8 +25,6 @@ public class Context : FrostingContext
     public bool AppVeyor { get; set; }
     public bool TravisCI { get; set; }
 
-    public bool CoreOnly { get; set; }
-
     public Project[] Projects { get; set; }
 
     public FilePath DotNetFormatToolPath { get; set; }
