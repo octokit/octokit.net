@@ -4,7 +4,7 @@
     <Description>Integration tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp2.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net452</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
@@ -19,7 +19,7 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
     <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE</DefineConstants>
   </PropertyGroup>
   
