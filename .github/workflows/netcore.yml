@@ -23,6 +23,12 @@ jobs:
       uses: actions/setup-dotnet@v1.4.0
       with:
         dotnet-version: 2.1.803
+    - name: List sdks
+      run: dotnet --list-sdks
+      shell: bash
+    - name: List runtimes
+      run: dotnet --list-runtimes
+      shell: bash
     - name: Build with dotnet
       run: ./build.sh --linksources=true --verbosity=verbose
       shell: bash
