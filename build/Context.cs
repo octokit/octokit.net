@@ -40,7 +40,7 @@ public class Context : FrostingContext
 
         if (!this.IsRunningOnWindows())
         {
-            var testFramework = "netcoreapp2.1";
+            var testFramework = "netcoreapp3.1";
 
             this.Information($"Running tests against {testFramework} only as we're not on Windows.");
             settings.Framework = testFramework;
