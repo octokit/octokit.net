@@ -20,6 +20,8 @@ public class Lifetime : FrostingLifetime<Context>
         var buildSystem = context.BuildSystem();
         context.IsLocalBuild = buildSystem.IsLocalBuild;
 
+        // TODO: tidy this up
+        context.ShouldFormatCode = true;
         context.GitHubActions = buildSystem.GitHubActions.IsRunningOnGitHubActions;
         context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;
         context.IsTagged = IsBuildTagged(buildSystem);

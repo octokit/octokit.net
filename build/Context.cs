@@ -21,6 +21,7 @@ public class Context : FrostingContext
     public bool IsTagged { get; set; }
     public bool IsMasterBranch { get; set; }
     public bool ForcePublish { get; set; }
+    public bool ShouldFormatCode { get; set; }
 
     public bool AppVeyor { get; set; }
     public bool GitHubActions { get; set; }
