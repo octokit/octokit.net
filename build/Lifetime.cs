@@ -52,7 +52,7 @@ public class Lifetime : FrostingLifetime<Context>
             new Project { Name = "Octokit.Tests.Integration", Path = "./Octokit.Tests.Integration/Octokit.Tests.Integration.csproj", IntegrationTests = true }
         };
 
-        context.DotNetFormatToolPath = ToolInstaller.DotNetCoreToolInstall(context, "dotnet-format", "3.1.37601", "dotnet-format");
+        context.DotNetFormatToolPath = ToolInstaller.DotNetCoreToolInstall(context, "dotnet-format", "3.2.107702", "dotnet-format");
         context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.0.0", "dotnet-gitversion");
 
         // Calculate semantic version.
