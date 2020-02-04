@@ -51,7 +51,7 @@ public class Lifetime : FrostingLifetime<Context>
         };
 
         context.DotNetFormatToolPath = ToolInstaller.DotNetCoreToolInstall(context, "dotnet-format", "3.1.37601", "dotnet-format");
-        context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.1.3", "dotnet-gitversion");
+        context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.0.0", "dotnet-gitversion");
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
