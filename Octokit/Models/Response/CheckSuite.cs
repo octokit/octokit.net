@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -11,7 +12,7 @@ namespace Octokit
         {
         }
 
-        public CheckSuite(long id, string headBranch, string headSha, CheckStatus status, CheckConclusion? conclusion, string url, string before, string after, IReadOnlyList<PullRequest> pullRequests, GitHubApp app, Repository repository)
+        public CheckSuite(long id, string headBranch, string headSha, CheckStatus status, CheckConclusion? conclusion, string url, string before, string after, IReadOnlyList<PullRequest> pullRequests, GitHubApp app, DateTimeOffset createdAt, DateTimeOffset updatedAt, long latestCheckRunsCount, HeadCommit headCommit, Repository repository)
         {
             Id = id;
             HeadBranch = headBranch;
@@ -23,6 +24,10 @@ namespace Octokit
             After = after;
             PullRequests = pullRequests;
             App = app;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            LatestCheckRunsCount = latestCheckRunsCount;
+            HeadCommit = headCommit;
             Repository = repository;
         }
 
@@ -75,6 +80,15 @@ namespace Octokit
         /// The GitHub App for the check suite
         /// </summary>
         public GitHubApp App { get; protected set; }
+
+
+        // These fields were not in the original check suite definition, but are documented as part of the response, so I've added them
+        // FIXME: Document these new fields
+        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; protected set; }
+        public long LatestCheckRunsCount { get; protected set; }
+        public HeadCommit HeadCommit { get; protected set; }
+
 
         /// <summary>
         /// The repository for the check suite
