@@ -12,6 +12,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
         context.LinkSources = context.Argument("linkSources", false);
+        context.FormatCode = context.Argument("formatCode", false);
 
         context.Artifacts = "./packaging/";
         context.CodeCoverage = "./coverage-results/";

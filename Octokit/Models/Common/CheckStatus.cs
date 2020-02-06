@@ -37,7 +37,7 @@ namespace Octokit
 
         [Parameter(Value = "skipped")]
         Skipped,
-        
+
         [Parameter(Value = "stale")]
         Stale,
     }
