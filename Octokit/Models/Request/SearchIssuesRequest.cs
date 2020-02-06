@@ -328,7 +328,7 @@ namespace Octokit
 
             if (Labels != null)
             {
-                parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:{0}", label)));
+                parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:\"{0}\"", label)));
             }
 
             if (No.HasValue)
