@@ -15,6 +15,6 @@ public sealed class FormatCode : FrostingTask<Context>
 
     public override bool ShouldRun(Context context)
     {
-        return context.IsLocalBuild;
+        return context.FormatCode;
     }
 }
