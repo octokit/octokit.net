@@ -103,6 +103,13 @@ $Arguments = @{
     dryrun=$WhatIf;
 }.GetEnumerator() | %{"--{0}=`"{1}`"" -f $_.key, $_.value };
 
+Write-Host "Restoring global tools..."
+Invoke-Expression "dotnet tool restore"
+if($LASTEXITCODE -ne 0) {
+    Pop-Location;
+    exit $LASTEXITCODE;
+}
+
 # Start Cake
 Push-Location
 Set-Location build

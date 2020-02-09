@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "sourcelink": {
+      "version": "3.1.1",
+      "commands": [
+        "sourcelink"
+      ]
+    }
+  }
+}
