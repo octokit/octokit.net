@@ -21,13 +21,13 @@ public sealed class CodeCoverage : FrostingTask<Context>
                 context.Information("Executing Code Coverage for Project {0}...", project.Name);
 
                 var dotNetCoreCoverage = context.CodeCoverage
-                    .CombineWithFilePath(project.Name + "-netcoreapp2.1.xml");
+                    .CombineWithFilePath(project.Name + "-netcoreapp3.1.xml");
                 coverageFiles.Add(dotNetCoreCoverage);
 
                 context.Coverlet(project, new CoverletToolSettings()
                 {
                     Configuration = context.Configuration,
-                    Framework = "netcoreapp2.1",
+                    Framework = "netcoreapp3.1",
                     Output = dotNetCoreCoverage.FullPath
                 });
 
