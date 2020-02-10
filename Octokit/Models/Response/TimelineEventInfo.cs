@@ -9,7 +9,7 @@ namespace Octokit
     {
         public TimelineEventInfo() { }
 
-        public TimelineEventInfo(int id, string nodeId, string url, User actor, string commitId, EventInfoState @event, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename)
+        public TimelineEventInfo(long id, string nodeId, string url, User actor, string commitId, EventInfoState @event, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename)
         {
             Id = id;
             NodeId = nodeId;
@@ -25,7 +25,7 @@ namespace Octokit
             Rename = rename;
         }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
