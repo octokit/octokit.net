@@ -25,8 +25,8 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 
 ## Supported Platforms
 
-* .NET 4.5 (Desktop / Server) or greater
-* [.NET Standard 1.1](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) or greater
+* .NET 4.6 (Desktop / Server) or greater
+* [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) or greater
 
 ## Getting Started
 
