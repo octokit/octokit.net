@@ -219,7 +219,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -232,7 +232,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -258,7 +258,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -275,7 +275,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2014-01-01T00:00:00+00:00..2014-02-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2014-01-01T00:00:00%2B00:00..2014-02-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -532,7 +532,7 @@ namespace Octokit.Tests.Clients
                 request.Created = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2011-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>2011-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -545,7 +545,7 @@ namespace Octokit.Tests.Clients
                 request.Created = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2011-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:>=2011-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -558,7 +558,7 @@ namespace Octokit.Tests.Clients
                 request.Created = DateRange.LessThan(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2011-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<2011-01-01T00:00:00%2B00:00"));
             }
 
 
@@ -572,7 +572,7 @@ namespace Octokit.Tests.Clients
                 request.Created = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2011, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2011-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:<=2011-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -588,7 +588,7 @@ namespace Octokit.Tests.Clients
                 client.SearchRepo(request);
 
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2011-01-01T00:00:00+00:00..2012-11-11T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+created:2011-01-01T00:00:00%2B00:00..2012-11-11T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -601,7 +601,7 @@ namespace Octokit.Tests.Clients
                 request.Updated = DateRange.GreaterThan(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>2013-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>2013-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -614,7 +614,7 @@ namespace Octokit.Tests.Clients
                 request.Updated = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>=2013-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:>=2013-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -627,7 +627,7 @@ namespace Octokit.Tests.Clients
                 request.Updated = DateRange.LessThan(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<2013-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<2013-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -640,7 +640,7 @@ namespace Octokit.Tests.Clients
                 request.Updated = DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(2013, 1, 1), TimeSpan.Zero));
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<=2013-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:<=2013-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -656,7 +656,7 @@ namespace Octokit.Tests.Clients
                 client.SearchRepo(request);
 
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:2012-04-30T00:00:00+00:00..2012-07-04T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+pushed:2012-04-30T00:00:00%2B00:00..2012-07-04T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1007,7 +1007,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1022,7 +1022,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1037,7 +1037,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1052,7 +1052,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1069,7 +1069,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T00:00:00+00:00..2014-02-02T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T00:00:00%2B00:00..2014-02-02T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1084,7 +1084,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1099,7 +1099,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1114,7 +1114,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1129,7 +1129,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1146,7 +1146,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T00:00:00+00:00..2014-02-02T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T00:00:00%2B00:00..2014-02-02T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1161,7 +1161,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1176,7 +1176,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1191,7 +1191,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1206,7 +1206,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T00:00:00+00:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T00:00:00%2B00:00"));
             }
 
             [Fact]
@@ -1221,7 +1221,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1236,7 +1236,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:>=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1250,7 +1250,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1265,7 +1265,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:<=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1282,7 +1282,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T02:04:06+10:00..2014-02-02T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+created:2014-01-01T02:04:06%2B10:00..2014-02-02T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1297,7 +1297,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1312,7 +1312,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:>=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1327,7 +1327,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1342,7 +1342,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:<=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1359,7 +1359,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T02:04:06+10:00..2014-02-02T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+merged:2014-01-01T02:04:06%2B10:00..2014-02-02T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1374,7 +1374,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1389,7 +1389,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:>=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1404,7 +1404,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]
@@ -1419,7 +1419,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T02:04:06+10:00"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+updated:<=2014-01-01T02:04:06%2B10:00"));
             }
 
             [Fact]

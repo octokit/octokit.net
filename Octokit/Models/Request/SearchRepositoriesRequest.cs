@@ -341,7 +341,7 @@ namespace Octokit
         /// </summary>
         public DateRange(DateTimeOffset from, DateTimeOffset to)
         {
-            query = $"{from.ToString(DateTimePattern, CultureInfo.InvariantCulture)}..{to.ToString(DateTimePattern, CultureInfo.InvariantCulture)}";
+            query = EncodeOffset($"{from.ToString(DateTimePattern, CultureInfo.InvariantCulture)}..{to.ToString(DateTimePattern, CultureInfo.InvariantCulture)}");
         }
 
         /// <summary>
@@ -353,18 +353,23 @@ namespace Octokit
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = dateTime.ToString($">{DateTimePattern}", CultureInfo.InvariantCulture);
+                    query = EncodeOffset(dateTime.ToString($">{DateTimePattern}", CultureInfo.InvariantCulture));
                     break;
                 case SearchQualifierOperator.LessThan:
-                    query = dateTime.ToString($"<{DateTimePattern}", CultureInfo.InvariantCulture);
+                    query = EncodeOffset(dateTime.ToString($"<{DateTimePattern}", CultureInfo.InvariantCulture));
                     break;
                 case SearchQualifierOperator.LessThanOrEqualTo:
-                    query = dateTime.ToString($"<={DateTimePattern}", CultureInfo.InvariantCulture);
+                    query = EncodeOffset(dateTime.ToString($"<={DateTimePattern}", CultureInfo.InvariantCulture));
                     break;
                 case SearchQualifierOperator.GreaterThanOrEqualTo:
-                    query = dateTime.ToString($">={DateTimePattern}", CultureInfo.InvariantCulture);
+                    query = EncodeOffset(dateTime.ToString($">={DateTimePattern}", CultureInfo.InvariantCulture));
                     break;
             }
+        }
+
+        private string EncodeOffset(string dateTimeOffset)
+        {
+            return dateTimeOffset.Replace("+", "%2B");
         }
 
         internal string DebuggerDisplay

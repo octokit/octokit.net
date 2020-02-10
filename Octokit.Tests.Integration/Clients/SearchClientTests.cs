@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -18,6 +19,18 @@ public class SearchClientTests
     public async Task SearchForCSharpRepositories()
     {
         var request = new SearchRepositoriesRequest("csharp");
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForCSharpRepositoriesUpdatedIn2020()
+    {
+        var request = new SearchRepositoriesRequest("csharp")
+        {
+            Updated = DateRange.GreaterThan(new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero))
+        };
         var repos = await _gitHubClient.Search.SearchRepo(request);
 
         Assert.NotEmpty(repos.Items);
