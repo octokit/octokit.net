@@ -353,7 +353,7 @@ namespace Octokit
             switch (op)
             {
                 case SearchQualifierOperator.GreaterThan:
-                    query = dateTime.ToString($">{DateTimePattern}", CultureInfo.InvariantCulture);
+                    query = dateTime.ToString($">{DateTimePattern}", CultureInfo.InvariantCulture).Replace("+", "%2B");
                     break;
                 case SearchQualifierOperator.LessThan:
                     query = dateTime.ToString($"<{DateTimePattern}", CultureInfo.InvariantCulture);
