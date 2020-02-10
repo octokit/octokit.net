@@ -191,6 +191,13 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
+        [IntegrationTest]
+        public async Task CanDeserializeIssueTimelineWhereIdPreviouslyOverflows()
+        {
+            var timelineEvents = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1595);
+            Assert.NotEmpty(timelineEvents);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
