@@ -4,7 +4,7 @@
     <Description>Integration tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp3.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net46</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
@@ -49,7 +50,7 @@
     <PackageReference Include="GitHubJwt" Version="0.0.4" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0"  PrivateAssets="All" />
   </ItemGroup>
 

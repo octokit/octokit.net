@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>netstandard1.1;netstandard2.0;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
     <AssemblyName>Octokit</AssemblyName>
     <PackageId>Octokit</PackageId>
     <DebugType>embedded</DebugType>
@@ -19,20 +19,12 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard2.0' ">
-    <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <DefineConstants>$(DefineConstants);NO_SERIALIZABLE</DefineConstants>
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO</DefineConstants>
     <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net46' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <DefineConstants>$(DefineConstants);HAS_ENVIRONMENT;HAS_REGEX_COMPILED_OPTIONS;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;HAS_SERVICEPOINTMANAGER</DefineConstants>
   </PropertyGroup>
 
@@ -40,7 +32,7 @@
     <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net46'  ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="System.Net.Http" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />

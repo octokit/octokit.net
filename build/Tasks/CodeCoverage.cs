@@ -40,7 +40,7 @@ public sealed class CodeCoverage : FrostingTask<Context>
                     context.Coverlet(project, new CoverletToolSettings
                     {
                         Configuration = context.Configuration,
-                        Framework = "net452",
+                        Framework = "net46",
                         Output = dotNetFrameworkCoverage.FullPath
                     });
                 }
