@@ -9,7 +9,7 @@ namespace Octokit
     {
         public IssueEvent() { }
 
-        public IssueEvent(long id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, string commitUrl)
+        public IssueEvent(long id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, string commitUrl, RenameInfo rename, IssueEventProjectCard projectCard)
         {
             Id = id;
             NodeId = nodeId;
@@ -22,6 +22,8 @@ namespace Octokit
             CreatedAt = createdAt;
             Issue = issue;
             CommitUrl = commitUrl;
+            Rename = rename;
+            ProjectCard = projectCard;
         }
 
         /// <summary>

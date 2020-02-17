@@ -26,53 +26,53 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var result = new List<EventInfo> { new EventInfo() };
+                var result = new List<IssueEvent> { new IssueEvent() };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
                     new Response
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
                 var eventInfos = await client.GetAllForIssue("fake", "repo", 42).ToList();
 
-                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Args.EmptyDictionary, null);
                 Assert.Equal(1, eventInfos.Count);
             }
 
             [Fact]
             public async Task RequestsCorrectUrlWithRepositoryId()
             {
-                var result = new List<EventInfo> { new EventInfo() };
+                var result = new List<IssueEvent> { new IssueEvent() };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
                     new Response
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
                 var eventInfos = await client.GetAllForIssue(1, 42).ToList();
 
-                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Args.EmptyDictionary, null);
                 Assert.Equal(1, eventInfos.Count);
             }
 
             [Fact]
             public async Task RequestsCorrectUrlWithApiOptions()
             {
-                var result = new List<EventInfo> { new EventInfo() };
+                var result = new List<IssueEvent> { new IssueEvent() };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
@@ -85,24 +85,24 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
                     new Response
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 
                 var eventInfos = await client.GetAllForIssue("fake", "repo", 42, options).ToList();
 
-                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
                 Assert.Equal(1, eventInfos.Count);
             }
 
             [Fact]
             public async Task RequestsCorrectUrlWithRepositoryIdWithApiOptions()
             {
-                var result = new List<EventInfo> { new EventInfo() };
+                var result = new List<IssueEvent> { new IssueEvent() };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
@@ -115,17 +115,17 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                IApiResponse<List<EventInfo>> response = new ApiResponse<List<EventInfo>>(
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
                     new Response
                     {
                         ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
                     }, result);
-                gitHubClient.Connection.Get<List<EventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
+                gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 
                 var eventInfos = await client.GetAllForIssue(1, 42, options).ToList();
 
-                connection.Received().Get<List<EventInfo>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
                 Assert.Equal(1, eventInfos.Count);
             }
 
