@@ -79,6 +79,18 @@ namespace Octokit
         /// </summary>
         public Issue Issue { get; protected set; }
 
+        /// <summary>
+        /// An object containing rename details
+        /// Only provided for renamed events
+        /// </summary>
+        public RenameInfo Rename { get; protected set; }
+
+        /// <summary>
+        /// Information about the project card that triggered the event.
+        /// The project_card attribute is not returned if someone deletes the project board, or if you do not have permission to view it.
+        /// </summary>
+        public IssueEventProjectCard ProjectCard { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} CreatedAt: {1}", Id, CreatedAt); }

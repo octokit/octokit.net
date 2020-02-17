@@ -69,6 +69,8 @@ namespace Octokit
 
         public const string ProtectedBranchesRequiredApprovingApiPreview = "application/vnd.github.luke-cage-preview+json";
 
+        public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.

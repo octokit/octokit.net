@@ -48,7 +48,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number),
+                                                            null,
+                                                            AcceptHeaders.Concat(AcceptHeaders.IssueTimelineApiPreview, AcceptHeaders.IssueEventsApiPreview),
+                                                            options);
         }
 
         /// <summary>
@@ -77,7 +80,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number),
+                                                            null,
+                                                            AcceptHeaders.Concat(AcceptHeaders.IssueTimelineApiPreview, AcceptHeaders.IssueEventsApiPreview),
+                                                            options);
         }
     }
 }

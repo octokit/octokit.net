@@ -40,11 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="images\octokit.png" Pack="true" PackagePath="\"/>
+    <None Include="images\octokit.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
