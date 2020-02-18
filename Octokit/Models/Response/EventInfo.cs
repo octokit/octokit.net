@@ -193,6 +193,12 @@ namespace Octokit
         HeadRefForcePushed,
 
         /// <summary>
+        /// The pull request is ready for review
+        /// </summary>
+        [Parameter(Value = "ready_for_review")]
+        ReadyForReview,
+
+        /// <summary>
         /// The actor dismissed a review from the pull request.
         /// </summary>
         [Parameter(Value = "review_dismissed")]
@@ -308,6 +314,24 @@ namespace Octokit
         /// An issue was transferred.
         /// </summary>
         [Parameter(Value = "transferred")]
-        Transferred
+        Transferred,
+
+        /// <summary>
+        /// An issue was connected.
+        /// </summary>
+        [Parameter(Value = "connected")]
+        Connected,
+
+        /// <summary>
+        /// An issue was pinned.
+        /// </summary>
+        [Parameter(Value = "pinned")]
+        Pinned,
+
+        /// <summary>
+        /// An issue was unpinned.
+        /// </summary>
+        [Parameter(Value = "unpinned")]
+        Unpinned,
     }
 }
