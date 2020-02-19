@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.Tests.Integration",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1CB116CB-0D5E-4AFA-B92B-C0A2CF5142CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.CodeGen.Tests", "test\Octokit.CodeGen.Tests\Octokit.CodeGen.Tests.csproj", "{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,7 @@ Global
 		{E58EC0EA-B6E5-43AA-A7D2-AD0A6D4BB0D2} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
 		{A04124DC-D057-4DB0-8E5F-ECD114FA371A} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
 		{EF19E577-D810-4357-BF95-9029A359CB4E} = {64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}
+		{4DF3587B-91ED-4A27-8EDA-CF8ABE0C98B8} = {1CB116CB-0D5E-4AFA-B92B-C0A2CF5142CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3ABF5A09-BE91-46DF-93C1-BE3932581DF5}
