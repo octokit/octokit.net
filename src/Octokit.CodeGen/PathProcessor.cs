@@ -53,7 +53,12 @@ namespace Octokit.CodeGen
                         var hasIn = parameter.TryGetProperty("in", out inProp);
                         var hasSchema = parameter.TryGetProperty("schema", out schemaProp);
 
-                        if (hasName && hasIn && hasSchema)
+                        if (!hasName || !hasIn)
+                        {
+                            continue;
+                        }
+
+                        if (hasSchema)
                         {
                             JsonElement requiredProp;
 
@@ -63,15 +68,33 @@ namespace Octokit.CodeGen
                                 isRequired = requiredProp.GetBoolean();
                             }
 
-                            if (inProp.GetString() == "header"
-                                && nameProp.GetString() == "accept")
+                            var inString = inProp.GetString();
+                            var nameString = nameProp.GetString();
+
+                            if (inString == "header" && nameString == "accept")
                             {
                                 JsonElement defaultProp;
 
                                 if (schemaProp.TryGetProperty("default", out defaultProp))
                                 {
                                     verb.AcceptHeader = defaultProp.GetString();
+                                    continue;
                                 }
+                            }
+
+                            JsonElement typeProp;
+                            if (schemaProp.TryGetProperty("type", out typeProp))
+                            {
+                                var typeString = typeProp.GetString();
+                                verb.Parameters.Add(new Parameter
+                                {
+                                    Name = nameString,
+                                    In = inString,
+                                    Required = isRequired,
+                                    Type = typeString
+                                });
+
+                                continue;
                             }
                         }
                     }
@@ -101,7 +124,21 @@ namespace Octokit.CodeGen
 
     public class VerbResult
     {
+        public VerbResult()
+        {
+            Parameters = new List<Parameter>();
+        }
+
         public HttpMethod Method { get; set; }
         public string AcceptHeader { get; set; }
+        public List<Parameter> Parameters { get; set; }
+    }
+
+    public class Parameter
+    {
+        public string Name { get; set; }
+        public string In { get; set; }
+        public string Type { get; set; }
+        public bool Required { get; set; }
     }
 }

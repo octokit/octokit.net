@@ -23,6 +23,14 @@ namespace Octokit.CodeGen.Tests
             var get = result.Verbs.First();
             Assert.Equal(HttpMethod.Get, get.Method);
             Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
+
+            Assert.Single(get.Parameters);
+            var parameter = get.Parameters.First();
+
+            Assert.Equal("account_id", parameter.Name);
+            Assert.Equal("path", parameter.In);
+            Assert.Equal("integer", parameter.Type);
+            Assert.True(parameter.Required);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
