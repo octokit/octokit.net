@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace Octokit.CodeGen.Tests
             var result = PathProcessor.Process(path);
 
             Assert.Equal("/marketplace_listing/accounts/{account_id}", result.Path);
+            Assert.Single(result.Verbs);
+
+            var get = result.Verbs[0];
+            Assert.Equal(HttpMethod.Get, get.Method);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
