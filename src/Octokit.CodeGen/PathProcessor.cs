@@ -112,16 +112,54 @@ namespace Octokit.CodeGen
                         {
                             foreach (var contentType in contentProp.EnumerateObject())
                             {
-
-                                verb.Responses.Add(new Response
+                                var response = new Response
                                 {
                                     StatusCode = statusCode,
-                                    ContentType = contentType.Name
-                                });
+                                    ContentType = contentType.Name,
+                                };
+
+                                JsonElement schemaProp;
+
+                                if (contentType.Value.TryGetProperty("schema", out schemaProp))
+                                {
+                                    JsonElement typeProp;
+                                    JsonElement propertiesProp;
+                                    var hasTypeProp = schemaProp.TryGetProperty("type", out typeProp);
+                                    var hasPropertiesProp = schemaProp.TryGetProperty("properties", out propertiesProp);
+
+                                    if (hasTypeProp)
+                                    {
+                                        var typeString = typeProp.GetString();
+                                        if (typeString == "object" && hasPropertiesProp)
+                                        {
+                                            var objectResponse = new ObjectResponseContent();
+
+                                            foreach (var property in propertiesProp.EnumerateObject())
+                                            {
+                                                var name = property.Name;
+                                                JsonElement innerTypeProp;
+                                                if (property.Value.TryGetProperty("type", out innerTypeProp))
+                                                {
+                                                    var innerType = innerTypeProp.GetString();
+                                                    if (innerType != "object")
+                                                    {
+                                                        objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
+                                                    }
+                                                    else
+                                                    {
+                                                        // TODO: recursion oh noooo
+                                                    }
+                                                }
+                                            }
+
+                                            response.Content = objectResponse;
+                                        }
+                                    }
+                                }
+
+                                verb.Responses.Add(response);
                             }
                         }
-
-
                     }
                 }
 
@@ -174,5 +212,45 @@ namespace Octokit.CodeGen
     {
         public string StatusCode { get; set; }
         public string ContentType { get; set; }
+        public ObjectResponseContent Content { get; set; }
+    }
+
+    public interface IResponseProperty
+    {
+        string Type { get; }
+        string Name { get; }
+    }
+
+    public class PrimitiveProperty : IResponseProperty
+    {
+        public PrimitiveProperty(string name, string type)
+        {
+            Name = name;
+            Type = type;
+        }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+    }
+
+    public class ObjectProperty : IResponseProperty
+    {
+        public ObjectProperty(string name)
+        {
+            Type = "object";
+            Properties = new List<IResponseProperty>();
+        }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+        public List<IResponseProperty> Properties { get; set; }
+    }
+
+    public class ObjectResponseContent
+    {
+        public ObjectResponseContent()
+        {
+            Properties = new List<IResponseProperty>();
+        }
+        public string Type { get { return "object"; } }
+        public List<IResponseProperty> Properties { get; set; }
     }
 }
