@@ -31,6 +31,12 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("path", parameter.In);
             Assert.Equal("integer", parameter.Type);
             Assert.True(parameter.Required);
+
+            Assert.Single(get.Responses);
+            var response = get.Responses.First();
+
+            Assert.Equal("200", response.StatusCode);
+            Assert.Equal("application/json", response.ContentType);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)

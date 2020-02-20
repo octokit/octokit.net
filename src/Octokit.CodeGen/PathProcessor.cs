@@ -40,10 +40,10 @@ namespace Octokit.CodeGen
                     Method = method
                 };
 
-                JsonElement parameters;
-                if (verbElement.Value.TryGetProperty("parameters", out parameters))
+                JsonElement parametersProp;
+                if (verbElement.Value.TryGetProperty("parameters", out parametersProp))
                 {
-                    foreach (var parameter in parameters.EnumerateArray())
+                    foreach (var parameter in parametersProp.EnumerateArray())
                     {
                         JsonElement nameProp;
                         JsonElement inProp;
@@ -100,6 +100,31 @@ namespace Octokit.CodeGen
                     }
                 }
 
+                JsonElement responsesProp;
+                if (verbElement.Value.TryGetProperty("responses", out responsesProp))
+                {
+                    foreach (var prop in responsesProp.EnumerateObject())
+                    {
+                        var statusCode = prop.Name;
+
+                        JsonElement contentProp;
+                        if (prop.Value.TryGetProperty("content", out contentProp))
+                        {
+                            foreach (var contentType in contentProp.EnumerateObject())
+                            {
+
+                                verb.Responses.Add(new Response
+                                {
+                                    StatusCode = statusCode,
+                                    ContentType = contentType.Name
+                                });
+                            }
+                        }
+
+
+                    }
+                }
+
                 verbs.Add(verb);
             }
 
@@ -127,11 +152,14 @@ namespace Octokit.CodeGen
         public VerbResult()
         {
             Parameters = new List<Parameter>();
+            Responses = new List<Response>();
         }
 
         public HttpMethod Method { get; set; }
         public string AcceptHeader { get; set; }
         public List<Parameter> Parameters { get; set; }
+
+        public List<Response> Responses { get; set; }
     }
 
     public class Parameter
@@ -140,5 +168,11 @@ namespace Octokit.CodeGen
         public string In { get; set; }
         public string Type { get; set; }
         public bool Required { get; set; }
+    }
+
+    public class Response
+    {
+        public string StatusCode { get; set; }
+        public string ContentType { get; set; }
     }
 }
