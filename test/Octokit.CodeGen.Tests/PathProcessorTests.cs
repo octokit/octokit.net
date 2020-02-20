@@ -11,7 +11,7 @@ namespace Octokit.CodeGen.Tests
     public class PathProcessorTests
     {
         [Fact]
-        public async Task Process_WithSimplePath_ExtractsPayload()
+        public async Task Process_WithSimplePath_ExtractsInformation()
         {
             var path = await LoadsSimplePath();
 
@@ -20,8 +20,9 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("/marketplace_listing/accounts/{account_id}", result.Path);
             Assert.Single(result.Verbs);
 
-            var get = result.Verbs[0];
+            var get = result.Verbs.First();
             Assert.Equal(HttpMethod.Get, get.Method);
+            Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
