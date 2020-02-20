@@ -3,7 +3,7 @@
     "/marketplace_listing/accounts/{account_id}": {
       "get": {
         "summary": "Check if a GitHub account is associated with any Marketplace listing",
-        "description": "Shows whether the user or organization account actively subscribes to a plan listed by the authenticated GitHub App. When someone submits a plan change that won't be processed until the end of their billing cycle, you will also see the upcoming pending change.\n\nGitHub Apps must use a [JWT](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint. OAuth Apps must use [basic authentication](https://developer.github.com/v3/auth/#basic-authentication) with their client ID and client secret to access this endpoint.",
+        "description": "Some description goes here",
         "operationId": "apps/check-account-is-associated-with-any",
         "tags": [
           "apps"

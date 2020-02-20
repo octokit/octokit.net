@@ -13,7 +13,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_WithSimplePath_ExtractsInformation()
         {
-            var path = await LoadsSimplePath();
+            var path = await LoadPathWithGet();
 
             var result = PathProcessor.Process(path);
 
@@ -23,6 +23,8 @@ namespace Octokit.CodeGen.Tests
             var get = result.Verbs.First();
             Assert.Equal(HttpMethod.Get, get.Method);
             Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
+            Assert.Equal("Check if a GitHub account is associated with any Marketplace listing", get.Summary);
+            Assert.Equal("Some description goes here", get.Description);
 
             Assert.Single(get.Parameters);
             var parameter = get.Parameters.First();
@@ -62,9 +64,9 @@ namespace Octokit.CodeGen.Tests
             return await JsonDocument.ParseAsync(stream);
         }
 
-        private static async Task<JsonProperty> LoadsSimplePath()
+        private static async Task<JsonProperty> LoadPathWithGet()
         {
-            var json = await LoadFixture("example-route.json");
+            var json = await LoadFixture("example-get-route.json");
             var paths = json.RootElement.GetProperty("paths");
             var properties = paths.EnumerateObject();
             var firstPath = properties.ElementAt(0);

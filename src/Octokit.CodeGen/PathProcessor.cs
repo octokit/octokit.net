@@ -67,6 +67,17 @@ namespace Octokit.CodeGen
                     Method = method
                 };
 
+                JsonElement textProp;
+                if (verbElement.Value.TryGetProperty("summary", out textProp))
+                {
+                    verb.Summary = textProp.GetString();
+                }
+
+                if (verbElement.Value.TryGetProperty("description", out textProp))
+                {
+                    verb.Description = textProp.GetString();
+                }
+
                 JsonElement parametersProp;
                 if (verbElement.Value.TryGetProperty("parameters", out parametersProp))
                 {
@@ -195,6 +206,7 @@ namespace Octokit.CodeGen
                 verbs.Add(verb);
             }
 
+
             return new PathResult()
             {
                 Path = jsonProperty.Name,
@@ -221,7 +233,8 @@ namespace Octokit.CodeGen
             Parameters = new List<Parameter>();
             Responses = new List<Response>();
         }
-
+        public string Summary { get; set; }
+        public string Description { get; set; }
         public HttpMethod Method { get; set; }
         public string AcceptHeader { get; set; }
         public List<Parameter> Parameters { get; set; }
