@@ -20,6 +20,33 @@ namespace Octokit.CodeGen
             return false;
         }
 
+        private static ObjectProperty ParseAsObject(string name, JsonElement properties)
+        {
+            var objectProperty = new ObjectProperty(name);
+
+            foreach (var property in properties.EnumerateObject())
+            {
+                var propertyName = property.Name;
+                JsonElement innerTypeProp;
+                if (property.Value.TryGetProperty("type", out innerTypeProp))
+                {
+                    var innerType = innerTypeProp.GetString();
+                    if (innerType != "object")
+                    {
+                        objectProperty.Properties.Add(new PrimitiveProperty(propertyName, innerType));
+                    }
+                    else
+                    {
+                        var innerProperties = property.Value.GetProperty("properties");
+                        objectProperty.Properties.Add(ParseAsObject(propertyName, innerProperties));
+                    }
+                }
+            }
+
+            return objectProperty;
+
+        }
+
         public static PathResult Process(JsonProperty jsonProperty)
         {
             var verbs = new List<VerbResult>();
@@ -141,13 +168,15 @@ namespace Octokit.CodeGen
                                                 if (property.Value.TryGetProperty("type", out innerTypeProp))
                                                 {
                                                     var innerType = innerTypeProp.GetString();
-                                                    if (innerType != "object")
+                                                    if (innerType == "object")
                                                     {
-                                                        objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
+                                                        var innerProperties = property.Value.GetProperty("properties");
+                                                        var objectProperty = ParseAsObject(name, innerProperties);
+                                                        objectResponse.Properties.Add(objectProperty);
                                                     }
                                                     else
                                                     {
-                                                        // TODO: recursion oh noooo
+                                                        objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
                                                     }
                                                 }
                                             }
@@ -236,6 +265,7 @@ namespace Octokit.CodeGen
     {
         public ObjectProperty(string name)
         {
+            Name = name;
             Type = "object";
             Properties = new List<IResponseProperty>();
         }

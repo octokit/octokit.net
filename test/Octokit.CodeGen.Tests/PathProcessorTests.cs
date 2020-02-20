@@ -42,6 +42,16 @@ namespace Octokit.CodeGen.Tests
             var content = response.Content;
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
+
+            var objectPropType = content.Properties.Single(p => p.Name == "marketplace_pending_change" && p.Type == "object");
+            var nestedObject = Assert.IsType<ObjectProperty>(objectPropType);
+
+            Assert.Single(nestedObject.Properties.Where(p => p.Name == "unit_count" && p.Type == "string"));
+            var nestedNestedObjectType = nestedObject.Properties.Single(p => p.Name == "plan" && p.Type == "object");
+
+            var nestedNestedObject = Assert.IsType<ObjectProperty>(nestedNestedObjectType);
+
+            Assert.Single(nestedNestedObject.Properties.Where(p => p.Name == "yearly_price_in_cents" && p.Type == "number"));
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
