@@ -1,0 +1,279 @@
+{
+  "paths": {
+    "/marketplace_listing/accounts/{account_id}": {
+      "get": {
+        "summary": "Check if a GitHub account is associated with any Marketplace listing",
+        "description": "Shows whether the user or organization account actively subscribes to a plan listed by the authenticated GitHub App. When someone submits a plan change that won't be processed until the end of their billing cycle, you will also see the upcoming pending change.\n\nGitHub Apps must use a [JWT](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint. OAuth Apps must use [basic authentication](https://developer.github.com/v3/auth/#basic-authentication) with their client ID and client secret to access this endpoint.",
+        "operationId": "apps/check-account-is-associated-with-any",
+        "tags": [
+          "apps"
+        ],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "account_id",
+            "description": "account_id parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number"
+                    },
+                    "login": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "organization_billing_email": {
+                      "type": "string"
+                    },
+                    "marketplace_pending_change": {
+                      "type": "object",
+                      "properties": {
+                        "effective_date": {
+                          "type": "string"
+                        },
+                        "unit_count": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "number"
+                        },
+                        "plan": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            },
+                            "accounts_url": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "number"
+                            },
+                            "number": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "monthly_price_in_cents": {
+                              "type": "number"
+                            },
+                            "yearly_price_in_cents": {
+                              "type": "number"
+                            },
+                            "price_model": {
+                              "type": "string"
+                            },
+                            "has_free_trial": {
+                              "type": "boolean"
+                            },
+                            "state": {
+                              "type": "string"
+                            },
+                            "unit_name": {
+                              "type": "string"
+                            },
+                            "bullets": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "marketplace_purchase": {
+                      "type": "object",
+                      "properties": {
+                        "billing_cycle": {
+                          "type": "string"
+                        },
+                        "next_billing_date": {
+                          "type": "string"
+                        },
+                        "unit_count": {
+                          "type": "string"
+                        },
+                        "on_free_trial": {
+                          "type": "boolean"
+                        },
+                        "free_trial_ends_on": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        },
+                        "plan": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            },
+                            "accounts_url": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "number"
+                            },
+                            "number": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "monthly_price_in_cents": {
+                              "type": "number"
+                            },
+                            "yearly_price_in_cents": {
+                              "type": "number"
+                            },
+                            "price_model": {
+                              "type": "string"
+                            },
+                            "has_free_trial": {
+                              "type": "boolean"
+                            },
+                            "unit_name": {
+                              "type": "string"
+                            },
+                            "state": {
+                              "type": "string"
+                            },
+                            "bullets": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "url": "https://api.github.com/orgs/github",
+                  "type": "Organization",
+                  "id": 4,
+                  "login": "github",
+                  "email": null,
+                  "organization_billing_email": "billing@github.com",
+                  "marketplace_pending_change": {
+                    "effective_date": "2017-11-11T00:00:00Z",
+                    "unit_count": null,
+                    "id": 77,
+                    "plan": {
+                      "url": "https://api.github.com/marketplace_listing/plans/1111",
+                      "accounts_url": "https://api.github.com/marketplace_listing/plans/1111/accounts",
+                      "id": 1111,
+                      "number": 2,
+                      "name": "Startup",
+                      "description": "A professional-grade CI solution",
+                      "monthly_price_in_cents": 699,
+                      "yearly_price_in_cents": 7870,
+                      "price_model": "flat-rate",
+                      "has_free_trial": true,
+                      "state": "published",
+                      "unit_name": null,
+                      "bullets": [
+                        "Up to 10 private repositories",
+                        "3 concurrent builds"
+                      ]
+                    }
+                  },
+                  "marketplace_purchase": {
+                    "billing_cycle": "monthly",
+                    "next_billing_date": "2017-11-11T00:00:00Z",
+                    "unit_count": null,
+                    "on_free_trial": true,
+                    "free_trial_ends_on": "2017-11-11T00:00:00Z",
+                    "updated_at": "2017-11-02T01:12:12Z",
+                    "plan": {
+                      "url": "https://api.github.com/marketplace_listing/plans/1313",
+                      "accounts_url": "https://api.github.com/marketplace_listing/plans/1313/accounts",
+                      "id": 1313,
+                      "number": 3,
+                      "name": "Pro",
+                      "description": "A professional-grade CI solution",
+                      "monthly_price_in_cents": 1099,
+                      "yearly_price_in_cents": 11870,
+                      "price_model": "flat-rate",
+                      "has_free_trial": true,
+                      "unit_name": null,
+                      "state": "published",
+                      "bullets": [
+                        "Up to 25 private repositories",
+                        "11 concurrent builds"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/marketplace_listing/accounts/42"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.apps.checkAccountIsAssociatedWithAny({\n  account_id: 42\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.check_account_is_associated_with_any(\n  42\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": false,
+          "githubCloudOnly": false,
+          "previews": []
+        },
+        "x-changes": []
+      }
+    }
+  }
+}
