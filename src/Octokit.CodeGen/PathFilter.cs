@@ -1,8 +1,22 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Octokit.CodeGen
 {
     public class PathFilter
     {
+        readonly List<string> prefixes = new List<string>();
+
+        public void Allow(string prefix)
+        {
+            this.prefixes.Add(prefix);
+        }
+
+        public IEnumerable Filter(List<PathResult> items)
+        {
+            return items.Where(i => prefixes.Any(p => i.Path.StartsWith(p)));
+        }
     }
 }
