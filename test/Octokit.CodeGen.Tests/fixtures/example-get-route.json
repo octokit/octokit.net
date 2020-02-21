@@ -5,9 +5,7 @@
         "summary": "Check if a GitHub account is associated with any Marketplace listing",
         "description": "Some description goes here",
         "operationId": "apps/check-account-is-associated-with-any",
-        "tags": [
-          "apps"
-        ],
+        "tags": ["apps"],
         "externalDocs": {
           "description": "API method documentation",
           "url": "https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing"

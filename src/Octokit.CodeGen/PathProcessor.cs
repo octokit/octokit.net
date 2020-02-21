@@ -16,6 +16,12 @@ namespace Octokit.CodeGen
                 return true;
             }
 
+            if (string.Equals(verb, "post", StringComparison.OrdinalIgnoreCase))
+            {
+                method = HttpMethod.Post;
+                return true;
+            }
+
             method = null;
             return false;
         }

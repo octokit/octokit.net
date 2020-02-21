@@ -11,7 +11,7 @@ namespace Octokit.CodeGen.Tests
     public class PathProcessorTests
     {
         [Fact]
-        public async Task Process_WithSimplePath_ExtractsInformation()
+        public async Task Process_ForPathWithOneVerb_ExtractsInformation()
         {
             var path = await LoadPathWithGet();
 
@@ -56,6 +56,17 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(nestedNestedObject.Properties.Where(p => p.Name == "yearly_price_in_cents" && p.Type == "number"));
         }
 
+        [Fact]
+        public async Task Process_ForPathWithTwoVerbs_ExtractsInformation()
+        {
+            var path = await LoadPathWithGetAndPost();
+
+            var result = PathProcessor.Process(path);
+
+            Assert.Equal("/repos/{owner}/{repo}/commits/{commit_sha}/comments", result.Path);
+            Assert.Equal(2, result.Verbs.Count);
+        }
+
         private static async Task<JsonDocument> LoadFixture(string filename)
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -67,6 +78,15 @@ namespace Octokit.CodeGen.Tests
         private static async Task<JsonProperty> LoadPathWithGet()
         {
             var json = await LoadFixture("example-get-route.json");
+            var paths = json.RootElement.GetProperty("paths");
+            var properties = paths.EnumerateObject();
+            var firstPath = properties.ElementAt(0);
+            return firstPath;
+        }
+
+        private static async Task<JsonProperty> LoadPathWithGetAndPost()
+        {
+            var json = await LoadFixture("example-get-and-post-route.json");
             var paths = json.RootElement.GetProperty("paths");
             var properties = paths.EnumerateObject();
             var firstPath = properties.ElementAt(0);

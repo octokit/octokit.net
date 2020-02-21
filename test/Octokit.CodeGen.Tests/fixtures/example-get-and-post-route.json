@@ -1,0 +1,510 @@
+{
+  "paths": {
+    "/repos/{owner}/{repo}/commits/{commit_sha}/comments": {
+      "get": {
+        "summary": "List comments for a single commit",
+        "description": "Use the `:commit_sha` to specify the commit that will have its comments listed.\n\n",
+        "operationId": "repos/list-comments-for-commit",
+        "tags": ["repos"],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "owner",
+            "description": "owner parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "description": "repo parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commit_sha",
+            "description": "commit_sha parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "description": "Results per page (max 100)",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 30
+            }
+          },
+          {
+            "name": "page",
+            "description": "Page number of the results to fetch.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "html_url": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "node_id": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "number"
+                      },
+                      "line": {
+                        "type": "number"
+                      },
+                      "commit_id": {
+                        "type": "string"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "login": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "node_id": {
+                            "type": "string"
+                          },
+                          "avatar_url": {
+                            "type": "string"
+                          },
+                          "gravatar_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "html_url": {
+                            "type": "string"
+                          },
+                          "followers_url": {
+                            "type": "string"
+                          },
+                          "following_url": {
+                            "type": "string"
+                          },
+                          "gists_url": {
+                            "type": "string"
+                          },
+                          "starred_url": {
+                            "type": "string"
+                          },
+                          "subscriptions_url": {
+                            "type": "string"
+                          },
+                          "organizations_url": {
+                            "type": "string"
+                          },
+                          "repos_url": {
+                            "type": "string"
+                          },
+                          "events_url": {
+                            "type": "string"
+                          },
+                          "received_events_url": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "site_admin": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "html_url": "https://github.com/octocat/Hello-World/commit/6dcb09b5b57875f334f61aebed695e2e4193db5e#commitcomment-1",
+                    "url": "https://api.github.com/repos/octocat/Hello-World/comments/1",
+                    "id": 1,
+                    "node_id": "MDEzOkNvbW1pdENvbW1lbnQx",
+                    "body": "Great stuff",
+                    "path": "file1.txt",
+                    "position": 4,
+                    "line": 14,
+                    "commit_id": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "user": {
+                      "login": "octocat",
+                      "id": 1,
+                      "node_id": "MDQ6VXNlcjE=",
+                      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+                      "gravatar_id": "",
+                      "url": "https://api.github.com/users/octocat",
+                      "html_url": "https://github.com/octocat",
+                      "followers_url": "https://api.github.com/users/octocat/followers",
+                      "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+                      "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+                      "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+                      "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+                      "organizations_url": "https://api.github.com/users/octocat/orgs",
+                      "repos_url": "https://api.github.com/users/octocat/repos",
+                      "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+                      "received_events_url": "https://api.github.com/users/octocat/received_events",
+                      "type": "User",
+                      "site_admin": false
+                    },
+                    "created_at": "2011-04-14T16:00:49Z",
+                    "updated_at": "2011-04-14T16:00:49Z"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/repos/octocat/hello-world/commits/COMMIT_SHA/comments"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.repos.listCommentsForCommit({\n  owner: 'octocat',\n  repo: 'hello-world',\n  commit_sha: 'commit_sha'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.comments_for_commit(\n  'hello-world',\n  'commit_sha'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": true,
+          "githubCloudOnly": false,
+          "previews": [
+            {
+              "name": "squirrel-girl",
+              "note": "An additional `reactions` object in the commit comment payload is currently available for developers to preview. During the preview period, the APIs may change without advance notice. Please see the [blog post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for full details.\n\nTo access the API you must provide a custom [media type](https://developer.github.com/v3/media) in the `Accept` header:\n\n```\n  application/vnd.github.squirrel-girl-preview\n\n```\n\nThe `reactions` key will have the following payload where `url` can be used to construct the API location for [listing and creating](https://developer.github.com/v3/reactions) reactions.",
+              "required": false
+            }
+          ]
+        },
+        "x-changes": [
+          {
+            "type": "parameter",
+            "date": "2019-06-07",
+            "note": "\"ref\" parameter renamed to \"commit_sha\"",
+            "before": {
+              "name": "ref"
+            },
+            "after": {
+              "name": "commit_sha"
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a commit comment",
+        "description": "Create a comment for a commit using its `:commit_sha`.\n\nThis endpoint triggers [notifications](https://help.github.com/articles/about-notifications/). Creating content too quickly using this endpoint may result in abuse rate limiting. See \"[Abuse rate limits](https://developer.github.com/v3/#abuse-rate-limits)\" and \"[Dealing with abuse rate limits](https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits)\" for details.",
+        "operationId": "repos/create-commit-comment",
+        "tags": ["repos"],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/repos/comments/#create-a-commit-comment"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "owner",
+            "description": "owner parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "description": "repo parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commit_sha",
+            "description": "commit_sha parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "html_url": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number"
+                    },
+                    "node_id": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "position": {
+                      "type": "number"
+                    },
+                    "line": {
+                      "type": "number"
+                    },
+                    "commit_id": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "login": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "number"
+                        },
+                        "node_id": {
+                          "type": "string"
+                        },
+                        "avatar_url": {
+                          "type": "string"
+                        },
+                        "gravatar_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "html_url": {
+                          "type": "string"
+                        },
+                        "followers_url": {
+                          "type": "string"
+                        },
+                        "following_url": {
+                          "type": "string"
+                        },
+                        "gists_url": {
+                          "type": "string"
+                        },
+                        "starred_url": {
+                          "type": "string"
+                        },
+                        "subscriptions_url": {
+                          "type": "string"
+                        },
+                        "organizations_url": {
+                          "type": "string"
+                        },
+                        "repos_url": {
+                          "type": "string"
+                        },
+                        "events_url": {
+                          "type": "string"
+                        },
+                        "received_events_url": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "site_admin": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "html_url": "https://github.com/octocat/Hello-World/commit/6dcb09b5b57875f334f61aebed695e2e4193db5e#commitcomment-1",
+                  "url": "https://api.github.com/repos/octocat/Hello-World/comments/1",
+                  "id": 1,
+                  "node_id": "MDEzOkNvbW1pdENvbW1lbnQx",
+                  "body": "Great stuff",
+                  "path": "file1.txt",
+                  "position": 4,
+                  "line": 14,
+                  "commit_id": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "user": {
+                    "login": "octocat",
+                    "id": 1,
+                    "node_id": "MDQ6VXNlcjE=",
+                    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+                    "gravatar_id": "",
+                    "url": "https://api.github.com/users/octocat",
+                    "html_url": "https://github.com/octocat",
+                    "followers_url": "https://api.github.com/users/octocat/followers",
+                    "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+                    "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+                    "organizations_url": "https://api.github.com/users/octocat/orgs",
+                    "repos_url": "https://api.github.com/users/octocat/repos",
+                    "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+                    "received_events_url": "https://api.github.com/users/octocat/received_events",
+                    "type": "User",
+                    "site_admin": false
+                  },
+                  "created_at": "2011-04-14T16:00:49Z",
+                  "updated_at": "2011-04-14T16:00:49Z"
+                }
+              }
+            }
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -XPOST \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/repos/octocat/hello-world/commits/COMMIT_SHA/comments \\\n  -d '{\"body\":\"body\"}'"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.repos.createCommitComment({\n  owner: 'octocat',\n  repo: 'hello-world',\n  commit_sha: 'commit_sha',\n  body: 'body'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.create_commit_comment(\n  'hello-world',\n  'commit_sha',\n  'body'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": true,
+          "githubCloudOnly": false,
+          "previews": [],
+          "triggersNotification": true
+        },
+        "x-changes": [
+          {
+            "type": "parameter",
+            "date": "2019-06-07",
+            "note": "\"sha\" parameter renamed to \"commit_sha\"",
+            "before": {
+              "name": "sha"
+            },
+            "after": {
+              "name": "commit_sha"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "type": "string",
+                    "description": "The contents of the comment."
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Relative path of the file to comment on."
+                  },
+                  "position": {
+                    "type": "integer",
+                    "description": "Line index in the diff to comment on."
+                  },
+                  "line": {
+                    "type": "integer",
+                    "description": "**Deprecated**. Use **position** parameter instead. Line number in the file to comment on."
+                  }
+                },
+                "required": ["body"]
+              },
+              "example": {
+                "body": "Great stuff",
+                "path": "file1.txt",
+                "position": 4,
+                "line": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
