@@ -157,6 +157,16 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
         }
 
+        [Fact]
+        public async Task Process_ForPathWithThreeVerb_ExtractsInformation()
+        {
+            var path = await LoadPathWithGetPutAndDelete();
+
+            var result = PathProcessor.Process(path);
+
+            Assert.Equal("/user/following/{username}", result.Path);
+            Assert.Equal(3, result.Verbs.Count);
+        }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
         {
@@ -178,6 +188,16 @@ namespace Octokit.CodeGen.Tests
         private static async Task<JsonProperty> LoadPathWithGetAndPost()
         {
             var json = await LoadFixture("example-get-and-post-route.json");
+            var paths = json.RootElement.GetProperty("paths");
+            var properties = paths.EnumerateObject();
+            var firstPath = properties.ElementAt(0);
+            return firstPath;
+        }
+
+
+        private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
+        {
+            var json = await LoadFixture("example-get-put-delete-route.json");
             var paths = json.RootElement.GetProperty("paths");
             var properties = paths.EnumerateObject();
             var firstPath = properties.ElementAt(0);

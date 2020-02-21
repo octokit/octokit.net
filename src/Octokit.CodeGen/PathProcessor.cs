@@ -22,6 +22,18 @@ namespace Octokit.CodeGen
                 return true;
             }
 
+            if (string.Equals(verb, "put", StringComparison.OrdinalIgnoreCase))
+            {
+                method = HttpMethod.Put;
+                return true;
+            }
+
+            if (string.Equals(verb, "delete", StringComparison.OrdinalIgnoreCase))
+            {
+                method = HttpMethod.Delete;
+                return true;
+            }
+
             method = null;
             return false;
         }

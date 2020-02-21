@@ -1,0 +1,177 @@
+{
+  "paths": {
+    "/user/following/{username}": {
+      "get": {
+        "summary": "Check if you are following a user",
+        "description": "",
+        "operationId": "users/check-following",
+        "tags": ["users"],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "username",
+            "description": "username parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Response if you are following this user"
+          },
+          "404": {
+            "description": "Response if you are not following this user"
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/user/following/USERNAME"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.users.checkFollowing({\n  username: 'username'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.check_following(\n  'username'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": false,
+          "githubCloudOnly": false,
+          "previews": []
+        },
+        "x-changes": []
+      },
+      "put": {
+        "summary": "Follow a user",
+        "description": "Note that you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see \"[HTTP verbs](https://developer.github.com/v3/#http-verbs).\"\n\nFollowing a user requires the user to be logged in and authenticated with basic auth or OAuth with the `user:follow` scope.",
+        "operationId": "users/follow",
+        "tags": ["users"],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/users/followers/#follow-a-user"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "username",
+            "description": "username parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Empty response"
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -XPUT \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/user/following/USERNAME"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.users.follow({\n  username: 'username'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.follow(\n  'username'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": false,
+          "githubCloudOnly": false,
+          "previews": []
+        },
+        "x-changes": []
+      },
+      "delete": {
+        "summary": "Unfollow a user",
+        "description": "Unfollowing a user requires the user to be logged in and authenticated with basic auth or OAuth with the `user:follow` scope.",
+        "operationId": "users/unfollow",
+        "tags": ["users"],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/users/followers/#unfollow-a-user"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "Setting to `application/vnd.github.v3+json` is recommended",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.v3+json"
+            }
+          },
+          {
+            "name": "username",
+            "description": "username parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Empty response"
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -XDELETE \\\n  -H\"Accept: application/vnd.github.v3+json\" \\\n  https://api.github.com/user/following/USERNAME"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.users.unfollow({\n  username: 'username'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.unfollow(\n  'username'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": false,
+          "githubCloudOnly": false,
+          "previews": []
+        },
+        "x-changes": []
+      }
+    }
+  }
+}
