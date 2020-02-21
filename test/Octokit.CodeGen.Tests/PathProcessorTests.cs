@@ -81,6 +81,9 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(get.Parameters.Where(p => p.Name == "per_page" && p.In == "query" && p.Type == "integer" && !p.Required));
             Assert.Single(get.Parameters.Where(p => p.Name == "page" && p.In == "query" && p.Type == "integer" && !p.Required));
 
+            // no request parameters needed
+            Assert.Null(get.RequestBody);
+
             Assert.Single(get.Responses);
             var response = get.Responses.First();
 
@@ -121,6 +124,18 @@ namespace Octokit.CodeGen.Tests
 
             Assert.NotNull(post.RequestBody);
 
+            Assert.Equal("application/json", post.RequestBody.ContentType);
+            Assert.Equal("object", post.RequestBody.Content.Type);
+
+            var requestContent = Assert.IsType<ObjectContent>(post.RequestBody.Content);
+
+            Assert.Single(requestContent.Properties.Where(p => p.Name == "body" && p.Type == "string"));
+            Assert.Single(requestContent.Properties.Where(p => p.Name == "path" && p.Type == "string"));
+            Assert.Single(requestContent.Properties.Where(p => p.Name == "position" && p.Type == "integer"));
+
+            // TODO: this parameter is deprecated in the schema - we should not make it available to callers
+            Assert.Single(requestContent.Properties.Where(p => p.Name == "line" && p.Type == "integer"));
+
             Assert.Single(post.Responses);
             var response = post.Responses.First();
 
@@ -128,11 +143,11 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var content = Assert.IsType<ObjectContent>(response.Content);
+            var responseContent = Assert.IsType<ObjectContent>(response.Content);
 
-            Assert.Single(content.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
+            Assert.Single(responseContent.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
-            var objectPropType = content.Properties.Single(p => p.Name == "user" && p.Type == "object");
+            var objectPropType = responseContent.Properties.Single(p => p.Name == "user" && p.Type == "object");
             var nestedObject = Assert.IsType<ObjectProperty>(objectPropType);
 
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
