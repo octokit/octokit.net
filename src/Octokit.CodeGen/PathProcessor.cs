@@ -212,6 +212,32 @@ namespace Octokit.CodeGen
                                 else if (typeString == "array")
                                 {
                                     var arrayResponse = new ArrayResponseContent();
+
+                                    JsonElement itemsProp;
+                                    if (schemaProp.TryGetProperty("items", out itemsProp)
+                                        && itemsProp.TryGetProperty("properties", out propertiesProp))
+                                    {
+                                        foreach (var property in propertiesProp.EnumerateObject())
+                                        {
+                                            var name = property.Name;
+                                            JsonElement innerTypeProp;
+                                            if (property.Value.TryGetProperty("type", out innerTypeProp))
+                                            {
+                                                var innerType = innerTypeProp.GetString();
+                                                if (innerType == "object")
+                                                {
+                                                    var innerProperties = property.Value.GetProperty("properties");
+                                                    var objectProperty = ParseAsObject(name, innerProperties);
+                                                    arrayResponse.ItemProperties.Add(objectProperty);
+                                                }
+                                                else
+                                                {
+                                                    arrayResponse.ItemProperties.Add(new PrimitiveProperty(name, innerType));
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     response.Content = arrayResponse;
                                 }
                                 else
@@ -327,6 +353,13 @@ namespace Octokit.CodeGen
 
     public class ArrayResponseContent : IResponseContent
     {
+        public ArrayResponseContent()
+        {
+            ItemProperties = new List<IResponseProperty>();
+        }
+
         public string Type { get { return "array"; } }
+
+        public List<IResponseProperty> ItemProperties { get; set; }
     }
 }

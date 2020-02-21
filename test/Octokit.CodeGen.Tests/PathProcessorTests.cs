@@ -57,7 +57,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Process_ForPathWithTwoVerbs_ExtractsInformation()
+        public async Task Process_ForPathWithTwoVerbs_ExtractsInformationForGet()
         {
             var path = await LoadPathWithGetAndPost();
 
@@ -87,6 +87,15 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("200", response.StatusCode);
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("array", response.Content.Type);
+
+            var content = Assert.IsType<ArrayResponseContent>(response.Content);
+
+            Assert.Single(content.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
+
+            var objectPropType = content.ItemProperties.Single(p => p.Name == "user" && p.Type == "object");
+            var nestedObject = Assert.IsType<ObjectProperty>(objectPropType);
+
+            Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
