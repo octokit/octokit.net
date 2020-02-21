@@ -173,51 +173,51 @@ namespace Octokit.CodeGen
                                 }
 
                                 JsonElement typeProp;
-                                var hasTypeProp = schemaProp.TryGetProperty("type", out typeProp);
-
-                                if (hasTypeProp)
+                                if (!schemaProp.TryGetProperty("type", out typeProp))
                                 {
-                                    JsonElement propertiesProp;
-                                    var hasPropertiesProp = schemaProp.TryGetProperty("properties", out propertiesProp);
-
-                                    var typeString = typeProp.GetString();
-                                    if (typeString == "object" && hasPropertiesProp)
-                                    {
-                                        var objectResponse = new ObjectResponseContent();
-
-                                        foreach (var property in propertiesProp.EnumerateObject())
-                                        {
-                                            var name = property.Name;
-                                            JsonElement innerTypeProp;
-                                            if (property.Value.TryGetProperty("type", out innerTypeProp))
-                                            {
-                                                var innerType = innerTypeProp.GetString();
-                                                if (innerType == "object")
-                                                {
-                                                    var innerProperties = property.Value.GetProperty("properties");
-                                                    var objectProperty = ParseAsObject(name, innerProperties);
-                                                    objectResponse.Properties.Add(objectProperty);
-                                                }
-                                                else
-                                                {
-                                                    objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
-                                                }
-                                            }
-                                        }
-
-                                        response.Content = objectResponse;
-                                    }
-                                    else if (typeString == "array")
-                                    {
-                                        var arrayResponse = new ArrayResponseContent();
-                                        response.Content = arrayResponse;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine($"PathProcessor.Parse encountered response type '{typeString}' which it doesn't understand.");
-                                    }
+                                    Console.WriteLine($"PathProcessor.Process for path {path} could not find type element on schema in content responses for {verbName}");
+                                    continue;
                                 }
 
+                                JsonElement propertiesProp;
+                                var hasPropertiesProp = schemaProp.TryGetProperty("properties", out propertiesProp);
+
+                                var typeString = typeProp.GetString();
+                                if (typeString == "object" && hasPropertiesProp)
+                                {
+                                    var objectResponse = new ObjectResponseContent();
+
+                                    foreach (var property in propertiesProp.EnumerateObject())
+                                    {
+                                        var name = property.Name;
+                                        JsonElement innerTypeProp;
+                                        if (property.Value.TryGetProperty("type", out innerTypeProp))
+                                        {
+                                            var innerType = innerTypeProp.GetString();
+                                            if (innerType == "object")
+                                            {
+                                                var innerProperties = property.Value.GetProperty("properties");
+                                                var objectProperty = ParseAsObject(name, innerProperties);
+                                                objectResponse.Properties.Add(objectProperty);
+                                            }
+                                            else
+                                            {
+                                                objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
+                                            }
+                                        }
+                                    }
+
+                                    response.Content = objectResponse;
+                                }
+                                else if (typeString == "array")
+                                {
+                                    var arrayResponse = new ArrayResponseContent();
+                                    response.Content = arrayResponse;
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"PathProcessor.Parse encountered response type '{typeString}' which it doesn't understand.");
+                                }
 
                                 verb.Responses.Add(response);
                             }
