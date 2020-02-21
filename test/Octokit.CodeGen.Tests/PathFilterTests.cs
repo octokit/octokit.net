@@ -12,8 +12,8 @@ namespace Octokit.CodeGen.Tests
         {
             var pathFilter = new PathFilter();
 
-            var items = new List<PathResult> {{
-                new PathResult()
+            var items = new List<PathMetadata> {{
+                new PathMetadata()
                 {
                     Path = "/foo/bar/baz"
                 }
@@ -29,8 +29,8 @@ namespace Octokit.CodeGen.Tests
 
             pathFilter.Allow("/foo");
 
-            var items = new List<PathResult> {{
-                new PathResult()
+            var items = new List<PathMetadata> {{
+                new PathMetadata()
                 {
                     Path = "/foo/bar/baz"
                 }

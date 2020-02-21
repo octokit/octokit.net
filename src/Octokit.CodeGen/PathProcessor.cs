@@ -124,7 +124,7 @@ namespace Octokit.CodeGen
             return arrayResponse;
         }
 
-        public static PathResult Process(JsonProperty jsonProperty)
+        public static PathMetadata Process(JsonProperty jsonProperty)
         {
             var path = jsonProperty.Name;
 
@@ -322,7 +322,7 @@ namespace Octokit.CodeGen
             }
 
 
-            return new PathResult()
+            return new PathMetadata()
             {
                 Path = path,
                 Verbs = verbs,
@@ -330,9 +330,9 @@ namespace Octokit.CodeGen
         }
     }
 
-    public class PathResult
+    public class PathMetadata
     {
-        public PathResult()
+        public PathMetadata()
         {
             Verbs = new List<VerbResult>();
         }

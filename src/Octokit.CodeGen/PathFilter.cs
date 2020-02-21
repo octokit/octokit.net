@@ -14,7 +14,7 @@ namespace Octokit.CodeGen
             this.prefixes.Add(prefix);
         }
 
-        public IEnumerable Filter(List<PathResult> items)
+        public IEnumerable Filter(List<PathMetadata> items)
         {
             return items.Where(i => prefixes.Any(p => i.Path.StartsWith(p)));
         }
