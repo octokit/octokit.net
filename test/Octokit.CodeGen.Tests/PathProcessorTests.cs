@@ -136,6 +136,10 @@ namespace Octokit.CodeGen.Tests
             // TODO: this parameter is deprecated in the schema - we should not make it available to callers
             Assert.Single(requestContent.Properties.Where(p => p.Name == "line" && p.Type == "integer"));
 
+            // TODO: we need to surface which parameters are required here, and
+            //       repurposing the response parser means we don't have that
+            //       type immediately available
+
             Assert.Single(post.Responses);
             var response = post.Responses.First();
 

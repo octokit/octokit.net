@@ -39,5 +39,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(pathFilter.Filter(items));
         }
 
+        // TODO: we should filter deprecated paths as we don't care about
+        //       backwards compatibility currently
     }
 }
