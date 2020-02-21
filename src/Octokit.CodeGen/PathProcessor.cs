@@ -224,16 +224,17 @@ namespace Octokit.CodeGen
                     {
                         var statusCode = prop.Name;
 
+                        var response = new Response
+                        {
+                            StatusCode = statusCode
+                        };
+
                         JsonElement contentProp;
                         if (prop.Value.TryGetProperty("content", out contentProp))
                         {
                             foreach (var contentType in contentProp.EnumerateObject())
                             {
-                                var response = new Response
-                                {
-                                    StatusCode = statusCode,
-                                    ContentType = contentType.Name,
-                                };
+                                response.ContentType = contentType.Name;
 
                                 JsonElement schemaProp;
                                 if (!contentType.Value.TryGetProperty("schema", out schemaProp))
@@ -263,10 +264,10 @@ namespace Octokit.CodeGen
                                 {
                                     Console.WriteLine($"PathProcessor.Parse encountered response type '{typeString}' which it doesn't understand.");
                                 }
-
-                                verb.Responses.Add(response);
                             }
                         }
+
+                        verb.Responses.Add(response);
                     }
                 }
 

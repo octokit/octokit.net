@@ -166,6 +166,15 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("/user/following/{username}", result.Path);
             Assert.Equal(3, result.Verbs.Count);
+
+            var get = result.Verbs.First(v => v.Method == HttpMethod.Get);
+            Assert.Equal(2, get.Responses.Count);
+
+            var put = result.Verbs.First(v => v.Method == HttpMethod.Put);
+            Assert.Single(put.Responses);
+
+            var delete = result.Verbs.First(v => v.Method == HttpMethod.Delete);
+            Assert.Single(delete.Responses);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
