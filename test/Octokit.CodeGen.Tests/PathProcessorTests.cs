@@ -158,7 +158,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Process_ForPathWithThreeVerb_ExtractsInformation()
+        public async Task Process_ForPathWithThreeVerb_ExtractsInformationForGet()
         {
             var path = await LoadPathWithGetPutAndDelete();
 
@@ -168,12 +168,42 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal(3, result.Verbs.Count);
 
             var get = result.Verbs.First(v => v.Method == HttpMethod.Get);
+
+            Assert.Single(get.Parameters);
+            Assert.Single(get.Parameters.Where(p => p.Name == "username" && p.Type == "string" && p.In == "path" && p.Required));
+
             Assert.Equal(2, get.Responses.Count);
+        }
+
+        [Fact]
+        public async Task Process_ForPathWithThreeVerb_ExtractsInformationForPut()
+        {
+            var path = await LoadPathWithGetPutAndDelete();
+
+            var result = PathProcessor.Process(path);
 
             var put = result.Verbs.First(v => v.Method == HttpMethod.Put);
+
+            Assert.Equal("application/vnd.github.v3+json", put.AcceptHeader);
+
+            Assert.Single(put.Parameters);
+            Assert.Single(put.Parameters.Where(p => p.Name == "username" && p.Type == "string" && p.In == "path" && p.Required));
+
             Assert.Single(put.Responses);
+        }
+
+        [Fact]
+        public async Task Process_ForPathWithThreeVerb_ExtractsInformationForDelete()
+        {
+            var path = await LoadPathWithGetPutAndDelete();
+
+            var result = PathProcessor.Process(path);
 
             var delete = result.Verbs.First(v => v.Method == HttpMethod.Delete);
+
+            Assert.Single(delete.Parameters);
+            Assert.Single(delete.Parameters.Where(p => p.Name == "username" && p.Type == "string" && p.In == "path" && p.Required));
+
             Assert.Single(delete.Responses);
         }
 
