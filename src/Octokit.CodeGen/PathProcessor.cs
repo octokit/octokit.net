@@ -76,12 +76,12 @@ namespace Octokit.CodeGen
                 JsonElement textProp;
                 if (verbElement.Value.TryGetProperty("summary", out textProp))
                 {
-                    verb.Summary = textProp.GetString();
+                    verb.Summary = textProp.GetString().TrimEnd();
                 }
 
                 if (verbElement.Value.TryGetProperty("description", out textProp))
                 {
-                    verb.Description = textProp.GetString();
+                    verb.Description = textProp.GetString().TrimEnd();
                 }
 
                 JsonElement parametersProp;
@@ -167,12 +167,13 @@ namespace Octokit.CodeGen
                                 if (contentType.Value.TryGetProperty("schema", out schemaProp))
                                 {
                                     JsonElement typeProp;
-                                    JsonElement propertiesProp;
                                     var hasTypeProp = schemaProp.TryGetProperty("type", out typeProp);
-                                    var hasPropertiesProp = schemaProp.TryGetProperty("properties", out propertiesProp);
 
                                     if (hasTypeProp)
                                     {
+                                        JsonElement propertiesProp;
+                                        var hasPropertiesProp = schemaProp.TryGetProperty("properties", out propertiesProp);
+
                                         var typeString = typeProp.GetString();
                                         if (typeString == "object" && hasPropertiesProp)
                                         {
@@ -199,6 +200,15 @@ namespace Octokit.CodeGen
                                             }
 
                                             response.Content = objectResponse;
+                                        }
+                                        else if (typeString == "array")
+                                        {
+                                            var arrayResponse = new ArrayResponseContent();
+                                            response.Content = arrayResponse;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine($"PathProcessor.Parse encountered response type '{typeString}' which it doesn't understand.");
                                         }
                                     }
                                 }
@@ -260,7 +270,7 @@ namespace Octokit.CodeGen
     {
         public string StatusCode { get; set; }
         public string ContentType { get; set; }
-        public ObjectResponseContent Content { get; set; }
+        public IResponseContent Content { get; set; }
     }
 
     public interface IResponseProperty
@@ -293,7 +303,12 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-    public class ObjectResponseContent
+    public interface IResponseContent
+    {
+        string Type { get; }
+    }
+
+    public class ObjectResponseContent : IResponseContent
     {
         public ObjectResponseContent()
         {
@@ -301,5 +316,11 @@ namespace Octokit.CodeGen
         }
         public string Type { get { return "object"; } }
         public List<IResponseProperty> Properties { get; set; }
+    }
+
+
+    public class ArrayResponseContent : IResponseContent
+    {
+        public string Type { get { return "array"; } }
     }
 }

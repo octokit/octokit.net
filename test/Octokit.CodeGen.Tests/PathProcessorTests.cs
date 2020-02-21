@@ -41,7 +41,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var content = response.Content;
+            var content = Assert.IsType<ObjectResponseContent>(response.Content);
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
 
@@ -65,6 +65,28 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("/repos/{owner}/{repo}/commits/{commit_sha}/comments", result.Path);
             Assert.Equal(2, result.Verbs.Count);
+
+            var get = result.Verbs.First();
+            Assert.Equal(HttpMethod.Get, get.Method);
+            Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
+            Assert.Equal("List comments for a single commit", get.Summary);
+            Assert.Equal("Use the `:commit_sha` to specify the commit that will have its comments listed.", get.Description);
+
+            // required parameters
+            Assert.Single(get.Parameters.Where(p => p.Name == "owner" && p.In == "path" && p.Type == "string" && p.Required));
+            Assert.Single(get.Parameters.Where(p => p.Name == "repo" && p.In == "path" && p.Type == "string" && p.Required));
+            Assert.Single(get.Parameters.Where(p => p.Name == "commit_sha" && p.In == "path" && p.Type == "string" && p.Required));
+
+            // optional parameters
+            Assert.Single(get.Parameters.Where(p => p.Name == "per_page" && p.In == "query" && p.Type == "integer" && !p.Required));
+            Assert.Single(get.Parameters.Where(p => p.Name == "page" && p.In == "query" && p.Type == "integer" && !p.Required));
+
+            Assert.Single(get.Responses);
+            var response = get.Responses.First();
+
+            Assert.Equal("200", response.StatusCode);
+            Assert.Equal("application/json", response.ContentType);
+            Assert.Equal("array", response.Content.Type);
         }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
