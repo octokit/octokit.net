@@ -41,7 +41,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var content = Assert.IsType<ObjectResponseContent>(response.Content);
+            var content = Assert.IsType<ObjectContent>(response.Content);
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
 
@@ -88,7 +88,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("array", response.Content.Type);
 
-            var content = Assert.IsType<ArrayResponseContent>(response.Content);
+            var content = Assert.IsType<ArrayContent>(response.Content);
 
             Assert.Single(content.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
@@ -108,25 +108,27 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("/repos/{owner}/{repo}/commits/{commit_sha}/comments", result.Path);
             Assert.Equal(2, result.Verbs.Count);
 
-            var get = result.Verbs.Last();
-            Assert.Equal(HttpMethod.Post, get.Method);
-            Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
-            Assert.Equal("Create a commit comment", get.Summary);
-            Assert.Equal("Create a comment for a commit using its `:commit_sha`.\n\nThis endpoint triggers [notifications](https://help.github.com/articles/about-notifications/). Creating content too quickly using this endpoint may result in abuse rate limiting. See \"[Abuse rate limits](https://developer.github.com/v3/#abuse-rate-limits)\" and \"[Dealing with abuse rate limits](https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits)\" for details.", get.Description);
+            var post = result.Verbs.Last();
+            Assert.Equal(HttpMethod.Post, post.Method);
+            Assert.Equal("application/vnd.github.v3+json", post.AcceptHeader);
+            Assert.Equal("Create a commit comment", post.Summary);
+            Assert.Equal("Create a comment for a commit using its `:commit_sha`.\n\nThis endpoint triggers [notifications](https://help.github.com/articles/about-notifications/). Creating content too quickly using this endpoint may result in abuse rate limiting. See \"[Abuse rate limits](https://developer.github.com/v3/#abuse-rate-limits)\" and \"[Dealing with abuse rate limits](https://developer.github.com/v3/guides/best-practices-for-integrators/#dealing-with-abuse-rate-limits)\" for details.", post.Description);
 
             // required parameters
-            Assert.Single(get.Parameters.Where(p => p.Name == "owner" && p.In == "path" && p.Type == "string" && p.Required));
-            Assert.Single(get.Parameters.Where(p => p.Name == "repo" && p.In == "path" && p.Type == "string" && p.Required));
-            Assert.Single(get.Parameters.Where(p => p.Name == "commit_sha" && p.In == "path" && p.Type == "string" && p.Required));
+            Assert.Single(post.Parameters.Where(p => p.Name == "owner" && p.In == "path" && p.Type == "string" && p.Required));
+            Assert.Single(post.Parameters.Where(p => p.Name == "repo" && p.In == "path" && p.Type == "string" && p.Required));
+            Assert.Single(post.Parameters.Where(p => p.Name == "commit_sha" && p.In == "path" && p.Type == "string" && p.Required));
 
-            Assert.Single(get.Responses);
-            var response = get.Responses.First();
+            Assert.NotNull(post.RequestBody);
+
+            Assert.Single(post.Responses);
+            var response = post.Responses.First();
 
             Assert.Equal("201", response.StatusCode);
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var content = Assert.IsType<ObjectResponseContent>(response.Content);
+            var content = Assert.IsType<ObjectContent>(response.Content);
 
             Assert.Single(content.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
