@@ -207,6 +207,73 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(delete.Responses);
         }
 
+        [Fact]
+        public async Task Process_ForUserReposPath_IncludesEnumValues()
+        {
+            var path = await LoadUserReposEndpoint();
+
+            var result = PathProcessor.Process(path);
+
+            var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Get));
+
+            // TODO: support parsing enum parameter details from source
+
+            var visibility = Assert.Single(get.Parameters.Where(p => p.Name == "visibility" && p.Type == "string" && p.In == "query"));
+
+            // Assert.Contains("all", visibility.Values);
+            // Assert.Contains("public", visibility.Values);
+            // Assert.Contains("private", visibility.Values);
+
+            // Assert.Equal("all", visibility.Default);
+
+            var type = Assert.Single(get.Parameters.Where(p => p.Name == "type" && p.Type == "string" && p.In == "query"));
+
+            // Assert.Contains("all", type.Values);
+            // Assert.Contains("owner", type.Values);
+            // Assert.Contains("public", type.Values);
+            // Assert.Contains("private", type.Values);
+            // Assert.Contains("member", type.Values);
+
+            // Assert.Equal("all", type.Default);
+
+            var sort = Assert.Single(get.Parameters.Where(p => p.Name == "sort" && p.Type == "string" && p.In == "query"));
+
+            // Assert.Contains("created", type.Values);
+            // Assert.Contains("updated", type.Values);
+            // Assert.Contains("pushed", type.Values);
+            // Assert.Contains("full_name", type.Values);
+
+            // Assert.Equal("full_name", type.Default);
+
+            var direction = Assert.Single(get.Parameters.Where(p => p.Name == "direction" && p.Type == "string" && p.In == "query"));
+
+            // Assert.Contains("created", type.Values);
+            // Assert.Contains("updated", type.Values);
+            // Assert.Contains("pushed", type.Values);
+            // Assert.Contains("full_name", type.Values);
+
+            // Assert.Equal("full_name", type.Default);
+
+            Assert.Single(get.Parameters.Where(p => p.Name == "per_page" && p.Type == "integer" && p.In == "query"));
+
+            Assert.Single(get.Parameters.Where(p => p.Name == "page" && p.Type == "integer" && p.In == "query"));
+        }
+
+        // [Fact]
+        // public async Task Process_ForUserReposPath_IncludesOptionalParametersOnPost()
+        // {
+        //     var path = await LoadUserReposEndpoint();
+
+        //     var result = PathProcessor.Process(path);
+
+        //     var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
+
+        //     Assert.Single(post.Parameters);
+        //     Assert.Single(post.Parameters.Where(p => p.Name == "username" && p.Type == "string" && p.In == "path" && p.Required));
+
+        //     Assert.Single(post.Responses);
+        // }
+
         private static async Task<JsonDocument> LoadFixture(string filename)
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -233,10 +300,18 @@ namespace Octokit.CodeGen.Tests
             return firstPath;
         }
 
-
         private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
         {
             var json = await LoadFixture("example-get-put-delete-route.json");
+            var paths = json.RootElement.GetProperty("paths");
+            var properties = paths.EnumerateObject();
+            var firstPath = properties.ElementAt(0);
+            return firstPath;
+        }
+
+        private static async Task<JsonProperty> LoadUserReposEndpoint()
+        {
+            var json = await LoadFixture("user-repos.json");
             var paths = json.RootElement.GetProperty("paths");
             var properties = paths.EnumerateObject();
             var firstPath = properties.ElementAt(0);
