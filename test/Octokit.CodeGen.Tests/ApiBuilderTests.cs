@@ -12,7 +12,8 @@ namespace Octokit.CodeGen.Tests
 
             var apiBuilder = new ApiBuilder();
 
-            Func<PathMetadata, ApiBuilderResult, ApiBuilderResult> addInterfaceName = (path, data) => {
+            Func<PathMetadata, ApiBuilderResult, ApiBuilderResult> addInterfaceName = (path, data) =>
+            {
                 data.InterfaceName = "Monkey";
                 return data;
             };
@@ -35,7 +36,8 @@ namespace Octokit.CodeGen.Tests
 
             var apiBuilder = new ApiBuilder();
 
-            Func<PathMetadata, ApiBuilderResult, ApiBuilderResult> addInterfaceName = (metadata, data) => {
+            Func<PathMetadata, ApiBuilderResult, ApiBuilderResult> addInterfaceName = (metadata, data) =>
+            {
                 data.InterfaceName = metadata.Path;
                 return data;
             };
