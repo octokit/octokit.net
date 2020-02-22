@@ -21,7 +21,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Register_SettingProperty_IsInvoked()
+        public void Build_SettingProperty_IsInvoked()
         {
             var metadata = new PathMetadata();
 
@@ -39,7 +39,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Register_UsingPropertyFromInput_DoesPassInMetadata()
+        public void Build_UsingPropertyFromInput_DoesPassInMetadata()
         {
             var metadata = new PathMetadata()
             {
@@ -60,7 +60,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Register_WillFormatInterfaceAndType_UsingPath()
+        public void Build_WillFormatInterfaceAndType_UsingPath()
         {
             var metadata = new PathMetadata
             {
@@ -92,7 +92,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Register_WillAddMethod_RepresentingGet()
+        public void Build_WillAddMethod_RepresentingGet()
         {
             var metadata = new PathMetadata
             {
@@ -169,7 +169,6 @@ namespace Octokit.CodeGen.Tests
             return await JsonDocument.ParseAsync(stream);
         }
 
-
         private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
         {
             var json = await LoadFixture("example-get-put-delete-route.json");
@@ -179,6 +178,4 @@ namespace Octokit.CodeGen.Tests
             return firstPath;
         }
     }
-
-
 }
