@@ -82,6 +82,17 @@ namespace Octokit.CodeGen
                     return "Get";
                 }
 
+                if (verb.Method == HttpMethod.Delete)
+                {
+                    return "Delete";
+                }
+
+
+                if (verb.Method == HttpMethod.Put)
+                {
+                    return "GetOrCreate";
+                }
+
                 return "???";
             };
 

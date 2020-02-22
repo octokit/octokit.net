@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.CodeGen.Tests
@@ -10,12 +13,17 @@ namespace Octokit.CodeGen.Tests
 
     public class ApiBuilderTests
     {
+        readonly ApiBuilder apiBuilder;
+
+        public ApiBuilderTests()
+        {
+            apiBuilder = new ApiBuilder();
+        }
+
         [Fact]
         public void Register_SettingProperty_IsInvoked()
         {
             var metadata = new PathMetadata();
-
-            var apiBuilder = new ApiBuilder();
 
             TypeBuilderFunc addInterfaceName = (path, data) =>
             {
@@ -37,8 +45,6 @@ namespace Octokit.CodeGen.Tests
             {
                 Path = "some-path"
             };
-
-            var apiBuilder = new ApiBuilder();
 
             TypeBuilderFunc addInterfaceName = (metadata, data) =>
             {
@@ -77,8 +83,6 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var apiBuilder = new ApiBuilder();
-
             apiBuilder.Register(ApiBuilder.AddTypeNames);
 
             var result = apiBuilder.Build(metadata);
@@ -111,8 +115,6 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var apiBuilder = new ApiBuilder();
-
             apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
 
             var result = apiBuilder.Build(metadata);
@@ -127,7 +129,56 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("number", parameter.Type);
         }
 
+        [Fact]
+        public async Task Build_ForPathWithMultipleMethods_GeneratesResultingModel()
+        {
+            var path = await LoadPathWithGetPutAndDelete();
+
+            var metadata = PathProcessor.Process(path);
+
+            apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
+
+            var result = apiBuilder.Build(metadata);
+
+            Assert.Equal(3, result.Methods.Count);
+
+            var get = Assert.Single(result.Methods.Where(m => m.Name == "Get"));
+            var getParameter = Assert.Single(get.Parameters);
+            Assert.Equal("username", getParameter.Name);
+            Assert.Equal("string", getParameter.Type);
+
+            var delete = Assert.Single(result.Methods.Where(m => m.Name == "Delete"));
+            var deleteParameter = Assert.Single(delete.Parameters);
+            Assert.Equal("username", deleteParameter.Name);
+            Assert.Equal("string", deleteParameter.Type);
+
+            var getOrCreate = Assert.Single(result.Methods.Where(m => m.Name == "GetOrCreate"));
+            var getOrCreateParameter = Assert.Single(getOrCreate.Parameters);
+            Assert.Equal("username", getOrCreateParameter.Name);
+            Assert.Equal("string", getOrCreateParameter.Type);
+        }
+
         // TODO: how do we represent parameters that are required rather than optional?
-        // TODO: what shall we do about pagination? 
+        // TODO: what shall we do about pagination?
+
+        private static async Task<JsonDocument> LoadFixture(string filename)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var manifestResourceNames = assembly.GetManifestResourceNames();
+            var stream = assembly.GetManifestResourceStream($"Octokit.CodeGen.Tests.fixtures.{filename}");
+            return await JsonDocument.ParseAsync(stream);
+        }
+
+
+        private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
+        {
+            var json = await LoadFixture("example-get-put-delete-route.json");
+            var paths = json.RootElement.GetProperty("paths");
+            var properties = paths.EnumerateObject();
+            var firstPath = properties.ElementAt(0);
+            return firstPath;
+        }
     }
+
+
 }
