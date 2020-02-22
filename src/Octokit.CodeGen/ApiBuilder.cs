@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
@@ -51,10 +52,14 @@ namespace Octokit.CodeGen
                 }
 
                 var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
-                var pascalCaseSegments = segments.Select(s => {
-                    if (s.Length == 0) {
+                var pascalCaseSegments = segments.Select(s =>
+                {
+                    if (s.Length <= 2)
+                    {
                         return s;
-                    } else {
+                    }
+                    else
+                    {
                         return Char.ToUpper(s[0]) + s.Substring(1);
                     }
                 });
@@ -65,16 +70,91 @@ namespace Octokit.CodeGen
             data.InterfaceName = $"I{className}";
             return data;
         };
-    }
 
-    public interface IApiBuilderFunc
-    {
-        ApiBuilderResult Apply(PathMetadata pathResult, ApiBuilderResult result);
+        public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>
+        {
+            Func<VerbResult, string> convertVerbToMethodName = (verb) =>
+            {
+                if (verb.Method == HttpMethod.Get)
+                {
+                    // what about Get with 200 response being a list?
+                    // this should be GetAll instead to align with our conventions?
+                    return "Get";
+                }
+
+                return "???";
+            };
+
+            Func<VerbResult, List<ApiParameterResult>> convertToParameters = (verb) =>
+            {
+                var list = new List<ApiParameterResult>();
+
+                foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
+                {
+                    var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
+                    var pascalCaseSegments = segments.Select(s =>
+                    {
+                        if (s.Length <= 2)
+                        {
+                            return s;
+                        }
+                        else
+                        {
+                            return Char.ToUpper(s[0]) + s.Substring(1);
+                        }
+                    });
+                    var parameterName = string.Join("", pascalCaseSegments);
+                    parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
+
+                    list.Add(new ApiParameterResult
+                    {
+                        Name = parameterName,
+                        Type = parameter.Type
+                    });
+                }
+
+                return list;
+            };
+
+            foreach (var verb in metadata.Verbs)
+            {
+                data.Methods.Add(new ApiMethodResult
+                {
+                    Name = convertVerbToMethodName(verb),
+                    Parameters = convertToParameters(verb)
+                });
+            }
+
+            return data;
+        };
     }
 
     public class ApiBuilderResult
     {
+        public ApiBuilderResult()
+        {
+            Methods = new List<ApiMethodResult>();
+        }
+
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
+
+        public List<ApiMethodResult> Methods { get; set; }
+    }
+
+    public class ApiMethodResult
+    {
+        public ApiMethodResult()
+        {
+            Parameters = new List<ApiParameterResult>();
+        }
+        public string Name { get; set; }
+        public List<ApiParameterResult> Parameters { get; set; }
+    }
+
+    public class ApiParameterResult
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
     }
 }
