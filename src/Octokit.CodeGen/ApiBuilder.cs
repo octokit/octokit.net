@@ -51,7 +51,13 @@ namespace Octokit.CodeGen
                 }
 
                 var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
-                var pascalCaseSegments = segments.Select(s => Char.ToUpper(s[0]) + s.Substring(1));
+                var pascalCaseSegments = segments.Select(s => {
+                    if (s.Length == 0) {
+                        return s;
+                    } else {
+                        return Char.ToUpper(s[0]) + s.Substring(1);
+                    }
+                });
                 className += string.Join("", pascalCaseSegments);
             }
 
