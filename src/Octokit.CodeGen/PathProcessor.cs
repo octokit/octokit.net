@@ -133,7 +133,7 @@ namespace Octokit.CodeGen
             return requestObject;
         }
 
-        private static ArrayContent ParseArraySchema(JsonElement schema)
+        private static ArrayContent ParseResponseArraySchema(JsonElement schema)
         {
             var arrayResponse = new ArrayContent();
 
@@ -202,15 +202,15 @@ namespace Octokit.CodeGen
                 JsonElement parametersProp;
                 if (verbElement.Value.TryGetProperty("parameters", out parametersProp))
                 {
-                    foreach (var parameter in parametersProp.EnumerateArray())
+                    foreach (var parameterProp in parametersProp.EnumerateArray())
                     {
                         JsonElement nameProp;
                         JsonElement inProp;
                         JsonElement schemaProp;
 
-                        var hasName = parameter.TryGetProperty("name", out nameProp);
-                        var hasIn = parameter.TryGetProperty("in", out inProp);
-                        var hasSchema = parameter.TryGetProperty("schema", out schemaProp);
+                        var hasName = parameterProp.TryGetProperty("name", out nameProp);
+                        var hasIn = parameterProp.TryGetProperty("in", out inProp);
+                        var hasSchema = parameterProp.TryGetProperty("schema", out schemaProp);
 
                         if (!hasName || !hasIn)
                         {
@@ -222,7 +222,7 @@ namespace Octokit.CodeGen
                             JsonElement requiredProp;
 
                             var isRequired = false;
-                            if (parameter.TryGetProperty("required", out requiredProp))
+                            if (parameterProp.TryGetProperty("required", out requiredProp))
                             {
                                 isRequired = requiredProp.GetBoolean();
                             }
@@ -245,13 +245,35 @@ namespace Octokit.CodeGen
                             if (schemaProp.TryGetProperty("type", out typeProp))
                             {
                                 var typeString = typeProp.GetString();
-                                verb.Parameters.Add(new Parameter
+
+                                var parameter = new Parameter
                                 {
                                     Name = nameString,
                                     In = inString,
                                     Required = isRequired,
                                     Type = typeString
-                                });
+                                };
+
+                                if (typeString == "string")
+                                {
+                                    JsonElement enumProp;
+
+                                    if (schemaProp.TryGetProperty("enum", out enumProp))
+                                    {
+                                        foreach (var enumItem in enumProp.EnumerateArray())
+                                        {
+                                            parameter.Values.Add(enumItem.GetString());
+                                        }
+
+                                        JsonElement defaultProp;
+                                        if (schemaProp.TryGetProperty("default", out defaultProp))
+                                        {
+                                            parameter.Default = defaultProp.GetString();
+                                        }
+                                    }
+                                }
+
+                                verb.Parameters.Add(parameter);
 
                                 continue;
                             }
@@ -300,7 +322,7 @@ namespace Octokit.CodeGen
                                 }
                                 else if (typeString == "array")
                                 {
-                                    response.Content = ParseArraySchema(schemaProp);
+                                    response.Content = ParseResponseArraySchema(schemaProp);
                                 }
                                 else
                                 {
@@ -358,7 +380,6 @@ namespace Octokit.CodeGen
                 verbs.Add(verb);
             }
 
-
             return new PathMetadata()
             {
                 Path = path,
@@ -390,17 +411,24 @@ namespace Octokit.CodeGen
         public HttpMethod Method { get; set; }
         public string AcceptHeader { get; set; }
         public List<Parameter> Parameters { get; set; }
-
         public Request RequestBody { get; set; }
         public List<Response> Responses { get; set; }
     }
 
     public class Parameter
     {
+        public Parameter()
+        {
+            Values = new List<string>();
+        }
         public string Name { get; set; }
         public string In { get; set; }
         public string Type { get; set; }
         public bool Required { get; set; }
+
+        // only relevant to enums (of type 'string')
+        public List<string> Values { get; set; }
+        public string Default { get; set; }
     }
 
     public class Response
@@ -440,7 +468,6 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-
     public class PrimitiveRequestProperty : IRequestProperty
     {
         public PrimitiveRequestProperty(string name, string type, bool required)
@@ -451,11 +478,8 @@ namespace Octokit.CodeGen
         }
         public string Name { get; private set; }
         public string Type { get; private set; }
-
         public bool Required { get; private set; }
     }
-
-
 
     public class ObjectProperty : IResponseProperty
     {
@@ -502,9 +526,7 @@ namespace Octokit.CodeGen
         {
             ItemProperties = new List<IResponseProperty>();
         }
-
         public string Type { get { return "array"; } }
-
         public List<IResponseProperty> ItemProperties { get; set; }
     }
 }

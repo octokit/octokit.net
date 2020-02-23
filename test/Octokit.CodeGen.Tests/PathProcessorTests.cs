@@ -210,43 +210,39 @@ namespace Octokit.CodeGen.Tests
 
             var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Get));
 
-            // TODO: support parsing enum parameter details from source
-
             var visibility = Assert.Single(get.Parameters.Where(p => p.Name == "visibility" && p.Type == "string" && p.In == "query"));
 
-            // Assert.Contains("all", visibility.Values);
-            // Assert.Contains("public", visibility.Values);
-            // Assert.Contains("private", visibility.Values);
+            Assert.Contains("all", visibility.Values);
+            Assert.Contains("public", visibility.Values);
+            Assert.Contains("private", visibility.Values);
 
-            // Assert.Equal("all", visibility.Default);
+            Assert.Equal("all", visibility.Default);
 
             var type = Assert.Single(get.Parameters.Where(p => p.Name == "type" && p.Type == "string" && p.In == "query"));
 
-            // Assert.Contains("all", type.Values);
-            // Assert.Contains("owner", type.Values);
-            // Assert.Contains("public", type.Values);
-            // Assert.Contains("private", type.Values);
-            // Assert.Contains("member", type.Values);
+            Assert.Contains("all", type.Values);
+            Assert.Contains("owner", type.Values);
+            Assert.Contains("public", type.Values);
+            Assert.Contains("private", type.Values);
+            Assert.Contains("member", type.Values);
 
-            // Assert.Equal("all", type.Default);
+            Assert.Equal("all", type.Default);
 
             var sort = Assert.Single(get.Parameters.Where(p => p.Name == "sort" && p.Type == "string" && p.In == "query"));
 
-            // Assert.Contains("created", type.Values);
-            // Assert.Contains("updated", type.Values);
-            // Assert.Contains("pushed", type.Values);
-            // Assert.Contains("full_name", type.Values);
+            Assert.Contains("created", sort.Values);
+            Assert.Contains("updated", sort.Values);
+            Assert.Contains("pushed", sort.Values);
+            Assert.Contains("full_name", sort.Values);
 
-            // Assert.Equal("full_name", type.Default);
+            Assert.Equal("full_name", sort.Default);
 
             var direction = Assert.Single(get.Parameters.Where(p => p.Name == "direction" && p.Type == "string" && p.In == "query"));
 
-            // Assert.Contains("created", type.Values);
-            // Assert.Contains("updated", type.Values);
-            // Assert.Contains("pushed", type.Values);
-            // Assert.Contains("full_name", type.Values);
+            Assert.Contains("asc", direction.Values);
+            Assert.Contains("desc", direction.Values);
 
-            // Assert.Equal("full_name", type.Default);
+            Assert.Null(direction.Default);
 
             Assert.Single(get.Parameters.Where(p => p.Name == "per_page" && p.Type == "integer" && p.In == "query"));
 
