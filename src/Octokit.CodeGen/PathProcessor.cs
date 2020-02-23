@@ -63,7 +63,7 @@ namespace Octokit.CodeGen
             return objectProperty;
         }
 
-        private static ObjectContent ParseObjectSchema(JsonElement properties)
+        private static IContent ParseResponseObjectSchema(JsonElement properties)
         {
             var objectResponse = new ObjectContent();
 
@@ -88,6 +88,49 @@ namespace Octokit.CodeGen
             }
 
             return objectResponse;
+        }
+
+        private static RequestObjectContent ParseRequestObjectSchema(JsonElement schemaProp)
+        {
+            var requestObject = new RequestObjectContent();
+
+            JsonElement propertiesProp;
+            if (!schemaProp.TryGetProperty("properties", out propertiesProp))
+            {
+                return requestObject;
+            }
+
+            var requiredProperties = new List<string>();
+
+            JsonElement requiredProp;
+            if (schemaProp.TryGetProperty("required", out requiredProp))
+            {
+                foreach (var prop in requiredProp.EnumerateArray())
+                {
+                    requiredProperties.Add(prop.GetString());
+                }
+            }
+
+            foreach (var property in propertiesProp.EnumerateObject())
+            {
+                var name = property.Name;
+                JsonElement innerTypeProp;
+                if (property.Value.TryGetProperty("type", out innerTypeProp))
+                {
+                    var innerType = innerTypeProp.GetString();
+                    if (innerType == "object")
+                    {
+                        Console.WriteLine("TODO: rewrite recursive parsing to handle objects");
+                    }
+                    else
+                    {
+                        var required = requiredProperties.Contains(name);
+                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, innerType, required));
+                    }
+                }
+            }
+
+            return requestObject;
         }
 
         private static ArrayContent ParseArraySchema(JsonElement schema)
@@ -253,7 +296,7 @@ namespace Octokit.CodeGen
                                 var typeString = typeProp.GetString();
                                 if (typeString == "object" && schemaProp.TryGetProperty("properties", out propertiesProp))
                                 {
-                                    response.Content = ParseObjectSchema(propertiesProp);
+                                    response.Content = ParseResponseObjectSchema(propertiesProp);
                                 }
                                 else if (typeString == "array")
                                 {
@@ -297,19 +340,14 @@ namespace Octokit.CodeGen
                                 continue;
                             }
 
-                            JsonElement propertiesProp;
                             var typeString = typeProp.GetString();
-                            if (typeString == "object" && schemaProp.TryGetProperty("properties", out propertiesProp))
+                            if (typeString == "object")
                             {
-                                requestBody.Content = ParseObjectSchema(propertiesProp);
-                            }
-                            else if (typeString == "array")
-                            {
-                                requestBody.Content = ParseArraySchema(schemaProp);
+                                requestBody.Content = ParseRequestObjectSchema(schemaProp);
                             }
                             else
                             {
-                                Console.WriteLine($"PathProcessor.Parse encountered response type '{typeString}' which it doesn't understand.");
+                                Console.WriteLine($"PathProcessor.Process encountered request body type '{typeString}' which it doesn't understand.");
                             }
 
                             verb.RequestBody = requestBody;
@@ -375,13 +413,20 @@ namespace Octokit.CodeGen
     public class Request
     {
         public string ContentType { get; set; }
-        public IContent Content { get; set; }
+        public RequestObjectContent Content { get; set; }
     }
 
     public interface IResponseProperty
     {
         string Type { get; }
         string Name { get; }
+    }
+
+    public interface IRequestProperty
+    {
+        string Type { get; }
+        string Name { get; }
+        bool Required { get; }
     }
 
     public class PrimitiveProperty : IResponseProperty
@@ -394,6 +439,23 @@ namespace Octokit.CodeGen
         public string Name { get; private set; }
         public string Type { get; private set; }
     }
+
+
+    public class PrimitiveRequestProperty : IRequestProperty
+    {
+        public PrimitiveRequestProperty(string name, string type, bool required)
+        {
+            Name = name;
+            Type = type;
+            Required = required;
+        }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+
+        public bool Required { get; private set; }
+    }
+
+
 
     public class ObjectProperty : IResponseProperty
     {
@@ -412,6 +474,17 @@ namespace Octokit.CodeGen
     {
         string Type { get; }
     }
+
+    public class RequestObjectContent : IContent
+    {
+        public RequestObjectContent()
+        {
+            Properties = new List<IRequestProperty>();
+        }
+        public string Type { get { return "object"; } }
+        public List<IRequestProperty> Properties { get; set; }
+    }
+
 
     public class ObjectContent : IContent
     {
