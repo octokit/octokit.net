@@ -196,11 +196,12 @@ namespace Octokit.Tests.Clients
             {
                 IReadOnlyList<LicenseMetadata> response = new ReadOnlyCollection<LicenseMetadata>(new List<LicenseMetadata>()
                 {
-                    new LicenseMetadata("foo1", "node-id-1", "foo2", "http://example.com/foo1", "something", true),
-                    new LicenseMetadata("bar1", "node-id-1", "bar2", "http://example.com/bar1", "something else", false )
+                    new LicenseMetadata("foo1", "node-id-1", "foo2", "something", "http://example.com/foo1",  true),
+                    new LicenseMetadata("bar1", "node-id-1", "bar2", "something else", "http://example.com/bar1", false)
                 });
+
                 var connection = Substitute.For<IApiConnection>();
-                connection.GetAll<LicenseMetadata>(Args.Uri, null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions)
+                connection.GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions)
                     .Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
