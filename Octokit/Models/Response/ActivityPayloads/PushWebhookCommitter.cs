@@ -11,7 +11,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PushWebhookCommitter
     {
-          /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="PushWebhookCommitter"/> class.
         /// </summary>
         public PushWebhookCommitter() { }
