@@ -107,7 +107,9 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
+            var url = (path == "/")
+                ? ApiUrls.RepositoryContent(owner, name, "", reference)
+                : ApiUrls.RepositoryContent(owner, name, path, reference);
 
             return ApiConnection.GetAll<RepositoryContent>(url);
         }
