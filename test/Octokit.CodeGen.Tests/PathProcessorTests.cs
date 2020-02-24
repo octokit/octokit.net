@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -249,20 +248,26 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(get.Parameters.Where(p => p.Name == "page" && p.Type == "integer" && p.In == "query"));
         }
 
-        // [Fact]
-        // public async Task Process_ForUserReposPath_IncludesOptionalParametersOnPost()
-        // {
-        //     var path = await LoadUserReposEndpoint();
+        [Fact]
+        public async Task Process_ForUserReposPath_IncludesOptionalParametersOnPost()
+        {
+            var path = await LoadUserReposEndpoint();
 
-        //     var result = PathProcessor.Process(path);
+            var result = PathProcessor.Process(path);
 
-        //     var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
+            var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
 
-        //     Assert.Single(post.Parameters);
-        //     Assert.Single(post.Parameters.Where(p => p.Name == "username" && p.Type == "string" && p.In == "path" && p.Required));
+            var requestBody = Assert.IsType<RequestObjectContent>(post.RequestBody.Content);
+            Assert.Single(requestBody.Properties.Where(p => p.Name == "name" && p.Type == "string" && p.Required));
 
-        //     Assert.Single(post.Responses);
-        // }
+            var visibility = Assert.Single(requestBody.Properties.Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required).OfType<RequestStringEnumProperty>());
+
+            Assert.Contains("public", visibility.Values);
+            Assert.Contains("private", visibility.Values);
+            Assert.Contains("internal", visibility.Values);
+
+            Assert.Single(post.Responses);
+        }
 
         private static async Task<JsonDocument> LoadFixture(string filename)
         {

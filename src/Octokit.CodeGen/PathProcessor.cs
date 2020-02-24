@@ -118,14 +118,43 @@ namespace Octokit.CodeGen
                 if (property.Value.TryGetProperty("type", out innerTypeProp))
                 {
                     var innerType = innerTypeProp.GetString();
+                    var required = requiredProperties.Contains(name);
                     if (innerType == "object")
                     {
                         Console.WriteLine("TODO: rewrite recursive parsing to handle objects");
                     }
+                    else if (innerType == "string")
+                    {
+                        JsonElement enumProp;
+                        if (property.Value.TryGetProperty("enum", out enumProp))
+                        {
+                            var stringEnumProp = new RequestStringEnumProperty(name, required);
+                            foreach (var prop in enumProp.EnumerateArray())
+                            {
+                                stringEnumProp.Values.Add(prop.GetString());
+                            }
+                            requestObject.Properties.Add(stringEnumProp);
+                        }
+                        else
+                        {
+                            requestObject.Properties.Add(new RequestStringProperty(name, required));
+                        }
+                    }
+                    else if (innerType == "boolean")
+                    {
+                        requestObject.Properties.Add(new RequestBooleanProperty(name, required));
+                    }
+                    else if (innerType == "integer")
+                    {
+                        requestObject.Properties.Add(new RequestIntegerProperty(name, required));
+                    }
+                    else if (innerType == "number")
+                    {
+                        requestObject.Properties.Add(new RequestLongProperty(name, required));
+                    }
                     else
                     {
-                        var required = requiredProperties.Contains(name);
-                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, innerType, required));
+                        Console.WriteLine($"TODO: handle request type '{innerType}'");
                     }
                 }
             }
@@ -468,17 +497,70 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-    public class PrimitiveRequestProperty : IRequestProperty
+    public class RequestStringProperty : IRequestProperty
     {
-        public PrimitiveRequestProperty(string name, string type, bool required)
+        public RequestStringProperty(string name, bool required)
         {
             Name = name;
-            Type = type;
             Required = required;
         }
         public string Name { get; private set; }
-        public string Type { get; private set; }
+        public string Type { get { return "string"; } }
         public bool Required { get; private set; }
+    }
+
+    public class RequestBooleanProperty : IRequestProperty
+    {
+        public RequestBooleanProperty(string name, bool required)
+        {
+            Name = name;
+            Required = required;
+        }
+        public string Name { get; private set; }
+        public string Type { get { return "boolean"; } }
+        public bool Required { get; private set; }
+    }
+
+    public class RequestIntegerProperty : IRequestProperty
+    {
+        public RequestIntegerProperty(string name, bool required)
+        {
+            Name = name;
+            Required = required;
+        }
+        public string Name { get; private set; }
+        public string Type { get { return "integer"; } }
+        public bool Required { get; private set; }
+    }
+
+    public class RequestLongProperty : IRequestProperty
+    {
+        public RequestLongProperty(string name, bool required)
+        {
+            Name = name;
+            Required = required;
+        }
+        public string Name { get; private set; }
+        public string Type { get { return "number"; } }
+        public bool Required { get; private set; }
+    }
+
+    public class RequestStringEnumProperty : IRequestProperty
+    {
+        public RequestStringEnumProperty(string name, bool required)
+        {
+            Name = name;
+            Required = required;
+
+            Values = new List<string>();
+        }
+        public string Name { get; private set; }
+        public string Type { get { return "string"; } }
+        public bool Required { get; private set; }
+
+        public List<string> Values { get; set; }
+
+        public string Default { get; set; }
     }
 
     public class ObjectProperty : IResponseProperty
