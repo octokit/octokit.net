@@ -209,7 +209,7 @@ public class DeploymentStatusClientTests
 
             connection.Received(1).Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                           Arg.Any<NewDeploymentStatus>(),
-                                                          Arg.Is<string>(s => s == AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview)));
+                                                          Arg.Is<string>(s => s == "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json"));
         }
     }
 
