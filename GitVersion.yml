@@ -4,10 +4,5 @@ branches:
     mode: ContinuousDeployment
     increment: Minor
     tag: beta
-  develop:
-    mode: ContinuousDeployment
-    increment: Minor
-    tag: alpha
-    source-branches: ['dotnetcore']
 ignore:
   sha: []
