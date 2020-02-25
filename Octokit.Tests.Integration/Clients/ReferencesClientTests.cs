@@ -180,6 +180,13 @@ public class ReferencesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanGetListOfReferencesInNamespaceWithRefsIncluded()
+    {
+        var list = await _fixture.GetAllForSubNamespace("octokit", "octokit.net", "refs/heads");
+        Assert.NotEmpty(list);
+    }
+
+    [IntegrationTest]
     public async Task ReturnsCorrectCountOfReferencesInNamespaceWithStart()
     {
         var options = new ApiOptions
@@ -502,6 +509,42 @@ public class ReferencesClientTests : IDisposable
 
         Assert.Empty(all.Where(r => r.Ref == "heads/develop"));
     }
+
+    [IntegrationTest]
+    public async Task CanDeleteAReferenceUsingRefs()
+    {
+        var blob = new NewBlob
+        {
+            Content = "Hello World!",
+            Encoding = EncodingType.Utf8
+        };
+        var blobResult = await _github.Git.Blob.Create(_context.RepositoryOwner, _context.RepositoryName, blob);
+
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Mode = FileMode.File,
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = blobResult.Sha
+        });
+
+        var treeResult = await _github.Git.Tree.Create(_context.RepositoryOwner, _context.RepositoryName, newTree);
+
+        var newCommit = new NewCommit("This is a new commit", treeResult.Sha);
+
+        var commitResult = await _github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit);
+
+        var newReference = new NewReference("heads/develop", commitResult.Sha);
+
+        await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newReference);
+        await _fixture.Delete(_context.RepositoryOwner, _context.RepositoryName, "refs/heads/develop");
+
+        var all = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
+
+        Assert.Empty(all.Where(r => r.Ref == "heads/develop"));
+    }
+
 
     [IntegrationTest]
     public async Task CanDeleteAReferenceWithRepositoryId()
