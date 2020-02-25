@@ -175,8 +175,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            // TODO: Handle 404 when subNamespace cannot be found
-
             if (subNamespace.StartsWith("refs/"))
             {
                 subNamespace = subNamespace.Replace("refs/", string.Empty);
@@ -218,8 +216,6 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
-
-            // TODO: Handle 404 when subNamespace cannot be found
 
             if (subNamespace.StartsWith("refs/"))
             {
