@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
 using System.Globalization;
 
@@ -13,20 +13,25 @@ namespace Octokit.Tests.Clients
         public class TheRenderRawMarkdownMethod
         {
             [Fact]
-            public async Task RequestsTheEmojiEndpoint()
+            public async Task RequestsTheRawMarkdownEndpoint()
             {
-                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
-                var connection = Substitute.For<IConnection>();
-                connection.Post<string>(Args.Uri, "**Test**", "text/html", "text/plain")
+                var markdown = "**Test**";
+                var response = "<strong>Test</strong>";
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Post<string>(
+                        Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
+                        markdown,
+                        "text/html",
+                        "text/plain")
                     .Returns(Task.FromResult(response));
-                var client = new MiscellaneousClient(connection);
+                var client = new MiscellaneousClient(apiConnection);
 
-                var html = await client.RenderRawMarkdown("**Test**");
+                var html = await client.RenderRawMarkdown(markdown);
 
                 Assert.Equal("<strong>Test</strong>", html);
-                connection.Received()
+                apiConnection.Received()
                     .Post<string>(Arg.Is<Uri>(u => u.ToString() == "markdown/raw"),
-                    "**Test**",
+                    markdown,
                     "text/html",
                     "text/plain");
             }
@@ -34,20 +39,23 @@ namespace Octokit.Tests.Clients
         public class TheRenderArbitraryMarkdownMethod
         {
             [Fact]
-            public async Task RequestsTheEmojiEndpoint()
+            public async Task RequestsTheMarkdownEndpoint()
             {
-                IApiResponse<string> response = new ApiResponse<string>(new Response(), "<strong>Test</strong>");
-                var connection = Substitute.For<IConnection>();
-                var forTest = new NewArbitraryMarkdown("testMarkdown", "gfm", "testContext");
-                connection.Post<string>(Args.Uri, forTest, "text/html", "text/plain")
-                    .Returns(Task.FromResult(response));
-                var client = new MiscellaneousClient(connection);
+                var response = "<strong>Test</strong>";
 
-                var html = await client.RenderArbitraryMarkdown(forTest);
+                var payload = new NewArbitraryMarkdown("testMarkdown", "gfm", "testContext");
+
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Post<string>(Args.Uri, payload, "text/html", "text/plain")
+                    .Returns(Task.FromResult(response));
+
+                var client = new MiscellaneousClient(apiConnection);
+
+                var html = await client.RenderArbitraryMarkdown(payload);
                 Assert.Equal("<strong>Test</strong>", html);
-                connection.Received()
+                apiConnection.Received()
                     .Post<string>(Arg.Is<Uri>(u => u.ToString() == "markdown"),
-                    forTest,
+                    payload,
                     "text/html",
                     "text/plain");
             }
@@ -57,25 +65,24 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                IApiResponse<Dictionary<string, string>> response = new ApiResponse<Dictionary<string, string>>
-                (
-                    new Response(),
-                    new Dictionary<string, string>
-                    {
-                        { "foo", "http://example.com/foo.gif" },
-                        { "bar", "http://example.com/bar.gif" }
-                    }
-                );
-                var connection = Substitute.For<IConnection>();
-                connection.Get<Dictionary<string, string>>(Args.Uri, null, null).Returns(Task.FromResult(response));
-                var client = new MiscellaneousClient(connection);
+                IReadOnlyList<Emoji> response = new List<Emoji>
+                {
+                    { new Emoji("foo", "http://example.com/foo.gif") },
+                    { new Emoji("bar", "http://example.com/bar.gif") }
+                };
+
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.GetAll<Emoji>(Args.Uri)
+                          .Returns(Task.FromResult(response));
+
+                var client = new MiscellaneousClient(apiConnection);
 
                 var emojis = await client.GetAllEmojis();
 
                 Assert.Equal(2, emojis.Count);
                 Assert.Equal("foo", emojis[0].Name);
-                connection.Received()
-                    .Get<Dictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"), null, null);
+                apiConnection.Received()
+                    .GetAll<Emoji>(Arg.Is<Uri>(u => u.ToString() == "emojis"));
             }
         }
 
@@ -84,20 +91,17 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheResourceRateLimitEndpoint()
             {
-                IApiResponse<MiscellaneousRateLimit> response = new ApiResponse<MiscellaneousRateLimit>
-                (
-                    new Response(),
-                    new MiscellaneousRateLimit(
-                        new ResourceRateLimit(
-                            new RateLimit(5000, 4999, 1372700873),
-                            new RateLimit(30, 18, 1372700873)
-                        ),
-                        new RateLimit(100, 75, 1372700873)
-                    )
-                );
-                var connection = Substitute.For<IConnection>();
-                connection.Get<MiscellaneousRateLimit>(Args.Uri, null, null).Returns(Task.FromResult(response));
-                var client = new MiscellaneousClient(connection);
+                var rateLimit = new MiscellaneousRateLimit(
+                     new ResourceRateLimit(
+                         new RateLimit(5000, 4999, 1372700873),
+                         new RateLimit(30, 18, 1372700873)
+                     ),
+                     new RateLimit(100, 75, 1372700873)
+                 );
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Get<MiscellaneousRateLimit>(Arg.Is<Uri>(u => u.ToString() == "rate_limit")).Returns(Task.FromResult(rateLimit));
+
+                var client = new MiscellaneousClient(apiConnection);
 
                 var result = await client.GetRateLimits();
 
@@ -131,8 +135,8 @@ namespace Octokit.Tests.Clients
                     CultureInfo.InvariantCulture);
                 Assert.Equal(expectedReset, result.Rate.Reset);
 
-                connection.Received()
-                    .Get<MiscellaneousRateLimit>(Arg.Is<Uri>(u => u.ToString() == "rate_limit"), null, null);
+                apiConnection.Received()
+                    .Get<MiscellaneousRateLimit>(Arg.Is<Uri>(u => u.ToString() == "rate_limit"));
             }
         }
 
@@ -141,22 +145,18 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheMetadataEndpoint()
             {
-                IApiResponse<Meta> response = new ApiResponse<Meta>
-                (
-                    new Response(),
-                    new Meta(
-                        false,
-                        "12345ABCDE",
-                        new[] { "1.1.1.1/24", "1.1.1.2/24" },
-                        new[] { "1.1.2.1/24", "1.1.2.2/24" },
-                        new[] { "1.1.3.1/24", "1.1.3.2/24" },
-                        new[] { "1.1.4.1", "1.1.4.2" }
-                    )
-                );
-                var connection = Substitute.For<IConnection>();
-                connection.Get<Meta>(Args.Uri, null, null)
-                    .Returns(Task.FromResult(response));
-                var client = new MiscellaneousClient(connection);
+                var meta = new Meta(
+                     false,
+                     "12345ABCDE",
+                     new[] { "1.1.1.1/24", "1.1.1.2/24" },
+                     new[] { "1.1.2.1/24", "1.1.2.2/24" },
+                     new[] { "1.1.3.1/24", "1.1.3.2/24" },
+                     new[] { "1.1.4.1", "1.1.4.2" }
+                 );
+
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Get<Meta>(Arg.Is<Uri>(u => u.ToString() == "meta")).Returns(Task.FromResult(meta));
+                var client = new MiscellaneousClient(apiConnection);
 
                 var result = await client.GetMetadata();
 
@@ -167,8 +167,8 @@ namespace Octokit.Tests.Clients
                 Assert.Equal(result.Pages, new[] { "1.1.3.1/24", "1.1.3.2/24" });
                 Assert.Equal(result.Importer, new[] { "1.1.4.1", "1.1.4.2" });
 
-                connection.Received()
-                    .Get<Meta>(Arg.Is<Uri>(u => u.ToString() == "meta"), null, null);
+                apiConnection.Received()
+                    .Get<Meta>(Arg.Is<Uri>(u => u.ToString() == "meta"));
             }
         }
 
@@ -178,6 +178,44 @@ namespace Octokit.Tests.Clients
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new MiscellaneousClient(null));
+            }
+        }
+
+        public class TheGetAllLicensesMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var client = new MiscellaneousClient(Substitute.For<IApiConnection>());
+
+                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
+            }
+
+            [Fact]
+            public async Task RequestsTheLicensesEndpoint()
+            {
+                IReadOnlyList<LicenseMetadata> response = new ReadOnlyCollection<LicenseMetadata>(new List<LicenseMetadata>()
+                {
+                    new LicenseMetadata("foo1", "node-id-1", "foo2", "something", "http://example.com/foo1",  true),
+                    new LicenseMetadata("bar1", "node-id-1", "bar2", "something else", "http://example.com/bar1", false)
+                });
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions)
+                    .Returns(Task.FromResult(response));
+                var client = new MiscellaneousClient(connection);
+
+                var licenses = await client.GetAllLicenses();
+
+                Assert.Equal(2, licenses.Count);
+                Assert.Equal("foo1", licenses[0].Key);
+                Assert.Equal("foo2", licenses[0].Name);
+                Assert.Equal("http://example.com/foo1", licenses[0].Url);
+                Assert.Equal("bar1", licenses[1].Key);
+                Assert.Equal("bar2", licenses[1].Name);
+                Assert.Equal("http://example.com/bar1", licenses[1].Url);
+                connection.Received()
+                    .GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions);
             }
         }
     }

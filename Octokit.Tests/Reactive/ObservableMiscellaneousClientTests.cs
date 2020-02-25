@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllLicenses();
 
-                gitHubClient.Miscellaneous.Received(1).GetAllLicenses();
+                gitHubClient.Miscellaneous.Received(1).GetAllLicenses(Args.ApiOptions);
             }
         }
 

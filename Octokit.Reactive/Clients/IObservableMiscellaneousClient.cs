@@ -47,10 +47,17 @@ namespace Octokit.Reactive
         /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
         /// list of all possible OSS licenses.
         /// </summary>
-        /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IObservable<LicenseMetadata> GetAllLicenses();
+
+        /// <summary>
+        /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
+        /// list of all possible OSS licenses.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of licenses available on the site</returns>
+        IObservable<LicenseMetadata> GetAllLicenses(ApiOptions options);
 
         /// <summary>
         /// Retrieves a license based on the license key such as "MIT"
