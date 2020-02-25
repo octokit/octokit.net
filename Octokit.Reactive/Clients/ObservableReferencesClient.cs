@@ -146,13 +146,23 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <remarks>
+        /// The subNamespace parameter supports either the fully-qualified ref
+        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
+        /// "heads/master" or "tags/release-1")
+        /// </remarks>
         public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
+
+            if (subNamespace.StartsWith("refs/"))
+            {
+                subNamespace = subNamespace.Replace("refs/", string.Empty);
+            }
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name, subNamespace), options);
         }
@@ -180,11 +190,21 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
+        /// <remarks>
+        /// The subNamespace parameter supports either the fully-qualified ref
+        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
+        /// "heads/master" or "tags/release-1")
+        /// </remarks>
         public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
+
+            if (subNamespace.StartsWith("refs/"))
+            {
+                subNamespace = subNamespace.Replace("refs/", string.Empty);
+            }
 
             return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options);
         }
