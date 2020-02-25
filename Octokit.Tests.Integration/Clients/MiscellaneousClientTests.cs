@@ -72,6 +72,31 @@ public class MiscellaneousClientTests
 
             Assert.Equal(5, result.Count);
         }
+
+        [IntegrationTest]
+        public async Task CanRetrieveDistinctListOfLicensesBasedOnPageStart()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var firstPage = await github.Miscellaneous.GetAllLicenses(startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var secondPage = await github.Miscellaneous.GetAllLicenses(skipStartOptions);
+
+            Assert.NotEqual(firstPage[0].Key, secondPage[0].Key);
+        }
     }
 
     public class TheGetLicenseMethod
