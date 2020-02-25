@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Octokit;
 using Octokit.Tests.Integration;
 using Xunit;
 
@@ -55,6 +56,22 @@ public class MiscellaneousClientTests
             Assert.True(result.Count > 2);
             Assert.Contains(result, license => license.Key == "mit");
         }
+
+        [IntegrationTest]
+        public async Task CanRetrieveListOfLicensesWithPagination()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var options = new ApiOptions
+            {
+                PageCount = 1,
+                PageSize = 5,
+            };
+
+            var result = await github.Miscellaneous.GetAllLicenses(options);
+
+            Assert.Equal(5, result.Count);
+        }
     }
 
     public class TheGetLicenseMethod
@@ -68,6 +85,14 @@ public class MiscellaneousClientTests
 
             Assert.Equal("mit", result.Key);
             Assert.Equal("MIT License", result.Name);
+        }
+
+        [IntegrationTest]
+        public async Task ReportsErrorWhenInvalidLicenseProvided()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            await Assert.ThrowsAsync<NotFoundException>(() => github.Miscellaneous.GetLicense("purple-monkey-dishwasher"));
         }
     }
 
