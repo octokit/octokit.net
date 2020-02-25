@@ -48,12 +48,34 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRef()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Get("owner", "repo", "refs/heads/develop");
+
+                connection.Received().Get<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"));
+            }
+
+            [Fact]
             public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReferencesClient(connection);
 
                 await client.Get(1, "heads/develop");
+
+                connection.Received().Get<Reference>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads/develop"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdAndRefs()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Get(1, "refs/heads/develop");
 
                 connection.Received().Get<Reference>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads/develop"));
             }
@@ -151,12 +173,34 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRef()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.GetAllForSubNamespace("owner", "repo", "refs/heads");
+
+                connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads"), Args.ApiOptions);
+            }
+
+            [Fact]
             public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReferencesClient(connection);
 
                 await client.GetAllForSubNamespace(1, "heads");
+
+                connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdAndRefs()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.GetAllForSubNamespace(1, "refs/heads");
 
                 connection.Received().GetAll<Reference>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads"), Args.ApiOptions);
             }
@@ -283,12 +327,34 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public async Task RequestsCorrectUrlWithRefs()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Delete("owner", "repo", "refs/heads/develop");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/git/refs/heads/develop"));
+            }
+
+            [Fact]
             public async Task RequestsCorrectUrlWithRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ReferencesClient(connection);
 
                 await client.Delete(1, "heads/develop");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads/develop"));
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdAndRefs()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ReferencesClient(connection);
+
+                await client.Delete(1, "refs/heads/develop");
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/git/refs/heads/develop"));
             }

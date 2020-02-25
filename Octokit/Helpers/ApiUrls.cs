@@ -3185,8 +3185,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for the specified reference.</returns>
         public static Uri Reference(long repositoryId, string referenceName)
         {
-            return "repositories/{0}/git/refs/{1}".FormatUri(repositoryId,
-                referenceName.Replace("refs/", string.Empty));
+            return "repositories/{0}/git/refs/{1}".FormatUri(repositoryId, referenceName);
         }
 
         /// <summary>
