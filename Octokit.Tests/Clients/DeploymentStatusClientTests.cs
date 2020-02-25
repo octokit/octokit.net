@@ -21,7 +21,7 @@ public class DeploymentStatusClientTests
             connection.Received().GetAll<
                 DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                 null,
-                "application/vnd.github.ant-man-preview+json",
+                "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json",
                 Args.ApiOptions);
         }
 
@@ -34,7 +34,10 @@ public class DeploymentStatusClientTests
 
             await client.GetAll(1, 1);
 
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), Args.ApiOptions);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                 null,
+                 "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json",
+                 Args.ApiOptions);
         }
 
         [Fact]
@@ -56,7 +59,7 @@ public class DeploymentStatusClientTests
             connection.Received().GetAll<DeploymentStatus>(
                 Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                 null,
-                "application/vnd.github.ant-man-preview+json",
+                "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json",
                 options);
         }
 
@@ -76,7 +79,10 @@ public class DeploymentStatusClientTests
 
             await client.GetAll(1, 1, options);
 
-            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), options);
+            connection.Received().GetAll<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                 null,
+                 "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json",
+                 options);
         }
 
         [Fact]
@@ -132,7 +138,7 @@ public class DeploymentStatusClientTests
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                 newDeploymentStatus,
-                "application/vnd.github.ant-man-preview+json");
+                "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json");
         }
 
         [Fact]
@@ -145,7 +151,8 @@ public class DeploymentStatusClientTests
             client.Create(1, 1, newDeploymentStatus);
 
             connection.Received().Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                Arg.Any<NewDeploymentStatus>());
+                Arg.Any<NewDeploymentStatus>(),
+                "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json");
         }
 
         [Fact]
@@ -202,7 +209,7 @@ public class DeploymentStatusClientTests
 
             connection.Received(1).Post<DeploymentStatus>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                                           Arg.Any<NewDeploymentStatus>(),
-                                                          Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview));
+                                                          Arg.Is<string>(s => s == "application/vnd.github.ant-man-preview+json,application/vnd.github.flash-preview+json"));
         }
     }
 

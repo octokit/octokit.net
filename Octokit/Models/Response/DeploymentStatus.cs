@@ -115,6 +115,12 @@ namespace Octokit
         Failure,
 
         [Parameter(Value = "inactive")]
-        Inactive
+        Inactive,
+
+        [Parameter(Value = "in_progress")]
+        InProgress,
+
+        [Parameter(Value = "queued")]
+        Queued
     }
 }

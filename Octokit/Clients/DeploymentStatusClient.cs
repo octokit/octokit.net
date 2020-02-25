@@ -68,7 +68,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                           null,
-                                                          AcceptHeaders.DeploymentApiPreview,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
                                                           options);
         }
 
@@ -86,7 +86,10 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
+                                                          null,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
+                                                          options);
         }
 
         /// <summary>
@@ -108,7 +111,7 @@ namespace Octokit
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                         newDeploymentStatus,
-                                                        AcceptHeaders.DeploymentApiPreview);
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
 
         /// <summary>
@@ -126,7 +129,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
-                                                        newDeploymentStatus);
+                                                        newDeploymentStatus,
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
     }
 }
