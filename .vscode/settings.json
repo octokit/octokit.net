@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/packaging": true,
+        "**/coverage-results": true
+    }
+}
