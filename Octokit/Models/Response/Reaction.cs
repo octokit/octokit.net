@@ -22,7 +22,13 @@ namespace Octokit
         Heart,
 
         [Parameter(Value = "hooray")]
-        Hooray
+        Hooray,
+
+        [Parameter(Value = "rocket")]
+        Rocket,
+
+        [Parameter(Value = "eyes")]
+        Eyes
     }
 
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
