@@ -40,7 +40,8 @@ public class DeploymentStatusClientTests : IDisposable
 
         var commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
 
-        var newDeployment = new NewDeployment(commit.Sha) { 
+        var newDeployment = new NewDeployment(commit.Sha)
+        {
             Environment = "production",
             AutoMerge = false
         };
