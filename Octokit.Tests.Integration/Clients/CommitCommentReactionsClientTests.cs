@@ -58,16 +58,21 @@ public class CommitCommentReactionsClientTests
 
             Assert.NotNull(result);
 
-            var newReaction = new NewReaction(ReactionType.Confused);
-            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+            var confusedReaction = new NewReaction(ReactionType.Confused);
+            var firstReaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, confusedReaction);
+
+            var rocketReaction = new NewReaction(ReactionType.Rocket);
+            var secondReaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, rocketReaction);
 
             var reactions = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id);
 
             Assert.NotEmpty(reactions);
 
-            Assert.Equal(reaction.Id, reactions[0].Id);
+            Assert.Equal(firstReaction.Id, reactions[0].Id);
+            Assert.Equal(firstReaction.Content, reactions[0].Content);
 
-            Assert.Equal(reaction.Content, reactions[0].Content);
+            Assert.Equal(secondReaction.Id, reactions[1].Id);
+            Assert.Equal(secondReaction.Content, reactions[1].Content);
         }
 
         [IntegrationTest]
