@@ -88,9 +88,26 @@ namespace Octokit.CodeGen.Tests
 
             var result = apiBuilder.Build(metadata);
 
-            Assert.Equal("MarketplaceListingAccounts", result.ClassName);
-            Assert.Equal("IMarketplaceListingAccounts", result.InterfaceName);
+            Assert.Equal("MarketplaceListingAccountsClient", result.ClassName);
+            Assert.Equal("IMarketplaceListingAccountsClient", result.InterfaceName);
             var expectedPath = Path.Join("Octokit", "Clients", "MarketplaceListingAccountsClient.cs");
+            Assert.Equal(expectedPath, result.FileName);
+        }
+
+        [Fact]
+        public async Task Build_WillUseAliasForNames_InTypesAndFileName()
+        {
+            var topics = await TestFixtureLoader.LoadTopicsRoute();
+
+            var metadata = PathProcessor.Process(topics);
+
+            apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
+
+            var result = apiBuilder.Build(metadata);
+
+            Assert.Equal("RepositoriesTopicsClient", result.ClassName);
+            Assert.Equal("IRepositoriesTopicsClient", result.InterfaceName);
+            var expectedPath = Path.Join("Octokit", "Clients", "RepositoriesTopicsClient.cs");
             Assert.Equal(expectedPath, result.FileName);
         }
 

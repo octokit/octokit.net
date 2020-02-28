@@ -29,6 +29,11 @@ namespace Octokit.CodeGen
             funcs.Add(func);
         }
 
+        private static readonly Dictionary<string,string> translations = new Dictionary<string, string>
+        {
+          { "repos", "repositories" },
+        };
+
         public static readonly TypeBuilderFunc AddTypeNamesAndFileName = (metadata, data) =>
         {
             var className = "";
@@ -55,6 +60,11 @@ namespace Octokit.CodeGen
                 var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
                 var pascalCaseSegments = segments.Select(s =>
                 {
+                    if (translations.ContainsKey(s))
+                    {
+                      s = translations[s];
+                    }
+
                     if (s.Length <= 2)
                     {
                         return s;
@@ -67,9 +77,11 @@ namespace Octokit.CodeGen
                 className += string.Join("", pascalCaseSegments);
             }
 
-            data.ClassName = className;
-            data.InterfaceName = $"I{className}";
-            data.FileName = Path.Join("Octokit", "Clients", $"{className}Client.cs");
+            var baseClassName = $"{className}Client";
+
+            data.ClassName = baseClassName;
+            data.InterfaceName = $"I{baseClassName}";
+            data.FileName = Path.Join("Octokit", "Clients", $"{baseClassName}.cs");
             return data;
         };
 

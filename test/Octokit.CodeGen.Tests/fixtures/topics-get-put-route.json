@@ -1,0 +1,229 @@
+{
+  "paths": {
+    "/repos/{owner}/{repo}/topics": {
+      "get": {
+        "summary": "List all topics for a repository",
+        "description": "",
+        "operationId": "repos/list-topics",
+        "tags": [
+          "repos"
+        ],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/repos/#list-all-topics-for-a-repository"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "This API is under preview and subject to change.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.mercy-preview+json"
+            },
+            "required": true
+          },
+          {
+            "name": "owner",
+            "description": "owner parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "description": "repo parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "names": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "names": [
+                    "octocat",
+                    "atom",
+                    "electron",
+                    "api"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -H\"Accept: application/vnd.github.mercy-preview+json\" \\\n  https://api.github.com/repos/octocat/hello-world/topics"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.repos.listTopics({\n  owner: 'octocat',\n  repo: 'hello-world'\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.topics(\n  'hello-world'\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": true,
+          "githubCloudOnly": false,
+          "previews": [
+            {
+              "name": "mercy",
+              "note": "The `topics` property for repositories on GitHub is currently available for developers to preview. To view the `topics` property in calls that return repository results, you must provide a custom [media type](https://developer.github.com/v3/media) in the `Accept` header:\n\n```\napplication/vnd.github.mercy-preview+json\n\n```",
+              "required": true
+            }
+          ]
+        },
+        "x-changes": []
+      },
+      "put": {
+        "summary": "Replace all topics for a repository",
+        "description": "",
+        "operationId": "repos/replace-topics",
+        "tags": [
+          "repos"
+        ],
+        "externalDocs": {
+          "description": "API method documentation",
+          "url": "https://developer.github.com/v3/repos/#replace-all-topics-for-a-repository"
+        },
+        "parameters": [
+          {
+            "name": "accept",
+            "description": "This API is under preview and subject to change.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.github.mercy-preview+json"
+            },
+            "required": true
+          },
+          {
+            "name": "owner",
+            "description": "owner parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "description": "repo parameter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "names": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "names": [
+                    "octocat",
+                    "atom",
+                    "electron",
+                    "api"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell",
+            "source": "curl \\\n  -XPUT \\\n  -H\"Accept: application/vnd.github.mercy-preview+json\" \\\n  https://api.github.com/repos/octocat/hello-world/topics \\\n  -d '{\"names\":[\"names\"]}'"
+          },
+          {
+            "lang": "JS",
+            "source": "octokit.repos.replaceTopics({\n  owner: 'octocat',\n  repo: 'hello-world',\n  names: [\n    'names'\n  ]\n})"
+          },
+          {
+            "lang": "Ruby",
+            "source": "octokit.replace_topics(\n  'hello-world',\n  [\n    'names'\n  ]\n)"
+          }
+        ],
+        "x-github": {
+          "legacy": false,
+          "enabledForApps": true,
+          "githubCloudOnly": false,
+          "previews": [
+            {
+              "name": "mercy",
+              "note": "The `topics` property for repositories on GitHub is currently available for developers to preview. To view the `topics` property in calls that return repository results, you must provide a custom [media type](https://developer.github.com/v3/media) in the `Accept` header:\n\n```\napplication/vnd.github.mercy-preview+json\n\n```",
+              "required": true
+            }
+          ]
+        },
+        "x-changes": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "names": {
+                    "type": "array",
+                    "description": "An array of topics to add to the repository. Pass one or more topics to _replace_ the set of existing topics. Send an empty array (`[]`) to clear all topics from the repository. **Note:** Topic `names` cannot contain uppercase letters.",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "names"
+                ]
+              },
+              "example": {
+                "names": [
+                  "octocat",
+                  "atom",
+                  "electron",
+                  "api"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

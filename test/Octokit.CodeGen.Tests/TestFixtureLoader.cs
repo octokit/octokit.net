@@ -48,4 +48,13 @@ public static class TestFixtureLoader
         var firstPath = properties.ElementAt(0);
         return firstPath;
     }
+
+    public static async Task<JsonProperty> LoadTopicsRoute()
+    {
+        var json = await LoadFixture("topics-get-put-route.json");
+        var paths = json.RootElement.GetProperty("paths");
+        var properties = paths.EnumerateObject();
+        var firstPath = properties.ElementAt(0);
+        return firstPath;
+    }
 }
