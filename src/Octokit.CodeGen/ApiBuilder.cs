@@ -71,31 +71,31 @@ namespace Octokit.CodeGen
             return data;
         };
 
+        static readonly Func<VerbResult, string> convertVerbToMethodName = (verb) =>
+        {
+            if (verb.Method == HttpMethod.Get)
+            {
+                // what about Get with 200 response being a list?
+                // this should be GetAll instead to align with our conventions?
+                return "Get";
+            }
+
+            if (verb.Method == HttpMethod.Delete)
+            {
+                return "Delete";
+            }
+
+            if (verb.Method == HttpMethod.Put)
+            {
+                return "GetOrCreate";
+            }
+
+            return "???";
+        };
+
+
         public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>
         {
-            Func<VerbResult, string> convertVerbToMethodName = (verb) =>
-            {
-                if (verb.Method == HttpMethod.Get)
-                {
-                    // what about Get with 200 response being a list?
-                    // this should be GetAll instead to align with our conventions?
-                    return "Get";
-                }
-
-                if (verb.Method == HttpMethod.Delete)
-                {
-                    return "Delete";
-                }
-
-
-                if (verb.Method == HttpMethod.Put)
-                {
-                    return "GetOrCreate";
-                }
-
-                return "???";
-            };
-
             Func<VerbResult, List<ApiParameterResult>> convertToParameters = (verb) =>
             {
                 var list = new List<ApiParameterResult>();

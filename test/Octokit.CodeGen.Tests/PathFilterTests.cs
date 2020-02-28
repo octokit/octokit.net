@@ -5,12 +5,16 @@ namespace Octokit.CodeGen.Tests
 {
     public class PathFilterTests
     {
+        readonly PathFilter pathFilter;
+
+        public PathFilterTests()
+        {
+            pathFilter = new PathFilter();
+        }
 
         [Fact]
         public void Allow_WhenUnset_BlocksEverything()
         {
-            var pathFilter = new PathFilter();
-
             var items = new List<PathMetadata> {{
                 new PathMetadata()
                 {
@@ -24,8 +28,6 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void Allow_WithPrefixMatchingPath_PassesThrough()
         {
-            var pathFilter = new PathFilter();
-
             pathFilter.Allow("/foo");
 
             var items = new List<PathMetadata> {{
