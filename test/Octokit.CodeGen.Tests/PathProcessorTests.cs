@@ -279,6 +279,7 @@ namespace Octokit.CodeGen.Tests
             var objectContent = Assert.IsType<RequestObjectContent>(get.RequestBody.Content);
             var property = Assert.Single(objectContent.Properties);
 
+            Assert.Equal("names", property.Name);
             Assert.Equal("array", property.Type);
             var array = Assert.IsType<RequestArrayProperty>(property);
             Assert.Equal("string", array.ArrayType);
