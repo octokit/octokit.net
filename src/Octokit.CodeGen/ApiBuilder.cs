@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 
@@ -28,7 +29,7 @@ namespace Octokit.CodeGen
             funcs.Add(func);
         }
 
-        public static readonly TypeBuilderFunc AddTypeNames = (metadata, data) =>
+        public static readonly TypeBuilderFunc AddTypeNamesAndFileName = (metadata, data) =>
         {
             var className = "";
 
@@ -68,6 +69,7 @@ namespace Octokit.CodeGen
 
             data.ClassName = className;
             data.InterfaceName = $"I{className}";
+            data.FileName = Path.Join("Octokit", "Clients", $"{className}Client.cs");
             return data;
         };
 
@@ -147,6 +149,7 @@ namespace Octokit.CodeGen
             Methods = new List<ApiMethodResult>();
         }
 
+        public string FileName { get; set; }
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
 

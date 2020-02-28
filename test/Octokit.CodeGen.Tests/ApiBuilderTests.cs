@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -83,12 +84,14 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            apiBuilder.Register(ApiBuilder.AddTypeNames);
+            apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
 
             var result = apiBuilder.Build(metadata);
 
             Assert.Equal("MarketplaceListingAccounts", result.ClassName);
             Assert.Equal("IMarketplaceListingAccounts", result.InterfaceName);
+            var expectedPath = Path.Join("Octokit", "Clients", "MarketplaceListingAccountsClient.cs");
+            Assert.Equal(expectedPath, result.FileName);
         }
 
         [Fact]
