@@ -12,7 +12,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithOneVerb_ExtractsInformation()
         {
-            var path = await LoadPathWithGet();
+            var path = await TestFixtureLoader.LoadPathWithGet();
 
             var result = PathProcessor.Process(path);
 
@@ -54,7 +54,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithTwoVerbs_ExtractsInformationForGet()
         {
-            var path = await LoadPathWithGetAndPost();
+            var path = await TestFixtureLoader.LoadPathWithGetAndPost();
 
             var result = PathProcessor.Process(path);
 
@@ -98,7 +98,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithTwoVerbs_ExtractsInformationForPost()
         {
-            var path = await LoadPathWithGetAndPost();
+            var path = await TestFixtureLoader.LoadPathWithGetAndPost();
 
             var result = PathProcessor.Process(path);
 
@@ -153,7 +153,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForGet()
         {
-            var path = await LoadPathWithGetPutAndDelete();
+            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
             var result = PathProcessor.Process(path);
 
@@ -171,7 +171,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForPut()
         {
-            var path = await LoadPathWithGetPutAndDelete();
+            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
             var result = PathProcessor.Process(path);
 
@@ -188,7 +188,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForDelete()
         {
-            var path = await LoadPathWithGetPutAndDelete();
+            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
             var result = PathProcessor.Process(path);
 
@@ -203,7 +203,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForUserReposPath_IncludesEnumValues()
         {
-            var path = await LoadUserReposEndpoint();
+            var path = await TestFixtureLoader.LoadUserReposEndpoint();
 
             var result = PathProcessor.Process(path);
 
@@ -251,7 +251,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForUserReposPath_IncludesOptionalParametersOnPost()
         {
-            var path = await LoadUserReposEndpoint();
+            var path = await TestFixtureLoader.LoadUserReposEndpoint();
 
             var result = PathProcessor.Process(path);
 
@@ -269,48 +269,5 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(post.Responses);
         }
 
-        private static async Task<JsonDocument> LoadFixture(string filename)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var manifestResourceNames = assembly.GetManifestResourceNames();
-            var stream = assembly.GetManifestResourceStream($"Octokit.CodeGen.Tests.fixtures.{filename}");
-            return await JsonDocument.ParseAsync(stream);
-        }
-
-        private static async Task<JsonProperty> LoadPathWithGet()
-        {
-            var json = await LoadFixture("example-get-route.json");
-            var paths = json.RootElement.GetProperty("paths");
-            var properties = paths.EnumerateObject();
-            var firstPath = properties.ElementAt(0);
-            return firstPath;
-        }
-
-        private static async Task<JsonProperty> LoadPathWithGetAndPost()
-        {
-            var json = await LoadFixture("example-get-and-post-route.json");
-            var paths = json.RootElement.GetProperty("paths");
-            var properties = paths.EnumerateObject();
-            var firstPath = properties.ElementAt(0);
-            return firstPath;
-        }
-
-        private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
-        {
-            var json = await LoadFixture("example-get-put-delete-route.json");
-            var paths = json.RootElement.GetProperty("paths");
-            var properties = paths.EnumerateObject();
-            var firstPath = properties.ElementAt(0);
-            return firstPath;
-        }
-
-        private static async Task<JsonProperty> LoadUserReposEndpoint()
-        {
-            var json = await LoadFixture("user-repos.json");
-            var paths = json.RootElement.GetProperty("paths");
-            var properties = paths.EnumerateObject();
-            var firstPath = properties.ElementAt(0);
-            return firstPath;
-        }
     }
 }
