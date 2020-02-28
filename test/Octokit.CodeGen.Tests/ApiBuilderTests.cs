@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -152,7 +150,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Build_ForPathWithMultipleMethods_GeneratesResultingModel()
         {
-            var path = await LoadPathWithGetPutAndDelete();
+            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
             var metadata = PathProcessor.Process(path);
 
@@ -180,22 +178,5 @@ namespace Octokit.CodeGen.Tests
 
         // TODO: how do we represent parameters that are required rather than optional?
         // TODO: what shall we do about pagination?
-
-        private static async Task<JsonDocument> LoadFixture(string filename)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var manifestResourceNames = assembly.GetManifestResourceNames();
-            var stream = assembly.GetManifestResourceStream($"Octokit.CodeGen.Tests.fixtures.{filename}");
-            return await JsonDocument.ParseAsync(stream);
-        }
-
-        private static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
-        {
-            var json = await LoadFixture("example-get-put-delete-route.json");
-            var paths = json.RootElement.GetProperty("paths");
-            var properties = paths.EnumerateObject();
-            var firstPath = properties.ElementAt(0);
-            return firstPath;
-        }
     }
 }
