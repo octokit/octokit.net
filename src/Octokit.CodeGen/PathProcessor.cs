@@ -152,6 +152,19 @@ namespace Octokit.CodeGen
                     {
                         requestObject.Properties.Add(new RequestLongProperty(name, required));
                     }
+                    else if (innerType == "array")
+                    {
+                        JsonElement itemsProp;
+                        if (property.Value.TryGetProperty("items", out itemsProp))
+                        {
+                            var arrayType = itemsProp.GetProperty("type").GetString();
+                            requestObject.Properties.Add(new RequestArrayProperty(name, arrayType, required));
+                        }
+                        else
+                        {
+                            Console.WriteLine($"TODO: unable to handle inner type on array");
+                        }
+                    }
                     else
                     {
                         Console.WriteLine($"TODO: handle request type '{innerType}'");
@@ -542,6 +555,21 @@ namespace Octokit.CodeGen
         }
         public string Name { get; private set; }
         public string Type { get { return "number"; } }
+        public bool Required { get; private set; }
+    }
+
+
+    public class RequestArrayProperty : IRequestProperty
+    {
+        public RequestArrayProperty(string name, string arrayType, bool required)
+        {
+            Name = name;
+            Required = required;
+            ArrayType = arrayType;
+        }
+        public string Name { get; private set; }
+        public string Type { get { return "array"; } }
+        public string ArrayType { get; private set; }
         public bool Required { get; private set; }
     }
 

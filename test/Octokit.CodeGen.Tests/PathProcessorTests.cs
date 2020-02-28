@@ -267,5 +267,21 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(post.Responses);
         }
 
+        [Fact]
+        public async Task Process_ForTopicsPath_ReturnsStringArrayOnResponse()
+        {
+            var path = await TestFixtureLoader.LoadTopicsRoute();
+
+            var result = PathProcessor.Process(path);
+
+            var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Put));
+
+            var objectContent = Assert.IsType<RequestObjectContent>(get.RequestBody.Content);
+            var property = Assert.Single(objectContent.Properties);
+
+            Assert.Equal("array", property.Type);
+            var array = Assert.IsType<RequestArrayProperty>(property);
+            Assert.Equal("string", array.ArrayType);
+        }
     }
 }
