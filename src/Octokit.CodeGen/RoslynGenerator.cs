@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,6 +10,94 @@ namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
+      private static TypeSyntax ConvertToTypeSyntax(string text)
+      {
+        if (text == "number") {
+          return PredefinedType(Token(SyntaxKind.LongKeyword));
+        }
+
+        // otherwise we don't know how to handle it
+        return PredefinedType(Token(SyntaxKind.VoidKeyword));
+      }
+
+        private static ParameterListSyntax GetParameterList(List<ApiParameterResult> parameters)
+        {
+            if (parameters.Count == 0)
+            {
+                return ParameterList();
+            }
+
+            if (parameters.Count == 1)
+            {
+                var parameter = parameters.FirstOrDefault();
+                var parameterType = ConvertToTypeSyntax(parameter.Type);
+
+                return ParameterList(SingletonSeparatedList<ParameterSyntax>(
+                                                Parameter(Identifier(parameter.Name))
+                                                .WithType(parameterType)));
+            }
+
+            var list = new List<SyntaxNodeOrToken>();
+
+            foreach (var parameter in parameters)
+            {
+
+                var parameterType = ConvertToTypeSyntax(parameter.Type);
+                list.Add(Parameter(Identifier(parameter.Name)).WithType(parameterType));
+                list.Add(Token(SyntaxKind.CommaToken));
+            }
+
+            // remove trailing comma token to ensure code compiles
+            list.RemoveAt(list.Count - 1);
+
+            return ParameterList(SeparatedList<ParameterSyntax>(list));
+        }
+
+        private static InterfaceDeclarationSyntax WithInterface(ApiBuilderResult apiBuilder)
+        {
+            var members = apiBuilder.Methods.Select(m =>
+            {
+                var parameters = GetParameterList(m.Parameters);
+                // TODO: a proper type returned from the API
+                var returnType = PredefinedType(Token(SyntaxKind.VoidKeyword));
+
+                return MethodDeclaration(returnType, Identifier(m.Name))
+                            .WithParameterList(parameters)
+                            .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+            });
+
+            return InterfaceDeclaration(apiBuilder.InterfaceName)
+                                      .WithModifiers(
+                                          TokenList(
+                                              Token(SyntaxKind.PublicKeyword)))
+                                      .WithMembers(List<MemberDeclarationSyntax>(members));
+        }
+
+        private static ClassDeclarationSyntax WithImplementation(ApiBuilderResult apiBuilder)
+        {
+            var members = apiBuilder.Methods.Select(m =>
+            {
+                var parameters = GetParameterList(m.Parameters);
+                // TODO: a proper type returned from the API
+                var returnType = PredefinedType(Token(SyntaxKind.VoidKeyword));
+
+                return MethodDeclaration(returnType, Identifier(m.Name))
+                            .WithParameterList(parameters)
+                            .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+            });
+
+            return ClassDeclaration(apiBuilder.ClassName)
+                                      .WithModifiers(
+                                          TokenList(
+                                              Token(SyntaxKind.PublicKeyword)))
+                                      .WithBaseList(
+                                          BaseList(
+                                              SingletonSeparatedList<BaseTypeSyntax>(
+                                                  SimpleBaseType(
+                                                      IdentifierName(apiBuilder.InterfaceName)))))
+                                      .WithMembers(List<MemberDeclarationSyntax>(members));
+        }
+
         public static CompilationUnitSyntax GenerateSourceFile(ApiBuilderResult stub)
         {
             return CompilationUnit()
@@ -18,19 +108,8 @@ namespace Octokit.CodeGen
                       .WithMembers(
                           List<MemberDeclarationSyntax>(
                               new MemberDeclarationSyntax[]{
-                                  InterfaceDeclaration(stub.InterfaceName)
-                                  .WithModifiers(
-                                      TokenList(
-                                          Token(SyntaxKind.PublicKeyword))),
-                                  ClassDeclaration(stub.ClassName)
-                                  .WithModifiers(
-                                      TokenList(
-                                          Token(SyntaxKind.PublicKeyword)))
-                                  .WithBaseList(
-                                      BaseList(
-                                          SingletonSeparatedList<BaseTypeSyntax>(
-                                              SimpleBaseType(
-                                                  IdentifierName(stub.InterfaceName)))))}))))
+                                  WithInterface(stub),
+                                  WithImplementation(stub) }))))
               .NormalizeWhitespace();
         }
     }
