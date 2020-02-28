@@ -105,7 +105,7 @@ namespace Octokit.CodeGen
                     var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
                     var pascalCaseSegments = segments.Select(s =>
                     {
-                        if (s.Length <= 2)
+                        if (s.Length < 2)
                         {
                             return s;
                         }
