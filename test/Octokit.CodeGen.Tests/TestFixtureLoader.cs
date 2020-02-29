@@ -1,60 +1,45 @@
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 public static class TestFixtureLoader
 {
-    private static async Task<JsonDocument> LoadFixture(string filename)
+    public static Stream LoadStream(string filename)
     {
         var assembly = Assembly.GetExecutingAssembly();
         var manifestResourceNames = assembly.GetManifestResourceNames();
-        var stream = assembly.GetManifestResourceStream($"Octokit.CodeGen.Tests.fixtures.{filename}");
+        return assembly.GetManifestResourceStream($"Octokit.CodeGen.Tests.fixtures.{filename}");
+    }
+
+    private static async Task<JsonDocument> LoadFixture(string filename)
+    {
+        var stream = LoadStream(filename);
         return await JsonDocument.ParseAsync(stream);
     }
 
-    public static async Task<JsonProperty> LoadPathWithGet()
+    public static Stream LoadPathWithGet()
     {
-        var json = await LoadFixture("example-get-route.json");
-        var paths = json.RootElement.GetProperty("paths");
-        var properties = paths.EnumerateObject();
-        var firstPath = properties.ElementAt(0);
-        return firstPath;
+        return LoadStream("example-get-route.json");
     }
 
-    public static async Task<JsonProperty> LoadPathWithGetAndPost()
+    public static Stream LoadPathWithGetAndPost()
     {
-        var json = await LoadFixture("example-get-and-post-route.json");
-        var paths = json.RootElement.GetProperty("paths");
-        var properties = paths.EnumerateObject();
-        var firstPath = properties.ElementAt(0);
-        return firstPath;
+        return LoadStream("example-get-and-post-route.json");
     }
 
-    public static async Task<JsonProperty> LoadPathWithGetPutAndDelete()
+    public static Stream LoadPathWithGetPutAndDelete()
     {
-        var json = await LoadFixture("example-get-put-delete-route.json");
-        var paths = json.RootElement.GetProperty("paths");
-        var properties = paths.EnumerateObject();
-        var firstPath = properties.ElementAt(0);
-        return firstPath;
+        return LoadStream("example-get-put-delete-route.json");
     }
 
-    public static async Task<JsonProperty> LoadUserReposEndpoint()
+    public static Stream LoadUserReposEndpoint()
     {
-        var json = await LoadFixture("user-repos.json");
-        var paths = json.RootElement.GetProperty("paths");
-        var properties = paths.EnumerateObject();
-        var firstPath = properties.ElementAt(0);
-        return firstPath;
+        return LoadStream("user-repos.json");
     }
 
-    public static async Task<JsonProperty> LoadTopicsRoute()
+    public static Stream LoadTopicsRoute()
     {
-        var json = await LoadFixture("topics-get-put-route.json");
-        var paths = json.RootElement.GetProperty("paths");
-        var properties = paths.EnumerateObject();
-        var firstPath = properties.ElementAt(0);
-        return firstPath;
+        return LoadStream("topics-get-put-route.json");
     }
 }

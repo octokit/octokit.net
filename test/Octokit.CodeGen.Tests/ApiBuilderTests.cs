@@ -95,13 +95,14 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Build_WillUseAliasForNames_InTypesAndFileName()
         {
-            var topics = await TestFixtureLoader.LoadTopicsRoute();
+            var stream = TestFixtureLoader.LoadTopicsRoute();
 
-            var metadata = PathProcessor.Process(topics);
+            var paths = await PathProcessor.Process(stream);
+            var path = paths.First();
 
             apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
 
-            var result = apiBuilder.Build(metadata);
+            var result = apiBuilder.Build(path);
 
             Assert.Equal("RepositoriesTopicsClient", result.ClassName);
             Assert.Equal("IRepositoriesTopicsClient", result.InterfaceName);
@@ -150,13 +151,14 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Build_ForPathWithMultipleMethods_GeneratesResultingModel()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
+            var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
-            var metadata = PathProcessor.Process(path);
+            var paths = await PathProcessor.Process(stream);
+            var path = paths.First();
 
             apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
 
-            var result = apiBuilder.Build(metadata);
+            var result = apiBuilder.Build(path);
 
             Assert.Equal(3, result.Methods.Count);
 

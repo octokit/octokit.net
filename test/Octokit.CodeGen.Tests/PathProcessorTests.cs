@@ -10,9 +10,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithOneVerb_ExtractsInformation()
         {
-            var path = await TestFixtureLoader.LoadPathWithGet();
+            var path = TestFixtureLoader.LoadPathWithGet();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(path);
+            var result = Assert.Single(results);
 
             Assert.Equal("/marketplace_listing/accounts/{account_id}", result.Path);
             Assert.Single(result.Verbs);
@@ -52,9 +53,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithTwoVerbs_ExtractsInformationForGet()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetAndPost();
+            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             Assert.Equal("/repos/{owner}/{repo}/commits/{commit_sha}/comments", result.Path);
             Assert.Equal(2, result.Verbs.Count);
@@ -96,9 +98,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithTwoVerbs_ExtractsInformationForPost()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetAndPost();
+            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             Assert.Equal("/repos/{owner}/{repo}/commits/{commit_sha}/comments", result.Path);
             Assert.Equal(2, result.Verbs.Count);
@@ -151,9 +154,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForGet()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
+            var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             Assert.Equal("/user/following/{username}", result.Path);
             Assert.Equal(3, result.Verbs.Count);
@@ -169,9 +173,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForPut()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
+            var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             var put = result.Verbs.First(v => v.Method == HttpMethod.Put);
 
@@ -186,9 +191,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForPathWithThreeVerb_ExtractsInformationForDelete()
         {
-            var path = await TestFixtureLoader.LoadPathWithGetPutAndDelete();
+            var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             var delete = result.Verbs.First(v => v.Method == HttpMethod.Delete);
 
@@ -201,9 +207,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForUserReposPath_IncludesEnumValues()
         {
-            var path = await TestFixtureLoader.LoadUserReposEndpoint();
+            var stream = TestFixtureLoader.LoadUserReposEndpoint();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Get));
 
@@ -249,9 +256,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForUserReposPath_IncludesOptionalParametersOnPost()
         {
-            var path = await TestFixtureLoader.LoadUserReposEndpoint();
+            var stream = TestFixtureLoader.LoadUserReposEndpoint();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
 
@@ -270,9 +278,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public async Task Process_ForTopicsPath_ReturnsStringArrayOnResponse()
         {
-            var path = await TestFixtureLoader.LoadTopicsRoute();
+            var stream = TestFixtureLoader.LoadTopicsRoute();
 
-            var result = PathProcessor.Process(path);
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
 
             var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Put));
 

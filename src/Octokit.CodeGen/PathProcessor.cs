@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Octokit.CodeGen
 {
@@ -208,7 +210,21 @@ namespace Octokit.CodeGen
             return arrayResponse;
         }
 
-        public static PathMetadata Process(JsonProperty jsonProperty)
+        public static async Task<List<PathMetadata>> Process(Stream stream)
+        {
+            var json = await JsonDocument.ParseAsync(stream);
+            var paths = json.RootElement.GetProperty("paths");
+
+            var result = new List<PathMetadata>();
+            foreach (var property in paths.EnumerateObject())
+            {
+                result.Add(Process(property));
+            }
+
+            return result;
+        }
+
+        private static PathMetadata Process(JsonProperty jsonProperty)
         {
             var path = jsonProperty.Name;
 
