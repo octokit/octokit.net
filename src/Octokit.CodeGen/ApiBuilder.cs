@@ -6,205 +6,229 @@ using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
-    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
+  using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
 
-    public class ApiBuilder
+  public class ApiBuilder
+  {
+    private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
+
+    public List<ApiCodeFileMetadata> Build(List<PathMetadata> paths)
     {
-        private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
+      var results = new List<ApiCodeFileMetadata>();
 
-        public List<ApiCodeFileMetadata> Build(List<PathMetadata> paths)
+      foreach (var path in paths)
+      {
+        var result = new ApiCodeFileMetadata();
+
+        foreach (var func in funcs)
         {
-            var results = new List<ApiCodeFileMetadata>();
-
-            foreach (var path in paths)
-            {
-                var result = new ApiCodeFileMetadata();
-
-                foreach (var func in funcs)
-                {
-                    result = func(path, result);
-                }
-
-                results.Add(result);
-            }
-
-            return results;
+          result = func(path, result);
         }
 
-        public void Register(TypeBuilderFunc func)
-        {
-            funcs.Add(func);
-        }
+        results.Add(result);
+      }
 
-        private static readonly Dictionary<string, string> translations = new Dictionary<string, string>
+      return results;
+    }
+
+    public void Register(TypeBuilderFunc func)
+    {
+      funcs.Add(func);
+    }
+
+    private static readonly Dictionary<string, string> translations = new Dictionary<string, string>
         {
           { "repos", "repositories" },
         };
 
-        public static readonly TypeBuilderFunc AddTypeNamesAndFileName = (metadata, data) =>
+    public static readonly TypeBuilderFunc AddTypeNamesAndFileName = (metadata, data) =>
+    {
+      var className = "";
+
+      var tokens = metadata.Path.Split("/");
+
+      Func<string, bool> isPlaceHolder = (str) =>
+          {
+          return str.StartsWith("{") && str.EndsWith("}"); ;
+        };
+
+      foreach (var token in tokens)
+      {
+        if (token.Length == 0)
         {
-            var className = "";
+          continue;
+        }
 
-            var tokens = metadata.Path.Split("/");
+        if (isPlaceHolder(token))
+        {
+          continue;
+        }
 
-            Func<string, bool> isPlaceHolder = (str) =>
+        var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
+        var pascalCaseSegments = segments.Select(s =>
             {
-                return str.StartsWith("{") && str.EndsWith("}"); ;
-            };
+              if (translations.ContainsKey(s))
+              {
+                s = translations[s];
+              }
 
-            foreach (var token in tokens)
-            {
-                if (token.Length == 0)
-                {
-                    continue;
-                }
+              if (s.Length <= 2)
+              {
+                return s;
+              }
+              else
+              {
+                return Char.ToUpper(s[0]) + s.Substring(1);
+              }
+            });
+        className += string.Join("", pascalCaseSegments);
+      }
 
-                if (isPlaceHolder(token))
-                {
-                    continue;
-                }
+      var baseClassName = $"{className}Client";
 
-                var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
-                var pascalCaseSegments = segments.Select(s =>
+      data.ClassName = baseClassName;
+      data.InterfaceName = $"I{baseClassName}";
+      data.FileName = Path.Join("Octokit", "Clients", $"{baseClassName}.cs");
+      return data;
+    };
+
+    static readonly Func<VerbResult, string> convertVerbToMethodName = (verb) =>
+    {
+      if (verb.Method == HttpMethod.Get)
+      {
+        // what about Get with 200 response being a list?
+        // this should be GetAll instead to align with our conventions?
+        return "Get";
+      }
+
+      if (verb.Method == HttpMethod.Delete)
+      {
+        return "Delete";
+      }
+
+      if (verb.Method == HttpMethod.Put)
+      {
+        return "GetOrCreate";
+      }
+
+      return "???";
+    };
+
+    public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>
+    {
+      Func<VerbResult, List<ApiParameterMetadata>> convertToParameters = (verb) =>
+          {
+          var list = new List<ApiParameterMetadata>();
+
+          foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
+          {
+            var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
+            var pascalCaseSegments = segments.Select(s =>
                 {
-                    if (translations.ContainsKey(s))
+                    if (s.Length < 2)
                     {
-                        s = translations[s];
-                    }
-
-                    if (s.Length <= 2)
-                    {
-                        return s;
+                      return s;
                     }
                     else
                     {
-                        return Char.ToUpper(s[0]) + s.Substring(1);
+                      return Char.ToUpper(s[0]) + s.Substring(1);
                     }
-                });
-                className += string.Join("", pascalCaseSegments);
-            }
+                  });
+            var parameterName = string.Join("", pascalCaseSegments);
+            parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
 
-            var baseClassName = $"{className}Client";
+            list.Add(new ApiParameterMetadata
+            {
+              Name = parameterName,
+              Type = parameter.Type
+            });
+          }
 
-            data.ClassName = baseClassName;
-            data.InterfaceName = $"I{baseClassName}";
-            data.FileName = Path.Join("Octokit", "Clients", $"{baseClassName}.cs");
-            return data;
+          return list;
         };
 
-        static readonly Func<VerbResult, string> convertVerbToMethodName = (verb) =>
-        {
-            if (verb.Method == HttpMethod.Get)
-            {
-                // what about Get with 200 response being a list?
-                // this should be GetAll instead to align with our conventions?
-                return "Get";
-            }
+      Func<VerbResult, IResponseType> convertToReturnType = (verb) =>
+          {
+          if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
+          {
+            return new TaskOfType("boolean");
+          }
 
-            if (verb.Method == HttpMethod.Delete)
-            {
-                return "Delete";
-            }
+          return null;
 
-            if (verb.Method == HttpMethod.Put)
-            {
-                return "GetOrCreate";
-            }
-
-            return "???";
         };
 
-
-        public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>
+      foreach (var verb in metadata.Verbs)
+      {
+        data.Methods.Add(new ApiMethodMetadata
         {
-            Func<VerbResult, List<ApiParameterMetadata>> convertToParameters = (verb) =>
-            {
-                var list = new List<ApiParameterMetadata>();
+          Name = convertVerbToMethodName(verb),
+          Parameters = convertToParameters(verb),
+          ReturnType = convertToReturnType(verb),
+        });
+      }
 
-                foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
-                {
-                    var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
-                    var pascalCaseSegments = segments.Select(s =>
-                    {
-                        if (s.Length < 2)
-                        {
-                            return s;
-                        }
-                        else
-                        {
-                            return Char.ToUpper(s[0]) + s.Substring(1);
-                        }
-                    });
-                    var parameterName = string.Join("", pascalCaseSegments);
-                    parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
+      return data;
+    };
+  }
 
-                    list.Add(new ApiParameterMetadata
-                    {
-                        Name = parameterName,
-                        Type = parameter.Type
-                    });
-                }
-
-                return list;
-            };
-
-            foreach (var verb in metadata.Verbs)
-            {
-                data.Methods.Add(new ApiMethodMetadata
-                {
-                    Name = convertVerbToMethodName(verb),
-                    Parameters = convertToParameters(verb)
-                });
-            }
-
-            return data;
-        };
-    }
-
-    public class ApiCodeFileMetadata
+  public class ApiCodeFileMetadata
+  {
+    public ApiCodeFileMetadata()
     {
-        public ApiCodeFileMetadata()
-        {
-            Methods = new List<ApiMethodMetadata>();
-        }
-
-        public string FileName { get; set; }
-        public string InterfaceName { get; set; }
-        public string ClassName { get; set; }
-
-        public List<ApiMethodMetadata> Methods { get; set; }
+      Methods = new List<ApiMethodMetadata>();
     }
 
-    public class ApiMethodMetadata
+    public string FileName { get; set; }
+    public string InterfaceName { get; set; }
+    public string ClassName { get; set; }
+    public List<ApiMethodMetadata> Methods { get; set; }
+  }
+
+  public class ApiMethodMetadata
+  {
+    public ApiMethodMetadata()
     {
-        public ApiMethodMetadata()
-        {
-            Parameters = new List<ApiParameterMetadata>();
-        }
-        public string Name { get; set; }
-        public List<ApiParameterMetadata> Parameters { get; set; }
-        public TaskOfListType ReturnType { get; set; }
-        public SourceMetadata SourceMetadata { get; set; }
+      Parameters = new List<ApiParameterMetadata>();
     }
+    public string Name { get; set; }
+    public List<ApiParameterMetadata> Parameters { get; set; }
+    public IResponseType ReturnType { get; set; }
+    public SourceMetadata SourceMetadata { get; set; }
+  }
 
-    public class ApiParameterMetadata
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-    }
+  public class ApiParameterMetadata
+  {
+    public string Name { get; set; }
+    public string Type { get; set; }
+  }
 
-    public class TaskOfListType
-    {
-        public TaskOfListType(string listType)
-        {
-            ListType = listType;
-        }
-        public string ListType { get; private set; }
-    }
+  public interface IResponseType
+  {
 
-    public class SourceMetadata
+  }
+
+  public class TaskOfType : IResponseType
+  {
+    public TaskOfType(string type)
     {
-        public string Verb { get; set; }
-        public string Path { get; set; }
+      Type = type;
     }
+    public string Type { get; private set; }
+  }
+
+  public class TaskOfListType : IResponseType
+  {
+    public TaskOfListType(string listType)
+    {
+      ListType = listType;
+    }
+    public string ListType { get; private set; }
+  }
+
+  public class SourceMetadata
+  {
+    public string Verb { get; set; }
+    public string Path { get; set; }
+  }
 }

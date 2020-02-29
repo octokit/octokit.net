@@ -10,9 +10,10 @@ namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
-        private static TypeSyntax ConvertToReturnType(TaskOfListType taskOfListType)
+        private static TypeSyntax ConvertToReturnType<T>(T taskOfSomeType) where T : IResponseType
         {
-            if (taskOfListType != null)
+            var listTask = taskOfSomeType as TaskOfListType;
+            if (listTask != null)
             {
                 return GenericName(Identifier("Task"))
                               .WithTypeArgumentList(
@@ -23,7 +24,17 @@ namespace Octokit.CodeGen
                                           .WithTypeArgumentList(
                                               TypeArgumentList(
                                                   SingletonSeparatedList<TypeSyntax>(
-                                                      IdentifierName(taskOfListType.ListType)))))));
+                                                      IdentifierName(listTask.ListType)))))));
+            }
+
+            var objectTask = taskOfSomeType as TaskOfType;
+            if (objectTask != null)
+            {
+                var innerType = ConvertToTypeSyntax(objectTask.Type);
+                return GenericName(Identifier("Task"))
+                        .WithTypeArgumentList(
+                            TypeArgumentList(
+                                SingletonSeparatedList<TypeSyntax>(innerType)));
             }
 
             return PredefinedType(Token(SyntaxKind.VoidKeyword));
@@ -34,6 +45,11 @@ namespace Octokit.CodeGen
             if (text == "number")
             {
                 return PredefinedType(Token(SyntaxKind.LongKeyword));
+            }
+
+            if (text == "boolean")
+            {
+                return PredefinedType(Token(SyntaxKind.BoolKeyword));
             }
 
             // otherwise we don't know how to handle it
@@ -124,8 +140,8 @@ namespace Octokit.CodeGen
             {
                 var parameters = GetParameterList(m.Parameters);
                 var attributes = GetAttributeList(m);
-                // TODO: a proper type returned from the API
-                var returnType = ConvertToReturnType(m.ReturnType);
+          // TODO: a proper type returned from the API
+          var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)

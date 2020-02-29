@@ -182,6 +182,9 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("username", getParameter.Name);
             Assert.Equal("string", getParameter.Type);
 
+            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            Assert.Equal("boolean", returnType.Type);
+
             var delete = Assert.Single(result.Methods.Where(m => m.Name == "Delete"));
             var deleteParameter = Assert.Single(delete.Parameters);
             Assert.Equal("username", deleteParameter.Name);
