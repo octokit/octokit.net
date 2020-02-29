@@ -6,15 +6,15 @@ using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
-    using TypeBuilderFunc = System.Func<PathMetadata, ApiBuilderResult, ApiBuilderResult>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
 
     public class ApiBuilder
     {
         private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
 
-        public ApiBuilderResult Build(PathMetadata path)
+        public ApiCodeFileMetadata Build(PathMetadata path)
         {
-            var value = new ApiBuilderResult();
+            var value = new ApiCodeFileMetadata();
 
             foreach (var func in funcs)
             {
@@ -154,9 +154,9 @@ namespace Octokit.CodeGen
         };
     }
 
-    public class ApiBuilderResult
+    public class ApiCodeFileMetadata
     {
-        public ApiBuilderResult()
+        public ApiCodeFileMetadata()
         {
             Methods = new List<ApiMethodResult>();
         }

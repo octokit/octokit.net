@@ -14,7 +14,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void CanGenerateAStubCodeFileFromSomeModel()
         {
-            var stub = new ApiBuilderResult
+            var stub = new ApiCodeFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 InterfaceName = "ISomeSortOfClient",
@@ -35,7 +35,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceFile_AddsMethod_ToInterfaceAndImplementation()
         {
-            var stub = new ApiBuilderResult
+            var stub = new ApiCodeFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 InterfaceName = "ISomeSortOfClient",
@@ -50,7 +50,8 @@ namespace Octokit.CodeGen.Tests
                       Name = "userId",
                       Type = "number",
                     }
-                  }
+                  },
+                  //ReturnType = new TaskOfListType("SomeResponseType")
                 }
               }
             };

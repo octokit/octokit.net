@@ -53,7 +53,7 @@ namespace Octokit.CodeGen
             return ParameterList(SeparatedList<ParameterSyntax>(list));
         }
 
-        private static InterfaceDeclarationSyntax WithInterface(ApiBuilderResult apiBuilder)
+        private static InterfaceDeclarationSyntax WithInterface(ApiCodeFileMetadata apiBuilder)
         {
             var members = apiBuilder.Methods.Select(m =>
             {
@@ -73,7 +73,7 @@ namespace Octokit.CodeGen
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
-        private static ClassDeclarationSyntax WithImplementation(ApiBuilderResult apiBuilder)
+        private static ClassDeclarationSyntax WithImplementation(ApiCodeFileMetadata apiBuilder)
         {
             var members = apiBuilder.Methods.Select(m =>
             {
@@ -98,7 +98,7 @@ namespace Octokit.CodeGen
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
-        public static CompilationUnitSyntax GenerateSourceFile(ApiBuilderResult stub)
+        public static CompilationUnitSyntax GenerateSourceFile(ApiCodeFileMetadata stub)
         {
             return CompilationUnit()
               .WithMembers(

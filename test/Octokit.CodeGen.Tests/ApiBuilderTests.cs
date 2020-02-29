@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Octokit.CodeGen.Tests
 {
-    using TypeBuilderFunc = Func<PathMetadata, ApiBuilderResult, ApiBuilderResult>;
+    using TypeBuilderFunc = Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
 
     public class ApiBuilderTests
     {
