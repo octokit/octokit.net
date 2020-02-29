@@ -184,6 +184,7 @@ namespace Octokit.CodeGen
         public string Name { get; set; }
         public List<ApiParameterMetadata> Parameters { get; set; }
         public TaskOfListType ReturnType { get; set; }
+        public SourceMetadata SourceMetadata { get; set; }
     }
 
     public class ApiParameterMetadata
@@ -199,5 +200,11 @@ namespace Octokit.CodeGen
             ListType = listType;
         }
         public string ListType { get; private set; }
+    }
+
+    public class SourceMetadata
+    {
+        public string Verb { get; set; }
+        public string Path { get; set; }
     }
 }

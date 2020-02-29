@@ -10,7 +10,6 @@ namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
-
         private static TypeSyntax ConvertToReturnType(TaskOfListType taskOfListType)
         {
             if (taskOfListType != null)
@@ -74,15 +73,41 @@ namespace Octokit.CodeGen
             return ParameterList(SeparatedList<ParameterSyntax>(list));
         }
 
+        private static SyntaxList<AttributeListSyntax> GetAttributeList(ApiMethodMetadata method)
+        {
+            if (method.SourceMetadata == null)
+            {
+                return SingletonList<AttributeListSyntax>(AttributeList());
+            }
+            var generatedRouteAttribute = Attribute(IdentifierName("GeneratedRoute"))
+                                                .WithArgumentList(
+                                                    AttributeArgumentList(
+                                                        SeparatedList<AttributeArgumentSyntax>(
+                                                            new SyntaxNodeOrToken[]{
+                                                            AttributeArgument(
+                                                                LiteralExpression(
+                                                                    SyntaxKind.StringLiteralExpression,
+                                                                    Literal(method.SourceMetadata.Verb))),
+                                                            Token(SyntaxKind.CommaToken),
+                                                            AttributeArgument(
+                                                                LiteralExpression(
+                                                                    SyntaxKind.StringLiteralExpression,
+                                                                    Literal(method.SourceMetadata.Path)))})));
+
+            return SingletonList<AttributeListSyntax>(AttributeList(SingletonSeparatedList<AttributeSyntax>(generatedRouteAttribute)));
+        }
+
         private static InterfaceDeclarationSyntax WithInterface(ApiCodeFileMetadata apiBuilder)
         {
             var members = apiBuilder.Methods.Select(m =>
             {
                 var parameters = GetParameterList(m.Parameters);
+                var attributes = GetAttributeList(m);
                 var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)
+                            .WithAttributeLists(attributes)
                             .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             });
 
@@ -98,11 +123,13 @@ namespace Octokit.CodeGen
             var members = apiBuilder.Methods.Select(m =>
             {
                 var parameters = GetParameterList(m.Parameters);
+                var attributes = GetAttributeList(m);
                 // TODO: a proper type returned from the API
                 var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)
+                            .WithAttributeLists(attributes)
                             .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             });
 

@@ -18,7 +18,7 @@ namespace Octokit.CodeGen.Tests
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 InterfaceName = "ISomeSortOfClient",
-                ClassName = "SomeSortOfClient"
+                ClassName = "SomeSortOfClient",
             };
 
             var result = RoslynGenerator.GenerateSourceFile(stub);
@@ -80,6 +80,55 @@ namespace Octokit.CodeGen.Tests
             parameter = Assert.Single(classMethodNode.DescendantNodes().OfType<ParameterSyntax>());
             Assert.Equal("userId", parameter.Identifier.ValueText);
             Assert.Equal(longNode.ToString(), parameter.Type.ToString());
+        }
+
+        [Fact]
+        public void GenerateSourceFile_UsesSourceMetadta_ToAddAttributes()
+        {
+            var stub = new ApiCodeFileMetadata
+            {
+                FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                InterfaceName = "ISomeSortOfClient",
+                ClassName = "SomeSortOfClient",
+                Methods = new List<ApiMethodMetadata>
+              {
+                new ApiMethodMetadata{
+                  Name = "GetAll",
+                  Parameters = new List<ApiParameterMetadata>
+                  {
+                    new ApiParameterMetadata{
+                      Name = "userId",
+                      Type = "number",
+                    }
+                  },
+                  ReturnType = new TaskOfListType("SomeResponseType"),
+                  SourceMetadata = new SourceMetadata {
+                    Verb = "Get",
+                    Path = "/something"
+                  }
+                }
+              }
+            };
+
+            var result = RoslynGenerator.GenerateSourceFile(stub);
+
+            var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
+            var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+            Assert.Equal("GetAll", interfaceMethodNode.Identifier.ValueText);
+
+            var attributes = interfaceMethodNode.DescendantNodes().OfType<AttributeSyntax>();
+            var attribute = Assert.Single(attributes);
+
+            Assert.Equal("GeneratedRoute", attribute.Name.ToString());
+
+            var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
+            var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+            Assert.Equal("GetAll", classMethodNode.Identifier.ValueText);
+
+            attributes = classMethodNode.DescendantNodes().OfType<AttributeSyntax>();
+            attribute = Assert.Single(attributes);
+
+            Assert.Equal("GeneratedRoute", attribute.Name.ToString());
         }
 
         private static TypeSyntax GetReturnType(string innerType)
