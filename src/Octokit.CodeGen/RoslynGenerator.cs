@@ -140,8 +140,8 @@ namespace Octokit.CodeGen
             {
                 var parameters = GetParameterList(m.Parameters);
                 var attributes = GetAttributeList(m);
-          // TODO: a proper type returned from the API
-          var returnType = ConvertToReturnType(m.ReturnType);
+                // TODO: a proper type returned from the API
+                var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)
