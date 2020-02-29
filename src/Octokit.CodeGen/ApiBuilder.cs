@@ -143,7 +143,7 @@ namespace Octokit.CodeGen
 
             foreach (var verb in metadata.Verbs)
             {
-                data.Methods.Add(new ApiMethodResult
+                data.Methods.Add(new ApiMethodMetadata
                 {
                     Name = convertVerbToMethodName(verb),
                     Parameters = convertToParameters(verb)
@@ -158,19 +158,19 @@ namespace Octokit.CodeGen
     {
         public ApiCodeFileMetadata()
         {
-            Methods = new List<ApiMethodResult>();
+            Methods = new List<ApiMethodMetadata>();
         }
 
         public string FileName { get; set; }
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
 
-        public List<ApiMethodResult> Methods { get; set; }
+        public List<ApiMethodMetadata> Methods { get; set; }
     }
 
-    public class ApiMethodResult
+    public class ApiMethodMetadata
     {
-        public ApiMethodResult()
+        public ApiMethodMetadata()
         {
             Parameters = new List<ApiParameterResult>();
         }

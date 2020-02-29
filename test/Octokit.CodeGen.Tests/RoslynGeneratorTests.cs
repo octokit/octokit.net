@@ -40,9 +40,9 @@ namespace Octokit.CodeGen.Tests
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 InterfaceName = "ISomeSortOfClient",
                 ClassName = "SomeSortOfClient",
-                Methods = new List<ApiMethodResult>
+                Methods = new List<ApiMethodMetadata>
               {
-                new ApiMethodResult{
+                new ApiMethodMetadata{
                   Name = "GetAll",
                   Parameters = new List<ApiParameterResult>
                   {
