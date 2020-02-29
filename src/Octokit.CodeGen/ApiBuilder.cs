@@ -29,7 +29,7 @@ namespace Octokit.CodeGen
             funcs.Add(func);
         }
 
-        private static readonly Dictionary<string,string> translations = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> translations = new Dictionary<string, string>
         {
           { "repos", "repositories" },
         };
@@ -62,7 +62,7 @@ namespace Octokit.CodeGen
                 {
                     if (translations.ContainsKey(s))
                     {
-                      s = translations[s];
+                        s = translations[s];
                     }
 
                     if (s.Length <= 2)
@@ -176,11 +176,21 @@ namespace Octokit.CodeGen
         }
         public string Name { get; set; }
         public List<ApiParameterMetadata> Parameters { get; set; }
+        public TaskOfListType ReturnType { get; set; }
     }
 
     public class ApiParameterMetadata
     {
         public string Name { get; set; }
         public string Type { get; set; }
+    }
+
+    public class TaskOfListType
+    {
+        public TaskOfListType(string listType)
+        {
+            ListType = listType;
+        }
+        public string ListType { get; private set; }
     }
 }

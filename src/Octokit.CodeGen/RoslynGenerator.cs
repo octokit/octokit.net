@@ -10,15 +10,36 @@ namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
-      private static TypeSyntax ConvertToTypeSyntax(string text)
-      {
-        if (text == "number") {
-          return PredefinedType(Token(SyntaxKind.LongKeyword));
+
+        private static TypeSyntax ConvertToReturnType(TaskOfListType taskOfListType)
+        {
+            if (taskOfListType != null)
+            {
+                return GenericName(Identifier("Task"))
+                              .WithTypeArgumentList(
+                                  TypeArgumentList(
+                                      SingletonSeparatedList<TypeSyntax>(
+                                          GenericName(
+                                              Identifier("IReadOnlyList"))
+                                          .WithTypeArgumentList(
+                                              TypeArgumentList(
+                                                  SingletonSeparatedList<TypeSyntax>(
+                                                      IdentifierName(taskOfListType.ListType)))))));
+            }
+
+            return PredefinedType(Token(SyntaxKind.VoidKeyword));
         }
 
-        // otherwise we don't know how to handle it
-        return PredefinedType(Token(SyntaxKind.VoidKeyword));
-      }
+        private static TypeSyntax ConvertToTypeSyntax(string text)
+        {
+            if (text == "number")
+            {
+                return PredefinedType(Token(SyntaxKind.LongKeyword));
+            }
+
+            // otherwise we don't know how to handle it
+            return PredefinedType(Token(SyntaxKind.VoidKeyword));
+        }
 
         private static ParameterListSyntax GetParameterList(List<ApiParameterMetadata> parameters)
         {
@@ -58,8 +79,7 @@ namespace Octokit.CodeGen
             var members = apiBuilder.Methods.Select(m =>
             {
                 var parameters = GetParameterList(m.Parameters);
-                // TODO: a proper type returned from the API
-                var returnType = PredefinedType(Token(SyntaxKind.VoidKeyword));
+                var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)
@@ -79,7 +99,7 @@ namespace Octokit.CodeGen
             {
                 var parameters = GetParameterList(m.Parameters);
                 // TODO: a proper type returned from the API
-                var returnType = PredefinedType(Token(SyntaxKind.VoidKeyword));
+                var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)

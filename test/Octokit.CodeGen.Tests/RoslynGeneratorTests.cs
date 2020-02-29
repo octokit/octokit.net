@@ -51,30 +51,49 @@ namespace Octokit.CodeGen.Tests
                       Type = "number",
                     }
                   },
-                  //ReturnType = new TaskOfListType("SomeResponseType")
+                  ReturnType = new TaskOfListType("SomeResponseType")
                 }
               }
             };
 
+            var expectedReturnType = GetReturnType("SomeResponseType");
+
             var result = RoslynGenerator.GenerateSourceFile(stub);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
-            var interfaceMethod = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
-            Assert.Equal("GetAll", interfaceMethod.Identifier.ValueText);
+            var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+            Assert.Equal("GetAll", interfaceMethodNode.Identifier.ValueText);
+
+            Assert.Equal(expectedReturnType.ToString(), interfaceMethodNode.ReturnType.ToString());
 
             var parameter = Assert.Single(interfaceNode.DescendantNodes().OfType<ParameterSyntax>());
             Assert.Equal("userId", parameter.Identifier.ValueText);
 
             var longNode = PredefinedType(Token(SyntaxKind.LongKeyword));
-            Assert.Equal(longNode.Kind(), parameter.Type.Kind());
+            Assert.Equal(longNode.ToString(), parameter.Type.ToString());
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
             Assert.Equal("GetAll", classMethodNode.Identifier.ValueText);
+            Assert.Equal(expectedReturnType.ToString(), classMethodNode.ReturnType.ToString());
 
             parameter = Assert.Single(classMethodNode.DescendantNodes().OfType<ParameterSyntax>());
             Assert.Equal("userId", parameter.Identifier.ValueText);
-            Assert.Equal(longNode.Kind(), parameter.Type.Kind());
+            Assert.Equal(longNode.ToString(), parameter.Type.ToString());
+        }
+
+        private static TypeSyntax GetReturnType(string innerType)
+        {
+            return GenericName(Identifier("Task"))
+                          .WithTypeArgumentList(
+                              TypeArgumentList(
+                                  SingletonSeparatedList<TypeSyntax>(
+                                      GenericName(
+                                          Identifier("IReadOnlyList"))
+                                      .WithTypeArgumentList(
+                                          TypeArgumentList(
+                                              SingletonSeparatedList<TypeSyntax>(
+                                                  IdentifierName(innerType)))))));
         }
     }
 }
