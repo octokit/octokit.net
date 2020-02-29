@@ -44,9 +44,9 @@ namespace Octokit.CodeGen.Tests
               {
                 new ApiMethodMetadata{
                   Name = "GetAll",
-                  Parameters = new List<ApiParameterResult>
+                  Parameters = new List<ApiParameterMetadata>
                   {
-                    new ApiParameterResult{
+                    new ApiParameterMetadata{
                       Name = "userId",
                       Type = "number",
                     }

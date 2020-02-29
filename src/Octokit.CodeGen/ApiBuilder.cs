@@ -110,9 +110,9 @@ namespace Octokit.CodeGen
 
         public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>
         {
-            Func<VerbResult, List<ApiParameterResult>> convertToParameters = (verb) =>
+            Func<VerbResult, List<ApiParameterMetadata>> convertToParameters = (verb) =>
             {
-                var list = new List<ApiParameterResult>();
+                var list = new List<ApiParameterMetadata>();
 
                 foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
                 {
@@ -131,7 +131,7 @@ namespace Octokit.CodeGen
                     var parameterName = string.Join("", pascalCaseSegments);
                     parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
 
-                    list.Add(new ApiParameterResult
+                    list.Add(new ApiParameterMetadata
                     {
                         Name = parameterName,
                         Type = parameter.Type
@@ -172,13 +172,13 @@ namespace Octokit.CodeGen
     {
         public ApiMethodMetadata()
         {
-            Parameters = new List<ApiParameterResult>();
+            Parameters = new List<ApiParameterMetadata>();
         }
         public string Name { get; set; }
-        public List<ApiParameterResult> Parameters { get; set; }
+        public List<ApiParameterMetadata> Parameters { get; set; }
     }
 
-    public class ApiParameterResult
+    public class ApiParameterMetadata
     {
         public string Name { get; set; }
         public string Type { get; set; }

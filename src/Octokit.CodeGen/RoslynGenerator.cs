@@ -20,7 +20,7 @@ namespace Octokit.CodeGen
         return PredefinedType(Token(SyntaxKind.VoidKeyword));
       }
 
-        private static ParameterListSyntax GetParameterList(List<ApiParameterResult> parameters)
+        private static ParameterListSyntax GetParameterList(List<ApiParameterMetadata> parameters)
         {
             if (parameters.Count == 0)
             {
