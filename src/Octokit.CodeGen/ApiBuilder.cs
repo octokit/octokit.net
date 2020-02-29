@@ -12,16 +12,23 @@ namespace Octokit.CodeGen
     {
         private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
 
-        public ApiCodeFileMetadata Build(PathMetadata path)
+        public List<ApiCodeFileMetadata> Build(List<PathMetadata> paths)
         {
-            var value = new ApiCodeFileMetadata();
+            var results = new List<ApiCodeFileMetadata>();
 
-            foreach (var func in funcs)
+            foreach (var path in paths)
             {
-                value = func(path, value);
+                var result = new ApiCodeFileMetadata();
+
+                foreach (var func in funcs)
+                {
+                    result = func(path, result);
+                }
+
+                results.Add(result);
             }
 
-            return value;
+            return results;
         }
 
         public void Register(TypeBuilderFunc func)

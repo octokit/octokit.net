@@ -22,7 +22,9 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void Build_SettingProperty_IsInvoked()
         {
-            var metadata = new PathMetadata();
+            var metadata = new List<PathMetadata> {
+              new PathMetadata()
+            };
 
             TypeBuilderFunc addInterfaceName = (path, data) =>
             {
@@ -32,7 +34,8 @@ namespace Octokit.CodeGen.Tests
 
             apiBuilder.Register(addInterfaceName);
 
-            var result = apiBuilder.Build(metadata);
+            var results = apiBuilder.Build(metadata);
+            var result = Assert.Single(results);
 
             Assert.Equal("Monkey", result.InterfaceName);
         }
@@ -40,9 +43,12 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void Build_UsingPropertyFromInput_DoesPassInMetadata()
         {
-            var metadata = new PathMetadata()
+            var metadata = new List<PathMetadata>
             {
-                Path = "some-path"
+              new PathMetadata()
+              {
+                  Path = "some-path"
+              }
             };
 
             TypeBuilderFunc addInterfaceName = (metadata, data) =>
@@ -53,7 +59,8 @@ namespace Octokit.CodeGen.Tests
 
             apiBuilder.Register(addInterfaceName);
 
-            var result = apiBuilder.Build(metadata);
+            var results = apiBuilder.Build(metadata);
+            var result = Assert.Single(results);
 
             Assert.Equal("some-path", result.InterfaceName);
         }
@@ -61,30 +68,34 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void Build_WillFormatInterfaceAndType_UsingPath()
         {
-            var metadata = new PathMetadata
+            var metadata = new List<PathMetadata>
             {
-                Path = "/marketplace_listing/accounts/{account_id}",
-                Verbs = new List<VerbResult>
-                {
-                    new VerbResult {
-                        Method = HttpMethod.Get,
-                        Parameters = new List<Parameter>
-                        {
-                            new Parameter
-                            {
-                                Name = "account_id",
-                                In = "path",
-                                Required = true,
-                                Type = "number",
-                            }
-                        }
-                    }
-                }
+              new PathMetadata
+              {
+                  Path = "/marketplace_listing/accounts/{account_id}",
+                  Verbs = new List<VerbResult>
+                  {
+                      new VerbResult {
+                          Method = HttpMethod.Get,
+                          Parameters = new List<Parameter>
+                          {
+                              new Parameter
+                              {
+                                  Name = "account_id",
+                                  In = "path",
+                                  Required = true,
+                                  Type = "number",
+                              }
+                          }
+                      }
+                  }
+              }
             };
 
             apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
 
-            var result = apiBuilder.Build(metadata);
+            var results = apiBuilder.Build(metadata);
+            var result = Assert.Single(results);
 
             Assert.Equal("MarketplaceListingAccountsClient", result.ClassName);
             Assert.Equal("IMarketplaceListingAccountsClient", result.InterfaceName);
@@ -98,11 +109,11 @@ namespace Octokit.CodeGen.Tests
             var stream = TestFixtureLoader.LoadTopicsRoute();
 
             var paths = await PathProcessor.Process(stream);
-            var path = paths.First();
 
             apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
 
-            var result = apiBuilder.Build(path);
+            var results = apiBuilder.Build(paths);
+            var result = Assert.Single(results);
 
             Assert.Equal("RepositoriesTopicsClient", result.ClassName);
             Assert.Equal("IRepositoriesTopicsClient", result.InterfaceName);
@@ -113,30 +124,34 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void Build_WillAddMethod_RepresentingGet()
         {
-            var metadata = new PathMetadata
+            var metadata = new List<PathMetadata>
             {
-                Path = "/marketplace_listing/accounts/{account_id}",
-                Verbs = new List<VerbResult>
-                {
-                    new VerbResult {
-                        Method = HttpMethod.Get,
-                        Parameters = new List<Parameter>
-                        {
-                            new Parameter
-                            {
-                                Name = "account_id",
-                                In = "path",
-                                Required = true,
-                                Type = "number",
-                            }
-                        }
-                    }
-                }
+              new PathMetadata
+              {
+                  Path = "/marketplace_listing/accounts/{account_id}",
+                  Verbs = new List<VerbResult>
+                  {
+                      new VerbResult {
+                          Method = HttpMethod.Get,
+                          Parameters = new List<Parameter>
+                          {
+                              new Parameter
+                              {
+                                  Name = "account_id",
+                                  In = "path",
+                                  Required = true,
+                                  Type = "number",
+                              }
+                          }
+                      }
+                  }
+              }
             };
 
             apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
 
-            var result = apiBuilder.Build(metadata);
+            var results = apiBuilder.Build(metadata);
+            var result = Assert.Single(results);
 
             var method = Assert.Single(result.Methods);
 
@@ -154,11 +169,11 @@ namespace Octokit.CodeGen.Tests
             var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
             var paths = await PathProcessor.Process(stream);
-            var path = paths.First();
 
             apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
 
-            var result = apiBuilder.Build(path);
+            var results = apiBuilder.Build(paths);
+            var result = Assert.Single(results);
 
             Assert.Equal(3, result.Methods.Count);
 
