@@ -85,17 +85,9 @@ namespace Octokit.CodeGen
                             requestObject.Properties.Add(new PrimitiveRequestProperty(name, "string", required));
                         }
                     }
-                    else if (innerType == "boolean")
+                    else if (innerType == "boolean" || innerType == "integer" || innerType == "number")
                     {
-                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "boolean", required));
-                    }
-                    else if (innerType == "integer")
-                    {
-                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "integer", required));
-                    }
-                    else if (innerType == "number")
-                    {
-                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "number", required));
+                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, innerType, required));
                     }
                     else if (innerType == "array")
                     {
@@ -156,17 +148,9 @@ namespace Octokit.CodeGen
                             objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "string", required));
                         }
                     }
-                    else if (innerType == "boolean")
+                    else if (innerType == "boolean" || innerType == "integer" || innerType == "number")
                     {
-                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "boolean", required));
-                    }
-                    else if (innerType == "integer")
-                    {
-                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "integer", required));
-                    }
-                    else if (innerType == "number")
-                    {
-                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "number", required));
+                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, innerType, required));
                     }
                     else if (innerType == "array")
                     {
