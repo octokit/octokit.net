@@ -36,12 +36,7 @@ namespace Octokit
 
         public static Uri ApplicationAuthorization(string clientId)
         {
-            return "applications/{0}/tokens".FormatUri(clientId);
-        }
-
-        public static Uri ApplicationAuthorization(string clientId, string accessToken)
-        {
-            return "applications/{0}/tokens/{1}".FormatUri(clientId, accessToken);
+            return "applications/{0}/token".FormatUri(clientId);
         }
     }
 }
