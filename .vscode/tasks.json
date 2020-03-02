@@ -24,7 +24,11 @@
       "label": "Format",
       "command": "dotnet",
       "type": "shell",
-      "args": ["format"],
+      "args": [
+        "format",
+        "-w",
+        "${workspaceFolder}/Octokit.sln"
+      ],
       "presentation": {
         "reveal": "silent"
       },
