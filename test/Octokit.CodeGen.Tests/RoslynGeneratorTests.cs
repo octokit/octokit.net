@@ -17,8 +17,11 @@ namespace Octokit.CodeGen.Tests
             var stub = new ApiCodeFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
-                InterfaceName = "ISomeSortOfClient",
-                ClassName = "SomeSortOfClient",
+                Client = new ClientInformation
+                {
+                    InterfaceName = "ISomeSortOfClient",
+                    ClassName = "SomeSortOfClient",
+                }
             };
 
             var result = RoslynGenerator.GenerateSourceFile(stub);
@@ -38,22 +41,25 @@ namespace Octokit.CodeGen.Tests
             var stub = new ApiCodeFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
-                InterfaceName = "ISomeSortOfClient",
-                ClassName = "SomeSortOfClient",
-                Methods = new List<ApiMethodMetadata>
-              {
-                new ApiMethodMetadata{
-                  Name = "GetAll",
-                  Parameters = new List<ApiParameterMetadata>
-                  {
-                    new ApiParameterMetadata{
-                      Name = "userId",
-                      Type = "number",
-                    }
-                  },
-                  ReturnType = new TaskOfListType("SomeResponseType")
+                Client = new ClientInformation
+                {
+                    InterfaceName = "ISomeSortOfClient",
+                    ClassName = "SomeSortOfClient",
+                    Methods = new List<ApiMethodMetadata>
+                {
+                  new ApiMethodMetadata{
+                    Name = "GetAll",
+                    Parameters = new List<ApiParameterMetadata>
+                    {
+                      new ApiParameterMetadata{
+                        Name = "userId",
+                        Type = "number",
+                      }
+                    },
+                    ReturnType = new TaskOfListType("SomeResponseType")
+                  }
                 }
-              }
+                }
             };
 
             var expectedReturnType = GetListReturnType("SomeResponseType");
@@ -88,23 +94,27 @@ namespace Octokit.CodeGen.Tests
             var stub = new ApiCodeFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                Client =
+              {
                 InterfaceName = "ISomeSortOfClient",
                 ClassName = "SomeSortOfClient",
                 Methods = new List<ApiMethodMetadata>
-              {
-                new ApiMethodMetadata{
-                  Name = "GetAll",
-                  Parameters = new List<ApiParameterMetadata>
-                  {
-                    new ApiParameterMetadata{
-                      Name = "userId",
-                      Type = "number",
+                {
+                  new ApiMethodMetadata{
+                    Name = "GetAll",
+                    Parameters = new List<ApiParameterMetadata>
+                    {
+                      new ApiParameterMetadata{
+                        Name = "userId",
+                        Type = "number",
+                      }
+                    },
+                    ReturnType = new TaskOfListType("SomeResponseType"),
+                    SourceMetadata = new SourceMetadata
+                    {
+                      Verb = "Get",
+                      Path = "/something"
                     }
-                  },
-                  ReturnType = new TaskOfListType("SomeResponseType"),
-                  SourceMetadata = new SourceMetadata {
-                    Verb = "Get",
-                    Path = "/something"
                   }
                 }
               }

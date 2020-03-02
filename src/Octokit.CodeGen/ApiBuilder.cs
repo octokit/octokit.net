@@ -49,8 +49,8 @@ namespace Octokit.CodeGen
 
             Func<string, bool> isPlaceHolder = (str) =>
             {
-                  return str.StartsWith("{") && str.EndsWith("}"); ;
-              };
+                return str.StartsWith("{") && str.EndsWith("}"); ;
+            };
 
             foreach (var token in tokens)
             {
@@ -86,8 +86,8 @@ namespace Octokit.CodeGen
 
             var baseClassName = $"{className}Client";
 
-            data.ClassName = baseClassName;
-            data.InterfaceName = $"I{baseClassName}";
+            data.Client.ClassName = baseClassName;
+            data.Client.InterfaceName = $"I{baseClassName}";
             data.FileName = Path.Join("Octokit", "Clients", $"{baseClassName}.cs");
             return data;
         };
@@ -96,9 +96,9 @@ namespace Octokit.CodeGen
         {
             if (verb.Method == HttpMethod.Get)
             {
-            // what about Get with 200 response being a list?
-            // this should be GetAll instead to align with our conventions?
-            return "Get";
+                // what about Get with 200 response being a list?
+                // this should be GetAll instead to align with our conventions?
+                return "Get";
             }
 
             if (verb.Method == HttpMethod.Delete)
@@ -118,13 +118,13 @@ namespace Octokit.CodeGen
         {
             Func<VerbResult, List<ApiParameterMetadata>> convertToParameters = (verb) =>
             {
-                  var list = new List<ApiParameterMetadata>();
+                var list = new List<ApiParameterMetadata>();
 
-                  foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
-                  {
-                      var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
-                      var pascalCaseSegments = segments.Select(s =>
-                      {
+                foreach (var parameter in verb.Parameters.Where(p => p.In == "path" && p.Required))
+                {
+                    var segments = parameter.Name.Replace("_", " ").Replace("-", " ").Split(" ");
+                    var pascalCaseSegments = segments.Select(s =>
+                    {
                         if (s.Length < 2)
                         {
                             return s;
@@ -134,49 +134,49 @@ namespace Octokit.CodeGen
                             return Char.ToUpper(s[0]) + s.Substring(1);
                         }
                     });
-                      var parameterName = string.Join("", pascalCaseSegments);
-                      parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
+                    var parameterName = string.Join("", pascalCaseSegments);
+                    parameterName = Char.ToLower(parameterName[0]) + parameterName.Substring(1);
 
-                      list.Add(new ApiParameterMetadata
-                      {
-                          Name = parameterName,
-                          Type = parameter.Type
-                      });
-                  }
+                    list.Add(new ApiParameterMetadata
+                    {
+                        Name = parameterName,
+                        Type = parameter.Type
+                    });
+                }
 
-                  return list;
-              };
+                return list;
+            };
 
             Func<VerbResult, IResponseType> convertToReturnType = (verb) =>
             {
-                  if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
-                  {
-                      return new TaskOfType("boolean");
-                  }
+                if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
+                {
+                    return new TaskOfType("boolean");
+                }
 
-                  var singleJsonContent = verb.Responses.SingleOrDefault(r => r.StatusCode == "200" && r.ContentType == "application/json");
+                var singleJsonContent = verb.Responses.SingleOrDefault(r => r.StatusCode == "200" && r.ContentType == "application/json");
 
-                  if (singleJsonContent != null)
-                  {
-                      var objectContent = singleJsonContent.Content as ObjectContent;
-                      if (objectContent != null)
-                      {
-                          return new TaskOfType("SomeObject");
-                      }
+                if (singleJsonContent != null)
+                {
+                    var objectContent = singleJsonContent.Content as ObjectContent;
+                    if (objectContent != null)
+                    {
+                        return new TaskOfType("SomeObject");
+                    }
 
-                      var arrayContent = singleJsonContent.Content as ArrayContent;
-                      if (arrayContent != null)
-                      {
-                          return new TaskOfListType("SomeList");
-                      }
-                  }
+                    var arrayContent = singleJsonContent.Content as ArrayContent;
+                    if (arrayContent != null)
+                    {
+                        return new TaskOfListType("SomeList");
+                    }
+                }
 
-                  return null;
-              };
+                return null;
+            };
 
             foreach (var verb in metadata.Verbs)
             {
-                data.Methods.Add(new ApiMethodMetadata
+                data.Client.Methods.Add(new ApiMethodMetadata
                 {
                     Name = convertVerbToMethodName(verb),
                     Parameters = convertToParameters(verb),
@@ -197,10 +197,19 @@ namespace Octokit.CodeGen
     {
         public ApiCodeFileMetadata()
         {
-            Methods = new List<ApiMethodMetadata>();
+            Client = new ClientInformation();
         }
 
         public string FileName { get; set; }
+        public ClientInformation Client { get; set; }
+    }
+
+    public class ClientInformation
+    {
+        public ClientInformation()
+        {
+            Methods = new List<ApiMethodMetadata>();
+        }
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
         public List<ApiMethodMetadata> Methods { get; set; }

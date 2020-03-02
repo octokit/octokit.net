@@ -121,7 +121,7 @@ namespace Octokit.CodeGen
 
         private static InterfaceDeclarationSyntax WithInterface(ApiCodeFileMetadata apiBuilder)
         {
-            var members = apiBuilder.Methods.Select(m =>
+            var members = apiBuilder.Client.Methods.Select(m =>
             {
                 var parameters = GetParameterList(m.Parameters);
                 var attributes = GetAttributeList(m);
@@ -133,7 +133,7 @@ namespace Octokit.CodeGen
                             .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             });
 
-            return InterfaceDeclaration(apiBuilder.InterfaceName)
+            return InterfaceDeclaration(apiBuilder.Client.InterfaceName)
                                       .WithModifiers(
                                           TokenList(
                                               Token(SyntaxKind.PublicKeyword)))
@@ -142,7 +142,7 @@ namespace Octokit.CodeGen
 
         private static ClassDeclarationSyntax WithImplementation(ApiCodeFileMetadata apiBuilder)
         {
-            var members = apiBuilder.Methods.Select(m =>
+            var members = apiBuilder.Client.Methods.Select(m =>
             {
                 var parameters = GetParameterList(m.Parameters);
                 var attributes = GetAttributeList(m);
@@ -163,7 +163,7 @@ namespace Octokit.CodeGen
                                                 ArgumentList())))));
             });
 
-            return ClassDeclaration(apiBuilder.ClassName)
+            return ClassDeclaration(apiBuilder.Client.ClassName)
                                       .WithModifiers(
                                           TokenList(
                                               Token(SyntaxKind.PublicKeyword)))
@@ -171,7 +171,7 @@ namespace Octokit.CodeGen
                                           BaseList(
                                               SingletonSeparatedList<BaseTypeSyntax>(
                                                   SimpleBaseType(
-                                                      IdentifierName(apiBuilder.InterfaceName)))))
+                                                      IdentifierName(apiBuilder.Client.InterfaceName)))))
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
