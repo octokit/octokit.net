@@ -37,7 +37,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var content = Assert.IsType<ObjectContent>(response.Content);
+            var content = Assert.IsType<ObjectResponseContent>(response.Content);
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
 
@@ -142,7 +142,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("object", response.Content.Type);
 
-            var responseContent = Assert.IsType<ObjectContent>(response.Content);
+            var responseContent = Assert.IsType<ObjectResponseContent>(response.Content);
 
             Assert.Single(responseContent.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
 

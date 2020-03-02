@@ -158,7 +158,7 @@ namespace Octokit.CodeGen
 
                 if (singleJsonContent != null)
                 {
-                    var objectContent = singleJsonContent.Content as ObjectContent;
+                    var objectContent = singleJsonContent.Content as ObjectResponseContent;
                     if (objectContent != null)
                     {
                         return new TaskOfType("SomeObject");

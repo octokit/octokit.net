@@ -71,9 +71,9 @@ namespace Octokit.CodeGen
             return objectProperty;
         }
 
-        private static IContent ParseResponseObjectSchema(JsonElement properties)
+        private static IResponseContent ParseResponseObjectSchema(JsonElement properties)
         {
-            var objectResponse = new ObjectContent();
+            var objectResponse = new ObjectResponseContent();
 
             foreach (var property in properties.EnumerateObject())
             {
@@ -431,6 +431,10 @@ namespace Octokit.CodeGen
                             {
                                 requestBody.Content = ParseRequestObjectSchema(schemaProp);
                             }
+                            else if (typeString == "string")
+                            {
+                                requestBody.Content = new RequestStringContent();
+                            }
                             else
                             {
                                 Console.WriteLine($"PathProcessor.Process encountered request body type '{typeString}' which it doesn't understand.");
@@ -499,13 +503,13 @@ namespace Octokit.CodeGen
     {
         public string StatusCode { get; set; }
         public string ContentType { get; set; }
-        public IContent Content { get; set; }
+        public IResponseContent Content { get; set; }
     }
 
     public class Request
     {
         public string ContentType { get; set; }
-        public RequestObjectContent Content { get; set; }
+        public IRequestContent Content { get; set; }
     }
 
     public interface IResponseProperty
@@ -626,12 +630,17 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-    public interface IContent
+    public interface IResponseContent
     {
         string Type { get; }
     }
 
-    public class RequestObjectContent : IContent
+    public interface IRequestContent
+    {
+        string Type { get; }
+    }
+
+    public class RequestObjectContent : IRequestContent
     {
         public RequestObjectContent()
         {
@@ -641,10 +650,14 @@ namespace Octokit.CodeGen
         public List<IRequestProperty> Properties { get; set; }
     }
 
-
-    public class ObjectContent : IContent
+    public class RequestStringContent : IRequestContent
     {
-        public ObjectContent()
+        public string Type { get { return "string"; } }
+    }
+
+    public class ObjectResponseContent : IResponseContent
+    {
+        public ObjectResponseContent()
         {
             Properties = new List<IResponseProperty>();
         }
@@ -652,7 +665,7 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-    public class ArrayContent : IContent
+    public class ArrayContent : IResponseContent
     {
         public ArrayContent()
         {
