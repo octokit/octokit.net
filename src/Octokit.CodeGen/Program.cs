@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit.CodeGen
@@ -22,6 +23,16 @@ namespace Octokit.CodeGen
             var filteredPaths = filter.Filter(results);
 
             var apiMetadata = apiBuilder.Build(filteredPaths);
+
+            foreach (var metadata in apiMetadata)
+            {
+                var sourceFile = RoslynGenerator.GenerateSourceFile(metadata);
+                Console.WriteLine($" - Write this file to disk: {metadata.FileName}");
+                Console.WriteLine($"-----");
+                Console.WriteLine(sourceFile.ToString());
+                Console.WriteLine($"-----");
+                Console.WriteLine();
+            }
         }
     }
 }

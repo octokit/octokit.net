@@ -154,8 +154,24 @@ namespace Octokit.CodeGen
                       return new TaskOfType("boolean");
                   }
 
-                  return null;
+                  var singleJsonContent = verb.Responses.SingleOrDefault(r => r.StatusCode == "200" && r.ContentType == "application/json");
 
+                  if (singleJsonContent != null)
+                  {
+                      var objectContent = singleJsonContent.Content as ObjectContent;
+                      if (objectContent != null)
+                      {
+                          return new TaskOfType("SomeObject");
+                      }
+
+                      var arrayContent = singleJsonContent.Content as ArrayContent;
+                      if (arrayContent != null)
+                      {
+                          return new TaskOfListType("SomeList");
+                      }
+                  }
+
+                  return null;
               };
 
             foreach (var verb in metadata.Verbs)
@@ -165,6 +181,11 @@ namespace Octokit.CodeGen
                     Name = convertVerbToMethodName(verb),
                     Parameters = convertToParameters(verb),
                     ReturnType = convertToReturnType(verb),
+                    SourceMetadata = new SourceMetadata
+                    {
+                        Path = metadata.Path,
+                        Verb = verb.Method.Method
+                    }
                 });
             }
 

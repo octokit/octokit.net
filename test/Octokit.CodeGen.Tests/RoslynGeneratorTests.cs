@@ -56,7 +56,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var expectedReturnType = GetReturnType("SomeResponseType");
+            var expectedReturnType = GetListReturnType("SomeResponseType");
 
             var result = RoslynGenerator.GenerateSourceFile(stub);
 
@@ -131,7 +131,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("GeneratedRoute", attribute.Name.ToString());
         }
 
-        private static TypeSyntax GetReturnType(string innerType)
+        private static TypeSyntax GetListReturnType(string innerType)
         {
             return GenericName(Identifier("Task"))
                           .WithTypeArgumentList(

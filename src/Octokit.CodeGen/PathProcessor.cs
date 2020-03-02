@@ -35,6 +35,12 @@ namespace Octokit.CodeGen
                 return true;
             }
 
+            if (string.Equals(verb, "patch", StringComparison.OrdinalIgnoreCase))
+            {
+                method = HttpMethod.Patch;
+                return true;
+            }
+
             method = null;
             return false;
         }

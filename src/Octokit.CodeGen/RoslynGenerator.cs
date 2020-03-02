@@ -47,13 +47,18 @@ namespace Octokit.CodeGen
                 return PredefinedType(Token(SyntaxKind.LongKeyword));
             }
 
+            if (text == "integer")
+            {
+                return PredefinedType(Token(SyntaxKind.IntKeyword));
+            }
+
             if (text == "boolean")
             {
                 return PredefinedType(Token(SyntaxKind.BoolKeyword));
             }
 
             // otherwise we don't know how to handle it
-            return PredefinedType(Token(SyntaxKind.VoidKeyword));
+            return IdentifierName(text);
         }
 
         private static ParameterListSyntax GetParameterList(List<ApiParameterMetadata> parameters)
@@ -95,6 +100,7 @@ namespace Octokit.CodeGen
             {
                 return SingletonList<AttributeListSyntax>(AttributeList());
             }
+
             var generatedRouteAttribute = Attribute(IdentifierName("GeneratedRoute"))
                                                 .WithArgumentList(
                                                     AttributeArgumentList(
@@ -144,9 +150,17 @@ namespace Octokit.CodeGen
                 var returnType = ConvertToReturnType(m.ReturnType);
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
+                            .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                             .WithParameterList(parameters)
                             .WithAttributeLists(attributes)
-                            .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                            .WithBody(
+                                Block(
+                                    SingletonList<StatementSyntax>(
+                                        ThrowStatement(
+                                            ObjectCreationExpression(
+                                                IdentifierName("NotImplementedException"))
+                                            .WithArgumentList(
+                                                ArgumentList())))));
             });
 
             return ClassDeclaration(apiBuilder.ClassName)
