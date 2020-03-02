@@ -341,8 +341,13 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
-            var endpoint = ApiUrls.ApplicationAuthorization(clientId, accessToken);
-            return ApiConnection.Get<ApplicationAuthorization>(endpoint, null);
+            var requestData = new
+            {
+                access_token = accessToken
+            };
+
+            var endpoint = ApiUrls.ApplicationAuthorization(clientId);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -360,9 +365,13 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
-            var requestData = new { };
+            var requestData = new
+            {
+                access_token = accessToken
+            };
 
-            return ApiConnection.Post<ApplicationAuthorization>(ApiUrls.ApplicationAuthorization(clientId, accessToken), requestData);
+            var endpoint = ApiUrls.ApplicationAuthorization(clientId);
+            return ApiConnection.Patch<ApplicationAuthorization>(endpoint, requestData);
         }
 
         /// <summary>
@@ -380,8 +389,13 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
 
-            return ApiConnection.Delete(
-                ApiUrls.ApplicationAuthorization(clientId, accessToken));
+            var requestData = new
+            {
+                access_token = accessToken
+            };
+
+            var endpoint = ApiUrls.ApplicationAuthorization(clientId);
+            return ApiConnection.Delete(endpoint, requestData);
         }
 
         /// <summary>

@@ -290,9 +290,9 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.CheckApplicationAuthentication("clientId", "accessToken");
 
-                client.Received().Get<ApplicationAuthorization>(
-                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
-                    null);
+                client.Received().Post<ApplicationAuthorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
+                    Args.Object);
             }
 
             [Fact]
@@ -318,8 +318,8 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.ResetApplicationAuthentication("clientId", "accessToken");
 
-                client.Received().Post<ApplicationAuthorization>(
-                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"),
+                client.Received().Patch<ApplicationAuthorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
                     Args.Object);
             }
 
@@ -347,7 +347,8 @@ namespace Octokit.Tests.Clients
                 authEndpoint.RevokeApplicationAuthentication("clientId", "accessToken");
 
                 client.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/tokens/accessToken"));
+                    Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
+                    Args.Object);
             }
 
             [Fact]
