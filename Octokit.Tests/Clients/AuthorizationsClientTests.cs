@@ -126,8 +126,9 @@ namespace Octokit.Tests.Clients
 
                 authEndpoint.GetOrCreateApplicationAuthentication("clientId", "secret", data);
 
-                client.Received().Put<ApplicationAuthorization>(Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
-                    Args.Object);
+                client.Received().Put<ApplicationAuthorization>(
+                    Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
+                    Arg.Is<Object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"));
             }
 
             [Fact]
@@ -141,7 +142,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Put<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
-                    Args.Object,
+                    Arg.Is<Object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"),
                     "two-factor");
             }
 
