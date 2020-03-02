@@ -41,11 +41,11 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
 
-            var nestedObject = Assert.Single(content.Properties.Where(p => p.Name == "marketplace_pending_change" && p.Type == "object").OfType<ObjectProperty>());
+            var nestedObject = Assert.Single(content.Properties.Where(p => p.Name == "marketplace_pending_change" && p.Type == "object").OfType<ObjectResponseProperty>());
 
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "unit_count" && p.Type == "string"));
 
-            var nestedNestedObject = Assert.Single(nestedObject.Properties.Where(p => p.Name == "plan" && p.Type == "object").OfType<ObjectProperty>());
+            var nestedNestedObject = Assert.Single(nestedObject.Properties.Where(p => p.Name == "plan" && p.Type == "object").OfType<ObjectResponseProperty>());
 
             Assert.Single(nestedNestedObject.Properties.Where(p => p.Name == "yearly_price_in_cents" && p.Type == "number"));
         }
@@ -90,7 +90,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Single(content.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
             var objectPropType = content.ItemProperties.Single(p => p.Name == "user" && p.Type == "object");
-            var nestedObject = Assert.IsType<ObjectProperty>(objectPropType);
+            var nestedObject = Assert.IsType<ObjectResponseProperty>(objectPropType);
 
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
         }
@@ -146,7 +146,7 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Single(responseContent.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
-            var nestedObject = Assert.Single(responseContent.Properties.Where(p => p.Name == "user" && p.Type == "object").OfType<ObjectProperty>());
+            var nestedObject = Assert.Single(responseContent.Properties.Where(p => p.Name == "user" && p.Type == "object").OfType<ObjectResponseProperty>());
 
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
         }
@@ -266,7 +266,7 @@ namespace Octokit.CodeGen.Tests
             var requestBody = Assert.IsType<RequestObjectContent>(post.RequestBody.Content);
             Assert.Single(requestBody.Properties.Where(p => p.Name == "name" && p.Type == "string" && p.Required));
 
-            var visibility = Assert.Single(requestBody.Properties.Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required).OfType<RequestStringEnumProperty>());
+            var visibility = Assert.Single(requestBody.Properties.Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required).OfType<StringEnumRequestProperty>());
 
             Assert.Contains("public", visibility.Values);
             Assert.Contains("private", visibility.Values);
@@ -290,7 +290,7 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("names", property.Name);
             Assert.Equal("array", property.Type);
-            var array = Assert.IsType<RequestArrayProperty>(property);
+            var array = Assert.IsType<ArrayRequestProperty>(property);
             Assert.Equal("string", array.ArrayType);
         }
     }

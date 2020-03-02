@@ -45,9 +45,9 @@ namespace Octokit.CodeGen
             return false;
         }
 
-        private static ObjectProperty ParseAsObject(string name, JsonElement properties)
+        private static ObjectResponseProperty ParseAsResponseObject(string name, JsonElement properties)
         {
-            var objectProperty = new ObjectProperty(name);
+            var objectProperty = new ObjectResponseProperty(name);
 
             foreach (var property in properties.EnumerateObject())
             {
@@ -63,7 +63,79 @@ namespace Octokit.CodeGen
                     else
                     {
                         var innerProperties = property.Value.GetProperty("properties");
-                        objectProperty.Properties.Add(ParseAsObject(propertyName, innerProperties));
+                        objectProperty.Properties.Add(ParseAsResponseObject(propertyName, innerProperties));
+                    }
+                }
+            }
+
+            return objectProperty;
+        }
+
+
+        private static IRequestProperty ParseAsRequestObject(string name, JsonElement properties)
+        {
+            var objectProperty = new ObjectRequestProperty(name);
+
+            // TODO: how should we handle this?
+            var required = false;
+
+            foreach (var property in properties.EnumerateObject())
+            {
+                var propertyName = property.Name;
+                JsonElement innerTypeProp;
+                if (property.Value.TryGetProperty("type", out innerTypeProp))
+                {
+                    var innerType = innerTypeProp.GetString();
+                    if (innerType == "object")
+                    {
+                        var innerProperties = property.Value.GetProperty("properties");
+                        objectProperty.Properties.Add(ParseAsRequestObject(propertyName, innerProperties));
+                    }
+                    else if (innerType == "string")
+                    {
+                        JsonElement enumProp;
+                        if (property.Value.TryGetProperty("enum", out enumProp))
+                        {
+                            var stringEnumProp = new StringEnumRequestProperty(name, required);
+                            foreach (var prop in enumProp.EnumerateArray())
+                            {
+                                stringEnumProp.Values.Add(prop.GetString());
+                            }
+                            objectProperty.Properties.Add(stringEnumProp);
+                        }
+                        else
+                        {
+                            objectProperty.Properties.Add(new StringRequestProperty(name, required));
+                        }
+                    }
+                    else if (innerType == "boolean")
+                    {
+                        objectProperty.Properties.Add(new BooleanRequestProperty(name, required));
+                    }
+                    else if (innerType == "integer")
+                    {
+                        objectProperty.Properties.Add(new IntegerRequestProperty(name, required));
+                    }
+                    else if (innerType == "number")
+                    {
+                        objectProperty.Properties.Add(new LongRequestProperty(name, required));
+                    }
+                    else if (innerType == "array")
+                    {
+                        JsonElement itemsProp;
+                        if (property.Value.TryGetProperty("items", out itemsProp))
+                        {
+                            var arrayType = itemsProp.GetProperty("type").GetString();
+                            objectProperty.Properties.Add(new ArrayRequestProperty(name, arrayType, required));
+                        }
+                        else
+                        {
+                            Console.WriteLine($"TODO: unable to handle inner type on array");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"TODO: handle request type '{innerType}'");
                     }
                 }
             }
@@ -85,7 +157,7 @@ namespace Octokit.CodeGen
                     if (innerType == "object")
                     {
                         var innerProperties = property.Value.GetProperty("properties");
-                        var objectProperty = ParseAsObject(name, innerProperties);
+                        var objectProperty = ParseAsResponseObject(name, innerProperties);
                         objectResponse.Properties.Add(objectProperty);
                     }
                     else
@@ -129,14 +201,22 @@ namespace Octokit.CodeGen
                     var required = requiredProperties.Contains(name);
                     if (innerType == "object")
                     {
-                        Console.WriteLine("TODO: rewrite recursive parsing to handle objects");
+                        JsonElement innerPropertiesProp;
+                        if (property.Value.TryGetProperty("properties", out innerPropertiesProp))
+                        {
+                            requestObject.Properties.Add(ParseAsRequestObject(name, innerPropertiesProp));
+                        }
+                        else
+                        {
+                            Console.WriteLine("TODO: could not parse request object");
+                        }
                     }
                     else if (innerType == "string")
                     {
                         JsonElement enumProp;
                         if (property.Value.TryGetProperty("enum", out enumProp))
                         {
-                            var stringEnumProp = new RequestStringEnumProperty(name, required);
+                            var stringEnumProp = new StringEnumRequestProperty(name, required);
                             foreach (var prop in enumProp.EnumerateArray())
                             {
                                 stringEnumProp.Values.Add(prop.GetString());
@@ -145,20 +225,20 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            requestObject.Properties.Add(new RequestStringProperty(name, required));
+                            requestObject.Properties.Add(new StringRequestProperty(name, required));
                         }
                     }
                     else if (innerType == "boolean")
                     {
-                        requestObject.Properties.Add(new RequestBooleanProperty(name, required));
+                        requestObject.Properties.Add(new BooleanRequestProperty(name, required));
                     }
                     else if (innerType == "integer")
                     {
-                        requestObject.Properties.Add(new RequestIntegerProperty(name, required));
+                        requestObject.Properties.Add(new IntegerRequestProperty(name, required));
                     }
                     else if (innerType == "number")
                     {
-                        requestObject.Properties.Add(new RequestLongProperty(name, required));
+                        requestObject.Properties.Add(new LongRequestProperty(name, required));
                     }
                     else if (innerType == "array")
                     {
@@ -166,7 +246,7 @@ namespace Octokit.CodeGen
                         if (property.Value.TryGetProperty("items", out itemsProp))
                         {
                             var arrayType = itemsProp.GetProperty("type").GetString();
-                            requestObject.Properties.Add(new RequestArrayProperty(name, arrayType, required));
+                            requestObject.Properties.Add(new ArrayRequestProperty(name, arrayType, required));
                         }
                         else
                         {
@@ -202,7 +282,7 @@ namespace Octokit.CodeGen
                         if (innerType == "object")
                         {
                             var innerProperties = property.Value.GetProperty("properties");
-                            var objectProperty = ParseAsObject(name, innerProperties);
+                            var objectProperty = ParseAsResponseObject(name, innerProperties);
                             arrayResponse.ItemProperties.Add(objectProperty);
                         }
                         else
@@ -431,6 +511,10 @@ namespace Octokit.CodeGen
                             {
                                 requestBody.Content = ParseRequestObjectSchema(schemaProp);
                             }
+                            else if (typeString == "array")
+                            {
+                               Console.WriteLine($"PathProcessor.Process encountered request body type '{typeString}' which it doesn't understand.");
+                            }
                             else if (typeString == "string")
                             {
                                 requestBody.Content = new RequestStringContent();
@@ -536,9 +620,9 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-    public class RequestStringProperty : IRequestProperty
+    public class StringRequestProperty : IRequestProperty
     {
-        public RequestStringProperty(string name, bool required)
+        public StringRequestProperty(string name, bool required)
         {
             Name = name;
             Required = required;
@@ -548,9 +632,9 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class RequestBooleanProperty : IRequestProperty
+    public class BooleanRequestProperty : IRequestProperty
     {
-        public RequestBooleanProperty(string name, bool required)
+        public BooleanRequestProperty(string name, bool required)
         {
             Name = name;
             Required = required;
@@ -560,9 +644,9 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class RequestIntegerProperty : IRequestProperty
+    public class IntegerRequestProperty : IRequestProperty
     {
-        public RequestIntegerProperty(string name, bool required)
+        public IntegerRequestProperty(string name, bool required)
         {
             Name = name;
             Required = required;
@@ -572,9 +656,9 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class RequestLongProperty : IRequestProperty
+    public class LongRequestProperty : IRequestProperty
     {
-        public RequestLongProperty(string name, bool required)
+        public LongRequestProperty(string name, bool required)
         {
             Name = name;
             Required = required;
@@ -584,10 +668,9 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-
-    public class RequestArrayProperty : IRequestProperty
+    public class ArrayRequestProperty : IRequestProperty
     {
-        public RequestArrayProperty(string name, string arrayType, bool required)
+        public ArrayRequestProperty(string name, string arrayType, bool required)
         {
             Name = name;
             Required = required;
@@ -599,9 +682,23 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class RequestStringEnumProperty : IRequestProperty
+
+    public class ObjectRequestProperty : IRequestProperty
     {
-        public RequestStringEnumProperty(string name, bool required)
+        public ObjectRequestProperty(string name)
+        {
+            Name = name;
+            Properties = new List<IRequestProperty>();
+        }
+        public string Name { get; private set; }
+        public bool Required { get; set; }
+        public List<IRequestProperty> Properties { get; private set; }
+        public string Type { get { return "object"; } }
+    }
+
+    public class StringEnumRequestProperty : IRequestProperty
+    {
+        public StringEnumRequestProperty(string name, bool required)
         {
             Name = name;
             Required = required;
@@ -617,9 +714,9 @@ namespace Octokit.CodeGen
         public string Default { get; set; }
     }
 
-    public class ObjectProperty : IResponseProperty
+    public class ObjectResponseProperty : IResponseProperty
     {
-        public ObjectProperty(string name)
+        public ObjectResponseProperty(string name)
         {
             Name = name;
             Type = "object";
