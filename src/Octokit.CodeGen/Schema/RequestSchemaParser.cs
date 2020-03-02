@@ -175,8 +175,6 @@ namespace Octokit.CodeGen
             return objectProperty;
         }
 
-
-
         private static StringArrayRequestContent ParseRequestArraySchema(JsonElement schema)
         {
             JsonElement itemsProp;
@@ -202,8 +200,8 @@ namespace Octokit.CodeGen
 
             return null;
         }
-
     }
+
     public interface IRequestContent
     {
         string Type { get; }
@@ -223,7 +221,6 @@ namespace Octokit.CodeGen
     {
         public string Type { get { return "string"; } }
     }
-
 
     public class StringArrayRequestContent : IRequestContent
     {
@@ -292,10 +289,7 @@ namespace Octokit.CodeGen
         public string Name { get; private set; }
         public string Type { get { return "string"; } }
         public bool Required { get; private set; }
-
         public List<string> Values { get; set; }
-
         public string Default { get; set; }
     }
-
 }
