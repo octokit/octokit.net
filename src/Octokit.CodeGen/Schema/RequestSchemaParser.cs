@@ -22,7 +22,7 @@ namespace Octokit.CodeGen
             }
             else
             {
-                Console.WriteLine($"PathProcessor.Process encountered request body type '{type}' which it doesn't understand.");
+                Console.WriteLine($"WARN: RequestSchemaParser.Process encountered request body type '{type}' which it doesn't understand.");
                 return null;
             }
         }
@@ -65,7 +65,7 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            Console.WriteLine("TODO: could not parse request object");
+                            Console.WriteLine("WARN: RequestSchemaParser.ParseRequestObjectSchema could not parse request object");
                         }
                     }
                     else if (innerType == "string")
@@ -99,12 +99,12 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            Console.WriteLine($"TODO: unable to handle inner type on array");
+                            Console.WriteLine($"WARN: RequestSchemaParser.ParseRequestObjectSchema does not handle inner type on array");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"TODO: handle request type '{innerType}'");
+                        Console.WriteLine($"WARN: RequestSchemaParser.ParseRequestObjectSchema does not handle request type '{innerType}'");
                     }
                 }
             }
@@ -162,12 +162,12 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            Console.WriteLine($"TODO: unable to handle inner type on array");
+                            Console.WriteLine($"WARN: RequestSchemaParser.ParseAsRequestObject does not handle inner type on array");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"TODO: handle request type '{innerType}'");
+                        Console.WriteLine($"WARN: RequestSchemaParser.ParseAsRequestObject does not handle request type '{innerType}'");
                     }
                 }
             }
