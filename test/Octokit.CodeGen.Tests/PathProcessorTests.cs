@@ -85,7 +85,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", response.ContentType);
             Assert.Equal("array", response.Content.Type);
 
-            var content = Assert.IsType<ArrayContent>(response.Content);
+            var content = Assert.IsType<ArrayResponseContent>(response.Content);
 
             Assert.Single(content.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
@@ -122,7 +122,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/json", post.RequestBody.ContentType);
             Assert.Equal("object", post.RequestBody.Content.Type);
 
-            var requestContent = Assert.IsType<RequestObjectContent>(post.RequestBody.Content);
+            var requestContent = Assert.IsType<ObjectRequestContent>(post.RequestBody.Content);
 
             Assert.Single(requestContent.Properties.Where(p => p.Name == "body" && p.Type == "string" && p.Required));
             Assert.Single(requestContent.Properties.Where(p => p.Name == "path" && p.Type == "string" && !p.Required));
@@ -263,7 +263,7 @@ namespace Octokit.CodeGen.Tests
 
             var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
 
-            var requestBody = Assert.IsType<RequestObjectContent>(post.RequestBody.Content);
+            var requestBody = Assert.IsType<ObjectRequestContent>(post.RequestBody.Content);
             Assert.Single(requestBody.Properties.Where(p => p.Name == "name" && p.Type == "string" && p.Required));
 
             var visibility = Assert.Single(requestBody.Properties.Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required).OfType<StringEnumRequestProperty>());
@@ -285,7 +285,7 @@ namespace Octokit.CodeGen.Tests
 
             var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Put));
 
-            var objectContent = Assert.IsType<RequestObjectContent>(get.RequestBody.Content);
+            var objectContent = Assert.IsType<ObjectRequestContent>(get.RequestBody.Content);
             var property = Assert.Single(objectContent.Properties);
 
             Assert.Equal("names", property.Name);

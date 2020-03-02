@@ -164,7 +164,7 @@ namespace Octokit.CodeGen
                         return new TaskOfType("SomeObject");
                     }
 
-                    var arrayContent = singleJsonContent.Content as ArrayContent;
+                    var arrayContent = singleJsonContent.Content as ArrayResponseContent;
                     if (arrayContent != null)
                     {
                         return new TaskOfListType("SomeList");

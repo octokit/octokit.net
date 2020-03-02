@@ -170,9 +170,9 @@ namespace Octokit.CodeGen
             return objectResponse;
         }
 
-        private static RequestObjectContent ParseRequestObjectSchema(JsonElement schemaProp)
+        private static ObjectRequestContent ParseRequestObjectSchema(JsonElement schemaProp)
         {
-            var requestObject = new RequestObjectContent();
+            var requestObject = new ObjectRequestContent();
 
             JsonElement propertiesProp;
             if (!schemaProp.TryGetProperty("properties", out propertiesProp))
@@ -263,9 +263,9 @@ namespace Octokit.CodeGen
             return requestObject;
         }
 
-        private static ArrayContent ParseResponseArraySchema(JsonElement schema)
+        private static ArrayResponseContent ParseResponseArraySchema(JsonElement schema)
         {
-            var arrayResponse = new ArrayContent();
+            var arrayResponse = new ArrayResponseContent();
 
             JsonElement itemsProp;
             JsonElement propertiesProp;
@@ -294,6 +294,32 @@ namespace Octokit.CodeGen
             }
 
             return arrayResponse;
+        }
+
+        private static StringArrayRequestContent ParseRequestArraySchema(JsonElement schema)
+        {
+            JsonElement itemsProp;
+            if (schema.TryGetProperty("items", out itemsProp))
+            {
+                // TODO: throw some tests at this and ensure we have it all covered
+                JsonElement innerTypeProp;
+                if (itemsProp.TryGetProperty("type", out innerTypeProp))
+                {
+                    var innerType = innerTypeProp.GetString();
+                    if (innerType == "string")
+                    {
+                        return new StringArrayRequestContent();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"TODO: PathProcessor.ParseRequestArraySchema encountered request array of type '{innerType}' and cannot convert it");
+                    }
+                }
+            }
+
+            Console.WriteLine($"TODO: PathProcessor.ParseRequestArraySchema encountered request array it could not represent");
+
+            return null;
         }
 
         public static async Task<List<PathMetadata>> Process(Stream stream)
@@ -513,11 +539,11 @@ namespace Octokit.CodeGen
                             }
                             else if (typeString == "array")
                             {
-                               Console.WriteLine($"PathProcessor.Process encountered request body type '{typeString}' which it doesn't understand.");
+                                requestBody.Content = ParseRequestArraySchema(schemaProp);
                             }
                             else if (typeString == "string")
                             {
-                                requestBody.Content = new RequestStringContent();
+                                requestBody.Content = new StringRequestContent();
                             }
                             else
                             {
@@ -737,9 +763,9 @@ namespace Octokit.CodeGen
         string Type { get; }
     }
 
-    public class RequestObjectContent : IRequestContent
+    public class ObjectRequestContent : IRequestContent
     {
-        public RequestObjectContent()
+        public ObjectRequestContent()
         {
             Properties = new List<IRequestProperty>();
         }
@@ -747,7 +773,7 @@ namespace Octokit.CodeGen
         public List<IRequestProperty> Properties { get; set; }
     }
 
-    public class RequestStringContent : IRequestContent
+    public class StringRequestContent : IRequestContent
     {
         public string Type { get { return "string"; } }
     }
@@ -762,9 +788,15 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-    public class ArrayContent : IResponseContent
+    public class StringArrayRequestContent : IRequestContent
     {
-        public ArrayContent()
+        public string Type { get { return "array"; } }
+        public string ArrayType { get { return "string"; } }
+    }
+
+    public class ArrayResponseContent : IResponseContent
+    {
+        public ArrayResponseContent()
         {
             ItemProperties = new List<IResponseProperty>();
         }
