@@ -82,20 +82,20 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            requestObject.Properties.Add(new StringRequestProperty(name, required));
+                            requestObject.Properties.Add(new PrimitiveRequestProperty(name, "string", required));
                         }
                     }
                     else if (innerType == "boolean")
                     {
-                        requestObject.Properties.Add(new BooleanRequestProperty(name, required));
+                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "boolean", required));
                     }
                     else if (innerType == "integer")
                     {
-                        requestObject.Properties.Add(new IntegerRequestProperty(name, required));
+                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "integer", required));
                     }
                     else if (innerType == "number")
                     {
-                        requestObject.Properties.Add(new LongRequestProperty(name, required));
+                        requestObject.Properties.Add(new PrimitiveRequestProperty(name, "number", required));
                     }
                     else if (innerType == "array")
                     {
@@ -153,20 +153,20 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            objectProperty.Properties.Add(new StringRequestProperty(name, required));
+                            objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "string", required));
                         }
                     }
                     else if (innerType == "boolean")
                     {
-                        objectProperty.Properties.Add(new BooleanRequestProperty(name, required));
+                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "boolean", required));
                     }
                     else if (innerType == "integer")
                     {
-                        objectProperty.Properties.Add(new IntegerRequestProperty(name, required));
+                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "integer", required));
                     }
                     else if (innerType == "number")
                     {
-                        objectProperty.Properties.Add(new LongRequestProperty(name, required));
+                        objectProperty.Properties.Add(new PrimitiveRequestProperty(name, "number", required));
                     }
                     else if (innerType == "array")
                     {
@@ -254,52 +254,19 @@ namespace Octokit.CodeGen
         bool Required { get; }
     }
 
-    public class StringRequestProperty : IRequestProperty
+    public class PrimitiveRequestProperty : IRequestProperty
     {
-        public StringRequestProperty(string name, bool required)
+        public PrimitiveRequestProperty(string name, string type, bool required)
         {
             Name = name;
+            Type = type;
             Required = required;
         }
-        public string Name { get; private set; }
-        public string Type { get { return "string"; } }
-        public bool Required { get; private set; }
-    }
 
-    public class BooleanRequestProperty : IRequestProperty
-    {
-        public BooleanRequestProperty(string name, bool required)
-        {
-            Name = name;
-            Required = required;
-        }
         public string Name { get; private set; }
-        public string Type { get { return "boolean"; } }
+        public string Type { get; private set; }
         public bool Required { get; private set; }
-    }
 
-    public class IntegerRequestProperty : IRequestProperty
-    {
-        public IntegerRequestProperty(string name, bool required)
-        {
-            Name = name;
-            Required = required;
-        }
-        public string Name { get; private set; }
-        public string Type { get { return "integer"; } }
-        public bool Required { get; private set; }
-    }
-
-    public class LongRequestProperty : IRequestProperty
-    {
-        public LongRequestProperty(string name, bool required)
-        {
-            Name = name;
-            Required = required;
-        }
-        public string Name { get; private set; }
-        public string Type { get { return "number"; } }
-        public bool Required { get; private set; }
     }
 
     public class ArrayRequestProperty : IRequestProperty
