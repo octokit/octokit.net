@@ -7,6 +7,7 @@
       "type": "shell",
       "args": [
         "build",
+        "${workspaceFolder}",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
