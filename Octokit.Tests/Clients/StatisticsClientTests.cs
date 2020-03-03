@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -232,10 +231,10 @@ namespace Octokit.Tests.Clients
                 var codeFrequency = await statisticsClient.GetCodeFrequency("owner", "name");
 
                 Assert.Equal(2, codeFrequency.AdditionsAndDeletionsByWeek.Count);
-                Assert.Equal(firstTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(firstTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
                 Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions);
                 Assert.Equal(52, codeFrequency.AdditionsAndDeletionsByWeek[0].Deletions);
-                Assert.Equal(secondTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(secondTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
                 Assert.Equal(0, codeFrequency.AdditionsAndDeletionsByWeek[1].Additions);
                 Assert.Equal(9, codeFrequency.AdditionsAndDeletionsByWeek[1].Deletions);
             }
@@ -260,10 +259,10 @@ namespace Octokit.Tests.Clients
                 var codeFrequency = await statisticsClient.GetCodeFrequency(1);
 
                 Assert.Equal(2, codeFrequency.AdditionsAndDeletionsByWeek.Count);
-                Assert.Equal(firstTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(firstTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
                 Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions);
                 Assert.Equal(52, codeFrequency.AdditionsAndDeletionsByWeek[0].Deletions);
-                Assert.Equal(secondTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(secondTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
                 Assert.Equal(0, codeFrequency.AdditionsAndDeletionsByWeek[1].Additions);
                 Assert.Equal(9, codeFrequency.AdditionsAndDeletionsByWeek[1].Deletions);
             }
@@ -290,10 +289,10 @@ namespace Octokit.Tests.Clients
                 var codeFrequency = await client.GetCodeFrequency("owner", "name", cancellationToken);
 
                 Assert.Equal(2, codeFrequency.AdditionsAndDeletionsByWeek.Count);
-                Assert.Equal(firstTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(firstTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
                 Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions);
                 Assert.Equal(52, codeFrequency.AdditionsAndDeletionsByWeek[0].Deletions);
-                Assert.Equal(secondTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(secondTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
                 Assert.Equal(0, codeFrequency.AdditionsAndDeletionsByWeek[1].Additions);
                 Assert.Equal(9, codeFrequency.AdditionsAndDeletionsByWeek[1].Deletions);
             }
@@ -320,10 +319,10 @@ namespace Octokit.Tests.Clients
                 var codeFrequency = await client.GetCodeFrequency(1, cancellationToken);
 
                 Assert.Equal(2, codeFrequency.AdditionsAndDeletionsByWeek.Count);
-                Assert.Equal(firstTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(firstTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[0].Timestamp);
                 Assert.Equal(10, codeFrequency.AdditionsAndDeletionsByWeek[0].Additions);
                 Assert.Equal(52, codeFrequency.AdditionsAndDeletionsByWeek[0].Deletions);
-                Assert.Equal(secondTimestamp.FromUnixTime(), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(secondTimestamp), codeFrequency.AdditionsAndDeletionsByWeek[1].Timestamp);
                 Assert.Equal(0, codeFrequency.AdditionsAndDeletionsByWeek[1].Additions);
                 Assert.Equal(9, codeFrequency.AdditionsAndDeletionsByWeek[1].Deletions);
             }
