@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Runtime.Serialization;
 #endif
 using System.Security;
-using Octokit.Helpers;
 using Octokit.Internal;
 
 namespace Octokit
@@ -57,7 +56,7 @@ namespace Octokit
         /// The date and time at which the current rate limit window resets
         /// </summary>
         [Parameter(Key = "ignoreThisField")]
-        public DateTimeOffset Reset { get { return ResetAsUtcEpochSeconds.FromUnixTime(); } }
+        public DateTimeOffset Reset => DateTimeOffset.FromUnixTimeSeconds(ResetAsUtcEpochSeconds);
 
         /// <summary>
         /// The date and time at which the current rate limit window resets - in UTC epoch seconds
