@@ -28,6 +28,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
         {
             return GetAllForRepository(owner, name, ApiOptions.None);
@@ -42,6 +43,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -60,6 +62,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request)
         {
             return GetAllForRepository(owner, name, request, ApiOptions.None);
@@ -75,6 +78,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -92,6 +96,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -105,6 +110,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -120,6 +126,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
+        [ManualRoute("GET", "/repositories/{id}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request)
         {
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
@@ -134,6 +141,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -149,6 +157,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
+        [ManualRoute("GET", "/orgs/{org}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization)
         {
             return GetAllForOrganization(organization, ApiOptions.None);
@@ -162,6 +171,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/orgs/{org}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -179,6 +189,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
+        [ManualRoute("GET", "/orgs/{org}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -196,6 +207,7 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/orgs/{org}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -212,10 +224,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The Id of the project</param>
+        [ManualRoute("GET", "/projects/{project_id}")]
         public Task<Project> Get(int id)
         {
             return ApiConnection.Get<Project>(ApiUrls.Project(id), null, AcceptHeaders.ProjectsApiPreview);
         }
+
+        // NOTE: I think we're missing a Task<Project> CreateForRepository(owner, name, newProject)
+        // Can we identify this programatically?
 
         /// <summary>
         /// Creates a project for this repository.
@@ -225,6 +241,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newProject">The new project to create for this repository</param>
+        [ManualRoute("POST", "/repositories/{id}/projects")]
         public Task<Project> CreateForRepository(long repositoryId, NewProject newProject)
         {
             Ensure.ArgumentNotNull(newProject, nameof(newProject));
@@ -240,6 +257,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="newProject">The new project to create for this repository</param>
+        [ManualRoute("POST", "/orgs/{org}/projects")]
         public Task<Project> CreateForOrganization(string organization, NewProject newProject)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -256,6 +274,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
+        [ManualRoute("PATCH", "/project/{project_id}")]
         public Task<Project> Update(int id, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
@@ -270,6 +289,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The Id of the project</param>
+        [ManualRoute("DELETE", "/project/{project_id}")]
         public async Task<bool> Delete(int id)
         {
             var endpoint = ApiUrls.Project(id);

@@ -32,6 +32,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches")]
         public Task<IReadOnlyList<Branch>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -47,6 +48,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/branches")]
         public Task<IReadOnlyList<Branch>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -62,6 +64,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches")]
         public Task<IReadOnlyList<Branch>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -79,6 +82,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/branches")]
         public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -95,6 +99,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}")]
         public Task<Branch> Get(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -112,6 +117,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}")]
         public Task<Branch> Get(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -128,6 +134,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection")]
         public Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -145,6 +152,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection")]
         public Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -162,6 +170,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/branches/{branch}/protection")]
         public Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -181,6 +190,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
+        [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection")]
         public Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -198,6 +208,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection")]
         public async Task<bool> DeleteBranchProtection(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -224,6 +235,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection")]
         public async Task<bool> DeleteBranchProtection(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -249,6 +261,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks")]
         public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -266,6 +279,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
         public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -283,6 +297,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
+        [ManualRoute("PATCH", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks")]
         public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -302,6 +317,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
+        [ManualRoute("PATCH", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
         public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -319,6 +335,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks")]
         public async Task<bool> DeleteRequiredStatusChecks(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -346,6 +363,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
         public async Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -372,6 +390,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -389,6 +408,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -406,6 +426,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -425,6 +446,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
+        [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -443,6 +465,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -462,6 +485,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
+        [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -480,6 +504,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -499,6 +524,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
         public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -516,6 +542,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/required_pull_request_reviews")]
         public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -533,6 +560,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
         public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -550,6 +578,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
+        [ManualRoute("PATCH", "/repos/{owner}/{name}/branches/{branch}/protection/required_pull_request_reviews")]
         public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -569,6 +598,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
         public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -586,6 +616,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/required_pull_request_reviews")]
         public async Task<bool> RemoveReviewEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -613,6 +644,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
         public async Task<bool> RemoveReviewEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -639,6 +671,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/enforce_admins")]
         public Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -656,6 +689,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
         public Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -672,6 +706,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/branches/{branch}/protection/enforce_admins")]
         public Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -689,6 +724,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
         public Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -705,6 +741,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/enforce_admins")]
         public async Task<bool> RemoveAdminEnforcement(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -732,6 +769,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
         public async Task<bool> RemoveAdminEnforcement(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -758,6 +796,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions")]
         public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -775,6 +814,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions")]
         public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -791,6 +831,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions")]
         public async Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -818,6 +859,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions")]
         public async Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -844,6 +886,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -861,6 +904,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -878,6 +922,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -897,6 +942,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
+        [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -915,6 +961,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -934,6 +981,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
+        [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -952,6 +1000,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -971,6 +1020,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
         public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -988,6 +1038,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -1005,6 +1056,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -1022,6 +1074,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
+        [ManualRoute("UPDATE", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -1041,6 +1094,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
+        [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -1059,6 +1113,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -1078,6 +1133,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
+        [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -1096,6 +1152,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -1115,6 +1172,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
+        [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
         public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));

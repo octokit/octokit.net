@@ -21,6 +21,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/license/#get-license-information
         /// </remarks>
         /// <returns>The <see cref="LicenseInfo"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/settings/license")]
         public Task<LicenseInfo> Get()
         {
             var endpoint = ApiUrls.EnterpriseLicense();

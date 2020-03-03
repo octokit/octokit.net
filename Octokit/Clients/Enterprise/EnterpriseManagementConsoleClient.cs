@@ -21,6 +21,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
         /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
+        [ManualRoute("GET", "/setup/api/maintenance")]
         public Task<MaintenanceModeResponse> GetMaintenanceMode(string managementConsolePassword)
         {
             Ensure.ArgumentNotNullOrEmptyString(managementConsolePassword, "managementConsolePassword");
@@ -37,6 +38,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
         /// </remarks>
         /// <returns>The <see cref="MaintenanceModeResponse"/>.</returns>
+        [ManualRoute("POST", "/setup/api/maintenance")]
         public Task<MaintenanceModeResponse> EditMaintenanceMode(UpdateMaintenanceRequest maintenance, string managementConsolePassword)
         {
             Ensure.ArgumentNotNull(maintenance, "maintenance");

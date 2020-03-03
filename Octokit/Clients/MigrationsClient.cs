@@ -30,6 +30,7 @@ namespace Octokit
         /// <param name="migration">Sprcifies parameters for the migration in a 
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
+        [ManualRoute("POST", "/orgs/{org}/migrations")]
         public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -48,6 +49,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/migrations")]
         public async Task<IReadOnlyList<Migration>> GetAll(string org)
         {
             return await GetAll(org, ApiOptions.None);
@@ -62,6 +64,7 @@ namespace Octokit
         /// <param name="org">The organization of which to list migrations.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/migrations")]
         public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -81,6 +84,7 @@ namespace Octokit
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migration Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
+        [ManualRoute("GET", "/orgs/{org}/migrations/{id}")]
         public async Task<Migration> Get(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -99,6 +103,7 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
+        [ManualRoute("GET", "/orgs/{org}/migrations/{id}/archive")]
         public async Task<byte[]> GetArchive(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -118,6 +123,7 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/migrations/{id}/archive")]
         public Task DeleteArchive(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -137,6 +143,7 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/migrations/{id}/repos/{name}/lock")]
         public Task UnlockRepository(string org, int id, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));

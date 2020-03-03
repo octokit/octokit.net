@@ -24,6 +24,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="userName">The @ handle of the user.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
+        [ManualRoute("GET", "/users/{username}/keys")]
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
@@ -40,6 +41,7 @@ namespace Octokit
         /// <param name="userName">The @ handle of the user.</param>
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
+        [ManualRoute("GET", "/users/{username}/keys")]
         public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
@@ -55,6 +57,7 @@ namespace Octokit
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns>Lists the current user's keys.</returns>
+        [ManualRoute("GET", "/user/keys")]
         public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -68,6 +71,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="options">Options to chagne API's behavior.</param>
         /// <returns>Lists the current user's keys.</returns>
+        [ManualRoute("GET", "/user/keys")]
         public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -83,6 +87,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The Id of the SSH key</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/user/keys/{public_key_id}")]
         public Task<PublicKey> Get(int id)
         {
             return ApiConnection.Get<PublicKey>(ApiUrls.Keys(id));
@@ -96,6 +101,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="newKey">The SSH Key contents</param>
         /// <returns></returns>
+        [ManualRoute("POST", "/user/keys")]
         public Task<PublicKey> Create(NewPublicKey newKey)
         {
             Ensure.ArgumentNotNull(newKey, nameof(newKey));
@@ -111,6 +117,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/user/keys/{public_key_id}")]
         public Task Delete(int id)
         {
             return ApiConnection.Delete(ApiUrls.Keys(id));

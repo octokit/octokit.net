@@ -30,6 +30,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/git/trees/{tree_sha}")]
         public Task<TreeResponse> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -47,6 +48,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
+        [ManualRoute("GET", "/repositories/{id}/git/trees/{tree_sha}")]
         public Task<TreeResponse> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -63,6 +65,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1")]
         public Task<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -80,6 +83,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
+        [ManualRoute("GET", "/repositories/{id}/git/trees/{tree_sha}?recursive=1")]
         public Task<TreeResponse> GetRecursive(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -96,6 +100,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/trees")]
         public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -118,6 +123,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
+        [ManualRoute("POST", "/repos/{id}/git/trees")]
         public Task<TreeResponse> Create(long repositoryId, NewTree newTree)
         {
             Ensure.ArgumentNotNull(newTree, nameof(newTree));

@@ -36,6 +36,7 @@ namespace Octokit
         /// </summary>
         /// <param name="request">Parameters to the Oauth web flow login url</param>
         /// <returns></returns>
+        [DotNetSpecificRoute]
         public Uri GetGitHubLoginUrl(OauthLoginRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -56,6 +57,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="request"></param>
         /// <returns></returns>
+        [ManualRoute("POST", "/login/oauth/access_token")]
         public async Task<OauthToken> CreateAccessToken(OauthTokenRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));

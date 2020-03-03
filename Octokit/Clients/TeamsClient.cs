@@ -30,6 +30,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
+        [ManualRoute("GET", "/teams/{id}")]
         public Task<Team> Get(int id)
         {
             var endpoint = ApiUrls.Teams(id);
@@ -43,6 +44,7 @@ namespace Octokit
         /// <param name="org">Organization to list teams of.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/teams")]
         public Task<IReadOnlyList<Team>> GetAll(string org)
         {
             return GetAll(org, ApiOptions.None);
@@ -55,6 +57,7 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the orgs's teams <see cref="Team"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/teams")]
         public Task<IReadOnlyList<Team>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -69,6 +72,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        [ManualRoute("GET", "/user/teams")]
         public Task<IReadOnlyList<Team>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -80,6 +84,7 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the user's <see cref="Team"/>s.</returns>
+        [ManualRoute("GET", "/user/teams")]
         public Task<IReadOnlyList<Team>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -96,6 +101,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
+        [ManualRoute("GET", "/teams{id}/teams")]
         public Task<IReadOnlyList<Team>> GetAllChildTeams(int id)
         {
             return GetAllChildTeams(id, ApiOptions.None);
@@ -109,6 +115,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
+        [ManualRoute("GET", "/teams{id}/teams")]
         public Task<IReadOnlyList<Team>> GetAllChildTeams(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -119,25 +126,27 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns all members of the given team. 
+        /// Returns all members of the given team.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <param name="id">The team identifier</param>
+        [ManualRoute("GET", "/teams{id}/members")]
         public Task<IReadOnlyList<User>> GetAllMembers(int id)
         {
             return GetAllMembers(id, ApiOptions.None);
         }
 
         /// <summary>
-        /// Returns all members of the given team. 
+        /// Returns all members of the given team.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
+        [ManualRoute("GET", "/teams{id}/members")]
         public Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -155,6 +164,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
+        [ManualRoute("GET", "/teams{id}/members")]
         public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -171,6 +181,7 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
         /// <param name="options">Options to change API behaviour.</param>
+        [ManualRoute("GET", "/teams{id}/members")]
         public Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -182,7 +193,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
+        /// Gets whether the user with the given <paramref name="login"/>
         /// is a member of the team with the given <paramref name="id"/>.
         /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
         /// </summary>
@@ -191,6 +202,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
+        [ManualRoute("GET", "/teams/{id}/memberships/{username}")]
         public Task<TeamMembershipDetails> GetMembershipDetails(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -205,6 +217,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Newly created <see cref="Team"/></returns>
+        [ManualRoute("POST", "/orgs/{org}/teams")]
         public Task<Team> Create(string org, NewTeam team)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -219,6 +232,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
+        [ManualRoute("PATCH", "/teams/{id}")]
         public Task<Team> Update(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
@@ -232,6 +246,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/teams/{id}")]
         public Task Delete(int id)
         {
             var endpoint = ApiUrls.Teams(id);
@@ -248,6 +263,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
+        [ManualRoute("PUT", "/teams/{id}/memberships/{username}")]
         public Task<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -267,6 +283,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
+        [ManualRoute("DELETE", "/teams/{id}/memberships/{username}")]
         public async Task<bool> RemoveMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -291,6 +308,7 @@ namespace Octokit
         /// <param name="id">Team Id.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
+        [ManualRoute("GET", "/teams/{id}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
         {
             return GetAllRepositories(id, ApiOptions.None);
@@ -303,6 +321,7 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
+        [ManualRoute("GET", "/teams/{id}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -317,10 +336,23 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [ManualRoute("PUT", "/orgs/{org}/team/{team_slug}/repos/{owner}/{repo}")]
         public async Task<bool> AddRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
+
+            // TODO: I am very suspicious of this due to the documentation
+            // https://developer.github.com/v3/teams/#add-or-update-team-repository
+            //
+            // Recommended:
+            // PUT /orgs/:org/teams/:team_slug/repos/:owner/:repo
+            //
+            // or
+            //
+            // PUT /organizations/:org_id/team/:team_id/repos/:owner/:repo
+            //
+            // Likely will require a breaking change
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -344,10 +376,23 @@ namespace Octokit
         /// <param name="permission">The permission to grant the team on this repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [ManualRoute("PUT", "/orgs/{org}/team/{team_slug}/repos/{owner}/{repo}")]
         public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
+
+            // TODO: I am very suspicious of this due to the documentation
+            // https://developer.github.com/v3/teams/#add-or-update-team-repository
+            //
+            // Recommended:
+            // PUT /orgs/:org/teams/:team_slug/repos/:owner/:repo
+            //
+            // or
+            //
+            // PUT /organizations/:org_id/team/:team_id/repos/:owner/:repo
+            //
+            // Likely will require a breaking change
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -367,10 +412,23 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/:org/teams/:team_slug/repos/:owner/:repo")]
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
+
+            // TODO: I am very suspicious of this due to the documentation
+            // https://developer.github.com/v3/teams/#remove-team-repository
+            //
+            // Recommended:
+            // DELETE /orgs/:org/teams/:team_slug/repos/:owner/:repo
+            //
+            // or
+            //
+            // DELETE /organizations/:org_id/team/:team_id/repos/:owner/:repo
+            //
+            // Likely will require a breaking change
 
             var endpoint = ApiUrls.TeamRepository(id, organization, repoName);
 
@@ -396,6 +454,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
+        [ManualRoute("GET", "/teams/{id}/repos/{owner}/{name}")]
         public async Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -423,6 +482,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/teams/{id}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id)
         {
             Ensure.ArgumentNotNull(id, nameof(id));
@@ -440,6 +500,7 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/teams/{id}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options)
         {
             return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, AcceptHeaders.OrganizationMembershipPreview, options);

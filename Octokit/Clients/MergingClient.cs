@@ -28,6 +28,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
+        [ManualRoute("POST", "repos/{owner}/{name}/merges")]
         public Task<Merge> Create(string owner, string name, NewMerge merge)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -46,6 +47,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
+        [ManualRoute("POST", "repositories/{id}/merges")]
         public Task<Merge> Create(long repositoryId, NewMerge merge)
         {
             Ensure.ArgumentNotNull(merge, nameof(merge));
