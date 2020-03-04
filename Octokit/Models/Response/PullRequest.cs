@@ -16,7 +16,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool draft, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers, IReadOnlyList<Label> labels)
+        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool draft, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers, IReadOnlyList<Team> requestedTeams, IReadOnlyList<Label> labels)
         {
             Id = id;
             NodeId = nodeId;
@@ -53,6 +53,7 @@ namespace Octokit
             Locked = locked;
             MaintainerCanModify = maintainerCanModify;
             RequestedReviewers = requestedReviewers;
+            RequestedTeams = requestedTeams;
             Labels = labels;
         }
 
@@ -242,6 +243,11 @@ namespace Octokit
         /// Users requested for review
         /// </summary>
         public IReadOnlyList<User> RequestedReviewers { get; protected set; }
+        
+        /// <summary>
+        /// Teams requested for review
+        /// </summary>
+        public IReadOnlyList<Team> RequestedTeams { get; protected set; }
 
         public IReadOnlyList<Label> Labels { get; protected set; }
 
