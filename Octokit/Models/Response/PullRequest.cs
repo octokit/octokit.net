@@ -243,7 +243,7 @@ namespace Octokit
         /// Users requested for review
         /// </summary>
         public IReadOnlyList<User> RequestedReviewers { get; protected set; }
-        
+
         /// <summary>
         /// Teams requested for review
         /// </summary>
