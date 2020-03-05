@@ -4,5 +4,8 @@
         "**/obj": true,
         "**/packaging": true,
         "**/coverage-results": true
-    }
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true
 }

@@ -32,6 +32,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -50,6 +51,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
         public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -69,6 +71,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -88,6 +91,7 @@ namespace Octokit
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -107,6 +111,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login of the user</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/outside_collaborators/{username}")]
         public async Task<bool> Delete(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -147,6 +152,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("PUT", "/orgs/{org}/outside_collaborators/{username}")]
         public async Task<bool> ConvertFromMember(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));

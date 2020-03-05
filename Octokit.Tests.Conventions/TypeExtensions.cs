@@ -74,6 +74,11 @@ namespace Octokit.Tests.Conventions
             return type.GetTypeInfo().IsInterface && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IGitHubClient).Namespace;
         }
 
+        public static bool IsClientClass(this Type type)
+        {
+            return type.GetTypeInfo().IsClass && type.Name.EndsWith(ClientSuffix) && type.Namespace == typeof(IGitHubClient).Namespace;
+        }
+
         public static Type GetObservableClientInterface(this Type type)
         {
             var observableClient = typeof(IObservableEventsClient);

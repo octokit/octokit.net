@@ -634,7 +634,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.        
+        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -726,7 +726,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the
         /// organization.
         /// Otherwise returns a 404.
         /// </summary>
@@ -1661,7 +1661,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for org teams 
+        /// returns the <see cref="Uri"/> for org teams
         /// use for both Get and Create methods
         /// </summary>
         /// <param name="organization"></param>
@@ -1672,7 +1672,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to discover teams 
+        /// Returns the <see cref="Uri"/> to discover teams
         /// for the current user
         /// </summary>
         /// <returns></returns>
@@ -2217,7 +2217,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// Creates the relative <see cref="Uri"/> for retrieving the
         /// current users followers
         /// </summary>
         /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>

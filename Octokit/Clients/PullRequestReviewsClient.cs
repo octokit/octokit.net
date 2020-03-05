@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,6 +23,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/reviews")]
         public Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -39,6 +38,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
+        [ManualRoute("GET", "/repositories/{id}/pulls/{number}/reviews")]
         public Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int number)
         {
             return GetAll(repositoryId, number, ApiOptions.None);
@@ -52,6 +52,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/reviews")]
         public Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -69,6 +70,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/pulls/{number}/reviews")]
         public Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -85,6 +87,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}")]
         public Task<PullRequestReview> Get(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -101,6 +104,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("GET", "/repositories/{id}/pulls/{number}/reviews/{review_id}")]
         public Task<PullRequestReview> Get(long repositoryId, int number, long reviewId)
         {
             var endpoint = ApiUrls.PullRequestReview(repositoryId, number, reviewId);
@@ -115,6 +119,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/pulls/{number}/reviews")]
         public Task<PullRequestReview> Create(string owner, string name, int number, PullRequestReviewCreate review)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -132,6 +137,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="review">The review</param>
+        [ManualRoute("POST", "/repositories/{id}/pulls/{number}/reviews")]
         public Task<PullRequestReview> Create(long repositoryId, int number, PullRequestReviewCreate review)
         {
             Ensure.ArgumentNotNull(review, nameof(review));
@@ -148,6 +154,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}")]
         public Task Delete(string owner, string name, int number, long reviewId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -164,6 +171,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("DELETE", "/repositories/{id}/pulls/{number}/reviews/{review_id}")]
         public Task Delete(long repositoryId, int number, long reviewId)
         {
             var endpoint = ApiUrls.PullRequestReview(repositoryId, number, reviewId);
@@ -179,6 +187,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}/dismissals")]
         public Task<PullRequestReview> Dismiss(string owner, string name, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -197,6 +206,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
+        [ManualRoute("PUT", "/repositories/{id}/pulls/{number}/reviews/{review_id}/dismissals")]
         public Task<PullRequestReview> Dismiss(long repositoryId, int number, long reviewId, PullRequestReviewDismiss dismissMessage)
         {
             Ensure.ArgumentNotNull(dismissMessage, nameof(dismissMessage));
@@ -214,6 +224,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}/events")]
         public Task<PullRequestReview> Submit(string owner, string name, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -232,6 +243,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
+        [ManualRoute("POST", "/repositories/{id}/pulls/{number}/reviews/{review_id}/events")]
         public Task<PullRequestReview> Submit(long repositoryId, int number, long reviewId, PullRequestReviewSubmit submitMessage)
         {
             Ensure.ArgumentNotNull(submitMessage, nameof(submitMessage));
@@ -248,6 +260,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}/comments")]
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId)
         {
             return GetAllComments(owner, name, number, reviewId, ApiOptions.None);
@@ -260,6 +273,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
+        [ManualRoute("POST", "/repositories/{id}/pulls/{number}/reviews/{review_id}/comments")]
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId)
         {
             return GetAllComments(repositoryId, number, reviewId, ApiOptions.None);
@@ -274,6 +288,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/reviews/{review_id}/comments")]
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int number, long reviewId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -291,6 +306,7 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("POST", "/repositories/{id}/pulls/{number}/reviews/{review_id}/comments")]
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int number, long reviewId, ApiOptions options)
         {
             var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number, reviewId);

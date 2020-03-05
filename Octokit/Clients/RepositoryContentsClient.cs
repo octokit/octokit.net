@@ -29,6 +29,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -48,6 +49,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
+        [ManualRoute("GET", "repoitories/{id}/contents/{path}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId, string path)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
@@ -65,6 +67,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "repos/{owner}/{name}/contents/{path}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -82,6 +85,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "repositories/{id}/contents/{path}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(long repositoryId)
         {
             var url = ApiUrls.RepositoryContent(repositoryId, string.Empty);
@@ -100,6 +104,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository�s default branch (usually master)</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}?ref={ref}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -123,6 +128,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ManualRoute("GET", "repositories/{id}/contents/{path}?ref={ref}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string path, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
@@ -142,6 +148,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository�s default branch (usually master)</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}?ref={ref}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -162,6 +169,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        [ManualRoute("GET", "repositories/{id}/contents/{path}?ref={ref}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -180,6 +188,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "repos/{owner}/{name}/readme")]
         public async Task<Readme> GetReadme(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -199,6 +208,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "repositories/{id}/readme")]
         public async Task<Readme> GetReadme(long repositoryId)
         {
             var endpoint = ApiUrls.RepositoryReadme(repositoryId);
@@ -216,6 +226,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [DotNetSpecificRouteAttribute]
         public Task<string> GetReadmeHtml(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -232,6 +243,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [DotNetSpecificRouteAttribute]
         public Task<string> GetReadmeHtml(long repositoryId)
         {
             return ApiConnection.GetHtml(ApiUrls.RepositoryReadme(repositoryId), null);
@@ -243,6 +255,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -256,6 +269,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(long repositoryId)
         {
             return GetArchive(repositoryId, ArchiveFormat.Tarball, string.Empty);
@@ -268,6 +282,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -282,6 +297,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
+        [ManualRoute("GET", "/repositories/{id}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat)
         {
             return GetArchive(repositoryId, archiveFormat, string.Empty);
@@ -295,6 +311,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -311,6 +328,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
+        [ManualRoute("GET", "/repositories/{id}/{archive_format}/{ref}")]
         public Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference)
         {
             Ensure.ArgumentNotNull(reference, nameof(reference));
@@ -327,6 +345,7 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/{archive_format}/{ref}")]
         public async Task<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -349,6 +368,7 @@ namespace Octokit
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
+        [ManualRoute("GET", "/repositories/{id}/{archive_format}/{ref}")]
         public async Task<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
         {
             Ensure.ArgumentNotNull(reference, nameof(reference));
@@ -368,6 +388,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/contents/{path}")]
         public Task<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -385,6 +406,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
+        [ManualRoute("PUT", "/repositories/{id}/contents/{path}")]
         public Task<RepositoryContentChangeSet> CreateFile(long repositoryId, string path, CreateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
@@ -401,6 +423,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/contents/{path}")]
         public Task<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -418,6 +441,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
+        [ManualRoute("PUT", "/repositories/{id}/contents/{path}")]
         public Task<RepositoryContentChangeSet> UpdateFile(long repositoryId, string path, UpdateFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
@@ -434,6 +458,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/contents/{path}")]
         public Task DeleteFile(string owner, string name, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -451,6 +476,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
+        [ManualRoute("DELETE", "/repositorioes/{id}/contents/{path}")]
         public Task DeleteFile(long repositoryId, string path, DeleteFileRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));

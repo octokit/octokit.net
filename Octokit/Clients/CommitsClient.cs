@@ -28,6 +28,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/git/commits/{commit_sha}")]
         public Task<Commit> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -45,6 +46,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
+        [ManualRoute("GET", "/repositories/{id}/git/commits/{commit_sha}")]
         public Task<Commit> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -61,6 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/git/commits")]
         public Task<Commit> Create(string owner, string name, NewCommit commit)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -78,6 +81,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
+        [ManualRoute("POST", "/repositories/{id}/git/commits")]
         public Task<Commit> Create(long repositoryId, NewCommit commit)
         {
             Ensure.ArgumentNotNull(commit, nameof(commit));

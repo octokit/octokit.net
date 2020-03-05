@@ -27,6 +27,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
+        [ManualRoute("GET", "/emojis")]
         public Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
             return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
@@ -38,6 +39,7 @@ namespace Octokit
         /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [ManualRoute("POST", "/markdown/raw")]
         public Task<string> RenderRawMarkdown(string markdown)
         {
             return ApiConnection.Post<string>(ApiUrls.RawMarkdown(), markdown, "text/html", "text/plain");
@@ -49,6 +51,7 @@ namespace Octokit
         /// <param name="markdown">An arbitrary Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [ManualRoute("POST", "/markdown")]
         public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
         {
             return ApiConnection.Post<string>(ApiUrls.Markdown(), markdown, "text/html", "text/plain");
@@ -58,6 +61,7 @@ namespace Octokit
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>
+        [ManualRoute("GET", "/gitignore/templates")]
         public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
         {
             return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates());
@@ -68,6 +72,7 @@ namespace Octokit
         /// </summary>
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
+        [ManualRoute("GET", "/gitignore/templates/{template_name}")]
         public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
@@ -80,6 +85,7 @@ namespace Octokit
         /// list of all possible OSS licenses.
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
+        [ManualRoute("GET", "/licenses")]
         public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
             return GetAllLicenses(ApiOptions.None);
@@ -91,6 +97,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
+        [ManualRoute("GET", "/licenses")]
         public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -103,6 +110,7 @@ namespace Octokit
         /// </summary>
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+        [ManualRoute("GET", "/licenses/{key}")]
         public Task<License> GetLicense(string key)
         {
             return ApiConnection.Get<License>(ApiUrls.Licenses(key), null, AcceptHeaders.LicensesApiPreview);
@@ -114,6 +122,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ManualRoute("GET", "/rate_limit")]
         public Task<MiscellaneousRateLimit> GetRateLimits()
         {
             return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit());
@@ -125,6 +134,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [ManualRoute("GET", "/meta")]
         public Task<Meta> GetMetadata()
         {
             return ApiConnection.Get<Meta>(ApiUrls.Meta());

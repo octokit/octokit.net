@@ -27,6 +27,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{name}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -40,6 +41,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId)
         {
             return GetAllWatchers(repositoryId, ApiOptions.None);
@@ -52,6 +54,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{name}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -67,6 +70,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -81,6 +85,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
+        [ManualRoute("GET", "/user/subscribers")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -94,6 +99,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
+        [ManualRoute("GET", "/user/subscribers")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -109,6 +115,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
+        [ManualRoute("GET", "/users/{username}/subscriptions")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -125,6 +132,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
+        [ManualRoute("GET", "/users/{username}/subscriptions")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -139,6 +147,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{name}/subscription")]
         public async Task<bool> CheckWatched(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -162,6 +171,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/subscription")]
         public async Task<bool> CheckWatched(long repositoryId)
         {
             try
@@ -183,6 +193,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/subscription")]
         public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -197,6 +208,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
+        [ManualRoute("PUT", "/repositories/{id}/subscription")]
         public Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
@@ -209,6 +221,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/subscription")]
         public async Task<bool> UnwatchRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -231,6 +244,7 @@ namespace Octokit
         /// Unwatches a repository for the authenticated user.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("DELETE", "/repositories/{id}/subscription")]
         public async Task<bool> UnwatchRepo(long repositoryId)
         {
             try

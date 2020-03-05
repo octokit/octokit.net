@@ -31,6 +31,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#get-a-single-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("GET", "/gists/{gist_id}")]
         public Task<Gist> Get(string id)
         {
             return ApiConnection.Get<Gist>(ApiUrls.Gist(id));
@@ -43,6 +44,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#create-a-gist
         /// </remarks>
         /// <param name="newGist">The new gist to create</param>
+        [ManualRoute("GET", "/gists")]
         public Task<Gist> Create(NewGist newGist)
         {
             Ensure.ArgumentNotNull(newGist, nameof(newGist));
@@ -73,6 +75,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#fork-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist to fork</param>
+        [ManualRoute("POST", "/gists/{gist_id}/forks")]
         public Task<Gist> Fork(string id)
         {
             return ApiConnection.Post<Gist>(ApiUrls.ForkGist(id), new object());
@@ -85,6 +88,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("DELETE", "/gists/{gist_id}")]
         public Task Delete(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -99,6 +103,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        [ManualRoute("GET", "/gists")]
         public Task<IReadOnlyList<Gist>> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -112,6 +117,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists")]
         public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -127,6 +133,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        [ManualRoute("GET", "/gists")]
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
         {
             return GetAll(since, ApiOptions.None);
@@ -141,6 +148,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists")]
         public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -155,6 +163,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        [ManualRoute("GET", "/gists/public")]
         public Task<IReadOnlyList<Gist>> GetAllPublic()
         {
             return GetAllPublic(ApiOptions.None);
@@ -167,6 +176,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/public")]
         public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -181,6 +191,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        [ManualRoute("GET", "/gists/public")]
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
         {
             return GetAllPublic(since, ApiOptions.None);
@@ -194,6 +205,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/public")]
         public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -208,6 +220,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        [ManualRoute("GET", "/gists/starred")]
         public Task<IReadOnlyList<Gist>> GetAllStarred()
         {
             return GetAllStarred(ApiOptions.None);
@@ -220,6 +233,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/starred")]
         public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -234,6 +248,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        [ManualRoute("GET", "/gists/starred")]
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
         {
             return GetAllStarred(since, ApiOptions.None);
@@ -247,6 +262,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/starred")]
         public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -262,6 +278,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user</param>
+        [ManualRoute("GET", "/users/{user}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -277,6 +294,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{user}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -293,6 +311,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        [ManualRoute("GET", "/users/{user}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -309,6 +328,7 @@ namespace Octokit
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{user}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -325,6 +345,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists-commits
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("GET", "/gists/{gist_id}/commits")]
         public Task<IReadOnlyList<GistHistory>> GetAllCommits(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -340,6 +361,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/{gist_id}/commits")]
         public Task<IReadOnlyList<GistHistory>> GetAllCommits(string id, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -355,6 +377,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists-forks
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("GET", "/gists/{gist_id}/forks")]
         public Task<IReadOnlyList<GistFork>> GetAllForks(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -370,6 +393,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/gists/{gist_id}/forks")]
         public Task<IReadOnlyList<GistFork>> GetAllForks(string id, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -386,6 +410,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="gistUpdate">The update to the gist</param>
+        [ManualRoute("PATCH", "/gists/{gist_id}")]
         public Task<Gist> Edit(string id, GistUpdate gistUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -413,6 +438,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#star-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("PUT", "/gists/{gist_id}/star")]
         public Task Star(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -427,6 +453,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#unstar-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("DELETE", "/gists/{gist_id}/star")]
         public Task Unstar(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));
@@ -441,6 +468,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
         /// </remarks>
         /// <param name="id">The id of the gist</param>
+        [ManualRoute("GET", "/gists/{gist_id}/star")]
         public async Task<bool> IsStarred(string id)
         {
             Ensure.ArgumentNotNullOrEmptyString(id, nameof(id));

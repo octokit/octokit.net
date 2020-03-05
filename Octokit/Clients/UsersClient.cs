@@ -55,6 +55,7 @@ namespace Octokit
         /// Returns the user specified by the login.
         /// </summary>
         /// <param name="login">The login name for the user</param>
+        [ManualRoute("GET", "/users/{username}")]
         public Task<User> Get(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -67,6 +68,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [ManualRoute("GET", "/user")]
         public Task<User> Current()
         {
             return ApiConnection.Get<User>(_userEndpoint);
@@ -78,6 +80,7 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
+        [ManualRoute("PATCH", "/user")]
         public Task<User> Update(UserUpdate user)
         {
             Ensure.ArgumentNotNull(user, nameof(user));

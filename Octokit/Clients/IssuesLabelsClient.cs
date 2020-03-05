@@ -25,6 +25,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -41,6 +42,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
+        [ManualRoute("GET", "/repositories/{id}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
@@ -56,6 +58,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -74,6 +77,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -89,6 +93,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -104,6 +109,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -118,6 +124,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -135,6 +142,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -151,6 +159,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/milestones/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -167,6 +176,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
+        [ManualRoute("GET", "/repositories/{id}/milestones/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number)
         {
             return GetAllForMilestone(repositoryId, number, ApiOptions.None);
@@ -182,6 +192,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/milestones/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -200,6 +211,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/milestones/{number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -216,6 +228,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/labels/{name}")]
         public Task<Label> Get(string owner, string name, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -233,6 +246,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        [ManualRoute("GET", "/repositories/{id}/labels/{name}")]
         public Task<Label> Get(long repositoryId, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
@@ -249,6 +263,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/labels/{name}")]
         public Task Delete(string owner, string name, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -266,6 +281,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        [ManualRoute("DELETE", "/repositories/{id}/labels/{name}")]
         public Task Delete(long repositoryId, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
@@ -282,6 +298,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/labels")]
         public Task<Label> Create(string owner, string name, NewLabel newLabel)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -299,6 +316,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
+        [ManualRoute("POST", "/repositories/{id}/labels/{name}")]
         public Task<Label> Create(long repositoryId, NewLabel newLabel)
         {
             Ensure.ArgumentNotNull(newLabel, nameof(newLabel));
@@ -316,12 +334,15 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
+        [ManualRoute("PATCH", "/repos/{owner}/{name}/labels/{name}")]
         public Task<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
             Ensure.ArgumentNotNull(labelUpdate, nameof(labelUpdate));
+
+            // BUG: this should be a PATCH instead of POST
 
             return ApiConnection.Post<Label>(ApiUrls.Label(owner, name, labelName), labelUpdate, AcceptHeaders.LabelsApiPreview);
         }
@@ -335,10 +356,13 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
+        [ManualRoute("PATCH", "/repositories/{id}/labels/{name}")]
         public Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
             Ensure.ArgumentNotNull(labelUpdate, nameof(labelUpdate));
+
+            // BUG: this should be a PATCH instead of POST
 
             return ApiConnection.Post<Label>(ApiUrls.Label(repositoryId, labelName), labelUpdate, AcceptHeaders.LabelsApiPreview);
         }
@@ -353,6 +377,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
+        [ManualRoute("POST", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int number, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -371,6 +396,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
+        [ManualRoute("POST", "/repositories/{id}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int number, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
@@ -388,6 +414,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -406,6 +433,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
+        [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
@@ -423,6 +451,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
+        [ManualRoute("PUT", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int number, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -441,6 +470,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
+        [ManualRoute("PUT", "/repositories/{id}/issues/{number}/labels")]
         public Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int number, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
@@ -457,6 +487,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/issues/{number}/labels")]
         public Task RemoveAllFromIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -473,6 +504,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the issue</param>
+        [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/labels")]
         public Task RemoveAllFromIssue(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.IssueLabels(repositoryId, number));

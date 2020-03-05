@@ -25,6 +25,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
+        [ManualRoute("POST", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -42,6 +43,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
+        [ManualRoute("POST", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
@@ -57,6 +59,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
+        [ManualRoute("GET", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             return GetAll(owner, name, number, ApiOptions.None);
@@ -71,6 +74,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -87,6 +91,7 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment id</param>        
         /// <returns></returns>
+        [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
         {
             return GetAll(repositoryId, number, ApiOptions.None);
@@ -100,6 +105,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));

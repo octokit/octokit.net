@@ -27,6 +27,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pages")]
         public Task<Page> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -42,6 +43,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repositories/{id}/pages")]
         public Task<Page> Get(long repositoryId)
         {
             return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId));
@@ -55,6 +57,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -70,6 +73,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repositories/{id}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -84,6 +88,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -102,6 +107,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repositories/{id}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -118,6 +124,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds/latest")]
         public Task<PagesBuild> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -133,6 +140,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("GET", "/repositories/{id}/pages/builds/latest")]
         public Task<PagesBuild> GetLatest(long repositoryId)
         {
             return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId));
@@ -146,6 +154,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("POST", "/repos/{owner}/{name}/pages/builds")]
         public Task<PagesBuild> RequestPageBuild(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -161,6 +170,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
+        [ManualRoute("POST", "/repositories/{id}/pages/builds")]
         public Task<PagesBuild> RequestPageBuild(long repositoryId)
         {
             return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), AcceptHeaders.PagesApiPreview);

@@ -24,6 +24,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/assignees")]
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -36,6 +37,7 @@ namespace Octokit
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/assignees")]
         public Task<IReadOnlyList<User>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -47,6 +49,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's response.</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/assignees")]
         public Task<IReadOnlyList<User>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -63,6 +66,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">The options to change API's response.</param>
+        [ManualRoute("GET", "/repositories/{id}/assignees")]
         public Task<IReadOnlyList<User>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -78,6 +82,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
+        [ManualRoute("GET", "/repos/{owner}/{name}/assignees/{username}")]
         public async Task<bool> CheckAssignee(string owner, string name, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -103,6 +108,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
+        [ManualRoute("POST", "/repos/{owner}/{name}/issues/{number}/assignees")]
         public Task<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -120,6 +126,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="assignees">List of assignees to remove</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/repos/{owner}/{name}/issues/{number}/assignees")]
         public Task<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -134,6 +141,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
+        [ManualRoute("GET", "/repositories/{id}/assignees/{username}")]
         public async Task<bool> CheckAssignee(long repositoryId, string assignee)
         {
             Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));

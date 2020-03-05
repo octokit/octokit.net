@@ -19,7 +19,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("PATCH", "/user/repository_invitations/{invitation_id}")]
         public async Task<bool> Accept(int invitationId)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
@@ -43,6 +44,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("DELETE", "/user/repository_invitations/{invitation_id}")]
         public async Task<bool> Decline(int invitationId)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
@@ -67,6 +69,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("DELETE", "/repos/:owner/:repo/invitations/{invitation_id}")]
         public async Task<bool> Delete(long repositoryId, int invitationId)
         {
             var endpoint = ApiUrls.RepositoryInvitations(repositoryId, invitationId);
@@ -89,6 +92,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "/user/repository_invitations")]
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -102,6 +106,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "/user/repository_invitations")]
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -116,6 +121,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "/repositories/{id}/invitations")]
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -130,6 +136,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "/repositories/{id}/invitations")]
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -146,6 +153,7 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collsborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("PATCH", "/repositories/{id}/invitations/{invitation_id}")]
         public Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, nameof(permissions));

@@ -15,6 +15,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/traffic/popular/paths")]
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(long repositoryId)
         {
             return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
@@ -26,6 +27,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/popular/paths")]
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -39,6 +41,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/traffic/popular/referrers")]
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(long repositoryId)
         {
             return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
@@ -50,6 +53,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/popular/referrers")]
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -64,6 +68,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#clones</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
+        [ManualRoute("GET", "/repositories/{id}/traffic/clones")]
         public Task<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNull(per, nameof(per));
@@ -78,6 +83,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
+        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/clones")]
         public Task<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -93,6 +99,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#views</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
+        [ManualRoute("GET", "/repositories/{id}/traffic/views")]
         public Task<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNull(per, nameof(per));
@@ -107,6 +114,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
+        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/views")]
         public Task<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
