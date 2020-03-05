@@ -143,29 +143,6 @@ namespace Octokit.Reactive
         IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite);
 
         /// <summary>
-        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="request">Details of the Check Suite request</param>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        IObservable<bool> Request(string owner, string name, CheckSuiteTriggerRequest request);
-
-        /// <summary>
-        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="request">Details of the Check Suite request</param>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        IObservable<bool> Request(long repositoryId, CheckSuiteTriggerRequest request);
-
-        /// <summary>
         /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
         /// </summary>
         /// <remarks>

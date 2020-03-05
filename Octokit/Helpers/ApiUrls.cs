@@ -4094,29 +4094,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public static Uri CheckSuiteRequests(long repositoryId)
-        {
-            return "repositories/{0}/check-suite-requests".FormatUri(repositoryId);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
-        /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="repo">The name of repo</param>
-        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public static Uri CheckSuiteRequests(string owner, string repo)
-        {
-            return "repos/{0}/{1}/check-suite-requests".FormatUri(owner, repo);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
-        /// </summary>
-        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
         public static Uri CheckSuiteRerequest(long repositoryId, long checkSuiteId)

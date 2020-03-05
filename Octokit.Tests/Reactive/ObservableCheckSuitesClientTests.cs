@@ -313,64 +313,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        public class TheRequestMethod
-        {
-            [Fact]
-            public async Task RequestsCorrectUrl()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableCheckSuitesClient(gitHubClient);
-
-                var request = new CheckSuiteTriggerRequest("123abc");
-
-                client.Request("fake", "repo", request);
-
-                gitHubClient.Check.Suite.Received().Request("fake", "repo", request);
-            }
-
-            [Fact]
-            public async Task RequestsCorrectUrlWithRepositoryId()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableCheckSuitesClient(gitHubClient);
-
-                var request = new CheckSuiteTriggerRequest("123abc");
-
-                client.Request(1, request);
-
-                gitHubClient.Check.Suite.Received().Request(1, request);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableCheckSuitesClient(gitHubClient);
-
-                var request = new CheckSuiteTriggerRequest("123abc");
-
-                Assert.Throws<ArgumentNullException>(() => client.Request(null, "repo", request));
-                Assert.Throws<ArgumentNullException>(() => client.Request("fake", null, request));
-                Assert.Throws<ArgumentNullException>(() => client.Request("fake", "repo", null));
-
-                Assert.Throws<ArgumentNullException>(() => client.Request(1, null));
-            }
-
-            [Fact]
-            public async Task EnsuresNonEmptyArguments()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableCheckSuitesClient(gitHubClient);
-
-                var request = new CheckSuiteTriggerRequest("123abc");
-
-                Assert.Throws<ArgumentException>(() => client.Request("", "repo", request));
-                Assert.Throws<ArgumentException>(() => client.Request("fake", "", request));
-            }
-        }
-#pragma warning restore CS0618 // Type or member is obsolete
-
         public class TheRerequestMethod
         {
             [Fact]
