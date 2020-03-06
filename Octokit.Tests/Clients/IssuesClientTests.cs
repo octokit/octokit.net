@@ -22,7 +22,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -74,7 +74,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -92,7 +92,7 @@ namespace Octokit.Tests.Clients
                         && d["sort"] == "created"
                         && d["state"] == "open"
                         && d["direction"] == "asc"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -183,7 +183,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -236,7 +236,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -250,7 +250,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -271,7 +271,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -292,7 +292,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -313,7 +313,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -334,7 +334,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -362,7 +362,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -390,7 +390,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
         }

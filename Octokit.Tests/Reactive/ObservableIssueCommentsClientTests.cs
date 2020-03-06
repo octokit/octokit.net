@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
                     Arg.Any<IDictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/comments", UriKind.Relative),
                     Arg.Any<IDictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Reactive
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
                         && d["sort"] == "updated"),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -133,7 +133,7 @@ namespace Octokit.Tests.Reactive
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
                         && d["sort"] == "updated"),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -172,7 +172,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Any<IDictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -184,7 +184,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue(1, 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview");
+                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Reactive
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 3
                          && d["since"] == "2016-11-23T11:11:11Z"),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -224,7 +224,7 @@ namespace Octokit.Tests.Reactive
                     new Uri("repositories/1/issues/3/comments", UriKind.Relative),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                                 && d["since"] == "2016-11-23T11:11:11Z"),
-                            "application/vnd.github.squirrel-girl-preview");
+                            "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 4),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -266,7 +266,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/3/comments", UriKind.Relative),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 4),
-                            "application/vnd.github.squirrel-girl-preview");
+                            "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]

@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll("fake", "repo", 42);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll("fake", "repo", 42, options);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview", options);
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", options);
             }
 
             [Fact]
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(1, 42);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
             }
 
             [Fact]
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(1, 42, options);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview", options);
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", options);
             }
 
             [Fact]
@@ -112,7 +112,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(1, 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]

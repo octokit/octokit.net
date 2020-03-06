@@ -20,7 +20,7 @@ public class RepositoryCommentsClientTests
 
             await client.Get("fake", "repo", 42);
 
-            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview");
+            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ public class RepositoryCommentsClientTests
 
             await client.Get(1, 42);
 
-            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview");
+            connection.Received().Get<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json");
         }
 
         [Fact]
@@ -57,7 +57,7 @@ public class RepositoryCommentsClientTests
 
             await client.GetAllForRepository("fake", "repo");
 
-            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
         }
 
         [Fact]
@@ -68,7 +68,7 @@ public class RepositoryCommentsClientTests
 
             await client.GetAllForRepository(1);
 
-            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview", Args.ApiOptions);
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ public class RepositoryCommentsClientTests
 
             await client.GetAllForRepository("fake", "repo", options);
 
-            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview", options);
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json", options);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ public class RepositoryCommentsClientTests
 
             await client.GetAllForRepository(1, options);
 
-            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview", options);
+            connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json", options);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ public class RepositoryCommentsClientTests
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"),
                 Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview",
+                "application/vnd.github.squirrel-girl-preview+json",
             Args.ApiOptions);
         }
 
@@ -155,7 +155,7 @@ public class RepositoryCommentsClientTests
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/comments"),
                 Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview",
+                "application/vnd.github.squirrel-girl-preview+json",
                 Args.ApiOptions);
         }
 
@@ -175,7 +175,7 @@ public class RepositoryCommentsClientTests
             await client.GetAllForCommit("fake", "repo", "sha", options);
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/sha/comments"), Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview", options);
+                "application/vnd.github.squirrel-girl-preview+json", options);
         }
 
         [Fact]
@@ -195,7 +195,7 @@ public class RepositoryCommentsClientTests
 
             connection.Received().GetAll<CommitComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/sha/comments"),
                 Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview", options);
+                "application/vnd.github.squirrel-girl-preview+json", options);
         }
 
         [Fact]
