@@ -30,6 +30,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
+        [Preview("antiope")]
         [ManualRoute("POST", "/repos/{owner}/{name}/check-runs")]
         public Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun)
         {
@@ -48,6 +49,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
+        [Preview("antiope")]
         [ManualRoute("POST", "/repositories/{id}/check-runs")]
         public Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
         {
@@ -66,6 +68,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
+        [Preview("antiope")]
         [ManualRoute("PATCH", "/repos/{owner}/{name}/check-runs/{check_run_id}")]
         public Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
@@ -85,6 +88,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
+        [Preview("antiope")]
         [ManualRoute("PATCH", "/repositories/{id}/check-runs/{check_run_id}")]
         public Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
@@ -178,6 +182,7 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "repos/{owner}/{name}/commits/{sha}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
@@ -204,6 +209,7 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repositories/{id}/commits/{sha}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
@@ -298,6 +304,7 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repos/{owner}/{name}/check-suite/{check_suite_id}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
@@ -323,6 +330,7 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repositories/{id}/check-suites/{check_suite_id}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
@@ -345,6 +353,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repos/{owner}/{name}/check-runs/{check_run_id}")]
         public Task<CheckRun> Get(string owner, string name, long checkRunId)
         {
@@ -362,6 +371,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repositories/{id}/check-runs/{check_run_id}")]
         public Task<CheckRun> Get(long repositoryId, long checkRunId)
         {
@@ -411,6 +421,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repos/{owner}/{name}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
         {
@@ -430,6 +441,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
         [ManualRoute("GET", "/repositories/{id}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
         {
