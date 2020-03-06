@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
-using Octokit.Clients;
+using Octokit;
 using Octokit.Reactive;
 using Xunit;
 

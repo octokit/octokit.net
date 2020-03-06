@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NSubstitute;
-using Octokit.Clients;
+using Octokit;
 using Xunit;
 
 namespace Octokit.Tests.Clients
