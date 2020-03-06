@@ -7,7 +7,7 @@ namespace Octokit
     /// </summary>
     /// <remarks>https://developer.github.com/v3/previews/</remarks>
 
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public class PreviewAttribute : Attribute
     {
         public string Name { get; private set; }
