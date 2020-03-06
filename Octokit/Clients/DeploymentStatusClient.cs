@@ -63,6 +63,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("ant-man")]
+        [Preview("flash")]
         [ManualRoute("GET", "/repos/{owner}/{name}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {
@@ -87,6 +88,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("ant-man")]
+        [Preview("flash")]
         [ManualRoute("GET", "/repositories/{id}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId, ApiOptions options)
         {
@@ -110,6 +112,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         [Preview("ant-man")]
+        [Preview("flash")]
         [ManualRoute("POST", "/repos/{owner}/{name}/deployments/{deployment_id}/statuses")]
         public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
@@ -133,6 +136,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         [Preview("ant-man")]
+        [Preview("flash")]
         [ManualRoute("POST", "/repositories/{id}/deployments/{deployment_id}/statuses")]
         public Task<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
