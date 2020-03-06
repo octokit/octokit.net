@@ -71,6 +71,7 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/{column_id}/cards")]
         public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, ApiOptions options)
         {
@@ -87,6 +88,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
+        [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
         public Task<ProjectCard> Get(int id)
         {
@@ -101,6 +103,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
+        [Preview("inertia")]
         [ManualRoute("POST", "/projects/columns/{column_id}/cards")]
         public Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard)
         {
@@ -117,6 +120,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
+        [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
         public Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
         {
@@ -132,6 +136,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
+        [Preview("inertia")]
         [ManualRoute("DELETE", "/projects/columns/cards/{card_id}")]
         public async Task<bool> Delete(int id)
         {
@@ -156,6 +161,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
+        [Preview("inertia")]
         [ManualRoute("POST", "/projects/columns/cards/{card_id}/moves")]
         public async Task<bool> Move(int id, ProjectCardMove position)
         {
