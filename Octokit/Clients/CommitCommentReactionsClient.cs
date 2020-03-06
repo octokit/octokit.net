@@ -25,6 +25,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
+        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
@@ -43,6 +44,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
+        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
@@ -57,7 +59,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
@@ -74,6 +76,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
@@ -89,7 +92,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
@@ -105,6 +108,7 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {

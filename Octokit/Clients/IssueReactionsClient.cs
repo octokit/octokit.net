@@ -37,6 +37,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
@@ -66,6 +67,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {
@@ -82,6 +84,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repos/{owner}/{name}/issues/{number}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
@@ -99,6 +102,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repositories/{id}/issues/{number}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
