@@ -69,7 +69,7 @@ namespace Octokit
 
         public const string ProtectedBranchesRequiredApprovingApiPreview = "application/vnd.github.luke-cage-preview+json";
 
-        public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview";
+        public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview+json";
 
         public const string DeploymentStatusesPreview = "application/vnd.github.flash-preview+json";
 
