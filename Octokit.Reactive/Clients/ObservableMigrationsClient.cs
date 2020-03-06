@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
         /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <param name="migration">Specifies parameters for the migration in a
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
         public IObservable<Migration> Start(string org, StartMigrationRequest migration)
