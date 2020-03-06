@@ -43,6 +43,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API repsonse</param>
+        [Preview("mockingbird")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/timeline")]
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number, ApiOptions options)
         {
@@ -79,6 +80,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("mockingbird")]
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
