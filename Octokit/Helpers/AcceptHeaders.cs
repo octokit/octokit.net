@@ -30,7 +30,7 @@ namespace Octokit
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
-        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
+        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview+json";
 
         public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
 
