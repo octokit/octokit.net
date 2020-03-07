@@ -11,7 +11,7 @@ using Xunit;
 namespace Octokit.Tests.Clients
 {
     /// <summary>
-    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
     public class AuthorizationsClientTests
@@ -293,7 +293,8 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Post<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"));
+                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    "application/vnd.github.doctor-strange-preview+json");
             }
 
             [Fact]
@@ -321,7 +322,8 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Patch<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"));
+                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    "application/vnd.github.doctor-strange-preview+json");
             }
 
             [Fact]
@@ -349,7 +351,8 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"));
+                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    "application/vnd.github.doctor-strange-preview+json");
             }
 
             [Fact]
