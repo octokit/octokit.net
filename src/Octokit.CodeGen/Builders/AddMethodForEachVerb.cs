@@ -5,10 +5,10 @@ using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
-  using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
 
-  public partial class Builders
-  {
+    public partial class Builders
+    {
         static readonly Func<VerbResult, string> convertVerbToMethodName = (verb) =>
         {
             if (verb.Method == HttpMethod.Get)
@@ -107,5 +107,5 @@ namespace Octokit.CodeGen
 
             return data;
         };
-  }
+    }
 }
