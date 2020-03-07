@@ -5,7 +5,7 @@ using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
-    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
 
     public partial class Builders
     {
@@ -61,7 +61,7 @@ namespace Octokit.CodeGen
             return list;
         };
 
-        static readonly Func<VerbResult, IResponseType> convertToReturnType = (verb) =>
+        static readonly Func<VerbResult, IResponseTypeMetadata> convertToReturnType = (verb) =>
         {
             if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
             {
@@ -97,7 +97,7 @@ namespace Octokit.CodeGen
                     Name = convertVerbToMethodName(verb),
                     Parameters = convertToParameters(verb),
                     ReturnType = convertToReturnType(verb),
-                    SourceMetadata = new SourceMetadata
+                    SourceMetadata = new SourceRouteMetadata
                     {
                         Path = metadata.Path,
                         Verb = verb.Method.Method

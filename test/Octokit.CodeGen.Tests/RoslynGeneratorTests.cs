@@ -14,10 +14,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void CanGenerateAStubCodeFileFromSomeModel()
         {
-            var stub = new ApiCodeFileMetadata
+            var stub = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
-                Client = new ClientInformation
+                Client = new ApiClientMetadata
                 {
                     InterfaceName = "ISomeSortOfClient",
                     ClassName = "SomeSortOfClient",
@@ -38,10 +38,10 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceFile_AddsMethod_ToInterfaceAndImplementation()
         {
-            var stub = new ApiCodeFileMetadata
+            var stub = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
-                Client = new ClientInformation
+                Client = new ApiClientMetadata
                 {
                     InterfaceName = "ISomeSortOfClient",
                     ClassName = "SomeSortOfClient",
@@ -91,7 +91,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceFile_UsesSourceMetadta_ToAddAttributes()
         {
-            var stub = new ApiCodeFileMetadata
+            var stub = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client =
@@ -110,7 +110,7 @@ namespace Octokit.CodeGen.Tests
                       }
                     },
                     ReturnType = new TaskOfListType("SomeResponseType"),
-                    SourceMetadata = new SourceMetadata
+                    SourceMetadata = new SourceRouteMetadata
                     {
                       Verb = "Get",
                       Path = "/something"

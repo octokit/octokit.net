@@ -2,19 +2,19 @@ using System.Collections.Generic;
 
 namespace Octokit.CodeGen
 {
-    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
 
     public class ApiBuilder
     {
         private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
 
-        public List<ApiCodeFileMetadata> Build(List<PathMetadata> paths)
+        public List<ApiClientFileMetadata> Build(List<PathMetadata> paths)
         {
-            var results = new List<ApiCodeFileMetadata>();
+            var results = new List<ApiClientFileMetadata>();
 
             foreach (var path in paths)
             {
-                var result = new ApiCodeFileMetadata();
+                var result = new ApiClientFileMetadata();
 
                 foreach (var func in funcs)
                 {
@@ -33,22 +33,23 @@ namespace Octokit.CodeGen
         }
     }
 
-    public class ApiCodeFileMetadata
+    /// <summary>This class
+    public class ApiClientFileMetadata
     {
-        public ApiCodeFileMetadata()
+        public ApiClientFileMetadata()
         {
-            Client = new ClientInformation();
+            Client = new ApiClientMetadata();
             Models = new List<ModelInformation>();
         }
 
         public string FileName { get; set; }
-        public ClientInformation Client { get; set; }
+        public ApiClientMetadata Client { get; set; }
         public List<ModelInformation> Models { get; set; }
     }
 
-    public class ClientInformation
+    public class ApiClientMetadata
     {
-        public ClientInformation()
+        public ApiClientMetadata()
         {
             Methods = new List<ApiMethodMetadata>();
         }
@@ -76,8 +77,8 @@ namespace Octokit.CodeGen
         }
         public string Name { get; set; }
         public List<ApiParameterMetadata> Parameters { get; set; }
-        public IResponseType ReturnType { get; set; }
-        public SourceMetadata SourceMetadata { get; set; }
+        public IResponseTypeMetadata ReturnType { get; set; }
+        public SourceRouteMetadata SourceMetadata { get; set; }
     }
 
     public class ApiParameterMetadata
@@ -86,12 +87,12 @@ namespace Octokit.CodeGen
         public string Type { get; set; }
     }
 
-    public interface IResponseType
+    public interface IResponseTypeMetadata
     {
 
     }
 
-    public class TaskOfType : IResponseType
+    public class TaskOfType : IResponseTypeMetadata
     {
         public TaskOfType(string type)
         {
@@ -100,7 +101,7 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-    public class TaskOfListType : IResponseType
+    public class TaskOfListType : IResponseTypeMetadata
     {
         public TaskOfListType(string listType)
         {
@@ -109,7 +110,7 @@ namespace Octokit.CodeGen
         public string ListType { get; private set; }
     }
 
-    public class SourceMetadata
+    public class SourceRouteMetadata
     {
         public string Verb { get; set; }
         public string Path { get; set; }

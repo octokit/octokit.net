@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Octokit.CodeGen
 {
-    using TypeBuilderFunc = System.Func<PathMetadata, ApiCodeFileMetadata, ApiCodeFileMetadata>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
 
     public partial class Builders
     {

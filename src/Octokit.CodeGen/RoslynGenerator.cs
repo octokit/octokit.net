@@ -10,7 +10,7 @@ namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
-        private static TypeSyntax ConvertToReturnType<T>(T taskOfSomeType) where T : IResponseType
+        private static TypeSyntax ConvertToReturnType<T>(T taskOfSomeType) where T : IResponseTypeMetadata
         {
             var listTask = taskOfSomeType as TaskOfListType;
             if (listTask != null)
@@ -118,7 +118,7 @@ namespace Octokit.CodeGen
             return SingletonList<AttributeListSyntax>(AttributeList(SingletonSeparatedList<AttributeSyntax>(generatedRouteAttribute)));
         }
 
-        private static InterfaceDeclarationSyntax WithInterface(ApiCodeFileMetadata apiBuilder)
+        private static InterfaceDeclarationSyntax WithInterface(ApiClientFileMetadata apiBuilder)
         {
             var members = apiBuilder.Client.Methods.Select(m =>
             {
@@ -138,7 +138,7 @@ namespace Octokit.CodeGen
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
-        private static ClassDeclarationSyntax WithImplementation(ApiCodeFileMetadata apiBuilder)
+        private static ClassDeclarationSyntax WithImplementation(ApiClientFileMetadata apiBuilder)
         {
             var members = apiBuilder.Client.Methods.Select(m =>
             {
@@ -173,7 +173,7 @@ namespace Octokit.CodeGen
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
-        public static CompilationUnitSyntax GenerateSourceFile(ApiCodeFileMetadata stub)
+        public static CompilationUnitSyntax GenerateSourceFile(ApiClientFileMetadata stub)
         {
             return CompilationUnit()
               .WithMembers(
