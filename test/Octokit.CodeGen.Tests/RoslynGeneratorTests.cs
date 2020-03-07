@@ -126,17 +126,16 @@ namespace Octokit.CodeGen.Tests
             var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
             Assert.Equal("GetAll", interfaceMethodNode.Identifier.ValueText);
 
+            // no attributes defined for interface methods
             var attributes = interfaceMethodNode.DescendantNodes().OfType<AttributeSyntax>();
-            var attribute = Assert.Single(attributes);
-
-            Assert.Equal("GeneratedRoute", attribute.Name.ToString());
+            Assert.Empty(attributes);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
             Assert.Equal("GetAll", classMethodNode.Identifier.ValueText);
 
             attributes = classMethodNode.DescendantNodes().OfType<AttributeSyntax>();
-            attribute = Assert.Single(attributes);
+            var attribute = Assert.Single(attributes);
 
             Assert.Equal("GeneratedRoute", attribute.Name.ToString());
         }

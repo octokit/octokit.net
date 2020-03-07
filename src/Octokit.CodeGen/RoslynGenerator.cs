@@ -82,7 +82,6 @@ namespace Octokit.CodeGen
 
             foreach (var parameter in parameters)
             {
-
                 var parameterType = ConvertToTypeSyntax(parameter.Type);
                 list.Add(Parameter(Identifier(parameter.Name)).WithType(parameterType));
                 list.Add(Token(SyntaxKind.CommaToken));
@@ -129,7 +128,6 @@ namespace Octokit.CodeGen
 
                 return MethodDeclaration(returnType, Identifier(m.Name))
                             .WithParameterList(parameters)
-                            .WithAttributeLists(attributes)
                             .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             });
 
