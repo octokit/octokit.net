@@ -39,12 +39,12 @@ namespace Octokit.CodeGen
         public ApiClientFileMetadata()
         {
             Client = new ApiClientMetadata();
-            Models = new List<ModelInformation>();
+            Models = new List<ApiModelMetadata>();
         }
 
         public string FileName { get; set; }
         public ApiClientMetadata Client { get; set; }
-        public List<ModelInformation> Models { get; set; }
+        public List<ApiModelMetadata> Models { get; set; }
     }
 
     public class ApiClientMetadata
@@ -58,9 +58,9 @@ namespace Octokit.CodeGen
         public List<ApiMethodMetadata> Methods { get; set; }
     }
 
-    public class ModelInformation
+    public class ApiModelMetadata
     {
-        public ModelInformation()
+        public ApiModelMetadata()
         {
             Properties = new List<object>();
         }
