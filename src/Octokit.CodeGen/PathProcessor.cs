@@ -58,7 +58,7 @@ namespace Octokit.CodeGen
                     var innerType = innerTypeProp.GetString();
                     if (innerType != "object")
                     {
-                        objectProperty.Properties.Add(new PrimitiveProperty(propertyName, innerType));
+                        objectProperty.Properties.Add(new PrimitiveResponseProperty(propertyName, innerType));
                     }
                     else
                     {
@@ -90,7 +90,7 @@ namespace Octokit.CodeGen
                     }
                     else
                     {
-                        objectResponse.Properties.Add(new PrimitiveProperty(name, innerType));
+                        objectResponse.Properties.Add(new PrimitiveResponseProperty(name, innerType));
                     }
                 }
             }
@@ -122,7 +122,7 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            arrayResponse.ItemProperties.Add(new PrimitiveProperty(name, innerType));
+                            arrayResponse.ItemProperties.Add(new PrimitiveResponseProperty(name, innerType));
                         }
                     }
                 }
@@ -424,9 +424,9 @@ namespace Octokit.CodeGen
 
 
 
-    public class PrimitiveProperty : IResponseProperty
+    public class PrimitiveResponseProperty : IResponseProperty
     {
-        public PrimitiveProperty(string name, string type)
+        public PrimitiveResponseProperty(string name, string type)
         {
             Name = name;
             Type = type;

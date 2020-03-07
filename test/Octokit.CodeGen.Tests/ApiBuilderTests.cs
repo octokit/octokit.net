@@ -203,18 +203,23 @@ namespace Octokit.CodeGen.Tests
 
             var paths = await PathProcessor.Process(stream);
 
+            apiBuilder.Register(Builders.AddResponseModels);
             apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
 
-            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
-            Assert.Equal("MarketplaceListingAccount", returnType.Type);
-
             var model = Assert.Single(result.Models);
-            Assert.Equal("MarketplaceListingAccount", model.Type);
+            Assert.Equal("MarketplaceListingAccount", model.Name);
             Assert.NotEmpty(model.Properties);
+
+            Assert.Single(model.Properties.Where(p => p.Name == "Id" && p.Type == "number"));
+
+            // TODO: how should we test that response parameters are being inserted into the client code?
+
+            // var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            // var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            // Assert.Equal("MarketplaceListingAccount", returnType.Type);
         }
 
         [Fact]
@@ -224,28 +229,30 @@ namespace Octokit.CodeGen.Tests
 
             var paths = await PathProcessor.Process(stream);
 
+            apiBuilder.Register(Builders.AddResponseModels);
             apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
 
-            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
-            Assert.Equal("CommitComment", returnType.ListType);
-
             Assert.Equal(3, result.Models.Count);
 
-            var commitComment = Assert.Single(result.Models.Where(m => m.Type =="CommitComment"));
+            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
             Assert.NotEmpty(commitComment.Properties);
 
-            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Type =="CommitCommentUser"));
+            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentUser"));
             Assert.NotEmpty(commitCommentUser.Properties);
 
-            // TODO: how can we test where this is being inserted into the client code?
-
-            var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Type =="CommitCommentRequest"));
+            var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
             Assert.NotEmpty(commitComment.Properties);
+
+            // TODO: how should we test that response parameters are being inserted into the client code?
+
+            // var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            // var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
+            // Assert.Equal("CommitComment", returnType.ListType);
         }
+
 
         // TODO: how do we represent parameters that are required rather than optional?
         // TODO: what shall we do about pagination?

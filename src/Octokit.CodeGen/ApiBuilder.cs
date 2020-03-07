@@ -58,16 +58,30 @@ namespace Octokit.CodeGen
         public List<ApiMethodMetadata> Methods { get; set; }
     }
 
+    public enum ModelKind
+    {
+        Request = 1,
+        Response
+    }
+
     public class ApiModelMetadata
     {
         public ApiModelMetadata()
         {
-            Properties = new List<object>();
+            Properties = new List<ApiModelProperty>();
         }
 
-        public string Type { get; set; }
-        public List<object> Properties { get; set; }
+        public ModelKind Kind { get; set; }
+        public string Name { get; set; }
+        public List<ApiModelProperty> Properties { get; set; }
     }
+
+    public class ApiModelProperty
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
 
     public class ApiMethodMetadata
     {
