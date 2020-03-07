@@ -30,7 +30,7 @@ namespace Octokit
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
-        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview";
+        public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview+json";
 
         public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
 
@@ -43,7 +43,7 @@ namespace Octokit
 
         public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
 
-        public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview";
+        public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview+json";
 
         public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
 
@@ -69,9 +69,11 @@ namespace Octokit
 
         public const string ProtectedBranchesRequiredApprovingApiPreview = "application/vnd.github.luke-cage-preview+json";
 
-        public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview";
+        public const string IssueEventsApiPreview = "application/vnd.github.starfox-preview+json";
 
         public const string DeploymentStatusesPreview = "application/vnd.github.flash-preview+json";
+
+        public const string OAuthApplicationsPreview = "application/vnd.github.doctor-strange-preview+json";
 
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple

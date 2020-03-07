@@ -41,6 +41,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
+        [Preview("shadow-cat")]
         [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}")]
         public Task<PullRequest> Get(string owner, string name, int number)
         {
@@ -56,6 +57,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
+        [Preview("shadow-cat")]
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}")]
         public Task<PullRequest> Get(long repositoryId, int number)
         {
@@ -172,6 +174,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("shadow-cat")]
         [ManualRoute("GET", "/repos/{owner}/{name}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
         {
@@ -193,6 +196,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("shadow-cat")]
         [ManualRoute("GET", "/repositories/{id}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request, ApiOptions options)
         {
@@ -210,6 +214,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
+        [Preview("shadow-cat")]
         [ManualRoute("POST", "/repos/{owner}/{name}/pulls")]
         public Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest)
         {
@@ -226,6 +231,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/#create-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
+        [Preview("shadow-cat")]
         [ManualRoute("POST", "/repositories/{id}/pulls")]
         public Task<PullRequest> Create(long repositoryId, NewPullRequest newPullRequest)
         {
@@ -243,6 +249,7 @@ namespace Octokit
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
+        [Preview("shadow-cat")]
         [ManualRoute("PATCH", "/repos/{owner}/{name}/pulls/{number}")]
         public Task<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate)
         {
@@ -261,6 +268,7 @@ namespace Octokit
         /// <param name="number">The PullRequest number</param>
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
+        [Preview("shadow-cat")]
         [ManualRoute("PATCH", "/repositories/{id}/pulls/{number}")]
         public Task<PullRequest> Update(long repositoryId, int number, PullRequestUpdate pullRequestUpdate)
         {

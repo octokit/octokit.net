@@ -357,7 +357,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, AcceptHeaders.OAuthApplicationsPreview);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Patch<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Patch<ApplicationAuthorization>(endpoint, requestData, AcceptHeaders.OAuthApplicationsPreview);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Delete(endpoint, requestData);
+            return ApiConnection.Delete(endpoint, requestData, AcceptHeaders.OAuthApplicationsPreview);
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview,
+                    "application/vnd.github.wyandotte-preview+json",
                     Args.ApiOptions);
             }
 
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview,
+                    "application/vnd.github.wyandotte-preview+json",
                     options);
             }
 
@@ -109,7 +109,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     Arg.Any<StartMigrationRequest>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -142,7 +142,7 @@ namespace Octokit.Tests.Clients
                         m.Repositories.Equals(migrationRequest.Repositories) &&
                         m.LockRepositories == migrationRequest.LockRepositories &&
                         m.ExcludeAttachments == migrationRequest.ExcludeAttachments),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Octokit.Tests.Clients
                 connection.Connection.Received().Get<byte[]>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -186,7 +186,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
                     Arg.Any<object>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/repos/repo/lock"),
                     Arg.Any<object>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]

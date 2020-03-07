@@ -66,6 +66,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}")]
         public Task<Issue> Get(string owner, string name, int number)
         {
@@ -83,6 +84,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues/{number}")]
         public Task<Issue> Get(long repositoryId, int number)
         {
@@ -145,6 +147,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options)
         {
@@ -208,6 +211,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/user/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
         {
@@ -275,6 +279,7 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/orgs/{org}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
         {
@@ -395,6 +400,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
         {
@@ -415,6 +421,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options)
         {

@@ -27,6 +27,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/comments/{number}")]
         public Task<CommitComment> Get(string owner, string name, int number)
         {
@@ -42,6 +43,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/comments/{number}")]
         public Task<CommitComment> Get(long repositoryId, int number)
         {
@@ -81,6 +83,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
@@ -97,6 +100,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
@@ -144,6 +148,7 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/commits/{sha}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
@@ -162,6 +167,7 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/commits/{sha}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {

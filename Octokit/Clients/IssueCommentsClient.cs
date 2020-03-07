@@ -26,6 +26,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The issue comment id</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/comments/{comment_id}")]
         public Task<IssueComment> Get(string owner, string name, int id)
         {
@@ -41,6 +42,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The issue comment id</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues/comments/{comment_id}")]
         public Task<IssueComment> Get(long repositoryId, int id)
         {
@@ -143,6 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/comments")]
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(string owner, string name, IssueCommentRequest request, ApiOptions options)
         {
@@ -161,6 +164,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues/comments")]
         public Task<IReadOnlyList<IssueComment>> GetAllForRepository(long repositoryId, IssueCommentRequest request, ApiOptions options)
         {
@@ -273,6 +277,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number]/comments")]
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int number, IssueCommentRequest request, ApiOptions options)
         {
@@ -293,6 +298,7 @@ namespace Octokit
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/comments")]
+        [Preview("squirrel-girl")]
         public Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int number, IssueCommentRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));

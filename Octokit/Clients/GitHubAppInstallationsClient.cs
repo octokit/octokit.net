@@ -30,6 +30,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
+        [Preview("machine-man")]
         [ManualRoute("GET", "/installation/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
         {
@@ -59,6 +60,7 @@ namespace Octokit
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
+        [Preview("machine-man")]
         [ManualRoute("GET", "/user/installation/{id}/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
