@@ -38,10 +38,12 @@ namespace Octokit.CodeGen
         public ApiCodeFileMetadata()
         {
             Client = new ClientInformation();
+            Models = new List<ModelInformation>();
         }
 
         public string FileName { get; set; }
         public ClientInformation Client { get; set; }
+        public List<ModelInformation> Models { get; set; }
     }
 
     public class ClientInformation
@@ -53,6 +55,17 @@ namespace Octokit.CodeGen
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
         public List<ApiMethodMetadata> Methods { get; set; }
+    }
+
+    public class ModelInformation
+    {
+        public ModelInformation()
+        {
+            Properties = new List<object>();
+        }
+
+        public string Type { get; set; }
+        public List<object> Properties { get; set; }
     }
 
     public class ApiMethodMetadata

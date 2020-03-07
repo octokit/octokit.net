@@ -164,7 +164,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Build_ForPathWithMultipleMethods_GeneratesResultingModel()
+        public async Task Build_ForPathWithMultipleMethods_GeneratesResultingClient()
         {
             var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
@@ -194,6 +194,57 @@ namespace Octokit.CodeGen.Tests
             var getOrCreateParameter = Assert.Single(getOrCreate.Parameters);
             Assert.Equal("username", getOrCreateParameter.Name);
             Assert.Equal("string", getOrCreateParameter.Type);
+        }
+
+        [Fact]
+        public async Task Build_ForPathReturningObjectResponse_GeneratesRequiredModel()
+        {
+            var stream = TestFixtureLoader.LoadPathWithGet();
+
+            var paths = await PathProcessor.Process(stream);
+
+            apiBuilder.Register(Builders.AddMethodForEachVerb);
+
+            var results = apiBuilder.Build(paths);
+            var result = Assert.Single(results);
+
+            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            Assert.Equal("MarketplaceListingAccount", returnType.Type);
+
+            var model = Assert.Single(result.Models);
+            Assert.Equal("MarketplaceListingAccount", model.Type);
+            Assert.NotEmpty(model.Properties);
+        }
+
+        [Fact]
+        public async Task Build_ForPathReturningArrayResponse_GeneratesRequiredModel()
+        {
+            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
+
+            var paths = await PathProcessor.Process(stream);
+
+            apiBuilder.Register(Builders.AddMethodForEachVerb);
+
+            var results = apiBuilder.Build(paths);
+            var result = Assert.Single(results);
+
+            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
+            Assert.Equal("CommitComment", returnType.ListType);
+
+            Assert.Equal(3, result.Models.Count);
+
+            var commitComment = Assert.Single(result.Models.Where(m => m.Type =="CommitComment"));
+            Assert.NotEmpty(commitComment.Properties);
+
+            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Type =="CommitCommentUser"));
+            Assert.NotEmpty(commitCommentUser.Properties);
+
+            // TODO: how can we test where this is being inserted into the client code?
+
+            var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Type =="CommitCommentRequest"));
+            Assert.NotEmpty(commitComment.Properties);
         }
 
         // TODO: how do we represent parameters that are required rather than optional?
