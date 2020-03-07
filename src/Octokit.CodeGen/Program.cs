@@ -12,8 +12,8 @@ namespace Octokit.CodeGen
             filter.Allow("/marketplace_listing/accounts/");
 
             var apiBuilder = new ApiBuilder();
-            apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
-            apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
+            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
+            apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var dir = Directory.GetCurrentDirectory();
             var file = File.OpenRead(Path.Combine(dir, "schema", "api.github.com.json"));

@@ -92,7 +92,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
+            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
 
             var results = apiBuilder.Build(metadata);
             var result = Assert.Single(results);
@@ -110,7 +110,7 @@ namespace Octokit.CodeGen.Tests
 
             var paths = await PathProcessor.Process(stream);
 
-            apiBuilder.Register(ApiBuilder.AddTypeNamesAndFileName);
+            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
 
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
@@ -148,7 +148,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
+            apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var results = apiBuilder.Build(metadata);
             var result = Assert.Single(results);
@@ -170,7 +170,7 @@ namespace Octokit.CodeGen.Tests
 
             var paths = await PathProcessor.Process(stream);
 
-            apiBuilder.Register(ApiBuilder.AddMethodForEachVerb);
+            apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
