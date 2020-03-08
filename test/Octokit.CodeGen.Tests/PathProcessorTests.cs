@@ -35,9 +35,10 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("200", response.StatusCode);
             Assert.Equal("application/json", response.ContentType);
-            Assert.Equal("object", response.Content.Type);
+            var responseContent = response.Content.AsT0;
+            Assert.Equal("object", responseContent.Type);
 
-            var content = Assert.IsType<ObjectResponseContent>(response.Content);
+            var content = Assert.IsType<ObjectResponseContent>(responseContent);
 
             Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
 
@@ -83,13 +84,14 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("200", response.StatusCode);
             Assert.Equal("application/json", response.ContentType);
-            Assert.Equal("array", response.Content.Type);
+            var content = response.Content.AsT1;
+            Assert.Equal("array", content.Type);
 
-            var content = Assert.IsType<ArrayResponseContent>(response.Content);
+            var responseContent = Assert.IsType<ArrayResponseContent>(content);
 
-            Assert.Single(content.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
+            Assert.Single(responseContent.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
 
-            var objectPropType = content.ItemProperties.Single(p => p.Name == "user" && p.Type == "object");
+            var objectPropType = responseContent.ItemProperties.Single(p => p.Name == "user" && p.Type == "object");
             var nestedObject = Assert.IsType<ObjectResponseProperty>(objectPropType);
 
             Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
@@ -140,9 +142,10 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("201", response.StatusCode);
             Assert.Equal("application/json", response.ContentType);
-            Assert.Equal("object", response.Content.Type);
+            var content = response.Content.AsT0;
+            Assert.Equal("object", content.Type);
 
-            var responseContent = Assert.IsType<ObjectResponseContent>(response.Content);
+            var responseContent = Assert.IsType<ObjectResponseContent>(content);
 
             Assert.Single(responseContent.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using OneOf;
 
 namespace Octokit.CodeGen
 {
@@ -89,7 +90,7 @@ namespace Octokit.CodeGen
             return objectProperty;
         }
 
-        private static IResponseContent ParseResponseObjectSchema(JsonElement properties)
+        private static ObjectResponseContent ParseResponseObjectSchema(JsonElement properties)
         {
             var objectResponse = new ObjectResponseContent();
 
@@ -425,7 +426,7 @@ namespace Octokit.CodeGen
     {
         public string StatusCode { get; set; }
         public string ContentType { get; set; }
-        public IResponseContent Content { get; set; }
+        public OneOf<ObjectResponseContent, ArrayResponseContent> Content { get; set; }
     }
 
     public class Request
@@ -467,14 +468,7 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-    public interface IResponseContent
-    {
-        string Type { get; }
-    }
-
-
-
-    public class ObjectResponseContent : IResponseContent
+    public class ObjectResponseContent
     {
         public ObjectResponseContent()
         {
@@ -485,7 +479,7 @@ namespace Octokit.CodeGen
     }
 
 
-    public class ArrayResponseContent : IResponseContent
+    public class ArrayResponseContent
     {
         public ArrayResponseContent()
         {

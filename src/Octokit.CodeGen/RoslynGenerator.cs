@@ -31,8 +31,9 @@ namespace Octokit.CodeGen
                                                             TypeArgumentList(
                                                                 SingletonSeparatedList<TypeSyntax>(
                                                                     IdentifierName(listTask.ListType)))))));
-            }, unknownType => {
-              return PredefinedType(Token(SyntaxKind.VoidKeyword));
+            }, unknownType =>
+            {
+                return PredefinedType(Token(SyntaxKind.VoidKeyword));
             }
             );
         }

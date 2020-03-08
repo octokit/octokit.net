@@ -240,20 +240,14 @@ namespace Octokit.CodeGen
                 {
                     if (response.ContentType == "application/json")
                     {
-                        if (response.Content.Type == "array")
+                        response.Content.Switch(objectResponse =>
                         {
-                            var arrayResponse = response.Content as ArrayResponseContent;
-                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse, verb.Method, response.StatusCode));
-                        }
-                        else if (response.Content.Type == "object")
-                        {
-                            var objectResponse = response.Content as ObjectResponseContent;
                             data.Models.AddRange(parseObjectResponseToModels(objectResponse, verb.Method, response.StatusCode));
-                        }
-                        else
+                        },
+                        arrayResponse =>
                         {
-                            throw new InvalidOperationException($"Unable to convert response type {response.ContentType} for status code {response.StatusCode}. Giving up...");
-                        }
+                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse, verb.Method, response.StatusCode));
+                        });
                     }
                 }
             }

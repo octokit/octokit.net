@@ -75,31 +75,30 @@ namespace Octokit.CodeGen
             {
                 var existingModel = models.FirstOrDefault(m => m.Method == verb.Method && m.StatusCode == singleJsonContent.StatusCode);
 
-                var objectContent = singleJsonContent.Content as ObjectResponseContent;
-                if (objectContent != null)
-                {
-                    if (existingModel != null)
-                    {
-                        return new TaskOfType(existingModel.Name);
-                    }
+                return singleJsonContent.Content.Match<OneOf<TaskOfType, TaskOfListType, UnknownReturnType>>(
+                  objectContent =>
+                  {
+                      if (existingModel != null)
+                      {
+                          return new TaskOfType(existingModel.Name);
+                      }
 
-                    // this is a fallback value to catch cases where we aren't handling things
-                    // as we should, and should eventually go away
-                    return new TaskOfType("SomeObject");
-                }
+                      // this is a fallback value to catch cases where we aren't handling things
+                      // as we should, and should eventually go away
+                      return new TaskOfType("SomeObject");
+                  },
+                  arrayContent =>
+                  {
+                      if (existingModel != null)
+                      {
+                          return new TaskOfListType(existingModel.Name);
+                      }
 
-                var arrayContent = singleJsonContent.Content as ArrayResponseContent;
-                if (arrayContent != null)
-                {
-                    if (existingModel != null)
-                    {
-                        return new TaskOfListType(existingModel.Name);
-                    }
-
-                    // this is a fallback value to catch cases where we aren't handling things
-                    // as we should, and should eventually go away
-                    return new TaskOfListType("SomeList");
-                }
+                      // this is a fallback value to catch cases where we aren't handling things
+                      // as we should, and should eventually go away
+                      return new TaskOfListType("SomeList");
+                  }
+                );
             }
 
             return new UnknownReturnType();
