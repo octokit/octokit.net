@@ -8,6 +8,8 @@ namespace Octokit.CodeGen
     {
         static async Task Main(string[] args)
         {
+            var writeFilesToDisk = Array.IndexOf(args, "--write") > -1;
+
             var filter = new PathFilter();
             filter.Allow("/marketplace_listing/accounts/");
 
@@ -28,11 +30,21 @@ namespace Octokit.CodeGen
             foreach (var metadata in apiMetadata)
             {
                 var sourceFile = RoslynGenerator.GenerateSourceFile(metadata);
-                Console.WriteLine($" - Write this file to disk: {metadata.FileName}");
-                Console.WriteLine($"-----");
-                Console.WriteLine(sourceFile.ToString());
-                Console.WriteLine($"-----");
-                Console.WriteLine();
+                if (writeFilesToDisk)
+                {
+                    Console.WriteLine($" - Writing file to disk: {metadata.FileName}");
+                    var fullPath = Path.Join(dir, metadata.FileName);
+                    File.WriteAllText(fullPath, sourceFile.ToString());
+                }
+                else
+                {
+                    Console.WriteLine($" - Write this file to disk: {metadata.FileName}");
+                    Console.WriteLine($"-----");
+                    Console.WriteLine(sourceFile.ToString());
+                    Console.WriteLine($"-----");
+                    Console.WriteLine();
+
+                }
             }
         }
     }

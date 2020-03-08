@@ -118,6 +118,22 @@ namespace Octokit.CodeGen
             return SingletonList<AttributeListSyntax>(AttributeList(SingletonSeparatedList<AttributeSyntax>(generatedRouteAttribute)));
         }
 
+        private static SyntaxList<UsingDirectiveSyntax> WithUsingStatements()
+        {
+            return List<UsingDirectiveSyntax>
+            (
+                new UsingDirectiveSyntax[]
+                {
+                  UsingDirective(IdentifierName("System")),
+                  UsingDirective(
+                    QualifiedName(
+                          QualifiedName(IdentifierName("System"),
+                          IdentifierName("Threading")),
+                          IdentifierName("Tasks")))
+                }
+            );
+        }
+
         private static ClassDeclarationSyntax WithModel(ApiModelMetadata modelMetadata)
         {
             var properties = modelMetadata.Properties.Select(m =>
@@ -221,6 +237,21 @@ namespace Octokit.CodeGen
             }
 
             return CompilationUnit()
+            .WithUsings(
+    List<UsingDirectiveSyntax>(
+        new UsingDirectiveSyntax[]{
+            UsingDirective(
+                IdentifierName("System")),
+            UsingDirective(
+                QualifiedName(
+                    IdentifierName("System"),
+                    IdentifierName("IO"))),
+            UsingDirective(
+                QualifiedName(
+                    QualifiedName(
+                        IdentifierName("System"),
+                        IdentifierName("Threading")),
+                    IdentifierName("Tasks")))}))
               .WithMembers(
                   SingletonList<MemberDeclarationSyntax>(
                       NamespaceDeclaration(

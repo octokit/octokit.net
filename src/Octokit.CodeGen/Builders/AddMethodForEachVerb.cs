@@ -77,8 +77,9 @@ namespace Octokit.CodeGen
                 var objectContent = singleJsonContent.Content as ObjectResponseContent;
                 if (objectContent != null)
                 {
-                    if (existingModel != null) {
-                      return new TaskOfType(existingModel.Name);
+                    if (existingModel != null)
+                    {
+                        return new TaskOfType(existingModel.Name);
                     }
 
                     return new TaskOfType("SomeObject");
@@ -87,8 +88,9 @@ namespace Octokit.CodeGen
                 var arrayContent = singleJsonContent.Content as ArrayResponseContent;
                 if (arrayContent != null)
                 {
-                    if (existingModel != null) {
-                      return new TaskOfListType(existingModel.Name);
+                    if (existingModel != null)
+                    {
+                        return new TaskOfListType(existingModel.Name);
                     }
 
                     return new TaskOfListType("SomeList");
