@@ -230,11 +230,9 @@ namespace Octokit.CodeGen.Tests
             var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
             Assert.NotEmpty(plan.Properties);
 
-            // TODO: how should we test that response parameters are being inserted into the client code?
-
-            // var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            // var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
-            // Assert.Equal("MarketplaceListingAccount", returnType.Type);
+            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            Assert.Equal("MarketplaceListingAccount", returnType.Type);
         }
 
         [Fact]
@@ -258,16 +256,14 @@ namespace Octokit.CodeGen.Tests
             var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
             Assert.NotEmpty(commitCommentUser.Properties);
 
-            // TODO: what about this request model?
+            // TODO: how should we handle the request model being found and rendered?
 
             // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
             // Assert.NotEmpty(commitComment.Properties);
 
-            // TODO: how should we test that response parameters are being inserted into the client code?
-
-            // var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            // var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
-            // Assert.Equal("CommitComment", returnType.ListType);
+            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
+            Assert.Equal("RepositoriesCommitComment", returnType.ListType);
         }
 
         // TODO: how do we represent parameters that are required rather than optional?

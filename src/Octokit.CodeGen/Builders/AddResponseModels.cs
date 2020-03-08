@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
@@ -137,7 +138,7 @@ namespace Octokit.CodeGen
                 return (top, additionalModels);
             }
 
-            List<ApiModelMetadata> parseArrayResponseToModels(ArrayResponseContent arrayContent)
+            List<ApiModelMetadata> parseArrayResponseToModels(ArrayResponseContent arrayContent, HttpMethod method, string statusCode)
             {
                 var models = new List<ApiModelMetadata>();
 
@@ -176,6 +177,8 @@ namespace Octokit.CodeGen
                     Kind = "response",
                     Name = classNamePrefix,
                     Properties = properties,
+                    Method = method,
+                    StatusCode = statusCode,
                 };
 
                 models.Add(top);
@@ -183,7 +186,7 @@ namespace Octokit.CodeGen
                 return models;
             }
 
-            List<ApiModelMetadata> parseObjectResponseToModels(ObjectResponseContent objectContent)
+            List<ApiModelMetadata> parseObjectResponseToModels(ObjectResponseContent objectContent, HttpMethod method, string statusCode)
             {
                 var models = new List<ApiModelMetadata>();
 
@@ -222,6 +225,8 @@ namespace Octokit.CodeGen
                     Kind = "response",
                     Name = classNamePrefix,
                     Properties = properties,
+                    Method = method,
+                    StatusCode = statusCode,
                 };
 
                 models.Add(top);
@@ -238,12 +243,12 @@ namespace Octokit.CodeGen
                         if (response.Content.Type == "array")
                         {
                             var arrayResponse = response.Content as ArrayResponseContent;
-                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse));
+                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse, verb.Method, response.StatusCode));
                         }
                         else if (response.Content.Type == "object")
                         {
                             var objectResponse = response.Content as ObjectResponseContent;
-                            data.Models.AddRange(parseObjectResponseToModels(objectResponse));
+                            data.Models.AddRange(parseObjectResponseToModels(objectResponse, verb.Method, response.StatusCode));
                         }
                         else
                         {

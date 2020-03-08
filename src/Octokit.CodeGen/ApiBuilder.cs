@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
 
 namespace Octokit.CodeGen
 {
@@ -67,9 +68,13 @@ namespace Octokit.CodeGen
         {
             Properties = new List<ApiModelProperty>();
         }
-
+        public Guid Id { get; }
         public string Kind { get; set; }
         public string Name { get; set; }
+        // this will only be set for the top-level response model
+        public HttpMethod Method { get; set; }
+        // this will only be set for the top-level response model
+        public string StatusCode { get; set; }
         public List<ApiModelProperty> Properties { get; set; }
 
         public bool Equals([AllowNull] ApiModelMetadata other)
@@ -77,8 +82,13 @@ namespace Octokit.CodeGen
             if (Object.ReferenceEquals(other, null)) return false;
             if (Object.ReferenceEquals(this, other)) return true;
 
+            var methodEquals = Method == null ? true : Method.Equals(other.Method);
+            var statusCodeEquals = StatusCode == null ? true : StatusCode.Equals(other.StatusCode);
+
             return Kind.Equals(other.Kind)
               && Name.Equals(other.Name)
+              && methodEquals
+              && statusCodeEquals
               && ListEquatable.ScrambledEquals(Properties, other.Properties);
         }
     }
