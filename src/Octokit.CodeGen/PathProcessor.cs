@@ -478,7 +478,6 @@ namespace Octokit.CodeGen
         public List<IResponseProperty> Properties { get; set; }
     }
 
-
     public class ArrayResponseContent
     {
         public ArrayResponseContent()
