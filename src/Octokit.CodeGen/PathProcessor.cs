@@ -56,14 +56,32 @@ namespace Octokit.CodeGen
                 if (property.Value.TryGetProperty("type", out innerTypeProp))
                 {
                     var innerType = innerTypeProp.GetString();
-                    if (innerType != "object")
-                    {
-                        objectProperty.Properties.Add(new PrimitiveResponseProperty(propertyName, innerType));
-                    }
-                    else
+                    if (innerType == "object")
                     {
                         var innerProperties = property.Value.GetProperty("properties");
                         objectProperty.Properties.Add(ParseAsResponseObject(propertyName, innerProperties));
+                    }
+                    else if (innerType == "array")
+                    {
+                        var items = property.Value.GetProperty("items");
+                        var itemsType = items.GetProperty("type").GetString();
+                        if (itemsType == "object")
+                        {
+                            Console.WriteLine($"enumerate properties inside {propertyName} as it looks like an array of type {itemsType}");
+                        }
+                        else if (itemsType == "string")
+                        {
+                            Console.WriteLine($"add property to list for {propertyName} as it is an array of type {itemsType}");
+                            // objectProperty.Properties.Add(new ListResponseProperty(propertyName, itemsType));
+                        }
+                        else
+                        {
+                            Console.WriteLine($"TODO: add response metadata for {propertyName} which is an array of type {itemsType}");
+                        }
+                    }
+                    else
+                    {
+                        objectProperty.Properties.Add(new PrimitiveResponseProperty(propertyName, innerType));
                     }
                 }
             }
