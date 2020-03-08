@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -53,6 +54,13 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         Task<User> Update(UserUpdate user);
+
+        /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        Task<List<User>> GetAll(string since);
 
         /// <summary>
         /// A client for GitHub's User Followers API

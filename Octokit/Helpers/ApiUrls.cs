@@ -2289,6 +2289,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>The <see cref="System.Uri"/> for the list of users after specified ID</returns>
+        public static Uri Users(string since)
+        {
+            return "users?since={0}".FormatUri(since);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for initiating the OAuth Web login Flow
         /// </summary>
         /// <returns></returns>

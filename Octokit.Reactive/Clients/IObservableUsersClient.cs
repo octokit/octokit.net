@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -27,6 +28,13 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         IObservable<User> Update(UserUpdate user);
+
+        /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        IObservable<List<User>> GetAll(string since);
 
         /// <summary>
         /// A client for GitHub's User Followers API

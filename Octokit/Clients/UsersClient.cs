@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -86,6 +87,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(user, nameof(user));
 
             return ApiConnection.Patch<User>(_userEndpoint, user);
+        }
+
+        /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        [ManualRoute("GET", "/users")]
+        public Task<List<User>> GetAll(string since)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(since, nameof(since));
+
+            return ApiConnection.Get<List<User>>(ApiUrls.Users(since));
         }
 
         /// <summary>
