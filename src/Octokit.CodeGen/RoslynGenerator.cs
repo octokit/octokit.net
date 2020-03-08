@@ -3,41 +3,38 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
+using OneOf;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Octokit.CodeGen
 {
     public class RoslynGenerator
     {
-        private static TypeSyntax ConvertToReturnType<T>(T taskOfSomeType) where T : IResponseTypeMetadata
+        private static TypeSyntax ConvertToReturnType(OneOf<TaskOfType, TaskOfListType, UnknownReturnType> taskOfSomeType)
         {
-            var listTask = taskOfSomeType as TaskOfListType;
-            if (listTask != null)
-            {
-                return GenericName(Identifier("Task"))
-                              .WithTypeArgumentList(
-                                  TypeArgumentList(
-                                      SingletonSeparatedList<TypeSyntax>(
-                                          GenericName(
-                                              Identifier("IReadOnlyList"))
-                                          .WithTypeArgumentList(
-                                              TypeArgumentList(
-                                                  SingletonSeparatedList<TypeSyntax>(
-                                                      IdentifierName(listTask.ListType)))))));
-            }
-
-            var objectTask = taskOfSomeType as TaskOfType;
-            if (objectTask != null)
+            return taskOfSomeType.Match<TypeSyntax>(objectTask =>
             {
                 var innerType = ConvertToTypeSyntax(objectTask.Type);
                 return GenericName(Identifier("Task"))
                         .WithTypeArgumentList(
                             TypeArgumentList(
                                 SingletonSeparatedList<TypeSyntax>(innerType)));
+            }, listTask =>
+            {
+                return GenericName(Identifier("Task"))
+                                            .WithTypeArgumentList(
+                                                TypeArgumentList(
+                                                    SingletonSeparatedList<TypeSyntax>(
+                                                        GenericName(
+                                                            Identifier("IReadOnlyList"))
+                                                        .WithTypeArgumentList(
+                                                            TypeArgumentList(
+                                                                SingletonSeparatedList<TypeSyntax>(
+                                                                    IdentifierName(listTask.ListType)))))));
+            }, unknownType => {
+              return PredefinedType(Token(SyntaxKind.VoidKeyword));
             }
-
-            return PredefinedType(Token(SyntaxKind.VoidKeyword));
+            );
         }
 
         private static TypeSyntax ConvertToTypeSyntax(string text)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using OneOf;
 
 namespace Octokit.CodeGen
 {
@@ -61,7 +62,7 @@ namespace Octokit.CodeGen
             return list;
         };
 
-        static readonly Func<VerbResult, List<ApiModelMetadata>, IResponseTypeMetadata> convertToReturnType = (verb, models) =>
+        static readonly Func<VerbResult, List<ApiModelMetadata>, OneOf<TaskOfType, TaskOfListType, UnknownReturnType>> convertToReturnType = (verb, models) =>
         {
             if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
             {
@@ -82,6 +83,8 @@ namespace Octokit.CodeGen
                         return new TaskOfType(existingModel.Name);
                     }
 
+                    // this is a fallback value to catch cases where we aren't handling things
+                    // as we should, and should eventually go away
                     return new TaskOfType("SomeObject");
                 }
 
@@ -93,11 +96,13 @@ namespace Octokit.CodeGen
                         return new TaskOfListType(existingModel.Name);
                     }
 
+                    // this is a fallback value to catch cases where we aren't handling things
+                    // as we should, and should eventually go away
                     return new TaskOfListType("SomeList");
                 }
             }
 
-            return null;
+            return new UnknownReturnType();
         };
 
         public static readonly TypeBuilderFunc AddMethodForEachVerb = (metadata, data) =>

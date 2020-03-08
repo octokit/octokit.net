@@ -182,7 +182,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("username", getParameter.Name);
             Assert.Equal("string", getParameter.Type);
 
-            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            var returnType = Assert.IsType<TaskOfType>(get.ReturnType.AsT0);
             Assert.Equal("boolean", returnType.Type);
 
             var delete = Assert.Single(result.Client.Methods.Where(m => m.Name == "Delete"));
@@ -231,7 +231,7 @@ namespace Octokit.CodeGen.Tests
             Assert.NotEmpty(plan.Properties);
 
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            var returnType = Assert.IsType<TaskOfType>(get.ReturnType);
+            var returnType = Assert.IsType<TaskOfType>(get.ReturnType.AsT0);
             Assert.Equal("MarketplaceListingAccount", returnType.Type);
         }
 
@@ -262,7 +262,7 @@ namespace Octokit.CodeGen.Tests
             // Assert.NotEmpty(commitComment.Properties);
 
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
+            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType.AsT1);
             Assert.Equal("RepositoriesCommitComment", returnType.ListType);
         }
 

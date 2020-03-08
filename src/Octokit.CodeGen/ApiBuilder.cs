@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
+using OneOf;
 
 namespace Octokit.CodeGen
 {
@@ -125,7 +126,7 @@ namespace Octokit.CodeGen
         }
         public string Name { get; set; }
         public List<ApiParameterMetadata> Parameters { get; set; }
-        public IResponseTypeMetadata ReturnType { get; set; }
+        public OneOf<TaskOfType, TaskOfListType, UnknownReturnType> ReturnType { get; set; }
         public SourceRouteMetadata SourceMetadata { get; set; }
     }
 
@@ -135,12 +136,7 @@ namespace Octokit.CodeGen
         public string Type { get; set; }
     }
 
-    public interface IResponseTypeMetadata
-    {
-
-    }
-
-    public class TaskOfType : IResponseTypeMetadata
+    public class TaskOfType
     {
         public TaskOfType(string type)
         {
@@ -149,13 +145,17 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-    public class TaskOfListType : IResponseTypeMetadata
+    public class TaskOfListType
     {
         public TaskOfListType(string listType)
         {
             ListType = listType;
         }
         public string ListType { get; private set; }
+    }
+
+    public class UnknownReturnType
+    {
     }
 
     public class SourceRouteMetadata

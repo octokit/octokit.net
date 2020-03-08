@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.4.0" />
+    <PackageReference Include="OneOf" Version="2.1.151" />
   </ItemGroup>
 
 </Project>
