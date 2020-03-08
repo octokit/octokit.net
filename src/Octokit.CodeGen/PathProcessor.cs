@@ -68,12 +68,15 @@ namespace Octokit.CodeGen
                         var itemsType = items.GetProperty("type").GetString();
                         if (itemsType == "object")
                         {
-                            Console.WriteLine($"enumerate properties inside {propertyName} as it looks like an array of type {itemsType}");
+                            var innerProperties = items.GetProperty("properties");
+                            // build this up using the same pattern, but we only want the properties
+                            var result = ParseAsResponseObject(propertyName, innerProperties);
+                            objectProperty.Properties.Add(new ListOfObjectsProperty(propertyName, result.Properties));
                         }
                         else if (itemsType == "string")
                         {
                             Console.WriteLine($"add property to list for {propertyName} as it is an array of type {itemsType}");
-                            // objectProperty.Properties.Add(new ListResponseProperty(propertyName, itemsType));
+                            objectProperty.Properties.Add(new ListOfPrimitivesProperty(propertyName, itemsType));
                         }
                         else
                         {
@@ -441,8 +444,6 @@ namespace Octokit.CodeGen
         string Name { get; }
     }
 
-
-
     public class PrimitiveResponseProperty : IResponseProperty
     {
         public PrimitiveResponseProperty(string name, string type)
@@ -454,6 +455,31 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
+    public class ListOfObjectsProperty : IResponseProperty
+    {
+        public ListOfObjectsProperty(string name, List<IResponseProperty> properties)
+        {
+            Name = name;
+            Type = "List(object)";
+            Properties = properties;
+        }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+        public List<IResponseProperty> Properties { get; private set; }
+    }
+
+    public class ListOfPrimitivesProperty : IResponseProperty
+    {
+        public ListOfPrimitivesProperty(string name, string type)
+        {
+            Name = name;
+            Type = "List";
+            ItemType = type;
+        }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+        public string ItemType { get; private set; }
+    }
 
     public class ObjectResponseProperty : IResponseProperty
     {
