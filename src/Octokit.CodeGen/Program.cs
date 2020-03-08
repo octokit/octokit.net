@@ -13,6 +13,7 @@ namespace Octokit.CodeGen
 
             var apiBuilder = new ApiBuilder();
             apiBuilder.Register(Builders.AddTypeNamesAndFileName);
+            apiBuilder.Register(Builders.AddResponseModels);
             apiBuilder.Register(Builders.AddMethodForEachVerb);
 
             var dir = Directory.GetCurrentDirectory();

@@ -23,7 +23,7 @@ namespace Octokit.CodeGen
 
                 if (str.EndsWith("ies"))
                 {
-                  return str;
+                    return str;
                 }
 
                 if (str[^1] == 's' && str[^2] != 's')
@@ -54,9 +54,9 @@ namespace Octokit.CodeGen
 
             string getPropertyName(IResponseProperty property)
             {
-              var segments = property.Name.Replace("_", " ").Replace("-", " ").Split(" ");
-              var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, false));
-              return string.Join("", pascalCaseSegments);
+                var segments = property.Name.Replace("_", " ").Replace("-", " ").Split(" ");
+                var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, false));
+                return string.Join("", pascalCaseSegments);
             }
 
             string getClassName(PathMetadata metadata)

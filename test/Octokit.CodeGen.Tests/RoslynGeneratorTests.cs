@@ -89,7 +89,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void GenerateSourceFile_UsesSourceMetadta_ToAddAttributes()
+        public void GenerateSourceFile_UsesSourceMetadata_ToAddAttributes()
         {
             var stub = new ApiClientFileMetadata
             {
@@ -138,6 +138,43 @@ namespace Octokit.CodeGen.Tests
             var attribute = Assert.Single(attributes);
 
             Assert.Equal("GeneratedRoute", attribute.Name.ToString());
+        }
+
+        [Fact]
+        public void GenerateSourceFile_WithModelsDefined_IncludesInSource()
+        {
+            var stub = new ApiClientFileMetadata
+            {
+                FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                Models = new List<ApiModelMetadata>
+                {
+                  new ApiModelMetadata
+                  {
+                    Name = "SomeObject",
+                    Kind = ModelKind.Response,
+                    Properties = new List<ApiModelProperty>
+                    {
+                      new ApiModelProperty
+                      {
+                        Name = "Id",
+                        Type = "number"
+                      },
+                      new ApiModelProperty
+                      {
+                        Name = "Name",
+                        Type = "string"
+                      }
+                    }
+                  }
+                }
+            };
+
+            var result = RoslynGenerator.GenerateSourceFile(stub);
+
+            var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
+            var propertyNodes = classNode.DescendantNodes().OfType<PropertyDeclarationSyntax>();
+
+            Assert.Equal(2, propertyNodes.Count());
         }
 
         private static TypeSyntax GetListReturnType(string innerType)

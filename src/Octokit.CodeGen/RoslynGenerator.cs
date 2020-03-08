@@ -118,6 +118,34 @@ namespace Octokit.CodeGen
             return SingletonList<AttributeListSyntax>(AttributeList(SingletonSeparatedList<AttributeSyntax>(generatedRouteAttribute)));
         }
 
+        private static ClassDeclarationSyntax WithModel(ApiModelMetadata modelMetadata)
+        {
+            var properties = modelMetadata.Properties.Select(m =>
+            {
+                // TODO: a proper type returned from the API
+                var returnType = ConvertToTypeSyntax(m.Type);
+
+                return PropertyDeclaration(returnType, Identifier(m.Name))
+                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                        .WithAccessorList(
+                            AccessorList(
+                                List<AccessorDeclarationSyntax>(
+                                    new AccessorDeclarationSyntax[]{
+                                        AccessorDeclaration(
+                                            SyntaxKind.GetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken)),
+                                        AccessorDeclaration(
+                                            SyntaxKind.SetAccessorDeclaration)
+                                        .WithSemicolonToken(
+                                            Token(SyntaxKind.SemicolonToken))})));
+            });
+
+          return ClassDeclaration(modelMetadata.Name)
+                .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                .WithMembers(List<MemberDeclarationSyntax>(properties));
+        }
+
         private static InterfaceDeclarationSyntax WithInterface(ApiClientFileMetadata apiBuilder)
         {
             var members = apiBuilder.Client.Methods.Select(m =>
@@ -175,16 +203,30 @@ namespace Octokit.CodeGen
 
         public static CompilationUnitSyntax GenerateSourceFile(ApiClientFileMetadata stub)
         {
+            var members = new List<MemberDeclarationSyntax>();
+
+            if (stub.Models.Any())
+            {
+                members.AddRange(stub.Models.Select(WithModel));
+            }
+
+            if (stub?.Client?.InterfaceName != null)
+            {
+                members.Add(WithInterface(stub));
+            }
+
+            if (stub?.Client?.ClassName != null)
+            {
+                members.Add(WithImplementation(stub));
+            }
+
             return CompilationUnit()
               .WithMembers(
                   SingletonList<MemberDeclarationSyntax>(
                       NamespaceDeclaration(
                           IdentifierName("Octokit"))
                       .WithMembers(
-                          List<MemberDeclarationSyntax>(
-                              new MemberDeclarationSyntax[]{
-                                  WithInterface(stub),
-                                  WithImplementation(stub) }))))
+                          List<MemberDeclarationSyntax>(members))))
               .NormalizeWhitespace();
         }
     }
