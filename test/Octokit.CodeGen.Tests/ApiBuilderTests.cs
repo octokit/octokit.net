@@ -209,11 +209,26 @@ namespace Octokit.CodeGen.Tests
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
 
-            var model = Assert.Single(result.Models);
-            Assert.Equal("MarketplaceListingAccount", model.Name);
-            Assert.NotEmpty(model.Properties);
+            Assert.Equal(5, result.Models.Count);
 
-            Assert.Single(model.Properties.Where(p => p.Name == "Id" && p.Type == "number"));
+            var account = Assert.Single(result.Models.Where(m => m.Name == "MarketplaceListingAccount"));
+            Assert.Single(account.Properties.Where(p => p.Name == "MarketplacePendingChange" && p.Type == "MarketplacePendingChange"));
+            Assert.Single(account.Properties.Where(p => p.Name == "MarketplacePurchase" && p.Type == "MarketplacePurchase"));
+
+            var pendingChange = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChange"));
+            Assert.Single(pendingChange.Properties.Where(p => p.Name == "Plan" && p.Type == "MarketplacePendingChangePlan"));
+
+            var purchase = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePurchase"));
+            Assert.Single(purchase.Properties.Where(p => p.Name == "Plan" && p.Type == "MarketplacePurchasePlan"));
+
+            // TODO: as these are structurally the same and scoped to the same client,
+            //       can we merge them into a single `Plan` type?
+
+            var purchasePlan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePurchasePlan"));
+            Assert.NotEmpty(purchasePlan.Properties);
+
+            var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
+            Assert.NotEmpty(plan.Properties);
 
             // TODO: how should we test that response parameters are being inserted into the client code?
 
@@ -235,16 +250,18 @@ namespace Octokit.CodeGen.Tests
             var results = apiBuilder.Build(paths);
             var result = Assert.Single(results);
 
-            Assert.Equal(3, result.Models.Count);
+            Assert.Equal(2, result.Models.Count);
 
             var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
             Assert.NotEmpty(commitComment.Properties);
 
-            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentUser"));
+            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
             Assert.NotEmpty(commitCommentUser.Properties);
 
-            var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
-            Assert.NotEmpty(commitComment.Properties);
+            // TODO: what about this request model?
+
+            // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
+            // Assert.NotEmpty(commitComment.Properties);
 
             // TODO: how should we test that response parameters are being inserted into the client code?
 
@@ -252,7 +269,6 @@ namespace Octokit.CodeGen.Tests
             // var returnType = Assert.IsType<TaskOfListType>(get.ReturnType);
             // Assert.Equal("CommitComment", returnType.ListType);
         }
-
 
         // TODO: how do we represent parameters that are required rather than optional?
         // TODO: what shall we do about pagination?

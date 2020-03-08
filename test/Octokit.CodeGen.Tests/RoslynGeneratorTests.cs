@@ -151,7 +151,7 @@ namespace Octokit.CodeGen.Tests
                   new ApiModelMetadata
                   {
                     Name = "SomeObject",
-                    Kind = ModelKind.Response,
+                    Kind = "response",
                     Properties = new List<ApiModelProperty>
                     {
                       new ApiModelProperty

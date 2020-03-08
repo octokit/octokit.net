@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Octokit.CodeGen
@@ -52,10 +53,10 @@ namespace Octokit.CodeGen
                 }
             }
 
-            string getPropertyName(IResponseProperty property)
+            string getPropertyName(string name, bool ensureSingular = false)
             {
-                var segments = property.Name.Replace("_", " ").Replace("-", " ").Split(" ");
-                var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, false));
+                var segments = name.Replace("_", " ").Replace("-", " ").Split(" ");
+                var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, ensureSingular));
                 return string.Join("", pascalCaseSegments);
             }
 
@@ -83,31 +84,149 @@ namespace Octokit.CodeGen
                 return className;
             }
 
-
-            ApiModelProperty convertProperty(IResponseProperty property)
+            // first parameter of return type is the current model (needed for assigning to property)
+            // second parameter is any additional models that were deserialized
+            (ApiModelMetadata, List<ApiModelMetadata>) parseInnerModel(ObjectResponseProperty objectProperty, string classPrefix)
             {
-                var primitiveProperty = property as PrimitiveResponseProperty;
-                if (primitiveProperty != null)
+                var additionalModels = new List<ApiModelMetadata>();
+                var additionalName = getPropertyName(objectProperty.Name, true);
+
+                // TODO: what if we just skip the prefix here? how far can we
+                // get without needing to worry about clashes and denormalizing
+                // models?
+
+                var classNamePrefix = $"{classPrefix}{additionalName}";
+                var properties = new List<ApiModelProperty>();
+
+                foreach (var property in objectProperty.Properties)
                 {
-                    return new ApiModelProperty
+                    var primitiveProperty = property as PrimitiveResponseProperty;
+                    if (primitiveProperty != null)
                     {
-                        Name = getPropertyName(primitiveProperty),
-                        Type = primitiveProperty.Type,
-                    };
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(primitiveProperty.Name),
+                            Type = primitiveProperty.Type,
+                        });
+                        continue;
+                    }
+
+                    var objectResponse = property as ObjectResponseProperty;
+                    if (objectResponse != null)
+                    {
+                        var (current, others) = parseInnerModel(objectResponse, classNamePrefix);
+                        additionalModels.Add(current);
+                        additionalModels.AddRange(others);
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(objectResponse.Name),
+                            Type = current.Name,
+                        });
+                    }
+
+                    // TODO: what about other things here? log or fail fast?
                 }
 
-                var objectResponse = property as ObjectResponseProperty;
-                if (objectResponse != null)
+                var top = new ApiModelMetadata
                 {
-                    // also need to extract this to a model of your own
-                    return new ApiModelProperty
+                    Kind = "response",
+                    Name = classNamePrefix,
+                    Properties = properties,
+                };
+
+                return (top, additionalModels);
+            }
+
+            List<ApiModelMetadata> parseArrayResponseToModels(ArrayResponseContent arrayContent)
+            {
+                var models = new List<ApiModelMetadata>();
+
+                var classNamePrefix = getClassName(metadata);
+                var properties = new List<ApiModelProperty>();
+
+                foreach (var property in arrayContent.ItemProperties)
+                {
+                    var primitiveProperty = property as PrimitiveResponseProperty;
+                    if (primitiveProperty != null)
                     {
-                        Name = getPropertyName(objectResponse),
-                        Type = "???"
-                    };
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(primitiveProperty.Name),
+                            Type = primitiveProperty.Type,
+                        });
+                        continue;
+                    }
+
+                    var objectResponse = property as ObjectResponseProperty;
+                    if (objectResponse != null)
+                    {
+                        var (current, others) = parseInnerModel(objectResponse, "");
+                        models.Add(current);
+                        models.AddRange(others);
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(objectResponse.Name),
+                            Type = current.Name,
+                        });
+                    }
                 }
 
-                throw new InvalidOperationException($"Unable to convert property {property.Name} of type {property.Type}. Giving up...");
+                var top = new ApiModelMetadata
+                {
+                    Kind = "response",
+                    Name = classNamePrefix,
+                    Properties = properties,
+                };
+
+                models.Add(top);
+
+                return models;
+            }
+
+            List<ApiModelMetadata> parseObjectResponseToModels(ObjectResponseContent objectContent)
+            {
+                var models = new List<ApiModelMetadata>();
+
+                var classNamePrefix = getClassName(metadata);
+                var properties = new List<ApiModelProperty>();
+
+                foreach (var property in objectContent.Properties)
+                {
+                    var primitiveProperty = property as PrimitiveResponseProperty;
+                    if (primitiveProperty != null)
+                    {
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(primitiveProperty.Name),
+                            Type = primitiveProperty.Type,
+                        });
+                        continue;
+                    }
+
+                    var objectResponse = property as ObjectResponseProperty;
+                    if (objectResponse != null)
+                    {
+                        var (current, others) = parseInnerModel(objectResponse, "");
+                        models.Add(current);
+                        models.AddRange(others);
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(objectResponse.Name),
+                            Type = current.Name,
+                        });
+                    }
+                }
+
+                var top = new ApiModelMetadata
+                {
+                    Kind = "response",
+                    Name = classNamePrefix,
+                    Properties = properties,
+                };
+
+                models.Add(top);
+
+                return models;
             }
 
             foreach (var verb in metadata.Verbs)
@@ -119,26 +238,12 @@ namespace Octokit.CodeGen
                         if (response.Content.Type == "array")
                         {
                             var arrayResponse = response.Content as ArrayResponseContent;
-                            var className = getClassName(metadata);
-                            var properties = arrayResponse.ItemProperties.Select(convertProperty).ToList();
-                            data.Models.Add(new ApiModelMetadata
-                            {
-                                Kind = ModelKind.Response,
-                                Name = className,
-                                Properties = properties,
-                            });
+                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse));
                         }
                         else if (response.Content.Type == "object")
                         {
                             var objectResponse = response.Content as ObjectResponseContent;
-                            var className = getClassName(metadata);
-                            var properties = objectResponse.Properties.Select(convertProperty).ToList();
-                            data.Models.Add(new ApiModelMetadata
-                            {
-                                Kind = ModelKind.Response,
-                                Name = className,
-                                Properties = properties,
-                            });
+                            data.Models.AddRange(parseObjectResponseToModels(objectResponse));
                         }
                         else
                         {
@@ -147,6 +252,8 @@ namespace Octokit.CodeGen
                     }
                 }
             }
+
+            data.Models = data.Models.Distinct(ApiModelCompararer.Default).ToList();
 
             return data;
         };

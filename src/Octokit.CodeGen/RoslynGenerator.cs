@@ -141,9 +141,9 @@ namespace Octokit.CodeGen
                                             Token(SyntaxKind.SemicolonToken))})));
             });
 
-          return ClassDeclaration(modelMetadata.Name)
-                .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-                .WithMembers(List<MemberDeclarationSyntax>(properties));
+            return ClassDeclaration(modelMetadata.Name)
+                  .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                  .WithMembers(List<MemberDeclarationSyntax>(properties));
         }
 
         private static InterfaceDeclarationSyntax WithInterface(ApiClientFileMetadata apiBuilder)
