@@ -66,44 +66,6 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Build_WillFormatInterfaceAndType_UsingPath()
-        {
-            var metadata = new List<PathMetadata>
-            {
-              new PathMetadata
-              {
-                  Path = "/marketplace_listing/accounts/{account_id}",
-                  Verbs = new List<VerbResult>
-                  {
-                      new VerbResult {
-                          Method = HttpMethod.Get,
-                          Parameters = new List<Parameter>
-                          {
-                              new Parameter
-                              {
-                                  Name = "account_id",
-                                  In = "path",
-                                  Required = true,
-                                  Type = "number",
-                              }
-                          }
-                      }
-                  }
-              }
-            };
-
-            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
-
-            var results = apiBuilder.Build(metadata);
-            var result = Assert.Single(results);
-
-            Assert.Equal("MarketplaceListingAccountsClient", result.Client.ClassName);
-            Assert.Equal("IMarketplaceListingAccountsClient", result.Client.InterfaceName);
-            var expectedPath = Path.Join("Octokit", "Clients", "MarketplaceListingAccountsClient.cs");
-            Assert.Equal(expectedPath, result.FileName);
-        }
-
-        [Fact]
         public async Task Build_WillUseAliasForNames_InTypesAndFileName()
         {
             var stream = TestFixtureLoader.LoadTopicsRoute();
