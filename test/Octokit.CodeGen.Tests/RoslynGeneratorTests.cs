@@ -24,7 +24,7 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var result = RoslynGenerator.GenerateSourceFile(stub);
+            var result = RoslynGenerator.GenerateSourceNode(stub);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             Assert.Equal("ISomeSortOfClient", interfaceNode.Identifier.ValueText);
@@ -64,7 +64,7 @@ namespace Octokit.CodeGen.Tests
 
             var expectedReturnType = GetListReturnType("SomeResponseType");
 
-            var result = RoslynGenerator.GenerateSourceFile(stub);
+            var result = RoslynGenerator.GenerateSourceNode(stub);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -120,7 +120,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var result = RoslynGenerator.GenerateSourceFile(stub);
+            var result = RoslynGenerator.GenerateSourceNode(stub);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -169,7 +169,7 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var result = RoslynGenerator.GenerateSourceFile(stub);
+            var result = RoslynGenerator.GenerateSourceNode(stub);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var propertyNodes = classNode.DescendantNodes().OfType<PropertyDeclarationSyntax>();

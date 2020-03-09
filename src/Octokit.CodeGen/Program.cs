@@ -29,18 +29,19 @@ namespace Octokit.CodeGen
 
             foreach (var metadata in apiMetadata)
             {
-                var sourceFile = RoslynGenerator.GenerateSourceFile(metadata);
+                var sourceFile = RoslynGenerator.GetSourceFileText(metadata);
+
                 if (writeFilesToDisk)
                 {
                     Console.WriteLine($" - Writing file to disk: {metadata.FileName}");
                     var fullPath = Path.Join(dir, metadata.FileName);
-                    File.WriteAllText(fullPath, sourceFile.ToString());
+                    File.WriteAllText(fullPath, sourceFile);
                 }
                 else
                 {
                     Console.WriteLine($" - Write this file to disk: {metadata.FileName}");
                     Console.WriteLine($"-----");
-                    Console.WriteLine(sourceFile.ToString());
+                    Console.WriteLine(sourceFile);
                     Console.WriteLine($"-----");
                     Console.WriteLine();
 

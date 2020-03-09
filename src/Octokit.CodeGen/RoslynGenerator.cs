@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Formatting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Formatting;
 using OneOf;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -220,23 +222,35 @@ namespace Octokit.CodeGen
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
-        public static CompilationUnitSyntax GenerateSourceFile(ApiClientFileMetadata stub)
+        public static string GetSourceFileText(ApiClientFileMetadata metadata)
+        {
+            var sourceFile = GenerateSourceNode(metadata);
+
+            var cw = new AdhocWorkspace();
+            cw.Options.WithChangedOption(CSharpFormattingOptions.WrappingKeepStatementsOnSingleLine, true);
+            cw.Options.WithChangedOption(CSharpFormattingOptions.WrappingPreserveSingleLine, true);
+            SyntaxNode formattedNode = Formatter.Format(sourceFile, cw);
+
+            return formattedNode.ToFullString();
+        }
+
+        public static CompilationUnitSyntax GenerateSourceNode(ApiClientFileMetadata metadata)
         {
             var members = new List<MemberDeclarationSyntax>();
 
-            if (stub.Models.Any())
+            if (metadata.Models.Any())
             {
-                members.AddRange(stub.Models.Select(WithModel));
+                members.AddRange(metadata.Models.Select(WithModel));
             }
 
-            if (stub?.Client?.InterfaceName != null)
+            if (metadata?.Client?.InterfaceName != null)
             {
-                members.Add(WithInterface(stub));
+                members.Add(WithInterface(metadata));
             }
 
-            if (stub?.Client?.ClassName != null)
+            if (metadata?.Client?.ClassName != null)
             {
-                members.Add(WithImplementation(stub));
+                members.Add(WithImplementation(metadata));
             }
 
             return CompilationUnit()
@@ -246,8 +260,7 @@ namespace Octokit.CodeGen
                               NamespaceDeclaration(
                                   IdentifierName("Octokit"))
                               .WithMembers(
-                                  List<MemberDeclarationSyntax>(members))))
-              .NormalizeWhitespace();
+                                  List<MemberDeclarationSyntax>(members))));
         }
     }
 }
