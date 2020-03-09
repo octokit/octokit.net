@@ -13,9 +13,9 @@ namespace Octokit.CodeGen.Tests
         public void UsingExamplePath_SetsExpectedInterfaceAndClassName()
         {
             var metadata = new PathMetadata
-              {
-                  Path = "/marketplace_listing/accounts/{account_id}",
-                  Verbs = new List<VerbResult>
+            {
+                Path = "/marketplace_listing/accounts/{account_id}",
+                Verbs = new List<VerbResult>
                   {
                       new VerbResult {
                           Method = HttpMethod.Get,
