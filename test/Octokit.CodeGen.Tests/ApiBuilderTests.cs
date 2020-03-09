@@ -66,48 +66,6 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void Build_WillAddMethod_RepresentingGet()
-        {
-            var metadata = new List<PathMetadata>
-            {
-              new PathMetadata
-              {
-                  Path = "/marketplace_listing/accounts/{account_id}",
-                  Verbs = new List<VerbResult>
-                  {
-                      new VerbResult {
-                          Method = HttpMethod.Get,
-                          Parameters = new List<Parameter>
-                          {
-                              new Parameter
-                              {
-                                  Name = "account_id",
-                                  In = "path",
-                                  Required = true,
-                                  Type = "number",
-                              }
-                          }
-                      }
-                  }
-              }
-            };
-
-            apiBuilder.Register(Builders.AddMethodForEachVerb);
-
-            var results = apiBuilder.Build(metadata);
-            var result = Assert.Single(results);
-
-            var method = Assert.Single(result.Client.Methods);
-
-            Assert.Equal("Get", method.Name);
-
-            var parameter = Assert.Single(method.Parameters);
-
-            Assert.Equal("accountId", parameter.Name);
-            Assert.Equal("number", parameter.Type);
-        }
-
-        [Fact]
         public async Task Build_ForPathWithMultipleMethods_GeneratesResultingClient()
         {
             var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
