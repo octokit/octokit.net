@@ -118,6 +118,97 @@ namespace Octokit.CodeGen
             return SingletonList<AttributeListSyntax>(AttributeList(SingletonSeparatedList<AttributeSyntax>(generatedRouteAttribute)));
         }
 
+        private static LocalDeclarationStatementSyntax GenerateUriStatement(ApiMethodMetadata method)
+        {
+          // for compatibility with GHE we need to start these URIs without a /
+          var path = method.SourceMetadata.Path.TrimStart('/');
+          var parameters = method.Parameters;
+
+          // TODO: how can we build up the "path with substitutes" here, replacing
+          //       each parameter in the path with it's C# equivalent?'
+
+          // TODO: and then how can we convert this string into it's Roslyn-based
+          //       equivalent?
+
+          return LocalDeclarationStatement(
+              VariableDeclaration(IdentifierName("var"))
+                  .WithVariables(
+                      SingletonSeparatedList<VariableDeclaratorSyntax>(
+                          VariableDeclarator(Identifier("uri"))
+                          .WithInitializer(
+                              EqualsValueClause(ObjectCreationExpression(IdentifierName("Uri"))
+                                  .WithArgumentList(
+                                      ArgumentList(
+                                          SingletonSeparatedList<ArgumentSyntax>(
+                                              Argument(
+                                                  InterpolatedStringExpression(
+                                                      Token(SyntaxKind.InterpolatedStringStartToken))
+                                                  .WithContents(
+                                                      List<InterpolatedStringContentSyntax>(
+                                                          new InterpolatedStringContentSyntax[]{
+                                                              InterpolatedStringText()
+                                                              .WithTextToken(
+                                                                  Token(
+                                                                      TriviaList(),
+                                                                      SyntaxKind.InterpolatedStringTextToken,
+                                                                      "marketplace_listing/accounts/",
+                                                                      "marketplace_listing/accounts/",
+                                                                      TriviaList())),
+                                                              Interpolation(
+                                                                  IdentifierName("accountId"))})))))))))));
+        }
+
+        private static ReturnStatementSyntax GenerateReturnStatement(ApiMethodMetadata method)
+        {
+            // TODO: change the method based on the verb
+
+            // TODO: the argument passed in here may need to strip the Task<> or Task<IReadOnlyList>
+            //       from the ReturnType
+
+            // TODO: how would this differ for POST/PATCH/DELETE?
+            // TODO: how can we handle things like preview APIs? content types?
+
+            return ReturnStatement(
+                  InvocationExpression(
+                      MemberAccessExpression(
+                          SyntaxKind.SimpleMemberAccessExpression,
+                          IdentifierName("ApiConnection"),
+                          GenericName(Identifier(method.Name))
+                          .WithTypeArgumentList(
+                              TypeArgumentList(
+                                  SingletonSeparatedList<TypeSyntax>(
+                                      IdentifierName("MarketplaceListingAccount"))))))
+                  .WithArgumentList(
+                      ArgumentList(
+                          SingletonSeparatedList<ArgumentSyntax>(
+                              Argument(IdentifierName("uri"))))));
+        }
+
+        private static BlockSyntax GetBodyForClientMethod(ApiMethodMetadata method)
+        {
+          if (method.SourceMetadata.Verb != "GET")
+          {
+             return Block(
+                SingletonList<StatementSyntax>(
+                    ThrowStatement(
+                        ObjectCreationExpression(
+                            IdentifierName("NotImplementedException"))
+                        .WithArgumentList(
+                            ArgumentList()))));
+          }
+
+          // for a GET we need two things
+          //  - the URL to call - where we merge the required parameters into the path
+          var declareUriStatement = GenerateUriStatement(method);
+          //  - the call to the underlying ApiConnection
+          var returnStatement = GenerateReturnStatement(method);
+
+
+          return Block(
+            declareUriStatement,
+            returnStatement);
+        }
+
         private static SyntaxList<UsingDirectiveSyntax> UsingStatements()
         {
             return List<UsingDirectiveSyntax>
@@ -200,14 +291,7 @@ namespace Octokit.CodeGen
                             .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                             .WithParameterList(parameters)
                             .WithAttributeLists(attributes)
-                            .WithBody(
-                                Block(
-                                    SingletonList<StatementSyntax>(
-                                        ThrowStatement(
-                                            ObjectCreationExpression(
-                                                IdentifierName("NotImplementedException"))
-                                            .WithArgumentList(
-                                                ArgumentList())))));
+                            .WithBody(GetBodyForClientMethod(m));
             }).ToList<MemberDeclarationSyntax>();
 
             MemberDeclarationSyntax constructor = ConstructorDeclaration(
