@@ -169,7 +169,11 @@ namespace Octokit.CodeGen
                         });
                     }, primitiveList =>
                     {
-                        throw new NotImplementedException($"AddResponseModels.parseArrayResponseToModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(primitiveList.Name),
+                            Type = "IReadOnlyList<string>",
+                        });
                     }, objectList =>
                     {
                         throw new NotImplementedException($"AddResponseModels.parseArrayResponseToModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
@@ -218,7 +222,11 @@ namespace Octokit.CodeGen
                         });
                     }, primitiveList =>
                     {
-                        throw new NotImplementedException($"AddResponseModels.parseObjectResponseToModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                        properties.Add(new ApiModelProperty
+                        {
+                            Name = getPropertyName(primitiveList.Name),
+                            Type = "IReadOnlyList<string>",
+                        });
                     }, objectList =>
                     {
                         throw new NotImplementedException($"AddResponseModels.parseObjectResponseToModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
