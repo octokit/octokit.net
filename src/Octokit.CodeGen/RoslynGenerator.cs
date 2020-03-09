@@ -208,17 +208,44 @@ namespace Octokit.CodeGen
                                                 IdentifierName("NotImplementedException"))
                                             .WithArgumentList(
                                                 ArgumentList())))));
-            });
+            }).ToList<MemberDeclarationSyntax>();
+
+            MemberDeclarationSyntax constructor = ConstructorDeclaration(
+                        Identifier(apiBuilder.Client.ClassName))
+                    .WithModifiers(
+                        TokenList(
+                            Token(SyntaxKind.PublicKeyword)))
+                    .WithParameterList(
+                        ParameterList(
+                            SingletonSeparatedList<ParameterSyntax>(
+                                Parameter(
+                                    Identifier("apiConnection"))
+                                .WithType(
+                                    IdentifierName("IApiConnection")))))
+                    .WithInitializer(
+                        ConstructorInitializer(
+                            SyntaxKind.BaseConstructorInitializer,
+                            ArgumentList(
+                                SingletonSeparatedList<ArgumentSyntax>(
+                                    Argument(
+                                        IdentifierName("apiConnection"))))))
+                    .WithBody(
+                        Block()); // TODO: create and assign any child clients that correspond to properties
+
+            members.Insert(0, constructor);
 
             return ClassDeclaration(apiBuilder.Client.ClassName)
                                       .WithModifiers(
                                           TokenList(
                                               Token(SyntaxKind.PublicKeyword)))
                                       .WithBaseList(
-                                          BaseList(
-                                              SingletonSeparatedList<BaseTypeSyntax>(
-                                                  SimpleBaseType(
-                                                      IdentifierName(apiBuilder.Client.InterfaceName)))))
+                                        BaseList(
+                                            SeparatedList<BaseTypeSyntax>(
+                                                new SyntaxNodeOrToken[]{
+                                                    SimpleBaseType(IdentifierName("ApiClient")),
+                                                    Token(SyntaxKind.CommaToken),
+                                                    SimpleBaseType(
+                                                        IdentifierName(apiBuilder.Client.InterfaceName))})))
                                       .WithMembers(List<MemberDeclarationSyntax>(members));
         }
 
