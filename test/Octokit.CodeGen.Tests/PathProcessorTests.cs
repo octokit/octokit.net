@@ -1,10 +1,17 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using OneOf;
 using Xunit;
 
 namespace Octokit.CodeGen.Tests
 {
+    using ResponseProperty = OneOf<PrimitiveResponseProperty,
+                                   ObjectResponseProperty,
+                                   ListOfPrimitiveTypeProperty,
+                                   ListOfObjectsProperty>;
+
     public class PathProcessorTests
     {
         [Fact]
@@ -40,15 +47,15 @@ namespace Octokit.CodeGen.Tests
 
             var content = Assert.IsType<ObjectResponseContent>(responseContent);
 
-            Assert.Single(content.Properties.Where(p => p.Name == "url" && p.Type == "string"));
+            Assert.Single(content.Properties.PrimitiveProperties().Where(p => p.Name == "url" && p.Type == "string"));
 
-            var nestedObject = Assert.Single(content.Properties.Where(p => p.Name == "marketplace_pending_change" && p.Type == "object").OfType<ObjectResponseProperty>());
+            var nestedObject = Assert.Single(content.Properties.ObjectProperties().Where(p => p.Name == "marketplace_pending_change" && p.Type == "object"));
 
-            Assert.Single(nestedObject.Properties.Where(p => p.Name == "unit_count" && p.Type == "string"));
+            Assert.Single(nestedObject.Properties.PrimitiveProperties().Where(p => p.Name == "unit_count" && p.Type == "string"));
 
-            var nestedNestedObject = Assert.Single(nestedObject.Properties.Where(p => p.Name == "plan" && p.Type == "object").OfType<ObjectResponseProperty>());
+            var nestedNestedObject = Assert.Single(nestedObject.Properties.ObjectProperties().Where(p => p.Name == "plan" && p.Type == "object"));
 
-            Assert.Single(nestedNestedObject.Properties.Where(p => p.Name == "yearly_price_in_cents" && p.Type == "number"));
+            Assert.Single(nestedNestedObject.Properties.PrimitiveProperties().Where(p => p.Name == "yearly_price_in_cents" && p.Type == "number"));
         }
 
         [Fact]
@@ -89,12 +96,12 @@ namespace Octokit.CodeGen.Tests
 
             var responseContent = Assert.IsType<ArrayResponseContent>(content);
 
-            Assert.Single(responseContent.ItemProperties.Where(p => p.Name == "html_url" && p.Type == "string"));
+            Assert.Single(responseContent.ItemProperties.PrimitiveProperties().Where(p => p.Name == "html_url" && p.Type == "string"));
 
-            var objectPropType = responseContent.ItemProperties.Single(p => p.Name == "user" && p.Type == "object");
+            var objectPropType = responseContent.ItemProperties.ObjectProperties().Single(p => p.Name == "user" && p.Type == "object");
             var nestedObject = Assert.IsType<ObjectResponseProperty>(objectPropType);
 
-            Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
+            Assert.Single(nestedObject.Properties.PrimitiveProperties().Where(p => p.Name == "login" && p.Type == "string"));
         }
 
         [Fact]
@@ -147,11 +154,11 @@ namespace Octokit.CodeGen.Tests
 
             var responseContent = Assert.IsType<ObjectResponseContent>(content);
 
-            Assert.Single(responseContent.Properties.Where(p => p.Name == "html_url" && p.Type == "string"));
+            Assert.Single(responseContent.Properties.PrimitiveProperties().Where(p => p.Name == "html_url" && p.Type == "string"));
 
-            var nestedObject = Assert.Single(responseContent.Properties.Where(p => p.Name == "user" && p.Type == "object").OfType<ObjectResponseProperty>());
+            var nestedObject = Assert.Single(responseContent.Properties.ObjectProperties().Where(p => p.Name == "user" && p.Type == "object"));
 
-            Assert.Single(nestedObject.Properties.Where(p => p.Name == "login" && p.Type == "string"));
+            Assert.Single(nestedObject.Properties.PrimitiveProperties().Where(p => p.Name == "login" && p.Type == "string"));
         }
 
         [Fact]
@@ -297,4 +304,18 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("string", array.ArrayType);
         }
     }
+
+    public static class PropertyExtensions
+    {
+        public static IEnumerable<PrimitiveResponseProperty> PrimitiveProperties(this List<ResponseProperty> properties)
+        {
+            return properties.Where(p => p.IsT0).Select(p => p.AsT0);
+        }
+
+        public static IEnumerable<ObjectResponseProperty> ObjectProperties(this List<ResponseProperty> properties)
+        {
+            return properties.Where(p => p.IsT1).Select(p => p.AsT1);
+        }
+    }
+
 }

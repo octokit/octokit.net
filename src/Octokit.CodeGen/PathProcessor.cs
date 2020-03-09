@@ -8,6 +8,11 @@ using OneOf;
 
 namespace Octokit.CodeGen
 {
+    using ResponseProperty = OneOf<PrimitiveResponseProperty,
+                                   ObjectResponseProperty,
+                                   ListOfPrimitiveTypeProperty,
+                                   ListOfObjectsProperty>;
+
     public class PathProcessor
     {
         private static bool TryParse(string verb, out HttpMethod method)
@@ -76,7 +81,7 @@ namespace Octokit.CodeGen
                         else if (itemsType == "string")
                         {
                             Console.WriteLine($"add property to list for {propertyName} as it is an array of type {itemsType}");
-                            objectProperty.Properties.Add(new ListOfPrimitivesProperty(propertyName, itemsType));
+                            objectProperty.Properties.Add(new ListOfPrimitiveTypeProperty(propertyName, itemsType));
                         }
                         else
                         {
@@ -438,13 +443,7 @@ namespace Octokit.CodeGen
         public IRequestContent Content { get; set; }
     }
 
-    public interface IResponseProperty
-    {
-        string Type { get; }
-        string Name { get; }
-    }
-
-    public class PrimitiveResponseProperty : IResponseProperty
+    public class PrimitiveResponseProperty
     {
         public PrimitiveResponseProperty(string name, string type)
         {
@@ -455,9 +454,9 @@ namespace Octokit.CodeGen
         public string Type { get; private set; }
     }
 
-    public class ListOfObjectsProperty : IResponseProperty
+    public class ListOfObjectsProperty
     {
-        public ListOfObjectsProperty(string name, List<IResponseProperty> properties)
+        public ListOfObjectsProperty(string name, List<ResponseProperty> properties)
         {
             Name = name;
             Type = "List(object)";
@@ -465,12 +464,12 @@ namespace Octokit.CodeGen
         }
         public string Name { get; private set; }
         public string Type { get; private set; }
-        public List<IResponseProperty> Properties { get; private set; }
+        public List<ResponseProperty> Properties { get; private set; }
     }
 
-    public class ListOfPrimitivesProperty : IResponseProperty
+    public class ListOfPrimitiveTypeProperty
     {
-        public ListOfPrimitivesProperty(string name, string type)
+        public ListOfPrimitiveTypeProperty(string name, string type)
         {
             Name = name;
             Type = "List";
@@ -481,36 +480,36 @@ namespace Octokit.CodeGen
         public string ItemType { get; private set; }
     }
 
-    public class ObjectResponseProperty : IResponseProperty
+    public class ObjectResponseProperty
     {
         public ObjectResponseProperty(string name)
         {
             Name = name;
             Type = "object";
-            Properties = new List<IResponseProperty>();
+            Properties = new List<ResponseProperty>();
         }
         public string Name { get; private set; }
         public string Type { get; private set; }
-        public List<IResponseProperty> Properties { get; set; }
+        public List<ResponseProperty> Properties { get; set; }
     }
 
     public class ObjectResponseContent
     {
         public ObjectResponseContent()
         {
-            Properties = new List<IResponseProperty>();
+            Properties = new List<ResponseProperty>();
         }
         public string Type { get { return "object"; } }
-        public List<IResponseProperty> Properties { get; set; }
+        public List<ResponseProperty> Properties { get; set; }
     }
 
     public class ArrayResponseContent
     {
         public ArrayResponseContent()
         {
-            ItemProperties = new List<IResponseProperty>();
+            ItemProperties = new List<ResponseProperty>();
         }
         public string Type { get { return "array"; } }
-        public List<IResponseProperty> ItemProperties { get; set; }
+        public List<ResponseProperty> ItemProperties { get; set; }
     }
 }

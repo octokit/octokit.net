@@ -101,19 +101,14 @@ namespace Octokit.CodeGen
 
                 foreach (var property in objectProperty.Properties)
                 {
-                    var primitiveProperty = property as PrimitiveResponseProperty;
-                    if (primitiveProperty != null)
+                    property.Switch(primitiveProperty =>
                     {
                         properties.Add(new ApiModelProperty
                         {
                             Name = getPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
-                        continue;
-                    }
-
-                    var objectResponse = property as ObjectResponseProperty;
-                    if (objectResponse != null)
+                    }, objectResponse =>
                     {
                         var (current, others) = parseInnerModel(objectResponse, classNamePrefix);
                         additionalModels.Add(current);
@@ -123,9 +118,13 @@ namespace Octokit.CodeGen
                             Name = getPropertyName(objectResponse.Name),
                             Type = current.Name,
                         });
-                    }
-
-                    // TODO: what about other things here? log or fail fast?
+                    }, primitiveList =>
+                   {
+                       Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                   }, objectList =>
+                   {
+                       Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                   });
                 }
 
                 var top = new ApiModelMetadata
@@ -147,29 +146,30 @@ namespace Octokit.CodeGen
 
                 foreach (var property in arrayContent.ItemProperties)
                 {
-                    var primitiveProperty = property as PrimitiveResponseProperty;
-                    if (primitiveProperty != null)
+                    property.Switch(primitiveProperty =>
                     {
                         properties.Add(new ApiModelProperty
                         {
                             Name = getPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
-                        continue;
-                    }
-
-                    var objectResponse = property as ObjectResponseProperty;
-                    if (objectResponse != null)
+                    }, objectProperty =>
                     {
-                        var (current, others) = parseInnerModel(objectResponse, "");
+                        var (current, others) = parseInnerModel(objectProperty, "");
                         models.Add(current);
                         models.AddRange(others);
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(objectResponse.Name),
+                            Name = getPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
-                    }
+                    }, primitiveList =>
+                    {
+                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                    }, objectList =>
+                    {
+                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                    });
                 }
 
                 var top = new ApiModelMetadata
@@ -195,29 +195,30 @@ namespace Octokit.CodeGen
 
                 foreach (var property in objectContent.Properties)
                 {
-                    var primitiveProperty = property as PrimitiveResponseProperty;
-                    if (primitiveProperty != null)
+                    property.Switch(primitiveProperty =>
                     {
                         properties.Add(new ApiModelProperty
                         {
                             Name = getPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
-                        continue;
-                    }
-
-                    var objectResponse = property as ObjectResponseProperty;
-                    if (objectResponse != null)
+                    }, objectProperty =>
                     {
-                        var (current, others) = parseInnerModel(objectResponse, "");
+                        var (current, others) = parseInnerModel(objectProperty, "");
                         models.Add(current);
                         models.AddRange(others);
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(objectResponse.Name),
+                            Name = getPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
-                    }
+                    }, primitiveList =>
+                    {
+                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                    }, objectList =>
+                    {
+                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                    });
                 }
 
                 var top = new ApiModelMetadata
