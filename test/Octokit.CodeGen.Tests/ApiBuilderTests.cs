@@ -63,37 +63,6 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("some-path", result.Client.InterfaceName);
         }
 
-        [Fact]
-        public async Task Build_ForPathReturningArrayResponse_GeneratesRequiredModel()
-        {
-            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
-
-            var paths = await PathProcessor.Process(stream);
-
-            apiBuilder.Register(Builders.AddResponseModels);
-            apiBuilder.Register(Builders.AddMethodForEachVerb);
-
-            var results = apiBuilder.Build(paths);
-            var result = Assert.Single(results);
-
-            Assert.Equal(2, result.Models.Count);
-
-            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
-            Assert.NotEmpty(commitComment.Properties);
-
-            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
-            Assert.NotEmpty(commitCommentUser.Properties);
-
-            // TODO: how should we handle the request model being found and rendered?
-
-            // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
-            // Assert.NotEmpty(commitComment.Properties);
-
-            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
-            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType.AsT1);
-            Assert.Equal("RepositoriesCommitComment", returnType.ListType);
-        }
-
         // TODO: how do we represent parameters that are required rather than optional?
         // TODO: what shall we do about pagination?
     }

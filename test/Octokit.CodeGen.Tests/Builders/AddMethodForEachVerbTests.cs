@@ -78,7 +78,6 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("string", getOrCreateParameter.Type);
         }
 
-
         [Fact]
         public async Task Build_ForPathReturningObjectResponse_GeneratesRequiredModel()
         {
@@ -116,6 +115,37 @@ namespace Octokit.CodeGen.Tests
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
             var returnType = Assert.IsType<TaskOfType>(get.ReturnType.AsT0);
             Assert.Equal("MarketplaceListingAccount", returnType.Type);
+        }
+
+        [Fact]
+        public async Task Build_ForPathReturningArrayResponse_GeneratesRequiredModel()
+        {
+            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
+
+            var paths = await PathProcessor.Process(stream);
+            var path = paths[0];
+
+            var data = new ApiClientFileMetadata();
+
+            data = Builders.AddResponseModels(path, data);
+            var result = Builders.AddMethodForEachVerb(path, data);
+
+            Assert.Equal(2, result.Models.Count);
+
+            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
+            Assert.NotEmpty(commitComment.Properties);
+
+            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
+            Assert.NotEmpty(commitCommentUser.Properties);
+
+            // TODO: how should we handle the request model being found and rendered?
+
+            // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
+            // Assert.NotEmpty(commitComment.Properties);
+
+            var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
+            var returnType = Assert.IsType<TaskOfListType>(get.ReturnType.AsT1);
+            Assert.Equal("RepositoriesCommitComment", returnType.ListType);
         }
     }
 }
