@@ -66,24 +66,6 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Build_WillUseAliasForNames_InTypesAndFileName()
-        {
-            var stream = TestFixtureLoader.LoadTopicsRoute();
-
-            var paths = await PathProcessor.Process(stream);
-
-            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
-
-            var results = apiBuilder.Build(paths);
-            var result = Assert.Single(results);
-
-            Assert.Equal("RepositoriesTopicsClient", result.Client.ClassName);
-            Assert.Equal("IRepositoriesTopicsClient", result.Client.InterfaceName);
-            var expectedPath = Path.Join("Octokit", "Clients", "RepositoriesTopicsClient.cs");
-            Assert.Equal(expectedPath, result.FileName);
-        }
-
-        [Fact]
         public void Build_WillAddMethod_RepresentingGet()
         {
             var metadata = new List<PathMetadata>
