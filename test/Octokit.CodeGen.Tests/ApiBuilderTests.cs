@@ -225,10 +225,10 @@ namespace Octokit.CodeGen.Tests
             //       can we merge them into a single `Plan` type?
 
             var purchasePlan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePurchasePlan"));
-            Assert.NotEmpty(purchasePlan.Properties);
+            Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
 
             var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
-            Assert.NotEmpty(plan.Properties);
+            Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
 
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
             var returnType = Assert.IsType<TaskOfType>(get.ReturnType.AsT0);

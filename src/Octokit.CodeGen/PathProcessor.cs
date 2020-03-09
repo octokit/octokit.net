@@ -80,7 +80,6 @@ namespace Octokit.CodeGen
                         }
                         else if (itemsType == "string")
                         {
-                            Console.WriteLine($"add property to list for {propertyName} as it is an array of type {itemsType}");
                             objectProperty.Properties.Add(new ListOfPrimitiveTypeProperty(propertyName, itemsType));
                         }
                         else

@@ -120,10 +120,14 @@ namespace Octokit.CodeGen
                         });
                     }, primitiveList =>
                    {
-                       Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                       properties.Add(new ApiModelProperty
+                       {
+                           Name = getPropertyName(primitiveList.Name),
+                           Type = "IReadOnlyList<string>",
+                       });
                    }, objectList =>
                    {
-                       Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                       throw new NotImplementedException($"AddResponseModels.parseInnerModel needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
                    });
                 }
 
@@ -165,10 +169,10 @@ namespace Octokit.CodeGen
                         });
                     }, primitiveList =>
                     {
-                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                        throw new NotImplementedException($"AddResponseModels.parseArrayResponseToModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
                     }, objectList =>
                     {
-                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                        throw new NotImplementedException($"AddResponseModels.parseArrayResponseToModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
                     });
                 }
 
@@ -214,10 +218,10 @@ namespace Octokit.CodeGen
                         });
                     }, primitiveList =>
                     {
-                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
+                        throw new NotImplementedException($"AddResponseModels.parseObjectResponseToModels needs to process object lists for the property {primitiveList.Name} and type {primitiveList.Type}");
                     }, objectList =>
                     {
-                        Console.WriteLine($"TODO: AddResponseModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
+                        throw new NotImplementedException($"AddResponseModels.parseObjectResponseToModels needs to process object lists for the property {objectList.Name} and type {objectList.Type}");
                     });
                 }
 
