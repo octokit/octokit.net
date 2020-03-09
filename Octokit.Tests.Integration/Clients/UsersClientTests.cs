@@ -98,4 +98,17 @@ public class UsersClientTests
             Assert.Equal(HttpStatusCode.Unauthorized, e.StatusCode);
         }
     }
+
+    public class TheGetAllMethod
+    {
+        [IntegrationTest]
+        public async Task ReturnsListOfdUsers()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var users = await github.User.GetAll("1");
+
+            Assert.Equal(30, users.Count);
+        }
+    }
 }
