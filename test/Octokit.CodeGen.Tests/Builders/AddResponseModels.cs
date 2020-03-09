@@ -45,5 +45,32 @@ namespace Octokit.CodeGen.Tests
             var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
             Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
         }
+
+
+        [Fact]
+        public async Task PathReturningArrayResponse_GeneratesRequiredModels()
+        {
+            var stream = TestFixtureLoader.LoadPathWithGetAndPost();
+
+            var paths = await PathProcessor.Process(stream);
+            var path = paths[0];
+
+            var data = new ApiClientFileMetadata();
+
+            var result = Builders.AddResponseModels(path, data);
+
+            Assert.Equal(2, result.Models.Count);
+
+            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
+            Assert.NotEmpty(commitComment.Properties);
+
+            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
+            Assert.NotEmpty(commitCommentUser.Properties);
+
+            // TODO: how should we handle the request model being found and rendered?
+
+            // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
+            // Assert.NotEmpty(commitComment.Properties);
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Build_ForPathWithMultipleMethods_GeneratesResultingClient()
+        public async Task ForPathWithMultipleMethods_ClientHasMultipleMethods()
         {
             var stream = TestFixtureLoader.LoadPathWithGetPutAndDelete();
 
@@ -100,7 +100,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Build_ForPathReturningArrayResponse_GeneratesRequiredModel()
+        public async Task ForPathReturningArrayResponse_ReturnTypeIsExpectedModel()
         {
             var stream = TestFixtureLoader.LoadPathWithGetAndPost();
 
@@ -111,19 +111,6 @@ namespace Octokit.CodeGen.Tests
 
             data = Builders.AddResponseModels(path, data);
             var result = Builders.AddMethodForEachVerb(path, data);
-
-            Assert.Equal(2, result.Models.Count);
-
-            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
-            Assert.NotEmpty(commitComment.Properties);
-
-            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
-            Assert.NotEmpty(commitCommentUser.Properties);
-
-            // TODO: how should we handle the request model being found and rendered?
-
-            // var commitCommentRequest = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitCommentRequest"));
-            // Assert.NotEmpty(commitComment.Properties);
 
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
             var returnType = Assert.IsType<TaskOfListType>(get.ReturnType.AsT1);
