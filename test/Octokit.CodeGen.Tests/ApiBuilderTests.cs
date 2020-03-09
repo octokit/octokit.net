@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Octokit.CodeGen.Tests
@@ -62,8 +60,5 @@ namespace Octokit.CodeGen.Tests
 
             Assert.Equal("some-path", result.Client.InterfaceName);
         }
-
-        // TODO: how do we represent parameters that are required rather than optional?
-        // TODO: what shall we do about pagination?
     }
 }

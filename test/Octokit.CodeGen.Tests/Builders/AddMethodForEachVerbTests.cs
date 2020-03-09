@@ -6,6 +6,9 @@ using Xunit;
 
 namespace Octokit.CodeGen.Tests
 {
+    // TODO: how do we represent parameters that are required rather than optional?
+    // TODO: what shall we do about calls where pagination is available?
+
     public class AddMethodForEachVerbTests
     {
         [Fact]
