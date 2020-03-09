@@ -9,6 +9,9 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Octokit.CodeGen.Tests
 {
+    // TODO: tests for implementing the method body for each call
+    // TODO: tests for rendering documentation for the interface (and inherit-doc for the implementation)
+
     public class RoslynGeneratorTests
     {
         [Fact]
