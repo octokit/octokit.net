@@ -38,7 +38,6 @@ namespace Octokit.CodeGen
         }
     }
 
-    /// <summary>This class
     public class ApiClientFileMetadata
     {
         public ApiClientFileMetadata()
