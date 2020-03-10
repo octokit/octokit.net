@@ -46,6 +46,7 @@ namespace Octokit.CodeGen.Tests
             var parameter = Assert.Single(method.Parameters);
 
             Assert.Equal("accountId", parameter.Name);
+            Assert.Equal("account_id", parameter.Replaces);
             Assert.Equal("number", parameter.Type);
         }
 
@@ -65,6 +66,7 @@ namespace Octokit.CodeGen.Tests
             var get = Assert.Single(result.Client.Methods.Where(m => m.Name == "Get"));
             var getParameter = Assert.Single(get.Parameters);
             Assert.Equal("username", getParameter.Name);
+            Assert.Equal("username", getParameter.Replaces);
             Assert.Equal("string", getParameter.Type);
 
             var returnType = Assert.IsType<TaskOfType>(get.ReturnType.AsT0);
@@ -73,11 +75,13 @@ namespace Octokit.CodeGen.Tests
             var delete = Assert.Single(result.Client.Methods.Where(m => m.Name == "Delete"));
             var deleteParameter = Assert.Single(delete.Parameters);
             Assert.Equal("username", deleteParameter.Name);
+            Assert.Equal("username", getParameter.Replaces);
             Assert.Equal("string", deleteParameter.Type);
 
             var getOrCreate = Assert.Single(result.Client.Methods.Where(m => m.Name == "GetOrCreate"));
             var getOrCreateParameter = Assert.Single(getOrCreate.Parameters);
             Assert.Equal("username", getOrCreateParameter.Name);
+            Assert.Equal("username", getParameter.Replaces);
             Assert.Equal("string", getOrCreateParameter.Type);
         }
 

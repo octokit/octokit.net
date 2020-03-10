@@ -133,6 +133,7 @@ namespace Octokit.CodeGen
     public class ApiParameterMetadata
     {
         public string Name { get; set; }
+        public string Replaces { get; set; }
         public string Type { get; set; }
     }
 

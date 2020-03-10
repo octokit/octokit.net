@@ -55,6 +55,7 @@ namespace Octokit.CodeGen
                 list.Add(new ApiParameterMetadata
                 {
                     Name = parameterName,
+                    Replaces = parameter.Name,
                     Type = parameter.Type
                 });
             }
