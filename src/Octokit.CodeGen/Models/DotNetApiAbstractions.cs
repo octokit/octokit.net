@@ -19,11 +19,13 @@ namespace Octokit.CodeGen
         {
             Client = new ApiClientMetadata();
             ResponseModels = new List<ApiResponseModelMetadata>();
+            RequestModels = new List<ApiResponseModelMetadata>();
         }
 
         public string FileName { get; set; }
         public ApiClientMetadata Client { get; set; }
         public List<ApiResponseModelMetadata> ResponseModels { get; set; }
+        public List<ApiResponseModelMetadata> RequestModels { get; set; }
     }
 
     public class ApiClientMetadata

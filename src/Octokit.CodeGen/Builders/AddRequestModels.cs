@@ -67,10 +67,10 @@ namespace Octokit.CodeGen
 
                   });
 
-                data.ResponseModels.Add(model);
+                data.RequestModels.Add(model);
             }
 
-            data.ResponseModels = data.ResponseModels.Distinct(ApiModelCompararer.Default).ToList();
+            data.RequestModels = data.RequestModels.Distinct(ApiModelCompararer.Default).ToList();
 
             return data;
         };
