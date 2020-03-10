@@ -15,7 +15,7 @@ namespace Octokit.CodeGen.Tests
     public class RoslynGeneratorTests
     {
         [Fact]
-        public void CanGenerateAStubCodeFileFromSomeModel()
+        public void GenerateSourceNode_WithStubDefinition_DefinesEmptyInterfaceAndClass()
         {
             var stub = new ApiClientFileMetadata
             {
@@ -39,7 +39,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void GenerateSourceFile_AddsMethod_ToInterfaceAndImplementation()
+        public void GenerateSourceNode_AddsMethod_ToInterfaceAndImplementation()
         {
             var stub = new ApiClientFileMetadata
             {
@@ -68,7 +68,6 @@ namespace Octokit.CodeGen.Tests
                     }
                   }
                 },
-
             };
 
             var expectedReturnType = GetListReturnType("SomeResponseType");
@@ -98,7 +97,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public void GenerateSourceFile_UsesSourceMetadata_ToAddAttributes()
+        public void GenerateSourceNode_UsesSourceMetadata_ToAddAttributes()
         {
             var stub = new ApiClientFileMetadata
             {
