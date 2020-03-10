@@ -4,16 +4,16 @@ using OneOf;
 namespace Octokit.CodeGen
 {
 
-  // this file contains the stripped-back representations of the OpenAPI
-  // schema for use in this project
+    // this file contains the stripped-back representations of the OpenAPI
+    // schema for use in this project
 
-  using RequestProperty = OneOf<PrimitiveRequestProperty,
-                                ArrayRequestProperty,
-                                ObjectRequestProperty,
-                                StringEnumRequestProperty>;
+    using RequestProperty = OneOf<PrimitiveRequestProperty,
+                                  ArrayRequestProperty,
+                                  ObjectRequestProperty,
+                                  StringEnumRequestProperty>;
 
 
-  public class ObjectRequestContent
+    public class ObjectRequestContent
     {
         public ObjectRequestContent()
         {

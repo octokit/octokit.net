@@ -9,88 +9,18 @@ namespace Octokit.CodeGen
 
     public partial class Builders
     {
+
         public static readonly TypeBuilderFunc AddResponseModels = (metadata, data) =>
         {
-            bool isPlaceHolder(string str)
-            {
-                return str.StartsWith("{") && str.EndsWith("}");
-            }
 
-            string singularize(string str)
-            {
-                if (str.Length < 3)
-                {
-                    return str;
-                }
 
-                if (str.EndsWith("ies"))
-                {
-                    return str;
-                }
-
-                if (str[^1] == 's' && str[^2] != 's')
-                {
-                    return str.Substring(0, str.Length - 1);
-                }
-
-                return str;
-            }
-
-            string convertToPascalCase(string s, bool ensureSingular = false)
-            {
-                if (translations.ContainsKey(s))
-                {
-                    s = translations[s];
-                }
-
-                if (s.Length < 2)
-                {
-                    return ensureSingular ? singularize(s) : s;
-                }
-                else
-                {
-                    var newString = Char.ToUpper(s[0]) + s.Substring(1);
-                    return ensureSingular ? singularize(newString) : newString;
-                }
-            }
-
-            string getPropertyName(string name, bool ensureSingular = false)
-            {
-                var segments = name.Replace("_", " ").Replace("-", " ").Split(" ");
-                var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, ensureSingular));
-                return string.Join("", pascalCaseSegments);
-            }
-
-            string getClassName(PathMetadata metadata)
-            {
-                var className = "";
-                var tokens = metadata.Path.Split("/");
-                foreach (var token in tokens)
-                {
-                    if (token.Length == 0)
-                    {
-                        continue;
-                    }
-
-                    if (isPlaceHolder(token))
-                    {
-                        continue;
-                    }
-
-                    var segments = token.Replace("_", " ").Replace("-", " ").Split(" ");
-                    var pascalCaseSegments = segments.Select(s => convertToPascalCase(s, true));
-                    className += string.Join("", pascalCaseSegments);
-                }
-
-                return className;
-            }
 
             // first parameter of return type is the current model (needed for assigning to property)
             // second parameter is any additional models that were deserialized
             (ApiModelMetadata, List<ApiModelMetadata>) parseInnerModel(ObjectResponseProperty objectProperty, string classPrefix)
             {
                 var additionalModels = new List<ApiModelMetadata>();
-                var additionalName = getPropertyName(objectProperty.Name, true);
+                var additionalName = GetPropertyName(objectProperty.Name, true);
 
                 // TODO: what if we just skip the prefix here? how far can we
                 // get without needing to worry about clashes and denormalizing
@@ -105,7 +35,7 @@ namespace Octokit.CodeGen
                     {
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(primitiveProperty.Name),
+                            Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
                     }, objectResponse =>
@@ -115,14 +45,14 @@ namespace Octokit.CodeGen
                         additionalModels.AddRange(others);
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(objectResponse.Name),
+                            Name = GetPropertyName(objectResponse.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                    {
                        properties.Add(new ApiModelProperty
                        {
-                           Name = getPropertyName(primitiveList.Name),
+                           Name = GetPropertyName(primitiveList.Name),
                            Type = "IReadOnlyList<string>",
                        });
                    }, objectList =>
@@ -145,7 +75,7 @@ namespace Octokit.CodeGen
             {
                 var models = new List<ApiModelMetadata>();
 
-                var classNamePrefix = getClassName(metadata);
+                var classNamePrefix = GetClassName(metadata);
                 var properties = new List<ApiModelProperty>();
 
                 foreach (var property in arrayContent.ItemProperties)
@@ -154,7 +84,7 @@ namespace Octokit.CodeGen
                     {
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(primitiveProperty.Name),
+                            Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
                     }, objectProperty =>
@@ -164,14 +94,14 @@ namespace Octokit.CodeGen
                         models.AddRange(others);
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(objectProperty.Name),
+                            Name = GetPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                     {
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(primitiveList.Name),
+                            Name = GetPropertyName(primitiveList.Name),
                             Type = "IReadOnlyList<string>",
                         });
                     }, objectList =>
@@ -198,7 +128,7 @@ namespace Octokit.CodeGen
             {
                 var models = new List<ApiModelMetadata>();
 
-                var classNamePrefix = getClassName(metadata);
+                var classNamePrefix = GetClassName(metadata);
                 var properties = new List<ApiModelProperty>();
 
                 foreach (var property in objectContent.Properties)
@@ -207,7 +137,7 @@ namespace Octokit.CodeGen
                     {
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(primitiveProperty.Name),
+                            Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
                         });
                     }, objectProperty =>
@@ -217,14 +147,14 @@ namespace Octokit.CodeGen
                         models.AddRange(others);
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(objectProperty.Name),
+                            Name = GetPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                     {
                         properties.Add(new ApiModelProperty
                         {
-                            Name = getPropertyName(primitiveList.Name),
+                            Name = GetPropertyName(primitiveList.Name),
                             Type = "IReadOnlyList<string>",
                         });
                     }, objectList =>
