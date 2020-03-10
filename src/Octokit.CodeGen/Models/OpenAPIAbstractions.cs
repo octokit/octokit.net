@@ -1,45 +1,40 @@
 using System.Collections.Generic;
+using OneOf;
 
 namespace Octokit.CodeGen
 {
-    // this file contains the stripped-back representations of the OpenAPI
-    // schema for use in this project
+
+  // this file contains the stripped-back representations of the OpenAPI
+  // schema for use in this project
+
+  using RequestProperty = OneOf<PrimitiveRequestProperty,
+                                ArrayRequestProperty,
+                                ObjectRequestProperty,
+                                StringEnumRequestProperty>;
 
 
-    public interface IRequestContent
-    {
-        string Type { get; }
-    }
-
-    public class ObjectRequestContent : IRequestContent
+  public class ObjectRequestContent
     {
         public ObjectRequestContent()
         {
-            Properties = new List<IRequestProperty>();
+            Properties = new List<RequestProperty>();
         }
         public string Type { get { return "object"; } }
-        public List<IRequestProperty> Properties { get; set; }
+        public List<RequestProperty> Properties { get; set; }
     }
 
-    public class StringRequestContent : IRequestContent
+    public class StringRequestContent
     {
         public string Type { get { return "string"; } }
     }
 
-    public class StringArrayRequestContent : IRequestContent
+    public class StringArrayRequestContent
     {
         public string Type { get { return "array"; } }
         public string ArrayType { get { return "string"; } }
     }
 
-    public interface IRequestProperty
-    {
-        string Type { get; }
-        string Name { get; }
-        bool Required { get; }
-    }
-
-    public class PrimitiveRequestProperty : IRequestProperty
+    public class PrimitiveRequestProperty
     {
         public PrimitiveRequestProperty(string name, string type, bool required)
         {
@@ -53,7 +48,7 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class ArrayRequestProperty : IRequestProperty
+    public class ArrayRequestProperty
     {
         public ArrayRequestProperty(string name, string arrayType, bool required)
         {
@@ -67,20 +62,20 @@ namespace Octokit.CodeGen
         public bool Required { get; private set; }
     }
 
-    public class ObjectRequestProperty : IRequestProperty
+    public class ObjectRequestProperty
     {
         public ObjectRequestProperty(string name)
         {
             Name = name;
-            Properties = new List<IRequestProperty>();
+            Properties = new List<RequestProperty>();
         }
         public string Name { get; private set; }
         public bool Required { get; set; }
-        public List<IRequestProperty> Properties { get; private set; }
+        public List<RequestProperty> Properties { get; private set; }
         public string Type { get { return "object"; } }
     }
 
-    public class StringEnumRequestProperty : IRequestProperty
+    public class StringEnumRequestProperty
     {
         public StringEnumRequestProperty(string name, bool required)
         {

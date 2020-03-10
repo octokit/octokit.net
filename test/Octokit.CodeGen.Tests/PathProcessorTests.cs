@@ -12,6 +12,12 @@ namespace Octokit.CodeGen.Tests
                                    ListOfPrimitiveTypeProperty,
                                    ListOfObjectsProperty>;
 
+    using RequestProperty = OneOf<PrimitiveRequestProperty,
+                                  ArrayRequestProperty,
+                                  ObjectRequestProperty,
+                                  StringEnumRequestProperty>;
+
+
     public class PathProcessorTests
     {
         [Fact]
@@ -129,16 +135,15 @@ namespace Octokit.CodeGen.Tests
             Assert.NotNull(post.RequestBody);
 
             Assert.Equal("application/json", post.RequestBody.ContentType);
-            Assert.Equal("object", post.RequestBody.Content.Type);
+            var requestContent = post.RequestBody.Content.AsT0;
+            Assert.Equal("object", requestContent.Type);
 
-            var requestContent = Assert.IsType<ObjectRequestContent>(post.RequestBody.Content);
-
-            Assert.Single(requestContent.Properties.Where(p => p.Name == "body" && p.Type == "string" && p.Required));
-            Assert.Single(requestContent.Properties.Where(p => p.Name == "path" && p.Type == "string" && !p.Required));
-            Assert.Single(requestContent.Properties.Where(p => p.Name == "position" && p.Type == "integer" && !p.Required));
+            Assert.Single(requestContent.Properties.PrimitiveProperties().Where(p => p.Name == "body" && p.Type == "string" && p.Required));
+            Assert.Single(requestContent.Properties.PrimitiveProperties().Where(p => p.Name == "path" && p.Type == "string" && !p.Required));
+            Assert.Single(requestContent.Properties.PrimitiveProperties().Where(p => p.Name == "position" && p.Type == "integer" && !p.Required));
 
             // TODO: this parameter is deprecated in the schema - we should not make it available to callers
-            Assert.Single(requestContent.Properties.Where(p => p.Name == "line" && p.Type == "integer"));
+            Assert.Single(requestContent.Properties.PrimitiveProperties().Where(p => p.Name == "line" && p.Type == "integer"));
 
             // TODO: we need to surface which parameters are required here, and
             //       repurposing the response parser means we don't have that
@@ -273,10 +278,10 @@ namespace Octokit.CodeGen.Tests
 
             var post = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Post));
 
-            var requestBody = Assert.IsType<ObjectRequestContent>(post.RequestBody.Content);
-            Assert.Single(requestBody.Properties.Where(p => p.Name == "name" && p.Type == "string" && p.Required));
+            var requestBody = post.RequestBody.Content.AsT0;
+            Assert.Single(requestBody.Properties.PrimitiveProperties().Where(p => p.Name == "name" && p.Type == "string" && p.Required));
 
-            var visibility = Assert.Single(requestBody.Properties.Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required).OfType<StringEnumRequestProperty>());
+            var visibility = Assert.Single(requestBody.Properties.StringEnumRequestProperties().Where(p => p.Name == "visibility" && p.Type == "string" && !p.Required));
 
             Assert.Contains("public", visibility.Values);
             Assert.Contains("private", visibility.Values);
@@ -295,8 +300,8 @@ namespace Octokit.CodeGen.Tests
 
             var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Put));
 
-            var objectContent = Assert.IsType<ObjectRequestContent>(get.RequestBody.Content);
-            var property = Assert.Single(objectContent.Properties);
+            var objectContent = get.RequestBody.Content.AsT0;
+            var property = Assert.Single(objectContent.Properties.ArrayRequestProperties());
 
             Assert.Equal("names", property.Name);
             Assert.Equal("array", property.Type);
@@ -315,6 +320,27 @@ namespace Octokit.CodeGen.Tests
         public static IEnumerable<ObjectResponseProperty> ObjectProperties(this List<ResponseProperty> properties)
         {
             return properties.Where(p => p.IsT1).Select(p => p.AsT1);
+        }
+
+        public static IEnumerable<PrimitiveRequestProperty> PrimitiveProperties(this List<RequestProperty> properties)
+        {
+            return properties.Where(p => p.IsT0).Select(p => p.AsT0);
+        }
+
+        public static IEnumerable<ArrayRequestProperty> ArrayRequestProperties(this List<RequestProperty> properties)
+        {
+            return properties.Where(p => p.IsT1).Select(p => p.AsT1);
+        }
+
+        public static IEnumerable<ObjectRequestProperty> ObjectRequestProperties(this List<RequestProperty> properties)
+        {
+            return properties.Where(p => p.IsT2).Select(p => p.AsT2);
+        }
+
+
+        public static IEnumerable<StringEnumRequestProperty> StringEnumRequestProperties(this List<RequestProperty> properties)
+        {
+            return properties.Where(p => p.IsT3).Select(p => p.AsT3);
         }
     }
 

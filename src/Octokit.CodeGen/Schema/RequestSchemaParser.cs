@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OneOf;
 
 namespace Octokit.CodeGen
 {
+    using RequestContent = OneOf<ObjectRequestContent,
+                                 StringRequestContent,
+                                 StringArrayRequestContent>;
+
     public static class RequestSchemaParser
     {
-        public static IRequestContent Parse(string type, JsonElement schema)
+        public static RequestContent Parse(string type, JsonElement schema)
         {
             if (type == "object")
             {
@@ -22,8 +27,7 @@ namespace Octokit.CodeGen
             }
             else
             {
-                Console.WriteLine($"WARN: RequestSchemaParser.Process encountered request body type '{type}' which it doesn't understand.");
-                return null;
+                throw new NotImplementedException($"WARN: RequestSchemaParser.Process encountered request body type '{type}' which it doesn't understand.");
             }
         }
 
@@ -112,7 +116,7 @@ namespace Octokit.CodeGen
             return requestObject;
         }
 
-        private static IRequestProperty ParseAsRequestObject(string name, JsonElement properties)
+        private static ObjectRequestProperty ParseAsRequestObject(string name, JsonElement properties)
         {
             var objectProperty = new ObjectRequestProperty(name);
 

@@ -8,10 +8,23 @@ using OneOf;
 
 namespace Octokit.CodeGen
 {
+    using ResponseContent = OneOf<ObjectResponseContent,
+                                  ArrayResponseContent>;
+
+    using RequestContent = OneOf<ObjectRequestContent,
+                                 StringRequestContent,
+                                 StringArrayRequestContent>;
+
     using ResponseProperty = OneOf<PrimitiveResponseProperty,
                                    ObjectResponseProperty,
                                    ListOfPrimitiveTypeProperty,
                                    ListOfObjectsProperty>;
+
+    using RequestProperty = OneOf<PrimitiveRequestProperty,
+                                  ArrayRequestProperty,
+                                  ObjectRequestProperty,
+                                  StringEnumRequestProperty>;
+
 
     public class PathProcessor
     {
@@ -433,13 +446,13 @@ namespace Octokit.CodeGen
     {
         public string StatusCode { get; set; }
         public string ContentType { get; set; }
-        public OneOf<ObjectResponseContent, ArrayResponseContent> Content { get; set; }
+        public ResponseContent Content { get; set; }
     }
 
     public class Request
     {
         public string ContentType { get; set; }
-        public IRequestContent Content { get; set; }
+        public RequestContent Content { get; set; }
     }
 
     public class PrimitiveResponseProperty
