@@ -49,20 +49,26 @@ namespace Octokit.CodeGen.Tests
                     InterfaceName = "ISomeSortOfClient",
                     ClassName = "SomeSortOfClient",
                     Methods = new List<ApiMethodMetadata>
-                {
-                  new ApiMethodMetadata{
-                    Name = "GetAll",
-                    Parameters = new List<ApiParameterMetadata>
-                    {
-                      new ApiParameterMetadata{
-                        Name = "userId",
-                        Type = "number",
+                  {
+                    new ApiMethodMetadata{
+                      Name = "GetAll",
+                      Parameters = new List<ApiParameterMetadata>
+                      {
+                        new ApiParameterMetadata{
+                          Name = "userId",
+                          Type = "number",
+                        }
+                      },
+                      ReturnType = new TaskOfListType("SomeResponseType"),
+                      SourceMetadata = new SourceRouteMetadata
+                      {
+                        Path ="/some/sort/of/endpoint",
+                        Verb = "GET"
                       }
-                    },
-                    ReturnType = new TaskOfListType("SomeResponseType")
+                    }
                   }
-                }
-                }
+                },
+
             };
 
             var expectedReturnType = GetListReturnType("SomeResponseType");
