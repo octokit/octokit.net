@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,7 +9,6 @@ namespace Octokit.CodeGen.Tests
 
     public class AddResponseModelsTests
     {
-
         [Fact]
         public async Task PathReturningObjectResponse_PopulatesRequiredModels()
         {
@@ -45,7 +42,6 @@ namespace Octokit.CodeGen.Tests
             var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
             Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
         }
-
 
         [Fact]
         public async Task PathReturningArrayResponse_GeneratesRequiredModels()

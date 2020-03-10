@@ -253,8 +253,8 @@ namespace Octokit.CodeGen.Tests
 
             var identifierNames = interpolatedString.DescendantNodes().OfType<IdentifierNameSyntax>();
             Assert.Equal(2, identifierNames.Count());
-            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "org"));
-            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "migrationId"));
+            Assert.Single(identifierNames.Where(i => i.Identifier.Text == "org"));
+            Assert.Single(identifierNames.Where(i => i.Identifier.Text == "migrationId"));
         }
 
         [Fact]
@@ -319,8 +319,8 @@ namespace Octokit.CodeGen.Tests
 
             var identifierNames = interpolatedString.DescendantNodes().OfType<IdentifierNameSyntax>();
             Assert.Equal(2, identifierNames.Count());
-            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "owner"));
-            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "name"));
+            Assert.Single(identifierNames.Where(i => i.Identifier.Text == "owner"));
+            Assert.Single(identifierNames.Where(i => i.Identifier.Text == "name"));
         }
 
         [Fact]
