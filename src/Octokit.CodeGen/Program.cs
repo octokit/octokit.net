@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -15,6 +15,7 @@ namespace Octokit.CodeGen
 
             var apiBuilder = new ApiBuilder();
             apiBuilder.Register(Builders.AddTypeNamesAndFileName);
+            apiBuilder.Register(Builders.AddRequestModels);
             apiBuilder.Register(Builders.AddResponseModels);
             apiBuilder.Register(Builders.AddMethodForEachVerb);
 
