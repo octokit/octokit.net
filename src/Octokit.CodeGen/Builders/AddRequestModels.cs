@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Octokit.CodeGen
 {
     using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
@@ -6,6 +8,17 @@ namespace Octokit.CodeGen
     {
         public static readonly TypeBuilderFunc AddRequestModels = (metadata, data) =>
         {
+
+            foreach (var verb in metadata.Verbs)
+            {
+                if (verb.RequestBody == null)
+                {
+                    continue;
+                }
+            }
+
+            data.Models = data.Models.Distinct(ApiModelCompararer.Default).ToList();
+
             return data;
         };
     }
