@@ -3,7 +3,6 @@ using OneOf;
 
 namespace Octokit.CodeGen
 {
-
     // this file contains the stripped-back representations of the OpenAPI
     // schema for use in this project
 
