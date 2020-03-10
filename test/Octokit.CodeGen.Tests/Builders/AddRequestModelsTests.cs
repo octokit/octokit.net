@@ -18,7 +18,7 @@ namespace Octokit.CodeGen
 
             var result = Builders.AddRequestModels(path, data);
 
-            var request = Assert.Single(result.Models);
+            var request = Assert.Single(result.ResponseModels);
 
             Assert.Equal("RepositoriesTopicRequest", request.Name);
             var property = Assert.Single(request.Properties);
@@ -38,7 +38,7 @@ namespace Octokit.CodeGen
 
             var result = Builders.AddRequestModels(path, data);
 
-            var request = Assert.Single(result.Models);
+            var request = Assert.Single(result.ResponseModels);
 
             Assert.Equal("RepositoriesCommitCommentRequest", request.Name);
             Assert.Equal(4, request.Properties.Count);

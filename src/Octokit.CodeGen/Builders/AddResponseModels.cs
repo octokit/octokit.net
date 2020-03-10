@@ -17,9 +17,9 @@ namespace Octokit.CodeGen
 
             // first parameter of return type is the current model (needed for assigning to property)
             // second parameter is any additional models that were deserialized
-            (ApiModelMetadata, List<ApiModelMetadata>) parseInnerModel(ObjectResponseProperty objectProperty, string classPrefix)
+            (ApiResponseModelMetadata, List<ApiResponseModelMetadata>) parseInnerModel(ObjectResponseProperty objectProperty, string classPrefix)
             {
-                var additionalModels = new List<ApiModelMetadata>();
+                var additionalModels = new List<ApiResponseModelMetadata>();
                 var additionalName = GetPropertyName(objectProperty.Name, true);
 
                 // TODO: what if we just skip the prefix here? how far can we
@@ -61,7 +61,7 @@ namespace Octokit.CodeGen
                    });
                 }
 
-                var top = new ApiModelMetadata
+                var top = new ApiResponseModelMetadata
                 {
                     Kind = "response",
                     Name = classNamePrefix,
@@ -71,9 +71,9 @@ namespace Octokit.CodeGen
                 return (top, additionalModels);
             }
 
-            List<ApiModelMetadata> parseArrayResponseToModels(ArrayResponseContent arrayContent, HttpMethod method, string statusCode)
+            List<ApiResponseModelMetadata> parseArrayResponseToModels(ArrayResponseContent arrayContent, HttpMethod method, string statusCode)
             {
-                var models = new List<ApiModelMetadata>();
+                var models = new List<ApiResponseModelMetadata>();
 
                 var classNamePrefix = GetClassName(metadata);
                 var properties = new List<ApiModelProperty>();
@@ -110,7 +110,7 @@ namespace Octokit.CodeGen
                     });
                 }
 
-                var top = new ApiModelMetadata
+                var top = new ApiResponseModelMetadata
                 {
                     Kind = "response",
                     Name = classNamePrefix,
@@ -124,9 +124,9 @@ namespace Octokit.CodeGen
                 return models;
             }
 
-            List<ApiModelMetadata> parseObjectResponseToModels(ObjectResponseContent objectContent, HttpMethod method, string statusCode)
+            List<ApiResponseModelMetadata> parseObjectResponseToModels(ObjectResponseContent objectContent, HttpMethod method, string statusCode)
             {
-                var models = new List<ApiModelMetadata>();
+                var models = new List<ApiResponseModelMetadata>();
 
                 var classNamePrefix = GetClassName(metadata);
                 var properties = new List<ApiModelProperty>();
@@ -163,7 +163,7 @@ namespace Octokit.CodeGen
                     });
                 }
 
-                var top = new ApiModelMetadata
+                var top = new ApiResponseModelMetadata
                 {
                     Kind = "response",
                     Name = classNamePrefix,
@@ -185,17 +185,17 @@ namespace Octokit.CodeGen
                     {
                         response.Content.Switch(objectResponse =>
                         {
-                            data.Models.AddRange(parseObjectResponseToModels(objectResponse, verb.Method, response.StatusCode));
+                            data.ResponseModels.AddRange(parseObjectResponseToModels(objectResponse, verb.Method, response.StatusCode));
                         },
                         arrayResponse =>
                         {
-                            data.Models.AddRange(parseArrayResponseToModels(arrayResponse, verb.Method, response.StatusCode));
+                            data.ResponseModels.AddRange(parseArrayResponseToModels(arrayResponse, verb.Method, response.StatusCode));
                         });
                     }
                 }
             }
 
-            data.Models = data.Models.Distinct(ApiModelCompararer.Default).ToList();
+            data.ResponseModels = data.ResponseModels.Distinct(ApiModelCompararer.Default).ToList();
 
             return data;
         };

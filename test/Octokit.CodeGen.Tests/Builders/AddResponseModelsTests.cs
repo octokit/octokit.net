@@ -21,25 +21,25 @@ namespace Octokit.CodeGen.Tests
 
             var result = Builders.AddResponseModels(path, data);
 
-            Assert.Equal(5, result.Models.Count);
+            Assert.Equal(5, result.ResponseModels.Count);
 
-            var account = Assert.Single(result.Models.Where(m => m.Name == "MarketplaceListingAccount"));
+            var account = Assert.Single(result.ResponseModels.Where(m => m.Name == "MarketplaceListingAccount"));
             Assert.Single(account.Properties.Where(p => p.Name == "MarketplacePendingChange" && p.Type == "MarketplacePendingChange"));
             Assert.Single(account.Properties.Where(p => p.Name == "MarketplacePurchase" && p.Type == "MarketplacePurchase"));
 
-            var pendingChange = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChange"));
+            var pendingChange = Assert.Single(result.ResponseModels.Where(m => m.Name == "MarketplacePendingChange"));
             Assert.Single(pendingChange.Properties.Where(p => p.Name == "Plan" && p.Type == "MarketplacePendingChangePlan"));
 
-            var purchase = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePurchase"));
+            var purchase = Assert.Single(result.ResponseModels.Where(m => m.Name == "MarketplacePurchase"));
             Assert.Single(purchase.Properties.Where(p => p.Name == "Plan" && p.Type == "MarketplacePurchasePlan"));
 
             // TODO: as these are structurally the same and scoped to the same client,
             //       can we merge them into a single `Plan` type?
 
-            var purchasePlan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePurchasePlan"));
+            var purchasePlan = Assert.Single(result.ResponseModels.Where(m => m.Name == "MarketplacePurchasePlan"));
             Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
 
-            var plan = Assert.Single(result.Models.Where(m => m.Name == "MarketplacePendingChangePlan"));
+            var plan = Assert.Single(result.ResponseModels.Where(m => m.Name == "MarketplacePendingChangePlan"));
             Assert.Single(purchasePlan.Properties.Where(p => p.Name == "Bullets" && p.Type == "IReadOnlyList<string>"));
         }
 
@@ -55,12 +55,12 @@ namespace Octokit.CodeGen.Tests
 
             var result = Builders.AddResponseModels(path, data);
 
-            Assert.Equal(2, result.Models.Count);
+            Assert.Equal(2, result.ResponseModels.Count);
 
-            var commitComment = Assert.Single(result.Models.Where(m => m.Name == "RepositoriesCommitComment"));
+            var commitComment = Assert.Single(result.ResponseModels.Where(m => m.Name == "RepositoriesCommitComment"));
             Assert.NotEmpty(commitComment.Properties);
 
-            var commitCommentUser = Assert.Single(result.Models.Where(m => m.Name == "User"));
+            var commitCommentUser = Assert.Single(result.ResponseModels.Where(m => m.Name == "User"));
             Assert.NotEmpty(commitCommentUser.Properties);
 
             // TODO: how should we handle the request model being found and rendered?

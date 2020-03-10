@@ -63,7 +63,7 @@ namespace Octokit.CodeGen
             return list;
         };
 
-        static readonly Func<VerbResult, List<ApiModelMetadata>, OneOf<TaskOfType, TaskOfListType, UnknownReturnType>> convertToReturnType = (verb, models) =>
+        static readonly Func<VerbResult, List<ApiResponseModelMetadata>, OneOf<TaskOfType, TaskOfListType, UnknownReturnType>> convertToReturnType = (verb, models) =>
         {
             if (verb.Responses.Any(r => r.StatusCode == "204") && verb.Responses.Any(r => r.StatusCode == "204"))
             {
@@ -113,7 +113,7 @@ namespace Octokit.CodeGen
                 {
                     Name = convertVerbToMethodName(verb),
                     Parameters = convertToParameters(verb),
-                    ReturnType = convertToReturnType(verb, data.Models),
+                    ReturnType = convertToReturnType(verb, data.ResponseModels),
                     SourceMetadata = new SourceRouteMetadata
                     {
                         Path = metadata.Path,

@@ -329,9 +329,9 @@ namespace Octokit.CodeGen.Tests
             var stub = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
-                Models = new List<ApiModelMetadata>
+                ResponseModels = new List<ApiResponseModelMetadata>
                 {
-                  new ApiModelMetadata
+                  new ApiResponseModelMetadata
                   {
                     Name = "SomeObject",
                     Kind = "response",

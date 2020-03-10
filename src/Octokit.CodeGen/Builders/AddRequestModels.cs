@@ -18,7 +18,7 @@ namespace Octokit.CodeGen
                 }
 
                 var classNamePrefix = GetClassName(metadata);
-                var model = new ApiModelMetadata
+                var model = new ApiResponseModelMetadata
                 {
                     Kind = "request",
                     Name = $"{classNamePrefix}Request",
@@ -67,10 +67,10 @@ namespace Octokit.CodeGen
 
                   });
 
-                data.Models.Add(model);
+                data.ResponseModels.Add(model);
             }
 
-            data.Models = data.Models.Distinct(ApiModelCompararer.Default).ToList();
+            data.ResponseModels = data.ResponseModels.Distinct(ApiModelCompararer.Default).ToList();
 
             return data;
         };

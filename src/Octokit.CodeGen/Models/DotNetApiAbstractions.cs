@@ -13,18 +13,17 @@ namespace Octokit.CodeGen
     // This represents the opinions about the shape of the API and how things
     // should come together.
 
-
     public class ApiClientFileMetadata
     {
         public ApiClientFileMetadata()
         {
             Client = new ApiClientMetadata();
-            Models = new List<ApiModelMetadata>();
+            ResponseModels = new List<ApiResponseModelMetadata>();
         }
 
         public string FileName { get; set; }
         public ApiClientMetadata Client { get; set; }
-        public List<ApiModelMetadata> Models { get; set; }
+        public List<ApiResponseModelMetadata> ResponseModels { get; set; }
     }
 
     public class ApiClientMetadata
@@ -38,9 +37,9 @@ namespace Octokit.CodeGen
         public List<ApiMethodMetadata> Methods { get; set; }
     }
 
-    public class ApiModelMetadata : IEquatable<ApiModelMetadata>
+    public class ApiResponseModelMetadata : IEquatable<ApiResponseModelMetadata>
     {
-        public ApiModelMetadata()
+        public ApiResponseModelMetadata()
         {
             Properties = new List<ApiModelProperty>();
         }
@@ -52,7 +51,7 @@ namespace Octokit.CodeGen
         public string StatusCode { get; set; }
         public List<ApiModelProperty> Properties { get; set; }
 
-        public bool Equals([AllowNull] ApiModelMetadata other)
+        public bool Equals([AllowNull] ApiResponseModelMetadata other)
         {
             if (Object.ReferenceEquals(other, null)) return false;
             if (Object.ReferenceEquals(this, other)) return true;
@@ -139,11 +138,11 @@ namespace Octokit.CodeGen
         public string Path { get; set; }
     }
 
-    public class ApiModelCompararer : IEqualityComparer<ApiModelMetadata>
+    public class ApiModelCompararer : IEqualityComparer<ApiResponseModelMetadata>
     {
         public static ApiModelCompararer Default => new ApiModelCompararer();
 
-        public bool Equals([AllowNull] ApiModelMetadata x, [AllowNull] ApiModelMetadata y)
+        public bool Equals([AllowNull] ApiResponseModelMetadata x, [AllowNull] ApiResponseModelMetadata y)
         {
             if (object.ReferenceEquals(x, y)) return true;
             if (object.ReferenceEquals(x, null) || object.ReferenceEquals(y, null)) return false;
@@ -151,7 +150,7 @@ namespace Octokit.CodeGen
             return x.Kind == y.Kind && x.Name == y.Name && ListEquatable.ScrambledEquals(x.Properties, y.Properties);
         }
 
-        public int GetHashCode([DisallowNull] ApiModelMetadata obj)
+        public int GetHashCode([DisallowNull] ApiResponseModelMetadata obj)
         {
             int hash = 13;
             hash = (hash * 7) + obj.Kind.GetHashCode();

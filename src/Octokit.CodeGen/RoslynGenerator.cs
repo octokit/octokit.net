@@ -327,7 +327,7 @@ namespace Octokit.CodeGen
             );
         }
 
-        private static ClassDeclarationSyntax WithModel(ApiModelMetadata modelMetadata)
+        private static ClassDeclarationSyntax WithModel(ApiResponseModelMetadata modelMetadata)
         {
             var properties = modelMetadata.Properties.Select(m =>
             {
@@ -446,9 +446,9 @@ namespace Octokit.CodeGen
         {
             var members = new List<MemberDeclarationSyntax>();
 
-            if (metadata.Models.Any())
+            if (metadata.ResponseModels.Any())
             {
-                members.AddRange(metadata.Models.Select(WithModel));
+                members.AddRange(metadata.ResponseModels.Select(WithModel));
             }
 
             if (metadata?.Client?.InterfaceName != null)
