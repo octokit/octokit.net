@@ -180,8 +180,10 @@ namespace Octokit.CodeGen.Tests
 
             var objectCreation = Assert.Single(classMethodNode.DescendantNodes().OfType<ObjectCreationExpressionSyntax>());
             var argumentList = Assert.Single(objectCreation.DescendantNodes().OfType<ArgumentListSyntax>());
+
             // because no parameters are found, we should not find any string interpolation
             Assert.Empty(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
+
             // but we should find a plain string inside the Uri constructor
             var literal = Assert.Single(argumentList.DescendantNodes().OfType<LiteralExpressionSyntax>());
             Assert.Equal(SyntaxKind.StringLiteralExpression, literal.Kind());
@@ -243,8 +245,16 @@ namespace Octokit.CodeGen.Tests
             // instead we need to find the string interpolation and walk it's descendants
             var interpolatedString = Assert.Single(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
 
-            // TODO: assert we have the expected state inside the interpolated string
-            Assert.False(true);
+            var textTokens = interpolatedString.DescendantNodes().OfType<InterpolatedStringTextSyntax>();
+            Assert.Equal(3, textTokens.Count());
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "orgs/"));
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "/migrations/"));
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "/repositories"));
+
+            var identifierNames = interpolatedString.DescendantNodes().OfType<IdentifierNameSyntax>();
+            Assert.Equal(2, identifierNames.Count());
+            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "org"));
+            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "migrationId"));
         }
 
         [Fact]
@@ -301,8 +311,16 @@ namespace Octokit.CodeGen.Tests
             // instead we need to find the string interpolation and walk it's descendants
             var interpolatedString = Assert.Single(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
 
-            // TODO: assert we have the expected state inside the interpolated string
-            Assert.False(true);
+            var textTokens = interpolatedString.DescendantNodes().OfType<InterpolatedStringTextSyntax>();
+            Assert.Equal(3, textTokens.Count());
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "repos/"));
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "/"));
+            Assert.Single(textTokens.Where(t => t.TextToken.ValueText == "/topics"));
+
+            var identifierNames = interpolatedString.DescendantNodes().OfType<IdentifierNameSyntax>();
+            Assert.Equal(2, identifierNames.Count());
+            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "owner"));
+            Assert.Single(identifierNames.Where(i =>i.Identifier.Text == "name"));
         }
 
         [Fact]
