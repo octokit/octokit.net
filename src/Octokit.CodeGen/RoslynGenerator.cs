@@ -126,29 +126,43 @@ namespace Octokit.CodeGen
 
             var stringInterpolationNodes = new List<InterpolatedStringContentSyntax>();
 
-            stringInterpolationNodes.Add(InterpolatedStringText()
-                                .WithTextToken(
-                                    Token(
-                                        TriviaList(),
-                                        SyntaxKind.InterpolatedStringTextToken,
-                                        "marketplace_listing/accounts/",
-                                        "marketplace_listing/accounts/",
-                                        TriviaList())));
+            ArgumentListSyntax constructorArgument;
 
-            stringInterpolationNodes.Add(Interpolation(IdentifierName("accountId")));
+            if (method.Parameters.Count == 0)
+            {
+                constructorArgument = ArgumentList(
+                    SingletonSeparatedList<ArgumentSyntax>(
+                        Argument(
+                            LiteralExpression(
+                                SyntaxKind.StringLiteralExpression,
+                                Literal(path)))));
+            }
+            else
+            {
+                stringInterpolationNodes.Add(InterpolatedStringText()
+                               .WithTextToken(
+                                   Token(
+                                       TriviaList(),
+                                       SyntaxKind.InterpolatedStringTextToken,
+                                       "marketplace_listing/accounts/",
+                                       "marketplace_listing/accounts/",
+                                       TriviaList())));
 
-            // TODO: how can we build up the "path with substitutes" here, replacing
-            //       each parameter in the path with it's C# equivalent?'
+                stringInterpolationNodes.Add(Interpolation(IdentifierName("accountId")));
 
-            // TODO: and then how can we convert this string into it's Roslyn-based
-            //       equivalent?
-            var constructorArgument = ArgumentList(
-              SingletonSeparatedList<ArgumentSyntax>(
-                  Argument(
-                      InterpolatedStringExpression(Token(SyntaxKind.InterpolatedStringStartToken))
-                      .WithContents(
-                          List<InterpolatedStringContentSyntax>(stringInterpolationNodes)))));
+                // TODO: how can we build up the "path with substitutes" here, replacing
+                //       each parameter in the path with it's C# equivalent?'
 
+                // TODO: and then how can we convert this string into it's Roslyn-based
+                //       equivalent?
+                constructorArgument = ArgumentList(
+                  SingletonSeparatedList<ArgumentSyntax>(
+                      Argument(
+                          InterpolatedStringExpression(Token(SyntaxKind.InterpolatedStringStartToken))
+                          .WithContents(
+                              List<InterpolatedStringContentSyntax>(stringInterpolationNodes)))));
+
+            }
 
             return LocalDeclarationStatement(
                 VariableDeclaration(IdentifierName("var"))

@@ -148,6 +148,49 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("GeneratedRoute", attribute.Name.ToString());
         }
 
+
+        [Fact]
+        public void GenerateSourceNode_UsesSourceMetadata_ToAssignUrlInMethod()
+        {
+            var stub = new ApiClientFileMetadata
+            {
+                FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                Client =
+              {
+                InterfaceName = "ISomeSortOfClient",
+                ClassName = "SomeSortOfClient",
+                Methods = new List<ApiMethodMetadata>
+                {
+                  new ApiMethodMetadata{
+                    Name = "GetAll",
+                    ReturnType = new TaskOfListType("SomeResponseType"),
+                    SourceMetadata = new SourceRouteMetadata
+                    {
+                      Verb = "GET",
+                      Path = "/something"
+                    }
+                  }
+                }
+              }
+            };
+
+            var result = RoslynGenerator.GenerateSourceNode(stub);
+
+            var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
+            var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+
+            //var localDeclaration = Assert.Single(classMethodNode.DescendantNodes().OfType<LocalDeclarationStatementSyntax>());
+            var objectCreation = Assert.Single(classMethodNode.DescendantNodes().OfType<ObjectCreationExpressionSyntax>());
+            var argumentList = Assert.Single(objectCreation.DescendantNodes().OfType<ArgumentListSyntax>());
+            // because no parameters are found, we should not find any string interpolation
+            Assert.Empty(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
+            // but we should find a plain string inside the Uri constructor
+            var literal = Assert.Single(argumentList.DescendantNodes().OfType<LiteralExpressionSyntax>());
+            Assert.Equal(SyntaxKind.StringLiteralExpression, literal.Kind());
+            Assert.Equal(SyntaxKind.StringLiteralToken, literal.Token.Kind());
+            Assert.Equal("something", literal.Token.ValueText);
+        }
+
         [Fact]
         public void GenerateSourceFile_WithModelsDefined_IncludesInSource()
         {
