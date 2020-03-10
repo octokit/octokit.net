@@ -124,11 +124,31 @@ namespace Octokit.CodeGen
             var path = method.SourceMetadata.Path.TrimStart('/');
             var parameters = method.Parameters;
 
+            var stringInterpolationNodes = new List<InterpolatedStringContentSyntax>();
+
+            stringInterpolationNodes.Add(InterpolatedStringText()
+                                .WithTextToken(
+                                    Token(
+                                        TriviaList(),
+                                        SyntaxKind.InterpolatedStringTextToken,
+                                        "marketplace_listing/accounts/",
+                                        "marketplace_listing/accounts/",
+                                        TriviaList())));
+
+            stringInterpolationNodes.Add(Interpolation(IdentifierName("accountId")));
+
             // TODO: how can we build up the "path with substitutes" here, replacing
             //       each parameter in the path with it's C# equivalent?'
 
             // TODO: and then how can we convert this string into it's Roslyn-based
             //       equivalent?
+            var constructorArgument = ArgumentList(
+              SingletonSeparatedList<ArgumentSyntax>(
+                  Argument(
+                      InterpolatedStringExpression(Token(SyntaxKind.InterpolatedStringStartToken))
+                      .WithContents(
+                          List<InterpolatedStringContentSyntax>(stringInterpolationNodes)))));
+
 
             return LocalDeclarationStatement(
                 VariableDeclaration(IdentifierName("var"))
@@ -136,26 +156,7 @@ namespace Octokit.CodeGen
                         SingletonSeparatedList<VariableDeclaratorSyntax>(
                             VariableDeclarator(Identifier("uri"))
                             .WithInitializer(
-                                EqualsValueClause(ObjectCreationExpression(IdentifierName("Uri"))
-                                    .WithArgumentList(
-                                        ArgumentList(
-                                            SingletonSeparatedList<ArgumentSyntax>(
-                                                Argument(
-                                                    InterpolatedStringExpression(
-                                                        Token(SyntaxKind.InterpolatedStringStartToken))
-                                                    .WithContents(
-                                                        List<InterpolatedStringContentSyntax>(
-                                                            new InterpolatedStringContentSyntax[]{
-                                                              InterpolatedStringText()
-                                                              .WithTextToken(
-                                                                  Token(
-                                                                      TriviaList(),
-                                                                      SyntaxKind.InterpolatedStringTextToken,
-                                                                      "marketplace_listing/accounts/",
-                                                                      "marketplace_listing/accounts/",
-                                                                      TriviaList())),
-                                                              Interpolation(
-                                                                  IdentifierName("accountId"))})))))))))));
+                                EqualsValueClause(ObjectCreationExpression(IdentifierName("Uri")).WithArgumentList(constructorArgument))))));
         }
 
         private static ReturnStatementSyntax GenerateReturnStatement(ApiMethodMetadata method)
