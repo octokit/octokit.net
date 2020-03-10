@@ -210,6 +210,22 @@ namespace Octokit.CodeGen
                     }
                     else
                     {
+                      var prevToken = i > 0 ? tokensForStringInterpolation[i-1] : null;
+                      var prevTokenWasPlaceholder = prevToken != null ? prevToken.Type == StringInterpolationTokenType.Placeholder : false;
+
+                      if (prevTokenWasPlaceholder)
+                      {
+                         var node = InterpolatedStringText()
+                                                  .WithTextToken(
+                                                      Token(
+                                                          TriviaList(),
+                                                          SyntaxKind.InterpolatedStringTextToken,
+                                                          "/",
+                                                          "/",
+                                                          TriviaList()));
+                        stringInterpolationNodes.Add(node);
+                      }
+
                       stringInterpolationNodes.Add(Interpolation(IdentifierName(token.Text)));
                       i += 1;
                     }
