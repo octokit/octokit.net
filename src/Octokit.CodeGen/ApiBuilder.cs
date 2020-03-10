@@ -69,7 +69,6 @@ namespace Octokit.CodeGen
         {
             Properties = new List<ApiModelProperty>();
         }
-        public Guid Id { get; }
         public string Kind { get; set; }
         public string Name { get; set; }
         // this will only be set for the top-level response model
