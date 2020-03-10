@@ -148,9 +148,8 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("GeneratedRoute", attribute.Name.ToString());
         }
 
-
         [Fact]
-        public void GenerateSourceNode_UsesSourceMetadata_ToAssignUrlInMethod()
+        public void GenerateSourceNode_UsesSourceMetadata_AssignsStringLiteralInUrlConstructorInMethod()
         {
             var stub = new ApiClientFileMetadata
             {
@@ -179,7 +178,6 @@ namespace Octokit.CodeGen.Tests
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
 
-            //var localDeclaration = Assert.Single(classMethodNode.DescendantNodes().OfType<LocalDeclarationStatementSyntax>());
             var objectCreation = Assert.Single(classMethodNode.DescendantNodes().OfType<ObjectCreationExpressionSyntax>());
             var argumentList = Assert.Single(objectCreation.DescendantNodes().OfType<ArgumentListSyntax>());
             // because no parameters are found, we should not find any string interpolation
@@ -189,6 +187,122 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal(SyntaxKind.StringLiteralExpression, literal.Kind());
             Assert.Equal(SyntaxKind.StringLiteralToken, literal.Token.Kind());
             Assert.Equal("something", literal.Token.ValueText);
+        }
+
+        [Fact]
+        public void GenerateSourceNode_UsesSourceMetadata_AssignsInterpolatedStringWithPlaceholdersForParameters()
+        {
+            var stub = new ApiClientFileMetadata
+            {
+                FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                Client =
+              {
+                InterfaceName = "ISomeSortOfClient",
+                ClassName = "SomeSortOfClient",
+                Methods = new List<ApiMethodMetadata>
+                {
+                  new ApiMethodMetadata{
+                    Name = "GetAll",
+                    Parameters = new List<ApiParameterMetadata>
+                    {
+                      new ApiParameterMetadata
+                      {
+                        Name = "org",
+                        Replaces = "org",
+                        Type = "string"
+                      },
+                      new ApiParameterMetadata
+                      {
+                        Name = "migrationId",
+                        Replaces = "migration_id",
+                        Type = "number"
+                      }
+                    },
+                    ReturnType = new TaskOfListType("SomeResponseType"),
+                    SourceMetadata = new SourceRouteMetadata
+                    {
+                      Verb = "GET",
+                      Path = "/orgs/{org}/migrations/{migration_id}/repositories"
+                    }
+                  }
+                }
+              }
+            };
+
+            var result = RoslynGenerator.GenerateSourceNode(stub);
+
+            var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
+            var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+
+            var objectCreation = Assert.Single(classMethodNode.DescendantNodes().OfType<ObjectCreationExpressionSyntax>());
+            var argumentList = Assert.Single(objectCreation.DescendantNodes().OfType<ArgumentListSyntax>());
+
+            // because we need to handle the parameters in the path, we should not use string literals here
+            Assert.Empty(argumentList.DescendantNodes().OfType<LiteralExpressionSyntax>());
+
+            // instead we need to find the string interpolation and walk it's descendants
+            var interpolatedString = Assert.Single(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
+
+            // TODO: assert we have the expected state inside the interpolated string
+            Assert.False(true);
+        }
+
+        [Fact]
+        public void GenerateSourceNode_UsesSourceMetadata_HandlesConsecutivePlaceholdersInInterpolatedString()
+        {
+            var stub = new ApiClientFileMetadata
+            {
+                FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
+                Client =
+              {
+                InterfaceName = "ISomeSortOfClient",
+                ClassName = "SomeSortOfClient",
+                Methods = new List<ApiMethodMetadata>
+                {
+                  new ApiMethodMetadata{
+                    Name = "GetAll",
+                    Parameters = new List<ApiParameterMetadata>
+                    {
+                      new ApiParameterMetadata
+                      {
+                        Name = "owner",
+                        Replaces = "owner",
+                        Type = "string"
+                      },
+                      new ApiParameterMetadata
+                      {
+                        Name = "name",
+                        Replaces = "name",
+                        Type = "string"
+                      }
+                    },
+                    ReturnType = new TaskOfListType("SomeResponseType"),
+                    SourceMetadata = new SourceRouteMetadata
+                    {
+                      Verb = "GET",
+                      Path = "/repos/{owner}/{name}/topics"
+                    }
+                  }
+                }
+              }
+            };
+
+            var result = RoslynGenerator.GenerateSourceNode(stub);
+
+            var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
+            var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
+
+            var objectCreation = Assert.Single(classMethodNode.DescendantNodes().OfType<ObjectCreationExpressionSyntax>());
+            var argumentList = Assert.Single(objectCreation.DescendantNodes().OfType<ArgumentListSyntax>());
+
+            // because we need to handle the parameters in the path, we should not use string literals here
+            Assert.Empty(argumentList.DescendantNodes().OfType<LiteralExpressionSyntax>());
+
+            // instead we need to find the string interpolation and walk it's descendants
+            var interpolatedString = Assert.Single(argumentList.DescendantNodes().OfType<InterpolatedStringExpressionSyntax>());
+
+            // TODO: assert we have the expected state inside the interpolated string
+            Assert.False(true);
         }
 
         [Fact]

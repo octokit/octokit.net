@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -120,6 +121,11 @@ namespace Octokit.CodeGen
 
         private static LocalDeclarationStatementSyntax GenerateUriStatement(ApiMethodMetadata method)
         {
+            bool isPlaceHolder(string str)
+            {
+                return str.StartsWith("{") && str.EndsWith("}");
+            }
+
             // for compatibility with GHE we need to start these URIs without a /
             var path = method.SourceMetadata.Path.TrimStart('/');
             var parameters = method.Parameters;
@@ -128,7 +134,7 @@ namespace Octokit.CodeGen
 
             ArgumentListSyntax constructorArgument;
 
-            if (method.Parameters.Count == 0)
+            if (parameters.Count == 0)
             {
                 constructorArgument = ArgumentList(
                     SingletonSeparatedList<ArgumentSyntax>(
@@ -139,16 +145,76 @@ namespace Octokit.CodeGen
             }
             else
             {
-                stringInterpolationNodes.Add(InterpolatedStringText()
-                               .WithTextToken(
-                                   Token(
-                                       TriviaList(),
-                                       SyntaxKind.InterpolatedStringTextToken,
-                                       "marketplace_listing/accounts/",
-                                       "marketplace_listing/accounts/",
-                                       TriviaList())));
+                var tokensForStringInterpolation = new List<StringInterpolationToken>();
 
-                stringInterpolationNodes.Add(Interpolation(IdentifierName("accountId")));
+                var tokensFromPath = path.Split("/");
+                foreach (var token in tokensFromPath)
+                {
+                    if (isPlaceHolder(token))
+                    {
+                        var parameterName = token.Replace("{", "").Replace("}", "");
+                        var parameterToReplace = parameters.FirstOrDefault(p => p.Replaces == parameterName);
+                        if (parameterToReplace == null)
+                        {
+                            throw new InvalidOperationException($"Unable to find parameter to replace {parameterName}");
+                        }
+
+                        tokensForStringInterpolation.Add(new StringInterpolationToken
+                        {
+                            Text = parameterToReplace.Name,
+                            Type = StringInterpolationTokenType.Placeholder
+                        });
+                    }
+                    else
+                    {
+                        tokensForStringInterpolation.Add(new StringInterpolationToken
+                        {
+                            Text = token.Trim('/'),
+                            Type = StringInterpolationTokenType.Text
+                        });
+                    }
+                }
+
+                for (var i = 0; i < tokensForStringInterpolation.Count;)
+                {
+                    var token = tokensForStringInterpolation[i];
+
+                    if (token.Type == StringInterpolationTokenType.Text)
+                    {
+                        // do not add a preceding slash for the first token
+                        var prefix = i == 0 ? "" : "/";
+
+                        var otherTokens = tokensForStringInterpolation.Skip(i)
+                                                                      .TakeWhile(t => t.Type == StringInterpolationTokenType.Text)
+                                                                      .Select(t => t.Text)
+                                                                      .ToList();
+                        var count = otherTokens.Count;
+                        i += count;
+                        var mergedTokens = string.Join('/', otherTokens);
+
+                        // only add a trailiing slash if there are other tokens to pull
+                        var suffix = i < tokensForStringInterpolation.Count ? "/" : "";
+
+                        var uriSegment = $"{prefix}{mergedTokens}{suffix}";
+
+                        var node = InterpolatedStringText()
+                                                  .WithTextToken(
+                                                      Token(
+                                                          TriviaList(),
+                                                          SyntaxKind.InterpolatedStringTextToken,
+                                                          uriSegment,
+                                                          uriSegment,
+                                                          TriviaList()));
+
+                        stringInterpolationNodes.Add(node);
+                    }
+                    else
+                    {
+                      stringInterpolationNodes.Add(Interpolation(IdentifierName(token.Text)));
+                      i += 1;
+                    }
+                }
+
 
                 // TODO: how can we build up the "path with substitutes" here, replacing
                 //       each parameter in the path with it's C# equivalent?'
@@ -388,5 +454,17 @@ namespace Octokit.CodeGen
                               .WithMembers(
                                   List<MemberDeclarationSyntax>(members))));
         }
+    }
+
+    enum StringInterpolationTokenType
+    {
+        Placeholder,
+        Text
+    }
+
+    class StringInterpolationToken
+    {
+        public string Text { get; set; }
+        public StringInterpolationTokenType Type { get; set; }
     }
 }
