@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -60,7 +59,7 @@ namespace Octokit
         /// </summary>
         /// <param name="since">ID after which the returned list begin</param>
         /// <returns>A list of <see cref="User"/> after specified ID</returns>
-        Task<List<User>> GetAll(string since);
+        Task<IReadOnlyPagedCollection<User>> GetAll(string since);
 
         /// <summary>
         /// A client for GitHub's User Followers API

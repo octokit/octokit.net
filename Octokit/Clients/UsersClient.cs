@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -95,11 +94,11 @@ namespace Octokit
         /// <param name="since">ID after which the returned list begin</param>
         /// <returns>A list of <see cref="User"/> after specified ID</returns>
         [ManualRoute("GET", "/users")]
-        public Task<List<User>> GetAll(string since)
+        public Task<IReadOnlyPagedCollection<User>> GetAll(string since)
         {
             Ensure.ArgumentNotNullOrEmptyString(since, nameof(since));
 
-            return ApiConnection.Get<List<User>>(ApiUrls.Users(since));
+            return ApiConnection.Get<IReadOnlyPagedCollection<User>>(ApiUrls.Users(since));
         }
 
         /// <summary>

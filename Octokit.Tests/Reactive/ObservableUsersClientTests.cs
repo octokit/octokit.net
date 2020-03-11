@@ -19,7 +19,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("1");
 
-                github.Connection.Received(1).Get<List<User>>(expectedUri, Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                github.Connection.Received(1).Get<IReadOnlyPagedCollection<User>>(expectedUri, Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
             }
         }
         }

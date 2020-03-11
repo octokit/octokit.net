@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Threading.Tasks;
 
@@ -61,7 +60,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="since">ID after which the returned list begin</param>
         /// <returns>A list of <see cref="User"/> after specified ID</returns>
-        public IObservable<List<User>> GetAll(string since)
+        public IObservable<IReadOnlyPagedCollection<User>> GetAll(string since)
         {
             Ensure.ArgumentNotNull(since, nameof(since));
 
