@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
@@ -358,6 +359,31 @@ namespace Octokit.CodeGen.Tests
             var propertyNodes = classNode.DescendantNodes().OfType<PropertyDeclarationSyntax>();
 
             Assert.Equal(2, propertyNodes.Count());
+        }
+
+        [Fact]
+        public async Task ForTopicsRoute_RequestModelWithNamesProperty_IsFound()
+        {
+            var stream = TestFixtureLoader.LoadTopicsRoute();
+
+            var paths = await PathProcessor.Process(stream);
+            var path = paths[0];
+
+            var data = new ApiClientFileMetadata();
+            data = Builders.AddTypeNamesAndFileName(path, data);
+            data = Builders.AddRequestModels(path, data);
+            data = Builders.AddResponseModels(path, data);
+            data = Builders.AddMethodForEachVerb(path, data);
+
+            var result = RoslynGenerator.GenerateSourceNode(data);
+
+            // this one will give us three classes - a response class, a request class and the client class
+
+            Assert.Equal(3, result.DescendantNodes().OfType<ClassDeclarationSyntax>().Count());
+
+            var requestClass = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>().Where(c => c.Identifier.ValueText == "RepositoriesTopicRequest"));
+            var responseClass = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>().Where(c => c.Identifier.ValueText == "RepositoriesTopic"));
+            var clientClass = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>().Where(c => c.Identifier.ValueText == "RepositoriesTopicsClient"));
         }
 
         private static TypeSyntax GetListReturnType(string innerType)

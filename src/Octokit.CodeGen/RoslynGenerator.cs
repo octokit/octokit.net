@@ -446,6 +446,11 @@ namespace Octokit.CodeGen
         {
             var members = new List<MemberDeclarationSyntax>();
 
+            if (metadata.RequestModels.Any())
+            {
+                members.AddRange(metadata.RequestModels.Select(WithModel));
+            }
+
             if (metadata.ResponseModels.Any())
             {
                 members.AddRange(metadata.ResponseModels.Select(WithModel));
