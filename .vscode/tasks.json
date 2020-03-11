@@ -35,20 +35,49 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "Test New Things",
+      "label": "Clean Test Directory",
+      "command": "git",
+      "type": "process",
+      "args": [
+        "clean",
+        "-xdf",
+        "${workspaceFolder}/test/Octokit.CodeGen.Tests"
+      ],
+      "problemMatcher": "$msCompile",
+    },
+    {
+      "label": "Test New Code",
       "command": "dotnet",
       "type": "process",
       "args": [
         "test",
         "${workspaceFolder}/test/Octokit.CodeGen.Tests/Octokit.CodeGen.Tests.csproj",
         "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
+        "/consoleloggerparameters:NoSummary",
+        "--collect:\"XPlat Code Coverage\"",
+        "--results-directory:\"test/Octokit.CodeGen.Tests/coverage-results/\"",
+        "--settings:\"test/Octokit.CodeGen.Tests/coverlet.runsettings\""
       ],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "test",
         "isDefault": true
-      }
+      },
+      "dependsOn": ["Clean Test Directory" ]
+    },
+    {
+      "label": "Get Coverage",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "reportgenerator",
+        "--reports:${workspaceFolder}/test/Octokit.CodeGen.Tests/coverage-results/*/coverage.cobertura.xml",
+        "--sourcedirs:${workspaceFolder}/src/Octokit.CodeGen/",
+        "--reporttypes:Html",
+        "--targetdir:${workspaceFolder}/test/Octokit.CodeGen.Tests/coverage-results/"
+      ],
+      "problemMatcher": "$msCompile",
+      "dependsOn": ["Test New Code" ]
     }
   ]
 }
