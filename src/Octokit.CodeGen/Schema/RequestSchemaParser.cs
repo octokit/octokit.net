@@ -195,14 +195,12 @@ namespace Octokit.CodeGen
                     }
                     else
                     {
-                        Console.WriteLine($"TODO: PathProcessor.ParseRequestArraySchema encountered request array of type '{innerType}' and cannot convert it");
+                        throw new NotImplementedException($"PathProcessor.ParseRequestArraySchema encountered request array of type '{innerType}' and cannot convert it");
                     }
                 }
             }
 
-            Console.WriteLine($"TODO: PathProcessor.ParseRequestArraySchema encountered request array it could not represent");
-
-            return null;
+            throw new NotImplementedException($"PathProcessor.ParseRequestArraySchema encountered request array it could not represent");
         }
     }
 }

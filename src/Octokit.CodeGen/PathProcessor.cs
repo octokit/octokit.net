@@ -97,7 +97,7 @@ namespace Octokit.CodeGen
                         }
                         else
                         {
-                            Console.WriteLine($"TODO: add response metadata for {propertyName} which is an array of type {itemsType}");
+                            throw new NotImplementedException($"Add response metadata for {propertyName} which is an array of type {itemsType}");
                         }
                     }
                     else

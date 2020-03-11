@@ -231,12 +231,6 @@ namespace Octokit.CodeGen
                     }
                 }
 
-
-                // TODO: how can we build up the "path with substitutes" here, replacing
-                //       each parameter in the path with it's C# equivalent?'
-
-                // TODO: and then how can we convert this string into it's Roslyn-based
-                //       equivalent?
                 constructorArgument = ArgumentList(
                   SingletonSeparatedList<ArgumentSyntax>(
                       Argument(
@@ -257,10 +251,8 @@ namespace Octokit.CodeGen
 
         private static ReturnStatementSyntax GenerateReturnStatement(ApiMethodMetadata method)
         {
-            // TODO: change the method based on the verb
-
             // TODO: the argument passed in here may need to strip the Task<> or Task<IReadOnlyList>
-            //       from the ReturnType
+            //       from the ReturnType for when it is passed
 
             // TODO: how would this differ for POST/PATCH/DELETE?
             // TODO: how can we handle things like preview APIs? content types?

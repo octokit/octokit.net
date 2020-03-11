@@ -9,11 +9,8 @@ namespace Octokit.CodeGen
 
     public partial class Builders
     {
-
         public static readonly TypeBuilderFunc AddResponseModels = (metadata, data) =>
         {
-
-
 
             // first parameter of return type is the current model (needed for assigning to property)
             // second parameter is any additional models that were deserialized

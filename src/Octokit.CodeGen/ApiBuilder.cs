@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Octokit.CodeGen
 {
-  using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
+    using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
 
-  public class ApiBuilder
+    public class ApiBuilder
     {
         private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
 
