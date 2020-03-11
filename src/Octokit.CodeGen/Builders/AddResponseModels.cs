@@ -27,13 +27,13 @@ namespace Octokit.CodeGen
                 // models?
 
                 var classNamePrefix = $"{classPrefix}{additionalName}";
-                var properties = new List<ApiModelProperty>();
+                var properties = new List<ApiResponseModelProperty>();
 
                 foreach (var property in objectProperty.Properties)
                 {
                     property.Switch(primitiveProperty =>
                     {
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
@@ -43,14 +43,14 @@ namespace Octokit.CodeGen
                         var (current, others) = parseInnerModel(objectResponse, classNamePrefix);
                         additionalModels.Add(current);
                         additionalModels.AddRange(others);
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(objectResponse.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                    {
-                       properties.Add(new ApiModelProperty
+                       properties.Add(new ApiResponseModelProperty
                        {
                            Name = GetPropertyName(primitiveList.Name),
                            Type = "IReadOnlyList<string>",
@@ -76,13 +76,13 @@ namespace Octokit.CodeGen
                 var models = new List<ApiResponseModelMetadata>();
 
                 var classNamePrefix = GetClassName(metadata);
-                var properties = new List<ApiModelProperty>();
+                var properties = new List<ApiResponseModelProperty>();
 
                 foreach (var property in arrayContent.ItemProperties)
                 {
                     property.Switch(primitiveProperty =>
                     {
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
@@ -92,14 +92,14 @@ namespace Octokit.CodeGen
                         var (current, others) = parseInnerModel(objectProperty, "");
                         models.Add(current);
                         models.AddRange(others);
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                     {
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(primitiveList.Name),
                             Type = "IReadOnlyList<string>",
@@ -129,13 +129,13 @@ namespace Octokit.CodeGen
                 var models = new List<ApiResponseModelMetadata>();
 
                 var classNamePrefix = GetClassName(metadata);
-                var properties = new List<ApiModelProperty>();
+                var properties = new List<ApiResponseModelProperty>();
 
                 foreach (var property in objectContent.Properties)
                 {
                     property.Switch(primitiveProperty =>
                     {
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(primitiveProperty.Name),
                             Type = primitiveProperty.Type,
@@ -145,14 +145,14 @@ namespace Octokit.CodeGen
                         var (current, others) = parseInnerModel(objectProperty, "");
                         models.Add(current);
                         models.AddRange(others);
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(objectProperty.Name),
                             Type = current.Name,
                         });
                     }, primitiveList =>
                     {
-                        properties.Add(new ApiModelProperty
+                        properties.Add(new ApiResponseModelProperty
                         {
                             Name = GetPropertyName(primitiveList.Name),
                             Type = "IReadOnlyList<string>",

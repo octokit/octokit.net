@@ -32,7 +32,7 @@ namespace Octokit.CodeGen
                       {
                           property.Switch(primitive =>
                           {
-                              model.Properties.Add(new ApiModelProperty
+                              model.Properties.Add(new ApiResponseModelProperty
                               {
                                   Name = GetPropertyName(primitive.Name),
                                   Type = primitive.Type,
@@ -41,7 +41,7 @@ namespace Octokit.CodeGen
                           },
                           array =>
                           {
-                              model.Properties.Add(new ApiModelProperty
+                              model.Properties.Add(new ApiResponseModelProperty
                               {
                                   Name = GetPropertyName(array.Name),
                                   Type = "List<string>",

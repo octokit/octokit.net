@@ -25,6 +25,7 @@ namespace Octokit.CodeGen
         public string FileName { get; set; }
         public ApiClientMetadata Client { get; set; }
         public List<ApiResponseModelMetadata> ResponseModels { get; set; }
+        // TODO: split this out into it's own shape that will suit our needs
         public List<ApiResponseModelMetadata> RequestModels { get; set; }
     }
 
@@ -43,7 +44,7 @@ namespace Octokit.CodeGen
     {
         public ApiResponseModelMetadata()
         {
-            Properties = new List<ApiModelProperty>();
+            Properties = new List<ApiResponseModelProperty>();
         }
         public string Kind { get; set; }
         public string Name { get; set; }
@@ -51,7 +52,7 @@ namespace Octokit.CodeGen
         public HttpMethod Method { get; set; }
         // this will only be set for the top-level response model
         public string StatusCode { get; set; }
-        public List<ApiModelProperty> Properties { get; set; }
+        public List<ApiResponseModelProperty> Properties { get; set; }
 
         public bool Equals([AllowNull] ApiResponseModelMetadata other)
         {
@@ -69,12 +70,12 @@ namespace Octokit.CodeGen
         }
     }
 
-    public class ApiModelProperty : IEquatable<ApiModelProperty>
+    public class ApiResponseModelProperty : IEquatable<ApiResponseModelProperty>
     {
         public string Name { get; set; }
         public string Type { get; set; }
 
-        public bool Equals([AllowNull] ApiModelProperty other)
+        public bool Equals([AllowNull] ApiResponseModelProperty other)
         {
             if (Object.ReferenceEquals(other, null)) return false;
 
