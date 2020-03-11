@@ -17,7 +17,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_WithStubDefinition_DefinesEmptyInterfaceAndClass()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client = new ApiClientMetadata
@@ -27,7 +27,7 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             Assert.Equal("ISomeSortOfClient", interfaceNode.Identifier.ValueText);
@@ -41,7 +41,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_AddsMethod_ToInterfaceAndImplementation()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client = new ApiClientMetadata
@@ -72,7 +72,7 @@ namespace Octokit.CodeGen.Tests
 
             var expectedReturnType = GetListReturnType("SomeResponseType");
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -99,7 +99,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_UsesSourceMetadata_ToAddAttributes()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client =
@@ -128,7 +128,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var interfaceNode = Assert.Single(result.DescendantNodes().OfType<InterfaceDeclarationSyntax>());
             var interfaceMethodNode = Assert.Single(interfaceNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -151,7 +151,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_UsesSourceMetadata_AssignsStringLiteralInUrlConstructorInMethod()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client =
@@ -173,7 +173,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -194,7 +194,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_UsesSourceMetadata_AssignsInterpolatedStringWithPlaceholdersForParameters()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client =
@@ -231,7 +231,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -260,7 +260,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceNode_UsesSourceMetadata_HandlesConsecutivePlaceholdersInInterpolatedString()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 Client =
@@ -297,7 +297,7 @@ namespace Octokit.CodeGen.Tests
               }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var classMethodNode = Assert.Single(classNode.DescendantNodes().OfType<MethodDeclarationSyntax>());
@@ -326,7 +326,7 @@ namespace Octokit.CodeGen.Tests
         [Fact]
         public void GenerateSourceFile_WithModelsDefined_IncludesInSource()
         {
-            var stub = new ApiClientFileMetadata
+            var metadata = new ApiClientFileMetadata
             {
                 FileName = Path.Join("Octokit", "Clients", "SomeSortOfClient.cs"),
                 ResponseModels = new List<ApiResponseModelMetadata>
@@ -335,14 +335,14 @@ namespace Octokit.CodeGen.Tests
                   {
                     Name = "SomeObject",
                     Kind = "response",
-                    Properties = new List<ApiModelProperty>
+                    Properties = new List<ApiResponseModelProperty>
                     {
-                      new ApiModelProperty
+                      new ApiResponseModelProperty
                       {
                         Name = "Id",
                         Type = "number"
                       },
-                      new ApiModelProperty
+                      new ApiResponseModelProperty
                       {
                         Name = "Name",
                         Type = "string"
@@ -352,7 +352,7 @@ namespace Octokit.CodeGen.Tests
                 }
             };
 
-            var result = RoslynGenerator.GenerateSourceNode(stub);
+            var result = RoslynGenerator.GenerateSourceNode(metadata);
 
             var classNode = Assert.Single(result.DescendantNodes().OfType<ClassDeclarationSyntax>());
             var propertyNodes = classNode.DescendantNodes().OfType<PropertyDeclarationSyntax>();
