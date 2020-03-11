@@ -11,8 +11,8 @@ namespace Octokit.CodeGen
             var writeFilesToDisk = Array.IndexOf(args, "--write") > -1;
 
             var filter = new PathFilter();
-            //filter.Allow("/marketplace_listing/accounts/");
-            filter.Allow("/repos/{owner}/{repo}/topics");
+            filter.Allow("/marketplace_listing/accounts/");
+            //filter.Allow("/repos/{owner}/{repo}/topics");
 
             var apiBuilder = new ApiBuilder();
             apiBuilder.Register(Builders.AddTypeNamesAndFileName);
