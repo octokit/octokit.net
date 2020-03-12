@@ -13,6 +13,12 @@ namespace Octokit
 
         public const string CommitReferenceSha1MediaType = "application/vnd.github.v3.sha";
 
+        /// <summary>
+        /// Support for retrieving raw file content with the <see cref="IConnection.GetRaw"/> method.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/repos/contents/#custom-media-types</remarks>
+        public const string RawContentMediaType = "application/vnd.github.v3.raw";
+
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
