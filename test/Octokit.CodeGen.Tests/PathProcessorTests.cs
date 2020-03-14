@@ -291,7 +291,7 @@ namespace Octokit.CodeGen.Tests
         }
 
         [Fact]
-        public async Task Process_ForTopicsPath_ReturnsStringArrayOnResponse()
+        public async Task Process_ForTopicsPath_ReturnsStringArrayOnRequest()
         {
             var stream = TestFixtureLoader.LoadTopicsRoute();
 
@@ -307,6 +307,28 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("array", property.Type);
             var array = Assert.IsType<ArrayRequestProperty>(property);
             Assert.Equal("string", array.ArrayType);
+        }
+
+        [Fact]
+        public async Task Process_ForTopicsPath_ReturnsStringArrayOnResponse()
+        {
+            var stream = TestFixtureLoader.LoadTopicsRoute();
+
+            var results = await PathProcessor.Process(stream);
+            var result = Assert.Single(results);
+
+            var get = Assert.Single(result.Verbs.Where(v => v.Method == HttpMethod.Put));
+
+            var response = Assert.Single(get.Responses);
+            var objectContent = response.Content.AsT0;
+
+            var property = Assert.Single(objectContent.Properties);
+
+            var listProperty = property.AsT2;
+
+            Assert.Equal("names", listProperty.Name);
+            Assert.Equal("array", listProperty.Type);
+            Assert.Equal("string", listProperty.ItemType);
         }
     }
 
