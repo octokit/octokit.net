@@ -112,8 +112,16 @@ namespace Octokit.CodeGen
                     else if (innerType == "array")
                     {
                       var innerProperties = property.Value.GetProperty("items");
-                      var arrayType = innerProperties.GetProperty("type").GetString();
-                      objectResponse.Properties.Add(new ListOfPrimitiveTypeProperty(name, arrayType));
+                      JsonElement arrayProp;
+                      if (innerProperties.TryGetProperty("type", out arrayProp))
+                      {
+                        var arrayType = arrayProp.GetString();
+                        objectResponse.Properties.Add(new ListOfPrimitiveTypeProperty(name, arrayType));
+                      } else
+                      {
+                        // TODO: what route is this failing on and what should we be parsing here?
+                      }
+
                     }
                     else
                     {
