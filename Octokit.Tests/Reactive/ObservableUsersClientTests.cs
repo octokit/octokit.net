@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Octokit.Tests.Reactive
 {
-    class ObservableUsersClientTests
+    public class ObservableUsersClientTests
     {
         public class TheGetAllMethod
         {
@@ -19,8 +19,8 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("1");
 
-                github.Connection.Received(1).Get<IReadOnlyPagedCollection<User>>(expectedUri, Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                github.User.Received(1).GetAll("1");
             }
         }
-        }
+    }
 }
