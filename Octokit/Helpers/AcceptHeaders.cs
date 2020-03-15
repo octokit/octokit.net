@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -46,8 +47,6 @@ namespace Octokit
         public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview+json";
 
         public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
-
-        public const string PullRequestReviewsApiPreview = "application/vnd.github.black-cat-preview+json";
 
         public const string DraftPullRequestApiPreview = "application/vnd.github.shadow-cat-preview+json";
 

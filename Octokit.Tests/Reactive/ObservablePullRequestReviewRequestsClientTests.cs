@@ -29,9 +29,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
-                client.GetAll("owner", "name", 7);
+                client.Get("owner", "name", 7);
 
-                gitHubClient.Received().PullRequest.ReviewRequest.GetAll("owner", "name", 7);
+                gitHubClient.Received().PullRequest.ReviewRequest.Get("owner", "name", 7);
             }
 
             [Fact]
@@ -40,45 +40,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
-                client.GetAll(42, 7);
+                client.Get(42, 7);
 
-                gitHubClient.Received().PullRequest.ReviewRequest.GetAll(42, 7);
-            }
-
-            [Fact]
-            public async Task RequestsCorrectUrlWithApiOptions()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
-
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1,
-                    PageSize = 1
-                };
-
-                client.GetAll("owner", "name", 7, options);
-
-                gitHubClient.Received().PullRequest.ReviewRequest.GetAll("owner", "name", 7, options);
-            }
-
-            [Fact]
-            public async Task RequestsCorrectUrlWithApiOptionsWithRepositoryId()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
-
-                var options = new ApiOptions
-                {
-                    StartPage = 1,
-                    PageCount = 1,
-                    PageSize = 1
-                };
-
-                client.GetAll(42, 7, options);
-
-                gitHubClient.Received().PullRequest.ReviewRequest.GetAll(42, 7, options);
+                gitHubClient.Received().PullRequest.ReviewRequest.Get(42, 7);
             }
 
             [Fact]
@@ -87,20 +51,12 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get(null, "name", 1));
+                Assert.Throws<ArgumentNullException>(() => client.Get("owner", null, 1));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, "name", 1, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", null, 1, ApiOptions.None));
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
+                Assert.Throws<ArgumentException>(() => client.Get("", "name", 1));
+                Assert.Throws<ArgumentException>(() => client.Get("owner", "", 1));
 
-                Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1));
-                Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1));
-
-                Assert.Throws<ArgumentException>(() => client.GetAll("", "name", 1, ApiOptions.None));
-                Assert.Throws<ArgumentException>(() => client.GetAll("owner", "", 1, ApiOptions.None));
-
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(42, 1, null));
             }
         }
 
@@ -113,7 +69,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 client.Create("fakeOwner", "fakeRepoName", 13, pullRequestReviewRequest);
 
@@ -127,7 +83,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 client.Create(42, 13, pullRequestReviewRequest);
 
@@ -141,7 +97,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 Assert.Throws<ArgumentNullException>(() => client.Create(null, "fakeRepoName", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Create("fakeOwner", null, 1, pullRequestReviewRequest));
@@ -162,7 +118,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 await client.Delete("owner", "name", 13, pullRequestReviewRequest);
 
@@ -176,7 +132,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 await client.Delete(42, 13, pullRequestReviewRequest);
 
@@ -190,7 +146,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservablePullRequestReviewRequestsClient(gitHubClient);
 
                 IReadOnlyList<string> fakeReviewers = new List<string> { "zxc", "asd" };
-                var pullRequestReviewRequest = new PullRequestReviewRequest(fakeReviewers);
+                var pullRequestReviewRequest = PullRequestReviewRequest.ForReviewers(fakeReviewers);
 
                 Assert.Throws<ArgumentNullException>(() => client.Delete(null, "name", 1, pullRequestReviewRequest));
                 Assert.Throws<ArgumentNullException>(() => client.Delete("owner", null, 1, pullRequestReviewRequest));

@@ -14,16 +14,28 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PullRequestReviewRequest
     {
-        public PullRequestReviewRequest(IReadOnlyList<string> reviewers)
+        public PullRequestReviewRequest(IReadOnlyList<string> reviewers, IReadOnlyList<string> teamReviewers)
         {
             Reviewers = reviewers;
+            TeamReviewers = teamReviewers;
         }
 
-        public IReadOnlyList<string> Reviewers { get; set; }
+        public IReadOnlyList<string> Reviewers { get; private set; }
+        public IReadOnlyList<string> TeamReviewers { get; private set; }
 
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Reviewers: {0}", string.Join(", ", Reviewers)); }
+        }
+
+        public static PullRequestReviewRequest ForReviewers(IReadOnlyList<string> reviewers)
+        {
+            return new PullRequestReviewRequest(reviewers, new List<string>());
+        }
+
+        public static PullRequestReviewRequest ForTeamReviewers(IReadOnlyList<string> teamReviewers)
+        {
+            return new PullRequestReviewRequest(new List<string>(), teamReviewers);
         }
     }
 }
