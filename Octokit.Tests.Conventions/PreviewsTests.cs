@@ -91,9 +91,9 @@ namespace Octokit.Tests.Conventions
 
         static string CreateMessage(IEnumerable<string> notAllowedHeaders)
         {
-             return string.Format("Accept headers in use but not allowed: {0}{1}",
-                Environment.NewLine,
-                string.Join(Environment.NewLine, notAllowedHeaders));
+            return string.Format("Accept headers in use but not allowed: {0}{1}",
+               Environment.NewLine,
+               string.Join(Environment.NewLine, notAllowedHeaders));
         }
     }
 }
