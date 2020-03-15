@@ -22,5 +22,14 @@ namespace Octokit.Tests.Reactive
                 github.User.Received(1).GetAll("1");
             }
         }
+
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new ObservableUsersClient(null));
+            }
+        }
     }
 }
