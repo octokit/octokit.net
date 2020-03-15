@@ -180,7 +180,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RequestPageBuild("fake", "repo");
 
-                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"), "application/vnd.github.mister-fantastic-preview+json");
+                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pages/builds"));
             }
 
             [Fact]
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RequestPageBuild(1);
 
-                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pages/builds"), "application/vnd.github.mister-fantastic-preview+json");
+                connection.Received().Post<PagesBuild>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pages/builds"));
             }
 
             [Fact]

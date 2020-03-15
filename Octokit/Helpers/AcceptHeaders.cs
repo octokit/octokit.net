@@ -27,9 +27,6 @@ namespace Octokit
 
         public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
 
-        [Obsolete("API has graduated")]
-        public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
-
         public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview+json";
 
         [Obsolete("API has graduated")]
