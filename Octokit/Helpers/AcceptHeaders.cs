@@ -9,8 +9,7 @@ namespace Octokit
 
         public const string StableVersionHtml = "application/vnd.github.v3.html";
 
-        [Obsolete("API has graduated")]
-        public const string RedirectsPreviewThenStableVersionJson = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
+        public const string StableVersionJson = "application/vnd.github.v3+json";
 
         public const string CommitReferenceSha1MediaType = "application/vnd.github.v3.sha";
 
