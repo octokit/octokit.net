@@ -48,9 +48,6 @@ namespace Octokit
 
         public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
 
-        [Obsolete("This API has already been graduated")]
-        public const string PullRequestReviewsApiPreview = "application/vnd.github.black-cat-preview+json";
-
         public const string DraftPullRequestApiPreview = "application/vnd.github.shadow-cat-preview+json";
 
         public const string ProjectsApiPreview = "application/vnd.github.inertia-preview+json";
