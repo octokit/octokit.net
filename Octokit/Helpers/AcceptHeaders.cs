@@ -16,23 +16,10 @@ namespace Octokit
         [Obsolete("API has graduated")]
         public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
 
-        /// <summary>
-        /// Support for retrieving information about open source license usage on GitHub.com.
-        /// Custom media type: drax-preview Announced: 2015-03-09 Update 1: 2015-06-24 Update 2: 2015-08-04
-        /// </summary>
-        [Obsolete("API has graduated")]
-        public const string LicensesApiPreview = "application/vnd.github.drax-preview+json";
-
         [Obsolete("API has graduated")]
         public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
 
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
-
-        [Obsolete("API has graduated")]
-        public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
-
-        [Obsolete("API has graduated")]
-        public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
@@ -70,9 +57,6 @@ namespace Octokit
 
         [Obsolete("API has graduated")]
         public const string LabelsApiPreview = "application/vnd.github.symmetra-preview+json";
-
-        [Obsolete("API has graduated")]
-        public const string RepositoryTransferPreview = "application/vnd.github.nightshade-preview+json";
 
         public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
 

@@ -513,7 +513,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), new object(), null, AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), new object());
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Octokit
         [ManualRoute("PUT", "/repositories/{id}/issues/{number}/lock")]
         public Task Lock(long repositoryId, int number)
         {
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object(), null, AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object());
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number));
         }
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace Octokit
         [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/lock")]
         public Task Unlock(long repositoryId, int number)
         {
-            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, number), new object(), AcceptHeaders.IssueLockingUnlockingApiPreview);
+            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, number));
         }
     }
 }

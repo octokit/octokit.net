@@ -201,7 +201,7 @@ namespace Octokit.Tests.Clients
                 });
 
                 var connection = Substitute.For<IApiConnection>();
-                connection.GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, "application/vnd.github.drax-preview+json", Args.ApiOptions)
+                connection.GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), Args.ApiOptions)
                     .Returns(Task.FromResult(response));
                 var client = new MiscellaneousClient(connection);
 
@@ -215,7 +215,7 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("bar2", licenses[1].Name);
                 Assert.Equal("http://example.com/bar1", licenses[1].Url);
                 connection.Received()
-                    .GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), null, AcceptHeaders.LicensesApiPreview, Args.ApiOptions);
+                    .GetAll<LicenseMetadata>(Arg.Is<Uri>(u => u.ToString() == "licenses"), Args.ApiOptions);
             }
         }
     }

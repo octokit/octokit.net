@@ -102,7 +102,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), options);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Octokit
         [ManualRoute("GET", "/licenses/{key}")]
         public Task<License> GetLicense(string key)
         {
-            return ApiConnection.Get<License>(ApiUrls.Licenses(key), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.Get<License>(ApiUrls.Licenses(key));
         }
 
         /// <summary>

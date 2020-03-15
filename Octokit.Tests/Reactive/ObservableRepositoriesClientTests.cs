@@ -258,9 +258,9 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
             }
 
             [Fact(Skip = "See https://github.com/octokit/octokit.net/issues/1011 for issue to investigate this further")]
@@ -379,9 +379,9 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364L)).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, "application/vnd.github.drax-preview+json");
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, "application/vnd.github.drax-preview+json");
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, null, "application/vnd.github.drax-preview+json");
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
             }
         }
 

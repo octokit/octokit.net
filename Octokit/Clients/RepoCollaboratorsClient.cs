@@ -145,7 +145,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
 
         }
 
@@ -165,7 +165,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

@@ -146,7 +146,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="user">The username of the prospective collaborator</param>        
+        /// <param name="user">The username of the prospective collaborator</param>
         public IObservable<RepositoryInvitation> Invite(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -372,7 +372,7 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/collaborators/#list">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="user">The username of the prospective collaborator</param>   
+        /// <param name="user">The username of the prospective collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         public IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission)
         {
