@@ -405,7 +405,7 @@ namespace Octokit.Tests.Clients
                 var permission = new CollaboratorRequest(Permission.Push);
 
                 client.Invite("owner", "test", "user1", permission);
-                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission), Arg.Any<string>(), Arg.Is<string>("application/vnd.github.swamp-thing-preview+json"));
+                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission));
             }
 
             [Fact]

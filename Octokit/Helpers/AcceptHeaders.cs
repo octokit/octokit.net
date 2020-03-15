@@ -25,13 +25,7 @@ namespace Octokit
 
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview+json";
 
-        [Obsolete("API has graduated")]
-        public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
-
         public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
-
-        [Obsolete("API has graduated")]
-        public const string InvitationsApiPreview = "application/vnd.github.swamp-thing-preview+json";
 
         [Obsolete("API has graduated")]
         public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";

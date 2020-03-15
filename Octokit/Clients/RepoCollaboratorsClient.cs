@@ -370,7 +370,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
 
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), new object());
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(permission, nameof(permission));
 
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), permission, null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), permission);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), new object(), null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), new object());
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(permission, nameof(permission));
 
-            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), permission, null, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), permission);
         }
 
         /// <summary>
