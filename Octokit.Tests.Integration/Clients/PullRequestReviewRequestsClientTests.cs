@@ -46,10 +46,11 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
 
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequests = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, number);
 
             Assert.NotNull(reviewRequests);
-            Assert.Empty(reviewRequests);
+            Assert.Empty(reviewRequests.Users);
+            Assert.Empty(reviewRequests.Teams);
         }
 
         [IntegrationTest]
@@ -57,10 +58,11 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
 
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequests = await _client.Get(_context.RepositoryId, number);
 
             Assert.NotNull(reviewRequests);
-            Assert.Empty(reviewRequests);
+            Assert.Empty(reviewRequests.Users);
+            Assert.Empty(reviewRequests.Teams);
         }
 
         [IntegrationTest]
@@ -68,9 +70,9 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context);
 
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequests = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, number);
 
-            Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
+            Assert.Equal(_collaboratorLogins, reviewRequests.Users.Select(rr => rr.Login));
         }
 
         [IntegrationTest]
@@ -78,91 +80,9 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context);
 
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequests = await _client.Get(_context.RepositoryId, number);
 
-            Assert.Equal(_collaboratorLogins, reviewRequests.Select(rr => rr.Login));
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfReviewRequestsWithStart()
-        {
-            var number = await CreateTheWorld(_github, _context);
-
-            var options = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1,
-                StartPage = 2
-            };
-            var reviewRequests = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, options);
-
-            Assert.Equal(1, reviewRequests.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsCorrectCountOfReviewRequestsWithStartWithRepositoryId()
-        {
-            var number = await CreateTheWorld(_github, _context);
-
-            var options = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1,
-                StartPage = 2
-            };
-            var reviewRequests = await _client.GetAll(_context.RepositoryId, number, options);
-
-            Assert.Equal(1, reviewRequests.Count);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsDistinctResultsBasedOnStartPage()
-        {
-            var number = await CreateTheWorld(_github, _context);
-
-            var startOptions = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1
-            };
-            var firstPage = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, startOptions);
-
-            var skipStartOptions = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1,
-                StartPage = 2
-            };
-            var secondPage = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number, skipStartOptions);
-
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
-            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
-        }
-
-        [IntegrationTest]
-        public async Task ReturnsDistinctResultsBasedOnStartPageWithRepositoryId()
-        {
-            var number = await CreateTheWorld(_github, _context);
-
-            var startOptions = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1
-            };
-            var firstPage = await _client.GetAll(_context.RepositoryId, number, startOptions);
-
-            var skipStartOptions = new ApiOptions
-            {
-                PageSize = 1,
-                PageCount = 1,
-                StartPage = 2
-            };
-            var secondPage = await _client.GetAll(_context.RepositoryId, number, skipStartOptions);
-
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
-            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.Equal(_collaboratorLogins, reviewRequests.Users.Select(rr => rr.Login));
         }
     }
 
@@ -173,13 +93,13 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context);
 
-            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestsBeforeDelete = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequestToCreate = PullRequestReviewRequest.ForReviewers(_collaboratorLogins);
             await _client.Delete(_context.RepositoryOwner, _context.RepositoryName, number, reviewRequestToCreate);
-            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryOwner, _context.RepositoryName, number);
+            var reviewRequestsAfterDelete = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, number);
 
-            Assert.NotEmpty(reviewRequestsBeforeDelete);
-            Assert.Empty(reviewRequestsAfterDelete);
+            Assert.NotEmpty(reviewRequestsBeforeDelete.Users);
+            Assert.Empty(reviewRequestsAfterDelete.Users);
         }
 
         [IntegrationTest]
@@ -187,13 +107,13 @@ public class PullRequestReviewRequestsClientTests
         {
             var number = await CreateTheWorld(_github, _context);
 
-            var reviewRequestsBeforeDelete = await _client.GetAll(_context.RepositoryId, number);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestsBeforeDelete = await _client.Get(_context.RepositoryId, number);
+            var reviewRequestToCreate = PullRequestReviewRequest.ForReviewers(_collaboratorLogins);
             await _client.Delete(_context.RepositoryId, number, reviewRequestToCreate);
-            var reviewRequestsAfterDelete = await _client.GetAll(_context.RepositoryId, number);
+            var reviewRequestsAfterDelete = await _client.Get(_context.RepositoryId, number);
 
-            Assert.NotEmpty(reviewRequestsBeforeDelete);
-            Assert.Empty(reviewRequestsAfterDelete);
+            Assert.NotEmpty(reviewRequestsBeforeDelete.Users);
+            Assert.Empty(reviewRequestsAfterDelete.Users);
         }
     }
 
@@ -203,7 +123,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task CreatesRequests()
         {
             var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = PullRequestReviewRequest.ForReviewers(_collaboratorLogins);
 
             var pr = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, number, reviewRequestToCreate);
 
@@ -214,7 +134,7 @@ public class PullRequestReviewRequestsClientTests
         public async Task CreatesRequestsWithRepositoryId()
         {
             var number = await CreateTheWorld(_github, _context, createReviewRequests: false);
-            var reviewRequestToCreate = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequestToCreate = PullRequestReviewRequest.ForReviewers(_collaboratorLogins);
 
             var pr = await _client.Create(_context.RepositoryId, number, reviewRequestToCreate);
 
@@ -250,7 +170,7 @@ public class PullRequestReviewRequestsClientTests
         // Create review requests (optional)
         if (createReviewRequests)
         {
-            var reviewRequest = new PullRequestReviewRequest(_collaboratorLogins);
+            var reviewRequest = PullRequestReviewRequest.ForReviewers(_collaboratorLogins);
             await github.PullRequest.ReviewRequest.Create(context.RepositoryOwner, context.RepositoryName, createdPullRequest.Number, reviewRequest);
         }
 
