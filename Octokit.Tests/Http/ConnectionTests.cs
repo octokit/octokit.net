@@ -396,7 +396,7 @@ namespace Octokit.Tests.Http
                     req.ContentType == null &&
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
-                    req.Headers["Accept"] == "application/vnd.github.html" &&
+                    req.Headers["Accept"] == "application/vnd.github.v3.html" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
