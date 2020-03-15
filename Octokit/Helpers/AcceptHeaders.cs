@@ -13,12 +13,6 @@ namespace Octokit
 
         public const string CommitReferenceSha1MediaType = "application/vnd.github.v3.sha";
 
-        [Obsolete("API has graduated")]
-        public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
-
-        [Obsolete("API has graduated")]
-        public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
-
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
