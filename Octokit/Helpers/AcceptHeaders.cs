@@ -7,7 +7,7 @@ namespace Octokit
     {
         public const string StableVersion = "application/vnd.github.v3";
 
-        public const string StableVersionHtml = "application/vnd.github.html";
+        public const string StableVersionHtml = "application/vnd.github.v3.html";
 
         public const string RedirectsPreviewThenStableVersionJson = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
 
