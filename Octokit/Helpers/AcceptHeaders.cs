@@ -29,9 +29,6 @@ namespace Octokit
 
         public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview+json";
 
-        [Obsolete("API has graduated")]
-        public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
-
         public const string DraftPullRequestApiPreview = "application/vnd.github.shadow-cat-preview+json";
 
         public const string ProjectsApiPreview = "application/vnd.github.inertia-preview+json";
@@ -39,15 +36,9 @@ namespace Octokit
         [Obsolete("API is considered legacy")]
         public const string OrganizationMembershipPreview = "application/vnd.github.korra-preview+json";
 
-        [Obsolete("API has graduated")]
-        public const string NestedTeamsPreview = "application/vnd.github.hellcat-preview+json";
-
         public const string GitHubAppsPreview = "application/vnd.github.machine-man-preview+json";
 
         public const string PreReceiveEnvironmentsPreview = "application/vnd.github.eye-scream-preview+json";
-
-        [Obsolete("API has graduated")]
-        public const string LabelsApiPreview = "application/vnd.github.symmetra-preview+json";
 
         public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
 

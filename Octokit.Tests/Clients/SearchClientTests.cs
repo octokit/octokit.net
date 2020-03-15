@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Octokit.Tests.Clients
 {
     /// <summary>
-    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
     public class SearchClientTests
@@ -1936,8 +1936,7 @@ namespace Octokit.Tests.Clients
                 client.SearchLabels(new SearchLabelsRequest("something", 1));
                 connection.Received().Get<SearchLabelsResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.symmetra-preview+json");
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -1960,8 +1959,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something" &&
-                        d["repository_id"] == "1"),
-                    "application/vnd.github.symmetra-preview+json");
+                        d["repository_id"] == "1"));
             }
 
             [Fact]
@@ -1976,8 +1974,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchLabelsResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
-                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"),
-                    "application/vnd.github.symmetra-preview+json");
+                    Arg.Is<Dictionary<string, string>>(d => d["sort"] == "created"));
             }
 
             [Fact]
@@ -1995,8 +1992,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["sort"] == "created" &&
-                        d["order"] == "asc"),
-                    "application/vnd.github.symmetra-preview+json");
+                        d["order"] == "asc"));
             }
 
             [Fact]
@@ -2010,8 +2006,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchLabelsResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
-                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"),
-                    "application/vnd.github.symmetra-preview+json");
+                    Arg.Is<Dictionary<string, string>>(d => d["order"] == "desc"));
             }
 
             [Fact]
@@ -2027,8 +2022,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/labels"),
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something" &&
-                        d["repository_id"] == "1"),
-                    "application/vnd.github.symmetra-preview+json");
+                        d["repository_id"] == "1"));
             }
         }
     }
