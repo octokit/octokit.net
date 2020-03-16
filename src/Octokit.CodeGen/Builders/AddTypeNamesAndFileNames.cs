@@ -12,6 +12,7 @@ namespace Octokit.CodeGen
         static readonly Dictionary<string, string> translations = new Dictionary<string, string>
         {
           { "repos", "repositories" },
+          { "orgs", "organizations" },
         };
 
         public static readonly TypeBuilderFunc AddTypeNamesAndFileName = (metadata, data) =>
