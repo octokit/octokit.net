@@ -74,6 +74,8 @@ namespace Octokit
 
         public const string OAuthApplicationsPreview = "application/vnd.github.doctor-strange-preview+json";
 
+        public const string SearchCommitsPreview = "application/vnd.github.cloak-preview";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
