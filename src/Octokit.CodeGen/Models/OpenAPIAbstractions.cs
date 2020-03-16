@@ -124,6 +124,7 @@ namespace Octokit.CodeGen
         }
         public string Summary { get; set; }
         public string Description { get; set; }
+        public string ExternalDocumentation { get; set; }
         public HttpMethod Method { get; set; }
         public string AcceptHeader { get; set; }
         public List<Parameter> Parameters { get; set; }

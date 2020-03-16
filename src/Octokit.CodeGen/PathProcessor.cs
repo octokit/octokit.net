@@ -111,16 +111,17 @@ namespace Octokit.CodeGen
                     }
                     else if (innerType == "array")
                     {
-                      var innerProperties = property.Value.GetProperty("items");
-                      JsonElement arrayProp;
-                      if (innerProperties.TryGetProperty("type", out arrayProp))
-                      {
-                        var arrayType = arrayProp.GetString();
-                        objectResponse.Properties.Add(new ListOfPrimitiveTypeProperty(name, arrayType));
-                      } else
-                      {
-                        // TODO: what route is this failing on and what should we be parsing here?
-                      }
+                        var innerProperties = property.Value.GetProperty("items");
+                        JsonElement arrayProp;
+                        if (innerProperties.TryGetProperty("type", out arrayProp))
+                        {
+                            var arrayType = arrayProp.GetString();
+                            objectResponse.Properties.Add(new ListOfPrimitiveTypeProperty(name, arrayType));
+                        }
+                        else
+                        {
+                            // TODO: what route is this failing on and what should we be parsing here?
+                        }
 
                     }
                     else
@@ -211,6 +212,16 @@ namespace Octokit.CodeGen
                 if (verbElement.Value.TryGetProperty("description", out textProp))
                 {
                     verb.Description = textProp.GetString().TrimEnd();
+                }
+
+                JsonElement objectProp;
+                if (verbElement.Value.TryGetProperty("externalDocs", out objectProp))
+                {
+                    JsonElement urlProp;
+                    if (objectProp.TryGetProperty("url", out urlProp))
+                    {
+                        verb.ExternalDocumentation = urlProp.GetString();
+                    }
                 }
 
                 JsonElement parametersProp;

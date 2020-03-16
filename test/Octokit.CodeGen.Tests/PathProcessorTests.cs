@@ -36,6 +36,7 @@ namespace Octokit.CodeGen.Tests
             Assert.Equal("application/vnd.github.v3+json", get.AcceptHeader);
             Assert.Equal("Check if a GitHub account is associated with any Marketplace listing", get.Summary);
             Assert.Equal("Some description goes here", get.Description);
+            Assert.Equal("https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing", get.ExternalDocumentation);
 
             var parameter = Assert.Single(get.Parameters);
 
