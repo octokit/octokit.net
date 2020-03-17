@@ -431,6 +431,13 @@ namespace Octokit.Tests
                 }
             }
 
+            // this test is the root cause of https://github.com/octokit/octokit.net/issues/2052
+            // as the API is returning a null value where the enum is expecting
+            // something like a string
+            //
+            // this should be removed once we can confirm the GitHub API is no
+            // longer returning a null for the parent Team's permission value,
+            // making the test redundant
             [Fact]
             public void ShouldDeserializeParentTeamWithNullPermission()
             {
