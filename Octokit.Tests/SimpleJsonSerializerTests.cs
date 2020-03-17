@@ -430,6 +430,44 @@ namespace Octokit.Tests
                     // Test passes if no exception thrown
                 }
             }
+
+            [Fact]
+            public void ShouldDeserializeParentTeamWithNullPermission()
+            {
+                var teamJson = @"{
+                    ""id"": 1,
+                    ""node_id"": ""MDQ6VGVhbTE="",
+                    ""url"": ""https://api.github.com/teams/1"",
+                    ""html_url"": ""https://api.github.com/teams/justice-league"",
+                    ""name"": ""Justice League"",
+                    ""slug"": ""justice-league"",
+                    ""description"": ""A great team."",
+                    ""privacy"": ""closed"",
+                    ""permission"": ""admin"",
+                    ""members_url"": ""https://api.github.com/teams/1/members{/member}"",
+                    ""repositories_url"": ""https://api.github.com/teams/1/repos"",
+                    ""parent"": {
+                        ""id"": 1,
+                        ""node_id"": ""MDQ6LFJSbTE="",
+                        ""url"": ""https://api.github.com/teams/2"",
+                        ""html_url"": ""https://api.github.com/teams/super-friends"",
+                        ""name"": ""Super Friends"",
+                        ""slug"": ""super-friends"",
+                        ""description"": ""Also a great team."",
+                        ""privacy"": ""closed"",
+                        ""permission"": null,
+                        ""members_url"": ""https://api.github.com/teams/2/members{/member}"",
+                        ""repositories_url"": ""https://api.github.com/teams/2/repos"",
+                        }
+                    }
+                }";
+
+                var result = new SimpleJsonSerializer().Deserialize<Team>(teamJson);
+
+                Assert.NotNull(result.Permission);
+                Assert.NotNull(result.Parent);
+                Assert.Null(result.Parent.Permission);
+            }
         }
 
         public class Sample
