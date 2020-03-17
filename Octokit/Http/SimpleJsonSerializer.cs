@@ -190,6 +190,11 @@ namespace Octokit.Internal
                     return base.DeserializeObject(value, payloadType);
                 }
 
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    return Activator.CreateInstance(type, "null");
+                }
+
                 return base.DeserializeObject(value, type);
             }
 
