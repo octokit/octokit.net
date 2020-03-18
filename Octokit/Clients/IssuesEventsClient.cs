@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{number}/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -58,7 +58,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("starfox")]
-        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{number}/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
