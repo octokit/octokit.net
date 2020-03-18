@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/blobs/{file_sha}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/blobs/{file_sha}")]
         public Task<Blob> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/git/blobs")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/blobs")]
         public Task<BlobReference> Create(string owner, string name, NewBlob newBlob)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

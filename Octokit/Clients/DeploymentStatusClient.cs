@@ -27,7 +27,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/deployments/{deployment_id}/statuses")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -64,7 +64,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         [Preview("ant-man")]
         [Preview("flash")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/deployments/{deployment_id}/statuses")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -113,7 +113,7 @@ namespace Octokit
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         [Preview("ant-man")]
         [Preview("flash")]
-        [ManualRoute("POST", "/repos/{owner}/{name}/deployments/{deployment_id}/statuses")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

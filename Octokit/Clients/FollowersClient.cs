@@ -57,7 +57,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        [ManualRoute("GET", "/user/{username}/followers")]
+        [ManualRoute("GET", "/users/{username}/followers")]
         public Task<IReadOnlyList<User>> GetAll(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -74,7 +74,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        [ManualRoute("GET", "/user/{username}/followers")]
+        [ManualRoute("GET", "/users/{username}/followers")]
         public Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -179,7 +179,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        [ManualRoute("GET", "/users/{login}/following/{username}")]
+        [ManualRoute("GET", "/users/{username}/following/{target_user}")]
         public async Task<bool> IsFollowing(string login, string following)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));

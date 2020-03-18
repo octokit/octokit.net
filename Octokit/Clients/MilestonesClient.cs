@@ -26,7 +26,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/milestones/{number}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{number}")]
         public Task<Milestone> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/milestones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/milestones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -127,7 +127,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/milestones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -165,7 +165,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/milestones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
         public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -206,7 +206,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        [ManualRoute("POST", "/repos/{owner}/{name}/milestones")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/milestones")]
         public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -243,7 +243,7 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/milestones/{number}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/milestones/{number}")]
         public Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -280,7 +280,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/milestones/{number}")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/milestones/{number}")]
         public Task Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

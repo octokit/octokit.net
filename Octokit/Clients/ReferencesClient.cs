@@ -35,7 +35,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/master" or "tags/release-1")
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/refs/{ref}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<Reference> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -86,7 +86,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/refs")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs")]
         public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
         {
             return GetAll(owner, name, ApiOptions.None);
@@ -102,7 +102,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/refs")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs")]
         public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -153,7 +153,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/refs/{ref}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace)
         {
             return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
@@ -175,7 +175,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/master" or "tags/release-1")
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/refs/{ref}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -245,7 +245,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        [ManualRoute("POST", "/repos/{owner}/{name}/git/refs")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/refs")]
         public Task<Reference> Create(string owner, string name, NewReference reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -288,7 +288,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/master" or "tags/release-1")
         /// </remarks>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/git/refs/{ref}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -348,7 +348,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/master" or "tags/release-1")
         /// </remarks>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/git/refs/{ref}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task Delete(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

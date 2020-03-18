@@ -56,7 +56,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -87,7 +87,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -121,7 +121,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -152,7 +152,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues/events")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
