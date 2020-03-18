@@ -27,7 +27,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repositories/{owner}/{repo}/traffic/popular/paths")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/popular/paths")]
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -53,7 +53,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repositories/{owner}/{repo}/traffic/popular/referrers")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/popular/referrers")]
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        [ManualRoute("GET", "/repositories/{owner}/{repo}/traffic/clones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/clones")]
         public Task<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -114,7 +114,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        [ManualRoute("GET", "/repositories/{owner}/{repo}/traffic/views")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/views")]
         public Task<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
