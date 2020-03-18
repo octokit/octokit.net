@@ -67,7 +67,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/contents/{path}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/contents/{path}")]
         public Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -188,7 +188,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/readme")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/readme")]
         public async Task<Readme> GetReadme(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
