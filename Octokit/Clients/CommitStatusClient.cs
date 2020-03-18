@@ -144,7 +144,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        [ManualRoute("POST", "/repos/{owner}/{repo}/statuses/{ref}")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/statuses/{sha}")]
         public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -164,7 +164,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        [ManualRoute("POST", "/repositories/{id}/statuses/{ref}")]
+        [ManualRoute("POST", "/repositories/{id}/statuses/{sha}")]
         public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));

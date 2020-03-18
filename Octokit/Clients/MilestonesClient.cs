@@ -26,7 +26,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{number}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
         public Task<Milestone> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -42,7 +42,7 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        [ManualRoute("GET", "/repositories/{id}/milestones/{number}")]
+        [ManualRoute("GET", "/repositories/{id}/milestones/{milestone_number}")]
         public Task<Milestone> Get(long repositoryId, int number)
         {
             return ApiConnection.Get<Milestone>(ApiUrls.Milestone(repositoryId, number));
@@ -243,7 +243,7 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        [ManualRoute("PATCH", "/repos/{owner}/{repo}/milestones/{number}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
         public Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -263,7 +263,7 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        [ManualRoute("PATCH", "/repositories/{id}/milestones/{number}")]
+        [ManualRoute("PATCH", "/repositories/{id}/milestones/{milestone_number}")]
         public Task<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
@@ -280,7 +280,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/repos/{owner}/{repo}/milestones/{number}")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
         public Task Delete(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -297,7 +297,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The milestone number</param>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/repositories/{id}/milestones/{number}")]
+        [ManualRoute("DELETE", "/repositories/{id}/milestones/{milestone_number}")]
         public Task Delete(long repositoryId, int number)
         {
             return ApiConnection.Delete(ApiUrls.Milestone(repositoryId, number));
