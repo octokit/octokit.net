@@ -164,7 +164,7 @@ namespace Octokit.Reactive
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         public IObservable<Repository> GetAllPublic()
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories());
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return _connection.GetAndFlattenAllPages<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
+            return _connection.GetAndFlattenAllPages<Repository>(url);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), options);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary());
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, options);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), options);
         }
 
         /// <summary>
@@ -602,7 +602,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
         }
 
         /// <summary>

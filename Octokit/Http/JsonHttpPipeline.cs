@@ -30,7 +30,7 @@ namespace Octokit.Internal
 
             if (!request.Headers.ContainsKey("Accept"))
             {
-                request.Headers["Accept"] = AcceptHeaders.RedirectsPreviewThenStableVersionJson;
+                request.Headers["Accept"] = AcceptHeaders.StableVersionJson;
             }
 
             if (request.Method == HttpMethod.Get || request.Body == null) return;

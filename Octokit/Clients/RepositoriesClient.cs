@@ -184,7 +184,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, nameof(update));
             Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId));
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories")]
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories());
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Octokit
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return ApiConnection.GetAll<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.GetAll<Repository>(url);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
         }
 
         /// <summary>
@@ -808,7 +808,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
         }
 
         /// <summary>
@@ -912,7 +912,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name));
         }
 
         /// <summary>
@@ -926,7 +926,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/license")]
         public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId)
         {
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId));
         }
 
         /// <summary>

@@ -396,7 +396,7 @@ namespace Octokit.Tests.Http
                     req.ContentType == null &&
                     req.Body == null &&
                     req.Method == HttpMethod.Get &&
-                    req.Headers["Accept"] == "application/vnd.github.html" &&
+                    req.Headers["Accept"] == "application/vnd.github.v3.html" &&
                     req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
             }
         }
@@ -631,7 +631,7 @@ namespace Octokit.Tests.Http
                 httpClient.Received().Send(Arg.Is<IRequest>(req =>
                     req.BaseAddress == _exampleUri &&
                     req.Body == body &&
-                    req.Headers["Accept"] == "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8" &&
+                    req.Headers["Accept"] == "application/vnd.github.v3+json" &&
                     req.ContentType == "application/arbitrary" &&
                     req.Method == HttpMethod.Post &&
                     req.Endpoint == new Uri("https://other.host.com/path?query=val")), Args.CancellationToken);

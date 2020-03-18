@@ -32,8 +32,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview"),
                     Arg.Any<ApiOptions>());
             }
         }
@@ -49,10 +47,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = "user/gpg_keys/1";
                 client.Get(1);
 
-                connection.Received().Get<GpgKey>(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<Dictionary<string, string>>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview"));
+                connection.Received().Get<GpgKey>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
 
@@ -76,8 +71,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<object>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview"));
+                    Arg.Any<object>());
             }
 
             [Fact]
@@ -91,9 +85,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<GpgKey>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Is<NewGpgKey>(a =>
-                        a.ArmoredPublicKey == "ABCDEFG"),
-                    Arg.Any<string>());
+                    Arg.Is<NewGpgKey>(a => a.ArmoredPublicKey == "ABCDEFG"));
             }
         }
 
@@ -108,10 +100,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = "user/gpg_keys/1";
                 client.Delete(1);
 
-                connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == expectedUri),
-                    Arg.Any<object>(),
-                    Arg.Is<string>(s => s == "application/vnd.github.cryptographer-preview"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
         }
     }

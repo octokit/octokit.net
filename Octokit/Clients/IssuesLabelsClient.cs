@@ -65,7 +65,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(owner, name, number), options);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.Labels(owner, name), options);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.Labels(repositoryId), options);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return ApiConnection.GetAll<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName), null, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName));
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName), null, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newLabel, nameof(newLabel));
 
-            return ApiConnection.Post<Label>(ApiUrls.Labels(owner, name), newLabel, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<Label>(ApiUrls.Labels(owner, name), newLabel);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newLabel, nameof(newLabel));
 
-            return ApiConnection.Post<Label>(ApiUrls.Labels(repositoryId), newLabel, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<Label>(ApiUrls.Labels(repositoryId), newLabel);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Octokit
 
             // BUG: this should be a PATCH instead of POST
 
-            return ApiConnection.Post<Label>(ApiUrls.Label(owner, name, labelName), labelUpdate, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<Label>(ApiUrls.Label(owner, name, labelName), labelUpdate);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Octokit
 
             // BUG: this should be a PATCH instead of POST
 
-            return ApiConnection.Post<Label>(ApiUrls.Label(repositoryId, labelName), labelUpdate, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<Label>(ApiUrls.Label(repositoryId, labelName), labelUpdate);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Post<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Delete<IReadOnlyList<Label>>(ApiUrls.IssueLabel(owner, name, number, labelName), AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Delete<IReadOnlyList<Label>>(ApiUrls.IssueLabel(owner, name, number, labelName), new object());
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Delete<IReadOnlyList<Label>>(ApiUrls.IssueLabel(repositoryId, number, labelName), AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Delete<IReadOnlyList<Label>>(ApiUrls.IssueLabel(repositoryId, number, labelName), new object());
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(owner, name, number), labels);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Put<IReadOnlyList<Label>>(ApiUrls.IssueLabels(repositoryId, number), labels);
         }
 
         /// <summary>

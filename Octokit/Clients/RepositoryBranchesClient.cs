@@ -13,8 +13,6 @@ namespace Octokit
     /// </remarks>
     public class RepositoryBranchesClient : ApiClient, IRepositoryBranchesClient
     {
-        private string protectedBranchesPreviewHeaders = AcceptHeaders.Concat(AcceptHeaders.ProtectedBranchesApiPreview, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
-
         /// <summary>
         /// Initializes a new GitHub Repository Branches API client.
         /// </summary>
@@ -72,7 +70,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, protectedBranchesPreviewHeaders, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview, options);
         }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(repositoryId), null, protectedBranchesPreviewHeaders, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(repositoryId), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview, options);
         }
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -126,7 +124,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -146,7 +144,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -163,7 +161,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -185,7 +183,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -204,7 +202,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -227,7 +225,7 @@ namespace Octokit
             var endpoint = ApiUrls.RepoBranchProtection(owner, name, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -253,7 +251,7 @@ namespace Octokit
             var endpoint = ApiUrls.RepoBranchProtection(repositoryId, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -279,7 +277,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -296,7 +294,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -318,7 +316,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update, protectedBranchesPreviewHeaders);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -337,7 +335,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update, protectedBranchesPreviewHeaders);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -361,7 +359,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -388,7 +386,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -414,7 +412,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -431,7 +429,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -453,7 +451,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -472,7 +470,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -494,7 +492,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -513,7 +511,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -535,7 +533,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, protectedBranchesPreviewHeaders);
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -554,7 +552,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, protectedBranchesPreviewHeaders);
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -574,7 +572,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -591,7 +589,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -613,7 +611,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), update, protectedBranchesPreviewHeaders);
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), update, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -632,7 +630,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), update, protectedBranchesPreviewHeaders);
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), update, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -656,7 +654,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -683,7 +681,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -709,7 +707,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -726,7 +724,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -746,7 +744,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object(), protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object(), AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -763,7 +761,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object(), protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object(), AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -787,7 +785,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -814,7 +812,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -840,7 +838,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -857,7 +855,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -881,7 +879,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -908,7 +906,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null, protectedBranchesPreviewHeaders).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -934,7 +932,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -951,7 +949,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -973,7 +971,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -992,7 +990,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1014,7 +1012,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1033,7 +1031,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1055,7 +1053,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1074,7 +1072,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.Concat(protectedBranchesPreviewHeaders, AcceptHeaders.NestedTeamsPreview));
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1094,7 +1092,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1111,7 +1109,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1133,7 +1131,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1152,7 +1150,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, null, protectedBranchesPreviewHeaders);
+            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, null, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1174,7 +1172,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1193,7 +1191,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, protectedBranchesPreviewHeaders);
+            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1215,7 +1213,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, protectedBranchesPreviewHeaders);
+            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
 
         /// <summary>
@@ -1234,7 +1232,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, protectedBranchesPreviewHeaders);
+            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, AcceptHeaders.ProtectedBranchesRequiredApprovingApiPreview);
         }
     }
 }

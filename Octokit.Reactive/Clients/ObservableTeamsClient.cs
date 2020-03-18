@@ -64,7 +64,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.OrganizationTeams(org), options);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams(), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.UserTeams(), options);
         }
 
         /// <summary>
@@ -114,11 +114,11 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.TeamChildTeams(id), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.TeamChildTeams(id), options);
         }
 
         /// <summary>
-        /// Returns all members of the given team. 
+        /// Returns all members of the given team.
         /// </summary>
         /// <param name="id">The team identifier</param>
         /// <remarks>
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Returns all members of the given team. 
+        /// Returns all members of the given team.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
@@ -145,7 +145,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), options);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.TeamMembers(id), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets whether the user with the given <paramref name="login"/> 
+        /// Gets whether the user with the given <paramref name="login"/>
         /// is a member of the team with the given <paramref name="id"/>.
         /// A <see cref="NotFoundException"/> is thrown if the user is not a member.
         /// </summary>
@@ -286,7 +286,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), null, AcceptHeaders.NestedTeamsPreview, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.TeamRepositories(id), options);
         }
 
         /// <summary>

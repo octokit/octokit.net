@@ -47,7 +47,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), null, AcceptHeaders.GpgKeysPreview, options);
+            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), options);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Octokit
         [ManualRoute("GET", "/user/gpg_keys/{id}")]
         public Task<GpgKey> Get(int id)
         {
-            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id), null, AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id));
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
-            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey, AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit
         [ManualRoute("DELETE", "/user/gpg_keys/{id}")]
         public Task Delete(int id)
         {
-            return ApiConnection.Delete(ApiUrls.GpgKeys(id), new object(), AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Delete(ApiUrls.GpgKeys(id));
         }
     }
 }
