@@ -81,7 +81,6 @@ namespace Octokit.Tests.Conventions
                 .Assembly
                 .ExportedTypes
                 .Where(TypeExtensions.IsClientClass)
-                .Where(t => t != typeof(StatisticsClient)) // This convention doesn't apply to this one type.
                 .Where(t => t != typeof(GitHubClient))
                 .Select(type => new[] { type });
         }
