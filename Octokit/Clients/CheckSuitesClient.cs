@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         [Preview("antiope")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/check-suites/{id}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suites/{id}")]
         public Task<CheckSuite> Get(string owner, string name, long checkSuiteId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -64,7 +64,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/commits/{ref}/check-suites")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/commits/{ref}/check-suites")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -141,7 +141,7 @@ namespace Octokit
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
         [Preview("antiope")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/commits/{ref}/check-suites")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public async Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -192,7 +192,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
         [Preview("antiope")]
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/check-suites/preferences")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/check-suites/preferences")]
         public Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -229,7 +229,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
         [Preview("antiope")]
-        [ManualRoute("POST", "/repos/{owner}/{name}/check-suites")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/check-suites")]
         public Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -266,7 +266,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         [Preview("antiope")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/check-suites/{2}/rerequest")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suites/{2}/rerequest")]
         public async Task<bool> Rerequest(string owner, string name, long checkSuiteId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="number">The reaction id</param>
         /// <returns></returns>
         [Preview("squirrel-girl")]
-        [ManualRoute("DELETE", "/reactions/{number}")]
+        [ManualRoute("DELETE", "/reactions/{reaction_id}")]
         public Task Delete(int number)
         {
             return ApiConnection.Delete(ApiUrls.Reactions(number), new object(), AcceptHeaders.ReactionsPreview);

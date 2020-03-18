@@ -58,7 +58,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
-        [ManualRoute("GET", "/user/gpg_keys/{id}")]
+        [ManualRoute("GET", "/user/gpg_keys/{gpg_key_id}")]
         public Task<GpgKey> Get(int id)
         {
             return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id), null, AcceptHeaders.GpgKeysPreview);
@@ -88,7 +88,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/user/gpg_keys/{id}")]
+        [ManualRoute("DELETE", "/user/gpg_keys/{gpg_key_id}")]
         public Task Delete(int id)
         {
             return ApiConnection.Delete(ApiUrls.GpgKeys(id), new object(), AcceptHeaders.GpgKeysPreview);

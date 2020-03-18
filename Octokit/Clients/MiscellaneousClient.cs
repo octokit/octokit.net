@@ -72,7 +72,7 @@ namespace Octokit
         /// </summary>
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
-        [ManualRoute("GET", "/gitignore/templates/{template_name}")]
+        [ManualRoute("GET", "/gitignore/templates/{name}")]
         public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));

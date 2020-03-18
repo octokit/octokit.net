@@ -94,7 +94,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [Preview("machine-man")]
-        [ManualRoute("GET", "/app/installations/{id}")]
+        [ManualRoute("GET", "/app/installations/{installation_id}")]
         public Task<Installation> GetInstallationForCurrent(long installationId)
         {
             return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null, AcceptHeaders.GitHubAppsPreview);
@@ -142,7 +142,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [Preview("machine-man")]
-        [ManualRoute("GET", "/app/installations/{id}/access_tokens")]
+        [ManualRoute("GET", "/app/installations/{installation_id}/access_tokens")]
         public Task<AccessToken> CreateInstallationToken(long installationId)
         {
             return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, AcceptHeaders.GitHubAppsPreview);
@@ -169,7 +169,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
         [Preview("machine-man")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/installation")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/installation")]
         public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -196,7 +196,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
         [Preview("machine-man")]
-        [ManualRoute("GET", "/users/{user}/installation")]
+        [ManualRoute("GET", "/users/{username}/installation")]
         public Task<Installation> GetUserInstallationForCurrent(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));

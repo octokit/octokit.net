@@ -67,7 +67,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         [Preview("squirrel-girl")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{number}")]
         public Task<Issue> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -298,7 +298,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -329,7 +329,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -364,7 +364,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -401,7 +401,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("squirrel-girl")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -439,7 +439,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/issues")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues")]
         public Task<Issue> Create(string owner, string name, NewIssue newIssue)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -473,7 +473,7 @@ namespace Octokit
         /// <param name="number">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/issues/{number}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/issues/{number}")]
         public Task<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -507,7 +507,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        [ManualRoute("PUT", "/repos/{owner}/{name}/issues/{number}/lock")]
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{number}/lock")]
         public Task Lock(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -535,7 +535,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/issues/{number}/lock")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{number}/lock")]
         public Task Unlock(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

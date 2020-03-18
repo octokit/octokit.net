@@ -49,8 +49,8 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newGist, nameof(newGist));
 
-            //Required to create anonymous object to match signature of files hash.  
-            // Allowing the serializer to handle Dictionary<string,NewGistFile> 
+            //Required to create anonymous object to match signature of files hash.
+            // Allowing the serializer to handle Dictionary<string,NewGistFile>
             // will fail to match.
             var filesAsJsonObject = new JsonObject();
             foreach (var kvp in newGist.Files)
@@ -97,7 +97,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously, 
+        /// List the authenticated user’s gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
@@ -110,7 +110,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously, 
+        /// List the authenticated user’s gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
@@ -126,7 +126,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously, 
+        /// List the authenticated user’s gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
@@ -140,7 +140,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously, 
+        /// List the authenticated user’s gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
@@ -278,7 +278,7 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user</param>
-        [ManualRoute("GET", "/users/{user}/gists")]
+        [ManualRoute("GET", "/users/{username}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -294,7 +294,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/users/{user}/gists")]
+        [ManualRoute("GET", "/users/{username}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -311,7 +311,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        [ManualRoute("GET", "/users/{user}/gists")]
+        [ManualRoute("GET", "/users/{username}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -328,7 +328,7 @@ namespace Octokit
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/users/{user}/gists")]
+        [ManualRoute("GET", "/users/{username}/gists")]
         public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));

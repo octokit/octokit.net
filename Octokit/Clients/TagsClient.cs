@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/tags/{sha}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/tags/{sha}")]
         public Task<GitTag> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/git/tags")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/tags")]
         public Task<GitTag> Create(string owner, string name, NewTag tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

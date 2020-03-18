@@ -27,7 +27,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pages")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pages")]
         public Task<Page> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -57,7 +57,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -88,7 +88,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds")]
         public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -124,7 +124,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pages/builds/latest")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds/latest")]
         public Task<PagesBuild> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -154,7 +154,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        [ManualRoute("POST", "/repos/{owner}/{name}/pages/builds")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/pages/builds")]
         public Task<PagesBuild> RequestPageBuild(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

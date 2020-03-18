@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases")]
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -61,7 +61,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases")]
         public Task<IReadOnlyList<Release>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/{id}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}")]
         public Task<Release> Get(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -120,7 +120,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="tag">The tag of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/tags/{tag}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/tags/{tag}")]
         public Task<Release> Get(string owner, string name, string tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -174,7 +174,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/latest")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/latest")]
         public Task<Release> GetLatest(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -209,7 +209,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("POST", "/repos/{owner}/{name}/releases")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/releases")]
         public Task<Release> Create(string owner, string name, NewRelease data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -249,7 +249,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/releases/{id}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/releases/{release_id}")]
         public Task<Release> Edit(string owner, string name, int id, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -289,7 +289,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/releases/{id}")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/releases/{release_id}")]
         public Task Delete(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -325,7 +325,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/{id}/assets")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}/assets")]
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -360,7 +360,7 @@ namespace Octokit
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/{id}/assets")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}/assets")]
         public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -433,7 +433,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/releases/assets/{asset_id}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/releases/assets/{asset_id}")]
         public Task<ReleaseAsset> GetAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -468,7 +468,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/releases/assets/{asset_id}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/releases/assets/{asset_id}")]
         public Task<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -506,7 +506,7 @@ namespace Octokit
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/releases/assets/{asset_id}")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/releases/assets/{asset_id}")]
         public Task DeleteAsset(string owner, string name, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

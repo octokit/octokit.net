@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
         public Task<RequestedReviews> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -53,7 +53,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
         public Task<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -88,7 +88,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
         public Task Delete(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

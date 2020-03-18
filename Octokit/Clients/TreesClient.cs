@@ -30,7 +30,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        [ManualRoute("GET", "repos/{owner}/{repo}/git/trees/{tree_sha}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/trees/{tree_sha}")]
         public Task<TreeResponse> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -65,7 +65,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        [ManualRoute("GET", "repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1")]
         public Task<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
