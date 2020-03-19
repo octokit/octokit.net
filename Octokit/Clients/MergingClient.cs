@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        [ManualRoute("POST", "/repos/{owner}/{name}/merges")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/merges")]
         public Task<Merge> Create(string owner, string name, NewMerge merge)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

@@ -25,7 +25,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -58,7 +58,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -159,7 +159,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{number}/labels")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{milestone_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -176,7 +176,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
-        [ManualRoute("GET", "/repositories/{id}/milestones/{number}/labels")]
+        [ManualRoute("GET", "/repositories/{id}/milestones/{milestone_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number)
         {
             return GetAllForMilestone(repositoryId, number, ApiOptions.None);
@@ -192,7 +192,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{number}/labels")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{milestone_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -211,7 +211,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repositories/{id}/milestones/{number}/labels")]
+        [ManualRoute("GET", "/repositories/{id}/milestones/{milestone_number}/labels")]
         public Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -377,7 +377,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int number, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -414,7 +414,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int number, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -451,7 +451,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int number, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -487,7 +487,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The number of the issue</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{number}/labels")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/labels")]
         public Task RemoveAllFromIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
