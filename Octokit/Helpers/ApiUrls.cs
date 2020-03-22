@@ -1860,6 +1860,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the relative <see cref="Uri"/> for searching commits
+        /// </summary>
+        /// <returns></returns>
+        public static Uri SearchCommits()
+        {
+            return "search/commits".FormatUri();
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

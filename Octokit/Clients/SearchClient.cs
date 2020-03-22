@@ -91,10 +91,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of commits</returns>
         [ManualRoute("GET", "/search/commits")]
-        public Task<SearchCommitsResult> SearchCommits(SearchLabelsRequest search)
+        public Task<SearchCommitsResult> SearchCommits(SearchCommitsRequest search)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters, AcceptHeaders.SearchCommitsPreview);
+            return ApiConnection.Get<SearchCommitsResult>(ApiUrls.SearchLabels(), search.Parameters, AcceptHeaders.SearchCommitsPreview);
         }
     }
 }

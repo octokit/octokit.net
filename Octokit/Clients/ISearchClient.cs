@@ -57,6 +57,6 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of commits</returns>
         [ManualRoute("GET", "/search/commits")]
-        Task<SearchCommitsResult> SearchCommits(SearchLabelsRequest search);
+        Task<SearchCommitsResult> SearchCommits(SearchCommitsRequest search);
     }
 }
