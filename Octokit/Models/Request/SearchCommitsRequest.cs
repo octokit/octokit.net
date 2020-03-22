@@ -164,7 +164,7 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/en/github/searching-for-information-on-github/searching-commits#search-within-a-users-or-organizations-repositories
         /// </remarks>
-        // [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public RepositoryCollection Repos { get; set; }
 
         private IEnumerable<CommittIsQualifier> _is;
@@ -293,6 +293,13 @@ namespace Octokit
             [Parameter(Value = "committer-date")]
             CommiterDate
 
+        }
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Term: {0} Sort: {1}", Term, Sort);
+            }
         }
     }
 }
