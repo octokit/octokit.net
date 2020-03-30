@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Octokit.Internal;
 using Xunit;
 
@@ -13,6 +15,8 @@ namespace Octokit.Tests
             [Fact]
             public void ParsesApiInfoFromHeaders()
             {
+                var response = new HttpResponseMessage();
+
                 var headers = new Dictionary<string, string>
                 {
                     { "X-Accepted-OAuth-Scopes", "user" },
@@ -22,7 +26,12 @@ namespace Octokit.Tests
                     { "ETag", "5634b0b187fd2e91e3126a75006cc4fa" }
                 };
 
-                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+                foreach (var header in headers)
+                {
+                    response.Headers.Add(header.Key, new string[] { header.Value });
+                }
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(response.Headers);
 
                 Assert.NotNull(apiInfo);
                 Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
@@ -35,6 +44,8 @@ namespace Octokit.Tests
             [Fact]
             public void BadHeadersAreIgnored()
             {
+                var response = new HttpResponseMessage();
+
                 var headers = new Dictionary<string, string>
                 {
                     {
@@ -44,7 +55,13 @@ namespace Octokit.Tests
                     }
                 };
 
-                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+                foreach (var header in headers)
+                {
+                    response.Headers.Add(header.Key, new string[] { header.Value });
+                }
+
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(response.Headers);
 
                 Assert.NotNull(apiInfo);
                 Assert.Equal(0, apiInfo.Links.Count);
