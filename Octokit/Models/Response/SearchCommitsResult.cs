@@ -5,10 +5,10 @@ using Octokit.Internal;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SearchCommitsResult : SearchResult<SearchCode>
+    public class SearchCommitsResult : SearchResult<SearchCommit>
     {
         public SearchCommitsResult() { }
-        public SearchCommitsResult(int totalCount, bool incompleteResults, IReadOnlyList<SearchCode> items)
+        public SearchCommitsResult(int totalCount, bool incompleteResults, IReadOnlyList<SearchCommit> items)
          : base(totalCount, incompleteResults, items)
         {
         }
