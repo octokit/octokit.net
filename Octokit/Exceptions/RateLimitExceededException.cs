@@ -93,8 +93,7 @@ namespace Octokit
         protected RateLimitExceededException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            _rateLimit = info.GetValue("RateLimit", typeof(RateLimit)) as RateLimit
-                         ?? new RateLimit(new Dictionary<string, string>());
+            _rateLimit = info.GetValue("RateLimit", typeof(RateLimit)) as RateLimit ?? new RateLimit();
         }
 
         [SecurityCritical]

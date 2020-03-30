@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
 namespace Octokit.Internal
@@ -16,7 +17,7 @@ namespace Octokit.Internal
         static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
-        public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
+        public static ApiInfo ParseResponseHeaders(HttpResponseHeaders responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
 
@@ -25,28 +26,32 @@ namespace Octokit.Internal
             var acceptedOauthScopes = new List<string>();
             string etag = null;
 
-            if (responseHeaders.ContainsKey("X-Accepted-OAuth-Scopes"))
+            IEnumerable<string> values;
+            if (responseHeaders.TryGetValues("X-Accepted-OAuth-Scopes", out values))
             {
-                acceptedOauthScopes.AddRange(responseHeaders["X-Accepted-OAuth-Scopes"]
+                var first = values.First();
+                acceptedOauthScopes.AddRange(first
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (responseHeaders.ContainsKey("X-OAuth-Scopes"))
+            if (responseHeaders.TryGetValues("X-OAuth-Scopes", out values))
             {
-                oauthScopes.AddRange(responseHeaders["X-OAuth-Scopes"]
+                var first = values.First();
+                oauthScopes.AddRange(first
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (responseHeaders.ContainsKey("ETag"))
+            if (responseHeaders.TryGetValues("ETag", out values))
             {
-                etag = responseHeaders["ETag"];
+                etag = values.First();
             }
 
-            if (responseHeaders.ContainsKey("Link"))
+            if (responseHeaders.TryGetValues("Link", out values))
             {
-                var links = responseHeaders["Link"].Split(',');
+                var first = values.First();
+                var links = first.Split(',');
                 foreach (var link in links)
                 {
                     var relMatch = _linkRelRegex.Match(link);

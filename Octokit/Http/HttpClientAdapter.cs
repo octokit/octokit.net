@@ -125,7 +125,7 @@ namespace Octokit.Internal
             return new Response(
                 responseMessage.StatusCode,
                 responseBody,
-                responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First()),
+                responseMessage.Headers,
                 contentType);
         }
 

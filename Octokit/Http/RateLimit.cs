@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
 #endif
@@ -22,7 +23,7 @@ namespace Octokit
     {
         public RateLimit() { }
 
-        public RateLimit(IDictionary<string, string> responseHeaders)
+        public RateLimit(System.Net.Http.Headers.HttpResponseHeaders responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
 
@@ -65,13 +66,27 @@ namespace Octokit
         [Parameter(Key = "reset")]
         public long ResetAsUtcEpochSeconds { get; private set; }
 
-        static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
+        static long GetHeaderValueAsInt32Safe(System.Net.Http.Headers.HttpResponseHeaders responseHeaders, string key)
         {
-            string value;
+            IEnumerable<string> values;
+            if (!responseHeaders.TryGetValues(key, out values))
+            {
+                return 0;
+            }
+
+            var first = values.FirstOrDefault();
+            if (first == null)
+            {
+                return 0;
+            }
+
             long result;
-            return !responseHeaders.TryGetValue(key, out value) || value == null || !long.TryParse(value, out result)
-                ? 0
-                : result;
+            if (!long.TryParse(first, out result))
+            {
+                return 0;
+            }
+
+            return result;
         }
 
 #if !NO_SERIALIZABLE
