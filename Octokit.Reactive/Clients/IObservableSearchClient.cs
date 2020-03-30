@@ -46,5 +46,14 @@ namespace Octokit.Reactive
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
         IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search);
+
+        /// <summary>
+        /// search commits
+        /// https://developer.github.com/v3/search/#search-commits
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of commits</returns>
+        [ManualRoute("GET", "/search/commits")]
+        IObservable<SearchCommitsResult> SearchCommits(SearchCommitsRequest search);
     }
 }
