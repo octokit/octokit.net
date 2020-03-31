@@ -114,11 +114,10 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.GetApiResponse(status);
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
@@ -133,11 +132,12 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCodeWithRepositoryId(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.GetApiResponse(status);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
@@ -150,11 +150,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.GetApiResponse(HttpStatusCode.Conflict);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);
@@ -165,11 +166,11 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCodeWithRepositoryId()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json");
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new AssigneesClient(apiConnection);

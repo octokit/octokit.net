@@ -124,7 +124,7 @@ namespace Octokit.Tests
             public void IsRetrievedFromCredentialStore()
             {
                 var credentialStore = Substitute.For<ICredentialStore>();
-                credentialStore.GetCredentials().Returns(Task.Factory.StartNew(() => new Credentials("foo", "bar")));
+                credentialStore.GetCredentials().Returns(Task.FromResult(new Credentials("foo", "bar")));
                 var client = new GitHubClient(new ProductHeaderValue("OctokitTests"), credentialStore);
 
                 Assert.Equal("foo", client.Credentials.Login);
