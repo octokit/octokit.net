@@ -326,7 +326,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew(() => status);
+                var response = Task.FromResult(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Delete(Arg.Is<Uri>(u => u.ToString() == "repos/yes/no/subscription"))
@@ -347,7 +347,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatusWithRepositoryId(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew(() => status);
+                var response = Task.FromResult(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/subscription"))

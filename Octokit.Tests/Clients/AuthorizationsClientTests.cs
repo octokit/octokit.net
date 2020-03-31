@@ -173,12 +173,12 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
+                    .Returns(Task.FromResult(new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     data,
-                    e => Task.Factory.StartNew(() => twoFactorChallengeResult));
+                    e => Task.FromResult(twoFactorChallengeResult));
 
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -205,12 +205,12 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
+                    .Returns(Task.FromResult(new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     data,
-                    e => Task.Factory.StartNew(() => challengeResults.Dequeue()));
+                    e => Task.FromResult(challengeResults.Dequeue()));
 
                 client.Received(2).GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Clients
                         "clientId",
                         "secret",
                         data,
-                        e => Task.Factory.StartNew(() => challengeResults.Dequeue())));
+                        e => Task.FromResult(challengeResults.Dequeue())));
 
                 Assert.NotNull(exception);
                 client.Received().GetOrCreateApplicationAuthentication("clientId",

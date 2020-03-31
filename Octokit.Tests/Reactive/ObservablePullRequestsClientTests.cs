@@ -210,11 +210,11 @@ namespace Octokit.Tests.Reactive
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = await client.GetAllForRepository("fake", "repo").ToArray();
@@ -263,11 +263,11 @@ namespace Octokit.Tests.Reactive
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = await client.GetAllForRepository(1).ToArray();
@@ -322,21 +322,21 @@ namespace Octokit.Tests.Reactive
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = await client.GetAllForRepository("fake", "repo", new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray();
@@ -391,21 +391,21 @@ namespace Octokit.Tests.Reactive
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => firstPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => secondPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
                         && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
-                    .Returns(Task.Factory.StartNew<IApiResponse<List<PullRequest>>>(() => lastPageResponse));
+                    .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
                 var results = await client.GetAllForRepository(1, new PullRequestRequest { Head = "user:ref-name", Base = "fake_base_branch" }).ToArray();

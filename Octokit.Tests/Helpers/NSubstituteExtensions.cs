@@ -9,7 +9,7 @@ public static class NSubstituteExtensions
         this TTask value, Func<CallInfo, TTaskType> returnThis,
         params Func<CallInfo, TTaskType>[] returnThese) where TTask : Task<TTaskType>
     {
-        return value.Returns(callInfo => Task.Factory.StartNew(() => returnThis(callInfo)));
+        return value.Returns(callInfo => Task.FromResult(returnThis(callInfo)));
     }
 
     public static ConfiguredCall ThrowsAsync<T>(this Task<T> value, Exception exception)

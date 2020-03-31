@@ -505,11 +505,12 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.GetApiResponse(status);
+
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
-                    .Returns(response);
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
 
@@ -528,12 +529,11 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.GetApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"),
-                    Args.Object, Args.String).Returns(response);
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), Args.Object, Args.String)
+                          .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
@@ -553,7 +553,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew(() => status);
+                var response = Task.FromResult(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Delete(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"))
