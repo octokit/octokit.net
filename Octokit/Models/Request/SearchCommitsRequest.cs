@@ -9,6 +9,10 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    /// <summary>
+    /// Search commits
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCommitsRequest : BaseSearchRequest
     {
         /// <summary>
