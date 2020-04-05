@@ -6,6 +6,17 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchCommits
     {
+        public SearchCommits() { }
+
+        public SearchCommits(string url, string sha, string htmlUrl, string commentsUrl, Repository repository)
+        {
+            Url = url;
+            Sha = sha;
+            HtmlUrl = htmlUrl;
+            CommentsUrl = commentsUrl;
+            Repository = repository;
+        }
+
         /// <summary>
         /// The git-url to the file
         /// </summary>
