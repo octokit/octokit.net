@@ -49,5 +49,13 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
         Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search);
+
+        /// <summary>
+        /// search commits
+        /// https://developer.github.com/v3/search/#search-commits
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of commits</returns>
+        Task<SearchCommitsResult> SearchCommits(SearchCommitsRequest search);
     }
 }

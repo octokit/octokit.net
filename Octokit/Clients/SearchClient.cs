@@ -83,5 +83,18 @@ namespace Octokit
             Ensure.ArgumentNotNull(search, nameof(search));
             return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters);
         }
+
+        /// <summary>
+        /// search commits
+        /// https://developer.github.com/v3/search/#search-commits
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of commits</returns>
+        [ManualRoute("GET", "/search/commits")]
+        public Task<SearchCommitsResult> SearchCommits(SearchCommitsRequest search)
+        {
+            Ensure.ArgumentNotNull(search, nameof(search));
+            return ApiConnection.Get<SearchCommitsResult>(ApiUrls.SearchCommits(), search.Parameters, @"application/vnd.github.cloak-preview");
+        }
     }
 }

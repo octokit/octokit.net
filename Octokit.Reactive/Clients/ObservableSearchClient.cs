@@ -76,5 +76,17 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(search, nameof(search));
             return _client.SearchLabels(search).ToObservable();
         }
+
+        /// <summary>
+        /// search commits
+        /// https://developer.github.com/v3/search/#search-commits
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>List of commits</returns>
+        public IObservable<SearchCommitsResult> SearchCommits(SearchCommitsRequest search)
+        {
+            Ensure.ArgumentNotNull(search, nameof(search));
+            return _client.SearchCommits(search).ToObservable();
+        }
     }
 }
