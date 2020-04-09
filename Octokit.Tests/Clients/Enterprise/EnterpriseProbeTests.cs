@@ -20,7 +20,7 @@ public class EnterpriseProbeTests
         [InlineData(HttpStatusCode.NotFound)]
         public async Task ReturnsExistsForResponseWithCorrectHeadersRegardlessOfResponse(HttpStatusCode httpStatusCode)
         {
-            var headers = new Dictionary<string,string>()
+            var headers = new Dictionary<string, string>()
             {
                 { "Server", "REVERSE-PROXY" },
                 { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
@@ -50,7 +50,7 @@ public class EnterpriseProbeTests
         public async Task ReturnsExistsForApiExceptionWithCorrectHeaders()
         {
 
-            var headers = new Dictionary<string,string>()
+            var headers = new Dictionary<string, string>()
             {
                 { "Server", "GitHub.com" },
                 { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
