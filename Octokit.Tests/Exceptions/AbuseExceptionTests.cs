@@ -54,6 +54,17 @@ namespace Octokit.Tests.Exceptions
                     }
 
                     [Fact]
+                    public void WithRetryAfterCaseInsensitiveHeader_PopulatesRetryAfterSeconds()
+                    {
+                        var headerDictionary = new Dictionary<string, string> { { "retry-after", "20" } };
+
+                        var response = new Response(HttpStatusCode.Forbidden, null, headerDictionary, "application/json");
+                        var abuseException = new AbuseException(response);
+
+                        Assert.Equal(20, abuseException.RetryAfterSeconds);
+                    }
+
+                    [Fact]
                     public void WithZeroHeaderValue_RetryAfterSecondsIsZero()
                     {
                         var headerDictionary = new Dictionary<string, string> { { "Retry-After", "0" } };
