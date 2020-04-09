@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
 #endif
@@ -65,11 +66,27 @@ namespace Octokit
         [Parameter(Key = "reset")]
         public long ResetAsUtcEpochSeconds { get; private set; }
 
+        static KeyValuePair<string, string> LookupHeader(IDictionary<string, string> headers, string key)
+        {
+            return headers.FirstOrDefault(h => string.Equals(h.Key, key, StringComparison.OrdinalIgnoreCase));
+        }
+
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
         {
-            string value;
             long result;
-            return !responseHeaders.TryGetValue(key, out value) || value == null || !long.TryParse(value, out result)
+
+            var foundKey = LookupHeader(responseHeaders, key);
+            if (foundKey.Equals(default(KeyValuePair<string, string>)))
+            {
+                return 0;
+            }
+
+            if (string.IsNullOrWhiteSpace(foundKey.Value))
+            {
+                return 0;
+            }
+
+            return !long.TryParse(foundKey.Value, out result)
                 ? 0
                 : result;
         }
