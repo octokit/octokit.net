@@ -71,12 +71,17 @@ namespace Octokit
             return headers.FirstOrDefault(h => string.Equals(h.Key, key, StringComparison.OrdinalIgnoreCase));
         }
 
+        static bool Exists(KeyValuePair<string, string> kvp)
+        {
+            return !kvp.Equals(default(KeyValuePair<string, string>));
+        }
+
         static long GetHeaderValueAsInt32Safe(IDictionary<string, string> responseHeaders, string key)
         {
             long result;
 
             var foundKey = LookupHeader(responseHeaders, key);
-            if (foundKey.Equals(default(KeyValuePair<string, string>)))
+            if (!Exists(foundKey))
             {
                 return 0;
             }

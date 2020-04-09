@@ -21,6 +21,11 @@ namespace Octokit.Internal
             return headers.FirstOrDefault(h => string.Equals(h.Key, key, StringComparison.OrdinalIgnoreCase));
         }
 
+        static bool Exists(KeyValuePair<string, string> kvp)
+        {
+            return !kvp.Equals(default(KeyValuePair<string, string>));
+        }
+
         public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
@@ -31,7 +36,7 @@ namespace Octokit.Internal
             string etag = null;
 
             var acceptedOauthScopesKey = LookupHeader(responseHeaders, "X-Accepted-OAuth-Scopes");
-            if (!acceptedOauthScopesKey.Equals(default(KeyValuePair<string, string>)))
+            if (Exists(acceptedOauthScopesKey))
             {
                 acceptedOauthScopes.AddRange(acceptedOauthScopesKey.Value
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
@@ -39,7 +44,7 @@ namespace Octokit.Internal
             }
 
             var oauthScopesKey = LookupHeader(responseHeaders, "X-OAuth-Scopes");
-            if (!oauthScopesKey.Equals(default(KeyValuePair<string, string>)))
+            if (Exists(oauthScopesKey))
             {
                 oauthScopes.AddRange(oauthScopesKey.Value
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
@@ -47,13 +52,13 @@ namespace Octokit.Internal
             }
 
             var etagKey = LookupHeader(responseHeaders, "ETag");
-            if (!etagKey.Equals(default(KeyValuePair<string, string>)))
+            if (Exists(etagKey))
             {
                 etag = etagKey.Value;
             }
 
             var linkKey = LookupHeader(responseHeaders, "Link");
-            if (!linkKey.Equals(default(KeyValuePair<string, string>)))
+            if (Exists(linkKey))
             {
                 var links = linkKey.Value.Split(',');
                 foreach (var link in links)
