@@ -4135,6 +4135,39 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all Codes of Conducts
+        /// in response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to Codes of Conducts.</returns>
+        public static Uri CodesOfConduct()
+        {
+            return "codes_of_conduct".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified Code of Conduct
+        /// in response to a GET request.
+        /// </summary>
+        /// <param name="key">The key of the Code of Conduct to retrieve</param>
+        /// <returns></returns>
+        public static Uri CodeOfConduct(string key)
+        {
+            return "codes_of_conduct/{0}".FormatUri(key);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the specified Code of Conduct
+        /// in response to a GET request.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri CodeOfConduct(string owner, string name)
+        {
+            return "repos/{owner}/{name}/community/code_of_conduct".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all emojis in
         /// response to a GET request.
         /// </summary>
