@@ -565,6 +565,7 @@ namespace Octokit.Tests.Clients
             {"PullRequestReviewEvent", typeof(PullRequestReviewEventPayload)},
             {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
             {"PushEvent", typeof(PushEventPayload)},
+            {"ReleaseEvent", typeof(ReleaseEventPayload)},
             {"StatusEvent", typeof(StatusEventPayload)},
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
@@ -899,6 +900,37 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(payload.Commits);
             Assert.Equal(1, payload.Commits.Count);
             Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
+        }
+
+        [Fact]
+        public async Task DeserializesReleaseEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "ReleaseEvent" },
+                {
+                    "payload", new
+                    {
+                        action = "published",
+                        release = new
+                        {
+                            id = 17372790,
+                            tag_name = "0.0.1",
+                            prerelease = false,
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            var activity = Assert.Single(activities);
+            var payload = Assert.IsType<ReleaseEventPayload>(activity.Payload);
+
+            Assert.Equal("published", payload.Action);
+            Assert.Equal(17372790, payload.Release.Id);
+            Assert.Equal("0.0.1", payload.Release.TagName);
+            Assert.False(payload.Release.Prerelease);
         }
 
         [Fact]
