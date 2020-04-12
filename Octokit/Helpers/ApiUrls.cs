@@ -2363,7 +2363,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
-            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
+            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path == "/" ? "" : path, reference);
         }
 
         /// <summary>

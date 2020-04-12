@@ -217,6 +217,39 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetRawContentMethod
+        {
+            [Fact]
+            public async Task ReturnsRawContent()
+            {
+                var result = new byte[] { 1, 2, 3 };
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRaw(Args.Uri, default).Returns(result);
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var rawContent = await contentsClient.GetRawContent("fake", "repo", "path/to/file.txt");
+
+                connection.Received().GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/path/to/file.txt"), null);
+                Assert.Same(result, rawContent);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContent(null, "name", "path"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContent("owner", null, "path"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContent("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContent("", "name", "path"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContent("owner", "", "path"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContent("owner", "name", ""));
+            }
+        }
+
         public class TheGetContentsByRefMethod
         {
             [Fact]
@@ -308,6 +341,41 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef(1, "", "reference"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef(1, "path", ""));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllContentsByRef(1, ""));
+            }
+        }
+
+        public class TheGetRawContentByRefMethod
+        {
+            [Fact]
+            public async Task ReturnsRawContent()
+            {
+                var result = new byte[] { 1, 2, 3 };
+
+                var connection = Substitute.For<IApiConnection>();
+                connection.GetRaw(Args.Uri, default).Returns(result);
+                var contentsClient = new RepositoryContentsClient(connection);
+
+                var rawContent = await contentsClient.GetRawContentByRef("fake", "repo", "path/to/file.txt", "reference");
+
+                connection.Received().GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/path/to/file.txt?ref=reference"), null);
+                Assert.Same(result, rawContent);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryContentsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContentByRef(null, "name", "path", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContentByRef("owner", null, "path", "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContentByRef("owner", "name", null, "reference"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRawContentByRef("owner", "name", "path", null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContentByRef("", "name", "path", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContentByRef("owner", "", "path", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContentByRef("owner", "name", "", "reference"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRawContentByRef("owner", "name", "path", ""));
             }
         }
 

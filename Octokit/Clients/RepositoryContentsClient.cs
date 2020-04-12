@@ -42,6 +42,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}")]
+        public Task<byte[]> GetRawContent(string owner, string name, string path)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+
+            var url = ApiUrls.RepositoryContent(owner, name, path);
+
+            return ApiConnection.GetRaw(url, null);
+        }
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
@@ -112,11 +133,30 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            var url = (path == "/")
-                ? ApiUrls.RepositoryContent(owner, name, "", reference)
-                : ApiUrls.RepositoryContent(owner, name, path, reference);
-
+            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
             return ApiConnection.GetAll<RepositoryContent>(url);
+        }
+
+        /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag.</param>
+        [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}?ref={ref}")]
+        public Task<byte[]> GetRawContentByRef(string owner, string name, string path, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+
+            var url = ApiUrls.RepositoryContent(owner, name, path, reference);
+            return ApiConnection.GetRaw(url, null);
         }
 
         /// <summary>
