@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Reactive.Linq;
@@ -19,10 +20,15 @@ public class EnterpriseProbeTests
         [InlineData(HttpStatusCode.NotFound)]
         public async Task ReturnsExistsForResponseWithCorrectHeadersRegardlessOfResponse(HttpStatusCode httpStatusCode)
         {
+            var headers = new Dictionary<string, string>()
+            {
+                { "Server", "REVERSE-PROXY" },
+                { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
+            };
             var response = Substitute.For<IResponse>();
             response.StatusCode.Returns(httpStatusCode);
-            response.Headers["Server"].Returns("REVERSE-PROXY");
-            response.Headers.ContainsKey("X-GitHub-Request-Id").Returns(true);
+            response.Headers.Returns(headers);
+
             var productHeader = new ProductHeaderValue("GHfW", "99");
             var httpClient = Substitute.For<IHttpClient>();
             httpClient.Send(Args.Request, CancellationToken.None).Returns(Task.FromResult(response));
@@ -43,10 +49,16 @@ public class EnterpriseProbeTests
         [Fact]
         public async Task ReturnsExistsForApiExceptionWithCorrectHeaders()
         {
+
+            var headers = new Dictionary<string, string>()
+            {
+                { "Server", "GitHub.com" },
+                { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
+            };
             var httpClient = Substitute.For<IHttpClient>();
             var response = Substitute.For<IResponse>();
-            response.Headers["Server"].Returns("GitHub.com");
-            response.Headers.ContainsKey("X-GitHub-Request-Id").Returns(true);
+            response.Headers.Returns(headers);
+
             var apiException = new ApiException(response);
             httpClient.Send(Args.Request, CancellationToken.None).ThrowsAsync(apiException);
             var productHeader = new ProductHeaderValue("GHfW", "99");
