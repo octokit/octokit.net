@@ -34,7 +34,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
-        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<byte[]> GetRawContent(string owner, string name, string path);
 
         /// <summary>
@@ -92,7 +91,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag.</param>
-        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<byte[]> GetRawContentByRef(string owner, string name, string path, string reference);
 
         /// <summary>
