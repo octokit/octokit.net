@@ -20,6 +20,18 @@
         "reveal": "silent",
       },
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Format",
+      "command": "dotnet",
+      "type": "shell",
+      "args": [
+        "format",
+      ],
+      "presentation": {
+        "reveal": "silent",
+      },
+      "problemMatcher": "$msCompile"
     }
   ]
 }
