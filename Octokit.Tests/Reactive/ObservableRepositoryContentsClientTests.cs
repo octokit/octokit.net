@@ -279,7 +279,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task ReturnsRawContent()
             {
-                var result = new byte[] {1, 2, 3};
+                var result = new byte[] { 1, 2, 3 };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
@@ -440,7 +440,7 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public async Task ReturnsRawContent()
             {
-                var result = new byte[] {1, 2, 3};
+                var result = new byte[] { 1, 2, 3 };
 
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);

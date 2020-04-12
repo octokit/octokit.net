@@ -222,7 +222,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsRawContent()
             {
-                var result = new byte[] {1, 2, 3};
+                var result = new byte[] { 1, 2, 3 };
 
                 var connection = Substitute.For<IApiConnection>();
                 connection.GetRaw(Args.Uri, default).Returns(result);
@@ -349,7 +349,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ReturnsRawContent()
             {
-                var result = new byte[] {1, 2, 3};
+                var result = new byte[] { 1, 2, 3 };
 
                 var connection = Substitute.For<IApiConnection>();
                 connection.GetRaw(Args.Uri, default).Returns(result);
