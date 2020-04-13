@@ -4,9 +4,12 @@ using Octokit.Internal;
 using Octokit.Reactive;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 public class ObservableIssuesClientTests
 {
@@ -288,7 +291,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response(),
+                CreateResponse(HttpStatusCode.OK),
                 new List<Issue>
                 {
                     CreateIssue(7)
@@ -364,7 +367,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response(),
+                CreateResponse(HttpStatusCode.OK),
                 new List<Issue>
                 {
                     CreateIssue(7)
@@ -451,7 +454,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response(),
+                CreateResponse(HttpStatusCode.OK),
                 new List<Issue>
                 {
                     CreateIssue(7)
@@ -524,7 +527,7 @@ public class ObservableIssuesClientTests
             );
             var lastPageResponse = new ApiResponse<List<Issue>>
             (
-                new Response(),
+                CreateResponse(HttpStatusCode.OK),
                 new List<Issue>
                 {
                     CreateIssue(7)

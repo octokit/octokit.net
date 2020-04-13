@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using Octokit.Internal;
+﻿using System.Net;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -12,13 +12,9 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void IdentifiesMaxLoginAttemptsExceededReason()
             {
-                const string responseBody = "{\"message\":\"YOU SHALL NOT PASS!\"," +
-                                            "\"documentation_url\":\"http://developer.github.com/v3\"}";
-                var response = new Response(
-                    HttpStatusCode.Forbidden,
-                    responseBody,
-                    new Dictionary<string, string>(),
-                    "application/json");
+                var responseBody = "{\"message\":\"YOU SHALL NOT PASS!\", \"documentation_url\":\"http://developer.github.com/v3\"}";
+                var response = CreateResponse(HttpStatusCode.Forbidden, responseBody);
+
                 var forbiddenException = new ForbiddenException(response);
 
                 Assert.Equal("YOU SHALL NOT PASS!", forbiddenException.ApiError.Message);
@@ -27,7 +23,8 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HasDefaultMessage()
             {
-                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden);
+
                 var forbiddenException = new ForbiddenException(response);
 
                 Assert.Equal("Request Forbidden", forbiddenException.Message);

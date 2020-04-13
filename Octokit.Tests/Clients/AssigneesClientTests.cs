@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class AssigneesClientTests
@@ -166,7 +168,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCodeWithRepositoryId()
             {
-                var response = new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Conflict);
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"),

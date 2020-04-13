@@ -10,6 +10,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Http
 {
     public class ConnectionTests
@@ -23,7 +25,7 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -45,7 +47,7 @@ namespace Octokit.Tests.Http
             public async Task CanMakeMultipleRequestsWithSameConnection()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -71,7 +73,7 @@ namespace Octokit.Tests.Http
                 {
                     { "X-Accepted-OAuth-Scopes", "user" }
                 };
-                IResponse response = new Response(headers);
+                var response = CreateResponse(HttpStatusCode.OK, headers);
 
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
@@ -89,7 +91,7 @@ namespace Octokit.Tests.Http
             public async Task ThrowsAuthorizationExceptionExceptionForUnauthorizedResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json");
+                IResponse response = CreateResponse(HttpStatusCode.Unauthorized);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -113,7 +115,7 @@ namespace Octokit.Tests.Http
             {
                 var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(HttpStatusCode.Unauthorized, null, headers, "application/json");
+                IResponse response = CreateResponse(HttpStatusCode.Unauthorized, headers);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -139,7 +141,7 @@ namespace Octokit.Tests.Http
                 TwoFactorType expectedFactorType)
             {
                 var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
-                IResponse response = new Response(HttpStatusCode.Unauthorized, null, headers, "application/json");
+                IResponse response = CreateResponse(HttpStatusCode.Unauthorized, headers);
                 var httpClient = Substitute.For<IHttpClient>();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
@@ -158,12 +160,10 @@ namespace Octokit.Tests.Http
             public async Task ThrowsApiValidationExceptionFor422Response()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     (HttpStatusCode)422,
                     @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    new Dictionary<string, string>(),
-                    "application/json"
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}"
                 );
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
@@ -183,12 +183,11 @@ namespace Octokit.Tests.Http
             public async Task ThrowsRateLimitExceededExceptionForForbidderResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                     "{\"message\":\"API rate limit exceeded. " +
-                    "See http://developer.github.com/v3/#rate-limiting for details.\"}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "See http://developer.github.com/v3/#rate-limiting for details.\"}");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -207,12 +206,11 @@ namespace Octokit.Tests.Http
             public async Task ThrowsLoginAttemptsExceededExceptionForForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                     "{\"message\":\"Maximum number of login attempts exceeded\"," +
-                    "\"documentation_url\":\"http://developer.github.com/v3\"}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "\"documentation_url\":\"http://developer.github.com/v3\"}");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -231,11 +229,9 @@ namespace Octokit.Tests.Http
             public async Task ThrowsNotFoundExceptionForFileNotFoundResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.NotFound,
-                    "GONE BYE BYE!",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "GONE BYE BYE!");
 
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
@@ -254,11 +250,10 @@ namespace Octokit.Tests.Http
             public async Task ThrowsForbiddenExceptionForUnknownForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
-                    "YOU SHALL NOT PASS!",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "YOU SHALL NOT PASS!");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -278,12 +273,11 @@ namespace Octokit.Tests.Http
                 var messageText = "blahblahblah this does not matter because we are testing the URL";
 
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                     "{\"message\":\"" + messageText + "\"," +
-                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -301,12 +295,11 @@ namespace Octokit.Tests.Http
                 var messageText = "You have triggered an abuse detection mechanism. Please wait a few minutes before you try again.";
 
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                     "{\"message\":\"" + messageText + "\"," +
-                    "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -330,12 +323,12 @@ namespace Octokit.Tests.Http
                     { "Retry-After", "45" }
                 };
 
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                     "{\"message\":\"" + messageText + "\"," +
                     "\"documentation_url\":\"https://ThisURLDoesNotMatter.com\"}",
-                    headerDictionary,
-                    "application/json");
+                    headerDictionary);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -355,12 +348,11 @@ namespace Octokit.Tests.Http
                 string messageText = string.Empty;
 
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.Forbidden,
                      "{\"message\":\"" + messageText + "\"," +
-                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}",
-                   new Dictionary<string, string>(),
-                    "application/json");
+                    "\"documentation_url\":\"https://developer.github.com/v3/#abuse-rate-limits\"}");
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -381,7 +373,7 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedRequestWithProperAcceptHeader()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -412,7 +404,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 serializer.Serialize(body).Returns(expectedData);
 
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
                 var httpClient = Substitute.For<IHttpClient>();
                 httpClient.Send(Args.Request, Args.CancellationToken)
                     .Returns(Task.FromResult(response));
@@ -439,7 +431,8 @@ namespace Octokit.Tests.Http
             public async Task RunsConfiguredAppWithAcceptsOverride()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -462,7 +455,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
 
                 serializer.Serialize(body).Returns(expectedBody);
 
@@ -492,7 +485,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
 
                 serializer.Serialize(body).Returns(expectedBody);
 
@@ -522,7 +515,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
 
                 serializer.Serialize(body).Returns(expectedBody);
 
@@ -553,7 +546,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 var expectedBody = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
 
                 serializer.Serialize(body).Returns(expectedBody);
 
@@ -586,7 +579,7 @@ namespace Octokit.Tests.Http
                 var serializer = Substitute.For<IJsonSerializer>();
                 var data = SimpleJson.SerializeObject(body);
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
 
                 serializer.Serialize(body).Returns(data);
 
@@ -613,7 +606,8 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedPostRequestWithCorrectHeaders()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -641,7 +635,8 @@ namespace Octokit.Tests.Http
             public async Task SetsAcceptsHeader()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
+
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -668,7 +663,7 @@ namespace Octokit.Tests.Http
             public async Task SendsProperlyFormattedDeleteRequest()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = new Response();
+                var response = CreateResponse(HttpStatusCode.OK);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -815,10 +810,9 @@ namespace Octokit.Tests.Http
                 var httpClient = Substitute.For<IHttpClient>();
 
                 // We really only care about the ApiInfo property...
-                var expectedResponse = new Response(HttpStatusCode.OK, null, new Dictionary<string, string>(), "application/json")
-                {
-                    ApiInfo = apiInfo
-                };
+                var expectedResponse = Substitute.For<IResponse>();
+                expectedResponse.StatusCode.Returns(HttpStatusCode.OK);
+                expectedResponse.ApiInfo.Returns(apiInfo);
 
                 httpClient.Send(Arg.Any<IRequest>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IResponse>(expectedResponse));

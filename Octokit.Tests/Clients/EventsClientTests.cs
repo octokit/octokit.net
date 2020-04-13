@@ -8,6 +8,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class EventsClientTests
@@ -1004,12 +1006,12 @@ namespace Octokit.Tests.Clients
             Assert.Equal("started", payload.Action);
         }
 
-        private EventsClient GetTestingEventsClient(JsonObject response)
+        private EventsClient GetTestingEventsClient(JsonObject json)
         {
-            var responseString = response.ToString();
+            var responseString = json.ToString();
             var httpClientMock = Substitute.For<IHttpClient>();
-            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
-                new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+            var response = CreateResponse(HttpStatusCode.Accepted, responseString);
+            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(response));
 
             return new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
         }

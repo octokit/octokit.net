@@ -8,6 +8,8 @@ using Octokit.Internal;
 using Octokit.Tests;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 public class RepositoryCommentsClientTests
 {
     public class TheGetMethod
@@ -387,11 +389,9 @@ public class RepositoryCommentsClientTests
             "\"created_at\": \"2011-04-14T16:00:49Z\"," +
             "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
             "}";
-        var httpResponse = new Response(
+        var httpResponse = CreateResponse(
             HttpStatusCode.OK,
-            commitCommentResponseJson,
-            new Dictionary<string, string>(),
-            "application/json");
+            commitCommentResponseJson);
 
         var jsonPipeline = new JsonHttpPipeline();
 

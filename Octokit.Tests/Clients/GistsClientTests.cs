@@ -8,6 +8,8 @@ using Octokit;
 using Octokit.Tests;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 public class GistsClientTests
 {
     public static Dictionary<string, string> DictionaryWithSince
@@ -499,7 +501,7 @@ public class GistsClientTests
         [InlineData(HttpStatusCode.NotFound, false)]
         public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
         {
-            var response = new Response(status, null, new Dictionary<string, string>(), "application/json");
+            var response = CreateResponse(status);
             var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
             var connection = Substitute.For<IConnection>();
@@ -518,7 +520,7 @@ public class GistsClientTests
         [Fact]
         public async Task ThrowsExceptionForInvalidStatusCode()
         {
-            var response = new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json");
+            var response = CreateResponse(HttpStatusCode.Conflict);
             var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
             var connection = Substitute.For<IConnection>();
