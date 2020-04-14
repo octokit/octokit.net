@@ -2,7 +2,7 @@
 
 namespace Octokit
 {
-    internal static class DateTimeextensions
+    internal static class DateTimeExtensions
     {
         public static bool IsNotDefault(this DateTime value)
         {
