@@ -91,7 +91,7 @@ namespace Octokit.Tests.Http
             public async Task ThrowsAuthorizationExceptionExceptionForUnauthorizedResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = CreateResponse(HttpStatusCode.Unauthorized);
+                var response = CreateResponse(HttpStatusCode.Unauthorized);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Http
             {
                 var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
                 var httpClient = Substitute.For<IHttpClient>();
-                IResponse response = CreateResponse(HttpStatusCode.Unauthorized, headers);
+                var response = CreateResponse(HttpStatusCode.Unauthorized, headers);
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),
                     _exampleUri,
@@ -141,7 +141,7 @@ namespace Octokit.Tests.Http
                 TwoFactorType expectedFactorType)
             {
                 var headers = new Dictionary<string, string> { { headerKey, otpHeaderValue } };
-                IResponse response = CreateResponse(HttpStatusCode.Unauthorized, headers);
+                var response = CreateResponse(HttpStatusCode.Unauthorized, headers);
                 var httpClient = Substitute.For<IHttpClient>();
                 httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
                 var connection = new Connection(new ProductHeaderValue("OctokitTests"),

@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class StarredClientTests
@@ -505,7 +507,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
@@ -529,7 +531,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.OK, false)]
             public async Task ReturnsCorrectResultBasedOnStatus(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), Args.Object, Args.String)

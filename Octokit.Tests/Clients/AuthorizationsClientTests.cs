@@ -5,7 +5,6 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
 
 using static Octokit.Internal.TestSetup;

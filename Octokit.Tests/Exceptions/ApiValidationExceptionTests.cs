@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 #endif
-using Octokit.Internal;
 using Xunit;
 
 using static Octokit.Internal.TestSetup;

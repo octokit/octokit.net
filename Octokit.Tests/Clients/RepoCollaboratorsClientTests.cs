@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Xunit;
-using System.Net;
 using Octokit.Internal;
+using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -206,7 +208,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), null, null)
@@ -226,7 +228,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCodeWithRepositoryId(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1"), null, null)
@@ -244,7 +246,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var responseTask = TestSetup.GetApiResponse(HttpStatusCode.Conflict);
+                var responseTask = CreateApiResponse(HttpStatusCode.Conflict);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null)
@@ -260,7 +262,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCodeWithRepositoryId()
             {
-                var responseTask = TestSetup.GetApiResponse(HttpStatusCode.Conflict);
+                var responseTask = TestSetup.CreateApiResponse(HttpStatusCode.Conflict);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null)

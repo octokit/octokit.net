@@ -1,9 +1,9 @@
-﻿using NSubstitute;
-using Octokit.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using NSubstitute;
+using Octokit.Internal;
 using Octokit;
 using Octokit.Tests;
 using Xunit;

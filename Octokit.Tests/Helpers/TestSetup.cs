@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Octokit.Internal
 {
     public static class TestSetup
     {
-        public static Task<IApiResponse<object>> GetApiResponse(HttpStatusCode statusCode)
+        public static Task<IApiResponse<object>> CreateApiResponse(HttpStatusCode statusCode)
         {
             var response = CreateResponse(statusCode);
             return Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
