@@ -11,7 +11,7 @@ namespace Octokit
     {
         public CodeOfConduct() { }
 
-        public CodeOfConduct(string key, string name, string url, string body)
+        public CodeOfConduct(CodeOfConductType key, string name, string url, string body)
         {
             Key = key;
             Name = name;
@@ -22,7 +22,7 @@ namespace Octokit
         /// <summary>
         /// The unique key for the Code of Conduct.
         /// </summary>
-        public string Key { get; protected set; }
+        public CodeOfConductType Key { get; protected set; }
 
         /// <summary>
         /// The name of the Code of Conduct.

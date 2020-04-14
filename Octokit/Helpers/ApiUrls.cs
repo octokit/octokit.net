@@ -4150,9 +4150,9 @@ namespace Octokit
         /// </summary>
         /// <param name="key">The key of the Code of Conduct to retrieve</param>
         /// <returns></returns>
-        public static Uri CodeOfConduct(string key)
+        public static Uri CodeOfConduct(CodeOfConductType key)
         {
-            return "codes_of_conduct/{0}".FormatUri(key);
+            return "codes_of_conduct/{0}".FormatUri(key.ToParameter());
         }
 
         /// <summary>
