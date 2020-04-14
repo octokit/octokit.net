@@ -22,7 +22,7 @@ namespace Octokit
         /// <summary>
         /// The unique key for the Code of Conduct.
         /// </summary>
-        public CodeOfConductType Key { get; protected set; }
+        public StringEnum<CodeOfConductType> Key { get; protected set; }
 
         /// <summary>
         /// The name of the Code of Conduct.
