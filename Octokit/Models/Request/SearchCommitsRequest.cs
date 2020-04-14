@@ -234,7 +234,8 @@ namespace Octokit
 
             if (IsMerge.IsNotNull())
             {
-                parameters.Add($"merge:{IsMerge.ToString()}");
+                var isMerge = IsMerge == true ? "true" : "false";
+                parameters.Add($"merge:{isMerge}");
             }
 
             if (CommitHash.IsNotBlank())
