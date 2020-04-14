@@ -26,7 +26,6 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{CodeOfConduct}"/> on GitHub.</returns>
         [Preview("scarlet-witch")]
         [ManualRoute("GET", "/codes_of_conduct")]
-        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 14/04/2020)")]
         public Task<IReadOnlyList<CodeOfConduct>> GetAll()
         {
             return ApiConnection.GetAll<CodeOfConduct>(ApiUrls.CodesOfConduct(), null, AcceptHeaders.CodesOfConductPreview);

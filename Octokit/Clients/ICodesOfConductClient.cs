@@ -18,6 +18,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See the <a href="https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct">API documentation</a> for more information.</remarks>
         /// <returns>A <see cref="IReadOnlyList{CodeOfConduct}"/> on GitHub.</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 14/04/2020)")]
         Task<IReadOnlyList<CodeOfConduct>> GetAll();
 
         /// <summary>
