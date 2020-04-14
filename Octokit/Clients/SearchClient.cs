@@ -94,7 +94,7 @@ namespace Octokit
         public Task<SearchCommitsResult> SearchCommits(SearchCommitsRequest search)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchCommitsResult>(ApiUrls.SearchCommits(), search.Parameters, @"application/vnd.github.cloak-preview");
+            return ApiConnection.Get<SearchCommitsResult>(ApiUrls.SearchCommits(), search.Parameters, AcceptHeaders.CommitSearchPreview);
         }
     }
 }

@@ -19,16 +19,6 @@ namespace Octokit
         {
             return !string.IsNullOrWhiteSpace(value);
         }
-        
-        public static bool IsNotDefault(this DateTime value)
-        {
-            return !(value == default);
-        }
-
-        public static bool IsNotNull(this object value)
-        {
-            return !(null == value);
-        }
 
         public static Uri FormatUri(this string pattern, params object[] args)
         {
