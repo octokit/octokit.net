@@ -26,6 +26,7 @@ namespace Octokit
         /// <returns>A <see cref="IReadOnlyList{CodeOfConduct}"/> on GitHub.</returns>
         [Preview("scarlet-witch")]
         [ManualRoute("GET", "/codes_of_conduct")]
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 14/04/2020)")]
         public Task<IReadOnlyList<CodeOfConduct>> GetAll()
         {
             return ApiConnection.GetAll<CodeOfConduct>(ApiUrls.CodesOfConduct(), null, AcceptHeaders.CodesOfConductPreview);
@@ -39,7 +40,7 @@ namespace Octokit
         /// <returns>A <see cref="CodeOfConduct"/> that includes the code of conduct key, name, and API/HTML URL.</returns>
         [Preview("scarlet-witch")]
         [ManualRoute("GET", "/codes_of_conduct/{key}")]
-        public Task<CodeOfConduct> GetCodeOfConduct(CodeOfConductType key)
+        public Task<CodeOfConduct> Get(CodeOfConductType key)
         {
             return ApiConnection.Get<CodeOfConduct>(ApiUrls.CodeOfConduct(key), null, AcceptHeaders.CodesOfConductPreview);
         }
@@ -53,7 +54,7 @@ namespace Octokit
         /// <returns>The <see cref="CodeOfConduct"/> that the repository uses, if one is detected.</returns>
         [Preview("scarlet-witch")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/community/code_of_conduct")]
-        public Task<CodeOfConduct> GetCodeOfConduct(string owner, string name)
+        public Task<CodeOfConduct> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
