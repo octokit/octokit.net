@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class AssigneesClientTests
@@ -114,7 +116,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
                     null, null).Returns(responseTask);
@@ -132,7 +134,7 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCodeWithRepositoryId(HttpStatusCode status, bool expected)
             {
-                var responseTask = TestSetup.GetApiResponse(status);
+                var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null)
@@ -150,7 +152,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var responseTask = TestSetup.GetApiResponse(HttpStatusCode.Conflict);
+                var responseTask = CreateApiResponse(HttpStatusCode.Conflict);
 
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null)
@@ -166,7 +168,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCodeWithRepositoryId()
             {
-                var response = new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Conflict);
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"),

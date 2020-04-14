@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 #endif
-using System.Text;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
-using Xunit.Extensions;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -48,13 +46,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.GatewayTimeout,
                     @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    new Dictionary<string, string>(),
-                    "application/json"
-                );
+                           @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}");
 
                 var exception = new ApiException(response);
 
@@ -70,11 +65,9 @@ namespace Octokit.Tests.Exceptions
             [InlineData("<html><body><h1>502 Bad Gateway</h1>The server returned an invalid or incomplete response.</body></html>")]
             public void CreatesGitHubErrorIfResponseMessageIsNotValidJson(string responseContent)
             {
-                var response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.GatewayTimeout,
-                    responseContent,
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    responseContent);
 
                 var exception = new ApiException(response);
 
@@ -89,8 +82,8 @@ namespace Octokit.Tests.Exceptions
                 response.Body.Returns("test");
 
                 var exception = new ApiException();
-                var anotherException = new ApiException(new Response(HttpStatusCode.ServiceUnavailable, "message1", new Dictionary<string, string>(), "application/json"));
-                var thirdException = new ApiException(new Response(HttpStatusCode.ServiceUnavailable, "message2", new Dictionary<string, string>(), "application/json"));
+                var anotherException = new ApiException(CreateResponse(HttpStatusCode.ServiceUnavailable, "message1"));
+                var thirdException = new ApiException(CreateResponse(HttpStatusCode.ServiceUnavailable, "message2"));
 
                 // It's fine if the message is null when there's no response body as long as this doesn't throw.
                 Assert.Null(exception.ApiError.Message);
@@ -102,12 +95,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                IResponse response = new Response(
+                var response = CreateResponse(
                     (HttpStatusCode)422,
                     @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}");
 
                 var exception = new ApiException(response);
 
@@ -131,12 +122,9 @@ namespace Octokit.Tests.Exceptions
             {
                 const string responseBody = @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
                                             @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}";
-                var response = new Response(
+                var response = CreateResponse(
                     HttpStatusCode.GatewayTimeout,
-                    responseBody,
-                    new Dictionary<string, string>(),
-                    "application/json"
-                    );
+                    responseBody);
 
                 var exception = new ApiException(response);
                 var stringRepresentation = exception.ToString();
@@ -146,12 +134,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void DoesNotThrowIfBodyIsNotDefined()
             {
-                var response = new Response(
-                    HttpStatusCode.GatewayTimeout,
-                    null,
-                    new Dictionary<string, string>(),
-                    "application/json"
-                );
+                var response = CreateResponse(HttpStatusCode.GatewayTimeout);
 
                 var exception = new ApiException(response);
                 var stringRepresentation = exception.ToString();
@@ -161,12 +144,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void DoesNotPrintImageContent()
             {
-                var responceBody = new byte[0];
-                var response = new Response(
+                var responseBody = new byte[0];
+                var response = CreateResponse(
                     HttpStatusCode.GatewayTimeout,
-                    responceBody,
-                    new Dictionary<string, string>(),
-                    "image/*"
+                    responseBody
                 );
 
                 var exception = new ApiException(response);
@@ -177,13 +158,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void DoesNotPrintNonStringContent()
             {
-                var responceBody = new byte[0];
-                var response = new Response(
+                var responseBody = new byte[0];
+                var response = CreateResponse(
                     HttpStatusCode.GatewayTimeout,
-                    responceBody,
-                    new Dictionary<string, string>(),
-                    "application/json"
-                );
+                    responseBody);
 
                 var exception = new ApiException(response);
                 var stringRepresentation = exception.ToString();

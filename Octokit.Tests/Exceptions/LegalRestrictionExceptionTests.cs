@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using Octokit.Internal;
+﻿using System.Net;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -10,7 +10,7 @@ namespace Octokit.Tests.Exceptions
         [Fact]
         public void HasDefaultMessage()
         {
-            var response = new Response((HttpStatusCode)451, null, new Dictionary<string, string>(), "application/json");
+            var response = CreateResponse((HttpStatusCode)451);
             var legalRestrictionException = new LegalRestrictionException(response);
 
             Assert.Equal("Resource taken down due to a DMCA notice.", legalRestrictionException.Message);

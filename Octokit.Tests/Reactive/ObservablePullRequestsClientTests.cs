@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -202,7 +204,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequest>
                     {
                         new PullRequest(7)
@@ -255,7 +257,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequest>
                     {
                         new PullRequest(7)
@@ -308,7 +310,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequest>
                     {
                         new PullRequest(7)
@@ -377,7 +379,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<PullRequest>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequest>
                     {
                         new PullRequest(7)
@@ -635,7 +637,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestCommit> { commit }
                 );
                 connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
@@ -659,7 +661,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestCommit>> response = new ApiResponse<List<PullRequestCommit>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestCommit> { commit }
                 );
                 connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
@@ -699,7 +701,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
                 connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
@@ -723,7 +725,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 IApiResponse<List<PullRequestFile>> response = new ApiResponse<List<PullRequestFile>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
                 connection.Get<List<PullRequestFile>>(Args.Uri, null, null)

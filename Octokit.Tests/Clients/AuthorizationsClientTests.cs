@@ -5,8 +5,9 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -152,9 +153,7 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
                 client.Put<ApplicationAuthorization>(Args.Uri, Args.Object, Args.String)
-                    .ThrowsAsync<ApplicationAuthorization>(
-                    new AuthorizationException(
-                        new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json")));
+                    .ThrowsAsync<ApplicationAuthorization>(new AuthorizationException(CreateResponse(HttpStatusCode.Unauthorized)));
                 var authEndpoint = new AuthorizationsClient(client);
 
                 await Assert.ThrowsAsync<TwoFactorChallengeFailedException>(() =>

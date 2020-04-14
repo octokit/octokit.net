@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class IssueCommentsClientTests
@@ -438,11 +440,9 @@ namespace Octokit.Tests.Clients
                 "\"created_at\": \"2011-04-14T16:00:49Z\"," +
                 "\"updated_at\": \"2011-04-14T16:00:49Z\"" +
                 "}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                issueResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                issueResponseJson);
 
             var jsonPipeline = new JsonHttpPipeline();
 
@@ -481,11 +481,9 @@ namespace Octokit.Tests.Clients
                 "\"url\": \"https://api.github.com/repos/octocat/Hello-World/issues/comments/1/reactions\"" +
                 "}" +
                 "}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                issueResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                issueResponseJson);
 
             var jsonPipeline = new JsonHttpPipeline();
 

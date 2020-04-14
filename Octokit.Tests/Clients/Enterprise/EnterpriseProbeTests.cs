@@ -11,6 +11,8 @@ using Octokit.Internal;
 using Octokit.Tests;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 public class EnterpriseProbeTests
 {
     public class TheProbeMethod
@@ -25,9 +27,7 @@ public class EnterpriseProbeTests
                 { "Server", "REVERSE-PROXY" },
                 { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
             };
-            var response = Substitute.For<IResponse>();
-            response.StatusCode.Returns(httpStatusCode);
-            response.Headers.Returns(headers);
+            var response = CreateResponse(httpStatusCode, headers);
 
             var productHeader = new ProductHeaderValue("GHfW", "99");
             var httpClient = Substitute.For<IHttpClient>();
@@ -49,18 +49,17 @@ public class EnterpriseProbeTests
         [Fact]
         public async Task ReturnsExistsForApiExceptionWithCorrectHeaders()
         {
-
             var headers = new Dictionary<string, string>()
             {
                 { "Server", "GitHub.com" },
                 { "X-GitHub-Request-Id", Guid.NewGuid().ToString() }
             };
-            var httpClient = Substitute.For<IHttpClient>();
-            var response = Substitute.For<IResponse>();
-            response.Headers.Returns(headers);
 
-            var apiException = new ApiException(response);
+            var apiException = new ApiException(CreateResponse(HttpStatusCode.OK, headers));
+
+            var httpClient = Substitute.For<IHttpClient>();
             httpClient.Send(Args.Request, CancellationToken.None).ThrowsAsync(apiException);
+
             var productHeader = new ProductHeaderValue("GHfW", "99");
             var enterpriseProbe = new EnterpriseProbe(productHeader, httpClient);
 
