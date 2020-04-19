@@ -4164,7 +4164,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri CodeOfConduct(string owner, string name)
         {
-            return "repos/{owner}/{name}/community/code_of_conduct".FormatUri(owner, name);
+            return "repos/{0}/{1}/community/code_of_conduct".FormatUri(owner, name);
         }
 
         /// <summary>
