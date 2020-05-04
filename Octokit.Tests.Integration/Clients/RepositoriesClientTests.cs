@@ -219,6 +219,50 @@ public class RepositoriesClientTests
             }
         }
 
+        [IntegrationTest]
+        public async Task CreatesARepositoryAsTemplate()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-as-template");
+
+            var newRepository = new NewRepository(repoName)
+            {
+                IsTemplate = true
+            };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+
+                Assert.True(repository.IsTemplate);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryFromTemplate()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoTemplateName = Helper.MakeNameWithTimestamp("repo-template");
+            var repoFromTemplateName = Helper.MakeNameWithTimestamp("repo-from-template");
+            var owner = github.User.Current().Result.Login;
+
+            var newTemplate = new NewRepository(repoTemplateName)
+            {
+                IsTemplate = true
+            };
+
+            var newRepo = new NewRepositoryFromTemplate(repoFromTemplateName);
+
+            using (var templateContext = await github.CreateRepositoryContext(newTemplate))
+            using (var context = await github.CreateRepositoryFromTemplateContext(owner, repoFromTemplateName, newRepo))
+            {
+                var repository = await github.Repository.Get(Helper.UserName, repoFromTemplateName);
+
+                Assert.Equal(repoFromTemplateName, repository.Name);
+            }
+        }
 
         [IntegrationTest]
         public async Task ThrowsInvalidGitIgnoreExceptionForInvalidTemplateNames()
