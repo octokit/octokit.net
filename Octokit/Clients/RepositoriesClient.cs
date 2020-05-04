@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -98,7 +98,7 @@ namespace Octokit
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
+                return await ApiConnection.Post<Repository>(url, newRepository, AcceptHeaders.TemplateRepositoryPreview).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
