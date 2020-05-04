@@ -81,6 +81,19 @@ namespace Octokit
             return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
         }
 
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
+        public Task<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository)
+        {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(owner, repo), newRepository, AcceptHeaders.TemplateRepositoryPreview);
+        }
+
         async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
         {
             try
