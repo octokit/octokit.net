@@ -6,6 +6,18 @@ namespace Octokit.CodeGen
 
     public class ApiBuilder
     {
+        static ApiBuilder()
+        {
+          Default = new ApiBuilder();
+
+          Default.Register(Builders.AddTypeNamesAndFileName);
+          Default.Register(Builders.AddRequestModels);
+          Default.Register(Builders.AddResponseModels);
+          Default.Register(Builders.AddMethodForEachVerb);
+
+          Default.Register(Builders.AddPropertiesForNestedClients);
+        }
+
         private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
 
         public List<ApiClientFileMetadata> Build(List<PathMetadata> paths)
@@ -31,5 +43,7 @@ namespace Octokit.CodeGen
         {
             funcs.Add(func);
         }
+
+        public static ApiBuilder Default { get; }
     }
 }

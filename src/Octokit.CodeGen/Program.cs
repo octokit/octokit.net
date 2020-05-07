@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,11 +14,7 @@ namespace Octokit.CodeGen
             filter.Allow("/marketplace_listing/accounts/");
             //filter.Allow("/repos/{owner}/{repo}/topics");
 
-            var apiBuilder = new ApiBuilder();
-            apiBuilder.Register(Builders.AddTypeNamesAndFileName);
-            apiBuilder.Register(Builders.AddRequestModels);
-            apiBuilder.Register(Builders.AddResponseModels);
-            apiBuilder.Register(Builders.AddMethodForEachVerb);
+            var apiBuilder = ApiBuilder.Default;
 
             var dir = Directory.GetCurrentDirectory();
             var file = File.OpenRead(Path.Combine(dir, "schema", "api.github.com.json"));
