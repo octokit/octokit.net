@@ -4,6 +4,8 @@ namespace Octokit.CodeGen
 {
     using TypeBuilderFunc = System.Func<PathMetadata, ApiClientFileMetadata, ApiClientFileMetadata>;
 
+    using TypeMergeFunc = System.Func<List<ApiClientFileMetadata>, List<ApiClientFileMetadata>>;
+
     public class ApiBuilder
     {
         static ApiBuilder()
@@ -18,7 +20,8 @@ namespace Octokit.CodeGen
           Default.Register(Builders.AddPropertiesForNestedClients);
         }
 
-        private List<TypeBuilderFunc> funcs = new List<TypeBuilderFunc>();
+        private List<TypeBuilderFunc> typeBuilders = new List<TypeBuilderFunc>();
+        private List<TypeMergeFunc> typeMergers = new List<TypeMergeFunc>();
 
         public List<ApiClientFileMetadata> Build(List<PathMetadata> paths)
         {
@@ -28,7 +31,7 @@ namespace Octokit.CodeGen
             {
                 var result = new ApiClientFileMetadata();
 
-                foreach (var func in funcs)
+                foreach (var func in typeBuilders)
                 {
                     result = func(path, result);
                 }
@@ -36,12 +39,22 @@ namespace Octokit.CodeGen
                 results.Add(result);
             }
 
+            foreach (var merger in typeMergers)
+            {
+                results = merger(results);
+            }
+
             return results;
         }
 
         public void Register(TypeBuilderFunc func)
         {
-            funcs.Add(func);
+            typeBuilders.Add(func);
+        }
+
+        public void Register(TypeMergeFunc func)
+        {
+            typeMergers.Add(func);
         }
 
         public static ApiBuilder Default { get; }

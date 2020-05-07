@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,7 +11,7 @@ namespace Octokit.CodeGen
             var writeFilesToDisk = Array.IndexOf(args, "--write") > -1;
 
             var filter = new PathFilter();
-            filter.Allow("/marketplace_listing/accounts/");
+            filter.Allow("/marketplace_listing/plans");
             //filter.Allow("/repos/{owner}/{repo}/topics");
 
             var apiBuilder = ApiBuilder.Default;

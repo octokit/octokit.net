@@ -34,9 +34,11 @@ namespace Octokit.CodeGen
         public ApiClientMetadata()
         {
             Methods = new List<ApiMethodMetadata>();
+            Properties = new List<ApiPropertyMetadata>();
         }
         public string InterfaceName { get; set; }
         public string ClassName { get; set; }
+        public List<ApiPropertyMetadata> Properties { get;set;}
         public List<ApiMethodMetadata> Methods { get; set; }
     }
 
@@ -92,6 +94,12 @@ namespace Octokit.CodeGen
 
             return hashName ^ hashType;
         }
+    }
+
+    public class ApiPropertyMetadata
+    {
+       public string Name { get; set; }
+        public string Type { get; set; }
     }
 
     public class ApiMethodMetadata
