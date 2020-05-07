@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -69,6 +71,110 @@ public class CommitCommentReactionsClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithoutStart()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var newReaction = new NewReaction(ReactionType.Confused);
+            var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+            var reactions = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, options);
+
+            Assert.Equal(1, reactions.Count);
+            
+            Assert.Equal(reaction.Id, reactions[0].Id);
+            Assert.Equal(reaction.Content, reactions[0].Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithStart()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var reactions = new List<Reaction>();
+            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            for (var i = 0; i < 2; i++)
+            {
+                var newReaction = new NewReaction(reactionsContent[i]);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+                reactions.Add(reaction);
+            }
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+            var reactionsInfo = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, options);
+
+            Assert.Equal(1, reactionsInfo.Count);
+            
+            Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
+            Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctReactionsBasedOnStartPage()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            for (var i = 0; i < 2; i++)
+            {
+                var newReaction = new NewReaction(reactionsContent[i]);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+            }
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var firstPage = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, startOptions);
+            
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var secondPage = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
+        }
+
+        [IntegrationTest]
         public async Task CanListReactionsWithRepositoryId()
         {
             var commit = await SetupCommitForRepository(_github);
@@ -92,6 +198,109 @@ public class CommitCommentReactionsClientTests
             Assert.Equal(reaction.Content, reactions[0].Content);
         }
 
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithoutStartWithRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var newReaction = new NewReaction(ReactionType.Confused);
+            var reaction = await _github.Reaction.CommitComment.Create(_context.Repository.Id, result.Id, newReaction);
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+            var reactions = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, options);
+
+            Assert.Equal(1, reactions.Count);
+            
+            Assert.Equal(reaction.Id, reactions[0].Id);
+            Assert.Equal(reaction.Content, reactions[0].Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithStartWithRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var reactions = new List<Reaction>();
+            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            for (var i = 0; i < 2; i++)
+            {
+                var newReaction = new NewReaction(reactionsContent[i]);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.Repository.Id, result.Id, newReaction);
+                reactions.Add(reaction);
+            }
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+            var reactionsInfo = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, options);
+
+            Assert.Equal(1, reactionsInfo.Count);
+            
+            Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
+            Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctReactionsBasedOnStartPageWithRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            Assert.NotNull(result);
+
+            var reactionsContent = new []{ ReactionType.Confused, ReactionType.Hooray };
+            for (var i = 0; i < 2; i++)
+            {
+                var newReaction = new NewReaction(reactionsContent[i]);
+                var reaction = await _github.Reaction.CommitComment.Create(_context.Repository.Id, result.Id, newReaction);
+            }
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var firstPage = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, startOptions);
+            
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var secondPage = await _github.Reaction.CommitComment.GetAll(_context.Repository.Id, result.Id, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
+        }        
         [IntegrationTest]
         public async Task CanCreateReaction()
         {

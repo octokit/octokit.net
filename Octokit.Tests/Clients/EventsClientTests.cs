@@ -553,13 +553,19 @@ namespace Octokit.Tests.Clients
 
         private readonly Dictionary<string, Type> _activityTypes = new Dictionary<string, Type>
         {
+            {"CheckRunEvent", typeof(CheckRunEventPayload)},
+            {"CheckSuiteEvent", typeof(CheckSuiteEventPayload)},
             {"CommitCommentEvent", typeof(CommitCommentPayload)},
+            {"CreateEvent", typeof(CreateEventPayload)},
+            {"DeleteEvent", typeof(DeleteEventPayload)},
             {"ForkEvent", typeof(ForkEventPayload)},
             {"IssueCommentEvent", typeof(IssueCommentPayload)},
             {"IssuesEvent", typeof(IssueEventPayload)},
             {"PullRequestEvent", typeof(PullRequestEventPayload)},
+            {"PullRequestReviewEvent", typeof(PullRequestReviewEventPayload)},
             {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
             {"PushEvent", typeof(PushEventPayload)},
+            {"StatusEvent", typeof(StatusEventPayload)},
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
         };
@@ -617,6 +623,54 @@ namespace Octokit.Tests.Clients
 
             var payload = activities.FirstOrDefault().Payload as CommitCommentPayload;
             Assert.Equal(1337, payload.Comment.Id);
+        }
+
+        [Fact]
+        public async Task DeserializesCreateEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "CreateEvent" },
+                {
+                    "payload", new
+                    {
+                        @ref = "master",
+                        ref_type = "branch",
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as CreateEventPayload;
+            Assert.Equal("master", payload.Ref);
+            Assert.Equal(RefType.Branch, payload.RefType);
+        }
+
+        [Fact]
+        public async Task DeserializesDeleteEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "DeleteEvent" },
+                {
+                    "payload", new
+                    {
+                        @ref = "master",
+                        ref_type = "branch",
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as DeleteEventPayload;
+            Assert.Equal("master", payload.Ref);
+            Assert.Equal(RefType.Branch, payload.RefType);
         }
 
         [Fact]
@@ -743,6 +797,43 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
+        public async Task DeserializesPullRequestReviewEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "PullRequestReviewEvent" },
+                {
+                    "payload", new
+                    {
+                        action = "submitted",
+                        review = new {
+                            id = 2626884,
+                            body = "Looks great!",
+                            state = "approved",
+                            html_url = "https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884",
+                        },
+                        pull_request = new
+                        {
+                            title = "PR Title"
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PullRequestReviewEventPayload;
+            Assert.Equal("submitted", payload.Action);
+            Assert.Equal(2626884, payload.Review.Id);
+            Assert.Equal("Looks great!", payload.Review.Body);
+            Assert.Equal(PullRequestReviewState.Approved, payload.Review.State.Value);
+            Assert.Equal("https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884", payload.Review.HtmlUrl);
+            Assert.Equal("PR Title", payload.PullRequest.Title);
+        }
+
+        [Fact]
         public async Task DeserializesPullRequestCommentEventCorrectly()
         {
             var jsonObj = new JsonObject
@@ -808,6 +899,55 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(payload.Commits);
             Assert.Equal(1, payload.Commits.Count);
             Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
+        }
+
+        [Fact]
+        public async Task DeserializesStatusEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "StatusEvent" },
+                {
+                    "payload", new
+                    {
+                        id = 214015194,
+                        sha = "9049f1265b7d61be4a8904a9a27120d2064dab3b",
+                        name = "baxterthehacker/public-repo",
+                        target_url = "https://www.some_target_url.com",
+                        context = "default",
+                        description = "some human readable text",
+                        state = "success",
+                        branches = new []
+                        {
+                            new
+                            {
+                                name = "master",
+                                commit = new
+                                {
+                                    sha = "9049f1265b7d61be4a8904a9a27120d2064dab3b",
+                                    url = "https://api.github.com/repos/baxterthehacker/public-repo/commits/9049f1265b7d61be4a8904a9a27120d2064dab3b"
+                                }
+                            }
+                        },
+                        created_at = "2015-05-05T23:40:39Z"
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as StatusEventPayload;
+            Assert.Equal(214015194, payload.Id);
+            Assert.Equal("9049f1265b7d61be4a8904a9a27120d2064dab3b", payload.Sha);
+            Assert.Equal("baxterthehacker/public-repo", payload.Name);
+            Assert.Equal("https://www.some_target_url.com", payload.TargetUrl);
+            Assert.Equal("default", payload.Context);
+            Assert.Equal("some human readable text", payload.Description);
+            Assert.Equal(CommitState.Success, payload.State.Value);
+            Assert.Equal(1, payload.Branches.Count);
+            Assert.Equal(new DateTimeOffset(2015, 05, 05, 23, 40, 39, TimeSpan.Zero), payload.CreatedAt);
         }
 
         [Fact]

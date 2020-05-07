@@ -15,10 +15,12 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(string url, int id, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, int? inReplyToId)
+        public PullRequestReviewComment(string url, int id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId, AuthorAssociation authorAssociation)
         {
+            PullRequestReviewId = pullRequestReviewId;
             Url = url;
             Id = id;
+            NodeId = nodeId;
             DiffHunk = diffHunk;
             Path = path;
             Position = position;
@@ -31,7 +33,9 @@ namespace Octokit
             UpdatedAt = updatedAt;
             HtmlUrl = htmlUrl;
             PullRequestUrl = pullRequestUrl;
+            Reactions = reactions;
             InReplyToId = inReplyToId;
+            AuthorAssociation = authorAssociation;
         }
 
         /// <summary>
@@ -43,6 +47,11 @@ namespace Octokit
         /// The comment Id.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The diff hunk the comment is about.
@@ -104,12 +113,25 @@ namespace Octokit
         /// </summary>
         public string PullRequestUrl { get; protected set; }
 
+        /// <summary>
+        /// The reaction summary for this comment.
+        /// </summary>
         public ReactionSummary Reactions { get; protected set; }
 
         /// <summary>
         /// The Id of the comment this comment replys to.
         /// </summary>
         public int? InReplyToId { get; protected set; }
+
+        /// <summary>
+        /// The Id of the pull request this comment belongs to.
+        /// </summary>
+        public int? PullRequestReviewId { get; protected set; }
+
+        /// <summary>
+        /// The comment author association with repository.
+        /// </summary>
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
 
         internal string DebuggerDisplay
         {

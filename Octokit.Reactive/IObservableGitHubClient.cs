@@ -18,6 +18,7 @@ namespace Octokit.Reactive
 
         IObservableAuthorizationsClient Authorization { get; }
         IObservableActivitiesClient Activity { get; }
+        IObservableGitHubAppsClient GitHubApps { get; }
         IObservableIssuesClient Issue { get; }
         IObservableMiscellaneousClient Miscellaneous { get; }
         IObservableOauthClient Oauth { get; }
@@ -31,5 +32,6 @@ namespace Octokit.Reactive
         IObservableEnterpriseClient Enterprise { get; }
         IObservableMigrationClient Migration { get; }
         IObservableReactionsClient Reaction { get; }
+        IObservableChecksClient Check { get; }
     }
 }

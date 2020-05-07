@@ -20,8 +20,8 @@ namespace Octokit
         /// <param name="color">The color of the label.</param>
         public NewLabel(string name, string color)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(color, "color");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(color, nameof(color));
 
             Name = name;
             Color = color;
@@ -30,11 +30,18 @@ namespace Octokit
         /// <summary>
         /// Name of the label (required).
         /// </summary>
+        /// <remarks>
+        /// Emoji can be added to label names, using either native emoji or colon-style markup. For example,
+        /// typing :strawberry: will render the emoji for strawberry. For a full list of available emoji and codes, see http://emoji-cheat-sheet.com/.
+        /// </remarks>
         public string Name { get; set; }
 
         /// <summary>
         /// Color of the label (required).
         /// </summary>
+        /// <remarks>
+        /// The hexadecimal color code for the label, without the leading #.
+        /// </remarks>
         public string Color
         {
             get { return _color; }
@@ -48,6 +55,11 @@ namespace Octokit
                 _color = value;
             }
         }
+
+        /// <summary>
+        /// A short description of the label (optional).
+        /// </summary>
+        public string Description { get; set; }
 
         internal string DebuggerDisplay
         {

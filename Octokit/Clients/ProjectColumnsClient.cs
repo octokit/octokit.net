@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<ProjectColumn>(ApiUrls.ProjectColumns(projectId), new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
         }
@@ -66,7 +66,7 @@ namespace Octokit
         /// <param name="newProjectColumn">The column to create</param>
         public Task<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
         {
-            Ensure.ArgumentNotNull(newProjectColumn, "newProjectColumn");
+            Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
             return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(projectId), newProjectColumn, AcceptHeaders.ProjectsApiPreview);
         }
@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         public Task<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
         {
-            Ensure.ArgumentNotNull(projectColumnUpdate, "projectColumnUpdate");
+            Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
             return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(id), projectColumnUpdate, AcceptHeaders.ProjectsApiPreview);
         }
@@ -117,7 +117,7 @@ namespace Octokit
         /// <param name="position">The position to move the column</param>
         public async Task<bool> Move(int id, ProjectColumnMove position)
         {
-            Ensure.ArgumentNotNull(position, "position");
+            Ensure.ArgumentNotNull(position, nameof(position));
 
             var endpoint = ApiUrls.ProjectColumnMove(id);
             try

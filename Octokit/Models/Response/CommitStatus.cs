@@ -10,7 +10,7 @@ namespace Octokit
     {
         public CommitStatus() { }
 
-        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, string targetUrl, string description, string context, long id, string url, User creator)
+        public CommitStatus(DateTimeOffset createdAt, DateTimeOffset updatedAt, CommitState state, string targetUrl, string description, string context, long id, string nodeId, string url, User creator)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -19,6 +19,7 @@ namespace Octokit
             Description = description;
             Context = context;
             Id = id;
+            NodeId = nodeId;
             Url = url;
             Creator = creator;
         }
@@ -58,6 +59,11 @@ namespace Octokit
         /// The unique identifier of the status.
         /// </summary>
         public long Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The URL of the status.

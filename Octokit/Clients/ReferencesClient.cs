@@ -28,13 +28,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         public Task<Reference> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Reference>(ApiUrls.Reference(owner, name, reference));
         }
@@ -46,11 +46,11 @@ namespace Octokit
         /// http://developer.github.com/v3/git/refs/#get-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         public Task<Reference> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<Reference>(ApiUrls.Reference(repositoryId, reference));
         }
@@ -66,10 +66,26 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            return GetAll(owner, name, ApiOptions.None);
+        }
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name));
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name), options);
         }
 
         /// <summary>
@@ -82,7 +98,23 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAll(long repositoryId)
         {
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId));
+            return GetAll(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all references for a given repository
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId), options);
         }
 
         /// <summary>
@@ -97,13 +129,30 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
+            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             // TODO: Handle 404 when subNamespace cannot be found
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(owner, name, subNamespace), options);
         }
 
         /// <summary>
@@ -117,11 +166,27 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace)
         {
-            Ensure.ArgumentNotNullOrEmptyString(subNamespace, "subNamespace");
+            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/git/refs/#get-all-references
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="subNamespace">The sub-namespace to get references for</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             // TODO: Handle 404 when subNamespace cannot be found
 
-            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId, subNamespace));
+            return ApiConnection.GetAll<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options);
         }
 
         /// <summary>
@@ -136,9 +201,9 @@ namespace Octokit
         /// <returns></returns>
         public Task<Reference> Create(string owner, string name, NewReference reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return ApiConnection.Post<Reference>(ApiUrls.Reference(owner, name), reference);
         }
@@ -154,7 +219,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<Reference> Create(long repositoryId, NewReference reference)
         {
-            Ensure.ArgumentNotNull(reference, "reference");
+            Ensure.ArgumentNotNull(reference, nameof(reference));
 
             return ApiConnection.Post<Reference>(ApiUrls.Reference(repositoryId), reference);
         }
@@ -167,15 +232,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(referenceUpdate, "update");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
 
             return ApiConnection.Patch<Reference>(ApiUrls.Reference(owner, name, reference), referenceUpdate);
         }
@@ -187,13 +252,13 @@ namespace Octokit
         /// http://developer.github.com/v3/git/refs/#update-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         public Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
-            Ensure.ArgumentNotNull(referenceUpdate, "update");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
 
             return ApiConnection.Patch<Reference>(ApiUrls.Reference(repositoryId, reference), referenceUpdate);
         }
@@ -206,13 +271,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         public Task Delete(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Delete(ApiUrls.Reference(owner, name, reference));
         }
@@ -224,11 +289,11 @@ namespace Octokit
         /// http://developer.github.com/v3/git/refs/#delete-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the reference</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
         /// <returns></returns>
         public Task Delete(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Delete(ApiUrls.Reference(repositoryId, reference));
         }

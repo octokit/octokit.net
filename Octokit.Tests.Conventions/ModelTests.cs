@@ -54,6 +54,42 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData(nameof(ResponseModelTypes))]
+        public void AllResponseModelsHavePublicCtorWithAllProperties(Type modelType)
+        {
+            var excludedProperties = modelType.GetCustomAttribute<ExcludeFromCtorWithAllPropertiesConventionTestAttribute>()?
+                                         .Properties ??
+                                     new string[] { };
+
+            var constructors = modelType.GetConstructors();
+            var properties = modelType.GetProperties()
+                .Where(prop => prop.CanWrite &&
+                               !excludedProperties.Contains(prop.Name))
+                .ToList();
+
+            var missingProperties = properties.ToList();
+            foreach (var constructor in constructors)
+            {
+                var parameters = constructor.GetParameters();
+
+                var constructorMissingProperties = properties.Where(property =>
+                        !parameters.Any(param =>
+                            string.Equals(param.Name, property.Name, StringComparison.InvariantCultureIgnoreCase)))
+                    .ToList();
+
+                if (constructorMissingProperties.Count < missingProperties.Count)
+                {
+                    missingProperties = constructorMissingProperties;
+                }
+            }
+
+            if (missingProperties.Any())
+            {
+                throw new MissingPublicConstructorWithAllPropertiesException(modelType, missingProperties);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
@@ -186,6 +222,7 @@ namespace Octokit.Tests.Conventions
                     .SelectMany(type => type.GetProperties())
                     .SelectMany(property => UnwrapGenericArguments(property.PropertyType))
                     .Where(type => type.GetTypeInfo().Assembly.Equals(Octokit) && type.GetTypeInfo().IsEnum)
+                    .Distinct()
                     .Select(type => new[] { type });
             }
         }

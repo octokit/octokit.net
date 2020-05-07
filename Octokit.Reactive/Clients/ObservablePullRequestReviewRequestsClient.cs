@@ -12,7 +12,7 @@ namespace Octokit.Reactive
 
         public ObservablePullRequestReviewRequestsClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.PullRequest.ReviewRequest;
             _connection = client.Connection;
@@ -27,8 +27,8 @@ namespace Octokit.Reactive
         /// <param name="number">The pull request number</param>
         public IObservable<User> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
         }
@@ -43,9 +43,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<User> GetAll(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
         }
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         public IObservable<User> GetAll(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
         }
@@ -85,9 +85,9 @@ namespace Octokit.Reactive
         /// <param name="users">List of logins of user will be requested for review</param>
         public IObservable<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.Create(owner, name, number, users).ToObservable();
         }
@@ -101,7 +101,7 @@ namespace Octokit.Reactive
         /// <param name="users">List of logins of user will be requested for review</param>
         public IObservable<PullRequest> Create(long repositoryId, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.Create(repositoryId, number, users).ToObservable();
         }
@@ -116,9 +116,9 @@ namespace Octokit.Reactive
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         public IObservable<Unit> Delete(string owner, string name, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.Delete(owner, name, number, users).ToObservable();
         }
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         public IObservable<Unit> Delete(long repositoryId, int number, PullRequestReviewRequest users)
         {
-            Ensure.ArgumentNotNull(users, "users");
+            Ensure.ArgumentNotNull(users, nameof(users));
 
             return _client.Delete(repositoryId, number, users).ToObservable();
         }

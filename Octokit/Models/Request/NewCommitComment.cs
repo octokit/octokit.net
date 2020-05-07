@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="body">The body of the comment.</param>
         public NewCommitComment(string body)
         {
-            Ensure.ArgumentNotNull(body, "body");
+            Ensure.ArgumentNotNull(body, nameof(body));
 
             Body = body;
         }

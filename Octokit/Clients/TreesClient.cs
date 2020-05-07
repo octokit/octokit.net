@@ -32,9 +32,9 @@ namespace Octokit
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> Get(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<TreeResponse>(ApiUrls.Tree(owner, name, reference));
         }
@@ -49,7 +49,7 @@ namespace Octokit
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> Get(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<TreeResponse>(ApiUrls.Tree(repositoryId, reference));
         }
@@ -65,9 +65,9 @@ namespace Octokit
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> GetRecursive(string owner, string name, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<TreeResponse>(ApiUrls.TreeRecursive(owner, name, reference));
         }
@@ -82,7 +82,7 @@ namespace Octokit
         /// <param name="reference">The SHA that references the tree</param>
         public Task<TreeResponse> GetRecursive(long repositoryId, string reference)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, "reference");
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
             return ApiConnection.Get<TreeResponse>(ApiUrls.TreeRecursive(repositoryId, reference));
         }
@@ -98,9 +98,9 @@ namespace Octokit
         /// <param name="newTree">The value of the new tree</param>
         public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(newTree, "newTree");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
             if (newTree.Tree.Any(t => string.IsNullOrWhiteSpace(t.Mode)))
             {
@@ -120,7 +120,7 @@ namespace Octokit
         /// <param name="newTree">The value of the new tree</param>
         public Task<TreeResponse> Create(long repositoryId, NewTree newTree)
         {
-            Ensure.ArgumentNotNull(newTree, "newTree");
+            Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
             if (newTree.Tree.Any(t => string.IsNullOrWhiteSpace(t.Mode)))
             {

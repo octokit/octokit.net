@@ -57,7 +57,7 @@ namespace Octokit
         /// <param name="login">The login name for the user</param>
         public Task<User> Get(string login)
         {
-            Ensure.ArgumentNotNullOrEmptyString(login, "login");
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             return ApiConnection.Get<User>(ApiUrls.User(login));
         }
@@ -80,7 +80,7 @@ namespace Octokit
         /// <returns>A <see cref="User"/></returns>
         public Task<User> Update(UserUpdate user)
         {
-            Ensure.ArgumentNotNull(user, "user");
+            Ensure.ArgumentNotNull(user, nameof(user));
 
             return ApiConnection.Patch<User>(_userEndpoint, user);
         }

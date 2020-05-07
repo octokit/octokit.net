@@ -15,21 +15,28 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
+        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state, AuthorAssociation authorAssociation)
         {
             Id = id;
+            NodeId = nodeId;
             CommitId = commitId;
             User = user;
             Body = body;
             HtmlUrl = htmlUrl;
             PullRequestUrl = pullRequestUrl;
             State = state;
+            AuthorAssociation = authorAssociation;
         }
 
         /// <summary>
         /// The review Id.
         /// </summary>
         public long Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The state of the review
@@ -60,6 +67,11 @@ namespace Octokit
         /// The URL for the pull request via the API.
         /// </summary>
         public string PullRequestUrl { get; protected set; }
+
+        /// <summary>
+        /// The comment author association with repository.
+        /// </summary>
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
 
         internal string DebuggerDisplay
         {

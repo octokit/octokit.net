@@ -6,6 +6,23 @@ namespace Octokit.Tests.Helpers
 {
     public class UriExtensionsTests
     {
+        public class TheReplaceRelativeUriMethod
+        {
+            [Theory]
+            [InlineData("https://api.github.com", "my/new/path", "https://api.github.com/my/new/path")]
+            [InlineData("https://api.github.com", "/my/new/path", "https://api.github.com/my/new/path")]
+            [InlineData("https://example.com/api/v3", "my/new/path", "https://example.com/my/new/path")]
+            [InlineData("https://example.com/api/v3", "/my/new/path", "https://example.com/my/new/path")]
+            public void ReplacesRelativeUrisCorrectly(string baseUri, string relativeUri, string expectedUri)
+            {
+                var uri = new Uri(baseUri);
+
+                var newUri = uri.ReplaceRelativeUri(relativeUri.FormatUri());
+
+                Assert.Equal(newUri.ToString(), expectedUri);
+            }
+        }
+
         public class TheApplyParametersMethod
         {
             [Fact]

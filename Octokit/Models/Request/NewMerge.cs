@@ -25,8 +25,8 @@ namespace Octokit
         /// <param name="head">The head to merge. This can be a branch name or a commit SHA1.</param>
         public NewMerge(string @base, string head)
         {
-            Ensure.ArgumentNotNullOrEmptyString(@base, "baseBranch");
-            Ensure.ArgumentNotNullOrEmptyString(head, "head");
+            Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
             Base = @base;
             Head = head;

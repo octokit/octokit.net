@@ -35,7 +35,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), options);
         }
@@ -47,7 +47,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForCurrent(request, ApiOptions.None);
         }
@@ -60,8 +60,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options);
         }
@@ -74,8 +74,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, ApiOptions.None);
         }
@@ -99,9 +99,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), options);
         }
@@ -114,7 +114,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), options);
         }
@@ -128,9 +128,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -143,7 +143,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -158,10 +158,10 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options);
         }
@@ -175,8 +175,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options);
         }
@@ -197,7 +197,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
         public Task MarkAsRead(MarkAsReadRequest markAsReadRequest)
         {
-            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+            Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(), markAsReadRequest);
         }
@@ -210,8 +210,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         public Task MarkAsReadForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), new object());
         }
@@ -235,9 +235,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         public Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsReadRequest);
         }
@@ -250,7 +250,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         public Task MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest)
         {
-            Ensure.ArgumentNotNull(markAsReadRequest, "markAsReadRequest");
+            Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
             return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), markAsReadRequest);
         }
@@ -293,7 +293,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
         public Task<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription)
         {
-            Ensure.ArgumentNotNull(threadSubscription, "threadSubscription");
+            Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
             return ApiConnection.Put<ThreadSubscription>(ApiUrls.NotificationSubscription(id), threadSubscription);
         }

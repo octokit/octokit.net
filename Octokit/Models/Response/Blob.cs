@@ -9,13 +9,19 @@ namespace Octokit
     {
         public Blob() { }
 
-        public Blob(string content, EncodingType encoding, string sha, int size)
+        public Blob(string nodeId, string content, EncodingType encoding, string sha, int size)
         {
+            NodeId = nodeId;
             Content = content;
             Encoding = encoding;
             Sha = sha;
             Size = size;
         }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The content of the blob.

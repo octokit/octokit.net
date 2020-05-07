@@ -26,8 +26,8 @@ namespace Octokit
         /// <param name="number">The pull request number</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAll(owner, name, number, ApiOptions.None);
         }
@@ -53,9 +53,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(string owner, string name, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
@@ -69,7 +69,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAll(long repositoryId, int number, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, number), options);
         }
@@ -82,8 +82,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None);
         }
@@ -107,9 +107,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options);
         }
@@ -122,7 +122,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options);
         }
@@ -136,9 +136,9 @@ namespace Octokit
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(owner, name, request, ApiOptions.None);
         }
@@ -151,7 +151,7 @@ namespace Octokit
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return GetAllForRepository(repositoryId, request, ApiOptions.None);
         }
@@ -166,10 +166,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
@@ -183,8 +183,8 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         public Task<IReadOnlyList<PullRequestReviewComment>> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
         {
-            Ensure.ArgumentNotNull(request, "request");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNull(request, nameof(request));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
         }
@@ -198,8 +198,8 @@ namespace Octokit
         /// <param name="number">The pull request review comment number</param>
         public Task<PullRequestReviewComment> GetComment(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), new Dictionary<string, string>(), AcceptHeaders.ReactionsPreview);
         }
@@ -225,9 +225,9 @@ namespace Octokit
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentCreate comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number);
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
@@ -249,7 +249,7 @@ namespace Octokit
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> Create(long repositoryId, int number, PullRequestReviewCommentCreate comment)
         {
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number);
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
@@ -272,9 +272,9 @@ namespace Octokit
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> CreateReply(string owner, string name, int number, PullRequestReviewCommentReplyCreate comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             var endpoint = ApiUrls.PullRequestReviewComments(owner, name, number);
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
@@ -296,7 +296,7 @@ namespace Octokit
         /// <param name="comment">The comment</param>
         public async Task<PullRequestReviewComment> CreateReply(long repositoryId, int number, PullRequestReviewCommentReplyCreate comment)
         {
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             var endpoint = ApiUrls.PullRequestReviewComments(repositoryId, number);
             var response = await ApiConnection.Connection.Post<PullRequestReviewComment>(endpoint, comment, null, null).ConfigureAwait(false);
@@ -319,9 +319,9 @@ namespace Octokit
         /// <param name="comment">The edited comment</param>
         public Task<PullRequestReviewComment> Edit(string owner, string name, int number, PullRequestReviewCommentEdit comment)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), comment);
         }
@@ -335,7 +335,7 @@ namespace Octokit
         /// <param name="comment">The edited comment</param>
         public Task<PullRequestReviewComment> Edit(long repositoryId, int number, PullRequestReviewCommentEdit comment)
         {
-            Ensure.ArgumentNotNull(comment, "comment");
+            Ensure.ArgumentNotNull(comment, nameof(comment));
 
             return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number), comment);
         }
@@ -349,8 +349,8 @@ namespace Octokit
         /// <param name="number">The pull request review comment number</param>
         public Task Delete(string owner, string name, int number)
         {
-            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(owner, name, number));
         }

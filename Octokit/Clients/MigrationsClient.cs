@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -31,8 +32,8 @@ namespace Octokit
         /// <returns>The started migration.</returns>
         public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(migration, "migration");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(migration, nameof(migration));
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
@@ -47,13 +48,28 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public async Task<List<Migration>> GetAll(string org)
+        public async Task<IReadOnlyList<Migration>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            return await GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets the list of the most recent migrations of the the organization.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
+        /// </remarks>
+        /// <param name="org">The organization of which to list migrations.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Get<List<Migration>>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
+            return await ApiConnection.GetAll<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,7 +83,7 @@ namespace Octokit
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         public async Task<Migration> Get(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
@@ -85,7 +101,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive as a byte array.</returns>
         public async Task<byte[]> GetArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
             var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
@@ -104,7 +120,7 @@ namespace Octokit
         /// <returns></returns>
         public Task DeleteArchive(string org, int id)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
@@ -123,8 +139,8 @@ namespace Octokit
         /// <returns></returns>
         public Task UnlockRepository(string org, int id, string repo)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(repo, "repo");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
             var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
 

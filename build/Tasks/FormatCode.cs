@@ -40,7 +40,9 @@ public sealed class FormatCode : FrostingTask<Context>
 
     public override bool ShouldRun(Context context)
     {
-        return context.IsRunningOnWindows();
+        // Core only builds do not download the formatter exe
+        // Only windows is guaranteed to be able to run exe files in the first place
+        return context.IsRunningOnWindows() && !context.CoreOnly;
     }
 
     private static string CreateTempCsproj(Context context, string projectName)

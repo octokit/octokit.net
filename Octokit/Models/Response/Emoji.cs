@@ -10,8 +10,8 @@ namespace Octokit
 
         public Emoji(string name, string url)
         {
-            Ensure.ArgumentNotNullOrEmptyString(name, "name");
-            Ensure.ArgumentNotNull(url, "url");
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(url, nameof(url));
 
             Name = name;
             Url = url;

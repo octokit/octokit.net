@@ -16,7 +16,7 @@ namespace Octokit
         /// <param name="title">The title.</param>
         public NewMilestone(string title)
         {
-            Ensure.ArgumentNotNull(title, "title");
+            Ensure.ArgumentNotNull(title, nameof(title));
 
             Title = title;
             State = ItemState.Open;

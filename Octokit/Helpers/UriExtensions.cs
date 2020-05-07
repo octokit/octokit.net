@@ -10,6 +10,30 @@ namespace Octokit
     public static class UriExtensions
     {
         /// <summary>
+        /// Returns a Uri where any existing relative Uri component is stripped
+        /// eg https://example.com/some/path becomes https://example.com
+        /// </summary>
+        /// <param name="uri">Base Uri</param>
+        /// <returns></returns>
+        public static Uri StripRelativeUri(this Uri uri)
+        {
+            return new Uri(uri, "/");
+        }
+
+        /// <summary>
+        /// Returns a Uri where any existing relative Uri component is replaced with the respective value
+        /// eg https://example.com/some/path becomes https://example.com/replacement/path
+        /// </summary>
+        /// <param name="uri">Base Uri</param>
+        /// <param name="relativeUri">Relative Uri to add to the base Uri, replacing any existing relative Uri component</param>
+        /// <returns></returns>
+        public static Uri ReplaceRelativeUri(this Uri uri, Uri relativeUri)
+        {
+            // Prepending a forward slash to the relative Uri causes it to replace any that is existing
+            return new Uri(StripRelativeUri(uri), relativeUri);
+        }
+
+        /// <summary>
         /// Merge a dictionary of values with an existing <see cref="Uri"/>
         /// </summary>
         /// <param name="uri">Original request Uri</param>
@@ -17,7 +41,7 @@ namespace Octokit
         /// <returns>Updated request Uri</returns>
         public static Uri ApplyParameters(this Uri uri, IDictionary<string, string> parameters)
         {
-            Ensure.ArgumentNotNull(uri, "uri");
+            Ensure.ArgumentNotNull(uri, nameof(uri));
 
             if (parameters == null || !parameters.Any()) return uri;
 

@@ -19,7 +19,7 @@ namespace Octokit
 
         public NewGpgKey(string publicKey)
         {
-            Ensure.ArgumentNotNullOrEmptyString(publicKey, "publicKey");
+            Ensure.ArgumentNotNullOrEmptyString(publicKey, nameof(publicKey));
 
             ArmoredPublicKey = publicKey;
         }

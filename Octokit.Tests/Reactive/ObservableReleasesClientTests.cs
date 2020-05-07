@@ -127,6 +127,28 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
+            public void RequestsTheCorrectUrlByTag()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
+
+                client.Get("fake", "repo", "tag");
+
+                gitHubClient.Repository.Release.Received(1).Get("fake", "repo", "tag");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithRepositoryIdByTag()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableReleasesClient(gitHubClient);
+
+                client.Get(1, "tag");
+
+                gitHubClient.Repository.Release.Received(1).Get(1, "tag");
+            }
+
+            [Fact]
             public void EnsuresNonNullArguments()
             {
                 var releasesClient = new ObservableReleasesClient(Substitute.For<IGitHubClient>());
@@ -136,6 +158,13 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => releasesClient.Get("", "name", 1));
                 Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "", 1));
+
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Get(null, "name", "tag"));
+                Assert.Throws<ArgumentException>(() => releasesClient.Get("", "name", "tag"));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Get("owner", null, "tag"));
+                Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "", "tag"));
+                Assert.Throws<ArgumentNullException>(() => releasesClient.Get("owner", "name", null));
+                Assert.Throws<ArgumentException>(() => releasesClient.Get("owner", "name", ""));
             }
         }
 

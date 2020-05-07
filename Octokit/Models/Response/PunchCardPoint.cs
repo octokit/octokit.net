@@ -12,7 +12,7 @@ namespace Octokit
 
         public PunchCardPoint(IList<int> punchPoint)
         {
-            Ensure.ArgumentNotNull(punchPoint, "punchPoint");
+            Ensure.ArgumentNotNull(punchPoint, nameof(punchPoint));
             if (punchPoint.Count != 3)
             {
                 throw new ArgumentException("Daily punch card must only contain three data points.");

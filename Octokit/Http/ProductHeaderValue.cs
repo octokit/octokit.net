@@ -2,11 +2,12 @@
 {
     /// <summary>
     /// Represents a product header value. This is used to generate the User Agent string sent with each request. The
-    /// name used should represent the product that's using Octokit.net.
+    /// name used should represent the product, the GitHub Organization, or the GitHub username that's using Octokit.net (in that order of preference).
     /// </summary>
     /// <remarks>
-    /// This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/> 
+    /// This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/>
     /// so that consumers of Octokit.net would not have to add a reference to the System.Net.Http.Headers namespace.
+    /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
     /// </remarks>
     public class ProductHeaderValue
     {
@@ -15,7 +16,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
         /// </summary>
-        /// <param name="name">The name of the product that's using Octokit</param>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+        /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
         public ProductHeaderValue(string name)
             : this(new System.Net.Http.Headers.ProductHeaderValue(name))
         {
@@ -24,7 +28,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
         /// </summary>
-        /// <param name="name">The name of the product that's using Octokit</param>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
+        /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
         /// <param name="version">The version of the product that's using Octokit</param>
         public ProductHeaderValue(string name, string version)
             : this(new System.Net.Http.Headers.ProductHeaderValue(name, version))
@@ -37,8 +44,11 @@
         }
 
         /// <summary>
-        /// The name of the product that's using Octokit
+        /// The name of the product, the GitHub Organization, or the GitHub Username that's using Octokit (in that order of preference)
         /// </summary>
+        /// <remarks>
+        /// See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required
+        /// </remarks>
         public string Name
         {
             get { return _productHeaderValue.Name; }

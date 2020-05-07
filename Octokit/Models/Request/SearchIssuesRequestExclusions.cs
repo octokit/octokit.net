@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -122,6 +120,14 @@ namespace Octokit
         /// </remarks>
         public string Base { get; set; }
 
+        /// <summary>
+        /// Excludes issues which target the specified milestone.
+        /// </summary>
+        /// <remarks>
+        /// https://help.github.com/articles/searching-issues-and-pull-requests/#search-by-milestone-on-an-issue-or-pull-request
+        /// </remarks>
+        public string Milestone { get; set; }
+
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public IReadOnlyList<string> MergedQualifiers()
         {
@@ -180,6 +186,11 @@ namespace Octokit
             if (Base.IsNotBlank())
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "-base:{0}", Base));
+            }
+
+            if (Milestone.IsNotBlank())
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "-milestone:\"{0}\"", Milestone.EscapeDoubleQuotes()));
             }
 
             return new ReadOnlyCollection<string>(parameters);

@@ -4,7 +4,7 @@
     {
         public ObservableActivitiesClient(IGitHubClient client)
         {
-            Ensure.ArgumentNotNull(client, "client");
+            Ensure.ArgumentNotNull(client, nameof(client));
 
             Events = new ObservableEventsClient(client);
             Watching = new ObservableWatchedClient(client);

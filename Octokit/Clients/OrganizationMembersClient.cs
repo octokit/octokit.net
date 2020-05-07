@@ -75,7 +75,7 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, ApiOptions.None);
         }
@@ -103,8 +103,8 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Members(org), options);
         }
@@ -132,7 +132,7 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, filter, ApiOptions.None);
         }
@@ -161,8 +161,8 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter), options);
         }
@@ -190,7 +190,7 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, role, ApiOptions.None);
         }
@@ -219,8 +219,8 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Members(org, role), options);
         }
@@ -249,7 +249,7 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAll(org, filter, role, ApiOptions.None);
         }
@@ -279,8 +279,8 @@ namespace Octokit
         /// <returns>The users</returns>
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.Members(org, filter, role), options);
         }
@@ -293,7 +293,7 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllPublic(string org)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             return GetAllPublic(org, ApiOptions.None);
         }
@@ -307,8 +307,8 @@ namespace Octokit
         /// <returns></returns>
         public Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNull(options, "options");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             return ApiConnection.GetAll<User>(ApiUrls.PublicMembers(org), options);
         }
@@ -325,8 +325,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> CheckMember(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -358,8 +358,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> CheckMemberPublic(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -386,8 +386,8 @@ namespace Octokit
         /// <returns></returns>
         public Task Delete(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete("orgs/{0}/members/{1}".FormatUri(org, user));
         }
@@ -405,8 +405,8 @@ namespace Octokit
         /// <returns></returns>
         public async Task<bool> Publicize(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
@@ -437,8 +437,8 @@ namespace Octokit
         /// <returns></returns>
         public Task Conceal(string org, string user)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, "org");
-            Ensure.ArgumentNotNullOrEmptyString(user, "user");
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
         }

@@ -7,5 +7,9 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 fi
 
 cd build
+echo "Preparing Cake.Frosting build runner..."
 dotnet restore
+
+echo "Executing Cake.Frosting build runner..."
+echo  "dotnet run -- $@"
 dotnet run -- "$@"

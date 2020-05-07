@@ -18,15 +18,17 @@ namespace Octokit
         /// <param name="connection">The underlying connection to use</param>
         public OauthClient(IConnection connection)
         {
-            Ensure.ArgumentNotNull(connection, "connection");
+            Ensure.ArgumentNotNull(connection, nameof(connection));
 
             this.connection = connection;
             var baseAddress = connection.BaseAddress ?? GitHubClient.GitHubDotComUrl;
 
-            // The Oauth login stuff uses https://github.com and not the https://api.github.com URLs.
+            // The Oauth login stuff uses the main website and not the API URLs
+            // For https://api.github.com we use https://github.com 
+            // For any other address (presumably a GitHub Enterprise address) we need to strip any relative Uri such as /api/v3
             hostAddress = baseAddress.Host.Equals("api.github.com")
                 ? new Uri("https://github.com")
-                : baseAddress;
+                : baseAddress.StripRelativeUri();
         }
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace Octokit
         /// <returns></returns>
         public Uri GetGitHubLoginUrl(OauthLoginRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             return new Uri(hostAddress, ApiUrls.OauthAuthorize())
                 .ApplyParameters(request.ToParametersDictionary());
@@ -56,7 +58,7 @@ namespace Octokit
         /// <returns></returns>
         public async Task<OauthToken> CreateAccessToken(OauthTokenRequest request)
         {
-            Ensure.ArgumentNotNull(request, "request");
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             var endPoint = ApiUrls.OauthAccessToken();
 

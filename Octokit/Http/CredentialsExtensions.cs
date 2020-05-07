@@ -4,7 +4,7 @@
     {
         public static string GetToken(this Credentials credentials)
         {
-            Ensure.ArgumentNotNull(credentials, "credentials");
+            Ensure.ArgumentNotNull(credentials, nameof(credentials));
 
             return credentials.Password;
         }

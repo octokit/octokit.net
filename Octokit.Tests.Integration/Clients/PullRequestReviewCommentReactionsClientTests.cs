@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -50,6 +52,113 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReactionsWithoutStart()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, options);
+
+        Assert.Equal(1, reactions.Count);
+        Assert.Equal(reaction.Id, reactions[0].Id);
+        Assert.Equal(reaction.Content, reactions[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReactionsWithStart()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reactions = new List<Reaction>();
+        var reactionsContent = new[] { ReactionType.Heart, ReactionType.Hooray };
+        for (var i = 0; i < 2; i++)
+        {
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(reactionsContent[i]));
+            reactions.Add(reaction);
+        }
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var reactionsInfo = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, options);
+
+        Assert.Equal(1, reactionsInfo.Count);
+        Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
+        Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReactionsBasedOnStartPage()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reactionsContent = new[] { ReactionType.Heart, ReactionType.Hooray };
+        for (var i = 0; i < 2; i++)
+        {
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(reactionsContent[i]));
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 1
+        };
+        var firstPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+        var secondPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.Equal(firstPage[0].Id, secondPage[0].Id);
+        Assert.Equal(firstPage[0].Content, secondPage[0].Content);
+    }
+
+    [IntegrationTest]
     public async Task CanListReactionsWithRepositoryId()
     {
         var pullRequest = await CreatePullRequest(_context);
@@ -70,6 +179,113 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         Assert.NotEmpty(reactions);
         Assert.Equal(reaction.Id, reactions[0].Id);
         Assert.Equal(reaction.Content, reactions[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReactionsWithoutStartWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(ReactionType.Heart));
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1
+        };
+
+        var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, options);
+
+        Assert.Equal(1, reactions.Count);
+        Assert.Equal(reaction.Id, reactions[0].Id);
+        Assert.Equal(reaction.Content, reactions[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsCorrectCountOfReactionsWithStartWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reactions = new List<Reaction>();
+        var reactionsContent = new[] { ReactionType.Heart, ReactionType.Hooray };
+        for (var i = 0; i < 2; i++)
+        {
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(reactionsContent[i]));
+            reactions.Add(reaction);
+        }
+
+        var options = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+
+        var reactionsInfo = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, options);
+
+        Assert.Equal(1, reactionsInfo.Count);
+        Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
+        Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
+    }
+
+    [IntegrationTest]
+    public async Task ReturnsDistinctReactionsBasedOnStartPageWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        var reactionsContent = new[] { ReactionType.Heart, ReactionType.Hooray };
+        for (var i = 0; i < 2; i++)
+        {
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, new NewReaction(reactionsContent[i]));
+        }
+
+        var startOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 1
+        };
+        var firstPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, startOptions);
+
+        var skipStartOptions = new ApiOptions
+        {
+            PageSize = 1,
+            PageCount = 1,
+            StartPage = 2
+        };
+        var secondPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, skipStartOptions);
+
+        Assert.Equal(1, firstPage.Count);
+        Assert.Equal(1, secondPage.Count);
+        Assert.Equal(firstPage[0].Id, secondPage[0].Id);
+        Assert.Equal(firstPage[0].Content, secondPage[0].Content);
     }
 
     [IntegrationTest]

@@ -12,29 +12,6 @@ namespace Octokit
     /// </remarks>
     public interface IRepositoryTrafficClient
     {
-        /// <summary>
-        /// List the top 10 referrers over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        [Obsolete("Please use GetAllReferrers instead")]
-        Task<IReadOnlyList<RepositoryTrafficReferrer>> GetReferrers(string owner, string name);
-
-        /// <summary>
-        /// List the top 10 referrers over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
-        /// <param name="repositoryId">The owner of the repository</param>
-        [Obsolete("Please use GetAllReferrers instead")]
-        Task<IReadOnlyList<RepositoryTrafficReferrer>> GetReferrers(long repositoryId);
-
-        /// <summary>
-        /// List the top 10 referrers over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name);
 
@@ -45,23 +22,6 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(long repositoryId);
-
-        /// <summary>
-        /// List the top 10 popular contents over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        [Obsolete("Please use GetAllPaths instead")]
-        Task<IReadOnlyList<RepositoryTrafficPath>> GetPaths(string owner, string name);
-
-        /// <summary>
-        /// List the top 10 popular contents over the last 14 days
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
-        /// <param name="repositoryId">The owner of the repository</param>
-        [Obsolete("Please use GetAllPaths instead")]
-        Task<IReadOnlyList<RepositoryTrafficPath>> GetPaths(long repositoryId);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days

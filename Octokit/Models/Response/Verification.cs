@@ -10,6 +10,16 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Verification
     {
+        public Verification() { }
+
+        public Verification(bool verified, VerificationReason reason, string signature, string payload)
+        {
+            Verified = verified;
+            Reason = reason;
+            Signature = signature;
+            Payload = payload;
+        }
+
         /// <summary>
         /// Does GitHub consider the signature in this commit to be verified?
         /// </summary>

@@ -9,9 +9,10 @@ namespace Octokit
     {
         public ProjectColumn() { }
 
-        public ProjectColumn(int id, string name, string projectUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public ProjectColumn(int id, string nodeId, string name, string projectUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             Id = id;
+            NodeId = nodeId;
             Name = name;
             ProjectUrl = projectUrl;
             CreatedAt = createdAt;
@@ -22,6 +23,11 @@ namespace Octokit
         /// The Id for this column.
         /// </summary>
         public int Id { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The name for this column.
