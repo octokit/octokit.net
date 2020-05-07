@@ -42,4 +42,9 @@ public static class TestFixtureLoader
     {
         return LoadStream("topics-get-put-route.json");
     }
+
+    public static Stream LoadMultipleMarketingRoutes()
+    {
+      return LoadStream("example-nested-routes.json");
+    }
 }
