@@ -12,7 +12,7 @@
         /// Initializes a new GitHub Checks API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public ChecksClient(ApiConnection apiConnection)
+        public ChecksClient(IApiConnection apiConnection)
         {
             Run = new CheckRunsClient(apiConnection);
             Suite = new CheckSuitesClient(apiConnection);
