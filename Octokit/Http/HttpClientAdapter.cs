@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -128,7 +129,8 @@ namespace Octokit.Internal
 
             // Add Client response received time as a synthetic header
             const string receivedTimeHeaderName = ApiInfoParser.ReceivedTimeHeaderName;
-            if (responseMessage.RequestMessage.Properties.TryGetValue(receivedTimeHeaderName, out object receivedTimeObj)
+            if (responseMessage.RequestMessage?.Properties is IDictionary<string, object> reqProperties
+                && reqProperties.TryGetValue(receivedTimeHeaderName, out object receivedTimeObj)
                 && receivedTimeObj is string receivedTimeString
                 && !responseHeaders.ContainsKey(receivedTimeHeaderName))
             {
