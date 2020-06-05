@@ -107,6 +107,9 @@ namespace Octokit.Tests.Models
 
     ]
   },
+  ""requested_action"": {
+    ""identifier"": ""dosomeaction""
+  },
   ""repository"": {
     ""id"": 526,
     ""node_id"": ""MDEwOlJlcG9zaXRvcnkxMzU0OTMyMzM="",
@@ -248,6 +251,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(4, payload.CheckRun.Id);
             Assert.Equal(CheckStatus.Completed, payload.CheckRun.Status);
             Assert.Equal(CheckConclusion.Neutral, payload.CheckRun.Conclusion);
+            Assert.Equal("dosomeaction", payload.RequestedAction.Identifier);
             Assert.Equal(5, payload.CheckRun.CheckSuite.Id);
             Assert.Equal(CheckStatus.Completed, payload.CheckRun.CheckSuite.Status.Value);
             Assert.Equal(CheckConclusion.Neutral, payload.CheckRun.CheckSuite.Conclusion);
