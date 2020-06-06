@@ -31,7 +31,7 @@ namespace Octokit.Internal
 
 #if HAS_SERVICEPOINTMANAGER
             // GitHub API requires TLS1.2 as of February 2018
-            // 
+            //
             // .NET Framework before 4.6 did not enable TLS1.2 by default
             //
             // Even though this is an AppDomain wide setting, the decision was made for Octokit to
@@ -99,7 +99,7 @@ namespace Octokit.Internal
             object responseBody = null;
             string contentType = null;
 
-            // We added support for downloading images,zip-files and application/octet-stream. 
+            // We added support for downloading images,zip-files and application/octet-stream.
             // Let's constrain this appropriately.
             var binaryContentTypes = new[] {
                 AcceptHeaders.RawContentMediaType,
