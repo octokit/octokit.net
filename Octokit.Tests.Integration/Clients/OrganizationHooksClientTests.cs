@@ -23,7 +23,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var hooks = await github.Organization.Hook.GetAll( _fixture.org);
+                var hooks = await github.Organization.Hook.GetAll(_fixture.org);
 
                 Assert.Equal(_fixture.ExpectedHooks.Count, hooks.Count);
 
@@ -164,7 +164,7 @@ namespace Octokit.Tests.Integration.Clients
 
             string CreateExpectedBaseHookUrl(string org, int id)
             {
-                return "https://api.github.com/orgs/" + org+ "/hooks/" + id;
+                return "https://api.github.com/orgs/" + org + "/hooks/" + id;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Integration.Clients
                     Events = new[] { "pull_request" }
                 };
 
-                var actualHook = await github.Organization.Hook.Edit( _fixture.org, _fixture.ExpectedHook.Id, editOrganizationHook);
+                var actualHook = await github.Organization.Hook.Edit(_fixture.org, _fixture.ExpectedHook.Id, editOrganizationHook);
 
                 var expectedConfig = new Dictionary<string, string> { { "content_type", "json" }, { "url", "http://test.com/example" } };
                 Assert.Equal(new[] { "commit_comment", "pull_request" }.ToList(), actualHook.Events.ToList());
@@ -212,7 +212,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                await github.Organization.Hook.Ping( _fixture.org, _fixture.ExpectedHook.Id);
+                await github.Organization.Hook.Ping(_fixture.org, _fixture.ExpectedHook.Id);
             }
         }
 
@@ -232,7 +232,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 await github.Organization.Hook.Delete(_fixture.org, _fixture.ExpectedHook.Id);
-                var hooks = await github.Organization.Hook.GetAll( _fixture.org);
+                var hooks = await github.Organization.Hook.GetAll(_fixture.org);
 
                 Assert.Empty(hooks);
             }

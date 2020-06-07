@@ -94,7 +94,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Get("",123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Get("", 123));
             }
         }
 
@@ -162,8 +162,8 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hook.Edit( null, 12345678, new EditOrganizationHook()));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hook.Edit( "name", 12345678, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hook.Edit(null, 12345678, new EditOrganizationHook()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Hook.Edit("name", 12345678, null));
             }
 
             [Fact]

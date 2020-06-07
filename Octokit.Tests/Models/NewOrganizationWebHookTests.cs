@@ -48,7 +48,7 @@ namespace Octokit.Tests.Models
                 };
 
                 Assert.Equal("http://test.com/example", create.Url);
-                Assert.Equal( OrgWebHookContentType.Json, create.ContentType);
+                Assert.Equal(OrgWebHookContentType.Json, create.ContentType);
                 Assert.Empty(create.Secret);
                 Assert.True(create.InsecureSsl);
 
