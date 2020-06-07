@@ -18,7 +18,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/traffic/popular/paths")]
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(long repositoryId)
         {
-            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(repositoryId));
         }
 
         /// <summary>
@@ -27,13 +27,13 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/popular/paths")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/popular/paths")]
         public Task<IReadOnlyList<RepositoryTrafficPath>> GetAllPaths(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.GetAll<RepositoryTrafficPath>(ApiUrls.RepositoryTrafficPaths(owner, name));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/traffic/popular/referrers")]
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(long repositoryId)
         {
-            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(repositoryId), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(repositoryId));
         }
 
         /// <summary>
@@ -53,13 +53,13 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/popular/referrers")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/popular/referrers")]
         public Task<IReadOnlyList<RepositoryTrafficReferrer>> GetAllReferrers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(owner, name), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.GetAll<RepositoryTrafficReferrer>(ApiUrls.RepositoryTrafficReferrers(owner, name));
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(per, nameof(per));
 
-            return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(repositoryId), per.ToParametersDictionary());
         }
 
         /// <summary>
@@ -83,14 +83,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/clones")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/clones")]
         public Task<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(per, nameof(per));
 
-            return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.Get<RepositoryTrafficCloneSummary>(ApiUrls.RepositoryTrafficClones(owner, name), per.ToParametersDictionary());
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(per, nameof(per));
 
-            return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(repositoryId), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(repositoryId), per.ToParametersDictionary());
         }
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        [ManualRoute("GET", "/repositories/{owner}/{name}/traffic/views")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/traffic/views")]
         public Task<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(per, nameof(per));
 
-            return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(owner, name), per.ToParametersDictionary(), AcceptHeaders.RepositoryTrafficApiPreview);
+            return ApiConnection.Get<RepositoryTrafficViewSummary>(ApiUrls.RepositoryTrafficViews(owner, name), per.ToParametersDictionary());
         }
     }
 }

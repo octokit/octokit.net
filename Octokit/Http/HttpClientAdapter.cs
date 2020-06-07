@@ -100,6 +100,7 @@ namespace Octokit.Internal
             // We added support for downloading images,zip-files and application/octet-stream. 
             // Let's constrain this appropriately.
             var binaryContentTypes = new[] {
+                AcceptHeaders.RawContentMediaType,
                 "application/zip" ,
                 "application/x-gzip" ,
                 "application/octet-stream"};

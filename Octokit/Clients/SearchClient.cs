@@ -81,7 +81,7 @@ namespace Octokit
         public Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters, AcceptHeaders.LabelsApiPreview);
+            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters);
         }
     }
 }

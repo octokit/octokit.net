@@ -16,6 +16,16 @@ namespace Octokit.Internal
         static readonly Regex _linkRelRegex = new Regex("rel=\"(next|prev|first|last)\"", regexOptions);
         static readonly Regex _linkUriRegex = new Regex("<(.+)>", regexOptions);
 
+        static KeyValuePair<string, string> LookupHeader(IDictionary<string, string> headers, string key)
+        {
+            return headers.FirstOrDefault(h => string.Equals(h.Key, key, StringComparison.OrdinalIgnoreCase));
+        }
+
+        static bool Exists(KeyValuePair<string, string> kvp)
+        {
+            return !kvp.Equals(default(KeyValuePair<string, string>));
+        }
+
         public static ApiInfo ParseResponseHeaders(IDictionary<string, string> responseHeaders)
         {
             Ensure.ArgumentNotNull(responseHeaders, nameof(responseHeaders));
@@ -25,28 +35,32 @@ namespace Octokit.Internal
             var acceptedOauthScopes = new List<string>();
             string etag = null;
 
-            if (responseHeaders.ContainsKey("X-Accepted-OAuth-Scopes"))
+            var acceptedOauthScopesKey = LookupHeader(responseHeaders, "X-Accepted-OAuth-Scopes");
+            if (Exists(acceptedOauthScopesKey))
             {
-                acceptedOauthScopes.AddRange(responseHeaders["X-Accepted-OAuth-Scopes"]
+                acceptedOauthScopes.AddRange(acceptedOauthScopesKey.Value
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (responseHeaders.ContainsKey("X-OAuth-Scopes"))
+            var oauthScopesKey = LookupHeader(responseHeaders, "X-OAuth-Scopes");
+            if (Exists(oauthScopesKey))
             {
-                oauthScopes.AddRange(responseHeaders["X-OAuth-Scopes"]
+                oauthScopes.AddRange(oauthScopesKey.Value
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim()));
             }
 
-            if (responseHeaders.ContainsKey("ETag"))
+            var etagKey = LookupHeader(responseHeaders, "ETag");
+            if (Exists(etagKey))
             {
-                etag = responseHeaders["ETag"];
+                etag = etagKey.Value;
             }
 
-            if (responseHeaders.ContainsKey("Link"))
+            var linkKey = LookupHeader(responseHeaders, "Link");
+            if (Exists(linkKey))
             {
-                var links = responseHeaders["Link"].Split(',');
+                var links = linkKey.Value.Split(',');
                 foreach (var link in links)
                 {
                     var relMatch = _linkRelRegex.Match(link);

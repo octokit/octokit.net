@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllReferrers("fake", "repo");
 
-                connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/referrers"), "application/vnd.github.spiderman-preview");
+                connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/referrers"));
             }
 
             [Fact]
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllReferrers(1);
 
-                connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/referrers"), "application/vnd.github.spiderman-preview");
+                connection.Received().GetAll<RepositoryTrafficReferrer>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/referrers"));
             }
 
             [Fact]
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllPaths("fake", "repo");
 
-                connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/paths"), "application/vnd.github.spiderman-preview");
+                connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/popular/paths"));
             }
 
             [Fact]
@@ -76,7 +76,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllPaths(1);
 
-                connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/paths"), "application/vnd.github.spiderman-preview");
+                connection.Received().GetAll<RepositoryTrafficPath>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/popular/paths"));
             }
 
             [Fact]
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetClones("fake", "repo", per);
 
-                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"));
             }
 
             [Fact]
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetClones(1, per);
 
-                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficCloneSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/clones"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"));
             }
 
             [Fact]
@@ -146,7 +146,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetViews("fake", "repo", per);
 
-                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"));
             }
 
             [Fact]
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetViews(1, per);
 
-                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"), "application/vnd.github.spiderman-preview");
+                connection.Received().Get<RepositoryTrafficViewSummary>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/traffic/views"), Arg.Is<Dictionary<string, string>>(s => s["per"] == "day"));
             }
 
             [Fact]

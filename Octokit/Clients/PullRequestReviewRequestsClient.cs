@@ -24,31 +24,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name, int number)
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
+        public Task<RequestedReviews> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
-        }
-
-        /// <summary>
-        /// Gets review requests for a specified pull request.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
-        /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name, int number, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
+            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(owner, name, number));
         }
 
         /// <summary>
@@ -58,24 +40,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId, int number)
+        public Task<RequestedReviews> Get(long repositoryId, int number)
         {
-            return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
-        }
-
-        /// <summary>
-        /// Gets review requests for a specified pull request.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
-        /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId, int number, ApiOptions options)
-        {
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return ApiConnection.GetAll<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
+            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(repositoryId, number));
         }
 
         /// <summary>
@@ -86,22 +53,15 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The Pull Request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
-        public async Task<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
+        [ManualRoute("POST", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
+        public Task<PullRequest> Create(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(owner, name, number);
-            var response = await ApiConnection.Connection.Post<PullRequest>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
-
-            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
-            }
-
-            return response.Body;
+            return ApiConnection.Post<PullRequest>(endpoint, users);
         }
 
         /// <summary>
@@ -112,19 +72,12 @@ namespace Octokit
         /// <param name="number">The Pull Request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
         [ManualRoute("POST", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public async Task<PullRequest> Create(long repositoryId, int number, PullRequestReviewRequest users)
+        public Task<PullRequest> Create(long repositoryId, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(repositoryId, number);
-            var response = await ApiConnection.Connection.Post<PullRequest>(endpoint, users, AcceptHeaders.PullRequestReviewsApiPreview, null).ConfigureAwait(false);
-
-            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
-            }
-
-            return response.Body;
+            return ApiConnection.Post<PullRequest>(endpoint, users);
         }
 
         /// <summary>
@@ -135,14 +88,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request review comment number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/pulls/{number}/requested_reviewers")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
         public Task Delete(string owner, string name, int number, PullRequestReviewRequest users)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(owner, name, number), users, AcceptHeaders.PullRequestReviewsApiPreview);
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(owner, name, number), users);
         }
 
         /// <summary>
@@ -157,7 +110,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(repositoryId, number), users, AcceptHeaders.PullRequestReviewsApiPreview);
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(repositoryId, number), users);
         }
     }
 }

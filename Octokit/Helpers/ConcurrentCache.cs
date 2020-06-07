@@ -11,6 +11,7 @@ namespace Octokit
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
+    [Obsolete("This component is no longer used, and will be removed in a future update")]
     public class ConcurrentCache<TKey, TValue>
     {
         Dictionary<TKey, TValue> _cache = new Dictionary<TKey, TValue>();

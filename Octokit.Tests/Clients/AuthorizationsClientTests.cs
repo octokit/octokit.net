@@ -5,8 +5,9 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -152,9 +153,7 @@ namespace Octokit.Tests.Clients
                 var data = new NewAuthorization();
                 var client = Substitute.For<IApiConnection>();
                 client.Put<ApplicationAuthorization>(Args.Uri, Args.Object, Args.String)
-                    .ThrowsAsync<ApplicationAuthorization>(
-                    new AuthorizationException(
-                        new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json")));
+                    .ThrowsAsync<ApplicationAuthorization>(new AuthorizationException(CreateResponse(HttpStatusCode.Unauthorized)));
                 var authEndpoint = new AuthorizationsClient(client);
 
                 await Assert.ThrowsAsync<TwoFactorChallengeFailedException>(() =>
@@ -173,12 +172,12 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
+                    .Returns(Task.FromResult(new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "xyz")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     data,
-                    e => Task.Factory.StartNew(() => twoFactorChallengeResult));
+                    e => Task.FromResult(twoFactorChallengeResult));
 
                 client.Received().GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -205,12 +204,12 @@ namespace Octokit.Tests.Clients
                     "secret",
                     Arg.Any<NewAuthorization>(),
                     "two-factor-code")
-                    .Returns(Task.Factory.StartNew(() => new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
+                    .Returns(Task.FromResult(new ApplicationAuthorization(0, null, null, null, null, null, null, null, DateTimeOffset.Now, DateTimeOffset.Now, null, "OAUTHSECRET")));
 
                 var result = await client.GetOrCreateApplicationAuthentication("clientId",
                     "secret",
                     data,
-                    e => Task.Factory.StartNew(() => challengeResults.Dequeue()));
+                    e => Task.FromResult(challengeResults.Dequeue()));
 
                 client.Received(2).GetOrCreateApplicationAuthentication("clientId",
                     "secret",
@@ -245,7 +244,7 @@ namespace Octokit.Tests.Clients
                         "clientId",
                         "secret",
                         data,
-                        e => Task.Factory.StartNew(() => challengeResults.Dequeue())));
+                        e => Task.FromResult(challengeResults.Dequeue())));
 
                 Assert.NotNull(exception);
                 client.Received().GetOrCreateApplicationAuthentication("clientId",

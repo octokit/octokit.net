@@ -47,7 +47,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), null, AcceptHeaders.GpgKeysPreview, options);
+            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), options);
         }
 
         /// <summary>
@@ -58,10 +58,10 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
-        [ManualRoute("GET", "/user/gpg_keys/{id}")]
+        [ManualRoute("GET", "/user/gpg_keys/{gpg_key_id}")]
         public Task<GpgKey> Get(int id)
         {
-            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id), null, AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id));
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
-            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey, AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey);
         }
 
         /// <summary>
@@ -88,10 +88,10 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/user/gpg_keys/{id}")]
+        [ManualRoute("DELETE", "/user/gpg_keys/{gpg_key_id}")]
         public Task Delete(int id)
         {
-            return ApiConnection.Delete(ApiUrls.GpgKeys(id), new object(), AcceptHeaders.GpgKeysPreview);
+            return ApiConnection.Delete(ApiUrls.GpgKeys(id));
         }
     }
 }

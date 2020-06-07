@@ -33,6 +33,28 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void ParsesApiInfoFromCaseInsensitiveHeaders()
+            {
+                var headers = new Dictionary<string, string>
+                {
+                    { "x-accepted-oauth-scopes", "user" },
+                    { "x-oauth-scopes", "user, public_repo, repo, gist" },
+                    { "x-ratelimit-limit", "5000" },
+                    { "x-ratelimit-remaining", "4997" },
+                    { "etag", "5634b0b187fd2e91e3126a75006cc4fa" }
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
+                Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes.ToArray());
+                Assert.Equal(5000, apiInfo.RateLimit.Limit);
+                Assert.Equal(4997, apiInfo.RateLimit.Remaining);
+                Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", apiInfo.Etag);
+            }
+
+            [Fact]
             public void BadHeadersAreIgnored()
             {
                 var headers = new Dictionary<string, string>

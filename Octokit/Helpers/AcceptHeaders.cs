@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit
 {
@@ -6,64 +7,38 @@ namespace Octokit
     {
         public const string StableVersion = "application/vnd.github.v3";
 
-        public const string StableVersionHtml = "application/vnd.github.html";
+        public const string StableVersionHtml = "application/vnd.github.v3.html";
 
-        public const string RedirectsPreviewThenStableVersionJson = "application/vnd.github.quicksilver-preview+json; charset=utf-8, application/vnd.github.v3+json; charset=utf-8";
+        public const string StableVersionJson = "application/vnd.github.v3+json";
 
         public const string CommitReferenceSha1MediaType = "application/vnd.github.v3.sha";
 
-        public const string OrganizationPermissionsPreview = "application/vnd.github.ironman-preview+json";
-
         /// <summary>
-        /// Support for retrieving information about open source license usage on GitHub.com.
-        /// Custom media type: drax-preview Announced: 2015-03-09 Update 1: 2015-06-24 Update 2: 2015-08-04
+        /// Support for retrieving raw file content with the <see cref="IConnection.GetRaw"/> method.
         /// </summary>
-        public const string LicensesApiPreview = "application/vnd.github.drax-preview+json";
-
-        public const string ProtectedBranchesApiPreview = "application/vnd.github.loki-preview+json";
+        /// <remarks>https://developer.github.com/v3/repos/contents/#custom-media-types</remarks>
+        public const string RawContentMediaType = "application/vnd.github.v3.raw";
 
         public const string StarCreationTimestamps = "application/vnd.github.v3.star+json";
-
-        public const string IssueLockingUnlockingApiPreview = "application/vnd.github.the-key-preview+json";
-
-        public const string SquashCommitPreview = "application/vnd.github.polaris-preview+json";
 
         public const string MigrationsApiPreview = "application/vnd.github.wyandotte-preview+json";
 
         public const string ReactionsPreview = "application/vnd.github.squirrel-girl-preview+json";
 
-        public const string SignatureVerificationPreview = "application/vnd.github.cryptographer-preview+sha";
-
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        public const string GpgKeysPreview = "application/vnd.github.cryptographer-preview";
-
         public const string DeploymentApiPreview = "application/vnd.github.ant-man-preview+json";
 
-        public const string InvitationsApiPreview = "application/vnd.github.swamp-thing-preview+json";
-
-        public const string PagesApiPreview = "application/vnd.github.mister-fantastic-preview+json";
-
         public const string IssueTimelineApiPreview = "application/vnd.github.mockingbird-preview+json";
-
-        public const string RepositoryTrafficApiPreview = "application/vnd.github.spiderman-preview";
-
-        public const string PullRequestReviewsApiPreview = "application/vnd.github.black-cat-preview+json";
 
         public const string DraftPullRequestApiPreview = "application/vnd.github.shadow-cat-preview+json";
 
         public const string ProjectsApiPreview = "application/vnd.github.inertia-preview+json";
 
+        [Obsolete("API is considered legacy")]
         public const string OrganizationMembershipPreview = "application/vnd.github.korra-preview+json";
-
-        public const string NestedTeamsPreview = "application/vnd.github.hellcat-preview+json";
 
         public const string GitHubAppsPreview = "application/vnd.github.machine-man-preview+json";
 
         public const string PreReceiveEnvironmentsPreview = "application/vnd.github.eye-scream-preview+json";
-
-        public const string LabelsApiPreview = "application/vnd.github.symmetra-preview+json";
-
-        public const string RepositoryTransferPreview = "application/vnd.github.nightshade-preview+json";
 
         public const string ChecksApiPreview = "application/vnd.github.antiope-preview+json";
 

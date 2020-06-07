@@ -23,7 +23,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue id</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/reactions")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
         {
             return GetAll(owner, name, number, ApiOptions.None);
@@ -38,7 +38,7 @@ namespace Octokit
         /// <param name="number">The issue id</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("squirrel-girl")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/issues/{number}/reactions")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="number">The issue id</param>
         /// <param name="reaction">The reaction to create</param>
         [Preview("squirrel-girl")]
-        [ManualRoute("POST", "/repos/{owner}/{name}/issues/{number}/reactions")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

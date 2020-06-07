@@ -35,7 +35,7 @@ public class RepositoryInvitationsClientTests
 
             await client.GetAllForRepository(1);
 
-            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations"), null, "application/vnd.github.swamp-thing-preview+json", Args.ApiOptions);
+            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations"), Args.ApiOptions);
         }
     }
 
@@ -58,7 +58,7 @@ public class RepositoryInvitationsClientTests
 
             await client.GetAllForCurrent();
 
-            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations"), null, "application/vnd.github.swamp-thing-preview+json", Args.ApiOptions);
+            connection.Received().GetAll<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations"), Args.ApiOptions);
         }
     }
 
@@ -72,7 +72,7 @@ public class RepositoryInvitationsClientTests
 
             await client.Accept(1);
 
-            connection.Connection.Received().Patch(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations/1"), "application/vnd.github.swamp-thing-preview+json");
+            connection.Connection.Received().Patch(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations/1"));
         }
     }
 
@@ -86,7 +86,7 @@ public class RepositoryInvitationsClientTests
 
             await client.Decline(1);
 
-            connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations/1"), Arg.Any<object>(), "application/vnd.github.swamp-thing-preview+json");
+            connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "user/repository_invitations/1"));
         }
     }
 
@@ -100,7 +100,7 @@ public class RepositoryInvitationsClientTests
 
             await client.Delete(1, 2);
 
-            connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations/2"), Arg.Any<object>(), "application/vnd.github.swamp-thing-preview+json");
+            connection.Connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations/2"));
         }
     }
 
@@ -115,7 +115,7 @@ public class RepositoryInvitationsClientTests
 
             await client.Edit(1, 2, updatedInvitation);
 
-            connection.Received().Patch<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations/2"), Arg.Is<InvitationUpdate>(updatedInvitation), "application/vnd.github.swamp-thing-preview+json");
+            connection.Received().Patch<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/invitations/2"), Arg.Is<InvitationUpdate>(updatedInvitation));
         }
 
         [Fact]
@@ -127,4 +127,3 @@ public class RepositoryInvitationsClientTests
         }
     }
 }
-

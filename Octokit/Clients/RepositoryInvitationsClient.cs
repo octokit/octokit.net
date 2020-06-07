@@ -17,7 +17,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/user/repository_invitations/{invitation_id}")]
@@ -27,7 +27,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Patch(endpoint, AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Patch(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -41,7 +41,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/user/repository_invitations/{invitation_id}")]
@@ -51,7 +51,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -76,7 +76,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, new object(), AcceptHeaders.InvitationsApiPreview).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -90,7 +90,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/user/repository_invitations")]
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
@@ -110,7 +110,7 @@ namespace Octokit
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), null, AcceptHeaders.InvitationsApiPreview, options);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), options);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/invitations")]
@@ -132,7 +132,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -140,7 +140,7 @@ namespace Octokit
         public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, AcceptHeaders.InvitationsApiPreview, options);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), options);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(permissions, nameof(permissions));
 
-            return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions, AcceptHeaders.InvitationsApiPreview);
+            return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions);
         }
     }
 }

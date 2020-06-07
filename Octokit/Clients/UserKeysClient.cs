@@ -87,7 +87,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The Id of the SSH key</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/user/keys/{public_key_id}")]
+        [ManualRoute("GET", "/user/keys/{key_id}")]
         public Task<PublicKey> Get(int id)
         {
             return ApiConnection.Get<PublicKey>(ApiUrls.Keys(id));
@@ -117,7 +117,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/user/keys/{public_key_id}")]
+        [ManualRoute("DELETE", "/user/keys/{key_id}")]
         public Task Delete(int id)
         {
             return ApiConnection.Delete(ApiUrls.Keys(id));

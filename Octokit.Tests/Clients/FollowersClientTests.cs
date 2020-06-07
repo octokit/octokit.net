@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     /// <summary>
-    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
     public class FollowersClientTests
@@ -204,11 +205,11 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -221,11 +222,11 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -251,11 +252,11 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -268,11 +269,11 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
-                    null, null).Returns(response);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -299,11 +300,13 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NoContent, true)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    Args.Object).Returns(response);
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -316,11 +319,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    new { }).Returns(response);
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);

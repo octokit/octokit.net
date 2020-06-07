@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Octokit.Internal;
+﻿using System.Net;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -16,7 +12,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void SetsDefaultMessage()
             {
-                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden);
 
                 var exception = new LoginAttemptsExceededException(response);
 

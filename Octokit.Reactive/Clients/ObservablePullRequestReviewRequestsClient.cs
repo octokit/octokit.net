@@ -25,29 +25,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<User> GetAll(string owner, string name, int number)
+        public IObservable<RequestedReviews> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
-        }
-
-        /// <summary>
-        /// Gets review requests for a specified pull request.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
-        /// <param name="options">Options for changing the API response</param>
-        public IObservable<User> GetAll(string owner, string name, int number, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(owner, name, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
+            return _client.Get(owner, name, number).ToObservable();
         }
 
         /// <summary>
@@ -56,23 +39,9 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<User> GetAll(long repositoryId, int number)
+        public IObservable<RequestedReviews> Get(long repositoryId, int number)
         {
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview);
-        }
-
-        /// <summary>
-        /// Gets review requests for a specified pull request.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
-        /// <param name="options">Options for changing the API response</param>
-        public IObservable<User> GetAll(long repositoryId, int number, ApiOptions options)
-        {
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.PullRequestReviewRequests(repositoryId, number), null, AcceptHeaders.PullRequestReviewsApiPreview, options);
+            return _client.Get(repositoryId, number).ToObservable();
         }
 
         /// <summary>

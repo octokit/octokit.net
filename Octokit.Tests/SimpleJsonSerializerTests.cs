@@ -430,6 +430,56 @@ namespace Octokit.Tests
                     // Test passes if no exception thrown
                 }
             }
+
+            // this test is the root cause of https://github.com/octokit/octokit.net/issues/2052
+            // as the API is returning a null value where the enum is expecting
+            // something like a string
+            //
+            // this should be removed once we can confirm the GitHub API is no
+            // longer returning a null for the parent Team's permission value,
+            // making the test redundant
+            [Fact]
+            public void ShouldDeserializeParentTeamWithNullPermission()
+            {
+                var teamJson = @"{
+                    ""id"": 1,
+                    ""node_id"": ""MDQ6VGVhbTE="",
+                    ""url"": ""https://api.github.com/teams/1"",
+                    ""html_url"": ""https://api.github.com/teams/justice-league"",
+                    ""name"": ""Justice League"",
+                    ""slug"": ""justice-league"",
+                    ""description"": ""A great team."",
+                    ""privacy"": ""closed"",
+                    ""permission"": ""admin"",
+                    ""members_url"": ""https://api.github.com/teams/1/members{/member}"",
+                    ""repositories_url"": ""https://api.github.com/teams/1/repos"",
+                    ""parent"": {
+                        ""id"": 1,
+                        ""node_id"": ""MDQ6LFJSbTE="",
+                        ""url"": ""https://api.github.com/teams/2"",
+                        ""html_url"": ""https://api.github.com/teams/super-friends"",
+                        ""name"": ""Super Friends"",
+                        ""slug"": ""super-friends"",
+                        ""description"": ""Also a great team."",
+                        ""privacy"": ""closed"",
+                        ""permission"": null,
+                        ""members_url"": ""https://api.github.com/teams/2/members{/member}"",
+                        ""repositories_url"": ""https://api.github.com/teams/2/repos"",
+                        }
+                    }
+                }";
+
+                var result = new SimpleJsonSerializer().Deserialize<Team>(teamJson);
+
+                // original value works as expected
+                Assert.Equal(PermissionLevel.Admin, result.Permission.Value);
+                Assert.Equal("admin", result.Permission.StringValue);
+
+                // parent permission is marked as null and cannot be parsed
+                Assert.Equal("null", result.Parent.Permission.StringValue);
+                PermissionLevel value;
+                Assert.False(result.Parent.Permission.TryParse(out value));
+            }
         }
 
         public class Sample

@@ -30,12 +30,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
-        [ManualRoute("GET", "/teams/{id}")]
+        [ManualRoute("GET", "/teams/{team_id}")]
         public Task<Team> Get(int id)
         {
             var endpoint = ApiUrls.Teams(id);
 
-            return ApiConnection.Get<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Get<Team>(endpoint);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.UserTeams();
 
-            return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamChildTeams(id);
 
-            return ApiConnection.GetAll<Team>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Team>(endpoint, options);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<User>(endpoint, options);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMembers(id);
 
-            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<User>(endpoint, request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -202,14 +202,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        [ManualRoute("GET", "/teams/{id}/memberships/{username}")]
+        [ManualRoute("GET", "/teams/{team_id}/memberships/{username}")]
         public Task<TeamMembershipDetails> GetMembershipDetails(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.TeamMember(id, login);
 
-            return ApiConnection.Get<TeamMembershipDetails>(endpoint, null, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Get<TeamMembershipDetails>(endpoint);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(team, nameof(team));
 
             var endpoint = ApiUrls.OrganizationTeams(org);
-            return ApiConnection.Post<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Post<Team>(endpoint, team);
         }
 
         /// <summary>
@@ -232,13 +232,13 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        [ManualRoute("PATCH", "/teams/{id}")]
+        [ManualRoute("PATCH", "/teams/{team_id}")]
         public Task<Team> Update(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
 
             var endpoint = ApiUrls.Teams(id);
-            return ApiConnection.Patch<Team>(endpoint, team, AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Patch<Team>(endpoint, team);
         }
 
         /// <summary>
@@ -246,12 +246,12 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/teams/{id}")]
+        [ManualRoute("DELETE", "/teams/{team_id}")]
         public Task Delete(int id)
         {
             var endpoint = ApiUrls.Teams(id);
 
-            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.NestedTeamsPreview);
+            return ApiConnection.Delete(endpoint);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
-        [ManualRoute("PUT", "/teams/{id}/memberships/{username}")]
+        [ManualRoute("PUT", "/teams/{team_id}/memberships/{username}")]
         public Task<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -283,7 +283,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        [ManualRoute("DELETE", "/teams/{id}/memberships/{username}")]
+        [ManualRoute("DELETE", "/teams/{team_id}/memberships/{username}")]
         public async Task<bool> RemoveMembership(int id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -292,7 +292,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Delete(endpoint).ConfigureAwait(false);
 
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
@@ -308,7 +308,7 @@ namespace Octokit
         /// <param name="id">Team Id.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        [ManualRoute("GET", "/teams/{id}/repos")]
+        [ManualRoute("GET", "/teams/{team_id}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id)
         {
             return GetAllRepositories(id, ApiOptions.None);
@@ -321,14 +321,14 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        [ManualRoute("GET", "/teams/{id}/repos")]
+        [ManualRoute("GET", "/teams/{team_id}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.TeamRepositories(id);
 
-            return ApiConnection.GetAll<Repository>(endpoint, null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Repository>(endpoint, options);
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put(endpoint, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Put(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -398,7 +398,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission, "", AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
+                var httpStatusCode = await ApiConnection.Connection.Put<HttpStatusCode>(endpoint, permission).ConfigureAwait(false);
                 return httpStatusCode.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -454,7 +454,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
-        [ManualRoute("GET", "/teams/{id}/repos/{owner}/{name}")]
+        [ManualRoute("GET", "/teams/{team_id}/repos/{owner}/{name}")]
         public async Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -464,7 +464,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Connection.Get<string>(endpoint, null, AcceptHeaders.NestedTeamsPreview).ConfigureAwait(false);
+                var response = await ApiConnection.Connection.Get<string>(endpoint, null, AcceptHeaders.StableVersionJson).ConfigureAwait(false);
                 return response.HttpResponse.StatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -482,7 +482,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/teams/{id}/invitations")]
+        [ManualRoute("GET", "/teams/{team_id}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id)
         {
             Ensure.ArgumentNotNull(id, nameof(id));
@@ -500,7 +500,7 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
-        [ManualRoute("GET", "/teams/{id}/invitations")]
+        [ManualRoute("GET", "/teams/{team_id}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options)
         {
             return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, AcceptHeaders.OrganizationMembershipPreview, options);

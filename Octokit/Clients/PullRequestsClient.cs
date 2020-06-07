@@ -42,7 +42,7 @@ namespace Octokit
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
         [Preview("shadow-cat")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}")]
         public Task<PullRequest> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -72,7 +72,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -103,7 +103,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -138,7 +138,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -175,7 +175,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("shadow-cat")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
         public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -215,7 +215,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         [Preview("shadow-cat")]
-        [ManualRoute("POST", "/repos/{owner}/{name}/pulls")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/pulls")]
         public Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -250,7 +250,7 @@ namespace Octokit
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
         [Preview("shadow-cat")]
-        [ManualRoute("PATCH", "/repos/{owner}/{name}/pulls/{number}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/pulls/{pull_number}")]
         public Task<PullRequest> Update(string owner, string name, int number, PullRequestUpdate pullRequestUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -285,7 +285,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
-        [ManualRoute("PUT", "/repos/{owner}/{name}/pulls/{number}/merge")]
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/pulls/{pull_number}/merge")]
         public async Task<PullRequestMerge> Merge(string owner, string name, int number, MergePullRequest mergePullRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -295,7 +295,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(owner, name, number);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null, AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -328,7 +328,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(repositoryId, number);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, null, AcceptHeaders.SquashCommitPreview).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -353,7 +353,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/merge")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/merge")]
         public async Task<bool> Merged(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -399,7 +399,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/commits")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/commits")]
         public Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -427,7 +427,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/pulls/{number}/files")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/files")]
         public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

@@ -28,7 +28,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
         {
             return GetAllForRepository(owner, name, ApiOptions.None);
@@ -44,7 +44,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("inertia")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request)
         {
             return GetAllForRepository(owner, name, request, ApiOptions.None);
@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         [Preview("inertia")]
-        [ManualRoute("GET", "/repos/{owner}/{name}/projects")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
         public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

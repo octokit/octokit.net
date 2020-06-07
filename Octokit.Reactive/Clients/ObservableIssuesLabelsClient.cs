@@ -71,7 +71,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), options);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, name), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(owner, name), options);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(repositoryId), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.Labels(repositoryId), options);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), null, AcceptHeaders.LabelsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
         }
 
         /// <summary>

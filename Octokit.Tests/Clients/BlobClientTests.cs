@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -110,11 +111,10 @@ namespace Octokit.Tests.Clients
                 "\"sha\": \"3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15\"," +
                 "\"size\": 100" +
                 "}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                blobResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                blobResponseJson);
+
             var jsonPipeline = new JsonHttpPipeline();
 
             var response = jsonPipeline.DeserializeResponse<Blob>(httpResponse);

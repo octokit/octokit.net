@@ -345,7 +345,7 @@ namespace Octokit
         /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        [ManualRoute("POST", "/applications/{id}/token")]
+        [ManualRoute("POST", "/applications/{client_id}/token")]
         public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
@@ -370,7 +370,7 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        [ManualRoute("PATCH", "/applications/{id}/token")]
+        [ManualRoute("PATCH", "/applications/{client_id}/token")]
         public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
@@ -395,7 +395,7 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to revoke</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        [ManualRoute("DELETE", "/applications/{id}/token")]
+        [ManualRoute("DELETE", "/applications/{client_id}/token")]
         public Task RevokeApplicationAuthentication(string clientId, string accessToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));

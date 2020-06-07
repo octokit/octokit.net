@@ -83,8 +83,8 @@ namespace Octokit.Tests.Reactive
 
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
-                    Args.EmptyDictionary,
-                    "application/vnd.github.hellcat-preview+json");
+                    Arg.Any<Dictionary<string, string>>(),
+                    null);
             }
 
             [Fact]
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Reactive
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
                     Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"),
-                    "application/vnd.github.hellcat-preview+json");
+                    null);
             }
 
             [Fact]
@@ -165,7 +165,7 @@ namespace Octokit.Tests.Reactive
                 gitHub.Connection.Received().Get<List<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.hellcat-preview+json");
+                    null);
             }
 
             [Fact]
@@ -184,7 +184,7 @@ namespace Octokit.Tests.Reactive
                 gitHub.Connection.Received().Get<List<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
                     Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
-                    "application/vnd.github.hellcat-preview+json");
+                    null);
             }
         }
 

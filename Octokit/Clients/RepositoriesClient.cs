@@ -143,7 +143,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}")]
         public Task Delete(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -177,14 +177,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        [ManualRoute("POST", "/repos/{owner}/{name}/transfer")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
         public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer, AcceptHeaders.RepositoryTransferPreview);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        [ManualRoute("PATCH", "/repos/{owner}/{name}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}")]
         public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -219,7 +219,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, nameof(update));
             Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update);
         }
 
         /// <summary>
@@ -246,13 +246,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}")]
         public Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, AcceptHeaders.Concat(AcceptHeaders.SquashCommitPreview, AcceptHeaders.LicensesApiPreview));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId));
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories")]
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories());
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Octokit
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return ApiConnection.GetAll<Repository>(url, null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.GetAll<Repository>(url);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.LicensesApiPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
         }
 
         /// <summary>
@@ -576,7 +576,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/contributors")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -609,7 +609,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/contributors")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -646,7 +646,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/contributors")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -681,7 +681,7 @@ namespace Octokit
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/contributors")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
         public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -726,7 +726,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/languages")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/languages")]
         public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -768,7 +768,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/teams")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/teams")]
         public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -801,14 +801,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/teams")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/teams")]
         public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), null, AcceptHeaders.NestedTeamsPreview, options);
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
         }
 
         /// <summary>
@@ -837,7 +837,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All of the repositories tags.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/tags")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/tags")]
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -870,7 +870,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/tags")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/tags")]
         public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -906,13 +906,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
-        [ManualRoute("GET", "/repos/{owner}/{name}/license")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/license")]
         public Task<RepositoryContentLicense> GetLicenseContents(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name));
         }
 
         /// <summary>
@@ -926,7 +926,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/license")]
         public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId)
         {
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), null, AcceptHeaders.LicensesApiPreview);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId));
         }
 
         /// <summary>

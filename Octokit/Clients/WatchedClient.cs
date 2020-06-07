@@ -27,7 +27,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/subscribers")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/subscribers")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/subscribers")]
         public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -147,7 +147,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{name}/subscription")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/subscription")]
         public async Task<bool> CheckWatched(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -193,7 +193,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        [ManualRoute("PUT", "/repos/{owner}/{name}/subscription")]
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/subscription")]
         public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -221,7 +221,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{name}/subscription")]
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/subscription")]
         public async Task<bool> UnwatchRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

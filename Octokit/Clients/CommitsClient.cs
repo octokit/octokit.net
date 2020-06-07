@@ -28,14 +28,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
-        [ManualRoute("GET", "/repos/{owner}/{name}/git/commits/{commit_sha}")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/commits/{commit_sha}")]
         public Task<Commit> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<Commit>(ApiUrls.Commit(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
+            return ApiConnection.Get<Commit>(ApiUrls.Commit(owner, name, reference));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
-        [ManualRoute("POST", "/repos/{owner}/{name}/git/commits")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/commits")]
         public Task<Commit> Create(string owner, string name, NewCommit commit)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

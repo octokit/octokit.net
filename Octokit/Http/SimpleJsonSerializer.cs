@@ -190,6 +190,18 @@ namespace Octokit.Internal
                     return base.DeserializeObject(value, payloadType);
                 }
 
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    // this check is a workaround for https://github.com/octokit/octokit.net/issues/2052
+                    // as the API is returning a null value where the enum is
+                    // expecting something like a string
+                    //
+                    // this should be removed once we can confirm the GitHub API
+                    // is no longer returning a null for the parent Team's
+                    // permission value
+                    return Activator.CreateInstance(type, "null");
+                }
+
                 return base.DeserializeObject(value, type);
             }
 
@@ -230,6 +242,8 @@ namespace Octokit.Internal
                         return typeof(PullRequestCommentPayload);
                     case "PushEvent":
                         return typeof(PushEventPayload);
+                    case "ReleaseEvent":
+                        return typeof(ReleaseEventPayload);
                     case "StatusEvent":
                         return typeof(StatusEventPayload);
                     case "WatchEvent":
