@@ -1,0 +1,36 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run unit tests",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Octokit.Tests/bin/Debug/netcoreapp3.1/Octokit.Tests.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Octokit.Tests",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Run convention tests",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Octokit.Tests.Conventions/bin/Debug/netcoreapp3.1/Octokit.Tests.Conventions.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Octokit.Tests.Conventions",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Attach to process",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
+    }
+  ]
+}
