@@ -26,7 +26,7 @@ namespace Octokit
     public class RateLimitExceededException : ForbiddenException
     {
         readonly RateLimit _rateLimit;
-        private readonly TimeSpan _severTimeDiff = TimeSpan.Zero;
+        readonly TimeSpan _severTimeDiff = TimeSpan.Zero;
 
         /// <summary>
         /// Constructs an instance of RateLimitExceededException
