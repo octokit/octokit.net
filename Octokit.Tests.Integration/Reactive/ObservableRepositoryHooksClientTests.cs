@@ -1,8 +1,8 @@
 ﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
-using Octokit.Tests.Integration.fixtures;
 using Xunit;
+using Octokit.Tests.Integration.Fixtures;
 
 namespace Octokit.Tests.Integration.Reactive
 {

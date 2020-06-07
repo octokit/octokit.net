@@ -20,6 +20,7 @@ namespace Octokit
         {
             Member = new OrganizationMembersClient(apiConnection);
             Team = new TeamsClient(apiConnection);
+            Hook = new OrganizationHooksClient(apiConnection);
             OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
         }
 
@@ -51,6 +52,12 @@ namespace Octokit
 
             return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
         }
+
+        /// <summary>
+        /// A client for GitHub's Organization Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
+        public IOrganizationHooksClient Hook { get; private set; }
 
         /// <summary>
         /// Returns all <see cref="Organization" />s for the current user.
@@ -138,17 +145,17 @@ namespace Octokit
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="org">The name of the organization to update.</param>
         /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         [ManualRoute("PATCH", "/orgs/{org}")]
-        public Task<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
+        public Task<Organization> Update(string org, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
-            var updateUri = new Uri("orgs/" + organizationName, UriKind.Relative);
+            var updateUri = new Uri("orgs/" + org, UriKind.Relative);
 
             return ApiConnection.Patch<Organization>(updateUri, updateRequest);
         }
