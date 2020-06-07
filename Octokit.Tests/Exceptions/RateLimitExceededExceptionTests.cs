@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Octokit.Internal;
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Net.Http;
 #if !NO_SERIALIZABLE
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -110,6 +113,59 @@ namespace Octokit.Tests.Exceptions
                 }
             }
 #endif
+        }
+
+        public class GetRetryAfterTimeSpanMethod
+        {
+            [Fact]
+            public void ReturnsSkewedDistanceFromReset()
+            {
+                // One hour into the future is hopefully long enough to still be
+                // in the future at the end of this method
+                var resetTime = DateTimeOffset.Now + TimeSpan.FromHours(1);
+                var recvDate = new DateTimeOffset(2020, 06, 07, 12, 00, 00, TimeSpan.Zero);
+                var skew = TimeSpan.FromSeconds(-5);
+
+                var response = CreateResponse(HttpStatusCode.Forbidden,
+                    new Dictionary<string, string>
+                    {
+                        ["X-RateLimit-Limit"] = "100",
+                        ["X-RateLimit-Remaining"] = "0",
+                        ["X-RateLimit-Reset"] = resetTime.ToUnixTimeSeconds()
+                            .ToString(CultureInfo.InvariantCulture),
+                        ["Date"] = (recvDate + skew).ToString("r"),
+                        [ApiInfoParser.ReceivedTimeHeaderName] = recvDate.ToString("r"),
+                    });
+                Assert.Equal(skew, response.ApiInfo.ServerTimeDifference);
+                var except = new RateLimitExceededException(response);
+
+                var timeToReset = except.GetRetryAfterTimeSpan();
+                Assert.NotEqual(TimeSpan.Zero, timeToReset);
+                Assert.InRange(timeToReset, TimeSpan.Zero, TimeSpan.FromHours(1));
+            }
+
+            [Fact]
+            public void ReturnsZeroIfSkewedResetInPast()
+            {
+                var beginTime = DateTimeOffset.Now;
+                var resetTime = beginTime - TimeSpan.FromHours(1);
+                
+                var response = CreateResponse(HttpStatusCode.Forbidden,
+                    new Dictionary<string, string>
+                    {
+                        ["X-RateLimit-Limit"] = "100",
+                        ["X-RateLimit-Remaining"] = "0",
+                        ["X-RateLimit-Reset"] = resetTime.ToUnixTimeSeconds()
+                            .ToString(CultureInfo.InvariantCulture),
+                        ["Date"] = beginTime.ToString("r"),
+                        [ApiInfoParser.ReceivedTimeHeaderName] = beginTime.ToString("r"),
+                    });
+                Assert.Equal(TimeSpan.Zero, response.ApiInfo.ServerTimeDifference);
+                var except = new RateLimitExceededException(response);
+
+                var timeToReset = except.GetRetryAfterTimeSpan();
+                Assert.Equal(TimeSpan.Zero, timeToReset);
+            }
         }
     }
 }

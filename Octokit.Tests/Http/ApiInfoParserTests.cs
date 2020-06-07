@@ -103,6 +103,72 @@ namespace Octokit.Tests
                 Assert.Equal(new Uri("https://api.github.com/repos/rails/rails/issues?page=131&per_page=5"),
                     apiInfo.Links["last"]);
             }
+
+            [Fact]
+            public void ParsesServerTimeDifference()
+            {
+                var serverDate = new DateTimeOffset(2020, 06, 07, 12, 00, 00, TimeSpan.Zero);
+                var receivedDate = new DateTimeOffset(2020, 06, 07, 14, 00, 00, TimeSpan.Zero);
+                var diff = serverDate - receivedDate;
+
+                var headers = new Dictionary<string, string>
+                {
+                    ["Date"] = serverDate.ToString("r"), // Format string r: RFC1123 HTTP Round-tripping time format
+                    [ApiInfoParser.ReceivedTimeHeaderName] = receivedDate.ToString("r")
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(diff, apiInfo.ServerTimeDifference);
+            }
+
+            [Fact]
+            public void ParsesServerTimeDifferenceAsZeroWhenDateHeaderIsMissing()
+            {
+                var receivedDate = new DateTimeOffset(2020, 06, 07, 14, 00, 00, TimeSpan.Zero);
+                var headers = new Dictionary<string, string>
+                {
+                    // Format string r: RFC1123 HTTP Round-tripping time format
+                    [ApiInfoParser.ReceivedTimeHeaderName] = receivedDate.ToString("r")
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(TimeSpan.Zero, apiInfo.ServerTimeDifference);
+            }
+
+            [Fact]
+            public void ParsesServerTimeDifferenceAsZeroWhenReceiveDateHeaderIsNonesense()
+            {
+                var headers = new Dictionary<string, string>
+                {
+                    // Format string r: RFC1123 HTTP Round-tripping time format
+                    ["Date"] = DateTimeOffset.Now.ToString("r"),
+                    [ApiInfoParser.ReceivedTimeHeaderName] = "abfhjsdkhfjkldhf"
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(TimeSpan.Zero, apiInfo.ServerTimeDifference);
+            }
+
+            [Fact]
+            public void ParsesServerTimeDifferenceAsZeroWhenReceiveDateHeaderIsMissing()
+            {
+                var serverDate = new DateTimeOffset(2020, 06, 07, 12, 00, 00, TimeSpan.Zero);
+                var headers = new Dictionary<string, string>
+                {
+                    ["Date"] = serverDate.ToString("r"), // Format string r: RFC1123 HTTP Round-tripping time format
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(TimeSpan.Zero, apiInfo.ServerTimeDifference);
+            }
         }
 
         public class ThePageUrlMethods
