@@ -50,7 +50,9 @@ namespace Octokit.Tests.Exceptions
                 {
                     {"X-RateLimit-Limit", "XXX"},
                     {"X-RateLimit-Remaining", "XXXX"},
-                    {"X-RateLimit-Reset", "XXXX"}
+                    {"X-RateLimit-Reset", "XXXX"},
+                    {"Date", "XXX"},
+                    {ApiInfoParser.ReceivedTimeHeaderName, "XXX"},
                 };
                 var response = CreateResponse(HttpStatusCode.Forbidden, headers);
 
@@ -64,6 +66,7 @@ namespace Octokit.Tests.Exceptions
                     "ddd dd MMM yyyy h:mm:ss tt zzz",
                     CultureInfo.InvariantCulture);
                 Assert.Equal(expectedReset, exception.Reset);
+                Assert.Equal(TimeSpan.Zero, exception.GetRetryAfterTimeSpan());
             }
 
             [Fact]
@@ -80,6 +83,7 @@ namespace Octokit.Tests.Exceptions
                     "ddd dd MMM yyyy h:mm:ss tt zzz",
                     CultureInfo.InvariantCulture);
                 Assert.Equal(expectedReset, exception.Reset);
+                Assert.Equal(TimeSpan.Zero, exception.GetRetryAfterTimeSpan());
             }
 
 #if !NO_SERIALIZABLE
