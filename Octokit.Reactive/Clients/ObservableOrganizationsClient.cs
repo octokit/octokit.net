@@ -143,6 +143,6 @@ namespace Octokit.Reactive
 
             return _client.Update(org, updateRequest).ToObservable();
         }
-        
+
     }
 }

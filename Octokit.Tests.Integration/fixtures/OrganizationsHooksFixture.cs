@@ -32,7 +32,7 @@ namespace Octokit.Tests.Integration.Fixtures
 
         public void Dispose()
         {
-            _github.Organization.Hook.Delete(_organizationFixture,_hook.Id);
+            _github.Organization.Hook.Delete(_organizationFixture, _hook.Id);
         }
 
         static OrganizationHook CreateHook(IGitHubClient github, string orgFixture, string hookName, string eventName)

@@ -1016,7 +1016,7 @@ namespace Octokit
         {
             return "orgs/{0}/hooks/{1}/pings".FormatUri(org, hookId);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>

@@ -24,6 +24,17 @@
       "stopAtEntry": false
     },
     {
+      "name": "Run integration tests",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Octokit.Tests.Integration/bin/Debug/netcoreapp3.1/Octokit.Tests.Integration.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Octokit.Tests.Integration",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
       "name": "Attach to process",
       "type": "coreclr",
       "request": "attach",
