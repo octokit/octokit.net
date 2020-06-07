@@ -60,6 +60,7 @@ namespace Octokit
         /// </summary>
         /// <param name="since">ID after which the returned list begin</param>
         /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        [ExcludeFromPaginationApiOptionsConventionTest("This API does support pagination but it is not the same as the other APIs so we need to disable this for now")]
         Task<IReadOnlyList<User>> GetAll(string since);
 
         /// <summary>

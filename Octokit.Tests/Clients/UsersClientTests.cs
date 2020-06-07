@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 #if NET_45
 using System.Collections.ObjectModel;
 #endif
@@ -101,7 +102,7 @@ namespace Octokit.Tests.Clients
 
                 usersClient.GetAll("1");
 
-                client.Received().Get<IReadOnlyPagedCollection<User>>(endpoint);
+                client.Received().Get<IReadOnlyList<User>>(endpoint);
             }
 
             [Fact]
