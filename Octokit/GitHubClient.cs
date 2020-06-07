@@ -102,7 +102,7 @@ namespace Octokit
             GitHubApps = new GitHubAppsClient(apiConnection);
             Issue = new IssuesClient(apiConnection);
             Migration = new MigrationClient(apiConnection);
-            Miscellaneous = new MiscellaneousClient(connection);
+            Miscellaneous = new MiscellaneousClient(apiConnection);
             Oauth = new OauthClient(connection);
             Organization = new OrganizationsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);

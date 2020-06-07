@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<EventInfo> GetAllForIssue(string owner, string name, int number)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        public IObservable<EventInfo> GetAllForIssue(long repositoryId, int number)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, int number)
         {
             return GetAllForIssue(repositoryId, number, ApiOptions.None);
         }
@@ -63,13 +63,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<EventInfo> GetAllForIssue(string owner, string name, int number, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<EventInfo>(ApiUrls.IssuesEvents(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name, number), options);
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<EventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<EventInfo>(ApiUrls.IssuesEvents(repositoryId, number), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId, number), options);
         }
 
         /// <summary>
@@ -157,13 +157,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The event id</param>
-        public IObservable<IssueEvent> Get(string owner, string name, int number)
+        /// <param name="eventId">The event id</param>
+        public IObservable<IssueEvent> Get(string owner, string name, long eventId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, eventId).ToObservable();
         }
 
         /// <summary>
@@ -173,10 +173,10 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#get-a-single-event
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The event id</param>
-        public IObservable<IssueEvent> Get(long repositoryId, int number)
+        /// <param name="eventId">The event id</param>
+        public IObservable<IssueEvent> Get(long repositoryId, long eventId)
         {
-            return _client.Get(repositoryId, number).ToObservable();
+            return _client.Get(repositoryId, eventId).ToObservable();
         }
     }
 }

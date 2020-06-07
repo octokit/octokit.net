@@ -38,7 +38,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalIssues: {0} OpenIssues: {1} ClosedIssues: {2}", TotalIssues, OpenIssues, ClosedIssues);
+                return string.Format(CultureInfo.InvariantCulture, "TotalIssues: {0} OpenIssues: {1} ClosedIssues: {2}", TotalIssues, OpenIssues, ClosedIssues);
             }
         }
     }

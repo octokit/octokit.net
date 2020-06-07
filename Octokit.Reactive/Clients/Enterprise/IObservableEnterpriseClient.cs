@@ -13,7 +13,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         IObservableEnterpriseAdminStatsClient AdminStats { get; }
 
         /// <summary>
@@ -21,7 +21,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/ldap/">Enterprise LDAP API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         IObservableEnterpriseLdapClient Ldap { get; }
 
         /// <summary>
@@ -29,15 +29,23 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/license/">Enterprise License API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         IObservableEnterpriseLicenseClient License { get; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Management Console API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/enterprise/management_console/">Enterprise Management Console API documentation</a> for more information.
+        /// </remarks>
+        IObservableEnterpriseManagementConsoleClient ManagementConsole { get; }
 
         /// <summary>
         /// A client for GitHub's Enterprise Organization API
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/orgs/">Enterprise Organization API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         IObservableEnterpriseOrganizationClient Organization { get; }
 
         /// <summary>
@@ -45,7 +53,7 @@
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/enterprise/search_indexing/">Enterprise Search Indexing API documentation</a> for more information.
-        ///</remarks>
+        /// </remarks>
         IObservableEnterpriseSearchIndexingClient SearchIndexing { get; }
 
         /// <summary>

@@ -6,6 +6,7 @@ using Cake.Frosting;
 
 [Dependency(typeof(UnitTests))]
 [Dependency(typeof(ConventionTests))]
+[Dependency(typeof(CodeCoverage))]
 [Dependency(typeof(ValidateLINQPadSamples))]
 public sealed class Package : FrostingTask<Context>
 {
@@ -21,7 +22,8 @@ public sealed class Package : FrostingTask<Context>
                     Configuration = context.Configuration,
                     NoBuild = true,
                     OutputDirectory = context.Artifacts,
-                    ArgumentCustomization = args => args.Append("/p:Version={0}", context.Version.GetSemanticVersion())
+                    ArgumentCustomization = args => args
+                        .Append("/p:Version={0}", context.Version.GetSemanticVersion()),
                 });
             }
         }

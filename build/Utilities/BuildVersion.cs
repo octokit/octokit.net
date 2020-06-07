@@ -6,11 +6,13 @@ public class BuildVersion
 {
     public string Prefix { get; set; }
     public string Suffix { get; set; }
+    public string FullSemVer { get; set; }
 
-    public BuildVersion(string version, string suffix)
+    public BuildVersion(string version, string suffix, string fullSemVer)
     {
         Prefix = version;
         Suffix = suffix;
+        FullSemVer = fullSemVer;
 
         if (string.IsNullOrWhiteSpace(Suffix))
         {
@@ -31,8 +33,10 @@ public class BuildVersion
     {
         string version = null;
         string semVersion = null;
+        string fullSemVer = null;
 
         context.Information("Calculating semantic version...");
+
         if (!context.IsLocalBuild)
         {
             // Run to set the version properties inside the CI server
@@ -44,12 +48,13 @@ public class BuildVersion
         
         version = assertedversions.MajorMinorPatch;
         semVersion = assertedversions.LegacySemVerPadded;
+        fullSemVer = assertedversions.FullSemVer;
 
         if (string.IsNullOrWhiteSpace(version))
         {
             throw new CakeException("Could not calculate version of build.");
         }
 
-        return new BuildVersion(version, semVersion.Substring(version.Length).TrimStart('-'));
+        return new BuildVersion(version, semVersion.Substring(version.Length).TrimStart('-'), fullSemVer);
     }
 }

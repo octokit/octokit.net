@@ -26,6 +26,7 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
+        [ManualRoute("GET", "/events")]
         public Task<IReadOnlyList<Activity>> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -38,7 +39,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>        
+        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
+        [ManualRoute("GET", "/events")]
         public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -54,6 +56,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -69,6 +72,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId)
         {
             return GetAllForRepository(repositoryId, ApiOptions.None);
@@ -83,6 +87,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -100,6 +105,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -115,6 +121,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -130,6 +137,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId)
         {
             return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
@@ -144,6 +152,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -161,6 +170,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/issues/events")]
         public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -176,6 +186,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/networks/{owner}/{name}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -193,6 +204,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/networks/{owner}/{name}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -209,6 +221,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
+        [ManualRoute("GET", "/orgs/{org}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -224,6 +237,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/orgs/{org}/events")]
         public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -239,6 +253,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
+        [ManualRoute("GET", "/users/{username}/received_events")]
         public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -254,6 +269,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{username}/received_events")]
         public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -269,6 +285,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
+        [ManualRoute("GET", "/users/{username}/received_events/public")]
         public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -284,6 +301,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{username}/received_events/public")]
         public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -299,6 +317,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
+        [ManualRoute("GET", "/users/{username}/events")]
         public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -314,6 +333,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{username}/events")]
         public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -329,6 +349,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
+        [ManualRoute("GET", "/users/{username}/events/public")]
         public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -344,6 +365,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{username}/events/public")]
         public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -360,6 +382,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
+        [ManualRoute("GET", "/users/{username}/events/orgs/{org}")]
         public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -377,6 +400,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/users/{username}/events/orgs/{org}")]
         public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));

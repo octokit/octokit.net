@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 #endif
-using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -17,13 +17,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CreatesGitHubErrorFromJsonResponse()
             {
-                var response = new Response(
+                var response = CreateResponse(
                     (HttpStatusCode)422,
                     @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    new Dictionary<string, string>(),
-                    "application/json"
-                );
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}");
 
                 var exception = new ApiValidationException(response);
 
@@ -34,7 +31,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void ProvidesDefaultMessage()
             {
-                var response = new Response((HttpStatusCode)422, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse((HttpStatusCode)422);
 
                 var exception = new ApiValidationException(response);
 
@@ -45,12 +42,10 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
-                IResponse response = new Response(
+                var response = CreateResponse(
                     (HttpStatusCode)422,
                     @"{""errors"":[{""code"":""custom"",""field"":""key"",""message"":""key is " +
-                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}",
-                    new Dictionary<string, string>(),
-                    "application/json");
+                    @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}");
 
                 var exception = new ApiValidationException(response);
 

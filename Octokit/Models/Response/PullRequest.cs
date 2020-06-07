@@ -16,7 +16,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers)
+        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool draft, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers, IReadOnlyList<Team> requestedTeams, IReadOnlyList<Label> labels)
         {
             Id = id;
             NodeId = nodeId;
@@ -39,6 +39,7 @@ namespace Octokit
             User = user;
             Assignee = assignee;
             Assignees = assignees;
+            Draft = draft;
             Mergeable = mergeable;
             MergeableState = mergeableState;
             MergedBy = mergedBy;
@@ -52,6 +53,8 @@ namespace Octokit
             Locked = locked;
             MaintainerCanModify = maintainerCanModify;
             RequestedReviewers = requestedReviewers;
+            RequestedTeams = requestedTeams;
+            Labels = labels;
         }
 
         /// <summary>
@@ -165,6 +168,11 @@ namespace Octokit
         public Milestone Milestone { get; protected set; }
 
         /// <summary>
+        /// Whether or not the pull request is in a draft state, and cannot be merged.
+        /// </summary>
+        public bool Draft { get; protected set; }
+
+        /// <summary>
         /// Whether or not the pull request has been merged.
         /// </summary>
         public bool Merged
@@ -235,6 +243,13 @@ namespace Octokit
         /// Users requested for review
         /// </summary>
         public IReadOnlyList<User> RequestedReviewers { get; protected set; }
+
+        /// <summary>
+        /// Teams requested for review
+        /// </summary>
+        public IReadOnlyList<Team> RequestedTeams { get; protected set; }
+
+        public IReadOnlyList<Label> Labels { get; protected set; }
 
         internal string DebuggerDisplay
         {

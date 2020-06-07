@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -26,7 +27,25 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll("fake", "repo", 42);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42/reactions"), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitCommentReactionsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAll("fake", "repo", 42, options);
+
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", options);
             }
 
             [Fact]
@@ -37,7 +56,25 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAll(1, 42);
 
-                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42/reactions"), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryIdApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitCommentReactionsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.GetAll(1, 42, options);
+
+                connection.Received().GetAll<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/42/reactions"), null, "application/vnd.github.squirrel-girl-preview+json", options);
             }
 
             [Fact]
@@ -48,9 +85,19 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "name", 1));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "name", 1, null));
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "name", 1));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "", 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNotNullArgumentsWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new CommitCommentReactionsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, 1, null));
             }
         }
 
@@ -66,7 +113,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create("fake", "repo", 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/comments/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -79,7 +126,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(1, 1, newReaction);
 
-                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Post<Reaction>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/comments/1/reactions"), newReaction, "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]

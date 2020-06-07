@@ -30,7 +30,7 @@ namespace Octokit.Internal
 
             if (!request.Headers.ContainsKey("Accept"))
             {
-                request.Headers["Accept"] = AcceptHeaders.RedirectsPreviewThenStableVersionJson;
+                request.Headers["Accept"] = AcceptHeaders.StableVersionJson;
             }
 
             if (request.Method == HttpMethod.Get || request.Body == null) return;
@@ -54,7 +54,7 @@ namespace Octokit.Internal
                     var responseIsObject = body.StartsWith("{", StringComparison.Ordinal);
 
                     // If we're expecting an array, but we get a single object, just wrap it.
-                    // This supports an api that dynamically changes the return type based on the content.
+                    // This supports an API that dynamically changes the return type based on the content.
                     if (!typeIsDictionary && typeIsEnumerable && responseIsObject)
                     {
                         body = "[" + body + "]";

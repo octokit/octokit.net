@@ -22,6 +22,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="newOrganization">A <see cref="NewOrganization"/> instance describing the organization to be created</param>
         /// <returns>The <see cref="Organization"/> created.</returns>
+        [ManualRoute("POST", "/admin/organizations")]
         public Task<Organization> Create(NewOrganization newOrganization)
         {
             Ensure.ArgumentNotNull(newOrganization, nameof(newOrganization));

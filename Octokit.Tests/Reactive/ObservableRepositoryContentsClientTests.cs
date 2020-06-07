@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -43,7 +46,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Repository.Content.GetReadme("fake", "repo").Returns(Task.FromResult(readmeFake));
 
-                IApiResponse<string> apiResponse = new ApiResponse<string>(new Response(), "<html>README</html>");
+                IApiResponse<string> apiResponse = new ApiResponse<string>(CreateResponse(HttpStatusCode.OK), "<html>README</html>");
                 gitHubClient.Connection.GetHtml(Args.Uri, null)
                     .Returns(Task.FromResult(apiResponse));
 
@@ -79,7 +82,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Repository.Content.GetReadme(1).Returns(Task.FromResult(readmeFake));
 
-                IApiResponse<string> apiResponse = new ApiResponse<string>(new Response(), "<html>README</html>");
+                IApiResponse<string> apiResponse = new ApiResponse<string>(CreateResponse(HttpStatusCode.OK), "<html>README</html>");
                 gitHubClient.Connection.GetHtml(Args.Uri, null)
                     .Returns(Task.FromResult(apiResponse));
 
@@ -118,7 +121,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<string> apiResponse = new ApiResponse<string>(new Response(), "<html>README</html>");
+                IApiResponse<string> apiResponse = new ApiResponse<string>(CreateResponse(HttpStatusCode.OK), "<html>README</html>");
 
                 connection.GetHtml(Args.Uri, null).Returns(Task.FromResult(apiResponse));
 
@@ -134,7 +137,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<string> apiResponse = new ApiResponse<string>(new Response(), "<html>README</html>");
+                IApiResponse<string> apiResponse = new ApiResponse<string>(CreateResponse(HttpStatusCode.OK), "<html>README</html>");
 
                 connection.GetHtml(Args.Uri, null).Returns(Task.FromResult(apiResponse));
 
@@ -168,11 +171,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
 
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
@@ -191,11 +190,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
 
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
@@ -214,11 +209,8 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
+
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -236,11 +228,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -274,6 +262,41 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetRawContentMethod
+        {
+            [Fact]
+            public async Task ReturnsRawContent()
+            {
+                var result = new byte[] { 1, 2, 3 };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
+                IApiResponse<byte[]> response = new ApiResponse<byte[]>(CreateResponse(HttpStatusCode.OK), result);
+                connection.GetRaw(Args.Uri, default).Returns(response);
+
+                var rawContent = await contentsClient.GetRawContent("fake", "repo", "path/to/file.txt");
+
+                connection.Received().GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/path/to/file.txt"), null);
+                Assert.Same(result, rawContent);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryContentsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContent(null, "name", "path"));
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContent("owner", null, "path"));
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContent("owner", "name", null));
+
+                Assert.Throws<ArgumentException>(() => client.GetRawContent("", "name", "path"));
+                Assert.Throws<ArgumentException>(() => client.GetRawContent("owner", "", "path"));
+                Assert.Throws<ArgumentException>(() => client.GetRawContent("owner", "name", ""));
+            }
+        }
+
         public class TheGetContentsByRefMethod
         {
             [Fact]
@@ -284,11 +307,8 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -306,11 +326,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -328,11 +344,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -350,11 +362,7 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
                 var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
-                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>
-                    (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()) },
-                    result
-                    );
+                IApiResponse<List<RepositoryContent>> response = new ApiResponse<List<RepositoryContent>>(CreateResponse(HttpStatusCode.OK), result);
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
@@ -393,6 +401,43 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.GetAllContentsByRef(1, "", "reference"));
                 Assert.Throws<ArgumentException>(() => client.GetAllContentsByRef(1, "path", ""));
                 Assert.Throws<ArgumentException>(() => client.GetAllContentsByRef(1, ""));
+            }
+        }
+
+        public class TheGetRawContentByRefMethod
+        {
+            [Fact]
+            public async Task ReturnsRawContent()
+            {
+                var result = new byte[] { 1, 2, 3 };
+
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = new GitHubClient(connection);
+                var contentsClient = new ObservableRepositoryContentsClient(gitHubClient);
+                IApiResponse<byte[]> response = new ApiResponse<byte[]>(CreateResponse(HttpStatusCode.OK), result);
+                connection.GetRaw(Args.Uri, default).Returns(response);
+
+                var rawContent = await contentsClient.GetRawContentByRef("fake", "repo", "path/to/file.txt", "reference");
+
+                connection.Received().GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/path/to/file.txt?ref=reference"), null);
+                Assert.Same(result, rawContent);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryContentsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContentByRef(null, "name", "path", "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContentByRef("owner", null, "path", "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContentByRef("owner", "name", null, "reference"));
+                Assert.Throws<ArgumentNullException>(() => client.GetRawContentByRef("owner", "name", "path", null));
+
+                Assert.Throws<ArgumentException>(() => client.GetRawContentByRef("", "name", "path", "reference"));
+                Assert.Throws<ArgumentException>(() => client.GetRawContentByRef("owner", "", "path", "reference"));
+                Assert.Throws<ArgumentException>(() => client.GetRawContentByRef("owner", "name", "", "reference"));
+                Assert.Throws<ArgumentException>(() => client.GetRawContentByRef("owner", "name", "path", ""));
             }
         }
 

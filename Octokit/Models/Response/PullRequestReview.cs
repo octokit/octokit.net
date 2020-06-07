@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state)
+        public PullRequestReview(long id, string nodeId, string commitId, User user, string body, string htmlUrl, string pullRequestUrl, PullRequestReviewState state, AuthorAssociation authorAssociation, DateTimeOffset submittedAt)
         {
             Id = id;
             NodeId = nodeId;
@@ -25,6 +25,8 @@ namespace Octokit
             HtmlUrl = htmlUrl;
             PullRequestUrl = pullRequestUrl;
             State = state;
+            AuthorAssociation = authorAssociation;
+            SubmittedAt = submittedAt;
         }
 
         /// <summary>
@@ -66,6 +68,16 @@ namespace Octokit
         /// The URL for the pull request via the API.
         /// </summary>
         public string PullRequestUrl { get; protected set; }
+
+        /// <summary>
+        /// The comment author association with repository.
+        /// </summary>
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
+
+        /// <summary>
+        /// The time the review was submitted
+        /// </summary>
+        public DateTimeOffset SubmittedAt { get; protected set; }
 
         internal string DebuggerDisplay
         {

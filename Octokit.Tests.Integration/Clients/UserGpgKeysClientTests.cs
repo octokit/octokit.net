@@ -44,7 +44,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
                 Assert.NotEmpty(keys);
 
                 var first = keys[0];
-                Assert.NotNull(first.Id);
+                Assert.NotEqual(default, first.Id);
                 Assert.NotNull(first.KeyId);
                 Assert.NotNull(first.PublicKey);
                 Assert.Null(first.PrimaryKeyId);
@@ -81,7 +81,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             // Verify key no longer exists
             var keys = await github.User.GpgKey.GetAllForCurrent();
-            Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
+            Assert.DoesNotContain(keys, k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey);
         }
 
         [IntegrationTest]
@@ -96,7 +96,7 @@ VO/+BCBsaoT4g1FFOmJhbBAD3G72yslBnUJmqKP/39pi
 
             await github.User.GpgKey.Delete(key.Id);
             var keys = await github.User.GpgKey.GetAllForCurrent();
-            Assert.False(keys.Any(k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey));
+            Assert.DoesNotContain(keys, k => k.KeyId == knownKeyId && k.PublicKey == knownPublicKey);
         }
     }
 }

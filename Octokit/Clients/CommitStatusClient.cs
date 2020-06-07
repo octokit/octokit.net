@@ -29,6 +29,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/statuses")]
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -47,6 +48,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/statuses")]
         public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -62,9 +64,10 @@ namespace Octokit
         /// https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>        
+        /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/statuses")]
         public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -85,6 +88,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/statuses")]
         public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -103,6 +107,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/status")]
         public Task<CombinedCommitStatus> GetCombined(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -121,6 +126,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/status")]
         public Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -138,6 +144,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/statuses/{sha}")]
         public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -157,6 +164,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
+        [ManualRoute("POST", "/repositories/{id}/statuses/{sha}")]
         public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));

@@ -39,8 +39,10 @@ namespace Octokit.Tests.Reactive
             {
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(null, name));
                 Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, null));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, null));
-                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, options: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, options: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(owner, name, request: null));
+                Assert.Throws<ArgumentNullException>(() => _client.GetAll(repositoryId, request: null));
             }
 
             [Fact]
@@ -67,8 +69,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
             }
 
             [Fact]
@@ -79,8 +81,8 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
-                        Arg.Any<string>());
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
             }
 
             [Fact]
@@ -99,7 +101,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3),
                         null);
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
@@ -111,7 +113,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
                         null);
 
                 // PageCount is setted => none of options in dictionary
@@ -123,7 +125,44 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilter()
+            {
+                var expectedUrl = string.Format("repos/{0}/{1}/collaborators", owner, name);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"),
+                        null);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        null);
+
+                // PageCount is setted => none of options in dictionary
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                _client.GetAll(owner, name, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"),
                         null);
             }
 
@@ -143,7 +182,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3),
                         null);
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
@@ -155,7 +194,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2),
                         null);
 
                 // PageCount is setted => none of options in dictionary
@@ -167,7 +206,43 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0),
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1),
+                        null);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndRepositoryId()
+            {
+                var expectedUrl = string.Format("repositories/{0}/collaborators", repositoryId);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"),
+                        null);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        null);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                _client.GetAll(repositoryId, request);
+                _githubClient.Connection.Received(1)
+                    .Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"),
                         null);
             }
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -45,6 +47,109 @@ public class IssueCommentReactionsClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithoutStart()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, new NewReaction(ReactionType.Heart));
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var reactions = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, options);
+
+            Assert.Equal(1, reactions.Count);
+
+            Assert.Equal(reactions[0].Id, issueCommentReaction.Id);
+            Assert.Equal(reactions[0].Content, issueCommentReaction.Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithStart()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var reactions = new List<Reaction>();
+            var reactionsContent = new[] { ReactionType.Heart, ReactionType.Plus1 };
+            for (var i = 0; i < 2; i++)
+            {
+                var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, new NewReaction(reactionsContent[i]));
+                reactions.Add(issueCommentReaction);
+            }
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var reactionsInfo = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, options);
+
+            Assert.Equal(1, reactionsInfo.Count);
+
+            Assert.Equal(reactionsInfo[0].Id, reactions.Last().Id);
+            Assert.Equal(reactionsInfo[0].Content, reactions.Last().Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctReactionsBasedOnStartPage()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var reactionsContent = new[] { ReactionType.Heart, ReactionType.Plus1 };
+            for (var i = 0; i < 2; i++)
+            {
+                var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, new NewReaction(reactionsContent[i]));
+            }
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var firstPage = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+            var secondPage = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
+        }
+
+        [IntegrationTest]
         public async Task CanListReactionsWithRepositoryId()
         {
             var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
@@ -65,6 +170,109 @@ public class IssueCommentReactionsClientTests
             Assert.Equal(reactions[0].Id, issueCommentReaction.Id);
 
             Assert.Equal(reactions[0].Content, issueCommentReaction.Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithoutStartWithRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.Repository.Id, issueComment.Id, new NewReaction(ReactionType.Heart));
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1
+            };
+
+            var reactions = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, options);
+
+            Assert.Equal(1, reactions.Count);
+
+            Assert.Equal(reactions[0].Id, issueCommentReaction.Id);
+            Assert.Equal(reactions[0].Content, issueCommentReaction.Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCorrectCountOfReactionsWithStartWithRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var reactions = new List<Reaction>();
+            var reactionsContent = new[] { ReactionType.Heart, ReactionType.Plus1 };
+            for (var i = 0; i < 2; i++)
+            {
+                var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.Repository.Id, issueComment.Id, new NewReaction(reactionsContent[i]));
+                reactions.Add(issueCommentReaction);
+            }
+
+            var options = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+
+            var reactionsInfo = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, options);
+
+            Assert.Equal(1, reactionsInfo.Count);
+
+            Assert.Equal(reactionsInfo[0].Id, reactions.Last().Id);
+            Assert.Equal(reactionsInfo[0].Content, reactions.Last().Content);
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsDistinctReactionsBasedOnStartPageWithRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            var reactionsContent = new[] { ReactionType.Heart, ReactionType.Plus1 };
+            for (var i = 0; i < 2; i++)
+            {
+                var issueCommentReaction = await _github.Reaction.IssueComment.Create(_context.Repository.Id, issueComment.Id, new NewReaction(reactionsContent[i]));
+            }
+
+            var startOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 1
+            };
+            var firstPage = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, startOptions);
+
+            var skipStartOptions = new ApiOptions
+            {
+                PageSize = 1,
+                PageCount = 1,
+                StartPage = 2
+            };
+            var secondPage = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, skipStartOptions);
+
+            Assert.Equal(1, firstPage.Count);
+            Assert.Equal(1, secondPage.Count);
+            Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+            Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
         }
 
         [IntegrationTest]

@@ -12,11 +12,12 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(string url, int id, string nodeId, string name, string description, TeamPrivacy privacy, Permission permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
+        public Team(string url, int id, string nodeId, string slug, string name, string description, TeamPrivacy privacy, PermissionLevel permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
         {
             Url = url;
             Id = id;
             NodeId = nodeId;
+            Slug = slug;
             Name = name;
             Description = description;
             Privacy = privacy;
@@ -44,6 +45,11 @@ namespace Octokit
         public string NodeId { get; protected set; }
 
         /// <summary>
+        /// team slug
+        /// </summary>
+        public string Slug { get; protected set; }
+
+        /// <summary>
         /// team name
         /// </summary>
         public string Name { get; protected set; }
@@ -61,7 +67,7 @@ namespace Octokit
         /// <summary>
         /// permission attached to this team
         /// </summary>
-        public StringEnum<Permission> Permission { get; protected set; }
+        public StringEnum<PermissionLevel> Permission { get; protected set; }
 
         /// <summary>
         /// how many members in this team

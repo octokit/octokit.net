@@ -35,7 +35,7 @@ namespace Octokit.Tests.Integration
                 return Enumerable.Empty<IXunitTestCase>();
             }
 
-            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod) };
+            return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.None, testMethod) };
         }
     }
 

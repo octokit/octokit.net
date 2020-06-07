@@ -71,7 +71,7 @@ namespace Octokit.Internal
                 if (ReflectionUtils.IsStringEnumWrapper(type))
                 {
                     // Handle StringEnum<T> by getting the underlying enum value, then using the enum serializer
-                    // Note this will throw if the StringEnum<T> was initialised using a string that is not a valid enum member
+                    // Note this will throw if the StringEnum<T> was initialized using a string that is not a valid enum member
                     var inputEnum = (getters["value"](input) as Enum);
                     if (inputEnum != null)
                     {
@@ -190,6 +190,18 @@ namespace Octokit.Internal
                     return base.DeserializeObject(value, payloadType);
                 }
 
+                if (ReflectionUtils.IsStringEnumWrapper(type))
+                {
+                    // this check is a workaround for https://github.com/octokit/octokit.net/issues/2052
+                    // as the API is returning a null value where the enum is
+                    // expecting something like a string
+                    //
+                    // this should be removed once we can confirm the GitHub API
+                    // is no longer returning a null for the parent Team's
+                    // permission value
+                    return Activator.CreateInstance(type, "null");
+                }
+
                 return base.DeserializeObject(value, type);
             }
 
@@ -212,6 +224,10 @@ namespace Octokit.Internal
                         return typeof(CheckSuiteEventPayload);
                     case "CommitCommentEvent":
                         return typeof(CommitCommentPayload);
+                    case "CreateEvent":
+                        return typeof(CreateEventPayload);
+                    case "DeleteEvent":
+                        return typeof(DeleteEventPayload);
                     case "ForkEvent":
                         return typeof(ForkEventPayload);
                     case "IssueCommentEvent":
@@ -226,6 +242,8 @@ namespace Octokit.Internal
                         return typeof(PullRequestCommentPayload);
                     case "PushEvent":
                         return typeof(PushEventPayload);
+                    case "ReleaseEvent":
+                        return typeof(ReleaseEventPayload);
                     case "StatusEvent":
                         return typeof(StatusEventPayload);
                     case "WatchEvent":

@@ -133,7 +133,7 @@ public class DeploymentsClientTests
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                     Arg.Any<IDictionary<string, string>>(),
-                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview),
+                                    "application/vnd.github.ant-man-preview+json",
                                     Args.ApiOptions);
         }
     }
@@ -212,7 +212,7 @@ public class DeploymentsClientTests
 
             connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
                                                     Arg.Any<NewDeployment>(),
-                                                    Arg.Is<string>(s => s == AcceptHeaders.DeploymentApiPreview));
+                                                    "application/vnd.github.ant-man-preview+json");
         }
     }
 

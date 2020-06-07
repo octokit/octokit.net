@@ -40,7 +40,11 @@ public class DeploymentStatusClientTests : IDisposable
 
         var commit = github.Git.Commit.Create(_context.RepositoryOwner, _context.RepositoryName, newCommit).Result;
 
-        var newDeployment = new NewDeployment(commit.Sha) { AutoMerge = false };
+        var newDeployment = new NewDeployment(commit.Sha)
+        {
+            Environment = "production",
+            AutoMerge = false
+        };
         _deployment = _deploymentsClient.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployment).Result;
     }
 
@@ -53,6 +57,17 @@ public class DeploymentStatusClientTests : IDisposable
 
         Assert.NotNull(status);
         Assert.Equal(DeploymentState.Success, status.State);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateDeploymentStatusWithNewState()
+    {
+        var newStatus = new NewDeploymentStatus(DeploymentState.InProgress);
+
+        var status = await _deploymentsClient.Status.Create(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, newStatus);
+
+        Assert.NotNull(status);
+        Assert.Equal(DeploymentState.InProgress, status.State);
     }
 
     [IntegrationTest]
@@ -243,4 +258,3 @@ public class DeploymentStatusClientTests : IDisposable
         _context.Dispose();
     }
 }
-

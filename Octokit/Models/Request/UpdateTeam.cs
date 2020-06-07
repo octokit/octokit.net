@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Used to update a teamm.
+    /// Used to update a team.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateTeam

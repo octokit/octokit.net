@@ -51,6 +51,11 @@ namespace Octokit
         /// </summary>
         public string Body { get; set; }
 
+        /// <summary>
+        /// Whether the pull request is in a draft state or not (optional)
+        /// </summary>
+        public bool? Draft { get; set; }
+
         internal string DebuggerDisplay
         {
             get

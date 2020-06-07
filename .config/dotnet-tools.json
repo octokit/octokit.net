@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "sourcelink": {
+      "version": "3.1.1",
+      "commands": [
+        "sourcelink"
+      ]
+    },
+    "dotnet-format": {
+      "version": "3.3.111304",
+      "commands": [
+        "dotnet-format"
+      ]
+    }
+  }
+}

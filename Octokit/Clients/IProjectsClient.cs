@@ -102,7 +102,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organization">The name of the organziation</param>
+        /// <param name="organization">The name of the organization</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organization">The name of the organziation</param>
+        /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request);
 
@@ -121,7 +121,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organization">The name of the organziation</param>
+        /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options);
 
@@ -131,7 +131,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="organization">The name of the organziation</param>
+        /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options);

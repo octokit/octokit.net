@@ -30,6 +30,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suites/{id}")]
         public Task<CheckSuite> Get(string owner, string name, long checkSuiteId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -46,6 +48,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-suites/{check_suite_id}")]
         public Task<CheckSuite> Get(long repositoryId, long checkSuiteId)
         {
             return ApiConnection.Get<CheckSuite>(ApiUrls.CheckSuite(repositoryId, checkSuiteId), null, AcceptHeaders.ChecksApiPreview);
@@ -60,6 +64,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -77,6 +82,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -94,6 +100,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -113,6 +120,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/check-suites")]
         public Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -132,6 +140,8 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/check-suites")]
         public async Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -157,6 +167,8 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/commits/{ref}/check-suites")]
         public async Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -171,7 +183,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
+        /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.
@@ -179,6 +191,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
+        [Preview("antiope")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/check-suites/preferences")]
         public Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -189,13 +203,15 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
+        /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-suites/preferences")]
         public Task<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
         {
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
@@ -212,6 +228,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
+        [Preview("antiope")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/check-suites")]
         public Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -229,60 +247,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-suites")]
         public Task<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite)
         {
             Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
 
             return ApiConnection.Post<CheckSuite>(ApiUrls.CheckSuites(repositoryId), newCheckSuite, AcceptHeaders.ChecksApiPreview);
-        }
-
-        /// <summary>
-        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="request">Details of the Check Suite request</param>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public async Task<bool> Request(string owner, string name, CheckSuiteTriggerRequest request)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(request, nameof(request));
-
-            var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRequests(owner, name), request, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
-
-            if (httpStatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
-            }
-
-            return httpStatusCode == HttpStatusCode.Created;
-        }
-
-        /// <summary>
-        /// Triggers GitHub to create a new check suite, without pushing new code to a repository
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="request">Details of the Check Suite request</param>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public async Task<bool> Request(long repositoryId, CheckSuiteTriggerRequest request)
-        {
-            Ensure.ArgumentNotNull(request, nameof(request));
-
-            var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRequests(repositoryId), request, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
-
-            if (httpStatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
-            }
-
-            return httpStatusCode == HttpStatusCode.Created;
         }
 
         /// <summary>
@@ -294,6 +265,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suites/{2}/rerequest")]
         public async Task<bool> Rerequest(string owner, string name, long checkSuiteId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -317,6 +290,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-suites/{2}/rerequest")]
         public async Task<bool> Rerequest(long repositoryId, long checkSuiteId)
         {
             var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRerequest(repositoryId, checkSuiteId), null, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace Octokit
 {
@@ -13,19 +11,15 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
-    public class MiscellaneousClient : IMiscellaneousClient
+    public class MiscellaneousClient : ApiClient, IMiscellaneousClient
     {
-        readonly IConnection _connection;
-
         /// <summary>
         ///     Initializes a new GitHub miscellaneous API client.
         /// </summary>
-        /// <param name="connection">An API connection</param>
-        public MiscellaneousClient(IConnection connection)
+        /// <param name="apiConnection">An API connection.</param>
+        public MiscellaneousClient(IApiConnection apiConnection)
+            : base(apiConnection)
         {
-            Ensure.ArgumentNotNull(connection, nameof(connection));
-
-            _connection = connection;
         }
 
         /// <summary>
@@ -33,12 +27,10 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
-        public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
+        [ManualRoute("GET", "/emojis")]
+        public Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
-            var endpoint = new Uri("emojis", UriKind.Relative);
-            var response = await _connection.Get<Dictionary<string, string>>(endpoint, null, null).ConfigureAwait(false);
-            return new ReadOnlyCollection<Emoji>(
-                response.Body.Select(kvp => new Emoji(kvp.Key, kvp.Value)).ToArray());
+            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
         }
 
         /// <summary>
@@ -47,11 +39,10 @@ namespace Octokit
         /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
-        public async Task<string> RenderRawMarkdown(string markdown)
+        [ManualRoute("POST", "/markdown/raw")]
+        public Task<string> RenderRawMarkdown(string markdown)
         {
-            var endpoint = new Uri("markdown/raw", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Post<string>(ApiUrls.RawMarkdown(), markdown, "text/html", "text/plain");
         }
 
         /// <summary>
@@ -60,23 +51,20 @@ namespace Octokit
         /// <param name="markdown">An arbitrary Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
-        public async Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        [ManualRoute("POST", "/markdown")]
+        public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
         {
-            var endpoint = new Uri("markdown", UriKind.Relative);
-            var response = await _connection.Post<string>(endpoint, markdown, "text/html", "text/plain").ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Post<string>(ApiUrls.Markdown(), markdown, "text/html", "text/plain");
         }
 
         /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>
-        public async Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
+        [ManualRoute("GET", "/gitignore/templates")]
+        public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
         {
-            var endpoint = new Uri("gitignore/templates", UriKind.Relative);
-
-            var response = await _connection.Get<string[]>(endpoint, null, null).ConfigureAwait(false);
-            return new ReadOnlyCollection<string>(response.Body);
+            return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates());
         }
 
         /// <summary>
@@ -84,28 +72,37 @@ namespace Octokit
         /// </summary>
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
-        public async Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
+        [ManualRoute("GET", "/gitignore/templates/{name}")]
+        public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
-            var endpoint = new Uri("gitignore/templates/" + Uri.EscapeUriString(templateName), UriKind.Relative);
-
-            var response = await _connection.Get<GitIgnoreTemplate>(endpoint, null, null).ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Get<GitIgnoreTemplate>(ApiUrls.GitIgnoreTemplates(templateName));
         }
 
         /// <summary>
         /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
         /// list of all possible OSS licenses.
         /// </summary>
-        /// <remarks>This is a PREVIEW API! Use it at your own risk.</remarks>
         /// <returns>A list of licenses available on the site</returns>
-        public async Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
+        [ManualRoute("GET", "/licenses")]
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
-            var endpoint = new Uri("licenses", UriKind.Relative);
+            return GetAllLicenses(ApiOptions.None);
+        }
 
-            var response = await _connection.Get<LicenseMetadata[]>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
-            return new ReadOnlyCollection<LicenseMetadata>(response.Body);
+        /// <summary>
+        /// Returns a list of the licenses shown in the license picker on GitHub.com. This is not a comprehensive
+        /// list of all possible OSS licenses.
+        /// </summary>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of licenses available on the site</returns>
+        [ManualRoute("GET", "/licenses")]
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, "options");
+
+            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), options);
         }
 
         /// <summary>
@@ -113,12 +110,10 @@ namespace Octokit
         /// </summary>
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
-        public async Task<License> GetLicense(string key)
+        [ManualRoute("GET", "/licenses/{key}")]
+        public Task<License> GetLicense(string key)
         {
-            var endpoint = new Uri("licenses/" + Uri.EscapeUriString(key), UriKind.Relative);
-
-            var response = await _connection.Get<License>(endpoint, null, AcceptHeaders.LicensesApiPreview).ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Get<License>(ApiUrls.Licenses(key));
         }
 
         /// <summary>
@@ -127,11 +122,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public async Task<MiscellaneousRateLimit> GetRateLimits()
+        [ManualRoute("GET", "/rate_limit")]
+        public Task<MiscellaneousRateLimit> GetRateLimits()
         {
-            var endpoint = new Uri("rate_limit", UriKind.Relative);
-            var response = await _connection.Get<MiscellaneousRateLimit>(endpoint, null, null).ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit());
         }
 
         /// <summary>
@@ -140,11 +134,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public async Task<Meta> GetMetadata()
+        [ManualRoute("GET", "/meta")]
+        public Task<Meta> GetMetadata()
         {
-            var endpoint = new Uri("meta", UriKind.Relative);
-            var response = await _connection.Get<Meta>(endpoint, null, null).ConfigureAwait(false);
-            return response.Body;
+            return ApiConnection.Get<Meta>(ApiUrls.Meta());
         }
     }
 }

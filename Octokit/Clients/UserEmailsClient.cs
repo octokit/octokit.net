@@ -28,6 +28,7 @@ namespace Octokit
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        [ManualRoute("GET", "/user/emails")]
         public Task<IReadOnlyList<EmailAddress>> GetAll()
         {
             return GetAll(ApiOptions.None);
@@ -40,6 +41,7 @@ namespace Octokit
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
+        [ManualRoute("GET", "/user/emails")]
         public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -55,6 +57,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to add.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
+        [ManualRoute("POST", "/user/emails")]
         public Task<IReadOnlyList<EmailAddress>> Add(params string[] emailAddresses)
         {
             Ensure.ArgumentNotNull(emailAddresses, nameof(emailAddresses));
@@ -72,6 +75,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="emailAddresses">The email addresses to delete.</param>
         /// <returns>Returns the added <see cref="EmailAddress"/>es.</returns>
+        [ManualRoute("DELETE", "/user/emails")]
         public Task Delete(params string[] emailAddresses)
         {
             Ensure.ArgumentNotNull(emailAddresses, nameof(emailAddresses));

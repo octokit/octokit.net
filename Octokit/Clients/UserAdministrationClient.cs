@@ -30,6 +30,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="newUser">The <see cref="NewUser"/> object describing the user to create</param>
         /// <returns>The created <see cref="User"/> object</returns>
+        [ManualRoute("POST", "/admin/users")]
         public Task<User> Create(NewUser newUser)
         {
             Ensure.ArgumentNotNull(newUser, nameof(newUser));
@@ -50,6 +51,7 @@ namespace Octokit
         /// <param name="login">The username to rename</param>
         /// <param name="userRename">The <see cref="UserRename"/> request, specifying the new login</param>
         /// <returns>A <see cref="UserRenameResponse"/> object indicating the queued task message and Url to the user</returns>
+        [ManualRoute("POST", "/admin/users/{username}")]
         public Task<UserRenameResponse> Rename(string login, UserRename userRename)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -70,6 +72,7 @@ namespace Octokit
         /// <param name="login">The user to impersonate</param>
         /// <param name="newImpersonationToken">The <see cref="NewImpersonationToken"/> request specifying the required scopes</param>
         /// <returns>An <see cref="Authorization"/> object containing the impersonation token</returns>
+        [ManualRoute("POST", "/admin/users/{username}/authorizations")]
         public Task<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -89,6 +92,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to remove impersonation token from</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/admin/users/{username}/authorizations")]
         public async Task DeleteImpersonationToken(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -111,6 +115,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to promote to administrator.</param>
         /// <returns></returns>
+        [ManualRoute("PUT", "/users/{username}/site_admin")]
         public Task Promote(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -127,6 +132,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to demote from administrator.</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/users/{username}/site_admin")]
         public Task Demote(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -143,6 +149,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to suspend.</param>
         /// <returns></returns>
+        [ManualRoute("PUT", "/users/{username}/suspended")]
         public Task Suspend(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -159,6 +166,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/users/{username}/suspended")]
         public Task Unsuspend(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -174,6 +182,7 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <returns></returns>
+        [ManualRoute("PUT", "/admin/keys")]
         public Task<IReadOnlyList<PublicKey>> ListAllPublicKeys()
         {
             var endpoint = ApiUrls.UserAdministrationPublicKeys();
@@ -189,6 +198,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The user to delete</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/admin/users/{username}")]
         public async Task Delete(string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -210,6 +220,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/admin/keys/{key_id}")]
         public async Task DeletePublicKey(int keyId)
         {
             Ensure.ArgumentNotNull(keyId, nameof(keyId));

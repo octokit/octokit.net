@@ -212,7 +212,7 @@ var request = new SearchCodeRequest("auth")
     Path = "app/assets",
     
     // we may want to restrict the file based on file extension
-    Extension = "json",
+    Extensions = new[] { "json", "sql" },
     
     // restrict search to a specific file name
     FileName = "app.json",

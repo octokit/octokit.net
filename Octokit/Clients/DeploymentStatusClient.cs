@@ -27,6 +27,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -44,6 +45,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
+        [ManualRoute("GET", "/repositories/{id}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId)
         {
             return GetAll(repositoryId, deploymentId, ApiOptions.None);
@@ -60,6 +62,9 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("ant-man")]
+        [Preview("flash")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -68,7 +73,7 @@ namespace Octokit
 
             return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                           null,
-                                                          AcceptHeaders.DeploymentApiPreview,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
                                                           options);
         }
 
@@ -82,11 +87,17 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("ant-man")]
+        [Preview("flash")]
+        [ManualRoute("GET", "/repositories/{id}/deployments/{deployment_id}/statuses")]
         public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
+            return ApiConnection.GetAll<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
+                                                          null,
+                                                          AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview),
+                                                          options);
         }
 
         /// <summary>
@@ -100,6 +111,9 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
+        [Preview("ant-man")]
+        [Preview("flash")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
         public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -108,7 +122,7 @@ namespace Octokit
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(owner, name, deploymentId),
                                                         newDeploymentStatus,
-                                                        AcceptHeaders.DeploymentApiPreview);
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
 
         /// <summary>
@@ -121,12 +135,16 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
+        [Preview("ant-man")]
+        [Preview("flash")]
+        [ManualRoute("POST", "/repositories/{id}/deployments/{deployment_id}/statuses")]
         public Task<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
             return ApiConnection.Post<DeploymentStatus>(ApiUrls.DeploymentStatuses(repositoryId, deploymentId),
-                                                        newDeploymentStatus);
+                                                        newDeploymentStatus,
+                                                        AcceptHeaders.Concat(AcceptHeaders.DeploymentApiPreview, AcceptHeaders.DeploymentStatusesPreview));
         }
     }
 }

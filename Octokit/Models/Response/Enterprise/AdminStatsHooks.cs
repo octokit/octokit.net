@@ -38,7 +38,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalHooks: {0} ActiveHooks: {1} InactiveHooks: {2}", TotalHooks, ActiveHooks, InactiveHooks);
+                return string.Format(CultureInfo.InvariantCulture, "TotalHooks: {0} ActiveHooks: {1} InactiveHooks: {2}", TotalHooks, ActiveHooks, InactiveHooks);
             }
         }
     }

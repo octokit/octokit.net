@@ -109,7 +109,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The HTTP status code associated with the repsonse
+        /// The HTTP status code associated with the response
         /// </summary>
         public HttpStatusCode StatusCode { get; private set; }
 

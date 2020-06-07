@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
@@ -24,6 +25,18 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForCSharpRepositoriesUpdatedIn2020()
+    {
+        var request = new SearchRepositoriesRequest("csharp")
+        {
+            Updated = DateRange.GreaterThan(new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero))
+        };
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
     public async Task SearchForForkedRepositories()
     {
         var request = new SearchRepositoriesRequest("octokit")
@@ -32,7 +45,7 @@ public class SearchClientTests
         };
         var repos = await _gitHubClient.Search.SearchRepo(request);
 
-        Assert.True(repos.Items.Any(x => x.Fork));
+        Assert.Contains(repos.Items, x => x.Fork);
     }
 
     [IntegrationTest]
@@ -112,7 +125,7 @@ public class SearchClientTests
 
         foreach (var code in searchResults.Items)
         {
-            Assert.True(code.Name.EndsWith(".cs"));
+            Assert.EndsWith(".cs", code.Name);
         }
     }
 

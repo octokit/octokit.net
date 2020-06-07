@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     /// <summary>
     /// A client for GitHub Applications Installations API.
@@ -19,6 +19,7 @@ namespace Octokit.Clients
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
+        [ManualRoute("GET", "/installation/repositories")]
         public Task<RepositoriesResponse> GetAllRepositoriesForCurrent()
         {
             return GetAllRepositoriesForCurrent(ApiOptions.None);
@@ -29,6 +30,8 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
+        [Preview("machine-man")]
+        [ManualRoute("GET", "/installation/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -45,6 +48,7 @@ namespace Octokit.Clients
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
+        [ManualRoute("GET", "/user/installation/{id}/repositories")]
         public Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
         {
             return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None);
@@ -56,6 +60,8 @@ namespace Octokit.Clients
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
+        [Preview("machine-man")]
+        [ManualRoute("GET", "/user/installation/{id}/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));

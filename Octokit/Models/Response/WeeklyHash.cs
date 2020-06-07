@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Octokit.Helpers;
 
 namespace Octokit
 {
@@ -37,7 +36,7 @@ namespace Octokit
 
         public DateTimeOffset Week
         {
-            get { return W.FromUnixTime(); }
+            get { return DateTimeOffset.FromUnixTimeSeconds(W); }
         }
 
         public int Additions

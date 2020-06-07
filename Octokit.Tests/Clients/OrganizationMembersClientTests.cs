@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     /// <summary>
-    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
     public class OrganizationMembersClientTests
@@ -309,11 +310,13 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.Found, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -326,11 +329,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -357,11 +362,13 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -374,11 +381,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -429,11 +438,13 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NoContent, true)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    Args.Object).Returns(response);
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -446,11 +457,13 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"),
-                    new { }).Returns(response);
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new OrganizationMembersClient(apiConnection);
@@ -492,6 +505,85 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("", "username"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => orgMembers.Conceal("org", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => orgMembers.Conceal("org", ""));
+            }
+        }
+
+        public class TheGetOrganizationMembershipMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.GetOrganizationMembership("org", "username");
+
+                connection.Received().Get<OrganizationMembership>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership(null, "username"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("", "username"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetOrganizationMembership("org", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetOrganizationMembership("org", ""));
+            }
+        }
+
+        public class TheAddOrUpdateOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.AddOrUpdateOrganizationMembership("org", "username", orgMembershipUpdate);
+
+                connection.Received().Put<OrganizationMembership>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                var orgMembershipUpdate = new OrganizationMembershipUpdate();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership(null, "username", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("", "username", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", null, orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("org", "", orgMembershipUpdate));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null));
+            }
+        }
+
+        public class TheDeleteOrganizationMembershipMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.RemoveOrganizationMembership("org", "username");
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/memberships/username"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership(null, "username"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("", "username"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.RemoveOrganizationMembership("org", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.RemoveOrganizationMembership("org", ""));
             }
         }
 

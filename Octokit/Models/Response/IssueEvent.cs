@@ -9,7 +9,7 @@ namespace Octokit
     {
         public IssueEvent() { }
 
-        public IssueEvent(int id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, string commitUrl)
+        public IssueEvent(long id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt, Issue issue, string commitUrl, RenameInfo rename, IssueEventProjectCard projectCard)
         {
             Id = id;
             NodeId = nodeId;
@@ -22,12 +22,14 @@ namespace Octokit
             CreatedAt = createdAt;
             Issue = issue;
             CommitUrl = commitUrl;
+            Rename = rename;
+            ProjectCard = projectCard;
         }
 
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
@@ -78,6 +80,18 @@ namespace Octokit
         /// The issue associated to this event.
         /// </summary>
         public Issue Issue { get; protected set; }
+
+        /// <summary>
+        /// An object containing rename details
+        /// Only provided for renamed events
+        /// </summary>
+        public RenameInfo Rename { get; protected set; }
+
+        /// <summary>
+        /// Information about the project card that triggered the event.
+        /// The project_card attribute is not returned if someone deletes the project board, or if you do not have permission to view it.
+        /// </summary>
+        public IssueEventProjectCard ProjectCard { get; protected set; }
 
         internal string DebuggerDisplay
         {

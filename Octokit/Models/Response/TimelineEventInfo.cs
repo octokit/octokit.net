@@ -9,7 +9,7 @@ namespace Octokit
     {
         public TimelineEventInfo() { }
 
-        public TimelineEventInfo(int id, string nodeId, string url, User actor, string commitId, EventInfoState @event, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename)
+        public TimelineEventInfo(long id, string nodeId, string url, User actor, string commitId, EventInfoState @event, DateTimeOffset createdAt, Label label, User assignee, Milestone milestone, SourceInfo source, RenameInfo rename, IssueEventProjectCard projectCard)
         {
             Id = id;
             NodeId = nodeId;
@@ -23,9 +23,10 @@ namespace Octokit
             Milestone = milestone;
             Source = source;
             Rename = rename;
+            ProjectCard = projectCard;
         }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
@@ -40,8 +41,24 @@ namespace Octokit
         public Label Label { get; protected set; }
         public User Assignee { get; protected set; }
         public Milestone Milestone { get; protected set; }
+
+        /// <summary>
+        /// The source of reference from another issue
+        /// Only provided for cross-referenced events
+        /// </summary>
         public SourceInfo Source { get; protected set; }
+
+        /// <summary>
+        /// An object containing rename details
+        /// Only provided for renamed events
+        /// </summary>
         public RenameInfo Rename { get; protected set; }
+
+        /// <summary>
+        /// The name of the column that the card was listed in prior to column_name.
+        /// Only returned for moved_columns_in_project events
+        /// </summary>
+        public IssueEventProjectCard ProjectCard { get; protected set; }
 
         internal string DebuggerDisplay
         {

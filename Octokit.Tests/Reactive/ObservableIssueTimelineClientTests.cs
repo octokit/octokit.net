@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -33,11 +36,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableIssueTimelineClient(gitHubClient);
 
                 IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
-                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview")
+                    CreateResponse(HttpStatusCode.OK),
+                    result);
+                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview+json")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42).ToList();
@@ -45,7 +46,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview");
+                    "application/vnd.github.mockingbird-preview+json");
                 Assert.Equal(1, timelineEvents.Count);
             }
 
@@ -58,12 +59,8 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssueTimelineClient(gitHubClient);
 
-                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
-                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview")
+                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
+                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview+json")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42, new ApiOptions { PageSize = 30 }).ToList();
@@ -71,7 +68,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"),
-                    "application/vnd.github.mockingbird-preview");
+                    "application/vnd.github.mockingbird-preview+json");
                 Assert.Equal(1, timelineEvents.Count);
             }
 
@@ -83,12 +80,8 @@ namespace Octokit.Tests.Reactive
                 var githubClient = new GitHubClient(connection);
                 var client = new ObservableIssueTimelineClient(githubClient);
 
-                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
-                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview")
+                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, "application/vnd.github.mockingbird-preview+json")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue(1, 42).ToList();
@@ -96,7 +89,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview");
+                    "application/vnd.github.mockingbird-preview+json");
                 Assert.Equal(1, timelineEvents.Count);
             }
 
@@ -108,12 +101,8 @@ namespace Octokit.Tests.Reactive
                 var githubClient = new GitHubClient(connection);
                 var client = new ObservableIssueTimelineClient(githubClient);
 
-                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
-                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview")
+                IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), "application/vnd.github.mockingbird-preview+json")
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue(1, 42, new ApiOptions { PageSize = 30 }).ToList();
@@ -121,7 +110,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"),
-                    "application/vnd.github.mockingbird-preview");
+                    "application/vnd.github.mockingbird-preview+json");
                 Assert.Equal(1, timelineEvents.Count);
             }
 

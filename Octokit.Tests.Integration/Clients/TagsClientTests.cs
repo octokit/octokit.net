@@ -36,8 +36,8 @@ namespace Octokit.Tests.Integration.Clients
 
                 var tag = await fixture.Create(context.Repository.Id, newTag);
 
-                Assert.Equal(tag.Object.Type, TaggedType.Blob);
-                Assert.Equal(tag.Message, "Hello");
+                Assert.Equal(TaggedType.Blob, tag.Object.Type);
+                Assert.Equal("Hello", tag.Message);
                 Assert.Equal(tag.Object.Sha, sha);
             }
 
@@ -48,8 +48,8 @@ namespace Octokit.Tests.Integration.Clients
 
                 var tag = await fixture.Create(context.Repository.Id, newTag);
 
-                Assert.Equal(tag.Object.Type, TaggedType.Blob);
-                Assert.Equal(tag.Message, "Hello");
+                Assert.Equal(TaggedType.Blob, tag.Object.Type);
+                Assert.Equal("Hello", tag.Message);
                 Assert.Equal(tag.Object.Sha, sha);
             }
         }
@@ -86,8 +86,8 @@ namespace Octokit.Tests.Integration.Clients
                 var gitTag = await fixture.Get(context.RepositoryOwner, context.RepositoryName, tag.Sha);
 
                 Assert.NotNull(gitTag);
-                Assert.Equal(gitTag.Object.Type, TaggedType.Blob);
-                Assert.Equal(gitTag.Message, "Hello");
+                Assert.Equal(TaggedType.Blob, gitTag.Object.Type);
+                Assert.Equal("Hello", gitTag.Message);
                 Assert.Equal(gitTag.Object.Sha, sha);
             }
 
@@ -103,8 +103,8 @@ namespace Octokit.Tests.Integration.Clients
                 var gitTag = await github.Git.Tag.Get(context.Repository.Id, tag.Sha);
 
                 Assert.NotNull(gitTag);
-                Assert.Equal(gitTag.Object.Type, TaggedType.Blob);
-                Assert.Equal(gitTag.Message, "Hello");
+                Assert.Equal(TaggedType.Blob, gitTag.Object.Type);
+                Assert.Equal("Hello", gitTag.Message);
                 Assert.Equal(gitTag.Object.Sha, sha);
             }
 
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.NotNull(gitTag);
 
                 Assert.False(gitTag.Verification.Verified);
-                Assert.Equal(gitTag.Verification.Reason, VerificationReason.Unsigned);
+                Assert.Equal(VerificationReason.Unsigned, gitTag.Verification.Reason);
                 Assert.Null(gitTag.Verification.Signature);
                 Assert.Null(gitTag.Verification.Payload);
             }

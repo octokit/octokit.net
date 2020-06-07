@@ -37,6 +37,14 @@ namespace Octokit
         Member
     }
 
+    public enum MembershipRole
+    {
+        [Parameter(Value = "admin")]
+        Admin,
+        [Parameter(Value = "member")]
+        Member
+    }
+
     /// <summary>
     /// A client for GitHub's Organization Members API.
     /// </summary>
@@ -73,6 +81,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members")]
         public Task<IReadOnlyList<User>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -101,6 +110,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members")]
         public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -130,6 +140,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -159,6 +170,7 @@ namespace Octokit
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -188,6 +200,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members?role={1}")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -217,6 +230,7 @@ namespace Octokit
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members?role={1}")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -247,6 +261,7 @@ namespace Octokit
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members?filter={1}&role={2}")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -277,6 +292,7 @@ namespace Octokit
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
+        [ManualRoute("GET", "/orgs/{org}/members?filter={1}&role={2}")]
         public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -291,6 +307,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/public_members")]
         public Task<IReadOnlyList<User>> GetAllPublic(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -305,6 +322,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/public_members")]
         public Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -323,6 +341,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/members/{username}")]
         public async Task<bool> CheckMember(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -356,6 +375,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/public_members/{username}")]
         public async Task<bool> CheckMemberPublic(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -384,6 +404,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/members/{username}")]
         public Task Delete(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -397,12 +418,13 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("PUT", "/orgs/{org}/public_members/{username}")]
         public async Task<bool> Publicize(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -428,19 +450,86 @@ namespace Octokit
         /// Make the authenticated user's organization membership private.
         /// </summary>
         /// <remarks>
-        /// This method requries authentication.
+        /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/orgs/members/#conceal-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/public_members/{username}")]
         public Task Conceal(string org, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection.Delete(ApiUrls.OrganizationMembership(org, user));
+        }
+
+        /// <summary>
+        /// Get a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization member.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#get-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/memberships/{username}")]
+        public Task<OrganizationMembership> GetOrganizationMembership(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return ApiConnection.Get<OrganizationMembership>(ApiUrls.OrganizationMemberships(org, user));
+        }
+
+        /// <summary>
+        /// Add a user to the organization or update the user's role withing the organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <param name="addOrUpdateRequest">An <see cref="OrganizationMembershipUpdate"/> instance describing the
+        /// changes to make to the user's organization membership</param>
+        /// <returns></returns>
+        [ManualRoute("PUT", "/orgs/{org}/memberships/{username}")]
+        public Task<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(addOrUpdateRequest, nameof(addOrUpdateRequest));
+
+            return ApiConnection.Put<OrganizationMembership>(ApiUrls.OrganizationMemberships(org, user), addOrUpdateRequest);
+        }
+
+        /// <summary>
+        /// Remove a user's membership with an organization.
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#remove-organization-membership">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="user">The login for the user</param>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/memberships/{username}")]
+        public Task RemoveOrganizationMembership(string org, string user)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return ApiConnection.Delete(ApiUrls.OrganizationMemberships(org, user));
         }
 
         /// <summary>
@@ -452,6 +541,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -469,6 +559,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));

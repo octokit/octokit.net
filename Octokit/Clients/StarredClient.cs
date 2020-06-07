@@ -26,6 +26,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/stargazers")]
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -39,6 +40,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/stargazers")]
         public Task<IReadOnlyList<User>> GetAllStargazers(long repositoryId)
         {
             return GetAllStargazers(repositoryId, ApiOptions.None);
@@ -51,6 +53,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/stargazers")]
         public Task<IReadOnlyList<User>> GetAllStargazers(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -66,6 +69,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/stargazers")]
         public Task<IReadOnlyList<User>> GetAllStargazers(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -79,6 +83,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/stargazers")]
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -92,6 +97,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/stargazers")]
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(long repositoryId)
         {
             return GetAllStargazersWithTimestamps(repositoryId, ApiOptions.None);
@@ -104,6 +110,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/stargazers")]
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -119,6 +126,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/repositories/{id}/stargazers")]
         public Task<IReadOnlyList<UserStar>> GetAllStargazersWithTimestamps(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -130,6 +138,7 @@ namespace Octokit
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
             return GetAllForCurrent(ApiOptions.None);
@@ -140,6 +149,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -151,6 +161,7 @@ namespace Octokit
         /// Retrieves all of the starred <see cref="Repository"/>(ies) for the current user with star creation timestamps.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps()
         {
             return GetAllForCurrentWithTimestamps(ApiOptions.None);
@@ -161,6 +172,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -175,6 +187,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
             Justification = "But i think i do need star-specific request parameters")]
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -188,6 +201,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -203,6 +217,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters",
             Justification = "But i think i do need star-specific request parameters")]
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -216,6 +231,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForCurrentWithTimestamps(StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -229,6 +245,7 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -242,6 +259,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -255,6 +273,7 @@ namespace Octokit
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -268,6 +287,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -283,6 +303,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -298,6 +319,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<Repository>> GetAllForUser(string user, StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -314,6 +336,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, StarredRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -329,6 +352,7 @@ namespace Octokit
         /// <param name="request">Star-specific request parameters that sort the results</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/users/{username}/starred")]
         public Task<IReadOnlyList<RepositoryStar>> GetAllForUserWithTimestamps(string user, StarredRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
@@ -344,6 +368,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
+        [ManualRoute("GET", "/user/starred/{owner}/{repo}")]
         public async Task<bool> CheckStarred(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -365,6 +390,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
+        [ManualRoute("PUT", "/user/starred/{owner}/{repo}")]
         public async Task<bool> StarRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -386,6 +412,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
+        [ManualRoute("DELETE", "/user/starred/{owner}/{repo}")]
         public async Task<bool> RemoveStarFromRepo(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

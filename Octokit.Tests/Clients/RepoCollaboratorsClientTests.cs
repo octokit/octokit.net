@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Xunit;
-using System.Net;
 using Octokit.Internal;
+using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
     /// <summary>
-    /// Client tests mostly just need to make sure they call the IApiConnection with the correct 
+    /// Client tests mostly just need to make sure they call the IApiConnection with the correct
     /// relative Uri. No need to fake up the response. All *those* tests are in ApiConnectionTests.cs.
     /// </summary>
     public class RepoCollaboratorsClientTests
@@ -33,7 +35,10 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -44,7 +49,10 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), Args.ApiOptions);
+                connection.Received().GetAll<User>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                    Arg.Any<Dictionary<string, string>>(),
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -63,7 +71,49 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"), options);
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -82,7 +132,53 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"), options);
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Any<Dictionary<string, string>>(),
+                        options);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<User>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        Args.ApiOptions);
             }
 
             [Fact]
@@ -97,9 +193,11 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "test", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "test", request: null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, options: null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(1, request: null));
             }
         }
 
@@ -110,11 +208,12 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = CreateApiResponse(status);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepoCollaboratorsClient(apiConnection);
@@ -129,11 +228,12 @@ namespace Octokit.Tests.Clients
             [InlineData(HttpStatusCode.NotFound, false)]
             public async Task RequestsCorrectValueForStatusCodeWithRepositoryId(HttpStatusCode status, bool expected)
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(status, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = CreateApiResponse(status);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepoCollaboratorsClient(apiConnection);
@@ -146,11 +246,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCode()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = CreateApiResponse(HttpStatusCode.Conflict);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepoCollaboratorsClient(apiConnection);
@@ -161,11 +262,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task ThrowsExceptionForInvalidStatusCodeWithRepositoryId()
             {
-                var response = Task.Factory.StartNew<IApiResponse<object>>(() =>
-                    new ApiResponse<object>(new Response(HttpStatusCode.Conflict, null, new Dictionary<string, string>(), "application/json")));
+                var responseTask = TestSetup.CreateApiResponse(HttpStatusCode.Conflict);
+
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"),
-                    null, null).Returns(response);
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null)
+                          .Returns(responseTask);
+
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepoCollaboratorsClient(apiConnection);
@@ -309,7 +411,7 @@ namespace Octokit.Tests.Clients
                 var permission = new CollaboratorRequest(Permission.Push);
 
                 client.Invite("owner", "test", "user1", permission);
-                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission), Arg.Any<string>(), Arg.Is<string>("application/vnd.github.swamp-thing-preview+json"));
+                connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission));
             }
 
             [Fact]

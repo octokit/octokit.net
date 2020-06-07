@@ -31,6 +31,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments")]
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -47,6 +48,7 @@ namespace Octokit
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        [ManualRoute("GET", "/repositories/{id}/deployments")]
         public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
@@ -62,6 +64,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [Preview("ant-man")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/deployments")]
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -83,6 +87,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/deployments")]
         public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -100,6 +105,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
+        [Preview("ant-man")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/deployments")]
         public Task<Deployment> Create(string owner, string name, NewDeployment newDeployment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -120,6 +127,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
+        [ManualRoute("POST", "/repositories/{id}/deployments")]
         public Task<Deployment> Create(long repositoryId, NewDeployment newDeployment)
         {
             Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));

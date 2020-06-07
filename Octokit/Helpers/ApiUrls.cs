@@ -374,7 +374,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all the repositores
+        /// Returns the <see cref="Uri"/> that returns all the repositories
         /// </summary>
         /// <returns></returns>
         public static Uri InstallationRepositories()
@@ -622,7 +622,7 @@ namespace Octokit
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository.
-        /// Otherwire returns a 404.
+        /// Otherwise returns a 404.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -634,7 +634,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.        
+        /// Returns the <see cref="Uri"/> to add and remove assignees for an issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -726,7 +726,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the 
+        /// Returns the <see cref="Uri"/> that returns a 204 if the user is a public member of the
         /// organization.
         /// Otherwise returns a 404.
         /// </summary>
@@ -748,6 +748,17 @@ namespace Octokit
         public static Uri OrganizationMembership(string org, string name)
         {
             return "orgs/{0}/public_members/{1}".FormatUri(org, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization memberships
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="name">The name of the user</param>
+        /// <returns></returns>
+        public static Uri OrganizationMemberships(string org, string name)
+        {
+            return "orgs/{0}/memberships/{1}".FormatUri(org, name);
         }
 
         /// <summary>
@@ -827,7 +838,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The event id</param>
         /// <returns></returns>
-        public static Uri IssuesEvent(string owner, string name, int id)
+        public static Uri IssuesEvent(string owner, string name, long id)
         {
             return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, id);
         }
@@ -1298,7 +1309,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for a spesific comment for the specified commit.
+        /// Returns the <see cref="Uri"/> for a specific comment for the specified commit.
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
@@ -1682,7 +1693,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// returns the <see cref="Uri"/> for org teams 
+        /// returns the <see cref="Uri"/> for org teams
         /// use for both Get and Create methods
         /// </summary>
         /// <param name="organization"></param>
@@ -1693,7 +1704,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> to discover teams 
+        /// Returns the <see cref="Uri"/> to discover teams
         /// for the current user
         /// </summary>
         /// <returns></returns>
@@ -2238,7 +2249,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Creates the relative <see cref="Uri"/> for retrieving the 
+        /// Creates the relative <see cref="Uri"/> for retrieving the
         /// current users followers
         /// </summary>
         /// <returns>The <see cref="Uri"/> for retrieving the current users followers</returns>
@@ -2384,7 +2395,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
-            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
+            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path == "/" ? "" : path, reference);
         }
 
         /// <summary>
@@ -2580,6 +2591,18 @@ namespace Octokit
             return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
         }
 
+        public static Uri EnterpriseManagementConsoleMaintenance(string managementConsolePassword, Uri baseAddress)
+        {
+            if (baseAddress != null
+                && baseAddress.ToString().EndsWith("/api/v3/", StringComparison.OrdinalIgnoreCase))
+            {
+                // note: leading slash here means the /api/v3/ prefix inherited from baseAddress is ignored
+                return "/setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
+            }
+
+            return "setup/api/maintenance?api_key={0}".FormatUri(managementConsolePassword);
+        }
+
         public static Uri EnterpriseOrganization()
         {
             return "admin/organizations".FormatUri();
@@ -2719,11 +2742,11 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.
+        /// Returns the <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwise returns a 404.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="login">The login for the user</param>
-        /// <returns>The <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwire returns a 404.</returns>
+        /// <returns>The <see cref="Uri"/> that returns a 204 if the login belongs to an assignee of the repository. Otherwise returns a 404.</returns>
         public static Uri CheckAssignee(long repositoryId, string login)
         {
             return "repositories/{0}/assignees/{1}".FormatUri(repositoryId, login);
@@ -2980,7 +3003,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The event id</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.</returns>
-        public static Uri IssuesEvent(long repositoryId, int id)
+        public static Uri IssuesEvent(long repositoryId, long id)
         {
             return "repositories/{0}/issues/events/{1}".FormatUri(repositoryId, id);
         }
@@ -3702,7 +3725,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// Returns the <see cref="Uri"/> for repository traffic referrers.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic referrers.</returns>
@@ -3712,7 +3735,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// Returns the <see cref="Uri"/> for repository traffic paths.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3723,7 +3746,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice paths.
+        /// Returns the <see cref="Uri"/> for repository traffic paths.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic paths.</returns>
@@ -3733,7 +3756,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// Returns the <see cref="Uri"/> for repository traffic views.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3744,7 +3767,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice views.
+        /// Returns the <see cref="Uri"/> for repository traffic views.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic views.</returns>
@@ -3754,7 +3777,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// Returns the <see cref="Uri"/> for repository traffic clones.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
@@ -3765,7 +3788,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice clones.
+        /// Returns the <see cref="Uri"/> for repository traffic clones.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
         /// <returns>The <see cref="Uri"/> for repository traffic clones.</returns>
@@ -4103,29 +4126,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public static Uri CheckSuiteRequests(long repositoryId)
-        {
-            return "repositories/{0}/check-suite-requests".FormatUri(repositoryId);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
-        /// </summary>
-        /// <param name="owner">The owner of repo</param>
-        /// <param name="repo">The name of repo</param>
-        /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
-        [Obsolete("This method has been deprecated in the GitHub Api, however can still be used on GitHub Enterprise 2.14")]
-        public static Uri CheckSuiteRequests(string owner, string repo)
-        {
-            return "repos/{0}/{1}/check-suite-requests".FormatUri(owner, repo);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that handles the check suite requests for the repository.
-        /// </summary>
-        /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <returns>The <see cref="Uri"/> that handles the check suite requests for the repository.</returns>
         public static Uri CheckSuiteRerequest(long repositoryId, long checkSuiteId)
@@ -4164,6 +4164,98 @@ namespace Octokit
         public static Uri CheckSuitePreferences(string owner, string repo)
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all emojis in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> for emojis.</returns>
+        public static Uri Emojis()
+        {
+            return "emojis".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rendered markdown in
+        /// response to a POST request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to render markdown.</returns>
+        public static Uri RawMarkdown()
+        {
+            return "markdown/raw".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rendered markdown in
+        /// response to a POST request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to render markdown.</returns>
+        public static Uri Markdown()
+        {
+            return "markdown".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all git ignore templates in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to git ignore templates.</returns>
+        public static Uri GitIgnoreTemplates()
+        {
+            return "gitignore/templates".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns specified git ignore templates in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="templateName">The name of the template to retrieve</param>
+        /// <returns>The <see cref="Uri"/> to git ignore template.</returns>
+        public static Uri GitIgnoreTemplates(string templateName)
+        {
+            return "gitignore/templates/{0}".FormatUri(templateName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all licenses in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to licenses.</returns>
+        public static Uri Licenses()
+        {
+            return "licenses".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns specified license in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="key">The key of the license to retrieve</param>
+        /// <returns>The <see cref="Uri"/> to license.</returns>
+        public static Uri Licenses(string key)
+        {
+            return "licenses/{0}".FormatUri(key);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns rate limit in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to rate limit.</returns>
+        public static Uri RateLimit()
+        {
+            return "rate_limit".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns meta in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
+        public static Uri Meta()
+        {
+            return "meta".FormatUri();
         }
     }
 }

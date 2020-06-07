@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -165,11 +163,12 @@ namespace Octokit
     {
         public BranchProtectionRequiredReviews() { }
 
-        public BranchProtectionRequiredReviews(BranchProtectionRequiredReviewsDismissalRestrictions dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews)
+        public BranchProtectionRequiredReviews(BranchProtectionRequiredReviewsDismissalRestrictions dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount)
         {
             DismissalRestrictions = dismissalRestrictions;
             DismissStaleReviews = dismissStaleReviews;
             RequireCodeOwnerReviews = requireCodeOwnerReviews;
+            RequiredApprovingReviewCount = requiredApprovingReviewCount;
         }
 
         /// <summary>
@@ -187,14 +186,20 @@ namespace Octokit
         /// </summary>
         public bool RequireCodeOwnerReviews { get; protected set; }
 
+        /// <summary>
+        /// Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.
+        /// </summary>
+        public int RequiredApprovingReviewCount { get; protected set; }
+
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2}",
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2} RequiredApprovingReviewCount: {3}",
                     DismissalRestrictions?.DebuggerDisplay ?? "disabled",
                     DismissStaleReviews,
-                    RequireCodeOwnerReviews);
+                    RequireCodeOwnerReviews,
+                    RequiredApprovingReviewCount);
             }
         }
     }

@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -55,10 +55,32 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("fake");
 
-                connection.Received().Get<List<Migration>>(
+                connection.Received().GetAll<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new MigrationsClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll("fake", options);
+
+                connection.Received().GetAll<Migration>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
+                    null,
+                    "application/vnd.github.wyandotte-preview+json",
+                    options);
             }
 
             [Fact]
@@ -68,6 +90,7 @@ namespace Octokit.Tests.Clients
                 var client = new MigrationsClient(connection);
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
             }
         }
@@ -86,7 +109,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Post<Migration>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations"),
                     Arg.Any<StartMigrationRequest>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -119,7 +142,7 @@ namespace Octokit.Tests.Clients
                         m.Repositories.Equals(migrationRequest.Repositories) &&
                         m.LockRepositories == migrationRequest.LockRepositories &&
                         m.ExcludeAttachments == migrationRequest.ExcludeAttachments),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
         }
 
@@ -136,7 +159,7 @@ namespace Octokit.Tests.Clients
                 connection.Connection.Received().Get<byte[]>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
                     null,
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -163,7 +186,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
                     Arg.Any<object>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]
@@ -190,7 +213,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/repos/repo/lock"),
                     Arg.Any<object>(),
-                    AcceptHeaders.MigrationsApiPreview);
+                    "application/vnd.github.wyandotte-preview+json");
             }
 
             [Fact]

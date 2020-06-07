@@ -109,7 +109,7 @@ With this issue, you can transform it into an `IssueUpdate` using the extension 
 var update = issue.ToUpdate();
 ```
 
-This creates an `IssueUpdate` which lets you specify the neccessary changes.
+This creates an `IssueUpdate` which lets you specify the necessary changes.
 Label changes probably requires some explanation:
 
  - by default, no labels are set in an `IssueUpdate` - this is to indicate

@@ -50,7 +50,7 @@ public class AssigneesClientTests
     {
         // Repository owner is always an assignee
         var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.True(assignees.Any(u => u.Login == Helper.UserName));
+        Assert.Contains(assignees, u => u.Login == Helper.UserName);
     }
 
     [IntegrationTest]
@@ -69,19 +69,20 @@ public class AssigneesClientTests
         Assert.IsType<Issue>(addAssignees);
 
         //Check if assignee was added to issue
-        Assert.True(addAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
+        Assert.Contains(addAssignees.Assignees, x => x.Login == _context.RepositoryOwner);
 
         //Test to remove assignees
         var removeAssignees = await _github.Issue.Assignee.RemoveAssignees(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newAssignees);
 
         //Check if assignee was removed
-        Assert.False(removeAssignees.Assignees.Any(x => x.Login == _context.RepositoryOwner));
+        Assert.DoesNotContain(removeAssignees.Assignees, x => x.Login == _context.RepositoryOwner);
     }
 
+    [IntegrationTest]
     public async Task CanListAssigneesWithRepositoryId()
     {
         // Repository owner is always an assignee
         var assignees = await _github.Issue.Assignee.GetAllForRepository(_context.Repository.Id);
-        Assert.True(assignees.Any(u => u.Login == Helper.UserName));
+        Assert.Contains(assignees, u => u.Login == Helper.UserName);
     }
 }

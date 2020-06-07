@@ -100,7 +100,7 @@ namespace Octokit
                     Comments != null ? "Comments," : ""
                     ).Trim(',');
 
-                return String.Format(CultureInfo.InvariantCulture, "Statistics: {0}", fieldsPresent);
+                return string.Format(CultureInfo.InvariantCulture, "Statistics: {0}", fieldsPresent);
             }
         }
     }

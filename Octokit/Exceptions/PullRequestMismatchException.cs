@@ -20,7 +20,7 @@ namespace Octokit
     public class PullRequestMismatchException : ApiException
     {
         /// <summary>
-        /// Constructs an instace of <see cref="Octokit.PullRequestMismatchException"/>.
+        /// Constructs an instance of <see cref="Octokit.PullRequestMismatchException"/>.
         /// </summary>
         /// <param name="response"></param>
         public PullRequestMismatchException(IResponse response) : this(response, null)

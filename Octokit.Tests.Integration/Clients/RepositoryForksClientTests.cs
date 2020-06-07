@@ -417,7 +417,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(forkCreated);
                 Assert.Equal(string.Format("{0}/octokit.net", Helper.UserName), forkCreated.FullName);
-                Assert.Equal(true, forkCreated.Fork);
+                Assert.True(forkCreated.Fork);
             }
 
             [IntegrationTest]
@@ -434,7 +434,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(forkCreated);
                 Assert.Equal(string.Format("{0}/octokit.net", Helper.UserName), forkCreated.FullName);
-                Assert.Equal(true, forkCreated.Fork);
+                Assert.True(forkCreated.Fork);
             }
 
             [OrganizationTest]
@@ -451,7 +451,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(forkCreated);
                 Assert.Equal(string.Format("{0}/octokit.net", Helper.Organization), forkCreated.FullName);
-                Assert.Equal(true, forkCreated.Fork);
+                Assert.True(forkCreated.Fork);
             }
 
             [OrganizationTest]
@@ -468,7 +468,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.NotNull(forkCreated);
                 Assert.Equal(string.Format("{0}/octokit.net", Helper.Organization), forkCreated.FullName);
-                Assert.Equal(true, forkCreated.Fork);
+                Assert.True(forkCreated.Fork);
             }
         }
     }

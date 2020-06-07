@@ -23,6 +23,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> Queue(string owner)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -42,6 +43,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> Queue(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -61,6 +63,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> QueueAll(string owner)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -80,6 +83,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> QueueAllIssues(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -99,6 +103,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> QueueAllIssues(string owner)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -118,6 +123,7 @@ namespace Octokit
         /// <param name="owner">A user or organization account</param>
         /// <param name="repository">A repository</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> QueueAllCode(string owner, string repository)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -137,6 +143,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">A user or organization account</param>
         /// <returns>The <see cref="SearchIndexingResponse"/> message.</returns>
+        [ManualRoute("POST", "/staff/indexing_jobs")]
         public Task<SearchIndexingResponse> QueueAllCode(string owner)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));

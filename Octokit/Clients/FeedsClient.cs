@@ -26,6 +26,7 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/feeds/#list-feeds
         /// </remarks>
         /// <returns>All the public <see cref="Feed"/>s for the particular user.</returns>
+        [ManualRoute("GET", "/feeds")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public Task<Feed> GetFeeds()
         {

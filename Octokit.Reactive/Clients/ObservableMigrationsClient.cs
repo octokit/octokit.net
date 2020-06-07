@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -15,6 +16,7 @@ namespace Octokit.Reactive
     public class ObservableMigrationsClient : IObservableMigrationsClient
     {
         private readonly IMigrationsClient _client;
+        private readonly IConnection _connection;
 
         /// <summary>
         /// Instantiates a GitHub Migrations API client.
@@ -25,6 +27,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Migration.Migrations;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
         /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <param name="migration">Specifies parameters for the migration in a
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
         public IObservable<Migration> Start(string org, StartMigrationRequest migration)
@@ -50,9 +53,16 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public IObservable<List<Migration>> GetAll(string org)
+        public IObservable<Migration> GetAll(string org)
         {
-            return _client.GetAll(org).ToObservable();
+            return GetAll(org, ApiOptions.None);
+        }
+
+        public IObservable<Migration> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, AcceptHeaders.MigrationsApiPreview, options);
         }
 
         /// <summary>

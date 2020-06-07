@@ -28,13 +28,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/git/tags/{sha}")]
         public Task<GitTag> Get(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference), null, AcceptHeaders.SignatureVerificationPreview);
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference));
         }
 
         /// <summary>
@@ -45,11 +46,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
+        [ManualRoute("GET", "/repositories/{id}/git/tags/{sha}")]
         public Task<GitTag> Get(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference), null, AcceptHeaders.SignatureVerificationPreview);
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference));
         }
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/git/tags")]
         public Task<GitTag> Create(string owner, string name, NewTag tag)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -78,6 +81,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
+        [ManualRoute("POST", "/repositories/{id}/git/tags")]
         public Task<GitTag> Create(long repositoryId, NewTag tag)
         {
             Ensure.ArgumentNotNull(tag, nameof(tag));

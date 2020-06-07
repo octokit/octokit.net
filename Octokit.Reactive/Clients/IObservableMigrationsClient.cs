@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/migration/migrations/#start-a-migration
         /// </remarks>
         /// <param name="org">The organization for which to start a migration.</param>
-        /// <param name="migration">Sprcifies parameters for the migration in a 
+        /// <param name="migration">Specifies parameters for the migration in a 
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
         IObservable<Migration> Start(
@@ -29,15 +29,28 @@ namespace Octokit.Reactive
             StartMigrationRequest migration);
 
         /// <summary>
-        /// Gets the list of the most recent migrations of the the organization.
+        /// Gets the list of the most recent migrations of the organization.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        IObservable<List<Migration>> GetAll(
+        IObservable<Migration> GetAll(
             string org);
+
+        /// <summary>
+        /// Gets the list of the most recent migrations of the organization.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
+        /// </remarks>
+        /// <param name="org">The organization of which to list migrations.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>List of most recent <see cref="Migration"/>s.</returns>
+        IObservable<Migration> GetAll(
+            string org,
+            ApiOptions options);
 
         /// <summary>
         /// Get the status of a migration.

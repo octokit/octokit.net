@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
 #if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
@@ -11,7 +13,7 @@ namespace Octokit
 {
     /// <summary>
     /// Represents a subset of the HTTP 403 - Forbidden response returned from the API when the forbidden response is related to an abuse detection mechanism.
-    /// Containts the amount of seconds after which it's safe to retry the request.
+    /// Contains the amount of seconds after which it's safe to retry the request.
     /// </summary>
 #if !NO_SERIALIZABLE
     [Serializable]
@@ -44,11 +46,11 @@ namespace Octokit
 
         private static int? ParseRetryAfterSeconds(IResponse response)
         {
-            string secondsValue;
-            if (!response.Headers.TryGetValue("Retry-After", out secondsValue)) { return null; }
+            var header = response.Headers.FirstOrDefault(h => string.Equals(h.Key, "Retry-After", StringComparison.OrdinalIgnoreCase));
+            if (header.Equals(default(KeyValuePair<string, string>))) { return null; }
 
             int retrySeconds;
-            if (!int.TryParse(secondsValue, out retrySeconds)) { return null; }
+            if (!int.TryParse(header.Value, out retrySeconds)) { return null; }
             if (retrySeconds < 0) { return null; }
 
             return retrySeconds;

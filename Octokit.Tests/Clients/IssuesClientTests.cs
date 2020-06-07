@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class IssuesClientTests
@@ -22,7 +24,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -35,7 +37,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview");
+                    "application/vnd.github.squirrel-girl-preview+json");
             }
 
             [Fact]
@@ -74,7 +76,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -92,7 +94,7 @@ namespace Octokit.Tests.Clients
                         && d["sort"] == "created"
                         && d["state"] == "open"
                         && d["direction"] == "asc"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -120,7 +122,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "user/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -162,7 +164,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -183,7 +185,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
         }
@@ -236,7 +238,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -250,7 +252,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -271,7 +273,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -292,7 +294,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -313,7 +315,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -334,7 +336,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -362,7 +364,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -390,7 +392,7 @@ namespace Octokit.Tests.Clients
                         && d["direction"] == "asc"
                         && d["sort"] == "created"
                         && d["filter"] == "assigned"),
-                    "application/vnd.github.squirrel-girl-preview",
+                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
         }
@@ -493,7 +495,7 @@ namespace Octokit.Tests.Clients
 
                 client.Lock("fake", "repo", 42);
 
-                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Any<object>(), Arg.Any<string>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Any<object>());
             }
 
             [Fact]
@@ -504,7 +506,7 @@ namespace Octokit.Tests.Clients
 
                 client.Lock(1, 42);
 
-                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>(), Arg.Any<string>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>());
             }
 
             [Fact]
@@ -531,7 +533,7 @@ namespace Octokit.Tests.Clients
 
                 client.Unlock("fake", "repo", 42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Any<object>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
             }
 
             [Fact]
@@ -542,7 +544,7 @@ namespace Octokit.Tests.Clients
 
                 client.Unlock(1, 42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>(), Arg.Is<string>(u => u.ToString() == "application/vnd.github.the-key-preview+json"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"));
             }
 
             [Fact]
@@ -592,11 +594,9 @@ namespace Octokit.Tests.Clients
                 "ed_events\",\"type\":\"User\",\"site_admin\":false},\"labels\":[],\"state\":\"open\",\"assignee" +
                 "\":null,\"milestone\":null,\"comments\":0,\"created_at\":\"2013-10-22T17:02:48Z\",\"updated_at\"" +
                 ":\"2013-10-22T17:02:48Z\",\"closed_at\":null,\"body\":\"A new unassigned issue\",\"closed_by\":null}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                issueResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                issueResponseJson);
 
             var jsonPipeline = new JsonHttpPipeline();
 

@@ -48,7 +48,7 @@ namespace Octokit
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "TotalPulls: {0} MergedPulls: {1} MergeablePulls: {2} UnmergeablePulls: {3}", TotalPulls, MergedPulls, MergeablePulls, UnmergeablePulls);
+                return string.Format(CultureInfo.InvariantCulture, "TotalPulls: {0} MergedPulls: {1} MergeablePulls: {2} UnmergeablePulls: {3}", TotalPulls, MergedPulls, MergeablePulls, UnmergeablePulls);
             }
         }
     }

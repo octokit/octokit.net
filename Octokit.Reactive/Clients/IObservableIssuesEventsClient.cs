@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        IObservable<EventInfo> GetAllForIssue(string owner, string name, int number);
+        IObservable<IssueEvent> GetAllForIssue(string owner, string name, int number);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        IObservable<EventInfo> GetAllForIssue(long repositoryId, int number);
+        IObservable<IssueEvent> GetAllForIssue(long repositoryId, int number);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<EventInfo> GetAllForIssue(string owner, string name, int number, ApiOptions options);
+        IObservable<IssueEvent> GetAllForIssue(string owner, string name, int number, ApiOptions options);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<EventInfo> GetAllForIssue(long repositoryId, int number, ApiOptions options);
+        IObservable<IssueEvent> GetAllForIssue(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -103,10 +103,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The event id</param>
+        /// <param name="eventId">The event id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<IssueEvent> Get(string owner, string name, int number);
+        IObservable<IssueEvent> Get(string owner, string name, long eventId);
 
         /// <summary>
         /// Gets a single event
@@ -115,9 +115,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#get-a-single-event
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The event id</param>
+        /// <param name="eventId">The event id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<IssueEvent> Get(long repositoryId, int number);
+        IObservable<IssueEvent> Get(long repositoryId, long eventId);
     }
 }

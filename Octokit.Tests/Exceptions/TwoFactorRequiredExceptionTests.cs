@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using Octokit.Internal;
+﻿using System.Net;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -12,7 +12,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void SetsDefaultMessage()
             {
-                var response = new Response(HttpStatusCode.Unauthorized, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Unauthorized);
 
                 var exception = new TwoFactorRequiredException(response, TwoFactorType.Sms);
 

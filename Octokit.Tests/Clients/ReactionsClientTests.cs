@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Delete(42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "reactions/42"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview");
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "reactions/42"), Arg.Any<object>(), "application/vnd.github.squirrel-girl-preview+json");
             }
         }
     }

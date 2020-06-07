@@ -21,6 +21,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsIssues"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/issues")]
         public Task<AdminStatsIssues> GetStatisticsIssues()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsIssues();
@@ -35,6 +36,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsHooks"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/hooks")]
         public Task<AdminStatsHooks> GetStatisticsHooks()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsHooks();
@@ -49,6 +51,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsMilestones"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/milestones")]
         public Task<AdminStatsMilestones> GetStatisticsMilestones()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsMilestones();
@@ -63,6 +66,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsOrgs"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/orgs")]
         public Task<AdminStatsOrgs> GetStatisticsOrgs()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsOrgs();
@@ -77,6 +81,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsComments"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/comments")]
         public Task<AdminStatsComments> GetStatisticsComments()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsComments();
@@ -91,6 +96,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsPages"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/pages")]
         public Task<AdminStatsPages> GetStatisticsPages()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsPages();
@@ -105,6 +111,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsUsers"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/users")]
         public Task<AdminStatsUsers> GetStatisticsUsers()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsUsers();
@@ -119,6 +126,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsGists"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/comments")]
         public Task<AdminStatsGists> GetStatisticsGists()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsGists();
@@ -133,6 +141,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsPulls"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/pulls")]
         public Task<AdminStatsPulls> GetStatisticsPulls()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsPulls();
@@ -147,6 +156,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStatsRepos"/> statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/repos")]
         public Task<AdminStatsRepos> GetStatisticsRepos()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsRepos();
@@ -161,6 +171,7 @@ namespace Octokit
         /// https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
         /// </remarks>
         /// <returns>The <see cref="AdminStats"/> collection of statistics.</returns>
+        [ManualRoute("GET", "/enterprise/stats/all")]
         public Task<AdminStats> GetStatisticsAll()
         {
             var endpoint = ApiUrls.EnterpriseAdminStatsAll();

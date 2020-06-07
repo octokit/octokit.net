@@ -21,8 +21,8 @@ namespace Octokit.Tests.Http
 
             var response = await adapter.SendAsync(httpRequestMessage, new CancellationToken());
 
-            Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-            Assert.Same(response.RequestMessage, httpRequestMessage);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Same(httpRequestMessage, response.RequestMessage);
         }
 
         [Theory]

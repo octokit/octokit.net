@@ -233,11 +233,11 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl, hook.Url);
                 Assert.Equal(baseHookUrl + "/test", hook.TestUrl);
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
-                Assert.NotNull(hook.CreatedAt);
-                Assert.NotNull(hook.UpdatedAt);
+                Assert.NotEqual(default, hook.CreatedAt);
+                Assert.NotEqual(default, hook.UpdatedAt);
                 Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
                 Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
-                Assert.Equal(false, hook.Active);
+                Assert.False(hook.Active);
             }
 
             [IntegrationTest]
@@ -277,11 +277,11 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(baseHookUrl, hook.Url);
                 Assert.Equal(baseHookUrl + "/test", hook.TestUrl);
                 Assert.Equal(baseHookUrl + "/pings", hook.PingUrl);
-                Assert.NotNull(hook.CreatedAt);
-                Assert.NotNull(hook.UpdatedAt);
+                Assert.NotEqual(default, hook.CreatedAt);
+                Assert.NotEqual(default, hook.UpdatedAt);
                 Assert.Equal(webHookConfig.Keys.OrderBy(x => x), hook.Config.Keys.OrderBy(x => x));
                 Assert.Equal(webHookConfig.Values.OrderBy(x => x), hook.Config.Values.OrderBy(x => x));
-                Assert.Equal(false, hook.Active);
+                Assert.False(hook.Active);
             }
 
             Dictionary<string, string> CreateExpectedConfigDictionary(Dictionary<string, string> config, string url, WebHookContentType contentType, string secret)

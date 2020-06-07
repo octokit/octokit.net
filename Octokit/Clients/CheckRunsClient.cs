@@ -30,6 +30,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
+        [Preview("antiope")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/check-runs")]
         public Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -47,6 +49,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
+        [Preview("antiope")]
+        [ManualRoute("POST", "/repositories/{id}/check-runs")]
         public Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
         {
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
@@ -64,6 +68,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
+        [Preview("antiope")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/check-runs/{check_run_id}")]
         public Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -82,6 +88,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
+        [Preview("antiope")]
+        [ManualRoute("PATCH", "/repositories/{id}/check-runs/{check_run_id}")]
         public Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
         {
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
@@ -98,6 +106,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/check-runs")]
         public Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -115,6 +124,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/check-runs")]
         public Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -132,6 +142,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/check-runs")]
         public Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -151,6 +162,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/check-runs")]
         public Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -170,6 +182,8 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -195,6 +209,8 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
@@ -217,6 +233,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suite/{check_suite_id}/check-runs")]
         public Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -233,6 +250,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
+        [ManualRoute("GET", "/repositories/{id}/check-suites/{check_suite_id}/check-runs")]
         public Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
         {
             return GetAllForCheckSuite(repositoryId, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
@@ -248,6 +266,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suite/{check_suite_id}/check-runs")]
         public Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -266,6 +285,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
+        [ManualRoute("GET", "/repositories/{id}/check-suites/{check_suite_id}/check-runs")]
         public Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
@@ -284,6 +304,8 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-suite/{check_suite_id}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -308,6 +330,8 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-suites/{check_suite_id}/check-runs")]
         public async Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
@@ -329,6 +353,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-runs/{check_run_id}")]
         public Task<CheckRun> Get(string owner, string name, long checkRunId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -345,6 +371,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-runs/{check_run_id}")]
         public Task<CheckRun> Get(long repositoryId, long checkRunId)
         {
             return ApiConnection.Get<CheckRun>(ApiUrls.CheckRun(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview);
@@ -359,6 +387,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -376,6 +405,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <returns></returns>
+        [ManualRoute("GET", "/repositories/{id}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId)
         {
             return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
@@ -391,6 +421,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -409,6 +441,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
+        [Preview("antiope")]
+        [ManualRoute("GET", "/repositories/{id}/check-runs/{check_run_id}/annotations")]
         public Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));

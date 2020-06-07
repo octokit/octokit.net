@@ -33,6 +33,28 @@ namespace Octokit.Tests
             }
 
             [Fact]
+            public void ParsesApiInfoFromCaseInsensitiveHeaders()
+            {
+                var headers = new Dictionary<string, string>
+                {
+                    { "x-accepted-oauth-scopes", "user" },
+                    { "x-oauth-scopes", "user, public_repo, repo, gist" },
+                    { "x-ratelimit-limit", "5000" },
+                    { "x-ratelimit-remaining", "4997" },
+                    { "etag", "5634b0b187fd2e91e3126a75006cc4fa" }
+                };
+
+                var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
+
+                Assert.NotNull(apiInfo);
+                Assert.Equal(new[] { "user" }, apiInfo.AcceptedOauthScopes.ToArray());
+                Assert.Equal(new[] { "user", "public_repo", "repo", "gist" }, apiInfo.OauthScopes.ToArray());
+                Assert.Equal(5000, apiInfo.RateLimit.Limit);
+                Assert.Equal(4997, apiInfo.RateLimit.Remaining);
+                Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", apiInfo.Etag);
+            }
+
+            [Fact]
             public void BadHeadersAreIgnored()
             {
                 var headers = new Dictionary<string, string>
@@ -86,7 +108,7 @@ namespace Octokit.Tests
         public class ThePageUrlMethods
         {
             [Theory]
-            [MemberData("PagingMethods")]
+            [MemberData(nameof(PagingMethods))]
             public void RetrievesTheCorrectPagePage(string linkName, Func<ApiInfo, Uri> pagingMethod)
             {
                 var pageUri = new Uri("https://api.github.com/user/repos?page=2");
@@ -100,8 +122,10 @@ namespace Octokit.Tests
             }
 
             [Theory]
-            [MemberData("PagingMethods")]
+            [MemberData(nameof(PagingMethods))]
+#pragma warning disable xUnit1026 // Theory methods should use all of their parameters
             public void ReturnsNullIfThereIsNoMatchingPagingLink(string ignored, Func<ApiInfo, Uri> pagingMethod)
+#pragma warning restore xUnit1026 // Theory methods should use all of their parameters
             {
                 var links = new Dictionary<string, Uri>();
                 var info = BuildApiInfo(links);

@@ -24,6 +24,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
+        [Preview("squirrel-girl")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/comments/{number}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -40,6 +42,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
+        [Preview("squirrel-girl")]
+        [ManualRoute("POST", "/repositories/{0}/issues/comments/{number}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
@@ -53,13 +57,30 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/comments/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number)
+        {
+            return GetAll(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/issues/comments/{number}/reactions")]
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), AcceptHeaders.ReactionsPreview);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
         }
 
         /// <summary>
@@ -67,10 +88,27 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
+        [ManualRoute("GET", "/repositories/{0}/issues/comments/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number)
         {
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), AcceptHeaders.ReactionsPreview);
+            return GetAll(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all reactions for a specified Issue Comment
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="options">Options for changing the API response</param>
+        [Preview("squirrel-girl")]
+        [ManualRoute("GET", "/repositories/{0}/issues/comments/{number}/reactions")]
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
         }
     }
 }

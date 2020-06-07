@@ -1,13 +1,20 @@
 ﻿using Cake.Common.IO;
+using Cake.Core.IO;
 using Cake.Frosting;
 
 public sealed class Clean : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        var directories = context.GetDirectories("./**/bin", x => !x.Path.FullPath.Contains("/build/"))
-            + context.GetDirectories("./**/obj", x => !x.Path.FullPath.Contains("/build/"))
-            + context.Artifacts;
+        var globberSettings = new GlobberSettings
+        {
+            Predicate = x => !x.Path.FullPath.Contains("/build/")
+        };
+
+        var directories = context.GetDirectories("./**/bin", globberSettings)
+            + context.GetDirectories("./**/obj", globberSettings)
+            + context.Artifacts
+            + context.CodeCoverage;
 
         foreach (var directory in directories)
         {

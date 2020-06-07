@@ -34,6 +34,12 @@ namespace Octokit
 
         [Parameter(Value = "action_required")]
         ActionRequired,
+
+        [Parameter(Value = "skipped")]
+        Skipped,
+
+        [Parameter(Value = "stale")]
+        Stale,
     }
 
     public enum CheckAnnotationLevel

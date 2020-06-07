@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Net;
 #if !NO_SERIALIZABLE
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
-using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -24,7 +25,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "42"},
                     {"X-RateLimit-Reset", "1372700873"}
                 };
-                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden, headers);
 
                 var exception = new RateLimitExceededException(response);
 
@@ -48,7 +49,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "XXXX"},
                     {"X-RateLimit-Reset", "XXXX"}
                 };
-                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden, headers);
 
                 var exception = new RateLimitExceededException(response);
 
@@ -65,7 +66,7 @@ namespace Octokit.Tests.Exceptions
             [Fact]
             public void HandlesMissingHeaderValues()
             {
-                var response = new Response(HttpStatusCode.Forbidden, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden);
                 var exception = new RateLimitExceededException(response);
 
                 Assert.Equal(HttpStatusCode.Forbidden, exception.StatusCode);
@@ -87,7 +88,7 @@ namespace Octokit.Tests.Exceptions
                     {"X-RateLimit-Remaining", "42"},
                     {"X-RateLimit-Reset", "1372700873"}
                 };
-                var response = new Response(HttpStatusCode.Forbidden, null, headers, "application/json");
+                var response = CreateResponse(HttpStatusCode.Forbidden, headers);
 
                 var exception = new RateLimitExceededException(response);
 

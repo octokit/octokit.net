@@ -11,7 +11,7 @@ namespace Octokit
     {
         public EventInfo() { }
 
-        public EventInfo(int id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
+        public EventInfo(long id, string nodeId, string url, User actor, User assignee, Label label, EventInfoState @event, string commitId, DateTimeOffset createdAt)
         {
             Id = id;
             NodeId = nodeId;
@@ -27,7 +27,7 @@ namespace Octokit
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
@@ -187,6 +187,18 @@ namespace Octokit
         HeadRefRestored,
 
         /// <summary>
+        /// The pull request’s branch was force pushed to. 
+        /// </summary>
+        [Parameter(Value = "head_ref_force_pushed")]
+        HeadRefForcePushed,
+
+        /// <summary>
+        /// The pull request is ready for review
+        /// </summary>
+        [Parameter(Value = "ready_for_review")]
+        ReadyForReview,
+
+        /// <summary>
         /// The actor dismissed a review from the pull request.
         /// </summary>
         [Parameter(Value = "review_dismissed")]
@@ -263,7 +275,7 @@ namespace Octokit
         Crossreferenced,
 
         /// <summary>
-        /// The issue was reveiewed.
+        /// The issue was reviewed.
         /// </summary>
         [Parameter(Value = "reviewed")]
         Reviewed,
@@ -296,6 +308,30 @@ namespace Octokit
         /// An issue comment was deleted.
         /// </summary>
         [Parameter(Value = "comment_deleted")]
-        CommentDeleted
+        CommentDeleted,
+
+        /// <summary>
+        /// An issue was transferred.
+        /// </summary>
+        [Parameter(Value = "transferred")]
+        Transferred,
+
+        /// <summary>
+        /// An issue was connected.
+        /// </summary>
+        [Parameter(Value = "connected")]
+        Connected,
+
+        /// <summary>
+        /// An issue was pinned.
+        /// </summary>
+        [Parameter(Value = "pinned")]
+        Pinned,
+
+        /// <summary>
+        /// An issue was unpinned.
+        /// </summary>
+        [Parameter(Value = "unpinned")]
+        Unpinned,
     }
 }

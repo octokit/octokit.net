@@ -1,0 +1,26 @@
+name: Publish Release to NuGet
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1.4.0
+      with:
+        dotnet-version: 3.1.201
+
+    - name: Build with dotnet
+      run: ./build.sh --linksources=true --verbosity=verbose
+      shell: bash
+
+    - name: Publish to NuGet
+      run: dotnet nuget push packaging/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }}
+      shell: bash

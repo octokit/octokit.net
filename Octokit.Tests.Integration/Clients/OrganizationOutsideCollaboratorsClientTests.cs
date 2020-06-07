@@ -261,10 +261,7 @@ namespace Octokit.Tests.Integration.Clients
                 var ex = await Assert.ThrowsAsync<UserIsOrganizationMemberException>(()
                     => _gitHub.Organization.OutsideCollaborator.Delete(Helper.Organization, Helper.UserName));
 
-                Assert.True(string.Equals(
-                    "You cannot specify an organization member to remove as an outside collaborator.",
-                    ex.Message,
-                    StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("You cannot specify an organization member to remove as an outside collaborator.", ex.Message, ignoreCase: true);
             }
         }
 
@@ -296,10 +293,7 @@ namespace Octokit.Tests.Integration.Clients
                 var ex = await Assert.ThrowsAsync<UserIsNotMemberOfOrganizationException>(()
                     => _gitHub.Organization.OutsideCollaborator.ConvertFromMember(Helper.Organization, _fixtureCollaborator));
 
-                Assert.True(string.Equals(
-                    $"{_fixtureCollaborator} is not a member of the {Helper.Organization} organization.",
-                    ex.Message,
-                    StringComparison.OrdinalIgnoreCase));
+                Assert.Equal($"{_fixtureCollaborator} is not a member of the {Helper.Organization} organization.", ex.Message, ignoreCase: true);
             }
 
             [OrganizationTest]
@@ -308,10 +302,7 @@ namespace Octokit.Tests.Integration.Clients
                 var ex = await Assert.ThrowsAsync<UserIsLastOwnerOfOrganizationException>(()
                     => _gitHub.Organization.OutsideCollaborator.ConvertFromMember(Helper.Organization, Helper.UserName));
 
-                Assert.True(string.Equals(
-                    "Cannot convert the last owner to an outside collaborator",
-                    ex.Message,
-                    StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("Cannot convert the last owner to an outside collaborator", ex.Message, ignoreCase: true);
             }
         }
     }
