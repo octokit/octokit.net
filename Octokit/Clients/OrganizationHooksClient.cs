@@ -20,6 +20,7 @@ namespace Octokit
         /// <param name="org">The organization's name</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("GET", "orgs/{org}/hooks")]
         public Task<IReadOnlyList<OrganizationHook>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -34,6 +35,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("GET", "orgs/{org}/hooks")]
         public Task<IReadOnlyList<OrganizationHook>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -49,6 +51,7 @@ namespace Octokit
         /// <param name="hookId"></param>
         /// <returns></returns>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
+        [ManualRoute("GET", "orgs/{org}/hooks/{hook_id}")]
         public Task<OrganizationHook> Get(string org, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -62,8 +65,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("POST", "orgs/{org}/hooks")]
         public Task<OrganizationHook> Create(string org, NewOrganizationHook hook)
-        { 
+        {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hook, nameof(hook));
 
@@ -75,6 +79,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("PATCH", "orgs/{org}/hooks/{hook_id}")]
         public Task<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -88,6 +93,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("POST", "orgs/{org}/hooks/{hook_id}/pings")]
         public Task Ping(string org, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -100,6 +106,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
+        [ManualRoute("DELETE", "orgs/{org}/hooks/{hook_id}")]
         public Task Delete(string org, int hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
