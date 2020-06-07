@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="since">ID after which the returned list begin</param>
         /// <returns>A list of <see cref="User"/> after specified ID</returns>
-        IObservable<IReadOnlyPagedCollection<User>> GetAll(string since);
+        IObservable<User> GetAll(string since);
 
         /// <summary>
         /// A client for GitHub's User Followers API
