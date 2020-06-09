@@ -1,6 +1,6 @@
 mode: ContinuousDeployment
 branches:
-  master:
+  main:
     mode: ContinuousDeployment
     increment: Minor
     tag: beta
