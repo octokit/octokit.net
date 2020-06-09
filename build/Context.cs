@@ -20,7 +20,7 @@ public class Context : FrostingContext
     public bool IsPullRequest { get; set; }
     public bool IsOriginalRepo { get; set; }
     public bool IsTagged { get; set; }
-    public bool IsMasterBranch { get; set; }
+    public bool IsMainBranch { get; set; }
     public bool ForcePublish { get; set; }
 
     public bool AppVeyor { get; set; }

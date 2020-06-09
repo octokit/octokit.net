@@ -29,13 +29,13 @@ public class Lifetime : FrostingLifetime<Context>
         {
             context.IsPullRequest = buildSystem.AppVeyor.Environment.PullRequest.IsPullRequest;
             context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.AppVeyor.Environment.Repository.Name);
-            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch);
+            context.IsMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", buildSystem.AppVeyor.Environment.Repository.Branch);
         }
         else if (context.GitHubActions)
         {
             context.IsPullRequest = buildSystem.GitHubActions.Environment.PullRequest.IsPullRequest;
             context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.GitHubActions.Environment.Workflow.Repository);
-            context.IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.GitHubActions.Environment.Workflow.Ref);
+            context.IsMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", buildSystem.GitHubActions.Environment.Workflow.Ref);
         }
 
         // Force publish?
