@@ -19,6 +19,7 @@ namespace Octokit.Reactive
 
             Member = new ObservableOrganizationMembersClient(client);
             Team = new ObservableTeamsClient(client);
+            Hook = new ObservableOrganizationHooksClient(client);
             OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
 
             _client = client.Organization;
@@ -34,6 +35,12 @@ namespace Octokit.Reactive
         /// Returns a client to manage teams for an organization.
         /// </summary>
         public IObservableTeamsClient Team { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Organization Hooks API.
+        /// </summary>
+        /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/">Hooks API documentation</a> for more information.</remarks>
+        public IObservableOrganizationHooksClient Hook { get; private set; }
 
         /// <summary>
         /// Returns a client to manage outside collaborators of an organization.
@@ -125,16 +132,17 @@ namespace Octokit.Reactive
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
-        /// <param name="organizationName">The name of the organization to update.</param>
+        /// <param name="org">The name of the organization to update.</param>
         /// <param name="updateRequest"></param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        public IObservable<Organization> Update(string organizationName, OrganizationUpdate updateRequest)
+        public IObservable<Organization> Update(string org, OrganizationUpdate updateRequest)
         {
-            Ensure.ArgumentNotNullOrEmptyString(organizationName, nameof(organizationName));
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
-            return _client.Update(organizationName, updateRequest).ToObservable();
+            return _client.Update(org, updateRequest).ToObservable();
         }
+
     }
 }

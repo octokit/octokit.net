@@ -986,6 +986,38 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the organization hooks for the specified reference.
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationHooks(string org)
+        {
+            return "orgs/{0}/hooks".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets the organization hook for the specified reference.
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="hookId">The identifier of the organization hook</param>
+        /// <returns></returns>
+        public static Uri OrganizationHookById(string org, int hookId)
+        {
+            return "orgs/{0}/hooks/{1}".FormatUri(org, hookId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that can ping a specified organization hook
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="hookId">The identifier of the organization hook</param>
+        /// <returns></returns>
+        public static Uri OrganizationHookPing(string org, int hookId)
+        {
+            return "orgs/{0}/hooks/{1}/pings".FormatUri(org, hookId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that lists the commit statuses for the specified reference.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -2363,7 +2395,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
-            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path, reference);
+            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path == "/" ? "" : path, reference);
         }
 
         /// <summary>

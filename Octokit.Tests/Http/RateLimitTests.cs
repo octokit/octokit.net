@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 #if !NO_SERIALIZABLE
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
 using Xunit;
@@ -104,7 +104,8 @@ namespace Octokit.Tests.Http
             [Fact]
             public void EnsuresHeadersNotNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new RateLimit(null));
+                IDictionary<string, string> dictionary = null;
+                Assert.Throws<ArgumentNullException>(() => new RateLimit(dictionary));
             }
         }
 

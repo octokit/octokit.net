@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -153,7 +156,7 @@ namespace Octokit.Tests.Reactive
             public async Task IsALukeWarmObservable()
             {
                 var repository = new Repository();
-                var response = Task.FromResult<IApiResponse<Repository>>(new ApiResponse<Repository>(new Response(), repository));
+                var response = Task.FromResult<IApiResponse<Repository>>(new ApiResponse<Repository>(CreateResponse(HttpStatusCode.OK), repository));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
@@ -178,7 +181,7 @@ namespace Octokit.Tests.Reactive
             public async Task IsALukeWarmObservableWithRepositoryId()
             {
                 var repository = new Repository();
-                var response = Task.FromResult<IApiResponse<Repository>>(new ApiResponse<Repository>(new Response(), repository));
+                var response = Task.FromResult<IApiResponse<Repository>>(new ApiResponse<Repository>(CreateResponse(HttpStatusCode.OK), repository));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<Repository>(Args.Uri, null, Args.AnyAcceptHeaders).Returns(response);
                 var gitHubClient = new GitHubClient(connection);
@@ -238,7 +241,7 @@ namespace Octokit.Tests.Reactive
                         new Repository(6)
                     });
                 var lastPageResponse = new ApiResponse<List<Repository>>(
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<Repository>
                     {
                         new Repository(7)
@@ -301,7 +304,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<Repository>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<Repository>
                     {
                         new Repository(8)
@@ -358,7 +361,7 @@ namespace Octokit.Tests.Reactive
                     });
 
                 IApiResponse<List<Repository>> lastPageResponse = new ApiResponse<List<Repository>>(
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<Repository>
                     {
                         new Repository(370)

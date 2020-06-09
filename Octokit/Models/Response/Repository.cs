@@ -14,7 +14,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, CodeOfConduct codeOfConduct)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, CodeOfConduct codeOfConduct)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -55,6 +55,7 @@ namespace Octokit
             AllowSquashMerge = allowSquashMerge;
             AllowMergeCommit = allowMergeCommit;
             Archived = archived;
+            WatchersCount = watchersCount;
             CodeOfConduct = codeOfConduct;
         }
 
@@ -101,6 +102,8 @@ namespace Octokit
 
         public int StargazersCount { get; protected set; }
 
+        public int WatchersCount { get; protected set; }
+
         public string DefaultBranch { get; protected set; }
 
         public int OpenIssuesCount { get; protected set; }
@@ -133,6 +136,7 @@ namespace Octokit
 
         public bool HasPages { get; protected set; }
 
+        [Obsolete("Update your code to use WatchersCount as this field will stop containing data in the future")]
         public int SubscribersCount { get; protected set; }
 
         public long Size { get; protected set; }

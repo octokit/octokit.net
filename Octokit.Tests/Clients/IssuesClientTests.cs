@@ -6,6 +6,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class IssuesClientTests
@@ -592,11 +594,9 @@ namespace Octokit.Tests.Clients
                 "ed_events\",\"type\":\"User\",\"site_admin\":false},\"labels\":[],\"state\":\"open\",\"assignee" +
                 "\":null,\"milestone\":null,\"comments\":0,\"created_at\":\"2013-10-22T17:02:48Z\",\"updated_at\"" +
                 ":\"2013-10-22T17:02:48Z\",\"closed_at\":null,\"body\":\"A new unassigned issue\",\"closed_by\":null}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                issueResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                issueResponseJson);
 
             var jsonPipeline = new JsonHttpPipeline();
 

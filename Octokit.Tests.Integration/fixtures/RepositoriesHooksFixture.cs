@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Octokit.Tests.Integration.fixtures
+namespace Octokit.Tests.Integration.Fixtures
 {
     public class RepositoriesHooksFixture : IDisposable
     {

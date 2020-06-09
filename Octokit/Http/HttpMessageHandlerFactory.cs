@@ -19,17 +19,18 @@ namespace Octokit.Internal
             {
                 AllowAutoRedirect = false
             };
-#if !PORTABLE
+
             if (handler.SupportsAutomaticDecompression)
             {
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
+
             if (handler.SupportsProxy && proxy != null)
             {
                 handler.UseProxy = true;
                 handler.Proxy = proxy;
             }
-#endif
+
             return handler;
         }
     }

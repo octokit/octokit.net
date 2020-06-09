@@ -655,10 +655,11 @@ public class RepositoriesClientTests
 
             var repository = await github.Repository.Get("haacked", "seegit");
 
-            Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl, ignoreCase: true);
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
             Assert.Equal(AccountType.User, repository.Owner.Type);
+            Assert.True(repository.WatchersCount > 0);
         }
 
         [IntegrationTest]
@@ -668,10 +669,11 @@ public class RepositoriesClientTests
 
             var repository = await github.Repository.Get(3622414);
 
-            Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl);
+            Assert.Equal("https://github.com/Haacked/SeeGit.git", repository.CloneUrl, ignoreCase: true);
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
             Assert.Equal(AccountType.User, repository.Owner.Type);
+            Assert.True(repository.WatchersCount > 0);
         }
 
         [IntegrationTest]

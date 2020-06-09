@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -240,7 +243,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
                 (
-                    new Response(),
+                    CreateResponse(HttpStatusCode.OK),
                     new List<Milestone>
                     {
                         new Milestone(7)
@@ -293,7 +296,7 @@ namespace Octokit.Tests.Reactive
                 );
                 var lastPageResponse = new ApiResponse<List<Milestone>>
                 (
-                    new Response { ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())) },
+                    CreateResponse(HttpStatusCode.OK),
                     new List<Milestone>
                     {
                         new Milestone(7)

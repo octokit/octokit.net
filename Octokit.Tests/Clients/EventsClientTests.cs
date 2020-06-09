@@ -8,6 +8,8 @@ using NSubstitute;
 using Octokit.Internal;
 using Xunit;
 
+using static Octokit.Internal.TestSetup;
+
 namespace Octokit.Tests.Clients
 {
     public class EventsClientTests
@@ -565,6 +567,7 @@ namespace Octokit.Tests.Clients
             {"PullRequestReviewEvent", typeof(PullRequestReviewEventPayload)},
             {"PullRequestReviewCommentEvent", typeof(PullRequestCommentPayload)},
             {"PushEvent", typeof(PushEventPayload)},
+            {"ReleaseEvent", typeof(ReleaseEventPayload)},
             {"StatusEvent", typeof(StatusEventPayload)},
             {"WatchEvent", typeof(StarredEventPayload)},
             {"unknown", typeof(ActivityPayload)}
@@ -902,6 +905,37 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
+        public async Task DeserializesReleaseEventCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "ReleaseEvent" },
+                {
+                    "payload", new
+                    {
+                        action = "published",
+                        release = new
+                        {
+                            id = 17372790,
+                            tag_name = "0.0.1",
+                            prerelease = false,
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            var activity = Assert.Single(activities);
+            var payload = Assert.IsType<ReleaseEventPayload>(activity.Payload);
+
+            Assert.Equal("published", payload.Action);
+            Assert.Equal(17372790, payload.Release.Id);
+            Assert.Equal("0.0.1", payload.Release.TagName);
+            Assert.False(payload.Release.Prerelease);
+        }
+
+        [Fact]
         public async Task DeserializesStatusEventCorrectly()
         {
             var jsonObj = new JsonObject
@@ -972,12 +1006,12 @@ namespace Octokit.Tests.Clients
             Assert.Equal("started", payload.Action);
         }
 
-        private EventsClient GetTestingEventsClient(JsonObject response)
+        private EventsClient GetTestingEventsClient(JsonObject json)
         {
-            var responseString = response.ToString();
+            var responseString = json.ToString();
             var httpClientMock = Substitute.For<IHttpClient>();
-            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(
-                new Response(HttpStatusCode.Accepted, responseString, new Dictionary<string, string>(), "application/json") as IResponse));
+            var response = CreateResponse(HttpStatusCode.Accepted, responseString);
+            httpClientMock.Send(Arg.Is((IRequest r) => r.Endpoint.ToString().Contains("events")), Arg.Any<CancellationToken>()).Returns(Task.FromResult(response));
 
             return new EventsClient(new ApiConnection(new Connection(new ProductHeaderValue("mock"), httpClientMock)));
         }

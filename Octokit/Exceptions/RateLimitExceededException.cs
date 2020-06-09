@@ -26,6 +26,7 @@ namespace Octokit
     public class RateLimitExceededException : ForbiddenException
     {
         readonly RateLimit _rateLimit;
+        readonly TimeSpan _severTimeDiff = TimeSpan.Zero;
 
         /// <summary>
         /// Constructs an instance of RateLimitExceededException
@@ -45,6 +46,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(response, nameof(response));
 
             _rateLimit = response.ApiInfo.RateLimit;
+
+            _severTimeDiff = response.ApiInfo.ServerTimeDifference;
         }
 
         /// <summary>
@@ -78,6 +81,27 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "API Rate Limit exceeded"; }
         }
 
+        /// <summary>
+        /// Calculates the time from now to wait until the next request can be
+        /// attempted.
+        /// </summary>
+        /// <returns>
+        /// A non-negative <see cref="TimeSpan"/> value. Returns
+        /// <see cref="TimeSpan.Zero"/> if the next Rate Limit window has
+        /// started and the next request can be attempted immediately.
+        /// </returns>
+        /// <remarks>
+        /// The return value is calculated using server time data from the 
+        /// response in order to provide a best-effort estimate that is 
+        /// independant from eventual inaccuracies in the client's clock.
+        /// </remarks>
+        public TimeSpan GetRetryAfterTimeSpan()
+        {
+            var skewedResetTime = Reset + _severTimeDiff;
+            var ts = skewedResetTime - DateTimeOffset.Now;
+            return ts > TimeSpan.Zero ? ts : TimeSpan.Zero;
+        }
+
 #if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of RateLimitExceededException
@@ -95,6 +119,8 @@ namespace Octokit
         {
             _rateLimit = info.GetValue("RateLimit", typeof(RateLimit)) as RateLimit
                          ?? new RateLimit(new Dictionary<string, string>());
+            if (info.GetValue(nameof(ApiInfo.ServerTimeDifference), typeof(TimeSpan)) is TimeSpan serverTimeDiff)
+                _severTimeDiff = serverTimeDiff;
         }
 
         [SecurityCritical]
@@ -103,6 +129,7 @@ namespace Octokit
             base.GetObjectData(info, context);
 
             info.AddValue("RateLimit", _rateLimit);
+            info.AddValue(nameof(ApiInfo.ServerTimeDifference), _severTimeDiff);
         }
 #endif
     }

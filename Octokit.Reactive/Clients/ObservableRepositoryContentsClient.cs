@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -239,6 +240,28 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        public IObservable<byte[]> GetRawContent(string owner, string name, string path)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+
+            return _client
+                .Connection
+                .GetRaw(ApiUrls.RepositoryContent(owner, name, path), null)
+                .ToObservable()
+                .Select(e => e.Body);
+        }
+
+        /// <summary>
         /// Returns the contents of the root directory in a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -268,6 +291,30 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             return _client.Connection.GetAndFlattenAllPages<RepositoryContent>(ApiUrls.RepositoryContent(owner, name, path, reference));
+        }
+
+        /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag.</param>
+        public IObservable<byte[]> GetRawContentByRef(string owner, string name, string path, string reference)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+
+            return _client
+                .Connection
+                .GetRaw(ApiUrls.RepositoryContent(owner, name, path, reference), null)
+                .ToObservable()
+                .Select(e => e.Body);
         }
 
         /// <summary>

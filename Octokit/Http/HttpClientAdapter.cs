@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -29,7 +31,7 @@ namespace Octokit.Internal
 
 #if HAS_SERVICEPOINTMANAGER
             // GitHub API requires TLS1.2 as of February 2018
-            // 
+            //
             // .NET Framework before 4.6 did not enable TLS1.2 by default
             //
             // Even though this is an AppDomain wide setting, the decision was made for Octokit to
@@ -97,9 +99,10 @@ namespace Octokit.Internal
             object responseBody = null;
             string contentType = null;
 
-            // We added support for downloading images,zip-files and application/octet-stream. 
+            // We added support for downloading images,zip-files and application/octet-stream.
             // Let's constrain this appropriately.
             var binaryContentTypes = new[] {
+                AcceptHeaders.RawContentMediaType,
                 "application/zip" ,
                 "application/x-gzip" ,
                 "application/octet-stream"};
@@ -122,10 +125,22 @@ namespace Octokit.Internal
                 }
             }
 
+            var responseHeaders = responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First());
+
+            // Add Client response received time as a synthetic header
+            const string receivedTimeHeaderName = ApiInfoParser.ReceivedTimeHeaderName;
+            if (responseMessage.RequestMessage?.Properties is IDictionary<string, object> reqProperties
+                && reqProperties.TryGetValue(receivedTimeHeaderName, out object receivedTimeObj)
+                && receivedTimeObj is string receivedTimeString
+                && !responseHeaders.ContainsKey(receivedTimeHeaderName))
+            {
+                responseHeaders[receivedTimeHeaderName] = receivedTimeString;
+            }
+
             return new Response(
                 responseMessage.StatusCode,
                 responseBody,
-                responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First()),
+                responseHeaders,
                 contentType);
         }
 
@@ -202,7 +217,13 @@ namespace Octokit.Internal
             var clonedRequest = await CloneHttpRequestMessageAsync(request).ConfigureAwait(false);
 
             // Send initial response
-            var response = await _http.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
+            var response = await _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            // Need to determine time on client computer as soon as possible.
+            var receivedTime = DateTimeOffset.Now;
+            // Since Properties are stored as objects, serialize to HTTP round-tripping string (Format: r)
+            // Resolution is limited to one-second, matching the resolution of the HTTP Date header
+            request.Properties[ApiInfoParser.ReceivedTimeHeaderName] = 
+                receivedTime.ToString("r", CultureInfo.InvariantCulture);
 
             // Can't redirect without somewhere to redirect to.
             if (response.Headers.Location == null)

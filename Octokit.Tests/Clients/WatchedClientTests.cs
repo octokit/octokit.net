@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -231,7 +231,8 @@ namespace Octokit.Tests.Clients
                 var endpoint = new Uri("repos/fight/club/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.NotFound);
+
                 connection.Get<Subscription>(endpoint).Returns<Task<Subscription>>(x =>
                 {
                     throw new NotFoundException(response);
@@ -250,7 +251,8 @@ namespace Octokit.Tests.Clients
                 var endpoint = new Uri("repositories/1/subscription", UriKind.Relative);
 
                 var connection = Substitute.For<IApiConnection>();
-                var response = new Response(HttpStatusCode.NotFound, null, new Dictionary<string, string>(), "application/json");
+                var response = CreateResponse(HttpStatusCode.NotFound);
+
                 connection.Get<Subscription>(endpoint).Returns<Task<Subscription>>(x =>
                 {
                     throw new NotFoundException(response);

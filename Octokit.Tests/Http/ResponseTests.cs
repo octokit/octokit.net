@@ -1,5 +1,7 @@
-﻿using Octokit.Internal;
+﻿using System.Net;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Http
 {
@@ -10,7 +12,7 @@ namespace Octokit.Tests.Http
             [Fact]
             public void InitializesAllRequiredProperties()
             {
-                var r = new Response();
+                var r = CreateResponse(HttpStatusCode.OK);
 
                 Assert.NotNull(r.Headers);
             }

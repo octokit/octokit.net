@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests
 {
@@ -207,11 +208,10 @@ namespace Octokit.Tests
                 "}" +
                 "]" +
                 "}";
-            var httpResponse = new Response(
+            var httpResponse = CreateResponse(
                 HttpStatusCode.OK,
-                issueResponseJson,
-                new Dictionary<string, string>(),
-                "application/json");
+                issueResponseJson);
+
             var jsonPipeline = new JsonHttpPipeline();
 
             var response = jsonPipeline.DeserializeResponse<TreeResponse>(httpResponse);

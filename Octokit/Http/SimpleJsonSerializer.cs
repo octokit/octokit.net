@@ -242,6 +242,8 @@ namespace Octokit.Internal
                         return typeof(PullRequestCommentPayload);
                     case "PushEvent":
                         return typeof(PushEventPayload);
+                    case "ReleaseEvent":
+                        return typeof(ReleaseEventPayload);
                     case "StatusEvent":
                         return typeof(StatusEventPayload);
                     case "WatchEvent":

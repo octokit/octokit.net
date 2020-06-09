@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Reactive
 {
@@ -32,11 +35,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
@@ -55,11 +54,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
@@ -85,11 +80,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 
@@ -116,10 +107,7 @@ namespace Octokit.Tests.Reactive
                 };
 
                 IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag", new RateLimit()),
-                    }, result);
+                    CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 
@@ -160,11 +148,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
@@ -183,11 +167,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = new GitHubClient(connection);
                 var client = new ObservableIssuesEventsClient(gitHubClient);
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult(response));
 
@@ -213,11 +193,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 
@@ -243,11 +219,7 @@ namespace Octokit.Tests.Reactive
                     PageSize = 1
                 };
 
-                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(
-                    new Response
-                    {
-                        ApiInfo = new ApiInfo(new Dictionary<string, Uri>(), new List<string>(), new List<string>(), "etag1", new RateLimit()),
-                    }, result);
+                IApiResponse<List<IssueEvent>> response = new ApiResponse<List<IssueEvent>>(CreateResponse(HttpStatusCode.OK), result);
                 gitHubClient.Connection.Get<List<IssueEvent>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null)
                     .Returns(Task.FromResult(response));
 

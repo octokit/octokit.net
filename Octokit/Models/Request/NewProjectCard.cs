@@ -12,7 +12,7 @@ namespace Octokit
             Note = note;
         }
 
-        public NewProjectCard(int contentId, ProjectCardContentType contentType)
+        public NewProjectCard(long contentId, ProjectCardContentType contentType)
         {
             ContentId = contentId;
             ContentType = contentType;
@@ -27,7 +27,7 @@ namespace Octokit
         /// The id of the Issue or Pull Request to associate with this card.
         /// </summary>
         [Parameter(Key = "content_id")]
-        public int? ContentId { get; protected set; }
+        public long? ContentId { get; protected set; }
 
         /// <summary>
         /// The type of content to associate with this card.
@@ -46,7 +46,9 @@ namespace Octokit
 
     public enum ProjectCardContentType
     {
-        [Parameter(Value = "Issue")]
-        Issue
+        [Parameter(Value = nameof(Issue))]
+        Issue,
+        [Parameter(Value = nameof(PullRequest))]
+        PullRequest
     }
 }

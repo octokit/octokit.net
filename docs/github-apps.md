@@ -3,7 +3,7 @@
 ## Introduction
 GitHub Apps are a new type of integration offering narrow, specific permissions, compared to OAuth apps or user authentication.
 
-:warning: Please ensure to follow the links to the official GitHub Developer documentation where they are referenced, as we do not want to include all of the detail in this walkthrough (and run the risk of it becoming out of date or incorrect)
+⚠️ Please ensure to follow the links to the official GitHub Developer documentation where they are referenced, as we do not want to include all of the detail in this walkthrough (and run the risk of it becoming out of date or incorrect)
 
 To learn more about GitHub Apps, head to the GitHub Apps section under the GitHub Developer [Getting started with Building Apps](https://developer.github.com/apps/getting-started-with-building-apps/#using-github-apps) documentation.
 
@@ -35,9 +35,9 @@ Each GitHub App has a private certificate (PEM file) which is [generated via the
 
 The first step in the authentication process, is to generate a temporary JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's unique Id, which is obtainable from the GitHub website.
 
-:bulb: There are several ways to generate JWT tokens in .NET and this library aims to have minimal dependencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
+💡 There are several ways to generate JWT tokens in .NET and this library aims to have minimal dependencies on other libraries.  Therefore the expectation is that your app will create the JWT token however you see fit, and pass it in to Octokit.net.  The example below contains a hardcoded JWT token string as an example.  See the Additional Notes section for one recommended library, to generate the JWT token.
 
-:warning: GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
+⚠️ GitHub enforces that the JWT token used can only be valid for a maximum of 10 minutes - a new token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
 
 ``` csharp
 // A time based JWT token, signed by the GitHub App's private certificate
@@ -64,11 +64,11 @@ var installation = await appClient.GitHubApps.GetInstallation(123);
 
 ```
 
-In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary Installation Token (currently these expire after 1 hour), and using that for authentication. 
+In order to do more than top level calls, a `GitHubApp` needs to authenticate as a specific `Installation` by creating a temporary Installation Token (currently these expire after 1 hour), and using that for authentication.
 
-:bulb: The example below includes a hardcoded Installation Id, but this would typically come from a webhook payload (so a GitHub App knows which Installation it needs to authenticate as, to deal with the received webhook).  See the Additional Notes section for more details on Installation Id's in webhooks.
+💡 The example below includes a hardcoded Installation Id, but this would typically come from a webhook payload (so a GitHub App knows which Installation it needs to authenticate as, to deal with the received webhook).  See the Additional Notes section for more details on Installation Id's in webhooks.
 
-:warning: These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
+⚠️ These temporary Installation Tokens are only valid for 1 hour, and a new Installation Token will be required after this time.  In the future, Octokit.net may provide hooks/helpers to help you take care of this, but for now your application will need to handle this itself.
 
 ``` csharp
 // Create an Installation token for Insallation Id 123

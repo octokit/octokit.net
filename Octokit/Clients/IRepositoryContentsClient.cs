@@ -26,6 +26,17 @@ namespace Octokit
         Task<IReadOnlyList<RepositoryContent>> GetAllContents(string owner, string name, string path);
 
         /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        Task<byte[]> GetRawContent(string owner, string name, string path);
+
+        /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
         /// <remarks>
@@ -69,6 +80,18 @@ namespace Octokit
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
         Task<IReadOnlyList<RepositoryContent>> GetAllContentsByRef(string owner, string name, string path, string reference);
+
+        /// <summary>
+        /// Returns the raw content of the file at the given <paramref name="path"/> or <c>null</c> if the path is a directory.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="path">The content path</param>
+        /// <param name="reference">The name of the commit/branch/tag.</param>
+        Task<byte[]> GetRawContentByRef(string owner, string name, string path, string reference);
 
         /// <summary>
         /// Returns the contents of a file or directory in a repository.

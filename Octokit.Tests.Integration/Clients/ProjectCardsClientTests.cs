@@ -202,9 +202,8 @@ public class ProjectCardsClientTests
         public TheCreateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
 
-            _context = _github.CreateRepositoryContext(new NewRepository(repoName)).Result;
+            _context = _github.CreateRepositoryContext("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -224,6 +223,22 @@ public class ProjectCardsClientTests
             var issue = await _github.Issue.Create(_context.RepositoryId, new NewIssue("a test issue"));
             var column = await CreateColumnHelper(_github, project.Id);
             var card = await CreateIssueCardHelper(_github, issue.Id, column.Id);
+
+            Assert.NotNull(card);
+        }
+
+        [IntegrationTest]
+        public async Task CreatesPullRequestCard()
+        {
+            await _github.CreateTheWorld(_context.Repository);
+
+            var project = await CreateRepositoryProjectHelper(_github, _context.RepositoryId);
+
+            var pullRequest = await _github.CreatePullRequest(_context.Repository);
+
+            var column = await CreateColumnHelper(_github, project.Id);
+
+            var card = await CreatePullRequestCardHelper(_github, pullRequest.Id, column.Id);
 
             Assert.NotNull(card);
         }
@@ -441,6 +456,14 @@ public class ProjectCardsClientTests
     private static async Task<ProjectCard> CreateIssueCardHelper(IGitHubClient githubClient, int issueId, int columnId)
     {
         var newCard = new NewProjectCard(issueId, ProjectCardContentType.Issue);
+        var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
+
+        return result;
+    }
+
+    private static async Task<ProjectCard> CreatePullRequestCardHelper(IGitHubClient githubClient, long pullRequestId, int columnId)
+    {
+        var newCard = new NewProjectCard(pullRequestId, ProjectCardContentType.PullRequest);
         var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);
 
         return result;
