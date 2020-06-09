@@ -2,7 +2,7 @@ image: Visual Studio 2019
 
 branches:
   only:
-    - master
+    - main
 
 init:
   - git config --global core.autocrlf input
