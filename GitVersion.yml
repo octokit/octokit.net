@@ -1,6 +1,7 @@
 mode: ContinuousDeployment
 branches:
-  main:
+  master:
+    regex: ^main
     mode: ContinuousDeployment
     increment: Minor
     tag: beta
