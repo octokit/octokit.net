@@ -41,16 +41,16 @@ for ways to improve the API to make it easy to work with the GitHub API.
 
 ## Making Changes
 
-When you're ready to make a change, create a branch off the `master` branch:
+When you're ready to make a change, create a branch off the `main` branch:
 
 ```
-git checkout master
-git pull origin master
+git checkout main
+git pull origin main
 git checkout -b SOME-BRANCH-NAME
 ```
 
-We use `master` as the default branch for the repository, and it holds the most
-recent contributions. By working in a branch away from `master` you can handle
+We use `main` as the default branch for the repository, and it holds the most
+recent contributions. By working in a branch away from `main` you can handle
 potential conflicts that may occur in the future.
 
 If you make focused commits (instead of one monolithic commit) and have descriptive
@@ -143,7 +143,7 @@ detection mechanism.
 ### Testing Documentation
 
 If you are making changes to the documentation for Octokit, you can test these
-changes locally using the [guide](https://github.com/octokit/octokit.net/blob/master/docs/contributing.md)
+changes locally using the [guide](https://github.com/octokit/octokit.net/blob/main/docs/contributing.md)
 under the `docs` folder.
 
 ### Submitting Changes
