@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - ">= 16.3.a, < 16.4"
+- package-ecosystem: nuget
+  directory: "/build"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
