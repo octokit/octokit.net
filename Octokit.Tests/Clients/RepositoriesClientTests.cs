@@ -54,7 +54,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(newRepository);
 
-                connection.Received().Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json");
+                connection.Received().Post<Repository>(Args.Uri, newRepository, null, "application/vnd.github.nebula-preview+json");
             }
 
             [Fact]

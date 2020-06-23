@@ -82,7 +82,7 @@ namespace Octokit
         /// Optional. Gets or sets the Id of the team to grant access to this repository. This is only valid when creating a repository for an organization.
         /// </summary>
         public int? TeamId { get; set; }
-        
+
         public bool? DeleteBranchOnMerge { get; set; }
 
         /// <summary>
