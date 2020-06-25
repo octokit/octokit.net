@@ -18,6 +18,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/">Deployments API documentation</a> for more details
         /// </remarks>
-        IRepositorySecretsClient Secrets { get; set; }
+        IRepositorySecretsClient Secrets { get; }
     }
 }
