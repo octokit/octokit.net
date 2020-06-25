@@ -4167,6 +4167,40 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="secret">The name of the secret</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecrets(string owner, string repo, string secret)
+        {
+            return "repos/{0}/{1}/actions/secrets/{2}".FormatUri(owner, repo, secret);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecretsList(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/secrets".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecretsPublicKey(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/secrets/public-key".FormatUri(owner, repo);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all emojis in
         /// response to a GET request.
         /// </summary>

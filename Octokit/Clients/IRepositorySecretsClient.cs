@@ -33,7 +33,7 @@ namespace Octokit
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        Task<IEnumerable<RepositorySecret>> GetSecretsList(string owner, string repoName);
+        Task<IReadOnlyList<RepositorySecret>> GetSecretsList(string owner, string repoName);
 
         /// <summary>
         /// Get a secret from a repository.
@@ -57,11 +57,11 @@ namespace Octokit
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
-        /// <param name="secretValue">The value of the secret</param>
-        /// <param name="valueEncrypted">Is the secret value already encrypted</param>
+        /// <param name="encryptedSecretValue">The value of the secret. See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
+        /// <param name="encryptionKeyId">The id of the encryption key used to encrypt the secret. Get key and id from <see cref="GetPublicKey(string, string)"/> and use the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
-        Task<RepositorySecret> CreateOrUpdateSecret(string owner, string repoName, string secretName, string secretValue, bool valueEncrypted = false);
+        Task<RepositorySecret> CreateOrUpdateSecret(string owner, string repoName, string secretName, string encryptedSecretValue, string encryptionKeyId);
 
         /// <summary>
         /// Delete a secret in a repository.
