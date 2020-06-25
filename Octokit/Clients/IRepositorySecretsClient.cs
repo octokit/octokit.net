@@ -33,7 +33,20 @@ namespace Octokit
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        Task<IReadOnlyList<RepositorySecret>> GetSecretsList(string owner, string repoName);
+        Task<IReadOnlyList<RepositorySecret>> GetAll (string owner, string repoName);
+
+        /// <summary>
+        /// List the secrets for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repoName">The owner of the repository</param>
+        /// <param name="owner">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
+        Task<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName, ApiOptions options);
 
         /// <summary>
         /// Get a secret from a repository.
@@ -46,7 +59,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
-        Task<RepositorySecret> GetSecret(string owner, string repoName, string secretName);
+        Task<RepositorySecret> Get(string owner, string repoName, string secretName);
 
         /// <summary>
         /// Create or update a secret in a repository.
@@ -57,11 +70,10 @@ namespace Octokit
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
-        /// <param name="encryptedSecretValue">The value of the secret. See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
-        /// <param name="encryptionKeyId">The id of the encryption key used to encrypt the secret. Get key and id from <see cref="GetPublicKey(string, string)"/> and use the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
+        /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
-        Task<RepositorySecret> CreateOrUpdateSecret(string owner, string repoName, string secretName, string encryptedSecretValue, string encryptionKeyId);
+        Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret);
 
         /// <summary>
         /// Delete a secret in a repository.
@@ -73,6 +85,6 @@ namespace Octokit
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task DeleteSecret(string owner, string repoName, string secretName);
+        Task Delete(string owner, string repoName, string secretName);
     }
 }

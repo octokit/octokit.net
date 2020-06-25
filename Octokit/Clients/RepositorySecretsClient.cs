@@ -47,7 +47,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets")]
-        public Task<IReadOnlyList<RepositorySecret>> GetSecretsList(string owner, string repoName)
+        public Task<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -55,6 +55,28 @@ namespace Octokit
             var url = ApiUrls.RepositorySecretsList(owner, repoName);
 
             return ApiConnection.GetAll<RepositorySecret>(url);
+        }
+
+        /// <summary>
+        /// List the secrets for a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repoName">The owner of the repository</param>
+        /// <param name="owner">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
+        public Task<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var url = ApiUrls.RepositorySecretsList(owner, repoName);
+
+            return ApiConnection.GetAll<RepositorySecret>(url, options);
         }
 
         /// <summary>
@@ -69,7 +91,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public Task<RepositorySecret> GetSecret(string owner, string repoName, string secretName)
+        public Task<RepositorySecret> Get(string owner, string repoName, string secretName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -89,28 +111,22 @@ namespace Octokit
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
-        /// <param name="encryptedSecretValue">The value of the secret. See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
-        /// /// <param name="encryptionKeyId">The id of the encryption key used to encrypt the secret. Get key and id from <see cref="GetPublicKey(string, string)"/> and use the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</param>
+        /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public async Task<RepositorySecret> CreateOrUpdateSecret(string owner, string repoName, string secretName, string encryptedSecretValue, string encryptionKeyId)
+        public async Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
-            Ensure.ArgumentNotNullOrEmptyString(encryptedSecretValue, nameof(encryptedSecretValue));
-            Ensure.ArgumentNotNullOrEmptyString(encryptionKeyId, nameof(encryptionKeyId));
-
-            var data = new UpsertRepositorySecret
-            {
-                EncryptedValue = encryptedSecretValue,
-                EncryptionKeyId = encryptionKeyId
-            };
+            Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
+            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
+            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
 
             var url = ApiUrls.RepositorySecrets(owner, repoName, secretName);
 
-            return await ApiConnection.Put<RepositorySecret>(url, data);
+            return await ApiConnection.Put<RepositorySecret>(url, upsertSecret);
         }
 
         /// <summary>
@@ -124,7 +140,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public Task DeleteSecret(string owner, string repoName, string secretName)
+        public Task Delete(string owner, string repoName, string secretName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));

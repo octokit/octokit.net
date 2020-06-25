@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -8,7 +9,34 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositorySecretsPublicKey
     {
-        public int KeyId { get; set; }
-        public string Key { get; set; }
+        public RepositorySecretsPublicKey()
+        {
+
+        }
+
+        public RepositorySecretsPublicKey(int keyId, string key)
+        {
+            KeyId = keyId;
+            Key = key;
+        }
+
+        /// <summary>
+        /// The id of this repository public key. Needed to create or update a secret
+        /// </summary>
+        public int KeyId { get; protected set; }
+
+        /// <summary>
+        /// The public key for this repository
+        /// </summary>
+        public string Key { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    "RepositorySecretPublicKey: Id: {0}", KeyId);
+            }
+        }
     }
 }
