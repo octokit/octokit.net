@@ -15,10 +15,6 @@ namespace Octokit.Reactive
         readonly IRepositoryActionsClient _client;
         readonly IConnection _connection;
 
-        /// <summary>
-        /// Initializes a new GitHub Repository Actions API client.
-        /// </summary>
-        /// <param name="apiConnection">An API connection</param>
         public ObservableRepositoryActionsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));

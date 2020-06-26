@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Reactive.Internal;
+using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
@@ -53,12 +54,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public IObservable<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName)
+        public IObservable<RepositorySecret> GetAll(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetAll(owner, repoName).ToObservable();
+            return _connection.GetAndFlattenAllPages<RepositorySecret>(ApiUrls.RepositorySecretsList(owner, repoName));
         }
 
         /// <summary>
@@ -72,13 +73,13 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public IObservable<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName, ApiOptions options)
+        public IObservable<RepositorySecret> GetAll(string owner, string repoName, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.GetAll(owner, repoName, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<RepositorySecret>(ApiUrls.RepositorySecretsList(owner, repoName), options);
         }
 
         /// <summary>

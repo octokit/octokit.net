@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        IObservable<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName);
+        IObservable<RepositorySecret> GetAll(string owner, string repoName);
 
         /// <summary>
         /// List the secrets for a repository.
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        IObservable<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName, ApiOptions options);
+        IObservable<RepositorySecret> GetAll(string owner, string repoName, ApiOptions options);
 
         /// <summary>
         /// Get a secret from a repository.
