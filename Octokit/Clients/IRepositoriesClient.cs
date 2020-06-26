@@ -22,6 +22,14 @@ namespace Octokit
         IPullRequestsClient PullRequest { get; }
 
         /// <summary>
+        /// Client for managing Actions in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/actions/">Repository Actions API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryActionsClient Actions { get; }
+
+        /// <summary>
         /// Client for managing branches in a repository.
         /// </summary>
         /// <remarks>

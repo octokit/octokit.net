@@ -6,6 +6,14 @@ namespace Octokit.Reactive
     public interface IObservableReactionsClient
     {
         /// <summary>
+        /// Access GitHub's Repository Actions API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
+        /// </remarks>
+        IObservableRepositoryActionsClient Actions { get; }
+
+        /// <summary>
         /// Access GitHub's Reactions API for Commit Comments.
         /// </summary>
         /// <remarks>
