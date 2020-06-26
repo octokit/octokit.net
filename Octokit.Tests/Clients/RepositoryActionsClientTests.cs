@@ -10,7 +10,7 @@ namespace Octokit.Tests.Clients
             [Fact]
             public void EnsuresNonNullArguments()
             {
-                Assert.Throws<ArgumentNullException>(() => new AssigneesClient(null));
+                Assert.Throws<ArgumentNullException>(() => new RepositoryActionsClient(null));
             }
         }
     }

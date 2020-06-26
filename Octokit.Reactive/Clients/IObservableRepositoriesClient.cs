@@ -174,6 +174,14 @@ namespace Octokit.Reactive
         IObservable<Repository> GetAllForOrg(string organization, ApiOptions options);
 
         /// <summary>
+        /// Access GitHub's Repository Actions API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
+        /// </remarks>
+        IObservableRepositoryActionsClient Actions { get; }
+
+        /// <summary>
         /// Client for managing branches in a repository.
         /// </summary>
         /// <remarks>
