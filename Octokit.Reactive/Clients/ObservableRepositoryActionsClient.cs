@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Repository Actions API.
@@ -10,15 +10,23 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/actions">Repository Actions API documentation</a> for more details.
     /// </remarks>
-    public class RepositoryActionsClient : ApiClient, IRepositoryActionsClient
+    public class ObservableRepositoryActionsClient : IObservableRepositoryActionsClient
     {
+        readonly IRepositoryActionsClient _client;
+        readonly IConnection _connection;
+
         /// <summary>
         /// Initializes a new GitHub Repository Actions API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
-        public RepositoryActionsClient(IApiConnection apiConnection) : base(apiConnection)
+        public ObservableRepositoryActionsClient(IGitHubClient client)
         {
-            Secrets = new RepositorySecretsClient(apiConnection);
+            Ensure.ArgumentNotNull(client, nameof(client));
+
+            _client = client.Repository.Actions;
+            _connection = client.Connection;
+
+            Secrets = new ObservableRepositorySecretsClient(client);
         }
 
         /// <summary>
@@ -27,6 +35,6 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions">Deployments API documentation</a> for more details
         /// </remarks>
-        public IRepositorySecretsClient Secrets { get; set; }
+        public IObservableRepositorySecretsClient Secrets { get; private set; }
     }
 }
