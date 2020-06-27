@@ -27,7 +27,7 @@ namespace Octokit.Tests.Clients
                 await client.GetPublicKey("owner", "repo");
 
                 connection.Received()
-                    .Get<RepositorySecretsPublicKey>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/actions/secrets/public-key"));
+                    .Get<SecretsPublicKey>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/actions/secrets/public-key"));
             }
 
             [Fact]
@@ -64,14 +64,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo", ApiOptions.None));
-
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "repo"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", ""));
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "repo", ApiOptions.None));
             }
         }
 

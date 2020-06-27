@@ -65,10 +65,6 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null).ToTask());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", null, ApiOptions.None).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("owner", "repo", null).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo", ApiOptions.None).ToTask());
-
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "repo").ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("owner", "").ToTask());
             }

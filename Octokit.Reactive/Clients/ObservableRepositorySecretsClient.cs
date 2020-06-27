@@ -35,8 +35,8 @@ namespace Octokit.Reactive
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="RepositorySecretsPublicKey"/> instance for the repository public key.</returns>
-        public IObservable<RepositorySecretsPublicKey> GetPublicKey(string owner, string repoName)
+        /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
+        public IObservable<SecretsPublicKey> GetPublicKey(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -54,32 +54,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public IObservable<RepositorySecret> GetAll(string owner, string repoName)
+        public IObservable<RepositorySecretsCollection> GetAll(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _connection.GetAndFlattenAllPages<RepositorySecret>(ApiUrls.RepositorySecretsList(owner, repoName));
-        }
-
-        /// <summary>
-        /// List the secrets for a repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public IObservable<RepositorySecret> GetAll(string owner, string repoName, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return _connection.GetAndFlattenAllPages<RepositorySecret>(ApiUrls.RepositorySecretsList(owner, repoName), options);
+            return _client.GetAll(owner, repoName).ToObservable();
         }
 
         /// <summary>
