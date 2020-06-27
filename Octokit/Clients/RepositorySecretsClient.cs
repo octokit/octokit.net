@@ -21,19 +21,19 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="RepositorySecretsPublicKey"/> instance for the repository public key.</returns>
+        /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets/public-key")]
-        public Task<RepositorySecretsPublicKey> GetPublicKey(string owner, string repoName)
+        public Task<SecretsPublicKey> GetPublicKey(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositorySecretsPublicKey(owner, repoName);
 
-            return ApiConnection.Get<RepositorySecretsPublicKey>(url);
+            return ApiConnection.Get<SecretsPublicKey>(url);
         }
 
         /// <summary>
@@ -42,41 +42,19 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
+        /// <returns>A <see cref="RepositorySecretsCollection"/> instance for the list of repository secrets.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets")]
-        public Task<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName)
+        public Task<RepositorySecretsCollection> GetAll(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositorySecretsList(owner, repoName);
 
-            return ApiConnection.GetAll<RepositorySecret>(url);
-        }
-
-        /// <summary>
-        /// List the secrets for a repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
-        /// <param name="options">Options for changing the API response</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public Task<IReadOnlyList<RepositorySecret>> GetAll(string owner, string repoName, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            var url = ApiUrls.RepositorySecretsList(owner, repoName);
-
-            return ApiConnection.GetAll<RepositorySecret>(url, options);
+            return ApiConnection.Get<RepositorySecretsCollection>(url);
         }
 
         /// <summary>
@@ -85,8 +63,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repoName">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
@@ -108,8 +86,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repoName">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -135,8 +113,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="repoName">The owner of the repository</param>
-        /// <param name="owner">The name of the repository</param>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repoName">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
