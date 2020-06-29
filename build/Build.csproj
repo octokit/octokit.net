@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Coverlet" Version="2.4.2" />
-    <PackageReference Include="Cake.Frosting" Version="0.37.0" />
+    <PackageReference Include="Cake.Frosting" Version="0.38.2" />
     <PackageReference Include="Cake.Codecov" Version="0.8.0" />
     <PackageReference Include="Codecov" Version="1.10.0" />
   </ItemGroup>
