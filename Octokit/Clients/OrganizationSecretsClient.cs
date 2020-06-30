@@ -156,7 +156,7 @@ namespace Octokit
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PUT", "/orgs/{org}/actions/secrets/{secretName}/{repoId}")]
-        public Task AddRepoToOrganiztionSecret(string org, string secretName, long repoId)
+        public Task AddRepoToOrganizationSecret(string org, string secretName, long repoId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));

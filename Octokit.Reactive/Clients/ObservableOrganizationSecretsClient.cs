@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Organization Secrets API.
@@ -8,8 +10,23 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/actions/secrets/">Organization Secrets API documentation</a> for more details.
     /// </remarks>
-    public interface IOrganizationSecretsClient
+    public class ObservableOrganizationSecretsClient: IObservableOrganizationSecretsClient
     {
+        readonly IOrganizationSecretsClient _client;
+        readonly IConnection _connection;
+
+        /// <summary>
+        /// Initializes a new Organization API client.
+        /// </summary>
+        /// <param name="client">An <see cref="IGitHubClient" /> used to make the requests</param>
+        public ObservableOrganizationSecretsClient(IGitHubClient client)
+        {
+            Ensure.ArgumentNotNull(client, nameof(client));
+
+            _client = client.Organization.Actions.Secrets;
+            _connection = client.Connection;
+        }
+
         /// <summary>
         /// Get the public signing key to encrypt secrets for an organization.
         /// </summary>
@@ -19,7 +36,12 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the organization public key.</returns>
-        Task<SecretsPublicKey> GetPublicKey(string org);
+        public IObservable<SecretsPublicKey> GetPublicKey(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return _client.GetPublicKey(org).ToObservable();
+        }
 
         /// <summary>
         /// List the secrets for an organization.
@@ -30,7 +52,12 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecretsCollection"/> instance for the list of organization secrets.</returns>
-        Task<OrganizationSecretsCollection> GetAll(string org);
+        public IObservable<OrganizationSecretsCollection> GetAll(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return _client.GetAll(org).ToObservable();
+        }
 
         /// <summary>
         /// Get a secret from an organization.
@@ -42,7 +69,13 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret.</returns>
-        Task<OrganizationSecret> Get(string org, string secretName);
+        public IObservable<OrganizationSecret> Get(string org, string secretName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+
+            return _client.Get(org, secretName).ToObservable();
+        }
 
         /// <summary>
         /// Create or update a secret in an organization.
@@ -55,7 +88,14 @@ namespace Octokit
         /// <param name="upsertSecret">The encrypted value, id of the encryption key, and visibility info to upsert</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret that was created or updated.</returns>
-        Task<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret);
+        public IObservable<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+            Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
+
+            return _client.CreateOrUpdate(org, secretName, upsertSecret).ToObservable();
+        }
 
         /// <summary>
         /// Delete a secret in an organization.
@@ -66,7 +106,13 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(string org, string secretName);
+        public IObservable<Unit> Delete(string org, string secretName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+
+            return _client.Delete(org, secretName).ToObservable();
+        }
 
         /// <summary>
         /// Get the list of selected sites that have access to a secret.
@@ -77,7 +123,13 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName);
+        public IObservable<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+
+            return _client.GetSelectedRepositoriesForSecret(org, secretName).ToObservable();
+        }
 
         /// <summary>
         /// Set the list of selected sites that have access to a secret.
@@ -89,7 +141,14 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repositories">The list of repositories that should have access to view and use the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories);
+        public IObservable<Unit> SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+            Ensure.ArgumentNotNull(repositories, nameof(repositories));
+
+            return _client.SetSelectedRepositoriesForSecret(org, secretName, repositories).ToObservable();
+        }
 
         /// <summary>
         /// Add a selected site to the visibility list of a secret.
@@ -101,7 +160,14 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task AddRepoToOrganizationSecret(string org, string secretName, long repoId);
+        public IObservable<Unit> AddRepoToOrganizationSecret(string org, string secretName, long repoId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+            Ensure.ArgumentNotNull(repoId, nameof(repoId));
+
+            return _client.AddRepoToOrganizationSecret(org, secretName, repoId).ToObservable();
+        }
 
         /// <summary>
         /// ARemoved a selected site from the visibility list of a secret.
@@ -113,6 +179,13 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId);
+        public IObservable<Unit> RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
+            Ensure.ArgumentNotNull(repoId, nameof(repoId));
+
+            return _client.RemoveRepoFromOrganizationSecret(org, secretName, repoId).ToObservable();
+        }
     }
 }
