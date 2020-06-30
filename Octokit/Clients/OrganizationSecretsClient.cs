@@ -83,7 +83,7 @@ namespace Octokit
         public Task<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));            
+            Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
@@ -144,6 +144,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(repositories, nameof(repositories));
+            Ensure.ArgumentNotNull(repositories.SelectedRepositoryIds, nameof(repositories.SelectedRepositoryIds));
 
             return ApiConnection.Put(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName));
         }

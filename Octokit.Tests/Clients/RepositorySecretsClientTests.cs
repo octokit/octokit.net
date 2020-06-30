@@ -53,7 +53,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("owner", "repo");
 
                 connection.Received()
-                    .GetAll<RepositorySecret>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/actions/secrets"));
+                    .Get<RepositorySecretsCollection>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/actions/secrets"));
             }
 
             [Fact]

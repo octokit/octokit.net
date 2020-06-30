@@ -10,7 +10,7 @@ namespace Octokit.Reactive
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/actions/secrets/">Organization Secrets API documentation</a> for more details.
     /// </remarks>
-    public class ObservableOrganizationSecretsClient: IObservableOrganizationSecretsClient
+    public class ObservableOrganizationSecretsClient : IObservableOrganizationSecretsClient
     {
         readonly IOrganizationSecretsClient _client;
         readonly IConnection _connection;
