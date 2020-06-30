@@ -52,7 +52,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            var url = ApiUrls.RepositorySecretsList(owner, repoName);
+            var url = ApiUrls.RepositorySecrets(owner, repoName);
 
             return ApiConnection.Get<RepositorySecretsCollection>(url);
         }
@@ -75,7 +75,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            var url = ApiUrls.RepositorySecrets(owner, repoName, secretName);
+            var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
             return ApiConnection.Get<RepositorySecret>(url);
         }
@@ -102,7 +102,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
 
-            var url = ApiUrls.RepositorySecrets(owner, repoName, secretName);
+            var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
             return await ApiConnection.Put<RepositorySecret>(url, upsertSecret);
         }
@@ -124,7 +124,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            var url = ApiUrls.RepositorySecrets(owner, repoName, secretName);
+            var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
             return ApiConnection.Delete(url);
         }

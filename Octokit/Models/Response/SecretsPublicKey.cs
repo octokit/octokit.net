@@ -7,14 +7,14 @@ namespace Octokit
     /// Represents the public key used to sign the secrets to post to GitHub
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositorySecretsPublicKey
+    public class SecretsPublicKey
     {
-        public RepositorySecretsPublicKey()
+        public SecretsPublicKey()
         {
 
         }
 
-        public RepositorySecretsPublicKey(int keyId, string key)
+        public SecretsPublicKey(int keyId, string key)
         {
             KeyId = keyId;
             Key = key;
