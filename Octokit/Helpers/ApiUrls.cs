@@ -97,7 +97,6 @@ namespace Octokit
         /// response to a GET request.
         /// </summary>
         /// <param name="organization">The name of the organization</param>
-        /// <param name="secret">The name of the secret</param>
         /// <returns></returns>
         public static Uri OrganizationRepositorySecretPublicKey(string organization)
         {
