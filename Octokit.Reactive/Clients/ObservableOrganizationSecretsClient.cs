@@ -93,6 +93,8 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
+            Ensure.ArgumentNotNull(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
+            Ensure.ArgumentNotNull(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
 
             return _client.CreateOrUpdate(org, secretName, upsertSecret).ToObservable();
         }
