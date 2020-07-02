@@ -14,7 +14,7 @@ namespace Octokit
 
         }
 
-        public SecretsPublicKey(int keyId, string key)
+        public SecretsPublicKey(string keyId, string key)
         {
             KeyId = keyId;
             Key = key;
@@ -23,7 +23,7 @@ namespace Octokit
         /// <summary>
         /// The id of this repository public key. Needed to create or update a secret
         /// </summary>
-        public int KeyId { get; protected set; }
+        public string KeyId { get; protected set; }
 
         /// <summary>
         /// The public key for this repository
