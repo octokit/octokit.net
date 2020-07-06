@@ -120,6 +120,7 @@ namespace Octokit
         /// </summary>
         /// <param name="organization">The name of the organization</param>
         /// <param name="secret">The name of the secret</param>
+        /// <param name="repoId">The id of the repo to target</param>
         /// <returns></returns>
         public static Uri OrganizationRepositorySecretRepository(string organization, string secret, long repoId)
         {
