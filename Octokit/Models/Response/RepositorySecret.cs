@@ -17,7 +17,7 @@ namespace Octokit
 
         }
 
-        public RepositorySecret(string name, DateTime createdAt, DateTime updatedAt)
+        public RepositorySecret(string name, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Name = name;
             CreatedAt = createdAt;
@@ -27,20 +27,17 @@ namespace Octokit
         /// <summary>
         /// The name of the repository secret
         /// </summary>
-        [Parameter(Key = "name")]
         public string Name { get; protected set; }
 
         /// <summary>
         /// The date and time that the secret was created
         /// </summary>
-        [Parameter(Key = "created_at")]
-        public DateTime CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// The date and time the secret was last updated
         /// </summary>
-        [Parameter(Key = "updated_at")]
-        public DateTime UpdatedAt { get; protected set; }
+        public DateTimeOffset? UpdatedAt { get; protected set; }
 
         internal string DebuggerDisplay
         {

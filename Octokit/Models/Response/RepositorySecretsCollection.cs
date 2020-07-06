@@ -17,22 +17,20 @@ namespace Octokit
 
         public RepositorySecretsCollection(int count, IReadOnlyList<RepositorySecret> secrets)
         {
-            Count = count;
+            TotalCount = count;
             Secrets = secrets;
         }
 
         /// <summary>
         /// The total count of secrets for the repository
         /// </summary>
-        [Parameter(Key = "total_count")]
-        public int Count { get; }
+        public int TotalCount { get; protected set; }
 
         /// <summary>
         /// The list of secrets for the repository
         /// </summary>
-        [Parameter(Key = "secrets")]
-        public IReadOnlyList<RepositorySecret> Secrets { get; }
+        public IReadOnlyList<RepositorySecret> Secrets { get; protected set; }
 
-        internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "RepositorySecretsCollection: Count: {0}", Count);
+        internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "RepositorySecretsCollection: Count: {0}", TotalCount);
     }
 }

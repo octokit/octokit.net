@@ -27,13 +27,13 @@ namespace Octokit
         /// The total count of repositories with visibility to the secret in the organization
         /// </summary>
         [Parameter(Key = "total_count")]
-        public int Count { get; }
+        public int Count { get; protected set; }
 
         /// <summary>
         /// The list of repositories with visibility to the secret in the organization
         /// </summary>
         [Parameter(Key = "repositories")]
-        public IReadOnlyList<Repository> Repositories { get; }
+        public IReadOnlyList<Repository> Repositories { get; protected set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "OrganizationSecretRepositoryCollection: Count: {0}", Count);
     }

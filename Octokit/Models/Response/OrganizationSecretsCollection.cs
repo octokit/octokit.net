@@ -25,13 +25,13 @@ namespace Octokit
         /// The total count of secrets for the organization
         /// </summary>
         [Parameter(Key = "total_count")]
-        public int Count { get; }
+        public int Count { get; protected set; }
 
         /// <summary>
         /// The list of secrets for the organization
         /// </summary>
         [Parameter(Key = "secrets")]
-        public IReadOnlyList<OrganizationSecret> Secrets { get; }
+        public IReadOnlyList<OrganizationSecret> Secrets { get; protected set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "OrganizationSecretCollection: Count: {0}", Count);
     }
