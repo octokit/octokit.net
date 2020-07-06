@@ -22,13 +22,13 @@ namespace Octokit
         /// </summary>
         /// <remarks>Get key and id from <see cref="RepositorySecretsClient.GetPublicKey(string, string)"/> and use the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information on how to encrypt the secret</remarks>
         [Parameter(Value = "key_id")]
-        public string EncryptionKeyId { get; set; }
+        public string KeyId { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "KeyId: {0}", EncryptionKeyId);
+                return string.Format(CultureInfo.InvariantCulture, "KeyId: {0}", KeyId);
             }
         }
     }

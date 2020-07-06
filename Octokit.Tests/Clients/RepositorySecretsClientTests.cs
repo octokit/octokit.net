@@ -108,7 +108,7 @@ namespace Octokit.Tests.Clients
                 var upsertSecret = new UpsertRepositorySecret
                 {
                     EncryptedValue = "encryptedValue",
-                    EncryptionKeyId = "keyId"
+                    KeyId = "keyId"
                 };
                 await client.CreateOrUpdate("owner", "repo", "secret", upsertSecret);
 
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Clients
                 var upsertSecret = new UpsertRepositorySecret
                 {
                     EncryptedValue = "encryptedValue",
-                    EncryptionKeyId = "keyId"
+                    KeyId = "keyId"
                 };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "repo", "secret", upsertSecret));

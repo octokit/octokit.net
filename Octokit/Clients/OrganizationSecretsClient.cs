@@ -80,16 +80,17 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret that was created or updated.</returns>
         [ManualRoute("PUT", "/orgs/{org}/actions/secrets/{secretName}")]
-        public Task<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret)
+        public async Task<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
-            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
+            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.KeyId, nameof(upsertSecret.KeyId));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.Visibility, nameof(upsertSecret.Visibility));
 
-            return ApiConnection.Put<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), upsertSecret);
+            await ApiConnection.Put<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), upsertSecret);
+            return await ApiConnection.Get<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName));
         }
 
         /// <summary>

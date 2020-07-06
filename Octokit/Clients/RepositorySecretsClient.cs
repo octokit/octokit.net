@@ -100,11 +100,13 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
-            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
+            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.KeyId, nameof(upsertSecret.KeyId));
 
             var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
-            return await ApiConnection.Put<RepositorySecret>(url, upsertSecret);
+            await ApiConnection.Put<RepositorySecret>(url, upsertSecret);
+
+            return await Get(owner, repoName, secretName);
         }
 
         /// <summary>

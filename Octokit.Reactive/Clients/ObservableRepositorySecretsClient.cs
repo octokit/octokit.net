@@ -101,7 +101,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(upsertSecret, nameof(upsertSecret));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
-            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptionKeyId, nameof(upsertSecret.EncryptionKeyId));
+            Ensure.ArgumentNotNullOrEmptyString(upsertSecret.KeyId, nameof(upsertSecret.KeyId));
 
             return _client.CreateOrUpdate(owner, repoName, secretName, upsertSecret).ToObservable();
         }

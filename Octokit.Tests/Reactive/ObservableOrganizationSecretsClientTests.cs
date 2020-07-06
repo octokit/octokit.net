@@ -102,7 +102,7 @@ namespace Octokit.Tests.Reactive
                 var upsertSecret = new UpsertOrganizationSecret
                 {
                     EncryptedValue = "encryptedValue",
-                    EncryptionKeyId = "keyId",
+                    KeyId = "keyId",
                     Visibility = "private"
                 };
 
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Reactive
                 var upsertSecret = new UpsertOrganizationSecret
                 {
                     EncryptedValue = "encryptedValue",
-                    EncryptionKeyId = "keyId"
+                    KeyId = "keyId"
                 };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "secret", upsertSecret).ToTask());
