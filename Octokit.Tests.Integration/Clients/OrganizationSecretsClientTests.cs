@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration.Clients
         /// <summary>
         /// Fill these in for tests to work
         /// </summary>
-        internal const string ORG = "mptolly-test-org";
+        internal const string ORG = "";
 
         public class GetPublicKeyMethod
         {
@@ -161,8 +161,8 @@ namespace Octokit.Tests.Integration.Clients
 
                 var secretName = "ADD_SELECTED_REPO_TEST";
 
-                var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
-                var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
+                var repo1 = await CreateRepoIfNotExists(github, "add-secrets-selected-repo-test-1");
+                var repo2 = await CreateRepoIfNotExists(github, "add-secrets-selected-repo-test-2");
 
                 var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1 });
@@ -188,8 +188,8 @@ namespace Octokit.Tests.Integration.Clients
 
                 var secretName = "REMOVE_SELECTED_REPO_TEST";
 
-                var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
-                var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
+                var repo1 = await CreateRepoIfNotExists(github, "remove-secrets-selected-repo-test-1");
+                var repo2 = await CreateRepoIfNotExists(github, "remove-secrets-selected-repo-test-2");
 
                 var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1, repo2 });
