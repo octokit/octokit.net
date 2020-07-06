@@ -140,14 +140,15 @@ namespace Octokit
         /// <param name="repositories">The list of repositories that should have access to view and use the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PUT", "/orgs/{org}/actions/secrets/{secretName}/repositories")]
-        public Task SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories)
+        public async Task SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(repositories, nameof(repositories));
             Ensure.ArgumentNotNull(repositories.SelectedRepositoryIds, nameof(repositories.SelectedRepositoryIds));
 
-            return ApiConnection.Put<SelectedRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), repositories);
+            await ApiConnection.Put<SelectedRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), repositories);
+            return;
         }
 
         /// <summary>
