@@ -1,0 +1,259 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+using System.Linq;
+
+#if SODIUM_CORE_AVAILABLE
+using Sodium;
+#endif
+
+namespace Octokit.Tests.Integration.Clients
+{
+    public class OrganizationSecretsClientTests
+    {
+        /// <summary>
+        /// Fill these in for tests to work
+        /// </summary>
+        internal const string ORG = "mptolly-test-org";
+
+        public class GetPublicKeyMethod
+        {
+            [OrganizationTest]
+            public async Task GetPublicKey()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+
+                Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
+            }
+        }
+
+        public class GetAllMethod
+        {
+            [OrganizationTest]
+            public async Task GetSecrets()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secrets = await github.Organization.Actions.Secrets.GetAll(ORG);
+
+                Assert.NotEmpty(secrets.Secrets);
+            }
+        }
+
+        /// <summary>
+        /// Please create a secret in your specific repo called TEST
+        /// </summary>
+        public class GetMethod
+        {
+            [OrganizationTest]
+            public async Task GetSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secret = await github.Organization.Actions.Secrets.Get(ORG, "TEST");
+
+                Assert.NotNull(secret);
+                Assert.True(secret.Name == "TEST");
+            }
+        }
+
+        public class CreateOrUpdateMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task UpsertSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                var now = DateTime.Now;
+
+                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertValue = GetSecretForCreate("value", publicKey);
+
+                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, "UPSERT_TEST", upsertValue);
+
+                Assert.NotNull(secret);
+                Assert.True(secret.UpdatedAt > now);
+            }
+#endif
+        }
+
+        public class DeleteMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task DeleteSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secretName = "DELETE_TEST";
+
+                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertValue = GetSecretForCreate("value", publicKey);
+
+                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertValue);
+                await github.Organization.Actions.Secrets.Delete(ORG, secretName);
+
+            }
+#endif
+        }
+
+        public class GetSelectedRepositoriesForSecretMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task GetSelectedRepositoriesForSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secretName = "LIST_SELECTED_REPO_TEST";
+
+                var repo = await CreateRepoIfNotExists(github, "list-secrets-selected-repo-test");
+
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo });
+                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+
+                Assert.NotEmpty(visibilityRepos.Repositories);
+            }
+#endif
+        }
+
+        public class SetSelectedRepositoriesForSecretMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task SetSelectedRepositoriesForSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secretName = "SET_SELECTED_REPO_TEST";
+
+                var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
+                var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
+
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1 });
+                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+
+                await github.Organization.Actions.Secrets.SetSelectedRepositoriesForSecret(ORG, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
+
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+
+                Assert.NotEmpty(visibilityRepos.Repositories);
+                Assert.Equal(2, visibilityRepos.Count);
+            }
+#endif
+        }
+
+        public class AddRepoToOrganizationSecretMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task AddSelectedRepositoriesForSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secretName = "ADD_SELECTED_REPO_TEST";
+
+                var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
+                var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
+
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1 });
+                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+
+                await github.Organization.Actions.Secrets.AddRepoToOrganizationSecret(ORG, secretName, repo2.Id);
+
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+
+                Assert.NotEmpty(visibilityRepos.Repositories);
+                Assert.Equal(2, visibilityRepos.Count);
+            }
+#endif
+        }
+
+        public class RemoveRepoFromOrganizationSecretMethod
+        {
+#if SODIUM_CORE_AVAILABLE
+            [OrganizationTest]
+            public async Task RemoveSelectedRepositoriesForSecret()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var secretName = "REMOVE_SELECTED_REPO_TEST";
+
+                var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
+                var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
+
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1, repo2 });
+                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+
+                await github.Organization.Actions.Secrets.RemoveRepoFromOrganizationSecret(ORG, secretName, repo2.Id);
+
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+
+                Assert.NotEmpty(visibilityRepos.Repositories);
+                Assert.Equal(1, visibilityRepos.Count);
+            }
+#endif
+        }
+
+#if SODIUM_CORE_AVAILABLE
+        private static UpsertOrganizationSecret GetSecretForCreate(string secretValue, SecretsPublicKey key)
+        {
+            var secretBytes = Encoding.UTF8.GetBytes(secretValue);
+            var publicKey = Convert.FromBase64String(key.Key);
+            var sealedPublicKeyBox = SealedPublicKeyBox.Create(secretBytes, publicKey);
+
+            var upsertValue = new UpsertOrganizationSecret
+            {
+                EncryptedValue = Convert.ToBase64String(sealedPublicKeyBox),
+                KeyId = key.KeyId,
+                Visibility = "all"
+
+            };
+
+            return upsertValue;
+        }
+
+        private static UpsertOrganizationSecret GetSecretForCreate(string secretValue, SecretsPublicKey key, Repository[] repos)
+        {
+            var secretBytes = Encoding.UTF8.GetBytes(secretValue);
+            var publicKey = Convert.FromBase64String(key.Key);
+            var sealedPublicKeyBox = SealedPublicKeyBox.Create(secretBytes, publicKey);
+
+            var upsertValue = new UpsertOrganizationSecret
+            {
+                EncryptedValue = Convert.ToBase64String(sealedPublicKeyBox),
+                KeyId = key.KeyId,
+                Visibility = "selected",
+                SelectedRepositoriesIds = repos.Select(r => r.Id)
+
+            };
+
+            return upsertValue;
+        }
+#endif
+
+        private static async Task<Repository> CreateRepoIfNotExists(IGitHubClient github, string name)
+        {
+            try
+            {
+                var existingRepo = await github.Repository.Get(ORG, name);
+                return existingRepo;
+            }
+            catch
+            {
+                var newRepo = await github.Repository.Create(ORG, new NewRepository(name));
+                return newRepo;
+            }
+        }
+    }
+}

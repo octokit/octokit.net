@@ -147,7 +147,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(repositories, nameof(repositories));
             Ensure.ArgumentNotNull(repositories.SelectedRepositoryIds, nameof(repositories.SelectedRepositoryIds));
 
-            return ApiConnection.Put(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName));
+            return ApiConnection.Put<SelectedRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), repositories);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("PUT", "/orgs/{org}/actions/secrets/{secretName}/{repoId}")]
+        [ManualRoute("PUT", "/orgs/{org}/actions/secrets/{secretName}/repositories/{repoId}")]
         public Task AddRepoToOrganizationSecret(string org, string secretName, long repoId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -180,7 +180,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("DELETE", "/orgs/{org}/actions/secrets/{secretName}/{repoId}")]
+        [ManualRoute("DELETE", "/orgs/{org}/actions/secrets/{secretName}/repositories/{repoId}")]
         public Task RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));

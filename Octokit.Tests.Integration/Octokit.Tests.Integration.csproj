@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE;SODIUM_CORE_AVAILABLE</DefineConstants>
   </PropertyGroup>
   
   <ItemGroup>
