@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Reactive
         /// <summary>
         /// Fill these in for tests to work
         /// </summary>
-        internal const string ORG = "mptolly-test-org";
+        internal const string ORG = "";
 
         public class GetPublicKeyMethod
         {
