@@ -90,8 +90,8 @@ There's also a number of additional fields:
  - `Labels` - a collection of labels to assign to the issue
 
 Note that `Milestones` and `Labels` need to exist in the repository before
-creating the issue. Refer to the [Milestones](https://github.com/octokit/octokit.net/blob/master/docs/milestones.md)
-and [Labels](https://github.com/octokit/octokit.net/blob/master/docs/labels.md)
+creating the issue. Refer to the [Milestones](https://github.com/octokit/octokit.net/blob/main/docs/milestones.md)
+and [Labels](https://github.com/octokit/octokit.net/blob/main/docs/labels.md)
 sections for more details.
 
 ### Update

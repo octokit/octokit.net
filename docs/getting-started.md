@@ -28,7 +28,7 @@ var tokenAuth = new Credentials("token"); // NOTE: not real token
 client.Credentials = tokenAuth;
 ```
 
-It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/master/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
+It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/main/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
 
  - the application owner never needs to store a user's password
  - the token can be revoked by the user at a later date
