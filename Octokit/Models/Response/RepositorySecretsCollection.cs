@@ -15,9 +15,9 @@ namespace Octokit
         {
         }
 
-        public RepositorySecretsCollection(int count, IReadOnlyList<RepositorySecret> secrets)
+        public RepositorySecretsCollection(int totalCount, IReadOnlyList<RepositorySecret> secrets)
         {
-            TotalCount = count;
+            TotalCount = totalCount;
             Secrets = secrets;
         }
 

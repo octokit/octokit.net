@@ -206,7 +206,7 @@ namespace Octokit.Tests.Clients
                 await client.SetSelectedRepositoriesForSecret("org", "secret", repos);
 
                 connection.Received()
-                    .Put(Arg.Is<Uri>(u => u.ToString() == "orgs/org/actions/secrets/secret/repositories"));
+                    .Put<SelectedRepositoryCollection>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/actions/secrets/secret/repositories"), repos);
             }
 
             [Fact]
