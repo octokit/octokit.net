@@ -11,7 +11,7 @@ namespace Octokit
     {
         public PullRequestCommit() { }
 
-        public PullRequestCommit(string nodeId, Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
+        public PullRequestCommit(string nodeId, User author, string commentsUrl, Commit commit, User committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 
@@ -31,13 +31,13 @@ namespace Octokit
         /// </summary>
         public string NodeId { get; protected set; }
 
-        public Committer Author { get; protected set; }
+        public User Author { get; protected set; }
 
         public string CommentsUrl { get; protected set; }
 
         public Commit Commit { get; protected set; }
 
-        public Committer Committer { get; protected set; }
+        public User Committer { get; protected set; }
 
         public string HtmlUrl { get; protected set; }
 
