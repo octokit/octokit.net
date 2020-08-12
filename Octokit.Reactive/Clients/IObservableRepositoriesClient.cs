@@ -177,7 +177,7 @@ namespace Octokit.Reactive
         /// Access GitHub's Repository Actions API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">API documentation</a> for more details.
         /// </remarks>
         IObservableRepositoryActionsClient Actions { get; }
 

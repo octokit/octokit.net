@@ -8,7 +8,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Org Actions API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/actions/"> Actions API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/reference/actions"> Actions API documentation</a> for more information.
     /// </remarks>
     public class ObservableOrganizationActionsClient : IObservableOrganizationActionsClient
     {
@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// Returns a client to manage organization secrets.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets"> Secrets API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#secrets"> Secrets API documentation</a> for more information.
         /// </remarks>
         public IObservableOrganizationSecretsClient Secrets { get; private set; }
     }
