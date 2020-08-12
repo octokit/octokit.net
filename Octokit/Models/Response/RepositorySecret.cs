@@ -14,7 +14,6 @@ namespace Octokit
     {
         public RepositorySecret()
         {
-
         }
 
         public RepositorySecret(string name, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
