@@ -11,7 +11,6 @@ namespace Octokit
     {
         public SecretsPublicKey()
         {
-
         }
 
         public SecretsPublicKey(string keyId, string key)
