@@ -11,7 +11,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Repository Secrets API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/actions/secrets/">Repository Secrets API documentation</a> for more details.
+    /// See the <a href="https://docs.github.com/en/rest/reference/actions">Repository Secrets API documentation</a> for more details.
     /// </remarks>
     public class ObservableRepositorySecretsClient : IObservableRepositorySecretsClient
     {
@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// Get the public signing key to encrypt secrets for a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#get-a-repository-public-key">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// List the secrets for a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#list-repository-secrets">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
@@ -66,7 +66,7 @@ namespace Octokit.Reactive
         /// Get a secret from a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#get-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
@@ -86,7 +86,7 @@ namespace Octokit.Reactive
         /// Create or update a secret in a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#create-or-update-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// Delete a secret in a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#delete-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repoName">The owner of the repository</param>
         /// <param name="owner">The name of the repository</param>
